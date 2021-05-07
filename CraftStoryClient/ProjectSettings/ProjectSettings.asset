@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 22
-  productGUID: e35d803a5a7263f4dbf142f6ec6bde0a
+  productGUID: c53a1e421cc90c34cb9afbec874a0258
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -482,6 +482,8 @@ PlayerSettings:
   switchNetworkInterfaceManagerInitializeEnabled: 1
   switchPlayerConnectionEnabled: 1
   switchUseNewStyleFilepaths: 0
+  switchUseMicroSleepForYield: 1
+  switchMicroSleepForYieldTime: 25
   ps4NPAgeRating: 12
   ps4NPTitleSecret: 
   ps4NPTrophyPackPath: 
