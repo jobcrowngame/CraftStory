@@ -56,15 +56,26 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\LoginUI.cs" />
-    <Compile Include="Assets\Scripts\UICtl.cs" />
-    <Compile Include="Assets\Scripts\Gs2AccountSample2.cs" />
-    <Compile Include="Assets\Scripts\Single.cs" />
-    <Compile Include="Assets\Scripts\BaseUI.cs" />
-    <Compile Include="Assets\Scripts\PublicPar.cs" />
-    <Compile Include="Assets\Scripts\GS2.cs" />
+    <Compile Include="Assets\Scripts\UI\BagUI.cs" />
+    <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
+    <Compile Include="Assets\Scripts\UI\UIBase.cs" />
+    <Compile Include="Assets\Scripts\UI\UILogicBase.cs" />
+    <Compile Include="Assets\Scripts\Test\UserTest.cs" />
+    <Compile Include="Assets\Scripts\UI\UICtl.cs" />
+    <Compile Include="Assets\Scripts\UI\LoginLG.cs" />
+    <Compile Include="Assets\Scripts\UI\HomeLG.cs" />
+    <Compile Include="Assets\Scripts\Test\Gs2AccountSample2.cs" />
+    <Compile Include="Assets\Scripts\Common\Single.cs" />
+    <Compile Include="Assets\Scripts\UI\LoginUI.cs" />
+    <Compile Include="Assets\Scripts\Common\CommonFunction.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
-    <Compile Include="Assets\Scripts\LoginLg.cs" />
+    <Compile Include="Assets\Scripts\UI\BagLG.cs" />
+    <Compile Include="Assets\Scripts\UI\HomeUI.cs" />
+    <Compile Include="Assets\Scripts\Common\MLog.cs" />
+    <Compile Include="Assets\Scripts\UI\Item.cs" />
+    <Compile Include="Assets\Scripts\UI\ItemCell.cs" />
+    <Compile Include="Assets\Scripts\UI\ItemLg.cs" />
+    <Compile Include="Assets\Scripts\Common\GS2.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -292,11 +303,11 @@
     <Reference Include="gs2_websocket-sharp">
       <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_websocket-sharp.dll</HintPath>
     </Reference>
-    <Reference Include="gs2_LitJSON">
-      <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_LitJSON.dll</HintPath>
-    </Reference>
     <Reference Include="gs2_Google.Protobuf">
       <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="gs2_LitJSON">
+      <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_LitJSON.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
@@ -643,14 +654,26 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
     </Reference>
+    <Reference Include="Gs2.Weave.Core">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2.Weave.Inventory">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Inventory.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2.Weave.Login.Editor">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Login.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2.Weave.Credential.Editor">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Credential.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
@@ -661,6 +684,18 @@
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
+    <Reference Include="Gs2.Weave.Inventory.Editor">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Inventory.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2.Weave.Login">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Login.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2.Weave.Core.Editor">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2.Weave.EditorExtension">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.EditorExtension.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
@@ -670,17 +705,17 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Gs2.Weave.Credential">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Credential.dll</HintPath>
+    </Reference>
     <Reference Include="Gs2.Editor">
       <HintPath>Library\ScriptAssemblies\Gs2.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Gs2">
-      <HintPath>Library\ScriptAssemblies\Gs2.dll</HintPath>
-    </Reference>
-    <Reference Include="Gs2.Weave.EditorExtension">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.EditorExtension.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.EditorCoroutines.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2">
+      <HintPath>Library\ScriptAssemblies\Gs2.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
