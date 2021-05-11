@@ -1,0 +1,42 @@
+{
+  "version": "2019-02-05",
+  "inventoryModels": [
+    {
+      "name": "Inventory01",
+      "metadata": "Inventory01 type mate data",
+      "initialCapacity": 30,
+      "maxCapacity": 99,
+      "protectReferencedItem": true,
+      "itemModels": [
+        {
+          "name": "item01",
+          "metadata": "item01 type mate data",
+          "stackingLimit": 30,
+          "allowMultipleStacks": true,
+          "sortValue": 0
+        },
+        {
+          "name": "item02",
+          "metadata": "item02 type mate data",
+          "stackingLimit": 30,
+          "allowMultipleStacks": true,
+          "sortValue": 0
+        },
+        {
+          "name": "item03",
+          "metadata": "item03 type mate data",
+          "stackingLimit": 1,
+          "allowMultipleStacks": true,
+          "sortValue": 1
+        },
+        {
+          "name": "item04",
+          "metadata": "item04 type mate data",
+          "stackingLimit": 1,
+          "allowMultipleStacks": true,
+          "sortValue": 1
+        }
+      ]
+    }
+  ]
+}
