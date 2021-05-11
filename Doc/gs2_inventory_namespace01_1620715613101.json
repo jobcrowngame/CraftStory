@@ -9,6 +9,13 @@
       "protectReferencedItem": true,
       "itemModels": [
         {
+          "name": "GachaItem",
+          "metadata": "GachaItem mate",
+          "stackingLimit": 99,
+          "allowMultipleStacks": true,
+          "sortValue": 0
+        },
+        {
           "name": "item01",
           "metadata": "item01 type mate data",
           "stackingLimit": 30,

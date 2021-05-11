@@ -17,4 +17,16 @@
 
     // インベントリの種類名
     public static string inventoryName = "Inventory01";
+
+    // 課金通貨ネームスペース名
+    public static string moneyNS = "MoneyNS";
+
+    // 交換ネームスペース名
+    public static string exchangeNS = "ExchangeNS";
+
+    // 商品ネームスペース名
+    public static string ShowcaseNS = "ShowcaseNS";
+
+    // 
+    public static string DistributorNS = "DistributorNS";
 }

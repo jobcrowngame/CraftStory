@@ -2,39 +2,31 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Gs2.Unity.Gs2Inventory.Model;
+using Gs2.Unity.Gs2Money.Model;
 
 public class BagUI : UIBase
 {
-    Button closeBtn;
+    Text moneyText;
     Transform itemGridRoot;
+    Button closeBtn;
 
-    public override void Init()
+    public override void Init(GameObject obj)
     {
+        base.Init(obj);
+
         BagLG.E.Init(this);
 
-        if (!InitUI())
-        {
-            MLog.Error("BagUI Init fail!");
-        }
+        InitUI();
+        RefreshMoney();
     }
 
-    private bool InitUI()
+    private void InitUI()
     {
-        var loginObj = CommonFunction.FindChiledByName(gameObject, "CloseBtn");
-        if (loginObj != null)
-            closeBtn = loginObj.GetComponent<Button>();
-        else
-            return false;
+        moneyText = FindChiled<Text>("Money");
+        itemGridRoot = FindChiled("Content");
 
-        var itemGridRootObj = CommonFunction.FindChiledByName(gameObject, "Content");
-        if (itemGridRootObj != null)
-            itemGridRoot = itemGridRootObj.transform;
-        else
-            return false;
-
+        closeBtn = FindChiled<Button>("CloseBtn");
         closeBtn.onClick.AddListener(()=> { Close(); });
-
-        return true;
     }
 
     public override void Open()
@@ -43,7 +35,6 @@ public class BagUI : UIBase
 
         BagLG.E.GetItemList();
     }
-
     public override void Close()
     {
         base.Close();
@@ -70,7 +61,7 @@ public class BagUI : UIBase
         if (cell == null)
             return;
 
-        cell.Init(item);
+        cell.Add(item);
     }
 
     private void ClearItem()
@@ -79,5 +70,14 @@ public class BagUI : UIBase
         {
             GameObject.Destroy(t.gameObject);
         }
+    }
+
+    private void RefreshMoney()
+    {
+        BagLG.E.GetMoney(0);
+    }
+    public void RefreshMoneyResponse(EzWallet item)
+    {
+        moneyText.text = (item.Free + item.Paid).ToString();
     }
 }

@@ -9,6 +9,9 @@ public class CommonFunction
 {
     public static GameObject FindChiledByName(GameObject obj, string name)
     {
+        if (obj == null)
+            MLog.Error(obj.name + "---" + name + " is null");
+
         Transform trans = obj.transform;
         Transform childTrans = trans.Find(name);
         if (childTrans != null)

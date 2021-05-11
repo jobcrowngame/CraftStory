@@ -1,32 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HomeUI : UIBase
 {
-    private Button bagBtn;
+    Button BagBtn;
+    Button LotteryBtn;
 
-    public override void Init()
+    public override void Init(GameObject obj)
     {
+        base.Init(obj);
+
         HomeLG.E.Init(this);
 
-        if (!InitUI())
-        {
-            MLog.Error("HomeUI Init fail!");
-        }
+        InitUI();
     }
 
-    private bool InitUI()
+    private void InitUI()
     {
-        var idObj = CommonFunction.FindChiledByName(gameObject, "BagBtn");
-        if (idObj != null)
-            bagBtn = idObj.GetComponent<Button>();
-        else
-            return false;
+        BagBtn = FindChiled<Button>("BagBtn");
+        BagBtn.onClick.AddListener(() => { UICtl.E.OpenUI<BagUI>(UIType.Bag); });
 
-        bagBtn.onClick.AddListener(() => { UICtl.E.OpenUI<BagUI>(UIType.Bag); });
-
-        return true;
+        LotteryBtn = FindChiled<Button>("LotteryBtn");
+        LotteryBtn.onClick.AddListener(() => { UICtl.E.OpenUI<LotteryUI>(UIType.Lottery); });
     }
 }

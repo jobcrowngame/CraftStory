@@ -11,8 +11,10 @@ public class LoginUI : UIBase
     private Button loginBtn;
 
     // Start is called before the first frame update
-    public override void Init()
+    public override void Init(GameObject obj)
     {
+        base.Init(obj);
+
         LoginLg.E.Init(this);
 
         if (!InitUI())
@@ -23,32 +25,14 @@ public class LoginUI : UIBase
 
     private bool InitUI()
     {
-        var idObj = CommonFunction.FindChiledByName(gameObject, "ID");
-        if (idObj != null)
-            idInput = idObj.GetComponent<InputField>();
-        else
-            return false;
+        idInput = FindChiled<InputField>("ID");
+        pwInput = FindChiled<InputField>("PW");
 
-        var pwObj = CommonFunction.FindChiledByName(gameObject, "PW");
-        if (pwObj != null)
-            pwInput = pwObj.GetComponent<InputField>();
-        else
-            return false;
-
-        var newAccObj = CommonFunction.FindChiledByName(gameObject, "NewAccountBtn");
-        if (newAccObj != null)
-            newAccBtn = newAccObj.GetComponent<Button>();
-        else
-            return false;
-
-        var loginObj = CommonFunction.FindChiledByName(gameObject, "LoginBtn");
-        if (loginObj != null)
-            loginBtn = loginObj.GetComponent<Button>();
-        else
-            return false;
-
+        newAccBtn = FindChiled<Button>("NewAccountBtn");
         newAccBtn.onClick.AddListener(()=> { LoginLg.E.CreateNewAccount(); });
-        loginBtn.onClick.AddListener(()=> { LoginLg.E.Login(idInput.text, pwInput.text); });
+
+        loginBtn = FindChiled<Button>("LoginBtn");
+        loginBtn.onClick.AddListener(() => { LoginLg.E.Login(idInput.text, pwInput.text); });
 
         return true;
     }

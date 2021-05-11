@@ -23,6 +23,7 @@ public class UICtl : Single<UICtl>
 
     private void CreateGlobalEntity()
     {
+        MLog.E.Init();
         GS2.E.Init();
         UserTest.E.Init();
 
@@ -44,7 +45,7 @@ public class UICtl : Single<UICtl>
         return uiDic[uiType];
     }
 
-    public bool OpenUI<T>(UIType uiType, UIOpenType closeType = UIOpenType.None) where T : UIBase
+    public UIBase OpenUI<T>(UIType uiType, UIOpenType closeType = UIOpenType.None) where T : UIBase
     {
         switch (closeType)
         {
@@ -74,23 +75,22 @@ public class UICtl : Single<UICtl>
             if (uiResourcesPath == "")
             {
                 MLog.Error("bad ui path " + uiType.ToString());
-                return false;
+                return null;
             }
 
             var prefab = Resources.Load(uiResourcesPath) as GameObject;
             if (prefab == null)
-                return false;
+                return null;
 
             var obj = GameObject.Instantiate(prefab, uiRootTran);
             if (obj == null)
-                return false;
+                return null;
 
             uiClass = obj.GetComponent<T>();
             if (uiClass == null)
-                return false;
+                return null;
 
-            uiClass.Init();
-            uiClass.obj = obj;
+            uiClass.Init(obj);
 
             uiDic[uiType] = uiClass;
 
@@ -110,7 +110,7 @@ public class UICtl : Single<UICtl>
 
         curentOpenUI = uiClass;
 
-        return true;
+        return uiClass;
     }
 
     public void CloseUI(UIType uiType)
@@ -130,6 +130,8 @@ public class UICtl : Single<UICtl>
             case UIType.Login: return "Prefabs/UI/Login";
             case UIType.Home: return "Prefabs/UI/Home";
             case UIType.Bag: return "Prefabs/UI/Bag";
+            case UIType.Lottery: return "Prefabs/UI/Lottery";
+            case UIType.GiftBox: return "Prefabs/UI/GiftBox";
             default: return "";
         }
     }
@@ -146,4 +148,6 @@ public enum UIType
     Login,
     Home,
     Bag,
+    Lottery,
+    GiftBox,
 }

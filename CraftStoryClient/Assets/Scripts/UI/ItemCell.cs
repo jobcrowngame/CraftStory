@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Gs2.Unity.Gs2Inventory.Model;
 
-public class ItemCell : MonoBehaviour
+public class ItemCell : UIBase
 {
     private Text itemName;
     private Text itemCount;
@@ -12,8 +12,10 @@ public class ItemCell : MonoBehaviour
 
     private EzItemSet item;
 
-    public void Init(EzItemSet ezitem)
+    public void Add(EzItemSet ezitem)
     {
+        obj = this.gameObject;
+
         InitUI();
 
         this.item = ezitem;
@@ -22,36 +24,16 @@ public class ItemCell : MonoBehaviour
         itemCount.text = "x" + item.Count;
     }
 
-    private bool InitUI()
+    private void InitUI()
     {
-        var NameObj = CommonFunction.FindChiledByName(gameObject, "Name");
-        if (NameObj != null)
-            itemName = NameObj.GetComponent<Text>();
-        else
-            return false;
+        itemName = FindChiled<Text>("Name");
+        itemCount = FindChiled<Text>("Count");
 
-        var CountObj = CommonFunction.FindChiledByName(gameObject, "Count");
-        if (CountObj != null)
-            itemCount = CountObj.GetComponent<Text>();
-        else
-            return false;
-
-        var increaseBtnObj = CommonFunction.FindChiledByName(gameObject, "Increase");
-        if (increaseBtnObj != null)
-            increaseBtn = increaseBtnObj.GetComponent<Button>();
-        else
-            return false;
-
-        var decreaseBtnObj = CommonFunction.FindChiledByName(gameObject, "Decrease");
-        if (decreaseBtnObj != null)
-            decreaseBtn = decreaseBtnObj.GetComponent<Button>();
-        else
-            return false;
-
+        increaseBtn = FindChiled<Button>("Increase");
         increaseBtn.onClick.AddListener(() => { ItemLg.E.Increase(item.ItemName); });
-        decreaseBtn.onClick.AddListener(() => { ItemLg.E.Decrease(this, item.ItemName, 1); });
 
-        return true;
+        decreaseBtn = FindChiled<Button>("Decrease");
+        decreaseBtn.onClick.AddListener(() => { ItemLg.E.Decrease(this, item.ItemName, 1); });
     }
 
     public void IncreaseRespones()

@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class MLog : Single<MLog>
 {
+    public void Init()
+    {
+
+    }
+
     public static void Log(string msg)
     {
         Debug.Log(msg);

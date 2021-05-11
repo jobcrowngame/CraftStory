@@ -1,18 +1,28 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+
+using UnityEngine;
+using UnityEngine.Events;
+
 using Gs2.Core;
 using Gs2.Unity.Gs2Account.Result;
 using Gs2.Unity.Util;
 using Gs2.Unity.Gs2Inventory.Model;
-
-using UnityEngine;
+using Gs2.Unity.Gs2Money.Model;
+using Gs2.Unity.Gs2Exchange.Model;
+using Gs2.Unity.Gs2Showcase.Model;
+using Gs2.Core.Exception;
+using Gs2.Unity;
 
 public class GS2 : MonoBehaviour
 {
+
+    #region Common
+
     private static GS2 entity;
 
-    private Gs2.Unity.Client gs2;
+    private Client gs2;
     private Profile profile;
     private GameSession gameSession;
 
@@ -29,7 +39,7 @@ public class GS2 : MonoBehaviour
 
     private void OnError(Exception e)
     {
-        Debug.Log(e.ToString());
+        MLog.Error(e.ToString());
     }
 
     public void Init()
@@ -65,6 +75,9 @@ public class GS2 : MonoBehaviour
 
         gs2 = new Gs2.Unity.Client(profile);
     }
+
+    #endregion
+    #region Account
 
     public void CreateAccount(Action<string, string> response)
     {
@@ -135,6 +148,9 @@ public class GS2 : MonoBehaviour
 
         response(gameSession);
     }
+
+    #endregion
+    #region Inventory
 
     public void GetInventory()
     {
@@ -254,4 +270,222 @@ public class GS2 : MonoBehaviour
             consumeCount   //  消費する量
         );
     }
+
+    #endregion
+    #region Money
+
+    /// <summary>
+    /// 課金通貨を消費する
+    /// </summary>
+    public void WithdrawMoney(Action response, int slot, int count, bool paidOnly = false)
+    {
+        StartCoroutine(WithdrawMoneyIE(response, slot, count, paidOnly));
+    }
+    public IEnumerator WithdrawMoneyIE(Action response, int slot, int count, bool paidOnly = false)
+    {
+        yield return gs2.Money.Withdraw(
+            r =>
+            {
+                if (r.Error != null)
+                {
+                    // エラーが発生した場合に到達
+                    // r.Error は発生した例外オブジェクトが格納されている
+                    MLog.Error("Withdraw fail!!!");
+                }
+                else
+                {
+                    response();
+                    //Debug.Log(r.Result.Item.Slot); // integer スロット番号
+                    //Debug.Log(r.Result.Item.Paid); // integer 有償課金通貨所持量
+                    //Debug.Log(r.Result.Item.Free); // integer 無償課金通貨所持量
+                    //Debug.Log(r.Result.Item.UpdatedAt); // long 最終更新日時
+                    //Debug.Log(r.Result.Price); // float 消費した通貨の価格
+                }
+            },
+            gameSession,    // GameSession ログイン状態を表すセッションオブジェクト
+            PublicPar.moneyNS,   //  ネームスペースの名前
+            slot,   //  スロット番号
+            count,   //  消費する課金通貨の数量
+            paidOnly   //  有償課金通貨のみを対象とするか
+        );
+    }
+
+    /// <summary>
+    /// 課金通貨を在庫を取得
+    /// </summary>
+    public void GetMoney(Action<EzWallet> response, int slot)
+    {
+        StartCoroutine(GetMoneyIE(response, slot));
+    }
+    public IEnumerator GetMoneyIE(Action<EzWallet> response, int slot)
+    {
+        yield return gs2.Money.Get(
+            r =>
+            {
+                if (r.Error != null)
+                {
+                    // エラーが発生した場合に到達
+                    // r.Error は発生した例外オブジェクトが格納されている
+                    MLog.Error("Withdraw fail!!!");
+                }
+                else
+                {
+                    response(r.Result.Item);
+                    //Debug.Log(r.Result.Item.Slot); // integer スロット番号
+                    //Debug.Log(r.Result.Item.Paid); // integer 有償課金通貨所持量
+                    //Debug.Log(r.Result.Item.Free); // integer 無償課金通貨所持量
+                    //Debug.Log(r.Result.Item.UpdatedAt); // long 最終更新日時
+                    //Debug.Log(r.Result.Price); // float 消費した通貨の価格
+                }
+            },
+            gameSession,    // GameSession ログイン状態を表すセッションオブジェクト
+            PublicPar.moneyNS,   //  ネームスペースの名前
+            slot   //  スロット番号
+        );
+    }
+
+    #endregion
+    #region Exchange
+
+    /// <summary>
+    /// 交換
+    /// </summary>
+    public void Exchange(Action<EzRateModel> response, int count, string rateName, List<Gs2.Unity.Gs2Exchange.Model.EzConfig> config = null)
+    {
+        StartCoroutine(ExchangeIE(response, count, rateName, config));
+    }
+    private IEnumerator ExchangeIE(Action<EzRateModel> response, int count, string rateName, List<Gs2.Unity.Gs2Exchange.Model.EzConfig> config = null)
+    {
+        yield return gs2.Exchange.Exchange(
+             r =>
+             {
+                 if (r.Error != null)
+                 {
+                     // エラーが発生した場合に到達
+                     // r.Error は発生した例外オブジェクトが格納されている
+                     MLog.Error("Exchange fail!!!");
+                 }
+                 else
+                 {
+                     StartCoroutine(StampSheet((sheet, result) => 
+                     {
+                        response(r.Result.Item);
+                     },r.Result.StampSheet));
+                     //Debug.Log(r.Result.Item.Name); // string 交換レートの種類名
+                     //Debug.Log(r.Result.Item.Metadata); // string 交換レートの種類のメタデータ
+                     //Debug.Log(r.Result.Item.ConsumeActions); // list[ConsumeAction] 消費アクションリスト
+                     //Debug.Log(r.Result.Item.AcquireActions); // list[AcquireAction] 入手アクションリスト
+                     //Debug.Log(r.Result.StampSheet); // string 交換処理の実行に使用するスタンプシート
+                 }
+             },
+             gameSession,    // GameSession ログイン状態を表すセッションオブジェクト
+             PublicPar.exchangeNS,   //  ネームスペース名
+             rateName,   //  交換レートの種類名
+             count,   //  交換するロット数
+             config   //  設定値(オプション値)
+         );
+    }
+
+    #endregion
+    #region Showcase
+
+    public void Buy(Action<EzRateModel> response, string showcaseName, string displayItemId, List<Gs2.Unity.Gs2Showcase.Model.EzConfig> config = null)
+    {
+        StartCoroutine(BuyIE(response, showcaseName, displayItemId, config));
+    }
+    private IEnumerator BuyIE(Action<EzRateModel> response, string showcaseName, string displayItemId, List<Gs2.Unity.Gs2Showcase.Model.EzConfig> config = null)
+    {
+        yield return gs2.Showcase.Buy(
+             r =>
+             {
+                 if (r.Error != null)
+                 {
+                     // エラーが発生した場合に到達
+                     // r.Error は発生した例外オブジェクトが格納されている
+                     MLog.Error("BuyIE fail!!!");
+                     MLog.Error(r.Error.Message);
+                 }
+                 else
+                 {
+                     StartCoroutine(StampSheet((sheet, result) =>
+                     {
+                         MLog.Log("BuyIE");
+                     }, r.Result.StampSheet));
+                     //Debug.Log(r.Result.Item.Name); // string 商品名
+                     //Debug.Log(r.Result.Item.Metadata); // string 商品のメタデータ
+                     //Debug.Log(r.Result.Item.ConsumeActions); // list[ConsumeAction] 消費アクションリスト
+                     //Debug.Log(r.Result.Item.AcquireActions); // list[AcquireAction] 入手アクションリスト
+                     //Debug.Log(r.Result.StampSheet); // string 購入処理の実行に使用するスタンプシート
+                 }
+             },
+             gameSession,    // GameSession ログイン状態を表すセッションオブジェクト
+             PublicPar.ShowcaseNS,   //  ネームスペース名
+             showcaseName,   //  商品名
+             displayItemId,   //  陳列商品ID
+             config   //  設定値(オプション値)
+         );
+    }
+
+    public void GetShowcase(Action<EzShowcase> response, string showcaseName)
+    {
+        StartCoroutine(GetShowcaseIE(response, showcaseName));
+    }
+    private IEnumerator GetShowcaseIE(Action<EzShowcase> response, string showcaseName)
+    {
+        yield return gs2.Showcase.GetShowcase(
+             r =>
+             {
+                 if (r.Error != null)
+                 {
+                     // エラーが発生した場合に到達
+                     // r.Error は発生した例外オブジェクトが格納されている
+                     MLog.Error("GetShowcaseIE fail!!!");
+                     MLog.Error(r.Error.Message);
+                 }
+                 else
+                 {
+                     response(r.Result.Item);
+                     //Debug.Log(r.Result.Item.Name); // string 商品名
+                     //Debug.Log(r.Result.Item.Metadata); // string 商品のメタデータ
+                     //Debug.Log(r.Result.Item.ConsumeActions); // list[ConsumeAction] 消費アクションリスト
+                     //Debug.Log(r.Result.Item.AcquireActions); // list[AcquireAction] 入手アクションリスト
+                     //Debug.Log(r.Result.StampSheet); // string 購入処理の実行に使用するスタンプシート
+                 }
+             },
+             gameSession,    // GameSession ログイン状態を表すセッションオブジェクト
+             PublicPar.ShowcaseNS,   //  ネームスペース名
+             showcaseName   //  商品名
+         );
+    }
+
+    #endregion
+
+
+
+
+    #region StampSheet
+
+    //UnityEvent<Gs2Exception>型を使用するための準備
+    [System.Serializable]
+    public class OnErrorCallback : UnityEvent<Gs2Exception> { }
+
+   
+
+    private void Machine_OnCompleteStampSheet(EzStampSheet sheet, Gs2.Unity.Gs2Distributor.Result.EzRunStampSheetResult result)
+    {
+        //スタンプシート実行完了時の処理を書く
+        MLog.Log("Machine_OnCompleteStampSheet");
+    }
+
+    private IEnumerator StampSheet(UnityAction<EzStampSheet, Gs2.Unity.Gs2Distributor.Result.EzRunStampSheetResult> responce, string stampSheet)
+    {
+        var machine = new StampSheetStateMachine(stampSheet, gs2, PublicPar.DistributorNS, PublicPar.accountEncryptionKeyId);
+        UnityEvent<Gs2Exception> m_events = new OnErrorCallback();
+        m_events.AddListener(OnError);
+        machine.OnCompleteStampSheet.AddListener(Machine_OnCompleteStampSheet);
+        machine.OnCompleteStampSheet.AddListener(responce);
+        yield return machine.Execute(m_events);
+    }
+
+    #endregion
 }
