@@ -5,6 +5,7 @@ public class HomeUI : UIBase
 {
     Button BagBtn;
     Button LotteryBtn;
+    Button ShopBtn;
 
     public override void Init(GameObject obj)
     {
@@ -22,5 +23,8 @@ public class HomeUI : UIBase
 
         LotteryBtn = FindChiled<Button>("LotteryBtn");
         LotteryBtn.onClick.AddListener(() => { UICtl.E.OpenUI<LotteryUI>(UIType.Lottery); });
+
+        ShopBtn = FindChiled<Button>("ShopBtn");
+        ShopBtn.onClick.AddListener(() => { UICtl.E.OpenUI<ShopUI>(UIType.Shop); });
     }
 }

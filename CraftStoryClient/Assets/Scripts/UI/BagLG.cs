@@ -2,6 +2,7 @@
 using Gs2.Unity.Gs2Inventory.Model;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class BagLG : UILogicBase<BagLG, BagUI>
 {
@@ -24,5 +25,10 @@ public class BagLG : UILogicBase<BagLG, BagUI>
         {
             ui.AddItems(items);
         },"1", 5);
+    }
+
+    public void DecreaseRespones(List<EzItemSet> r)
+    {
+        ui.DecreaseRespones(r);
     }
 }

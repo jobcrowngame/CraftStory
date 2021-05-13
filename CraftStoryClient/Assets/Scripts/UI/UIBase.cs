@@ -35,13 +35,13 @@ public class UIBase : MonoBehaviour
         if (parent == null)
             parent = obj;
         
-        var findObj = CommonFunction.FindChiledByName(parent, chiledName);
+        var findObj = CommonFunction.FindChiledByName(parent.transform, chiledName);
         if (findObj != null)
             return findObj.GetComponent<T>();
         else
         {
-            MLog.Error("Find chiled fail: " + chiledName);
-            MLog.Error("From UI: " + obj.name);
+            Debug.LogError("Find chiled fail: " + chiledName);
+            Debug.LogError("From UI: " + obj.name);
             return null;
         }
     }
@@ -50,14 +50,39 @@ public class UIBase : MonoBehaviour
         if (parent == null)
             parent = obj;
 
-        var findObj = CommonFunction.FindChiledByName(parent, chiledName);
+        var findObj = CommonFunction.FindChiledByName(parent.transform, chiledName);
         if (findObj != null)
             return findObj.transform;
         else
         {
-            MLog.Error("Find chiled fail: " + chiledName);
-            MLog.Error("From UI: " + obj.name);
+            Debug.LogError("Find chiled fail: " + chiledName);
+            Debug.LogError("From UI: " + obj.name);
             return null;
+        }
+    }
+
+    protected T AddCell<T>(string resourcesPath, Transform parent) where T : UIBase
+    {
+        var resources = CommonFunction.ReadResourcesPrefab(resourcesPath);
+        if (resources == null)
+            Debug.LogError("not find resources " + resourcesPath);
+
+        var obj = GameObject.Instantiate(resources, parent);
+        if (obj == null)
+            return null;
+
+        var cell = obj.GetComponent<T>();
+        if (cell == null)
+            return null;
+
+        return cell;
+    }
+
+    protected void ClearCell(Transform parent)
+    {
+        foreach (Transform t in parent)
+        {
+            GameObject.Destroy(t.gameObject);
         }
     }
 }

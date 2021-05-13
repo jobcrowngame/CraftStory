@@ -13,13 +13,13 @@
             "consumeActions": [
               {
                 "action": "Gs2Money:WithdrawByUserId",
-                "request": "{\"namespaceName\":\"MoneyNS\",\"userId\":\"aa4d4e86-0303-4f23-bbeb-3344f12f9198\",\"slot\":\"0\",\"count\":\"10\"}"
+                "request": "{\"namespaceName\":\"MoneyNS\",\"userId\":\"\",\"slot\":\"0\",\"count\":\"10\"}"
               }
             ],
             "acquireActions": [
               {
                 "action": "Gs2Inventory:AcquireItemSetByUserId",
-                "request": "{\"namespaceName\":\"namespace01\",\"inventoryName\":\"Inventory01\",\"itemName\":\"item01\",\"userId\":\"aa4d4e86-0303-4f23-bbeb-3344f12f9198\",\"acquireCount\":\"10\"}"
+                "request": "{\"namespaceName\":\"namespace01\",\"inventoryName\":\"Inventory01\",\"itemName\":\"item01\",\"userId\":\"\",\"acquireCount\":\"10\"}"
               }
             ]
           }
@@ -39,6 +39,25 @@
               {
                 "action": "Gs2Inventory:AcquireItemSetByUserId",
                 "request": "{\"namespaceName\":\"namespace01\",\"inventoryName\":\"Inventory01\",\"itemName\":\"item02\",\"userId\":\"aa4d4e86-0303-4f23-bbeb-3344f12f9198\",\"acquireCount\":\"10\"}"
+              }
+            ]
+          }
+        },
+        {
+          "type": "salesItem",
+          "salesItem": {
+            "name": "item03Box",
+            "metadata": "item03Box mate",
+            "consumeActions": [
+              {
+                "action": "Gs2Money:WithdrawByUserId",
+                "request": "{\"namespaceName\":\"MoneyNS\",\"slot\":\"0\",\"count\":\"10\"}"
+              }
+            ],
+            "acquireActions": [
+              {
+                "action": "Gs2Inventory:AcquireItemSetByUserId",
+                "request": "{\"namespaceName\":\"namespace01\",\"inventoryName\":\"Inventory01\",\"itemName\":\"item03\",\"acquireCount\":\"1\"}"
               }
             ]
           }

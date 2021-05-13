@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Gs2.Unity.Gs2Exchange.Model;
+using Gs2.Unity.Gs2Showcase.Model;
 
 public class GiftBoxUI : UIBase
 {
@@ -26,9 +27,32 @@ public class GiftBoxUI : UIBase
         itemGridRoot = FindChiled("Content");
     }
 
-    public void Add(EzRateModel response)
+    public override void Open()
     {
-        MLog.Log(response.Name);
+        base.Open();
+    }
+    public override void Close()
+    {
+        base.Close();
+
+        ClearCell(itemGridRoot);
+    }
+
+    public void AddItem(EzSalesItem r)
+    {
+        AddItem(r.Name, 1);
+    }
+    public void AddItem(EzRateModel r)
+    {
+        //AddItem(r);
+    }
+    private void AddItem(string itemName, int count)
+    {
+        var cell = AddCell<IconItemCell>("Prefabs/UI/IconItem", itemGridRoot);
+        if (cell != null)
+        {
+            cell.Add(itemName, count);
+        }
     }
 
     //public void AddItems(List<EzItemSet> itemList)

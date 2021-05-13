@@ -39,23 +39,23 @@ public class GS2 : MonoBehaviour
 
     private void OnError(Exception e)
     {
-        MLog.Error(e.ToString());
+        Debug.LogError(e.ToString());
     }
 
     public void Init()
     {
+        StartCoroutine(InitCoroutine());
+    }
+    public IEnumerator InitCoroutine()
+    {
+        // GS2 SDK のクライアントを初期化
+        Debug.Log("GS2 SDK のクライアントを初期化");
+
         profile = new Gs2.Unity.Util.Profile(
            clientId: PublicPar.clientId,
            clientSecret: PublicPar.clientSecret,
            reopener: new Gs2BasicReopener()
        );
-
-        StartCoroutine(InitCoroutine());
-    }
-    private IEnumerator InitCoroutine()
-    {
-        // GS2 SDK のクライアントを初期化
-        Debug.Log("GS2 SDK のクライアントを初期化");
 
         AsyncResult<object> asyncResult = null;
 
@@ -164,7 +164,7 @@ public class GS2 : MonoBehaviour
             {
                 // エラーが発生した場合に到達
                 // r.Error は発生した例外オブジェクトが格納されている
-                MLog.Error(r.Error.Message);
+                Debug.LogError(r.Error.Message);
             }
             else
             {
@@ -192,7 +192,7 @@ public class GS2 : MonoBehaviour
             {
                 // エラーが発生した場合に到達
                 // r.Error は発生した例外オブジェクトが格納されている
-                MLog.Error(r.Error.Message);
+                Debug.LogError(r.Error.Message);
             }
             else
             {
@@ -218,7 +218,7 @@ public class GS2 : MonoBehaviour
                 {
                     // エラーが発生した場合に到達
                     // r.Error は発生した例外オブジェクトが格納されている
-                    MLog.Error(r.Error.Message);
+                    Debug.LogError(r.Error.Message);
                 }
                 else
                 {
@@ -235,11 +235,11 @@ public class GS2 : MonoBehaviour
         );
     }
 
-    public void Consume(ItemCell cell, string itemName, long consumeCount)
+    public void Consume(string itemMasterName, long consumeCount, string itemName)
     {
-        StartCoroutine(ConsumeIE(cell, itemName, consumeCount));
+        StartCoroutine(ConsumeIE(itemMasterName, consumeCount, itemName));
     }
-    private IEnumerator ConsumeIE(ItemCell cell, string itemName, long consumeCount)
+    private IEnumerator ConsumeIE(string itemMasterName, long consumeCount, string itemName)
     {
         yield return gs2.Inventory.Consume(
             r => {
@@ -247,10 +247,13 @@ public class GS2 : MonoBehaviour
                 {
                     // エラーが発生した場合に到達
                     // r.Error は発生した例外オブジェクトが格納されている
+                    Debug.LogError("Consume fail");
+                    Debug.LogError(r.Error.Message);
                 }
                 else
                 {
-                    cell.DecreaseRespones(r.Result.Items);
+                    Debug.Log("Consume success");
+                    BagLG.E.DecreaseRespones(r.Result.Items);
                     //Debug.Log(r.Result.Items); // list[ItemSet] 消費後の有効期限ごとのアイテム所持数量のリスト
                     //Debug.Log(r.Result.ItemModel.Name); // string アイテムモデルの種類名
                     //Debug.Log(r.Result.ItemModel.Metadata); // string アイテムモデルの種類のメタデータ
@@ -266,8 +269,9 @@ public class GS2 : MonoBehaviour
             gameSession,    // GameSession ログイン状態を表すセッションオブジェクト
             PublicPar.inventoryNamespaceName,   //  カテゴリー名
             PublicPar.inventoryName,   //  インベントリの名前
-            itemName,   //  アイテムマスターの名前
-            consumeCount   //  消費する量
+            itemMasterName,   //  アイテムマスターの名前
+            consumeCount,   //  消費する量
+            itemName // アイテムの名前
         );
     }
 
@@ -290,7 +294,8 @@ public class GS2 : MonoBehaviour
                 {
                     // エラーが発生した場合に到達
                     // r.Error は発生した例外オブジェクトが格納されている
-                    MLog.Error("Withdraw fail!!!");
+                    Debug.LogError("Withdraw fail!!!");
+                    Debug.LogError(r.Error.Message);
                 }
                 else
                 {
@@ -326,7 +331,8 @@ public class GS2 : MonoBehaviour
                 {
                     // エラーが発生した場合に到達
                     // r.Error は発生した例外オブジェクトが格納されている
-                    MLog.Error("Withdraw fail!!!");
+                    Debug.LogError("Withdraw fail!!!");
+                    Debug.LogError(r.Error.Message);
                 }
                 else
                 {
@@ -363,14 +369,16 @@ public class GS2 : MonoBehaviour
                  {
                      // エラーが発生した場合に到達
                      // r.Error は発生した例外オブジェクトが格納されている
-                     MLog.Error("Exchange fail!!!");
+                     Debug.LogError("Exchange fail!!!");
+                     Debug.LogError(r.Error.Message);
                  }
                  else
                  {
-                     StartCoroutine(StampSheet((sheet, result) => 
+                     StartCoroutine(StampSheet((sheet, result) =>
                      {
-                        response(r.Result.Item);
-                     },r.Result.StampSheet));
+                         Debug.Log("Exchange success");
+                         response(r.Result.Item);
+                     }, r.Result.StampSheet));
                      //Debug.Log(r.Result.Item.Name); // string 交換レートの種類名
                      //Debug.Log(r.Result.Item.Metadata); // string 交換レートの種類のメタデータ
                      //Debug.Log(r.Result.Item.ConsumeActions); // list[ConsumeAction] 消費アクションリスト
@@ -389,11 +397,11 @@ public class GS2 : MonoBehaviour
     #endregion
     #region Showcase
 
-    public void Buy(Action<EzRateModel> response, string showcaseName, string displayItemId, List<Gs2.Unity.Gs2Showcase.Model.EzConfig> config = null)
+    public void Buy(Action<EzSalesItem> response, string showcaseName, EzDisplayItem displayItem, List<Gs2.Unity.Gs2Showcase.Model.EzConfig> config = null)
     {
-        StartCoroutine(BuyIE(response, showcaseName, displayItemId, config));
+        StartCoroutine(BuyIE(response, showcaseName, displayItem, config));
     }
-    private IEnumerator BuyIE(Action<EzRateModel> response, string showcaseName, string displayItemId, List<Gs2.Unity.Gs2Showcase.Model.EzConfig> config = null)
+    private IEnumerator BuyIE(Action<EzSalesItem> response, string showcaseName, EzDisplayItem displayItem, List<Gs2.Unity.Gs2Showcase.Model.EzConfig> config = null)
     {
         yield return gs2.Showcase.Buy(
              r =>
@@ -402,14 +410,15 @@ public class GS2 : MonoBehaviour
                  {
                      // エラーが発生した場合に到達
                      // r.Error は発生した例外オブジェクトが格納されている
-                     MLog.Error("BuyIE fail!!!");
-                     MLog.Error(r.Error.Message);
+                     Debug.LogErrorFormat("BuyIE fail!!!    showcaseName:{0}    displayItem:{1}", showcaseName, displayItem.SalesItem.Name);
+                     Debug.LogError(r.Error.Message);
                  }
                  else
                  {
                      StartCoroutine(StampSheet((sheet, result) =>
                      {
-                         MLog.Log("BuyIE");
+                         Debug.Log("Buy success");
+                         response(r.Result.Item);
                      }, r.Result.StampSheet));
                      //Debug.Log(r.Result.Item.Name); // string 商品名
                      //Debug.Log(r.Result.Item.Metadata); // string 商品のメタデータ
@@ -421,7 +430,7 @@ public class GS2 : MonoBehaviour
              gameSession,    // GameSession ログイン状態を表すセッションオブジェクト
              PublicPar.ShowcaseNS,   //  ネームスペース名
              showcaseName,   //  商品名
-             displayItemId,   //  陳列商品ID
+             displayItem.DisplayItemId,   //  陳列商品ID
              config   //  設定値(オプション値)
          );
     }
@@ -439,11 +448,12 @@ public class GS2 : MonoBehaviour
                  {
                      // エラーが発生した場合に到達
                      // r.Error は発生した例外オブジェクトが格納されている
-                     MLog.Error("GetShowcaseIE fail!!!");
-                     MLog.Error(r.Error.Message);
+                     Debug.LogError("GetShowcaseIE fail!!!");
+                     Debug.LogError(r.Error.Message);
                  }
                  else
                  {
+                     Debug.Log("GetShowcase success");
                      response(r.Result.Item);
                      //Debug.Log(r.Result.Item.Name); // string 商品名
                      //Debug.Log(r.Result.Item.Metadata); // string 商品のメタデータ
@@ -469,20 +479,11 @@ public class GS2 : MonoBehaviour
     [System.Serializable]
     public class OnErrorCallback : UnityEvent<Gs2Exception> { }
 
-   
-
-    private void Machine_OnCompleteStampSheet(EzStampSheet sheet, Gs2.Unity.Gs2Distributor.Result.EzRunStampSheetResult result)
-    {
-        //スタンプシート実行完了時の処理を書く
-        MLog.Log("Machine_OnCompleteStampSheet");
-    }
-
     private IEnumerator StampSheet(UnityAction<EzStampSheet, Gs2.Unity.Gs2Distributor.Result.EzRunStampSheetResult> responce, string stampSheet)
     {
         var machine = new StampSheetStateMachine(stampSheet, gs2, PublicPar.DistributorNS, PublicPar.accountEncryptionKeyId);
         UnityEvent<Gs2Exception> m_events = new OnErrorCallback();
         m_events.AddListener(OnError);
-        machine.OnCompleteStampSheet.AddListener(Machine_OnCompleteStampSheet);
         machine.OnCompleteStampSheet.AddListener(responce);
         yield return machine.Execute(m_events);
     }

@@ -1,0 +1,59 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+public class MainCameraCtl : MonoBehaviour
+{
+    // ↓ 「カメラからのレイ」を画面中央の平面座標から飛ばす
+    Ray ray;
+    // ↓ 当たったオブジェクト情報を格納する変数
+    RaycastHit hit;
+    // ブロックを設置する位置を一応リアルタイムで格納
+    private Vector3 pos;
+    // カメラ画面の真ん中
+    Vector2 displayCenter;
+
+    private void Start()
+    {
+        // Mouse Cursor
+        Cursor.lockState = CursorLockMode.Locked;
+
+        displayCenter = new Vector2(Screen.width / 2, Screen.height / 2);
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void Update()
+    {
+        // レザーを画面真ん中にショット
+        ray = Camera.main.ScreenPointToRay(displayCenter);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            // ↓ 生成位置の変数の値を「ブロックの向き + ブロックの位置」
+            pos = hit.normal + hit.collider.transform.position;
+        }
+    }
+
+    public Vector3 HitPos
+    {
+        get { return pos; }
+    }
+    public GameObject HitObj
+    {
+        get
+        {
+            if (hit.collider != null)
+                return hit.collider.gameObject;
+
+            return null;
+        }
+    }
+
+    public void DestroyColliderObj()
+    {
+        
+    }
+}

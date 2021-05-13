@@ -7,27 +7,34 @@ using UnityEngine;
 
 public class CommonFunction
 {
-    public static GameObject FindChiledByName(GameObject obj, string name)
+    public static T FindChiledByName<T>(Transform parent, string name) where T : Component
     {
-        if (obj == null)
-            MLog.Error(obj.name + "---" + name + " is null");
+        var findObj = FindChiledByName(parent, name);
+        if (findObj != null)
+            return findObj.GetComponent<T>();
 
-        Transform trans = obj.transform;
-        Transform childTrans = trans.Find(name);
+        return null;
+    }
+    public static GameObject FindChiledByName(Transform parent, string name)
+    {
+        if (parent == null)
+            Debug.LogError(parent.gameObject.name + "---" + name + " is null");
+
+        Transform childTrans = parent.Find(name);
         if (childTrans != null)
         {
             return childTrans.gameObject;
         }
         else
         {
-            return FIndAllChiled(obj, name);
+            return FIndAllChiled(parent, name);
         }
     }
-    private static GameObject FIndAllChiled(GameObject obj, string name)
+    private static GameObject FIndAllChiled(Transform parent, string name)
     {
         GameObject retObj = null;
 
-        foreach (Transform t in obj.transform)
+        foreach (Transform t in parent)
         {
             if (t.name == name)
             {
@@ -36,7 +43,7 @@ public class CommonFunction
             }
             else
             {
-                retObj = FIndAllChiled(t.gameObject, name);
+                retObj = FIndAllChiled(t, name);
                 if (retObj == null)
                     continue;
                 else
@@ -51,8 +58,20 @@ public class CommonFunction
     {
         var prefab = Resources.Load(path) as GameObject;
         if (prefab == null)
+        {
+            Debug.LogError("not find resources " + path);
             return null;
+        }
 
         return prefab;
+    }
+
+    public static GameObject CreateObj(Transform parent, string sourcePath)
+    {
+        var resources = ReadResourcesPrefab(sourcePath);
+        if (resources == null)
+            return null;
+
+        return GameObject.Instantiate(resources, parent);
     }
 }

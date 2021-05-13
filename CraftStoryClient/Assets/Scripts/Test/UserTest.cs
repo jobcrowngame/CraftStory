@@ -16,8 +16,11 @@ public class UserTest : MonoBehaviour
         }
     }
 
-    string id = "aa4d4e86-0303-4f23-bbeb-3344f12f9198";
-    string pw = "kfHtHQ4LWWv6IKdraivCXIySlBuTOHVG";
+    public string id = "aa4d4e86-0303-4f23-bbeb-3344f12f9198";
+    public string pw = "kfHtHQ4LWWv6IKdraivCXIySlBuTOHVG";
+
+    public string id2 = "e89190f3-a18f-4f51-acdb-f34ec65f56ac";
+    public string pw2 = "dvSte5fBIeojTfaVwdnvmQIVlVx4ESzY";
 
     public void Init()
     {
@@ -38,10 +41,6 @@ public class UserTest : MonoBehaviour
         {
             GetShowcase();
         }
-        if (Input.GetKeyDown(KeyCode.F4))
-        {
-            BuyItem();
-        }
     }
 
     public void WritLoginIDPW()
@@ -52,31 +51,22 @@ public class UserTest : MonoBehaviour
 
     private void GetGachaItem()
     {
-        MLog.Log("get gacha item");
+        Debug.Log("get gacha item");
 
-        GS2.E.Exchange((response) =>
+        GS2.E.Exchange((r) =>
         {
             var giftBoxUI = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox, UIOpenType.BeforeClose) as GiftBoxUI;
             if (giftBoxUI != null)
-                giftBoxUI.Add(response);
+                giftBoxUI.AddItem(r);
         }, 1, "ExchangeGachaItem");
     }
     private void GetShowcase()
     {
-        MLog.Log("GetShowcase");
+        Debug.Log("GetShowcase");
 
         GS2.E.GetShowcase((r) => 
         { 
 
         }, "ShowcaseShop01");
-    }
-    private void BuyItem()
-    {
-        MLog.Log("BuyItem");
-
-        GS2.E.Buy((r) =>
-        {
-
-        }, "ShowcaseShop01", "a059b507-c6a8-4703-80dd-13bc84b4e844");
     }
 }

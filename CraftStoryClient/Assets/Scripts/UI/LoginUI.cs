@@ -17,13 +17,12 @@ public class LoginUI : UIBase
 
         LoginLg.E.Init(this);
 
-        if (!InitUI())
-        {
-            MLog.Error("LoginUI Init fail!");
-        }
+        InitUI();
+
+        AutoLogin();
     }
 
-    private bool InitUI()
+    private void InitUI()
     {
         idInput = FindChiled<InputField>("ID");
         pwInput = FindChiled<InputField>("PW");
@@ -33,8 +32,6 @@ public class LoginUI : UIBase
 
         loginBtn = FindChiled<Button>("LoginBtn");
         loginBtn.onClick.AddListener(() => { LoginLg.E.Login(idInput.text, pwInput.text); });
-
-        return true;
     }
 
     public void CreateNewAccountResponse(string id, string pw)
@@ -54,6 +51,14 @@ public class LoginUI : UIBase
 
     #region Test
 
+    public void AutoLogin()
+    {
+        LoginLg.E.Login(UserTest.E.id, UserTest.E.pw);
+    }
+    public void AutoLogin2()
+    {
+        LoginLg.E.Login(UserTest.E.id2, UserTest.E.pw2);
+    }
     public void WritIDPW(string id, string pw)
     {
         idInput.text = id;

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 using Gs2.Unity.Gs2Inventory.Model;
 
@@ -14,11 +13,9 @@ public class ItemCell : UIBase
 
     public void Add(EzItemSet ezitem)
     {
-        obj = this.gameObject;
-
         InitUI();
 
-        this.item = ezitem;
+        item = ezitem;
 
         itemName.text = item.ItemName;
         itemCount.text = "x" + item.Count;
@@ -30,28 +27,29 @@ public class ItemCell : UIBase
         itemCount = FindChiled<Text>("Count");
 
         increaseBtn = FindChiled<Button>("Increase");
-        increaseBtn.onClick.AddListener(() => { ItemLg.E.Increase(item.ItemName); });
+        increaseBtn.onClick.AddListener(Increase);
 
         decreaseBtn = FindChiled<Button>("Decrease");
-        decreaseBtn.onClick.AddListener(() => { ItemLg.E.Decrease(this, item.ItemName, 1); });
+        decreaseBtn.onClick.AddListener(Decrease);
     }
 
-    public void IncreaseRespones()
+    public void Increase()
     {
-
+        GS2.E.GetItem(item.ItemName);
     }
 
-    public void DecreaseRespones(List<EzItemSet> ret)
+    public void Decrease()
     {
-        foreach (var i in ret)
+        GS2.E.Consume(item.ItemName, 1, item.Name);
+    }
+    public void Refresh(EzItemSet i)
+    {
+        if (i.Count <= 0)
         {
-            if (i.ItemSetId == item.ItemSetId)
-            {
-                item = i;
-                itemName.text = i.ItemName;
-                itemCount.text = "x" + i.Count;
-                break;
-            }
+            Destroy(this.gameObject);
         }
+
+        itemName.text = i.ItemName;
+        itemCount.text = "x" + i.Count;
     }
 }

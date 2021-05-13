@@ -9,12 +9,14 @@ public class BagUI : UIBase
     Text moneyText;
     Transform itemGridRoot;
     Button closeBtn;
+    Dictionary<string, ItemCell> cellDic;
 
     public override void Init(GameObject obj)
     {
         base.Init(obj);
 
         BagLG.E.Init(this);
+        cellDic = new Dictionary<string, ItemCell>();
 
         InitUI();
         RefreshMoney();
@@ -34,12 +36,13 @@ public class BagUI : UIBase
         base.Open();
 
         BagLG.E.GetItemList();
+        RefreshMoney();
     }
     public override void Close()
     {
         base.Close();
 
-        ClearItem();
+        ClearCell(itemGridRoot);
     }
 
     public void AddItems(List<EzItemSet> itemList)
@@ -51,24 +54,16 @@ public class BagUI : UIBase
     }
     private void AddItem(EzItemSet item)
     {
-        var resources = CommonFunction.ReadResourcesPrefab("Prefabs/UI/Item");
-
-        var obj = GameObject.Instantiate(resources, itemGridRoot);
-        if (obj == null)
-            return;
-
-        var cell = obj.GetComponent<ItemCell>();
-        if (cell == null)
-            return;
-
-        cell.Add(item);
-    }
-
-    private void ClearItem()
-    {
-        foreach (Transform t in itemGridRoot)
+        var cell = AddCell<ItemCell>("Prefabs/UI/Item", itemGridRoot);
+        if (cell != null)
         {
-            GameObject.Destroy(t.gameObject);
+            cell.Init(cell.gameObject);
+            cell.Add(item);
+
+            if (!cellDic.ContainsKey(item.Name))
+            {
+                cellDic[item.Name] = cell;
+            }
         }
     }
 
@@ -79,5 +74,16 @@ public class BagUI : UIBase
     public void RefreshMoneyResponse(EzWallet item)
     {
         moneyText.text = (item.Free + item.Paid).ToString();
+    }
+
+    public void DecreaseRespones(List<EzItemSet> r)
+    {
+        foreach (var i in r)
+        {
+            if (cellDic.ContainsKey(i.Name))
+            {
+                cellDic[i.Name].Refresh(i);
+            }
+        }
     }
 }

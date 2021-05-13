@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class UICtl : Single<UICtl>
@@ -11,23 +12,27 @@ public class UICtl : Single<UICtl>
     private Dictionary<UIType, UIBase> uiDic;
     private List<UIBase> OpenningUI;
 
-    public void Init(GameObject glubalObj, GameObject uiRoot)
+    public bool Init(GameObject glubalObj, GameObject uiRoot)
     {
+        bool ret;
+
         glubalObjTran = glubalObj.transform;
         uiRootTran = uiRoot.transform;
         uiDic = new Dictionary<UIType, UIBase>();
         OpenningUI = new List<UIBase>();
 
-        CreateGlobalEntity();
-    }
-
-    private void CreateGlobalEntity()
-    {
-        MLog.E.Init();
-        GS2.E.Init();
-        UserTest.E.Init();
+        ret = CreateGlobalEntity();
 
         OpenUI<LoginUI>(UIType.Login);
+
+        return ret;
+    }
+
+    private bool CreateGlobalEntity()
+    {
+        UserTest.E.Init();
+
+        return true;
     }
 
     public T CreateGlobalObject<T>() where T : Component
@@ -74,7 +79,7 @@ public class UICtl : Single<UICtl>
             string uiResourcesPath = GetUIResourcesPath(uiType);
             if (uiResourcesPath == "")
             {
-                MLog.Error("bad ui path " + uiType.ToString());
+                Debug.LogError("bad ui path " + uiType.ToString());
                 return null;
             }
 
@@ -132,7 +137,8 @@ public class UICtl : Single<UICtl>
             case UIType.Bag: return "Prefabs/UI/Bag";
             case UIType.Lottery: return "Prefabs/UI/Lottery";
             case UIType.GiftBox: return "Prefabs/UI/GiftBox";
-            default: return "";
+            case UIType.Shop: return "Prefabs/UI/Shop";
+            default: Debug.LogError("not find UIType " + ui); return "";
         }
     }
 }
@@ -150,4 +156,5 @@ public enum UIType
     Bag,
     Lottery,
     GiftBox,
+    Shop,
 }
