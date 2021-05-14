@@ -7,13 +7,13 @@ using UnityEngine;
 
 public class CharacterEntity : MonoBehaviour
 {
-    private CharacterInfo cInfo;
+    public CharacterData CharacterData { get; private set; }
 
-    public void Init(CharacterInfo characterInfo)
+    public void Init(CharacterData characterInfo)
     {
-        cInfo = characterInfo;
+        CharacterData = characterInfo;
 
-        transform.position = cInfo.Pos;
+        transform.position = CharacterData.Pos;
     }
 
     //public void Move(Vector3 offset)

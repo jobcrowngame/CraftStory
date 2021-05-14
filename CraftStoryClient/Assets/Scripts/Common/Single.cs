@@ -2,6 +2,7 @@
 
 public class Single<T> where T : class, new()
 {
+    [NonSerialized]
     private static T entity;
 
     public static T E 

@@ -140,17 +140,18 @@ class CharacterEntityPlayer : CharacterEntity
 
     public void CreateCube()
     {
-        WorldMng.E.MapCtl.CreateCell(cameraCtl.HitPos, selectMapCellType);
+        WorldMng.E.MapCtl.CreateMapCell(cameraCtl.HitPos, selectMapCellType);
     }
     public void DestroyCube()
     {
         if (cameraCtl.HitObj == null)
             return;
 
+
         var cell = cameraCtl.HitObj.GetComponent<MapCell>();
         if (cell == null)
             return;
 
-        Destroy(cell.gameObject);
+        WorldMng.E.MapCtl.DeleteMapCell(cell);
     }
 }

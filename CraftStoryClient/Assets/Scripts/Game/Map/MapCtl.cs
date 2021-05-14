@@ -7,34 +7,42 @@ using UnityEngine;
 
 public class MapCtl
 {
-    private MapCell[,] map;
     private Transform mapCellParent;
+
+    private MapData mData;
 
     public MapCtl()
     {
         mapCellParent = new GameObject("Ground").transform;
 
-        map = new MapCell[30, 30];
-
-        InitMap();
+        InitMap(DataMng.E.MapData);
     }
 
-    private void InitMap()
+    private void InitMap(MapData mData)
     {
-        for (int i = 0; i < 30; i++)
+        this.mData = mData;
+
+        for (int i = 0; i < mData.MapSize.x; i++)
         {
-            for (int j = 0; j < 30; j++)
+            for (int j = 0; j < mData.MapSize.y; j++)
             {
-                var Pos = new Vector3(i, 1, j);
-                var CellType = (MapCellType)UnityEngine.Random.Range(0,4);
-                map[i, j] = CreateCell(Pos, CellType);
+                for (int k = 0; k < mData.MapSize.z; k++)
+                {
+                    if (mData.Map[i, j, k] != null)
+                        CreateMapCell(mData.Map[i, j, k].Pos, mData.Map[i, j, k].CellType, true);
+                }
             }
         }
     }
 
-    public MapCell CreateCell(Vector3 pos, MapCellType cellType)
+    public void OnQuit()
     {
-        string sourcePath = GetMapCellPath(cellType);
+
+    }
+
+    public MapCell CreateMapCell(Vector3 pos, MapCellType cellType, bool isFirst = false)
+    {
+        string sourcePath = GetMapCellResourcesPath(cellType);
         if (sourcePath == "")
             return null;
 
@@ -52,13 +60,25 @@ public class MapCtl
         obj.transform.position = pos;
 
         var cell = obj.AddComponent<MapCell>();
-        cell.Pos = pos;
-        cell.CellType = cellType;
+        cell.Add(new MapCellData()
+        {
+            Pos = pos,
+            CellType = cellType
+        }, obj);
+
+        if (!isFirst)
+            mData.Add(pos, cell.data);
 
         return cell;
     }
 
-    public string GetMapCellPath(MapCellType type)
+    public void DeleteMapCell(MapCell mCell)
+    {
+        mData.Remove(mCell.data.Pos);
+        GameObject.Destroy(mCell.gameObject);
+    }
+
+    public string GetMapCellResourcesPath(MapCellType type)
     {
         string root = "Prefabs/Game/";
 

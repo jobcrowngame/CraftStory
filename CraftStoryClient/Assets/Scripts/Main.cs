@@ -14,6 +14,8 @@ public class Main : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DataMng.E.Load();
+
         //StartCoroutine(Init());
         gameObject.GetComponent<WorldMng>().Init();
     }
@@ -22,5 +24,11 @@ public class Main : MonoBehaviour
     {
         yield return GS2.E.InitCoroutine();
         yield return UICtl.E.Init(this.gameObject, uiRoot);
+    }
+
+    private void OnApplicationQuit()
+    {
+        WorldMng.E.OnQuit();
+        DataMng.E.Save();
     }
 }

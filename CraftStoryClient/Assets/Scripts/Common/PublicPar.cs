@@ -1,5 +1,10 @@
-﻿public class PublicPar
+﻿using UnityEngine;
+
+public class PublicPar
 {
+
+    #region GS2
+
     // GS2-Identifier で発行したクライアントID
     public static string clientId = "GKIuTdVMtvZILPRylMfno2QXWmZIt2QfCPySFXB2DMdq6UF2JeR7cPBkhAr12XLa3JX";
 
@@ -29,4 +34,13 @@
 
     // 
     public static string DistributorNS = "DistributorNS";
+
+    #endregion
+
+    #region Game
+
+    // Dataセーブパース
+    public static string SaveRootPath = Application.dataPath + "/SaveData/";
+
+    #endregion
 }
