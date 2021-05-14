@@ -46,10 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  jumpSpeed: 12
+  jumpSpeed: 8
   gravity: 30
   rotateSpeed: 3
   camRotSpeed: 3
+  cameraOffset: {x: 0, y: 0.7, z: 0}
 --- !u!143 &5743920583998338413
 CharacterController:
   m_ObjectHideFlags: 0

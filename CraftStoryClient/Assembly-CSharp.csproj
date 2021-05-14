@@ -62,7 +62,7 @@
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
     <Compile Include="Assets\Scripts\Game\MainCameraCtl.cs" />
-    <Compile Include="Assets\Scripts\WorldMng.cs" />
+    <Compile Include="Assets\Scripts\Game\WorldMng.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
     <Compile Include="Assets\Scripts\Game\Character\PlayerEntity.cs" />
     <Compile Include="Assets\Scripts\UI\ShopUI.cs" />
@@ -101,6 +101,7 @@
     <Compile Include="Assets\Scripts\Game\Map\MapData.cs" />
     <Compile Include="Assets\Scripts\Common\GS2.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
+    <Compile Include="Assets\Scripts\Game\SettingMng.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\SemiTransparent.shader" />

@@ -18,11 +18,7 @@ public class MainCameraCtl : MonoBehaviour
 
     private void Start()
     {
-        // Mouse Cursor
-        Cursor.lockState = CursorLockMode.Locked;
-
         displayCenter = new Vector2(Screen.width / 2, Screen.height / 2);
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()

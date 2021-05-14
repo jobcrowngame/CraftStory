@@ -37,35 +37,37 @@ class PlayerEntity : CharacterEntity
     // Update is called once per frame
     void Update()
     {
+        if (SettingMng.E.MouseCursorLocked)
+        {
+            h = Input.GetAxis("Horizontal");    //左右矢印キーの値(-1.0~1.0)
+            v = Input.GetAxis("Vertical");      //上下矢印キーの値(-1.0~1.0)
+            mX = Input.GetAxis("Mouse X");      //マウスの左右移動量(-1.0~1.0)
+            mY = Input.GetAxis("Mouse Y");      //マウスの上下移動量(-1.0~1.0)
 
-        h = Input.GetAxis("Horizontal");    //左右矢印キーの値(-1.0~1.0)
-        v = Input.GetAxis("Vertical");      //上下矢印キーの値(-1.0~1.0)
-        mX = Input.GetAxis("Mouse X");      //マウスの左右移動量(-1.0~1.0)
-        mY = Input.GetAxis("Mouse Y");      //マウスの上下移動量(-1.0~1.0)
-
-        lookUpAngle = Camera.main.transform.eulerAngles.x - 180 + camRotSpeed * mY;
-        //Debug.LogFormat("angle:{0},  cameraAngleX:{1},  mY:{2}", lookUpAngle, Camera.main.transform.eulerAngles.x, mY * camRotSpeed);
-        //if (Mathf.Abs(lookUpAngle) > 120 || Mathf.Abs(lookUpAngle) > 180)
+            lookUpAngle = Camera.main.transform.eulerAngles.x - 180 + camRotSpeed * mY;
+            //Debug.LogFormat("angle:{0},  cameraAngleX:{1},  mY:{2}", lookUpAngle, Camera.main.transform.eulerAngles.x, mY * camRotSpeed);
+            //if (Mathf.Abs(lookUpAngle) > 120 || Mathf.Abs(lookUpAngle) > 180)
             Camera.main.transform.Rotate(new Vector3(-camRotSpeed * mY, 0, 0));
 
 
-        //キャラクターの移動と回転
-        if (controller.isGrounded)
-        {
-            moveDirection = speed * new Vector3(h, 0, v);
-            moveDirection = transform.TransformDirection(moveDirection);
-            if (Input.GetButton("Jump"))
-                moveDirection.y = jumpSpeed;
+            //キャラクターの移動と回転
+            if (controller.isGrounded)
+            {
+                moveDirection = speed * new Vector3(h, 0, v);
+                moveDirection = transform.TransformDirection(moveDirection);
+                if (Input.GetButton("Jump"))
+                    moveDirection.y = jumpSpeed;
+            }
+
+            gameObject.transform.Rotate(new Vector3(0, rotateSpeed * mX, 0));
+            moveDirection.y -= gravity * Time.deltaTime;
+            controller.Move(moveDirection * Time.deltaTime);
+
+            if (Input.GetMouseButtonDown(0))
+                CreateCube();
+            if (Input.GetMouseButtonDown(1))
+                DestroyCube();
         }
-
-        gameObject.transform.Rotate(new Vector3(0, rotateSpeed * mX, 0));
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
-
-        if (Input.GetMouseButtonDown(0))
-            CreateCube();
-        if (Input.GetMouseButtonDown(1))
-            DestroyCube();
     }//Update()
 
     public void ChangeSelectMapCellType(MapCellType mcType)

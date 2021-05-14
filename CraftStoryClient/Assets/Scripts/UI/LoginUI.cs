@@ -1,14 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LoginUI : UIBase
 {
-    private InputField idInput;
-    private InputField pwInput;
-    private Button newAccBtn;
-    private Button loginBtn;
+    const string idInputNm = "ID";
+    const string pwInputNm = "PW";
+    const string newAccBtnNm = "NewAccountBtn";
+    const string loginBtnNm = "LoginBtn";
+
+    const string msgNm = "Text";
+    const string BGBtnNm = "BG";
+
+    InputField idInput;
+    InputField pwInput;
+    Button newAccBtn;
+    Button loginBtn;
+
+    Text msg;
+    Button BGBtn;
 
     // Start is called before the first frame update
     public override void Init(GameObject obj)
@@ -24,14 +33,26 @@ public class LoginUI : UIBase
 
     private void InitUI()
     {
-        idInput = FindChiled<InputField>("ID");
-        pwInput = FindChiled<InputField>("PW");
+        idInput = FindChiled<InputField>(idInputNm);
+        pwInput = FindChiled<InputField>(pwInputNm);
 
-        newAccBtn = FindChiled<Button>("NewAccountBtn");
+        newAccBtn = FindChiled<Button>(newAccBtnNm);
         newAccBtn.onClick.AddListener(()=> { LoginLg.E.CreateNewAccount(); });
 
-        loginBtn = FindChiled<Button>("LoginBtn");
+        loginBtn = FindChiled<Button>(loginBtnNm);
         loginBtn.onClick.AddListener(() => { LoginLg.E.Login(idInput.text, pwInput.text); });
+
+        msg = FindChiled<Text>(msgNm);
+        msg.text = "ログイン...";
+
+        BGBtn = FindChiled<Button>(BGBtnNm);
+        BGBtn.onClick.AddListener(OnClickBGBtn);
+    }
+
+    private void OnClickBGBtn()
+    {
+        Debug.Log("On Click OnClickBGBtn");
+        UICtl.E.OpenUI<HomeUI>(UIType.Home, UIOpenType.BeforeClose);
     }
 
     public void CreateNewAccountResponse(string id, string pw)
@@ -47,8 +68,7 @@ public class LoginUI : UIBase
         Debug.Log("ログイン成功しました。");
 
         WorldMng.E.Init();
-
-        UICtl.E.OpenUI<HomeUI>(UIType.Home, UIOpenType.BeforeClose);
+        msg.text = "画面をクリックして開始します";
     }
 
     #region Test
