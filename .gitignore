@@ -62,3 +62,7 @@ CraftStoryClient/Library/
 CraftStoryClient/UserSettings/EditorUserSettings.asset
 CraftStoryClient/Temp/
 CraftStoryClient/obj/
+CraftStoryClient/Assets/SaveData/
+CraftStoryClient/Assets/Scripts/Test/
+CraftStoryClient/Logs/
+CraftStoryClient/.vsconfig
