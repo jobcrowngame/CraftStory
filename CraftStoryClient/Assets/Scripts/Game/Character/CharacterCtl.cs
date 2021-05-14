@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacterCtl
 {
-    private CharacterEntityPlayer player;
+    private PlayerEntity player;
     private List<CharacterEntity> characterList;
     private GameObject playerRoot;
 
@@ -25,7 +25,7 @@ public class CharacterCtl
         if (characterP == null)
             return;
 
-        player = characterP.GetComponent<CharacterEntityPlayer>();
+        player = characterP.GetComponent<PlayerEntity>();
         if (player == null)
         {
             Debug.LogError("not find CharacterEntity component");

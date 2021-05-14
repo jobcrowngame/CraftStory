@@ -46,6 +46,8 @@ public class LoginUI : UIBase
     {
         Debug.Log("ƒƒOƒCƒ“¬Œ÷‚µ‚Ü‚µ‚½B");
 
+        WorldMng.E.Init();
+
         UICtl.E.OpenUI<HomeUI>(UIType.Home, UIOpenType.BeforeClose);
     }
 

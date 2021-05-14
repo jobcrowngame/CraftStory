@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
-class CharacterEntityPlayer : CharacterEntity
+class PlayerEntity : CharacterEntity
 {
+    public static PlayerEntity E;
+
     private MainCameraCtl cameraCtl;
     private CharacterController controller;
 
@@ -15,6 +12,7 @@ class CharacterEntityPlayer : CharacterEntity
     public float gravity = 20.0F;    //重力の大きさ
     public float rotateSpeed = 3.0F;    //回転速度
     public float camRotSpeed = 5.0f;    //視点の上下スピード
+    public Vector3 cameraOffset = new Vector3(0, 0.7f, 0);
 
     private Vector3 moveDirection = Vector3.zero;
     private float h, v;
@@ -26,10 +24,14 @@ class CharacterEntityPlayer : CharacterEntity
 
     private void Start()
     {
+        E = this;
+
         controller = GetComponent<CharacterController>();
 
-        var mainCameraObj = CommonFunction.FindChiledByName(gameObject.transform, "Main Camera");
-        cameraCtl = mainCameraObj.GetComponent<MainCameraCtl>();
+        var camera = Camera.main;
+        cameraCtl = camera.GetComponent<MainCameraCtl>();
+        camera.transform.SetParent(transform);
+        camera.transform.localPosition = Vector3.zero + cameraOffset;
     }
 
     // Update is called once per frame
@@ -57,39 +59,6 @@ class CharacterEntityPlayer : CharacterEntity
         }
 
         gameObject.transform.Rotate(new Vector3(0, rotateSpeed * mX, 0));
-
-        //if (controller.isGrounded)
-        //{
-        //    moveDirection = new Vector3(h, 0, v);
-        //    moveDirection = transform.TransformDirection(moveDirection);
-        //    moveDirection *= speed;
-
-        //    if (Input.GetButton("Jump"))
-        //        moveDirection.y = jumpSpeed;
-        //}
-
-        //if (controller.isGrounded)
-        //{
-        //    gameObject.transform.Rotate(new Vector3(0, rotateSpeed * h, 0));
-        //    moveDirection = speed * v * gameObject.transform.forward;
-
-        //    if (Input.GetButton("Jump"))
-        //        moveDirection.y = jumpSpeed;
-        //}
-
-        ////キャラクターの移動お回転
-        //if (controller.isGrounded)
-        //{
-        //    moveDirection = speed * new Vector3(h, 0, v);                               //移動方向を決定
-        //    moveDirection = transform.TransformDirection(moveDirection);         //ベクトルをローカル座標からグローバル座標へ変換
-
-        //    if (Input.GetButton("Jump"))
-        //        moveDirection.y = jumpSpeed;
-        //}
-        //gameObject.transform.Rotate(new Vector3(0, rotateSpeed * mX, 0));
-
-
-
         moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
 
@@ -97,25 +66,6 @@ class CharacterEntityPlayer : CharacterEntity
             CreateCube();
         if (Input.GetMouseButtonDown(1))
             DestroyCube();
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            ChangeSelectMapCellType(MapCellType.Black);
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            ChangeSelectMapCellType(MapCellType.Blue);
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            ChangeSelectMapCellType(MapCellType.Red);
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            ChangeSelectMapCellType(MapCellType.Green);
-
-        //if (Input.GetKey(KeyCode.UpArrow))
-        //    E.ViewingAngleChange(-Vector3.right);
-        //if (Input.GetKey(KeyCode.DownArrow))
-        //    E.ViewingAngleChange(Vector3.right);
-        //if (Input.GetKey(KeyCode.LeftArrow))
-        //    E.ViewingAngleChange(-Vector3.up);
-        //if (Input.GetKey(KeyCode.RightArrow))
-        //    E.ViewingAngleChange(Vector3.up);
-
     }//Update()
 
     public void ChangeSelectMapCellType(MapCellType mcType)
@@ -140,6 +90,14 @@ class CharacterEntityPlayer : CharacterEntity
 
     public void CreateCube()
     {
+        if (cameraCtl.HitObj == null)
+            return;
+
+        var cell = cameraCtl.HitObj.GetComponent<MapCell>();
+        if (cell == null)
+            return;
+
+        Debug.Log("Create cube. " + cameraCtl.HitObj.transform.position);
         WorldMng.E.MapCtl.CreateMapCell(cameraCtl.HitPos, selectMapCellType);
     }
     public void DestroyCube()
@@ -147,11 +105,11 @@ class CharacterEntityPlayer : CharacterEntity
         if (cameraCtl.HitObj == null)
             return;
 
-
         var cell = cameraCtl.HitObj.GetComponent<MapCell>();
         if (cell == null)
             return;
 
+        Debug.Log("Delete cube. " + cameraCtl.HitObj.transform.position);
         WorldMng.E.MapCtl.DeleteMapCell(cell);
     }
 }

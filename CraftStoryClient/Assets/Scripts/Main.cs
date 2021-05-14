@@ -16,19 +16,20 @@ public class Main : MonoBehaviour
     {
         DataMng.E.Load();
 
-        //StartCoroutine(Init());
-        gameObject.GetComponent<WorldMng>().Init();
+        WorldMng.E = gameObject.GetComponent<WorldMng>();
+
+        StartCoroutine(Init());
     }
 
     IEnumerator Init()
     {
         yield return GS2.E.InitCoroutine();
-        yield return UICtl.E.Init(this.gameObject, uiRoot);
+        yield return UICtl.E.Init(gameObject, uiRoot);
     }
 
     private void OnApplicationQuit()
     {
-        WorldMng.E.OnQuit();
-        DataMng.E.Save();
+        if (WorldMng.E != null) WorldMng.E.OnQuit();
+        if (DataMng.E != null) DataMng.E.Save();
     }
 }
