@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using SimpleInputNamespace;
 
 class PlayerEntity : CharacterEntity
 {
@@ -22,7 +23,10 @@ class PlayerEntity : CharacterEntity
     private MapCellType selectMapCellType;
     private GameObject selectBlokCube;
 
-    private void Start()
+    public Joystick joystick;
+    public ScreenDraggingCtl screenDraggingCtl;
+
+    private void Awake()
     {
         E = this;
 
@@ -34,6 +38,11 @@ class PlayerEntity : CharacterEntity
         camera.transform.localPosition = Vector3.zero + cameraOffset;
     }
 
+    private void Start()
+    {
+        
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -43,32 +52,56 @@ class PlayerEntity : CharacterEntity
             v = Input.GetAxis("Vertical");      //上下矢印キーの値(-1.0~1.0)
             mX = Input.GetAxis("Mouse X");      //マウスの左右移動量(-1.0~1.0)
             mY = Input.GetAxis("Mouse Y");      //マウスの上下移動量(-1.0~1.0)
-
-            lookUpAngle = Camera.main.transform.eulerAngles.x - 180 + camRotSpeed * mY;
-            //Debug.LogFormat("angle:{0},  cameraAngleX:{1},  mY:{2}", lookUpAngle, Camera.main.transform.eulerAngles.x, mY * camRotSpeed);
-            //if (Mathf.Abs(lookUpAngle) > 120 || Mathf.Abs(lookUpAngle) > 180)
-            Camera.main.transform.Rotate(new Vector3(-camRotSpeed * mY, 0, 0));
-
-
-            //キャラクターの移動と回転
-            if (controller.isGrounded)
-            {
-                moveDirection = speed * new Vector3(h, 0, v);
-                moveDirection = transform.TransformDirection(moveDirection);
-                if (Input.GetButton("Jump"))
-                    moveDirection.y = jumpSpeed;
-            }
-
-            gameObject.transform.Rotate(new Vector3(0, rotateSpeed * mX, 0));
-            moveDirection.y -= gravity * Time.deltaTime;
-            controller.Move(moveDirection * Time.deltaTime);
-
-            if (Input.GetMouseButtonDown(0))
-                CreateCube();
-            if (Input.GetMouseButtonDown(1))
-                DestroyCube();
         }
+        else
+        {
+            if (joystick != null)
+            {
+                h = joystick.xAxis.value;
+                v = joystick.yAxis.value;
+            }
+            if (screenDraggingCtl != null)
+            {
+                mX = screenDraggingCtl.offsetX;
+                mY = screenDraggingCtl.offsetY;
+            }
+        }
+
+        //キャラクターの移動と回転
+        if (controller.isGrounded)
+        {
+            moveDirection = speed * new Vector3(h, 0, v);
+            moveDirection = transform.TransformDirection(moveDirection);
+            if (Input.GetButton("Jump"))
+                moveDirection.y = jumpSpeed;
+        }
+
+        moveDirection.y -= gravity * Time.deltaTime;
+        controller.Move(moveDirection * Time.deltaTime);
+
+        if (Input.GetMouseButtonDown(0) && SettingMng.E.MouseCursorLocked)
+            CreateCube();
+
+        if (Input.GetMouseButtonDown(1))
+            DestroyCube();
     }//Update()
+
+    public void Move(float h, float v)
+    {
+        this.h = h;
+        this.v = v;
+    }
+    public void Rotate(float mx, float my)
+    {
+        mX = mx;
+        mY = my;
+
+        lookUpAngle = Camera.main.transform.eulerAngles.x - 180 + camRotSpeed * mY;
+        //Debug.LogFormat("angle:{0},  cameraAngleX:{1},  mY:{2}", lookUpAngle, Camera.main.transform.eulerAngles.x, mY * camRotSpeed);
+        //if (Mathf.Abs(lookUpAngle) > 120 || Mathf.Abs(lookUpAngle) > 180)
+        Camera.main.transform.Rotate(new Vector3(-camRotSpeed * mY, 0, 0));
+        gameObject.transform.Rotate(new Vector3(0, rotateSpeed * mX, 0));
+    }
 
     public void ChangeSelectMapCellType(MapCellType mcType)
     {

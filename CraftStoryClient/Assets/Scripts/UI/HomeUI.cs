@@ -11,6 +11,8 @@ public class HomeUI : UIBase
     Transform cubeSelection;
     Button[] cubBtns;
 
+    Button CreateBtn;
+
     public override void Init(GameObject obj)
     {
         base.Init(obj);
@@ -38,14 +40,9 @@ public class HomeUI : UIBase
         {
             Debug.Log("Lock MouseCursor");
             SettingMng.E.MouseCursorLocked = !SettingMng.E.MouseCursorLocked;
-            FindChiled<Text>("Text", LockCursorBtn.gameObject).text = "F10 Key UnLock Cursor";
-        }
-
-        if (Input.GetKeyDown(KeyCode.F10))
-        {
-            Debug.Log("UnLock MouseCursor");
-            SettingMng.E.MouseCursorLocked = !SettingMng.E.MouseCursorLocked;
-            FindChiled<Text>("Text", LockCursorBtn.gameObject).text = "F9 Key Lock Cursor";
+            FindChiled<Text>("Text", LockCursorBtn.gameObject).text = SettingMng.E.MouseCursorLocked ?
+                    "F9 Key UnLock Cursor" :
+                    "F9 Key Lock Cursor";
         }
     }
 
@@ -80,6 +77,12 @@ public class HomeUI : UIBase
         cubBtns[2].onClick.AddListener(() => { OnClickRedBtn(); });
         cubBtns[3] = FindChiled<Button>("GreenBtn");
         cubBtns[3].onClick.AddListener(() => { OnClickGreenBtn(); });
+
+        PlayerEntity.E.joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
+        PlayerEntity.E.screenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
+
+        CreateBtn = FindChiled<Button>("Create");
+        CreateBtn.onClick.AddListener(() => { PlayerEntity.E.CreateCube(); });
     }
 
     private void OnClickBlackBtn()

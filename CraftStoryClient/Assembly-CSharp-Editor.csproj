@@ -735,6 +735,14 @@
       <Project>{C85E1AE6-1292-3581-E007-24E077556706}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="SimpleInput.Runtime.csproj">
+      <Project>{815990B8-154B-3E8B-07EC-8B4C0A3CDCA8}</Project>
+      <Name>SimpleInput.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="SimpleInput.Editor.csproj">
+      <Project>{F6107704-C902-9D6D-57B8-7633D2D6595F}</Project>
+      <Name>SimpleInput.Editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
