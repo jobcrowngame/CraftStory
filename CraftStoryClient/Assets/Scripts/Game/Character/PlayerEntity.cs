@@ -38,11 +38,6 @@ class PlayerEntity : CharacterEntity
         camera.transform.localPosition = Vector3.zero + cameraOffset;
     }
 
-    private void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -52,32 +47,15 @@ class PlayerEntity : CharacterEntity
             v = Input.GetAxis("Vertical");      //上下矢印キーの値(-1.0~1.0)
             mX = Input.GetAxis("Mouse X");      //マウスの左右移動量(-1.0~1.0)
             mY = Input.GetAxis("Mouse Y");      //マウスの上下移動量(-1.0~1.0)
+
+            Move(h, v);
+            Rotate(mX, mY);
         }
         else
         {
             if (joystick != null)
-            {
-                h = joystick.xAxis.value;
-                v = joystick.yAxis.value;
-            }
-            if (screenDraggingCtl != null)
-            {
-                mX = screenDraggingCtl.offsetX;
-                mY = screenDraggingCtl.offsetY;
-            }
+                Move(joystick.xAxis.value, joystick.yAxis.value);
         }
-
-        //キャラクターの移動と回転
-        if (controller.isGrounded)
-        {
-            moveDirection = speed * new Vector3(h, 0, v);
-            moveDirection = transform.TransformDirection(moveDirection);
-            if (Input.GetButton("Jump"))
-                moveDirection.y = jumpSpeed;
-        }
-
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
 
         if (Input.GetMouseButtonDown(0) && SettingMng.E.MouseCursorLocked)
             CreateCube();
@@ -90,6 +68,18 @@ class PlayerEntity : CharacterEntity
     {
         this.h = h;
         this.v = v;
+
+        //キャラクターの移動と回転
+        if (controller.isGrounded)
+        {
+            moveDirection = speed * new Vector3(h, 0, v);
+            moveDirection = transform.TransformDirection(moveDirection);
+            if (Input.GetButton("Jump"))
+                moveDirection.y = jumpSpeed;
+        }
+
+        moveDirection.y -= gravity * Time.deltaTime;
+        controller.Move(moveDirection * Time.deltaTime);
     }
     public void Rotate(float mx, float my)
     {

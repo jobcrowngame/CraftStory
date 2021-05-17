@@ -64,6 +64,7 @@ public class HomeUI : UIBase
             Debug.Log("Lock MouseCursor");
             SettingMng.E.MouseCursorLocked = !SettingMng.E.MouseCursorLocked;
             FindChiled<Text>("Text", LockCursorBtn.gameObject).text = "F10 Key UnLock Cursor";
+            CreateBtn.gameObject.SetActive(!SettingMng.E.MouseCursorLocked);
         });
 
         cubeSelection = FindChiled("CubeSelection");
