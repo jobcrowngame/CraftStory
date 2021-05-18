@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Game\Character\PlayerEntity.cs" />
     <Compile Include="Assets\Scripts\UI\ShopUI.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
+    <Compile Include="Assets\Scripts\Game\ScreenDraggingCtl.cs" />
     <Compile Include="Assets\Scripts\UI\UILogicBase.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapCtl.cs" />
     <Compile Include="Assets\Scripts\Test\UserTest.cs" />
@@ -102,7 +103,6 @@
     <Compile Include="Assets\Scripts\Game\Map\MapData.cs" />
     <Compile Include="Assets\Scripts\Common\GS2.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
-    <Compile Include="Assets\Scripts\Game\ScreenDraggingCtl.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\SemiTransparent.shader" />
@@ -336,6 +336,9 @@
     </Reference>
     <Reference Include="gs2_LitJSON">
       <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_LitJSON.dll</HintPath>
+    </Reference>
+    <Reference Include="JsonConfigData">
+      <HintPath>Assets\Plugins\Lib\JsonConfigData.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>

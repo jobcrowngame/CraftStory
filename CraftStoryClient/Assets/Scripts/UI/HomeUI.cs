@@ -11,8 +11,6 @@ public class HomeUI : UIBase
     Transform cubeSelection;
     Button[] cubBtns;
 
-    Button CreateBtn;
-
     public override void Init(GameObject obj)
     {
         base.Init(obj);
@@ -37,13 +35,7 @@ public class HomeUI : UIBase
         }
 
         if (Input.GetKeyDown(KeyCode.F9))
-        {
-            Debug.Log("Lock MouseCursor");
-            SettingMng.E.MouseCursorLocked = !SettingMng.E.MouseCursorLocked;
-            FindChiled<Text>("Text", LockCursorBtn.gameObject).text = SettingMng.E.MouseCursorLocked ?
-                    "F9 Key UnLock Cursor" :
-                    "F9 Key Lock Cursor";
-        }
+            OnClickLockCursorBtn();
     }
 
     private void InitUI()
@@ -59,13 +51,7 @@ public class HomeUI : UIBase
 
         LockCursorBtn = FindChiled<Button>("LockCursorBtn");
         FindChiled<Text>("Text", LockCursorBtn.gameObject).text = "F9 Key Lock Cursor";
-        LockCursorBtn.onClick.AddListener(() => 
-        {
-            Debug.Log("Lock MouseCursor");
-            SettingMng.E.MouseCursorLocked = !SettingMng.E.MouseCursorLocked;
-            FindChiled<Text>("Text", LockCursorBtn.gameObject).text = "F10 Key UnLock Cursor";
-            CreateBtn.gameObject.SetActive(!SettingMng.E.MouseCursorLocked);
-        });
+        LockCursorBtn.onClick.AddListener(OnClickLockCursorBtn);
 
         cubeSelection = FindChiled("CubeSelection");
 
@@ -81,9 +67,6 @@ public class HomeUI : UIBase
 
         PlayerEntity.E.joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
         PlayerEntity.E.screenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
-
-        CreateBtn = FindChiled<Button>("Create");
-        CreateBtn.onClick.AddListener(() => { PlayerEntity.E.CreateCube(); });
     }
 
     private void OnClickBlackBtn()
@@ -109,5 +92,14 @@ public class HomeUI : UIBase
         Debug.Log("OnClickGreenBtn");
         cubeSelection.position = cubBtns[3].transform.position;
         PlayerEntity.E.ChangeSelectMapCellType(MapCellType.Green);
+    }
+    private void OnClickLockCursorBtn()
+    {
+        Debug.Log("Lock MouseCursor");
+
+        SettingMng.E.MouseCursorLocked = !SettingMng.E.MouseCursorLocked;
+        FindChiled<Text>("Text", LockCursorBtn.gameObject).text = SettingMng.E.MouseCursorLocked ?
+                "F9 Key UnLock Cursor" :
+                "F9 Key Lock Cursor";
     }
 }

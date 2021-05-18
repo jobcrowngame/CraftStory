@@ -13,7 +13,7 @@ class PlayerEntity : CharacterEntity
     public float gravity = 20.0F;    //重力の大きさ
     public float rotateSpeed = 3.0F;    //回転速度
     public float camRotSpeed = 5.0f;    //視点の上下スピード
-    public Vector3 cameraOffset = new Vector3(0, 0.7f, 0);
+    private Vector3 cameraOffset = new Vector3(0, 0.7f, 0);
 
     private Vector3 moveDirection = Vector3.zero;
     private float h, v;
@@ -34,12 +34,16 @@ class PlayerEntity : CharacterEntity
 
         var camera = Camera.main;
         cameraCtl = camera.GetComponent<MainCameraCtl>();
-        camera.transform.SetParent(transform);
-        camera.transform.localPosition = Vector3.zero + cameraOffset;
+    }
+
+    private void Start()
+    {
+        cameraCtl.transform.SetParent(transform);
+        cameraCtl.transform.localPosition = cameraOffset;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (SettingMng.E.MouseCursorLocked)
         {
@@ -50,15 +54,21 @@ class PlayerEntity : CharacterEntity
 
             Move(h, v);
             Rotate(mX, mY);
+
+            if (controller.isGrounded)
+            {
+                if (Input.GetButton("Jump"))
+                    moveDirection.y = jumpSpeed;
+            }
+
+            if (Input.GetMouseButtonDown(0))
+                CreateCube();
         }
         else
         {
             if (joystick != null)
                 Move(joystick.xAxis.value, joystick.yAxis.value);
         }
-
-        if (Input.GetMouseButtonDown(0) && SettingMng.E.MouseCursorLocked)
-            CreateCube();
 
         if (Input.GetMouseButtonDown(1))
             DestroyCube();
@@ -74,8 +84,6 @@ class PlayerEntity : CharacterEntity
         {
             moveDirection = speed * new Vector3(h, 0, v);
             moveDirection = transform.TransformDirection(moveDirection);
-            if (Input.GetButton("Jump"))
-                moveDirection.y = jumpSpeed;
         }
 
         moveDirection.y -= gravity * Time.deltaTime;
@@ -97,21 +105,6 @@ class PlayerEntity : CharacterEntity
     {
         selectMapCellType = mcType;
     }
-
-    //public void ViewingAngleChange(Vector3 offset)
-    //{
-    //    offset = offset * rotateSpeed;
-
-    //    cameraCtl.transform.rotation = Quaternion.Euler(new Vector3(
-    //        cameraCtl.transform.rotation.eulerAngles.x + offset.x,
-    //        cameraCtl.transform.rotation.eulerAngles.y,
-    //        cameraCtl.transform.rotation.eulerAngles.z + offset.z));
-
-    //    transform.rotation = Quaternion.Euler(new Vector3(
-    //        transform.rotation.eulerAngles.x,
-    //        transform.rotation.eulerAngles.y + offset.y,
-    //        transform.rotation.eulerAngles.z));
-    //}
 
     public void CreateCube()
     {
