@@ -26,15 +26,15 @@ public class MapData
         get { return map; }
     }
 
-    public void Add(Vector3 pos, MapCellData mcData)
+    public void Add(MapCellData mcData)
     {
-        if (pos.x > sizeX || pos.y > sizeY || pos.z > sizeZ)
+        if (mcData.Pos.x > sizeX || mcData.Pos.y > sizeY || mcData.Pos.z > sizeZ)
         {
-            Debug.LogError("add mapdata file." + pos);
+            Debug.LogError("add mapdata file." + mcData.Pos);
             return;
         }
 
-        map[(int)pos.x, (int)pos.y, (int)pos.z] = mcData;
+        map[(int)mcData.Pos.x, (int)mcData.Pos.y, (int)mcData.Pos.z] = mcData;
     }
 
     public void Remove(Vector3 pos)

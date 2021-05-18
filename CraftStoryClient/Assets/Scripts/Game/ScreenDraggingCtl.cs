@@ -1,24 +1,45 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
+class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, 
+    IPointerDownHandler, IPointerUpHandler
 {
     public float offsetX;
     public float offsetY;
 
-    //private float rotateSpeed = 0.1f;
+    private bool isDrag;
+    private bool isClick;
+    private bool isClicking;
 
     Vector2 startPos;
 
+    float clickingTime;
+
+    private void Update()
+    {
+        if (isClick)
+        {
+            clickingTime += Time.deltaTime;
+
+            if (clickingTime > 0.5f)
+            {
+                OnClicking();
+            }
+        }
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
+        //Debug.Log("OnBeginDrag");
+
+        isDrag = true;
         startPos = eventData.position;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Vector2 pointerPos = (eventData.position - startPos).normalized;
+        //Debug.Log("OnDrag");
+
         Vector2 pointerPos = eventData.position - startPos;
 
         offsetX = pointerPos.x;
@@ -33,17 +54,42 @@ class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        //Debug.Log("OnEndDrag");
+
+        isDrag = false;
+        isClick = false;
+        isClicking = false;
+        clickingTime = 0;
+
         offsetX = 0;
         offsetY = 0;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        if (eventData.clickCount > 1)
-        {
+        //Debug.Log("OnPointerDown");
+
+        isClick = true;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        //Debug.Log("OnPointerUp");
+
+        if (isDrag)
+            return;
+
+        if (!isClicking)
             PlayerEntity.E.CreateCube();
 
-            eventData.clickCount = 0;
-        }
+        isClick = false;
+        isClicking = false;
+        clickingTime = 0;
+    }
+
+    public void OnClicking()
+    {
+        isClicking = true;
+        PlayerEntity.E.OnClicking(Time.deltaTime);
     }
 }

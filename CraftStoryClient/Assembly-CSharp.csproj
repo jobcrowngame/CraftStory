@@ -331,14 +331,14 @@
     <Reference Include="gs2_websocket-sharp">
       <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_websocket-sharp.dll</HintPath>
     </Reference>
+    <Reference Include="JsonConfigData">
+      <HintPath>Assets\Plugins\Lib\JsonConfigData.dll</HintPath>
+    </Reference>
     <Reference Include="gs2_Google.Protobuf">
       <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="gs2_LitJSON">
       <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_LitJSON.dll</HintPath>
-    </Reference>
-    <Reference Include="JsonConfigData">
-      <HintPath>Assets\Plugins\Lib\JsonConfigData.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>

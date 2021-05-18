@@ -13,6 +13,8 @@ public class MapCellData
     private float Z { get; set; }
     public MapCellType CellType { get; set; }
 
+    public float DeleteTime { get; set; }
+
     public Vector3 Pos
     {
         get { return new Vector3(X, Y, Z); }

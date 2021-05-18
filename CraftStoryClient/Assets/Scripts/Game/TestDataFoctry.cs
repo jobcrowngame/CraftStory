@@ -17,11 +17,7 @@ public class TestDataFoctry
                     if (j > 3)
                         continue;
 
-                    map[i, j, k] = new MapCellData()
-                    {
-                        Pos = new Vector3(i, j, k),
-                        CellType = (MapCellType)Random.Range(0, 4)
-                    };
+                    map[i, j, k] = GetNewMapCellData(new Vector3(i, j, k));
                 }
             }
         }
@@ -35,5 +31,20 @@ public class TestDataFoctry
         cData.Pos = new Vector3(3, 12, 3);
 
         return cData;
+    }
+
+    public static MapCellData GetNewMapCellData(Vector3 pos)
+    {
+        MapCellType mcType = (MapCellType)Random.Range(0, 4);
+        return GetNewMapCellData(pos, mcType);
+    }
+    public static MapCellData GetNewMapCellData(Vector3 pos, MapCellType mcType)
+    {
+        return new MapCellData()
+        {
+            Pos = pos,
+            CellType = mcType,
+            DeleteTime = 1
+        };
     }
 }

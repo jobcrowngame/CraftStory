@@ -26,6 +26,9 @@ class PlayerEntity : CharacterEntity
     public Joystick joystick;
     public ScreenDraggingCtl screenDraggingCtl;
 
+
+    private MapCell selectMapCell;
+
     private void Awake()
     {
         E = this;
@@ -63,15 +66,14 @@ class PlayerEntity : CharacterEntity
 
             if (Input.GetMouseButtonDown(0))
                 CreateCube();
+            if (Input.GetMouseButtonDown(1))
+                DestroyCube();
         }
         else
         {
             if (joystick != null)
                 Move(joystick.xAxis.value, joystick.yAxis.value);
         }
-
-        if (Input.GetMouseButtonDown(1))
-            DestroyCube();
     }//Update()
 
     public void Move(float h, float v)
@@ -116,7 +118,7 @@ class PlayerEntity : CharacterEntity
             return;
 
         Debug.Log("Create cube. " + cameraCtl.HitObj.transform.position);
-        WorldMng.E.MapCtl.CreateMapCell(cameraCtl.HitPos, selectMapCellType);
+        WorldMng.E.MapCtl.CreateMapCell(TestDataFoctry.GetNewMapCellData(cameraCtl.HitPos, selectMapCellType));
     }
     public void DestroyCube()
     {
@@ -127,7 +129,25 @@ class PlayerEntity : CharacterEntity
         if (cell == null)
             return;
 
-        Debug.Log("Delete cube. " + cameraCtl.HitObj.transform.position);
-        WorldMng.E.MapCtl.DeleteMapCell(cell);
+        cell.Delete();
+    }
+    public void OnClicking(float time)
+    {
+        if (cameraCtl.HitObj == null)
+            return;
+
+        var cell = cameraCtl.HitObj.GetComponent<MapCell>();
+        if (cell == null)
+            return;
+
+        if (selectMapCell == null || selectMapCell != cell)
+        {
+            selectMapCell = cell;
+            selectMapCell.CancelClicking();
+        }
+        else
+            cell.OnClicking(time);
+
+        Debug.LogFormat("select cell:{0}", cell.name);
     }
 }

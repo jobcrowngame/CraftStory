@@ -29,7 +29,7 @@ public class MapCtl
                 for (int k = 0; k < mData.MapSize.z; k++)
                 {
                     if (mData.Map[i, j, k] != null)
-                        CreateMapCell(mData.Map[i, j, k].Pos, mData.Map[i, j, k].CellType, true);
+                        CreateMapCell(mData.Map[i, j, k]);
                 }
             }
         }
@@ -40,9 +40,9 @@ public class MapCtl
 
     }
 
-    public MapCell CreateMapCell(Vector3 pos, MapCellType cellType, bool isFirst = false)
+    public MapCell CreateMapCell(MapCellData mcData)
     {
-        string sourcePath = GetMapCellResourcesPath(cellType);
+        string sourcePath = GetMapCellResourcesPath(mcData.CellType);
         if (sourcePath == "")
             return null;
 
@@ -57,17 +57,12 @@ public class MapCtl
         if (obj == null)
             return null;
 
-        obj.transform.position = pos;
+        obj.transform.position = mcData.Pos;
 
         var cell = obj.AddComponent<MapCell>();
-        cell.Add(new MapCellData()
-        {
-            Pos = pos,
-            CellType = cellType
-        }, obj);
+        cell.SetData(mcData);
 
-        if (!isFirst)
-            mData.Add(pos, cell.data);
+        mData.Add(mcData);
 
         return cell;
     }

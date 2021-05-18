@@ -44,6 +44,12 @@ public class SaveLoadFile : Single<SaveLoadFile>
 		try
 		{
 			fileStream = File.Open(path, FileMode.Open);
+            if (fileStream.Length < 1)
+            {
+				Debug.LogError("Load fial. Bad save data." + path);
+				return null;
+			}
+
 			return bf.Deserialize(fileStream);
 		}
 		catch (FileNotFoundException e1)

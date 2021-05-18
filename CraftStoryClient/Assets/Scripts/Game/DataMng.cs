@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 [Serializable]
 public class DataMng : Single<DataMng>
@@ -39,9 +34,11 @@ public class DataMng : Single<DataMng>
 
     public void Save()
     {
-        SaveLoadFile.E.Save(mData, PublicPar.SaveRootPath + MapDataName);
+        if (mData != null)
+            SaveLoadFile.E.Save(mData, PublicPar.SaveRootPath + MapDataName);
 
-        SaveLoadFile.E.Save(cData, PublicPar.SaveRootPath + CharacterDataName);
+        if (cData != null)
+            SaveLoadFile.E.Save(cData, PublicPar.SaveRootPath + CharacterDataName);
     }
 
     public void Load()
