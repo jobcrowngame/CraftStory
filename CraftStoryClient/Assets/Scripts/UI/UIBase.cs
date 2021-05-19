@@ -3,12 +3,10 @@ using UnityEngine;
 
 public class UIBase : MonoBehaviour
 {
-    public GameObject obj;
     private UIBase beforeUI;
 
-    public virtual void Init(GameObject obj)
+    public virtual void Init()
     {
-        this.obj = obj;
     }
 
     public void SetBeforUI(UIBase beforeUI)
@@ -27,13 +25,13 @@ public class UIBase : MonoBehaviour
 
     private void Active(bool b)
     {
-        obj.SetActive(b);
+        gameObject.SetActive(b);
     }
 
     protected T FindChiled<T>(string chiledName, GameObject parent = null) where T : Component
     {
         if (parent == null)
-            parent = obj;
+            parent = gameObject;
         
         var findObj = CommonFunction.FindChiledByName(parent.transform, chiledName);
         if (findObj != null)
@@ -41,14 +39,14 @@ public class UIBase : MonoBehaviour
         else
         {
             Debug.LogError("Find chiled fail: " + chiledName);
-            Debug.LogError("From UI: " + obj.name);
+            Debug.LogError("From UI: " + gameObject.name);
             return null;
         }
     }
     protected Transform FindChiled(string chiledName, GameObject parent = null)
     {
         if (parent == null)
-            parent = obj;
+            parent = gameObject;
 
         var findObj = CommonFunction.FindChiledByName(parent.transform, chiledName);
         if (findObj != null)
@@ -56,7 +54,7 @@ public class UIBase : MonoBehaviour
         else
         {
             Debug.LogError("Find chiled fail: " + chiledName);
-            Debug.LogError("From UI: " + obj.name);
+            Debug.LogError("From UI: " + gameObject.name);
             return null;
         }
     }

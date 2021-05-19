@@ -7,9 +7,9 @@ public class ShopUI : UIBase
     Transform itemGridRoot;
     Button CloseBtn;
 
-    public override void Init(GameObject obj)
+    public override void Init()
     {
-        base.Init(obj);
+        base.Init();
 
         ShopLG.E.Init(this);
 
@@ -49,7 +49,7 @@ public class ShopUI : UIBase
         var cell =  AddCell<ShopItemCell>("Prefabs/UI/ShopItem", itemGridRoot);
         if (cell != null)
         {
-            cell.Init(cell.gameObject);
+            cell.Init();
             cell.Add(item);
         }
     }

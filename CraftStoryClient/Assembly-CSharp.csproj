@@ -56,6 +56,7 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\UI\NowLoadingLG.cs" />
     <Compile Include="Assets\Scripts\Test\DragObj.cs" />
     <Compile Include="Assets\Scripts\UI\BagUI.cs" />
     <Compile Include="Assets\Scripts\UI\ShopLG.cs" />
@@ -67,13 +68,14 @@
     <Compile Include="Assets\Scripts\Game\Character\PlayerEntity.cs" />
     <Compile Include="Assets\Scripts\UI\ShopUI.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
+    <Compile Include="Assets\Scripts\Data\UserData.cs" />
     <Compile Include="Assets\Scripts\Game\ScreenDraggingCtl.cs" />
     <Compile Include="Assets\Scripts\UI\UILogicBase.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapCtl.cs" />
     <Compile Include="Assets\Scripts\Test\UserTest.cs" />
     <Compile Include="Assets\Scripts\UI\UICtl.cs" />
     <Compile Include="Assets\Scripts\UI\LoginLG.cs" />
-    <Compile Include="Assets\Scripts\Game\Character\CharacterData.cs" />
+    <Compile Include="Assets\Scripts\Data\CharacterData.cs" />
     <Compile Include="Assets\Scripts\UI\HomeLG.cs" />
     <Compile Include="Assets\Scripts\Test\Gs2AccountSample2.cs" />
     <Compile Include="Assets\Scripts\Common\Single.cs" />
@@ -84,9 +86,10 @@
     <Compile Include="Assets\Scripts\Game\Character\CharacterCtl.cs" />
     <Compile Include="Assets\Scripts\Common\CommonFunction.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
+    <Compile Include="Assets\Scripts\UI\NowLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
     <Compile Include="Assets\Scripts\Common\SaveLoadFile.cs" />
-    <Compile Include="Assets\Scripts\Game\DataMng.cs" />
+    <Compile Include="Assets\Scripts\Data\DataMng.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion1.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryUI.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxLG.cs" />
@@ -95,7 +98,7 @@
     <Compile Include="Assets\Scripts\UI\HomeUI.cs" />
     <Compile Include="Assets\Scripts\UI\ItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\MapCellData.cs" />
+    <Compile Include="Assets\Scripts\Data\MapCellData.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapCell.cs" />
     <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion2.cs" />
@@ -103,6 +106,10 @@
     <Compile Include="Assets\Scripts\Game\Map\MapData.cs" />
     <Compile Include="Assets\Scripts\Common\GS2.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
+    <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
+    <Compile Include="Assets\Scripts\UI\TermsLG.cs" />
+    <Compile Include="Assets\Scripts\UI\Terms01UI.cs" />
+    <Compile Include="Assets\Scripts\UI\Terms02UI.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\SemiTransparent.shader" />

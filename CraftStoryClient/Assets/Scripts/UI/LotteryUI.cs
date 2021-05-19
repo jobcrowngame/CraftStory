@@ -9,9 +9,9 @@ public class LotteryUI : UIBase
     Button OneBtn;
     Button TenBtn;
 
-    public override void Init(GameObject obj)
+    public override void Init()
     {
-        base.Init(obj);
+        base.Init();
 
         LotteryLG.E.Init(this);
 

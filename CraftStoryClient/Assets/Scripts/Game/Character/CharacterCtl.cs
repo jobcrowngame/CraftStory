@@ -7,15 +7,19 @@ public class CharacterCtl
     private List<CharacterEntity> characterList;
     private GameObject playerRoot;
 
-    public CharacterCtl()
+    public void CreateCharacter()
     {
         characterList = new List<CharacterEntity>();
-
         playerRoot = new GameObject("PlayerRoot");
+
+        AddPlayer();
     }
 
     public void OnQuit()
     {
+        if (player == null)
+            return;
+
         player.CharacterData.Pos = player.transform.position;
     }
 

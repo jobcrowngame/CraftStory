@@ -1,30 +1,44 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Main : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject uiRoot;
+    public static Main E;
 
-    // Start is called before the first frame update
     void Start()
     {
-        DataMng.E.Load();
+        E = this;
 
-        WorldMng.E = gameObject.GetComponent<WorldMng>();
+        DontDestroyOnLoad(this);
 
         StartCoroutine(Init());
     }
 
     IEnumerator Init()
     {
+        var uiRoot = GameObject.Find("Canvas");
+
+        yield return UICtl.E.InitCoroutine(gameObject, uiRoot);
+        var loginUI = UICtl.E.OpenUI<LoginUI>(UIType.Login) as LoginUI;
+
+        yield return LoadData();
+
         yield return GS2.E.InitCoroutine();
-        yield return UICtl.E.Init(gameObject, uiRoot);
+
+        LoginLg.E.Login();
     }
 
     private void OnApplicationQuit()
     {
         if (WorldMng.E != null) WorldMng.E.OnQuit();
         if (DataMng.E != null) DataMng.E.Save();
+    }
+
+    private IEnumerator LoadData()
+    {
+        Debug.Log("èâä˙âª LoadData");
+
+        yield return DataMng.E.Load();
     }
 }

@@ -12,9 +12,11 @@ public class UICtl : Single<UICtl>
     private Dictionary<UIType, UIBase> uiDic;
     private List<UIBase> OpenningUI;
 
-    public bool Init(GameObject glubalObj, GameObject uiRoot)
+    public IEnumerator InitCoroutine(GameObject glubalObj, GameObject uiRoot)
     {
-        bool ret;
+        Debug.Log("èâä˙âª UICtl");
+
+        bool ret = false;
 
         glubalObjTran = glubalObj.transform;
         uiRootTran = uiRoot.transform;
@@ -23,14 +25,13 @@ public class UICtl : Single<UICtl>
 
         ret = CreateGlobalEntity();
 
-        OpenUI<LoginUI>(UIType.Login);
-
-        return ret;
+        yield return ret;
     }
 
     private bool CreateGlobalEntity()
     {
         UserTest.E.Init();
+        WorldMng.E.Init();
 
         return true;
     }
@@ -95,7 +96,7 @@ public class UICtl : Single<UICtl>
             if (uiClass == null)
                 return null;
 
-            uiClass.Init(obj);
+            uiClass.Init();
 
             uiDic[uiType] = uiClass;
 
@@ -133,11 +134,15 @@ public class UICtl : Single<UICtl>
         switch (ui)
         {
             case UIType.Login: return "Prefabs/UI/Login";
+            case UIType.NowLoading: return "Prefabs/UI/NowLoading";
             case UIType.Home: return "Prefabs/UI/Home";
             case UIType.Bag: return "Prefabs/UI/Bag";
             case UIType.Lottery: return "Prefabs/UI/Lottery";
             case UIType.GiftBox: return "Prefabs/UI/GiftBox";
             case UIType.Shop: return "Prefabs/UI/Shop";
+            case UIType.Terms: return "Prefabs/UI/Terms";
+            case UIType.Terms01: return "Prefabs/UI/Terms01";
+            case UIType.Terms02: return "Prefabs/UI/Terms02";
             default: Debug.LogError("not find UIType " + ui); return "";
         }
     }
@@ -152,9 +157,13 @@ public enum UIOpenType
 public enum UIType
 {
     Login,
+    NowLoading,
     Home,
     Bag,
     Lottery,
     GiftBox,
     Shop,
+    Terms,
+    Terms01,
+    Terms02,
 }

@@ -42,14 +42,9 @@ public class GS2 : MonoBehaviour
         Debug.LogError(e.ToString());
     }
 
-    public void Init()
-    {
-        StartCoroutine(InitCoroutine());
-    }
     public IEnumerator InitCoroutine()
     {
-        // GS2 SDK のクライアントを初期化
-        Debug.Log("GS2 SDK のクライアントを初期化");
+        Debug.Log("初期化 GS2");
 
         profile = new Gs2.Unity.Util.Profile(
            clientId: PublicPar.clientId,

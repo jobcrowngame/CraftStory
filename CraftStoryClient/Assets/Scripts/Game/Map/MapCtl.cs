@@ -11,16 +11,11 @@ public class MapCtl
 
     private MapData mData;
 
-    public MapCtl()
+    public void CreateMap()
     {
         mapCellParent = new GameObject("Ground").transform;
 
-        InitMap(DataMng.E.MapData);
-    }
-
-    private void InitMap(MapData mData)
-    {
-        this.mData = mData;
+        mData = DataMng.E.MapData;
 
         for (int i = 0; i < mData.MapSize.x; i++)
         {

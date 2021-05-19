@@ -29,10 +29,6 @@ public class UserTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            WritLoginIDPW();
-        }
         if (Input.GetKeyDown(KeyCode.F2))
         {
             GetGachaItem();
@@ -41,12 +37,6 @@ public class UserTest : MonoBehaviour
         {
             GetShowcase();
         }
-    }
-
-    public void WritLoginIDPW()
-    {
-        LoginUI loginUI = UICtl.E.GetUI(UIType.Login) as LoginUI;
-        loginUI.WritIDPW(id, pw);
     }
 
     private void GetGachaItem()

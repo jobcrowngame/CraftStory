@@ -17,8 +17,6 @@ public class IconItemCell : UIBase
 
     public void Add(string itemName, int count)
     {
-        obj = this.gameObject;
-
         InitUI();
 
         Name.text = itemName;

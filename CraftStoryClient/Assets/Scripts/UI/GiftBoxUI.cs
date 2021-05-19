@@ -10,9 +10,9 @@ public class GiftBoxUI : UIBase
     Button OKBtn;
     Transform itemGridRoot;
 
-    public override void Init(GameObject obj)
+    public override void Init()
     {
-        base.Init(obj);
+        base.Init();
 
         GiftBoxLG.E.Init(this);
 

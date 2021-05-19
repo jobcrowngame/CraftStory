@@ -11,9 +11,9 @@ public class BagUI : UIBase
     Button closeBtn;
     Dictionary<string, ItemCell> cellDic;
 
-    public override void Init(GameObject obj)
+    public override void Init()
     {
-        base.Init(obj);
+        base.Init();
 
         BagLG.E.Init(this);
         cellDic = new Dictionary<string, ItemCell>();
@@ -57,7 +57,7 @@ public class BagUI : UIBase
         var cell = AddCell<ItemCell>("Prefabs/UI/Item", itemGridRoot);
         if (cell != null)
         {
-            cell.Init(cell.gameObject);
+            cell.Init();
             cell.Add(item);
 
             if (!cellDic.ContainsKey(item.Name))

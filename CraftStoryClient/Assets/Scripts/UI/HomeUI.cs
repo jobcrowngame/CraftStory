@@ -1,8 +1,11 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HomeUI : UIBase
 {
+    Image FadeinImg;
+
     Button BagBtn;
     Button LotteryBtn;
     Button ShopBtn;
@@ -11,13 +14,23 @@ public class HomeUI : UIBase
     Transform cubeSelection;
     Button[] cubBtns;
 
-    public override void Init(GameObject obj)
+    private float fadeInTime = 0.05f;
+
+    private void Start()
     {
-        base.Init(obj);
+        WorldMng.E.StartGame();
+        Init();
+    }
+
+    public override void Init()
+    {
+        base.Init();
 
         HomeLG.E.Init(this);
 
         InitUI();
+
+        StartCoroutine("FadeIn");
     }
 
     void Update()
@@ -40,6 +53,8 @@ public class HomeUI : UIBase
 
     private void InitUI()
     {
+        FadeinImg = FindChiled<Image>("Fadein");
+
         BagBtn = FindChiled<Button>("BagBtn");
         BagBtn.onClick.AddListener(() => { UICtl.E.OpenUI<BagUI>(UIType.Bag); });
 
@@ -68,6 +83,8 @@ public class HomeUI : UIBase
         PlayerEntity.E.joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
         PlayerEntity.E.screenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
     }
+
+    #region ButtonClick
 
     private void OnClickBlackBtn()
     {
@@ -101,5 +118,20 @@ public class HomeUI : UIBase
         FindChiled<Text>("Text", LockCursorBtn.gameObject).text = SettingMng.E.MouseCursorLocked ?
                 "F9 Key UnLock Cursor" :
                 "F9 Key Lock Cursor";
+    }
+
+    #endregion
+
+    IEnumerator FadeIn()
+    {
+        //　Colorのアルファを0.1ずつ下げていく
+        for (var i = 1f; i > 0; i -= 0.1f)
+        {
+            FadeinImg.color = new Color(0f, 0f, 0f, i);
+            //　指定秒数待つ
+            yield return new WaitForSeconds(fadeInTime);
+        }
+
+        FadeinImg.gameObject.SetActive(false);
     }
 }

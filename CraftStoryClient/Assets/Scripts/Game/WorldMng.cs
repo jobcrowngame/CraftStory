@@ -2,8 +2,17 @@
 
 public class WorldMng : MonoBehaviour
 {
-    public static WorldMng E;
+    private static WorldMng entity;
+    public static WorldMng E
+    {
+        get
+        {
+            if (entity == null)
+                entity = UICtl.E.CreateGlobalObject<WorldMng>();
 
+            return entity;
+        }
+    }
 
     private MapCtl mapCtl;
     private CharacterCtl characterCtl;
@@ -12,17 +21,19 @@ public class WorldMng : MonoBehaviour
 
     public void Init()
     {
-        E = this;
-
         mapCtl = new MapCtl();
         characterCtl = new CharacterCtl();
+    }
 
-        characterCtl.AddPlayer();
+    public void StartGame()
+    {
+        mapCtl.CreateMap();
+        characterCtl.CreateCharacter();
     }
 
     public void OnQuit()
     {
-        mapCtl.OnQuit();
-        characterCtl.OnQuit();
+        if (mapCtl != null) mapCtl.OnQuit();
+        if (characterCtl != null) characterCtl.OnQuit();
     }
 }
