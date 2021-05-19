@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Collections;
 using UnityEngine;
 
@@ -20,10 +21,7 @@ public class Main : MonoBehaviour
         var uiRoot = GameObject.Find("Canvas");
 
         yield return UICtl.E.InitCoroutine(gameObject, uiRoot);
-        var loginUI = UICtl.E.OpenUI<LoginUI>(UIType.Login) as LoginUI;
-
         yield return LoadData();
-
         yield return GS2.E.InitCoroutine();
 
         LoginLg.E.Login();
