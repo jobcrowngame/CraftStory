@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+using System.Text;
+
 public class LoginUI : UIBase
 {
     Text Login;
@@ -10,6 +12,9 @@ public class LoginUI : UIBase
     Button Terms01Btn;
     Button Terms02Btn;
 
+    string LoginText01 = "ログイン...";
+    string LoginText02 = "ゲームスタート";
+
     public override void Init()
     {
         base.Init();
@@ -17,7 +22,7 @@ public class LoginUI : UIBase
         LoginLg.E.Init(this);
 
         Login = FindChiled<Text>("Login");
-        Login.text = "ログイン...";
+        Login.text = LoginText01;
 
         Ver = FindChiled<Text>("Ver");
         Ver.text = "Ver:1.0.0";
@@ -38,7 +43,15 @@ public class LoginUI : UIBase
         Debug.Log("ログイン成功しました。");
         Debug.LogFormat("ようこそ、{0}様", DataMng.E.UserData.UserID);
 
-        Login.text = "ゲームスタート";
+        Login.text = LoginText02;
+
+        string msg = "";
+        for (int i = 0; i < LoginText02.ToCharArray().Length; i++)
+        {
+            msg += LoginText02.ToCharArray()[i];
+        }
+        Debug.Log(msg);
+
         BGBtn.enabled = true;
     }
 }
