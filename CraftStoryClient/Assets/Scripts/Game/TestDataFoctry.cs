@@ -44,7 +44,7 @@ public class TestDataFoctry
         {
             Pos = pos,
             CellType = mcType,
-            DeleteTime = 1
+            DeleteTime = 1f
         };
     }
 }
