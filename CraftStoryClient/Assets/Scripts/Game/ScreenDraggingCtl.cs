@@ -21,7 +21,7 @@ class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         {
             clickingTime += Time.deltaTime;
 
-            if (clickingTime > 0.5f && !isDrag)
+            if (clickingTime > 0.2f && !isDrag)
             {
                 OnClicking();
             }

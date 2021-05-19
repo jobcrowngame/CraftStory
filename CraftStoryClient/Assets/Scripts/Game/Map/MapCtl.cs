@@ -37,6 +37,8 @@ public class MapCtl
 
     public MapCell CreateMapCell(MapCellData mcData)
     {
+        Debug.Log("Create cube. \n" + mcData.ToString());
+
         string sourcePath = GetMapCellResourcesPath(mcData.CellType);
         if (sourcePath == "")
             return null;

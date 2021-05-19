@@ -25,6 +25,11 @@ public class MapCellData
             Z = value.z;
         }
     }
+
+    public override string ToString()
+    {
+        return string.Format("POS:{0}, CType:{1}, DeleteTime:{2}", Pos, CellType, DeleteTime);
+    }
 }
 
 public enum MapCellType

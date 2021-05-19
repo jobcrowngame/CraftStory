@@ -18,7 +18,7 @@ public class MapCell : MonoBehaviour
 
     public void Delete()
     {
-        Debug.Log("Delete cube. ");
+        Debug.Log("Delete cube. \n" + data.ToString()); ;
         WorldMng.E.MapCtl.DeleteMapCell(this);
     }
 
@@ -28,7 +28,7 @@ public class MapCell : MonoBehaviour
 
         if (clickingTime > data.DeleteTime)
         {
-            Debug.Log(clickingTime);
+            Debug.Log("clickingTime:" + clickingTime);
             Delete();
         }
     }

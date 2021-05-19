@@ -117,7 +117,6 @@ class PlayerEntity : CharacterEntity
         if (cell == null)
             return;
 
-        Debug.Log("Create cube. " + cameraCtl.HitObj.transform.position);
         WorldMng.E.MapCtl.CreateMapCell(TestDataFoctry.GetNewMapCellData(cameraCtl.HitPos, selectMapCellType));
     }
     public void DestroyCube()
@@ -147,7 +146,5 @@ class PlayerEntity : CharacterEntity
         }
         else
             cell.OnClicking(time);
-
-        Debug.LogFormat("select cell:{0}", cell.name);
     }
 }
