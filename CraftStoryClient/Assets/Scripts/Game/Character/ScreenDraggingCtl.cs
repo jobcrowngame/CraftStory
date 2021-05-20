@@ -45,7 +45,7 @@ class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         offsetX = pointerPos.x;
         offsetY = pointerPos.y;
 
-        PlayerEntity.E.Rotate(offsetX * 0.1f, offsetY * 0.1f);
+        PlayerEntity.E.CameraRotate(offsetX * 0.1f, offsetY * 0.1f);
 
         startPos = eventData.position;
         offsetX = 0;

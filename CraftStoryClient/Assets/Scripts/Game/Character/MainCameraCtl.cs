@@ -16,7 +16,7 @@ public class MainCameraCtl : MonoBehaviour
     // カメラ画面の真ん中
     Vector2 displayCenter;
 
-    private Vector3 cameraOffset = new Vector3(0, 0.7f, 0);
+    private Vector3 cameraOffset = new Vector3(0, 0, -10f);
 
     private void Start()
     {

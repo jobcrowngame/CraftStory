@@ -63,7 +63,7 @@
     <Compile Include="Assets\Scripts\UI\ShopLG.cs" />
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
-    <Compile Include="Assets\Scripts\Game\MainCameraCtl.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\MainCameraCtl.cs" />
     <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
     <Compile Include="Assets\Scripts\Game\WorldMng.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
@@ -71,7 +71,7 @@
     <Compile Include="Assets\Scripts\UI\ShopUI.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\Data\UserData.cs" />
-    <Compile Include="Assets\Scripts\Game\ScreenDraggingCtl.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\ScreenDraggingCtl.cs" />
     <Compile Include="Assets\Scripts\UI\UILogicBase.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapCtl.cs" />
     <Compile Include="Assets\Scripts\Test\UserTest.cs" />
@@ -103,6 +103,7 @@
     <Compile Include="Assets\Scripts\UI\HomeUI.cs" />
     <Compile Include="Assets\Scripts\UI\ItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
+    <Compile Include="Assets\Scripts\Test\TestAngle.cs" />
     <Compile Include="Assets\Scripts\Data\BlockData.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapBlock.cs" />
     <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
