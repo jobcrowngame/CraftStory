@@ -53,5 +53,6 @@ public class MainCameraCtl : MonoBehaviour
     {
         transform.SetParent(paretn);
         transform.localPosition = cameraOffset;
+        transform.localRotation = Quaternion.identity;
     }
 }

@@ -11,7 +11,6 @@ public class CharacterData
     private float qX { get; set; }
     private float qY { get; set; }
     private float qZ { get; set; }
-    private float qW { get; set; }
 
     public Vector3 Pos
     {
@@ -24,15 +23,14 @@ public class CharacterData
         }
     }
 
-    public Quaternion Quaternion
+    public Vector3 EulerAngles
     {
-        get { return new Quaternion(qX, qY, qZ, qW); }
+        get { return new Vector3(qX, qY, qZ); }
         set
         {
             qX = value.x;
             qY = value.y;
             qZ = value.z;
-            qW = value.w;
         }
     }
 }

@@ -4,7 +4,7 @@ public class CharacterEntity : MonoBehaviour
 {
     public CharacterData CharacterData { get; set; }
 
-    public void Init()
+    public virtual void Init()
     {
     }
 

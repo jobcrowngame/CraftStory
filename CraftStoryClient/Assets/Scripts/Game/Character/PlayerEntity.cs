@@ -27,18 +27,15 @@ class PlayerEntity : CharacterEntity
 
     private MapBlock selectMapCell;
 
-    private void Awake()
+    public override void Init()
     {
-        E = this;
+        base.Init();
 
+        E = this;
         controller = GetComponent<CharacterController>();
 
         var camera = Camera.main;
         cameraCtl = camera.GetComponent<MainCameraCtl>();
-    }
-
-    private void Start()
-    {
         cameraCtl.SetParent(transform);
 
         ChangeSelectBlock(1001);

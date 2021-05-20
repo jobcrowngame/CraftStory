@@ -29,7 +29,7 @@ public class TestDataFoctry
     {
         var cData = new CharacterData();
         cData.Pos = new Vector3(3, 12, 3);
-        cData.Quaternion = Quaternion.identity;
+        cData.EulerAngles = Vector3.zero;
 
         return cData;
     }

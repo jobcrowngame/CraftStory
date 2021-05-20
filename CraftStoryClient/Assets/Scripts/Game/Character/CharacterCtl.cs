@@ -23,7 +23,7 @@ public class CharacterCtl
         Debug.Log("Save player pos " + player.transform.position);
 
         player.CharacterData.Pos = player.transform.position;
-        player.CharacterData.Quaternion = player.transform.rotation;
+        player.CharacterData.EulerAngles = player.transform.rotation.eulerAngles;
     }
 
     public void AddPlayer()
@@ -32,7 +32,7 @@ public class CharacterCtl
         if (resource == null)
             return;
 
-        var obj = GameObject.Instantiate(resource, DataMng.E.CharacterData.Pos, DataMng.E.CharacterData.Quaternion);
+        var obj = GameObject.Instantiate(resource, DataMng.E.CharacterData.Pos, Quaternion.Euler(DataMng.E.CharacterData.EulerAngles));
         if (obj == null)
             return;
 
