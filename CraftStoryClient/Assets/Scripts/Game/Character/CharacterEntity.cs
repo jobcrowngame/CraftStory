@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterEntity : MonoBehaviour
 {
@@ -13,6 +8,12 @@ public class CharacterEntity : MonoBehaviour
     {
         CharacterData = characterInfo;
 
+        ChangePosition(CharacterData.Pos);
+    }
+
+    private void ChangePosition(Vector3 pos)
+    {
+        Debug.Log("Change position to " + pos);
         transform.position = CharacterData.Pos;
     }
 

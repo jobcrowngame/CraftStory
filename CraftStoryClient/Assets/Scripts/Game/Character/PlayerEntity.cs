@@ -13,7 +13,6 @@ class PlayerEntity : CharacterEntity
     public float gravity = 20.0F;    //重力の大きさ
     public float rotateSpeed = 3.0F;    //回転速度
     public float camRotSpeed = 5.0f;    //視点の上下スピード
-    private Vector3 cameraOffset = new Vector3(0, 0.7f, 0);
 
     private Vector3 moveDirection = Vector3.zero;
     private float h, v;
@@ -41,9 +40,7 @@ class PlayerEntity : CharacterEntity
 
     private void Start()
     {
-        cameraCtl.transform.SetParent(transform);
-        cameraCtl.transform.localPosition = cameraOffset;
-
+        cameraCtl.SetParent(transform);
         ChangeSelectBlock(1001);
     }
 

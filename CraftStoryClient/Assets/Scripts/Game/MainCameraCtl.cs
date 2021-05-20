@@ -16,6 +16,8 @@ public class MainCameraCtl : MonoBehaviour
     // カメラ画面の真ん中
     Vector2 displayCenter;
 
+    private Vector3 cameraOffset = new Vector3(0, 0.7f, 0);
+
     private void Start()
     {
         displayCenter = new Vector2(Screen.width / 2, Screen.height / 2);
@@ -47,9 +49,9 @@ public class MainCameraCtl : MonoBehaviour
             return null;
         }
     }
-
-    public void DestroyColliderObj()
+    public void SetParent(Transform paretn)
     {
-        
+        transform.SetParent(paretn);
+        transform.localPosition = cameraOffset;
     }
 }
