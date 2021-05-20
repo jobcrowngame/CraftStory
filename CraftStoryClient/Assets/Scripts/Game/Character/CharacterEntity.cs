@@ -2,23 +2,15 @@
 
 public class CharacterEntity : MonoBehaviour
 {
-    public CharacterData CharacterData { get; private set; }
+    public CharacterData CharacterData { get; set; }
 
-    public void Init(CharacterData characterInfo)
+    public void Init()
     {
-        CharacterData = characterInfo;
-
-        ChangePosition(CharacterData.Pos);
     }
 
-    private void ChangePosition(Vector3 pos)
+    public void ChangePosition(Vector3 pos)
     {
-        Debug.Log("Change position to " + pos);
-        transform.position = CharacterData.Pos;
+        transform.position = pos;
+        Debug.Log("Change position to " + transform.position);
     }
-
-    //public void Move(Vector3 offset)
-    //{
-    //    transform.position += offset * moveSpeed;
-    //}
 }

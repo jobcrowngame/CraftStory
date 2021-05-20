@@ -62,13 +62,4 @@ public class CommonFunction
 
         return prefab;
     }
-
-    public static GameObject CreateObj(Transform parent, string sourcePath)
-    {
-        var resources = ReadResources(sourcePath);
-        if (resources == null)
-            return null;
-
-        return GameObject.Instantiate(resources, parent);
-    }
 }

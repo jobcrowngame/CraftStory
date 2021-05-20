@@ -25,7 +25,6 @@ class PlayerEntity : CharacterEntity
     public Joystick joystick;
     public ScreenDraggingCtl screenDraggingCtl;
 
-
     private MapBlock selectMapCell;
 
     private void Awake()
@@ -41,10 +40,10 @@ class PlayerEntity : CharacterEntity
     private void Start()
     {
         cameraCtl.SetParent(transform);
+
         ChangeSelectBlock(1001);
     }
 
-    // Update is called once per frame
     private void Update()
     {
         if (SettingMng.E.MouseCursorLocked)

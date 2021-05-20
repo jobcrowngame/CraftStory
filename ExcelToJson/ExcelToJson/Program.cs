@@ -89,7 +89,7 @@ namespace ExcelToJson
                 data.Name = Convert.ToString(dt.Rows[i].ItemArray[1]);
                 data.ResourcesName = Convert.ToString(dt.Rows[i].ItemArray[2]);
                 data.Type = Convert.ToInt32(dt.Rows[i].ItemArray[3]);
-                data.DestroyTime = Convert.ToInt32(dt.Rows[i].ItemArray[4]);
+                data.DestroyTime = (float)Convert.ToDouble(dt.Rows[i].ItemArray[4]);
 
                 blockList.Add(data);
             }

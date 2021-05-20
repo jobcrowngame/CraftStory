@@ -4,13 +4,13 @@ using UnityEngine;
 public class CharacterCtl
 {
     private PlayerEntity player;
-    private List<CharacterEntity> characterList;
-    private GameObject playerRoot;
+    //private List<CharacterEntity> characterList;
+    //private GameObject playerRoot;
 
     public void CreateCharacter()
     {
-        characterList = new List<CharacterEntity>();
-        playerRoot = new GameObject("PlayerRoot");
+        //characterList = new List<CharacterEntity>();
+        //playerRoot = new GameObject("PlayerRoot");
 
         AddPlayer();
     }
@@ -20,38 +20,30 @@ public class CharacterCtl
         if (player == null)
             return;
 
+        Debug.Log("Save player pos " + player.transform.position);
+
         player.CharacterData.Pos = player.transform.position;
+        player.CharacterData.Quaternion = player.transform.rotation;
     }
 
     public void AddPlayer()
     {
-        var characterP = CommonFunction.CreateObj(playerRoot.transform, "Prefabs/Game/CharacterPlayer");
-        if (characterP == null)
+        var resource = Resources.Load("Prefabs/Game/CharacterPlayer") as GameObject;
+        if (resource == null)
             return;
 
-        player = characterP.GetComponent<PlayerEntity>();
+        var obj = GameObject.Instantiate(resource, DataMng.E.CharacterData.Pos, DataMng.E.CharacterData.Quaternion);
+        if (obj == null)
+            return;
+
+        player = obj.GetComponent<PlayerEntity>();
         if (player == null)
         {
             Debug.LogError("not find CharacterEntity component");
             return;
         }
 
-        player.Init(DataMng.E.CharacterData);
-    }
-    public CharacterEntity AddCharacter(CharacterData cData)
-    {
-        var character = CommonFunction.CreateObj(playerRoot.transform, "Prefabs/Game/Character");
-        if (character == null)
-            return null;
-
-        var characterEntity = character.GetComponent<CharacterEntity>();
-        if (characterEntity == null)
-        {
-            Debug.LogError("not find CharacterEntity component");
-            return null;
-        }
-
-        characterEntity.Init(cData);
-        return characterEntity;
+        player.CharacterData = DataMng.E.CharacterData;
+        player.Init();
     }
 }

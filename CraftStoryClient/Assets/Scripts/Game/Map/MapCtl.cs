@@ -42,7 +42,7 @@ public class MapCtl
     }
     public MapBlock CreateBlock(BlockData block)
     {
-        Debug.Log("Create block. \n" + block.BaseData.Name);
+        Debug.Log("Create block. " + block.BaseData.Name + "DestroyTime: " + block.BaseData.DestroyTime);
 
         string sourcesFullPath = PublicPar.BlockRootPath + block.BaseData.ResourcesName;
 
