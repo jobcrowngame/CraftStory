@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using ExcelDataReader;
 using Newtonsoft.Json;
 using JsonConfigData;
+using System.Collections.Generic;
 
 namespace ExcelToJson
 {
@@ -28,43 +28,28 @@ namespace ExcelToJson
 
             for (int i = 0; i < files.Length; i++)
             {
-                string outFileName = Path.GetFileName(files[i]);
+                string outFileName = Path.GetFileNameWithoutExtension(files[i]);
                 ExcelToJson(files[i], outFilePath + outFileName + ".json", indented);
             }
         }
-
         private static void ExcelToJson(string inFilePath, string outFilePath, Formatting indented)
         {
             var ds = ReadExcelData(inFilePath);
+            if (ds == null)
+                return;
 
             foreach (DataTable tbl in ds.Tables)
             {
-                List<TestData> testData = new List<TestData>();
+                //var json = JsonConvert.SerializeObject(tbl, indented);
+                //File.WriteAllText(outFilePath, json);
 
-                for (int i = 1; i < tbl.Rows.Count; i++)
-                {
-                    TestData d = new TestData();
-                    d.Key1 = tbl.Rows[i][0].ToString();
-                    d.Key2 = int.Parse(tbl.Rows[i][1].ToString());
-
-                    testData.Add(d);
-                }
-
-                var json = JsonConvert.SerializeObject(testData, indented);
+                var list = ToBlock(tbl);
+                var json = JsonConvert.SerializeObject(list, indented);
                 File.WriteAllText(outFilePath, json);
             }
         }
 
-        private static void Readjson(string outFilePath)
-        {
-            using (StreamReader r = new StreamReader(outFilePath))
-            {
-                string json = r.ReadToEnd();
-                List<TestData> items = JsonConvert.DeserializeObject<List<TestData>>(json);
-            }
-        }
-
-        static DataSet ReadExcelData(string path)
+        private static DataSet ReadExcelData(string path)
         {
             DataSet ds = null;
             var ext = Path.GetExtension(path);
@@ -85,6 +70,31 @@ namespace ExcelToJson
             }
 
             return ds;
+        }
+
+        private static List<Block> ToBlock(DataTable dt)
+        {
+            List<Block> blockList = new List<Block>();
+            string[] columNames = new string[dt.Columns.Count];
+
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+                columNames[i] = dt.Rows[0].ItemArray[i].ToString();
+            }
+
+            for (int i = 1; i < dt.Rows.Count; i++)
+            {
+                var data = new Block();
+                data.ID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
+                data.Name = Convert.ToString(dt.Rows[i].ItemArray[1]);
+                data.ResourcesName = Convert.ToString(dt.Rows[i].ItemArray[2]);
+                data.Type = Convert.ToInt32(dt.Rows[i].ItemArray[3]);
+                data.DestroyTime = Convert.ToInt32(dt.Rows[i].ItemArray[4]);
+
+                blockList.Add(data);
+            }
+
+            return blockList;
         }
     }
 }

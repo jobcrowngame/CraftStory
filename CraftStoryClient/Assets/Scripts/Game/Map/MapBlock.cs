@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class MapCell : MonoBehaviour
+public class MapBlock : MonoBehaviour
 {
-    public MapCellData data { get; set; }
+    public BlockData data { get; set; }
 
     private float clickingTime;
 
-    public void SetData(MapCellData mcData)
+    public void SetData(BlockData mcData)
     {
         data = mcData;
     }
@@ -26,7 +26,7 @@ public class MapCell : MonoBehaviour
     {
         clickingTime += time;
 
-        if (clickingTime > data.DeleteTime)
+        if (clickingTime > data.BaseData.DestroyTime)
         {
             Debug.Log("clickingTime:" + clickingTime);
             Delete();

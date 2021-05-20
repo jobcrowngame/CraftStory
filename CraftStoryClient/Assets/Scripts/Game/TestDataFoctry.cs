@@ -5,7 +5,7 @@ public class TestDataFoctry
     public static MapData CreateTestMap()
     {
         Vector3 mapSize = new Vector3(30, 30, 30);
-        MapCellData[,,] map = new MapCellData[(int)mapSize.x, (int)mapSize.y, (int)mapSize.z];
+        BlockData[,,] map = new BlockData[(int)mapSize.x, (int)mapSize.y, (int)mapSize.z];
         for (int i = 0; i < mapSize.x; i++)
         {
             for (int j = 0; j < mapSize.y; j++)
@@ -17,7 +17,7 @@ public class TestDataFoctry
                     if (j > 3)
                         continue;
 
-                    map[i, j, k] = GetNewMapCellData(new Vector3(i, j, k));
+                    map[i, j, k] = GetNewBlockData(new Vector3(i, j, k));
                 }
             }
         }
@@ -33,18 +33,14 @@ public class TestDataFoctry
         return cData;
     }
 
-    public static MapCellData GetNewMapCellData(Vector3 pos)
+    public static BlockData GetNewBlockData(Vector3 pos)
     {
-        MapCellType mcType = (MapCellType)Random.Range(0, 4);
-        return GetNewMapCellData(pos, mcType);
-    }
-    public static MapCellData GetNewMapCellData(Vector3 pos, MapCellType mcType)
-    {
-        return new MapCellData()
-        {
-            Pos = pos,
-            CellType = mcType,
-            DeleteTime = 1f
-        };
+        int blockId = Random.Range(1001, 1005);
+        var config = ConfigMng.E.BlockConfig[blockId];
+
+        var bData = new BlockData(config.ID);
+        bData.Pos = pos;
+
+        return bData;
     }
 }

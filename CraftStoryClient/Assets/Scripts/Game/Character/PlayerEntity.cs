@@ -20,14 +20,14 @@ class PlayerEntity : CharacterEntity
     private float mX, mY;
     private float lookUpAngle;
 
-    private MapCellType selectMapCellType;
+    private BlockData selectBlock;
     private GameObject selectBlokCube;
 
     public Joystick joystick;
     public ScreenDraggingCtl screenDraggingCtl;
 
 
-    private MapCell selectMapCell;
+    private MapBlock selectMapCell;
 
     private void Awake()
     {
@@ -43,6 +43,8 @@ class PlayerEntity : CharacterEntity
     {
         cameraCtl.transform.SetParent(transform);
         cameraCtl.transform.localPosition = cameraOffset;
+
+        ChangeSelectBlock(1001);
     }
 
     // Update is called once per frame
@@ -103,9 +105,10 @@ class PlayerEntity : CharacterEntity
         gameObject.transform.Rotate(new Vector3(0, rotateSpeed * mX, 0));
     }
 
-    public void ChangeSelectMapCellType(MapCellType mcType)
+    public void ChangeSelectBlock(int blockId)
     {
-        selectMapCellType = mcType;
+        BlockData bData = new BlockData(ConfigMng.E.BlockConfig[blockId].ID);
+        selectBlock = bData;
     }
 
     public void CreateCube()
@@ -113,18 +116,21 @@ class PlayerEntity : CharacterEntity
         if (cameraCtl.HitObj == null)
             return;
 
-        var cell = cameraCtl.HitObj.GetComponent<MapCell>();
+        var cell = cameraCtl.HitObj.GetComponent<MapBlock>();
         if (cell == null)
             return;
 
-        WorldMng.E.MapCtl.CreateMapCell(TestDataFoctry.GetNewMapCellData(cameraCtl.HitPos, selectMapCellType));
+        if (selectBlock == null)
+            return;
+
+        WorldMng.E.MapCtl.CreateBlock(cameraCtl.HitPos, selectBlock);
     }
     public void DestroyCube()
     {
         if (cameraCtl.HitObj == null)
             return;
 
-        var cell = cameraCtl.HitObj.GetComponent<MapCell>();
+        var cell = cameraCtl.HitObj.GetComponent<MapBlock>();
         if (cell == null)
             return;
 
@@ -135,7 +141,7 @@ class PlayerEntity : CharacterEntity
         if (cameraCtl.HitObj == null)
             return;
 
-        var cell = cameraCtl.HitObj.GetComponent<MapCell>();
+        var cell = cameraCtl.HitObj.GetComponent<MapBlock>();
         if (cell == null)
             return;
 

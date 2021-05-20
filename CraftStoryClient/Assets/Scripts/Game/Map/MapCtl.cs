@@ -24,7 +24,7 @@ public class MapCtl
                 for (int k = 0; k < mData.MapSize.z; k++)
                 {
                     if (mData.Map[i, j, k] != null)
-                        CreateMapCell(mData.Map[i, j, k]);
+                        CreateBlock(mData.Map[i, j, k]);
                 }
             }
         }
@@ -35,18 +35,21 @@ public class MapCtl
 
     }
 
-    public MapCell CreateMapCell(MapCellData mcData)
+    public MapBlock CreateBlock(Vector3 pos, BlockData block)
     {
-        Debug.Log("Create cube. \n" + mcData.ToString());
+        block.Pos = pos;
+        return CreateBlock(block);
+    }
+    public MapBlock CreateBlock(BlockData block)
+    {
+        Debug.Log("Create block. \n" + block.BaseData.Name);
 
-        string sourcePath = GetMapCellResourcesPath(mcData.CellType);
-        if (sourcePath == "")
-            return null;
+        string sourcesFullPath = PublicPar.BlockRootPath + block.BaseData.ResourcesName;
 
-        var resources = CommonFunction.ReadResourcesPrefab(sourcePath);
+        var resources = CommonFunction.ReadResources(sourcesFullPath);
         if (resources == null)
         {
-            Debug.LogError("not find resources " + sourcePath);
+            Debug.LogError("not find resources " + sourcesFullPath);
             return null;
         }
 
@@ -54,33 +57,19 @@ public class MapCtl
         if (obj == null)
             return null;
 
-        obj.transform.position = mcData.Pos;
+        obj.transform.position = block.Pos;
 
-        var cell = obj.AddComponent<MapCell>();
-        cell.SetData(mcData);
+        var cell = obj.AddComponent<MapBlock>();
+        cell.SetData(block);
 
-        mData.Add(mcData);
+        mData.Add(block);
 
         return cell;
     }
 
-    public void DeleteMapCell(MapCell mCell)
+    public void DeleteMapCell(MapBlock mCell)
     {
         mData.Remove(mCell.data.Pos);
         GameObject.Destroy(mCell.gameObject);
-    }
-
-    public string GetMapCellResourcesPath(MapCellType type)
-    {
-        string root = "Prefabs/Game/";
-
-        switch (type)
-        {
-            case MapCellType.Black: return root + "Cubes/Cube_Black";
-            case MapCellType.Blue: return root + "Cubes/Cube_Blue";
-            case MapCellType.Red: return root + "Cubes/Cube_Red";
-            case MapCellType.Green: return root + "Cubes/Cube_Green";
-            default: Debug.LogError("not find MapCellType " + type); return "";
-        }
     }
 }

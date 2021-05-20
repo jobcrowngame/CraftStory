@@ -20,6 +20,7 @@ public class Main : MonoBehaviour
     {
         var uiRoot = GameObject.Find("Canvas");
 
+        yield return ConfigMng.E.InitInitCoroutine();
         yield return UICtl.E.InitCoroutine(gameObject, uiRoot);
         yield return LoadData();
         yield return GS2.E.InitCoroutine();

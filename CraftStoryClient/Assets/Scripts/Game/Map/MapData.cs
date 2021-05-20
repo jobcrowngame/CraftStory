@@ -4,12 +4,12 @@ using UnityEngine;
 [Serializable]
 public class MapData
 {
-    private MapCellData[,,] map { get; set; }
+    private BlockData[,,] map { get; set; }
     private int sizeX { get; set; }
     private int sizeY { get; set; }
     private int sizeZ { get; set; }
 
-    public MapData(MapCellData[,,] map, Vector3 size)
+    public MapData(BlockData[,,] map, Vector3 size)
     {
         this.map = map;
         sizeX = (int)size.x;
@@ -21,12 +21,12 @@ public class MapData
     {
         get { return new Vector3(sizeX, sizeY, sizeZ); }
     }
-    public MapCellData[,,] Map 
+    public BlockData[,,] Map 
     { 
         get { return map; }
     }
 
-    public void Add(MapCellData mcData)
+    public void Add(BlockData mcData)
     {
         if (mcData.Pos.x > sizeX || mcData.Pos.y > sizeY || mcData.Pos.z > sizeZ)
         {

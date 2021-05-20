@@ -90,25 +90,29 @@ public class HomeUI : UIBase
     {
         Debug.Log("OnClickBlackBtn");
         cubeSelection.position = cubBtns[0].transform.position;
-        PlayerEntity.E.ChangeSelectMapCellType(MapCellType.Black);
+
+        PlayerEntity.E.ChangeSelectBlock(1001);
     }
     private void OnClickBlueBtn()
     {
         Debug.Log("OnClickBlueBtn");
         cubeSelection.position = cubBtns[1].transform.position;
-        PlayerEntity.E.ChangeSelectMapCellType(MapCellType.Blue);
+
+        PlayerEntity.E.ChangeSelectBlock(1002);
     }
     private void OnClickRedBtn()
     {
         Debug.Log("OnClickRedBtn");
         cubeSelection.position = cubBtns[2].transform.position;
-        PlayerEntity.E.ChangeSelectMapCellType(MapCellType.Red);
+
+        PlayerEntity.E.ChangeSelectBlock(1003);
     }
     private void OnClickGreenBtn()
     {
         Debug.Log("OnClickGreenBtn");
         cubeSelection.position = cubBtns[3].transform.position;
-        PlayerEntity.E.ChangeSelectMapCellType(MapCellType.Green);
+
+        PlayerEntity.E.ChangeSelectBlock(1004);
     }
     private void OnClickLockCursorBtn()
     {

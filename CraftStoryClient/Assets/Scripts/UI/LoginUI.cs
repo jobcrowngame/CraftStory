@@ -19,9 +19,9 @@ public class LoginUI : UIBase
 
     private void Awake()
     {
-        var textAsset = Resources.Load("TestText/Test") as TextAsset;
-        texts = textAsset.text.Split('^');
-        Debug.Log(textAsset);
+        //var textAsset = Resources.Load("TestText/Test") as TextAsset;
+        //texts = textAsset.text.Split('^');
+        //Debug.Log(textAsset);
 
         Init();
     }
@@ -33,7 +33,7 @@ public class LoginUI : UIBase
         LoginLg.E.Init(this);
 
         Login = FindChiled<Text>("Login");
-        Login.text = texts[0];
+        Login.text = LoginText01;
 
         Ver = FindChiled<Text>("Ver");
         Ver.text = "Ver:1.0.0";
@@ -54,7 +54,7 @@ public class LoginUI : UIBase
         Debug.Log("ログイン成功しました。");
         Debug.LogFormat("ようこそ、{0}様", DataMng.E.UserData.UserID);
 
-        Login.text = texts[1];
+        Login.text = LoginText02;
 
         BGBtn.enabled = true;
     }

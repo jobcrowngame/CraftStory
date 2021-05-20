@@ -54,21 +54,18 @@ public class CommonFunction
         return retObj;
     }
 
-    public static GameObject ReadResourcesPrefab(string path)
+    public static GameObject ReadResources(string path)
     {
         var prefab = Resources.Load(path) as GameObject;
         if (prefab == null)
-        {
-            Debug.LogError("not find resources " + path);
             return null;
-        }
 
         return prefab;
     }
 
     public static GameObject CreateObj(Transform parent, string sourcePath)
     {
-        var resources = ReadResourcesPrefab(sourcePath);
+        var resources = ReadResources(sourcePath);
         if (resources == null)
             return null;
 
