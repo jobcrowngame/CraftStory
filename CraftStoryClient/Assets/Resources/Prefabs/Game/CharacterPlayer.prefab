@@ -78,7 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpSpeed: 8
-  gravity: 30
+  gravity: 2000
   rotateSpeed: 3
   camRotSpeed: 3
   joystick: {fileID: 0}

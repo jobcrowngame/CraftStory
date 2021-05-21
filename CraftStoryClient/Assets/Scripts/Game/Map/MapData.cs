@@ -34,7 +34,7 @@ public class MapData
             return;
         }
 
-        map[(int)mcData.Pos.x, (int)mcData.Pos.y, (int)mcData.Pos.z] = mcData;
+        map[(int)mcData.Pos.x, (int)mcData.Pos.y, (int)mcData.Pos.z] = mcData.Copy(); ;
     }
 
     public void Remove(Vector3 pos)

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 [Serializable]
 public class DataMng : Single<DataMng>
@@ -51,6 +52,8 @@ public class DataMng : Single<DataMng>
 
     public void Save()
     {
+        Debug.Log("Save Data");
+
         if (uData != null)
             SaveLoadFile.E.Save(uData, PublicPar.SaveRootPath + UserDataName);
 

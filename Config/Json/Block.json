@@ -14,15 +14,15 @@
     "ID": 1002
   },
   {
-    "Name": "Green",
-    "ResourcesName": "Cube_Green",
+    "Name": "Red",
+    "ResourcesName": "Cube_Red",
     "Type": 3,
     "DestroyTime": 1.2,
     "ID": 1003
   },
   {
-    "Name": "Red",
-    "ResourcesName": "Cube_Red",
+    "Name": "Green",
+    "ResourcesName": "Cube_Green",
     "Type": 4,
     "DestroyTime": 1.2,
     "ID": 1004

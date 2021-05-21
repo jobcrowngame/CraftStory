@@ -5,8 +5,10 @@ class PlayerEntity : CharacterEntity
 {
     public static PlayerEntity E;
 
-    private MainCameraCtl cameraCtl;
     private CharacterController controller;
+    private Camera mainCamera;
+
+    private Vector3 cameraOffset = new Vector3(0, 0, -10f);
 
     public float speed = 6.0F;       //歩行速度
     public float jumpSpeed = 8.0F;   //ジャンプ力
@@ -37,13 +39,14 @@ class PlayerEntity : CharacterEntity
         E = this;
         controller = GetComponent<CharacterController>();
 
-        var camera = Camera.main;
-        cameraCtl = camera.GetComponent<MainCameraCtl>();
         cameraRotateX = CommonFunction.FindChiledByName(transform, "X").transform;
         cameraRotateY = CommonFunction.FindChiledByName(transform, "Y").transform;
         playerModel = CommonFunction.FindChiledByName(transform, "PlayerModel").transform;
 
-        cameraCtl.SetParent(cameraRotateX);
+        mainCamera = Camera.main;
+        mainCamera.transform.SetParent(cameraRotateX);
+        mainCamera.transform.localPosition = cameraOffset;
+        mainCamera.transform.localRotation = Quaternion.identity;
 
         ChangeSelectBlock(1001);
     }
@@ -60,43 +63,24 @@ class PlayerEntity : CharacterEntity
             Move(h, v);
             CameraRotate(mX, mY);
 
-            if (controller.isGrounded)
-            {
-                if (Input.GetButton("Jump"))
-                    moveDirection.y = jumpSpeed;
-            }
-
-            if (Input.GetMouseButtonDown(0))
-                CreateCube();
-            if (Input.GetMouseButtonDown(1))
-                DestroyCube();
+            //if (controller.isGrounded)
+            //{
+            //    if (Input.GetButton("Jump"))
+            //        moveDirection.y = jumpSpeed;
+            //}
         }
         else
         {
             if (joystick != null)
                 Move(joystick.xAxis.value, joystick.yAxis.value);
         }
-    }//Update()
 
-    //public void Move(float h, float v)
-    //{
-    //    this.h = h;
-    //    this.v = v;
-
-    //    //キャラクターの移動と回転
-    //    if (controller.isGrounded)
-    //    {
-    //        moveDirection = speed * new Vector3(h, 0, v);
-    //        moveDirection = transform.TransformDirection(moveDirection);
-    //    }
-
-    //    moveDirection.y -= gravity * Time.deltaTime;
-    //    controller.Move(moveDirection * Time.deltaTime);
-    //}
+        controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0) * Time.deltaTime);
+    }
 
     public void Move(float h, float v)
     {
-        if (h ==0 || v == 0)
+        if (h == 0 || v == 0)
             return;
 
         this.h = h;
@@ -113,10 +97,9 @@ class PlayerEntity : CharacterEntity
             moveDirection = transform.TransformDirection(moveDirection);
         }
 
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
-
         playerModel.rotation = Quaternion.Euler(new Vector3(0, angle1 + angle2, 0));
+
+        controller.Move(moveDirection * Time.deltaTime);
     }
 
     private Vector2 GetV2FromAngle(float angle)
@@ -148,11 +131,11 @@ class PlayerEntity : CharacterEntity
             if (cameraPosZ > -1)
                 cameraPosZ = -1;
 
-            cameraCtl.transform.localPosition = new Vector3(0, 0, cameraPosZ);
+            mainCamera.transform.localPosition = new Vector3(0, 0, cameraPosZ);
         }
         else
         {
-            cameraCtl.transform.localPosition = new Vector3(0, 0, -10);
+            mainCamera.transform.localPosition = new Vector3(0, 0, -10);
         }
 
         cameraRotateX.transform.Rotate(new Vector3(-camRotSpeed * mY, 0, 0));
@@ -165,37 +148,24 @@ class PlayerEntity : CharacterEntity
         selectBlock = bData;
     }
 
-    public void CreateCube()
+    public void CreateCube(GameObject collider, Vector3 pos)
     {
-        if (cameraCtl.HitObj == null)
-            return;
-
-        var cell = cameraCtl.HitObj.GetComponent<MapBlock>();
+        var cell = collider.GetComponent<MapBlock>();
         if (cell == null)
             return;
 
         if (selectBlock == null)
             return;
 
-        WorldMng.E.MapCtl.CreateBlock(cameraCtl.HitPos, selectBlock);
+        WorldMng.E.MapCtl.CreateBlock(pos, selectBlock);
     }
-    public void DestroyCube()
+
+    public void OnClicking(float time, GameObject collider)
     {
-        if (cameraCtl.HitObj == null)
+        if (collider == null)
             return;
 
-        var cell = cameraCtl.HitObj.GetComponent<MapBlock>();
-        if (cell == null)
-            return;
-
-        cell.Delete();
-    }
-    public void OnClicking(float time)
-    {
-        if (cameraCtl.HitObj == null)
-            return;
-
-        var cell = cameraCtl.HitObj.GetComponent<MapBlock>();
+        var cell = collider.GetComponent<MapBlock>();
         if (cell == null)
             return;
 

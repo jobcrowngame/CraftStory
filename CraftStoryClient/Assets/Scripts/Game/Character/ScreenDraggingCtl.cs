@@ -12,6 +12,8 @@ class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     private bool isClicking;
 
     Vector2 startPos;
+    PointerEventData eventData;
+    private RaycastHit _cacheRaycastHit;
 
     float clickingTime;
 
@@ -23,7 +25,8 @@ class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
             if (clickingTime > 0.2f && !isDrag)
             {
-                OnClicking();
+                isClicking = true;
+                OnClicking(eventData.position);
             }
         }
     }
@@ -69,6 +72,8 @@ class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     {
         //Debug.Log("OnPointerDown");
 
+        this.eventData = eventData;
+
         isClick = true;
     }
 
@@ -80,16 +85,47 @@ class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             return;
 
         if (!isClicking)
-            PlayerEntity.E.CreateCube();
+            CreateBlock(eventData.position);
 
         isClick = false;
         isClicking = false;
         clickingTime = 0;
     }
 
-    public void OnClicking()
+    public void OnClicking(Vector2 pos)
     {
-        isClicking = true;
-        PlayerEntity.E.OnClicking(Time.deltaTime);
+        var obj = RayCastHits(pos);
+        if (obj == null)
+            return;
+
+        PlayerEntity.E.OnClicking(Time.deltaTime, obj);
+    }
+
+    private void CreateBlock(Vector2 pos)
+    {
+        var obj = RayCastHits(pos);
+        if (obj == null)
+            return;
+
+        var createPos = _cacheRaycastHit.normal + _cacheRaycastHit.collider.transform.position;
+        PlayerEntity.E.CreateCube(_cacheRaycastHit.collider.gameObject, createPos);
+    }
+
+    /// <summary>
+    /// Rayを飛ばしてチェック
+    /// </summary>
+    public GameObject RayCastHits(Vector2 position)
+    {
+        // スクリーン座標を元にRayを取得
+        var ray = Camera.main.ScreenPointToRay(position);
+
+#if UNITY_EDITOR
+        Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red, 5, false);
+#endif
+
+        if (!Physics.Raycast(ray, out _cacheRaycastHit))
+            return null;
+
+        return _cacheRaycastHit.collider.gameObject;
     }
 }

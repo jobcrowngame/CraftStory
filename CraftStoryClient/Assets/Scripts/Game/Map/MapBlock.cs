@@ -28,7 +28,6 @@ public class MapBlock : MonoBehaviour
 
         if (clickingTime > data.BaseData.DestroyTime)
         {
-            Debug.Log("clickingTime:" + clickingTime);
             Delete();
         }
     }

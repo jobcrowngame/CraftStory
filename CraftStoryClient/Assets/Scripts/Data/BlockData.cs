@@ -35,6 +35,16 @@ public class BlockData
     {
         return string.Format("POS:{0}, BlockType:{1}, DeleteTime:{2}", Pos, BaseData.Name, BaseData.DestroyTime);
     }
+
+    public BlockData Copy()
+    {
+        return new BlockData(blockID)
+        {
+            X = X,
+            Y = Y,
+            Z = Z
+        };
+    }
 }
 
 //public enum MapCellType

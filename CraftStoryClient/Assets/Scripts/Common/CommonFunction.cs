@@ -7,6 +7,16 @@ using UnityEngine;
 
 public class CommonFunction
 {
+    public static T CreateGlobalObject<T>() where T : Component
+    {
+        var obj = new GameObject();
+        obj.transform.parent = Main.E.transform;
+        var entity = obj.AddComponent<T>();
+        obj.name = entity.ToString();
+
+        return entity;
+    }
+
     public static T FindChiledByName<T>(Transform parent, string name) where T : Component
     {
         var findObj = FindChiledByName(parent, name);

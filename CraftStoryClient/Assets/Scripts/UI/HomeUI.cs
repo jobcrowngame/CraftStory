@@ -19,6 +19,7 @@ public class HomeUI : UIBase
     private void Start()
     {
         WorldMng.E.StartGame();
+
         Init();
     }
 
