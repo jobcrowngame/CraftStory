@@ -15,7 +15,7 @@ public class CameraCtl : MonoBehaviour
     private float triggerExitTime;
     private RaycastHit _cacheRaycastHit;
 
-    public float GetEulerAngleY { get => cameraRotateY.transform.rotation.eulerAngles.y; }
+    public float GetEulerAngleY { get => cameraRotateY.transform.localEulerAngles.y; }
 
     public void Init()
     {
