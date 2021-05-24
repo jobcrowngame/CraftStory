@@ -61,13 +61,16 @@
     <Compile Include="Assets\Scripts\UI\BagUI.cs" />
     <Compile Include="Assets\Scripts\Common\ConfigMng.cs" />
     <Compile Include="Assets\Scripts\UI\ShopLG.cs" />
+    <Compile Include="Assets\Scripts\Test\TestTriger.cs" />
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
+    <Compile Include="Assets\Scripts\Test\TestAtt.cs" />
     <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
     <Compile Include="Assets\Scripts\Game\WorldMng.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
     <Compile Include="Assets\Scripts\Game\Character\PlayerEntity.cs" />
     <Compile Include="Assets\Scripts\UI\ShopUI.cs" />
+    <Compile Include="Assets\Scripts\Test\Test2.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\Data\UserData.cs" />
     <Compile Include="Assets\Scripts\Game\Character\ScreenDraggingCtl.cs" />
@@ -90,9 +93,11 @@
     <Compile Include="Assets\Scripts\Main.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
+    <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Common\SaveLoadFile.cs" />
     <Compile Include="Assets\Scripts\Data\DataMng.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion1.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\CameraCtl.cs" />
     <Compile Include="Assets\Scripts\UI\Terms02UI.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryUI.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxLG.cs" />
@@ -111,8 +116,6 @@
     <Compile Include="Assets\Scripts\Game\Map\MapData.cs" />
     <Compile Include="Assets\Scripts\Common\GS2.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
-    <Compile Include="Assets\Scripts\Test\Test2.cs" />
-    <Compile Include="Assets\Scripts\Test\TestAtt.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\SemiTransparent.shader" />

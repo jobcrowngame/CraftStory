@@ -79,8 +79,6 @@ MonoBehaviour:
   speed: 5
   jumpSpeed: 8
   gravity: 2000
-  rotateSpeed: 3
-  camRotSpeed: 3
   joystick: {fileID: 0}
   screenDraggingCtl: {fileID: 0}
 --- !u!143 &5743920583998338413
@@ -194,7 +192,6 @@ GameObject:
   - component: {fileID: 7510785932532054369}
   - component: {fileID: 665039508234497806}
   - component: {fileID: 8359833767410318996}
-  - component: {fileID: 4298657758152223889}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -265,19 +262,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &4298657758152223889
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6866403896976504710}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9027562317918127447
 GameObject:
   m_ObjectHideFlags: 0

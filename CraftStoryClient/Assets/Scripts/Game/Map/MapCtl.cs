@@ -76,4 +76,13 @@ public class MapCtl
         mData.Remove(mCell.data.Pos);
         GameObject.Destroy(mCell.gameObject);
     }
+
+    public bool OutOfMapRangeX(float posX)
+    {
+        return posX > mData.MapSize.x - 1 || posX < 0;
+    }
+    public bool OutOfMapRangeZ(float posZ)
+    {
+        return posZ > mData.MapSize.z - 1 || posZ < 0;
+    }
 }
