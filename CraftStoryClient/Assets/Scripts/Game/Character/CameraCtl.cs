@@ -83,7 +83,9 @@ public class CameraCtl : MonoBehaviour
     }
     private void CameraPull(bool b)
     {
-        transform.localPosition = Vector3.MoveTowards(transform.localPosition, b ? maxPos : minPos, b ? 0.01f : 0.5f);
+        transform.localPosition = Vector3.MoveTowards(transform.localPosition, 
+            b ? maxPos : minPos, 
+            b ? SettingMng.E.cameraPullSpeed : SettingMng.E.cameraPushSpeed);
     }
     private bool IsBlock()
     {

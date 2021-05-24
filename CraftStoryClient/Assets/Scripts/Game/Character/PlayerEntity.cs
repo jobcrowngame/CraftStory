@@ -63,8 +63,19 @@ class PlayerEntity : CharacterEntity
         if (h == 0 || v == 0)
             return;
 
+        Debug.Log(new Vector2(h, v));
+
         this.h = h;
         this.v = v;
+
+#if UNITY_IOS
+
+        Debug.Log("is ios");
+
+        this.h = -h;
+        this.v = -v;
+
+#endif
 
         var angle1 = GetAngleFromV2(new Vector2(h, v).normalized);
         var angle2 = cameraCtl.GetEulerAngleY;

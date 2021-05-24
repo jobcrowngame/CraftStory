@@ -71,6 +71,7 @@ class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public void OnPointerDown(PointerEventData eventData)
     {
         //Debug.Log("OnPointerDown");
+        Debug.Log(eventData.position);
 
         this.eventData = eventData;
 
