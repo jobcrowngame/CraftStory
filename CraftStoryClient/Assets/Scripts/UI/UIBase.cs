@@ -61,7 +61,7 @@ public class UIBase : MonoBehaviour
 
     protected T AddCell<T>(string resourcesPath, Transform parent) where T : UIBase
     {
-        var resources = CommonFunction.ReadResources(resourcesPath);
+        var resources = ResourcesMng.E.ReadResources(resourcesPath);
         if (resources == null)
             Debug.LogError("not find resources " + resourcesPath);
 

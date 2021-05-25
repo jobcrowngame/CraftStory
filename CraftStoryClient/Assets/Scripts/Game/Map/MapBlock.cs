@@ -35,4 +35,9 @@ public class MapBlock : MonoBehaviour
     {
         clickingTime = 0;
     }
+
+    //public void OnWillRenderObject()
+    //{
+    //    Debug.Log("OnWillRenderObject");
+    //}
 }

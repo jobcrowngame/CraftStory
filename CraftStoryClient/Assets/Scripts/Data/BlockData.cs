@@ -5,10 +5,11 @@ using UnityEngine;
 [Serializable]
 public class BlockData
 {
-    private float X { get; set; }
-    private float Y { get; set; }
-    private float Z { get; set; }
+    private int X { get; set; }
+    private int Y { get; set; }
+    private int Z { get; set; }
     private int blockID { get; set; }
+    private bool isIn { get; set; }
 
     public Block BaseData 
     {
@@ -20,9 +21,9 @@ public class BlockData
         this.blockID = blockID;
     }
 
-    public Vector3 Pos
+    public Vector3Int Pos
     {
-        get { return new Vector3(X, Y, Z); }
+        get { return new Vector3Int(X, Y, Z); }
         set
         {
             X = value.x;
@@ -30,6 +31,8 @@ public class BlockData
             Z = value.z;
         }
     }
+
+    public bool IsIn { get => isIn; set => isIn = value; }
 
     public override string ToString()
     {

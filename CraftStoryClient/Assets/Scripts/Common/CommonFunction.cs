@@ -63,13 +63,4 @@ public class CommonFunction
 
         return retObj;
     }
-
-    public static GameObject ReadResources(string path)
-    {
-        var prefab = Resources.Load(path) as GameObject;
-        if (prefab == null)
-            return null;
-
-        return prefab;
-    }
 }

@@ -10,8 +10,6 @@ public class CameraCtl : MonoBehaviour
     private Transform cameraRotateX;
     private Transform cameraRotateY;
 
-    private Vector3 minPos;
-    private Vector3 maxPos;
     private float triggerExitTime;
     private RaycastHit _cacheRaycastHit;
 
@@ -19,9 +17,6 @@ public class CameraCtl : MonoBehaviour
 
     public void Init()
     {
-        minPos = Vector3.zero;
-        maxPos = new Vector3(0, 0, SettingMng.E.CameraDistanseMax);
-
         cameraRotateX = CommonFunction.FindChiledByName(PlayerEntity.E.transform, "X").transform;
         cameraRotateY = CommonFunction.FindChiledByName(PlayerEntity.E.transform, "Y").transform;
 
@@ -44,7 +39,8 @@ public class CameraCtl : MonoBehaviour
                 CameraPull(true);
         }
 
-        PlayerEntity.E.PlayerModelActive(transform.localPosition.z < SettingMng.E.EnactiveCharacterModelDistanse);
+        if (PlayerEntity.E != null)
+            PlayerEntity.E.PlayerModelActive(transform.localPosition.z < SettingMng.E.EnactiveCharacterModelDistanse);
     }
 
     public void OnTriggerStay(Collider other)
@@ -74,7 +70,7 @@ public class CameraCtl : MonoBehaviour
 
         if (lookUpAngle > SettingMng.E.LookUpAngleMin && lookUpAngle < 360)
         {
-            Debug.Log(lookUpAngle);
+            //Debug.Log(lookUpAngle);
             CameraPull(false);
         }
 
@@ -83,9 +79,20 @@ public class CameraCtl : MonoBehaviour
     }
     private void CameraPull(bool b)
     {
-        transform.localPosition = Vector3.MoveTowards(transform.localPosition, 
-            b ? maxPos : minPos, 
-            b ? SettingMng.E.cameraPullSpeed : SettingMng.E.cameraPushSpeed);
+
+        Vector3 curPos = transform.localPosition;
+        Vector3 targetPos = b ? new Vector3(0, 0, SettingMng.E.CameraDistanseMax) : Vector3.zero;
+        float step = b ? SettingMng.E.cameraPullSpeed : SettingMng.E.cameraPushSpeed;
+
+        //Debug.LogFormat("curPos:{0}, targetPos:{1}, b:{2}", transform.localPosition, targetPos, b);
+
+        if (Vector3.Distance(transform.position, targetPos) < 0.001f)
+        {
+            // Swap the position of the cylinder.
+            targetPos *= -1.0f;
+        }
+
+        transform.localPosition = Vector3.MoveTowards(curPos, targetPos, step);
     }
     private bool IsBlock()
     {

@@ -21,6 +21,7 @@ public class Main : MonoBehaviour
         var uiRoot = GameObject.Find("Canvas");
 
         yield return ConfigMng.E.InitInitCoroutine();
+        yield return ResourcesMng.E.InitInitCoroutine();
         yield return UICtl.E.InitCoroutine(gameObject, uiRoot);
         yield return LoadData();
         yield return GS2.E.InitCoroutine();
@@ -30,6 +31,8 @@ public class Main : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        return;
+
         if (WorldMng.E != null) WorldMng.E.OnQuit();
         if (DataMng.E != null) DataMng.E.Save();
     }

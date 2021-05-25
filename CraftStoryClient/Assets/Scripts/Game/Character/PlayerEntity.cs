@@ -63,21 +63,11 @@ class PlayerEntity : CharacterEntity
         if (h == 0 || v == 0)
             return;
 
-        Debug.Log(new Vector2(h, v));
-
         this.h = h;
         this.v = v;
 
-#if UNITY_IOS
-
-        Debug.Log("is ios");
-
-#endif
-
         var angle1 = GetAngleFromV2(new Vector2(h, v).normalized);
-        Debug.Log("angle1" + angle1);
         var angle2 = cameraCtl.GetEulerAngleY;
-        Debug.Log("angle2" + angle1);
         var vec = GetV2FromAngle(angle1 + angle2);
 
         //キャラクターの移動と回転
@@ -94,7 +84,6 @@ class PlayerEntity : CharacterEntity
         if (WorldMng.E.MapCtl.OutOfMapRangeZ(transform.position.z + moveDirection.z * Time.deltaTime))
             moveDirection.z = 0;
 
-        Debug.Log("moveDirection" + moveDirection);
         controller.Move(moveDirection * Time.deltaTime);
     }
     public void CameraRotate(float x, float y)
@@ -123,7 +112,7 @@ class PlayerEntity : CharacterEntity
         selectBlock = bData;
     }
 
-    public void CreateCube(GameObject collider, Vector3 pos)
+    public void CreateCube(GameObject collider, Vector3Int pos)
     {
         var cell = collider.GetComponent<MapBlock>();
         if (cell == null)

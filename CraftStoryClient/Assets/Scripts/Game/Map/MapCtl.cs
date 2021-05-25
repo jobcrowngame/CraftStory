@@ -13,6 +13,8 @@ public class MapCtl
 
     public void CreateMap()
     {
+        var startTime = DateTime.Now;
+
         mapCellParent = new GameObject("Ground").transform;
 
         mData = DataMng.E.MapData;
@@ -24,10 +26,18 @@ public class MapCtl
                 for (int k = 0; k < mData.MapSize.z; k++)
                 {
                     if (mData.Map[i, j, k] != null)
+                    {
+                        if (mData.Map[i, j, k].IsIn)
+                            continue;
+
                         CreateBlock(mData.Map[i, j, k]);
+                    }
                 }
             }
         }
+
+        TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
+        Debug.LogWarningFormat("mapData 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
     }
 
     public void OnQuit()
@@ -35,27 +45,24 @@ public class MapCtl
 
     }
 
-    public MapBlock CreateBlock(Vector3 pos, BlockData block)
+    public MapBlock CreateBlock(Vector3Int pos, BlockData block)
     {
         block.Pos = pos;
         return CreateBlock(block);
     }
     public MapBlock CreateBlock(BlockData block)
     {
-        if (block.Pos.y > 3)
-        {
-            Debug.LogFormat("Create block [{0}]. \n DT:{1}, Pos:{2}",
-           block.BaseData.Name, block.BaseData.DestroyTime, block.Pos);
-        }
+        //if (block.Pos.y > 3)
+        //{
+        //    Debug.LogFormat("Create block [{0}]. \n DT:{1}, Pos:{2}",
+        //   block.BaseData.Name, block.BaseData.DestroyTime, block.Pos);
+        //}
 
         string sourcesFullPath = PublicPar.BlockRootPath + block.BaseData.ResourcesName;
 
-        var resources = CommonFunction.ReadResources(sourcesFullPath);
+        var resources = ResourcesMng.E.ReadResources(sourcesFullPath);
         if (resources == null)
-        {
-            Debug.LogError("not find resources " + sourcesFullPath);
             return null;
-        }
 
         var obj = GameObject.Instantiate(resources, mapCellParent);
         if (obj == null)

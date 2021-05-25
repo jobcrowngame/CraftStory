@@ -71,7 +71,7 @@ class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public void OnPointerDown(PointerEventData eventData)
     {
         //Debug.Log("OnPointerDown");
-        Debug.Log(eventData.position);
+        //Debug.Log(eventData.position);
 
         this.eventData = eventData;
 
@@ -109,7 +109,7 @@ class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             return;
 
         var createPos = _cacheRaycastHit.normal + _cacheRaycastHit.collider.transform.position;
-        PlayerEntity.E.CreateCube(_cacheRaycastHit.collider.gameObject, createPos);
+        PlayerEntity.E.CreateCube(_cacheRaycastHit.collider.gameObject, new Vector3Int((int)createPos.x, (int)createPos.y, (int)createPos.z));
     }
 
     /// <summary>
