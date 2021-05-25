@@ -14,7 +14,7 @@ public class TestDataFoctry
             for (int z = 0; z < mapSize.z; z++)
             {
                 //var randomY = 4;
-                var randomY = Random.Range(20-3, 20+3);
+                var randomY = Random.Range(20-1, 20+1);
                 for (int y = 0; y < randomY; y++)
                 {
                     map[x, y, z] = GetNewBlockData(new Vector3Int(x, y, z));
