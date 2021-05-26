@@ -78,7 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpSpeed: 8
-  gravity: 2000
+  gravity: 5000
   joystick: {fileID: 0}
   screenDraggingCtl: {fileID: 0}
 --- !u!143 &5743920583998338413

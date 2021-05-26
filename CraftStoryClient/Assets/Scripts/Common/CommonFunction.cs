@@ -63,4 +63,29 @@ public class CommonFunction
 
         return retObj;
     }
+
+    public static GameObject Instantiate(string path, Transform parent, Vector3Int pos)
+    {
+        var resources = ResourcesMng.E.ReadResources(path);
+        if (resources == null)
+            return null;
+
+        var obj = GameObject.Instantiate(resources, parent);
+        obj.transform.position = pos;
+
+        return obj;
+    }
+    public static T Instantiate<T>(string path, Transform parent, Vector3Int pos) where T : Component
+    {
+        var obj = Instantiate(path, parent, pos);
+        if (obj == null)
+            return null;
+
+        var componte = obj.GetComponent<T>();
+
+        if (componte == null)
+            componte = obj.AddComponent<T>();
+
+        return componte;
+    }
 }

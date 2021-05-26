@@ -58,7 +58,10 @@ public class DataMng : Single<DataMng>
             SaveLoadFile.E.Save(uData, PublicPar.SaveRootPath + UserDataName);
 
         if (mData != null)
+        {
+            mData.ToStringData();
             SaveLoadFile.E.Save(mData, PublicPar.SaveRootPath + MapDataName);
+        }
 
         if (cData != null)
             SaveLoadFile.E.Save(cData, PublicPar.SaveRootPath + CharacterDataName);
@@ -77,6 +80,7 @@ public class DataMng : Single<DataMng>
             return false;
 
         this.mData = (MapData)mData;
+        this.mData.ParseStringData();
 
         var cData = SaveLoadFile.E.Load(PublicPar.SaveRootPath + CharacterDataName);
         if (cData == null)

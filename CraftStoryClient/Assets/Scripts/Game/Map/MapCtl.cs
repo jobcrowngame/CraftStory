@@ -8,29 +8,26 @@ using UnityEngine;
 public class MapCtl
 {
     private Transform mapCellParent;
-
-    private MapData mData;
+    public Transform CellParent { get => mapCellParent; }
 
     public void CreateMap()
     {
         var startTime = DateTime.Now;
-
         mapCellParent = new GameObject("Ground").transform;
 
-        mData = DataMng.E.MapData;
-
-        for (int i = 0; i < mData.MapSize.x; i++)
+        for (int i = 0; i < DataMng.E.MapData.MapSize.x; i++)
         {
-            for (int j = 0; j < mData.MapSize.y; j++)
+            for (int j = 0; j < DataMng.E.MapData.MapSize.y; j++)
             {
-                for (int k = 0; k < mData.MapSize.z; k++)
+                for (int k = 0; k < DataMng.E.MapData.MapSize.z; k++)
                 {
-                    if (mData.Map[i, j, k] != null)
+                    if (DataMng.E.MapData.Map[i, j, k] != null)
                     {
-                        if (mData.Map[i, j, k].IsIn)
+                        if (DataMng.E.MapData.Map[i, j, k].IsIn)
                             continue;
 
-                        CreateBlock(mData.Map[i, j, k]);
+                        DataMng.E.MapData.Add(DataMng.E.MapData.Map[i, j, k]);
+                        DataMng.E.MapData.Map[i, j, k].ActiveBlock();
                     }
                 }
             }
@@ -45,51 +42,98 @@ public class MapCtl
 
     }
 
-    public MapBlock CreateBlock(Vector3Int pos, BlockData block)
+    public MapBlock CreateBlock(Vector3Int pos, int blockId)
     {
-        block.Pos = pos;
-        return CreateBlock(block);
-    }
-    public MapBlock CreateBlock(BlockData block)
-    {
-        //if (block.Pos.y > 3)
-        //{
-        //    Debug.LogFormat("Create block [{0}]. \n DT:{1}, Pos:{2}",
-        //   block.BaseData.Name, block.BaseData.DestroyTime, block.Pos);
-        //}
-
-        string sourcesFullPath = PublicPar.BlockRootPath + block.BaseData.ResourcesName;
-
-        var resources = ResourcesMng.E.ReadResources(sourcesFullPath);
-        if (resources == null)
+        if (IsOutRange(pos))
             return null;
 
-        var obj = GameObject.Instantiate(resources, mapCellParent);
-        if (obj == null)
-            return null;
+        BlockData bData = new BlockData(blockId);
+        bData.Pos = pos;
+        return CreateBlock(bData);
+    }
+    public MapBlock CreateBlock(BlockData data)
+    {
+        var block = data.ActiveBlock();
+        DataMng.E.MapData.Add(data);
+        CheckNextToBlocks(data);
+        return block;
+    }
+   
+    public void DeleteMapCell(MapBlock block)
+    {
+        DataMng.E.MapData.Remove(block.data.Pos);
+        GameObject.Destroy(block.gameObject);
+        CheckNextToBlocks(block.data);
+    }
+   
+    private void CheckNextToBlocks(BlockData data)
+    {
+        var list = GetNextToBlocks(data);
 
-        obj.transform.position = block.Pos;
+        for (int i = 0; i < list.Count; i++)
+        {
+            var isSurface = CheckBlockIsSurface(list[i]);
+            list[i].ActiveBlock(isSurface);
+        }
+    }
+    private bool CheckBlockIsSurface(BlockData data)
+    {
+        var isSurface = IsSurface(new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
+        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x + 1, data.Pos.y, data.Pos.z));
+        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x, data.Pos.y - 1, data.Pos.z));
+        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x, data.Pos.y + 1, data.Pos.z));
+        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z - 1));
+        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z + 1));
+        return isSurface;
+    }
+    private bool IsSurface(Vector3Int pos)
+    {
+        if (IsOutRange(pos))
+            return false;
 
-        var cell = obj.AddComponent<MapBlock>();
-        cell.SetData(block);
-
-        mData.Add(block);
-
-        return cell;
+        return GetNextToBlock(pos) == null;
     }
 
-    public void DeleteMapCell(MapBlock mCell)
+    private List<BlockData> GetNextToBlocks(BlockData data)
     {
-        mData.Remove(mCell.data.Pos);
-        GameObject.Destroy(mCell.gameObject);
+        BlockData bData;
+        List<BlockData> blockList = new List<BlockData>();
+
+        bData = GetNextToBlock(new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
+        if (bData != null) blockList.Add(bData);
+        bData = GetNextToBlock(new Vector3Int(data.Pos.x + 1, data.Pos.y, data.Pos.z));
+        if (bData != null) blockList.Add(bData);
+        bData = GetNextToBlock(new Vector3Int(data.Pos.x, data.Pos.y - 1, data.Pos.z));
+        if (bData != null) blockList.Add(bData);
+        bData = GetNextToBlock(new Vector3Int(data.Pos.x, data.Pos.y + 1, data.Pos.z));
+        if (bData != null) blockList.Add(bData);
+        bData = GetNextToBlock(new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z - 1));
+        if (bData != null) blockList.Add(bData);
+        bData = GetNextToBlock(new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z + 1));
+        if (bData != null) blockList.Add(bData);
+
+        return blockList;
+    }
+    private BlockData GetNextToBlock(Vector3Int pos)
+    {
+        if (IsOutRange(pos))
+            return null;
+
+        return DataMng.E.MapData.GetMap(pos);
+    }
+    private bool IsOutRange(Vector3Int pos)
+    {
+        return pos.x < 0 || pos.x > DataMng.E.MapData.MapSize.x - 1
+            || pos.y < 0 || pos.y > DataMng.E.MapData.MapSize.y - 1
+            || pos.z < 0 || pos.z > DataMng.E.MapData.MapSize.z - 1;
     }
 
     public bool OutOfMapRangeX(float posX)
     {
-        return posX > mData.MapSize.x - 1 || posX < 0;
+        return posX > DataMng.E.MapData.MapSize.x - 1 || posX < 0;
     }
     public bool OutOfMapRangeZ(float posZ)
     {
-        return posZ > mData.MapSize.z - 1 || posZ < 0;
+        return posZ > DataMng.E.MapData.MapSize.z - 1 || posZ < 0;
     }
 }

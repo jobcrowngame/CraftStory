@@ -31,8 +31,6 @@ public class Main : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        return;
-
         if (WorldMng.E != null) WorldMng.E.OnQuit();
         if (DataMng.E != null) DataMng.E.Save();
     }

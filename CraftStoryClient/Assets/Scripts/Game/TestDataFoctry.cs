@@ -6,15 +6,14 @@ public class TestDataFoctry
 
     public static MapData CreateTestMap()
     {
-        mapSize = new Vector3Int(100, 100, 100);
+        mapSize = new Vector3Int(300, 100, 300);
 
         BlockData[,,] map = new BlockData[mapSize.x, mapSize.y, mapSize.z];
         for (int x = 0; x < mapSize.x; x++)
         {
             for (int z = 0; z < mapSize.z; z++)
             {
-                //var randomY = 4;
-                var randomY = Random.Range(20-1, 20+1);
+                var randomY = Random.Range(20, 20 + 2);
                 for (int y = 0; y < randomY; y++)
                 {
                     map[x, y, z] = GetNewBlockData(new Vector3Int(x, y, z));
@@ -28,7 +27,6 @@ public class TestDataFoctry
             {
                 for (int z = 0; z < mapSize.z; z++)
                 {
-                    //Debug.LogFormat("{0}, {1}:{2}:{3}", ++count, x, y, z);
                     SetDefaltInfo(map, map[x, y, z]);
                 }
             }
@@ -63,54 +61,35 @@ public class TestDataFoctry
         if (mData == null)
             return;
 
-        //if (mData.Pos.x == 0 || mData.Pos.y == 0 || mData.Pos.z == 0 || mData.Pos.x == mapSize.x - 1 || 
-        //    mData.Pos.y == mapSize.y - 1 || mData.Pos.z == mapSize.z - 1)
-        //{
-        //    mData.IsIn = false;
-        //    //Debug.LogFormat("{0}={1}", mData.Pos, mData.IsIn);
-        //    return;
-        //}
+        bool ret = false;
+       
+        if (!ret) ret = CheckPosIsNull(map, new Vector3Int(mData.Pos.x - 1, mData.Pos.y, mData.Pos.z));
+        if (!ret) ret = CheckPosIsNull(map, new Vector3Int(mData.Pos.x + 1, mData.Pos.y, mData.Pos.z));
+        if (!ret) ret = CheckPosIsNull(map, new Vector3Int(mData.Pos.x, mData.Pos.y - 1, mData.Pos.z));
+        if (!ret) ret = CheckPosIsNull(map, new Vector3Int(mData.Pos.x, mData.Pos.y + 1, mData.Pos.z));
+        if (!ret) ret = CheckPosIsNull(map, new Vector3Int(mData.Pos.x, mData.Pos.y, mData.Pos.z - 1));
+        if (!ret) ret = CheckPosIsNull(map, new Vector3Int(mData.Pos.x, mData.Pos.y, mData.Pos.z + 1));
 
-        int minX = mData.Pos.x - 1;
-        if (minX < 0) minX = 0;
-        int maxX = mData.Pos.x + 1;
-        if (maxX > mapSize.x - 1) maxX = mapSize.x - 1;
+        mData.IsIn = !ret;
+    }
 
-        int minY = mData.Pos.y - 1;
-        if (minY < 0) minY = 0;
-        int maxY = mData.Pos.y + 1;
-        if (maxY > mapSize.y - 1) maxY = mapSize.y - 1;
-
-        int minZ = mData.Pos.z - 1;
-        if (minZ < 0) minZ = 0;
-        int maxZ = mData.Pos.z + 1;
-        if (maxZ > mapSize.z - 1) maxZ = mapSize.z - 1;
-
-
-        for (int x = minX; x <= maxX; x++)
+    private static bool CheckPosIsNull(BlockData[,,] map, Vector3Int pos)
+    {
+        try
         {
-            for (int y = minY; y <= maxY; y++)
-            {
-                for (int z = minZ; z <= maxZ; z++)
-                {
-                    try
-                    {
-                        if (map[x, y, z] == null)
-                        {
-                            mData.IsIn = false;
-                            //Debug.LogWarning("not in block " + mData.Pos);
-                            //Debug.LogFormat("{0}={1}", mData.Pos, mData.IsIn);
-                            return;
-                        }
-                    }
-                    catch (System.Exception)
-                    {
-                        Debug.LogErrorFormat("{0},{1},{2}",x,y,z);
-                    }
-                }
-            }
-        }
+            if (pos.x < 0) pos.x = 0;
+            if (pos.x > mapSize.x - 1) pos.x = mapSize.x - 1;
+            if (pos.y < 0) pos.y = 0;
+            if (pos.y > mapSize.y - 1) pos.y = mapSize.y - 1;
+            if (pos.z < 0) pos.z = 0;
+            if (pos.z > mapSize.z - 1) pos.z = mapSize.z - 1;
 
-        //Debug.LogFormat("{0}={1}", mData.Pos, mData.IsIn);
+            return map[pos.x, pos.y, pos.z] == null;
+        }
+        catch
+        {
+            Debug.LogError(map + ", " + pos);
+            return false;
+        }
     }
 }

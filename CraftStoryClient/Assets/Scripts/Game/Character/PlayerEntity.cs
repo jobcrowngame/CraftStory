@@ -15,7 +15,7 @@ class PlayerEntity : CharacterEntity
     private Vector3 moveDirection = Vector3.zero;
     private float h, v;
 
-    private BlockData selectBlock;
+    private int selectBlockID;
     private GameObject selectBlokCube;
 
     public Joystick joystick;
@@ -108,8 +108,7 @@ class PlayerEntity : CharacterEntity
 
     public void ChangeSelectBlock(int blockId)
     {
-        BlockData bData = new BlockData(ConfigMng.E.BlockConfig[blockId].ID);
-        selectBlock = bData;
+        selectBlockID = blockId;
     }
 
     public void CreateCube(GameObject collider, Vector3Int pos)
@@ -118,10 +117,9 @@ class PlayerEntity : CharacterEntity
         if (cell == null)
             return;
 
-        if (selectBlock == null)
-            return;
+        WorldMng.E.MapCtl.CreateBlock(pos, selectBlockID);
 
-        WorldMng.E.MapCtl.CreateBlock(pos, selectBlock);
+        Debug.Log("Create block " + pos);
     }
 
     public void OnClicking(float time, GameObject collider)

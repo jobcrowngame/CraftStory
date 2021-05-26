@@ -2,37 +2,42 @@
 using System;
 using UnityEngine;
 
-[Serializable]
 public class BlockData
 {
-    private int X { get; set; }
-    private int Y { get; set; }
-    private int Z { get; set; }
-    private int blockID { get; set; }
-    private bool isIn { get; set; }
-
-    public Block BaseData 
-    {
-        get => ConfigMng.E.BlockConfig[blockID];
-    }
+    private int blockID;
+    private int x, y, z;
+    private bool isIn;
+    private MapBlock block;
 
     public BlockData(int blockID) 
     {
         this.blockID = blockID;
     }
+    public BlockData(string strData, Vector3Int pos)
+    {
+        string[] data = strData.Split('^');
+
+        blockID = int.Parse(data[0]);
+        IsIn = data[1] == "t";
+
+        x = pos.x;
+        y = pos.y;
+        z = pos.z;
+    }
 
     public Vector3Int Pos
     {
-        get { return new Vector3Int(X, Y, Z); }
+        get { return new Vector3Int(x, y, z); }
         set
         {
-            X = value.x;
-            Y = value.y;
-            Z = value.z;
+            x = value.x;
+            y = value.y;
+            z = value.z;
         }
     }
-
+    public Block BaseData { get => ConfigMng.E.BlockConfig[blockID]; }
     public bool IsIn { get => isIn; set => isIn = value; }
+    public MapBlock Block { get => block; }
 
     public override string ToString()
     {
@@ -43,10 +48,38 @@ public class BlockData
     {
         return new BlockData(blockID)
         {
-            X = X,
-            Y = Y,
-            Z = Z
+            x = x,
+            y = y,
+            z = z
         };
+    }
+
+    public string ToStringData()
+    {
+        return string.Format("{0}^{1}", blockID, isIn ? "t" : "f");
+    }
+
+    public MapBlock ActiveBlock(bool active = true)
+    {
+        if (active)
+        {
+            if (block == null)
+            {
+                string sourcesFullPath = PublicPar.BlockRootPath + BaseData.ResourcesName;
+                block = CommonFunction.Instantiate<MapBlock>(sourcesFullPath, WorldMng.E.MapCtl.CellParent, Pos);
+                block.SetData(this);
+            }
+            else
+                block.gameObject.SetActive(active);
+        }
+        else
+        {
+            if (block != null)
+                block.gameObject.SetActive(false);
+        }
+
+        IsIn = !active;
+        return block;
     }
 }
 
