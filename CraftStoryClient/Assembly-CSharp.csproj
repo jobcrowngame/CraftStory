@@ -125,6 +125,7 @@
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />
      <None Include="Assets\Resources\Shader\SemiTransparent.shader" />
+     <None Include="Assets\Five Seamless Tileable Ground Textures\read me.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
