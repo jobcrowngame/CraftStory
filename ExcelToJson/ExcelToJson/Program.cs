@@ -5,6 +5,8 @@ using ExcelDataReader;
 using Newtonsoft.Json;
 using JsonConfigData;
 using System.Collections.Generic;
+using System.Linq;
+using System.Data.OleDb;
 
 namespace ExcelToJson
 {
@@ -29,26 +31,9 @@ namespace ExcelToJson
             for (int i = 0; i < files.Length; i++)
             {
                 string outFileName = Path.GetFileNameWithoutExtension(files[i]);
-                ExcelToJson(files[i], outFilePath + outFileName + ".json", indented);
+                ExcelToJson(files[i], outFilePath, outFileName, indented);
             }
         }
-        private static void ExcelToJson(string inFilePath, string outFilePath, Formatting indented)
-        {
-            var ds = ReadExcelData(inFilePath);
-            if (ds == null)
-                return;
-
-            foreach (DataTable tbl in ds.Tables)
-            {
-                //var json = JsonConvert.SerializeObject(tbl, indented);
-                //File.WriteAllText(outFilePath, json);
-
-                var list = ToBlock(tbl);
-                var json = JsonConvert.SerializeObject(list, indented);
-                File.WriteAllText(outFilePath, json);
-            }
-        }
-
         private static DataSet ReadExcelData(string path)
         {
             DataSet ds = null;
@@ -72,29 +57,95 @@ namespace ExcelToJson
             return ds;
         }
 
-        private static List<Block> ToBlock(DataTable dt)
+        private static void ExcelToJson(string inFilePath, string outputPath, string fileName, Formatting indented)
         {
-            List<Block> blockList = new List<Block>();
-            string[] columNames = new string[dt.Columns.Count];
+            var ds = ReadExcelData(inFilePath);
+            if (ds == null)
+                return;
 
-            for (int i = 0; i < dt.Columns.Count; i++)
+            foreach (DataTable tbl in ds.Tables)
             {
-                columNames[i] = dt.Rows[0].ItemArray[i].ToString();
-            }
+                for (int i = 0; i < tbl.Columns.Count; i++)
+                {
+                    tbl.Columns[i].ColumnName = tbl.Rows[0].ItemArray[i].ToString();
+                }
 
-            for (int i = 1; i < dt.Rows.Count; i++)
+                object list = null;
+                switch (fileName)
+                {
+                    case "Block": list = Block(tbl); break;
+                    case "Map": list = Map(tbl); break;
+                    case "MapMountain": list = MapMountain(tbl); break;
+                    default:
+                        break;
+                }
+
+                var json = JsonConvert.SerializeObject(list, indented);
+                File.WriteAllText(outputPath + fileName + ".json", json);
+            }
+        }
+
+        private static object Block(DataTable tbl)
+        {
+            List<Block> list = new List<Block>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
             {
                 var data = new Block();
-                data.ID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
-                data.Name = Convert.ToString(dt.Rows[i].ItemArray[1]);
-                data.ResourcesName = Convert.ToString(dt.Rows[i].ItemArray[2]);
-                data.Type = Convert.ToInt32(dt.Rows[i].ItemArray[3]);
-                data.DestroyTime = (float)Convert.ToDouble(dt.Rows[i].ItemArray[4]);
+                data.ID = ToInt32(tbl.Rows[i].ItemArray[0]);
+                data.Name = Convert.ToString(tbl.Rows[i].ItemArray[1]);
+                data.ResourcesName = Convert.ToString(tbl.Rows[i].ItemArray[2]);
+                data.Type = ToInt32(tbl.Rows[i].ItemArray[3]);
+                data.DestroyTime = (float)Convert.ToDouble(tbl.Rows[i].ItemArray[4]);
 
-                blockList.Add(data);
+                list.Add(data);
             }
+            return list;
+        }
+        private static object Map(DataTable tbl)
+        {
+            List<Map> list = new List<Map>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var cell = new Map();
+                cell.ID = Convert.ToInt32( tbl.Rows[i]["ID"]);
+                cell.Name = tbl.Rows[i]["Name"].ToString();
+                cell.SizeX = Convert.ToInt32(tbl.Rows[i]["SizeX"]);
+                cell.SizeY = Convert.ToInt32(tbl.Rows[i]["SizeY"]);
+                cell.SizeZ = Convert.ToInt32(tbl.Rows[i]["SizeZ"]);
+                cell.Block01 = Convert.ToInt32(tbl.Rows[i]["Block01"]);
+                cell.Block01Height = Convert.ToInt32(tbl.Rows[i]["Block01Height"]);
+                cell.Block02 = Convert.ToInt32(tbl.Rows[i]["Block02"]);
+                cell.Block02Height = Convert.ToInt32(tbl.Rows[i]["Block02Height"]);
+                cell.Block03 = Convert.ToInt32(tbl.Rows[i]["Block03"]);
+                cell.Block03Height = Convert.ToInt32(tbl.Rows[i]["Block03Height"]);
+                cell.Mountains = tbl.Rows[i]["Mountains"].ToString();
+                list.Add(cell);
+            }
+            return list;
+        }
+        private static object MapMountain(DataTable tbl)
+        {
+            List<Mountain> list = new List<Mountain>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Mountain();
+                data.ID = ToInt32(tbl.Rows[i].ItemArray[0]);
+                data.StartPosX = ToInt32(tbl.Rows[i].ItemArray[1]);
+                data.StartPosY = ToInt32(tbl.Rows[i].ItemArray[2]);
+                data.StartPosZ = ToInt32(tbl.Rows[i].ItemArray[3]);
+                data.Height = ToInt32(tbl.Rows[i].ItemArray[4]);
+                data.Wide = ToInt32(tbl.Rows[i].ItemArray[5]);
 
-            return blockList;
+                list.Add(data);
+            }
+            return list;
+        }
+
+        private static int ToInt32(object obj)
+        {
+            if (obj == DBNull.Value)
+                return -1;
+            return Convert.ToInt32(obj);
         }
     }
 }

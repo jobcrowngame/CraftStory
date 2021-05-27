@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
     <Compile Include="Assets\Scripts\Test\TestAtt.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
     <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
     <Compile Include="Assets\Scripts\Game\WorldMng.cs" />
     <Compile Include="Assets\Scripts\Test\LookChange.cs" />

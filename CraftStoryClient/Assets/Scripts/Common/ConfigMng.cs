@@ -7,26 +7,28 @@ using JsonConfigData;
 class ConfigMng : Single<ConfigMng>
 {
     Dictionary<int, Block> blockConfig;
-    public Dictionary<int, Block> BlockConfig { get => blockConfig; }
+    Dictionary<int, Map> mapConfig;
+    Dictionary<int, Mountain> mountainConfig;
+
+    public Dictionary<int, Block> Block { get => blockConfig; }
+    public Dictionary<int, Map> Map{ get => mapConfig; }
+    public Dictionary<int, Mountain> Mountain { get => mountainConfig; }
 
     public IEnumerator InitInitCoroutine()
     {
         blockConfig = new Dictionary<int, Block>();
+        mapConfig = new Dictionary<int, Map>();
+        mountainConfig = new Dictionary<int, Mountain>();
 
-        ReadAllConfig();
+        ReadConfig("Config/Block", blockConfig);
+        ReadConfig("Config/Map", mapConfig);
+        ReadConfig("Config/MapMountain", mountainConfig);
 
         yield return null;
     }
 
-    private void ReadAllConfig()
+    private void ReadConfig<T>(string path, Dictionary<int, T> dic) where T : Base
     {
-        ReadBlock();
-    }
-    private void ReadBlock()
-    {
-        ConfigType cType = ConfigType.Block;
-        string path = GetConfigFilePath(cType);
-
         var config = Resources.Load<TextAsset>(path);
         if (config == null)
         {
@@ -34,30 +36,23 @@ class ConfigMng : Single<ConfigMng>
             return;
         }
 
-        var obj = JsonConvert.DeserializeObject<List<Block>>(config.text);
-        if (obj == null)
+        var list = JsonConvert.DeserializeObject<List<T>>(config.text);
+        if (list == null)
         {
             Debug.LogError("DeserializeObject file fail." + path);
             return;
         }
 
-        for (int i = 0; i < obj.Count; i++)
+        for (int i = 0; i < list.Count; i++)
         {
-            blockConfig[obj[i].ID] = obj[i];
+            dic[list[i].ID] = list[i];
         }
     }
 
-    private string GetConfigFilePath(ConfigType cType)
+    enum ConfigType
     {
-        switch (cType)
-        {
-            case ConfigType.Block: return "Config/Block";
-            default: Debug.LogError("not find config type " + cType); return "";
-        }
+        Block,
+        Map,
+        Mountain,
     }
-}
-
-enum ConfigType
-{
-    Block,
 }

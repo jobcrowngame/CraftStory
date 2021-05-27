@@ -7,34 +7,51 @@ using UnityEngine;
 
 public class MapCtl
 {
+    private MapDataFactory mapF;
+
     private Transform mapCellParent;
     public Transform CellParent { get => mapCellParent; }
 
+    public MapCtl()
+    {
+        mapF = new MapDataFactory();
+    }
+
     public void CreateMap()
     {
-        var startTime = DateTime.Now;
+        CreateMap(DataMng.E.MapData);
+    }
+    public void CreateMap(int mapID)
+    {
+        var mData = mapF.CreateMap(mapID);
+        DataMng.E.MapData = mData;
+        CreateMap(mData);
+    }
+    public void CreateMap(MapData mData)
+    {
         mapCellParent = new GameObject("Ground").transform;
+        var startTime = DateTime.Now;
 
-        for (int i = 0; i < DataMng.E.MapData.MapSize.x; i++)
+        for (int i = 0; i < mData.MapSize.x; i++)
         {
-            for (int j = 0; j < DataMng.E.MapData.MapSize.y; j++)
+            for (int j = 0; j < mData.MapSize.y; j++)
             {
-                for (int k = 0; k < DataMng.E.MapData.MapSize.z; k++)
+                for (int k = 0; k < mData.MapSize.z; k++)
                 {
-                    if (DataMng.E.MapData.Map[i, j, k] != null)
+                    if (mData.Map[i, j, k] != null)
                     {
-                        if (DataMng.E.MapData.Map[i, j, k].IsIn)
+                        if (mData.Map[i, j, k].IsIn)
                             continue;
 
-                        DataMng.E.MapData.Add(DataMng.E.MapData.Map[i, j, k]);
-                        DataMng.E.MapData.Map[i, j, k].ActiveBlock();
+                        mData.Add(mData.Map[i, j, k]);
+                        mData.Map[i, j, k].ActiveBlock();
                     }
                 }
             }
         }
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-        Debug.LogWarningFormat("mapData 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
+        Debug.LogWarningFormat("map 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
     }
 
     public void OnQuit()
@@ -47,8 +64,7 @@ public class MapCtl
         if (IsOutRange(pos))
             return null;
 
-        BlockData bData = new BlockData(blockId);
-        bData.Pos = pos;
+        BlockData bData = new BlockData(blockId, pos);
         return CreateBlock(bData);
     }
     public MapBlock CreateBlock(BlockData data)
@@ -76,7 +92,7 @@ public class MapCtl
             list[i].ActiveBlock(isSurface);
         }
     }
-    private bool CheckBlockIsSurface(BlockData data)
+    public bool CheckBlockIsSurface(BlockData data)
     {
         var isSurface = IsSurface(new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
         if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x + 1, data.Pos.y, data.Pos.z));

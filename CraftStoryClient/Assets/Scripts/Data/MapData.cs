@@ -13,6 +13,14 @@ public class MapData
     private int sizeZ { get; set; }
     private string strMap { get; set; }
 
+    public MapData(Vector3Int size)
+    {
+        sizeX = size.x;
+        sizeY = size.y;
+        sizeZ = size.z;
+
+        map = new BlockData[sizeX, sizeY, sizeZ];
+    }
     public MapData(BlockData[,,] map, Vector3Int size)
     {
         this.map = map;

@@ -25,7 +25,7 @@ public class DataMng : Single<DataMng>
 
             return mData;
         }
-        private set => mData = value;
+        set => mData = value;
     }
 
     private CharacterData cData;

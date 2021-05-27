@@ -9,9 +9,13 @@ public class BlockData
     private bool isIn;
     private MapBlock block;
 
-    public BlockData(int blockID) 
+    public BlockData(int blockID, Vector3Int pos)
     {
         this.blockID = blockID;
+
+        x = pos.x;
+        y = pos.y;
+        z = pos.z;
     }
     public BlockData(string strData, Vector3Int pos)
     {
@@ -35,7 +39,7 @@ public class BlockData
             z = value.z;
         }
     }
-    public Block BaseData { get => ConfigMng.E.BlockConfig[blockID]; }
+    public Block BaseData { get => ConfigMng.E.Block[blockID]; }
     public bool IsIn { get => isIn; set => isIn = value; }
     public MapBlock Block { get => block; }
 
@@ -46,12 +50,7 @@ public class BlockData
 
     public BlockData Copy()
     {
-        return new BlockData(blockID)
-        {
-            x = x,
-            y = y,
-            z = z
-        };
+        return new BlockData(blockID, Pos);
     }
 
     public string ToStringData()

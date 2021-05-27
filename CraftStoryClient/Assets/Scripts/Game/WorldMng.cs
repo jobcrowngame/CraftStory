@@ -27,7 +27,8 @@ public class WorldMng : MonoBehaviour
 
     public void StartGame()
     {
-        mapCtl.CreateMap();
+        //mapCtl.CreateMap();
+        mapCtl.CreateMap(1000);
         characterCtl.CreateCharacter();
     }
 

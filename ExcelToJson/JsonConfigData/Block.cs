@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace JsonConfigData
+﻿namespace JsonConfigData
 {
-    public class Block : ConfigBase
+    public class Block : Base
     {
         public string Name { get; set; }
         public string ResourcesName { get; set; }
