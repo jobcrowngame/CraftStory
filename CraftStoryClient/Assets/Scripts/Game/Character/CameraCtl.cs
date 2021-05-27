@@ -79,19 +79,9 @@ public class CameraCtl : MonoBehaviour
     }
     private void CameraPull(bool b)
     {
-
         Vector3 curPos = transform.localPosition;
         Vector3 targetPos = b ? new Vector3(0, 0, SettingMng.E.CameraDistanseMax) : Vector3.zero;
         float step = b ? SettingMng.E.cameraPullSpeed : SettingMng.E.cameraPushSpeed;
-
-        //Debug.LogFormat("curPos:{0}, targetPos:{1}, b:{2}", transform.localPosition, targetPos, b);
-
-        if (Vector3.Distance(transform.position, targetPos) < 0.001f)
-        {
-            // Swap the position of the cylinder.
-            targetPos *= -1.0f;
-        }
-
         transform.localPosition = Vector3.MoveTowards(curPos, targetPos, step);
     }
     private bool IsBlock()
@@ -102,6 +92,9 @@ public class CameraCtl : MonoBehaviour
         Vector2 pos = new Vector2(Screen.width / 2, Screen.height / 2);
         var obj = RayCastHits(pos);
         if (obj == null)
+            return false;
+
+        if (obj.name == "Main Camera")
             return false;
 
         var cCtl = obj.GetComponent<CharacterController>();

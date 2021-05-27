@@ -36,7 +36,7 @@ public class SettingMng : Single<SettingMng>
     public float rotateSpeed = 3.0F;    //回転速度
 
     public float CameraPullSpeed { get => cameraPullSpeed; }
-    public float cameraPullSpeed = 0.3f;
+    public float cameraPullSpeed = 0.1f;
 
     public float CameraPushSpeed { get => cameraPushSpeed; }
     public float cameraPushSpeed = 0.5f;
