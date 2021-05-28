@@ -8,13 +8,20 @@ using UnityEngine;
 public class MapCtl
 {
     private MapDataFactory mapF;
-
     private Transform mapCellParent;
+    private Transform resourceParent;
+
+    private List<ResourceEntity> resourcesEntitys;
+    private int entityID;
+
     public Transform CellParent { get => mapCellParent; }
 
     public MapCtl()
     {
         mapF = new MapDataFactory();
+        resourcesEntitys = new List<ResourceEntity>();
+
+        entityID = 0;
     }
 
     public void CreateMap()
@@ -27,10 +34,21 @@ public class MapCtl
         DataMng.E.MapData = mData;
         CreateMap(mData);
     }
-    public void CreateMap(MapData mData)
+    private void CreateMap(MapData mData)
     {
         mapCellParent = new GameObject("Ground").transform;
+        resourceParent = new GameObject("Resources").transform;
+
         var startTime = DateTime.Now;
+
+        CreateBlock(mData);
+        CreateResources(mData);
+
+        TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
+        Debug.LogWarningFormat("map 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
+    }
+    private void CreateBlock(MapData mData)
+    {
 
         for (int i = 0; i < mData.MapSize.x; i++)
         {
@@ -49,9 +67,26 @@ public class MapCtl
                 }
             }
         }
+    }
+    private void CreateResources(MapData mData)
+    {
+        for (int i = 0; i < mData.Resources.Count; i++)
+        {
+            string resourcesPath = "";
+            switch (mData.Resources[i].Type)
+            {
+                case EntityType.Tree: resourcesPath = ConfigMng.E.Tree[mData.Resources[i].ID].ResourceName; break;
+                case EntityType.Rock: resourcesPath = ConfigMng.E.Rock[mData.Resources[i].ID].ResourceName; break;
+                default: break;
+            }
 
-        TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-        Debug.LogWarningFormat("map 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
+            var resourceEntity = CommonFunction.Instantiate<ResourceEntity>(resourcesPath, resourceParent, mData.Resources[i].Pos);
+            if (resourceEntity != null)
+            {
+                resourceEntity.Init(mData.Resources[i]);
+                resourceEntity.EntityID = entityID++;
+            }
+        }
     }
 
     public void OnQuit()
@@ -75,7 +110,7 @@ public class MapCtl
         return block;
     }
    
-    public void DeleteMapCell(MapBlock block)
+    public void DeleteBlock(MapBlock block)
     {
         DataMng.E.MapData.Remove(block.data.Pos);
         GameObject.Destroy(block.gameObject);

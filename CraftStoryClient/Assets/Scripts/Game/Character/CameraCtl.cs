@@ -33,11 +33,14 @@ public class CameraCtl : MonoBehaviour
         {
             CameraPull(false);
         }
-        else
-        {
-            if (Time.time - triggerExitTime > 3 && transform.localPosition.z > SettingMng.E.CameraDistanseMax)
-                CameraPull(true);
-        }
+        //else
+        //{
+        //    if (Time.time - triggerExitTime > 3 && transform.localPosition.z > SettingMng.E.CameraDistanseMax)
+        //        CameraPull(true);
+        //}
+
+        if (Time.time - triggerExitTime > 3 && transform.localPosition.z > SettingMng.E.CameraDistanseMax)
+            CameraPull(true);
 
         if (PlayerEntity.E != null)
             PlayerEntity.E.PlayerModelActive(transform.localPosition.z < SettingMng.E.EnactiveCharacterModelDistanse);
@@ -79,6 +82,8 @@ public class CameraCtl : MonoBehaviour
     }
     private void CameraPull(bool b)
     {
+        if (!b) triggerExitTime = Time.time;
+
         Vector3 curPos = transform.localPosition;
         Vector3 targetPos = b ? new Vector3(0, 0, SettingMng.E.CameraDistanseMax) : Vector3.zero;
         float step = b ? SettingMng.E.cameraPullSpeed : SettingMng.E.cameraPushSpeed;
@@ -95,7 +100,7 @@ public class CameraCtl : MonoBehaviour
             return false;
 
         if (obj.name == "Main Camera")
-            return false;
+                return false;
 
         var cCtl = obj.GetComponent<CharacterController>();
         return cCtl == null;

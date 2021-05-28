@@ -9,20 +9,28 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, Block> blockConfig;
     Dictionary<int, Map> mapConfig;
     Dictionary<int, Mountain> mountainConfig;
+    Dictionary<int, JsonConfigData.Tree> treeConfig;
+    Dictionary<int, Rock> rockConfig;
 
     public Dictionary<int, Block> Block { get => blockConfig; }
     public Dictionary<int, Map> Map{ get => mapConfig; }
     public Dictionary<int, Mountain> Mountain { get => mountainConfig; }
+    public Dictionary<int, JsonConfigData.Tree> Tree { get => treeConfig; }
+    public Dictionary<int, Rock> Rock { get => rockConfig; }
 
     public IEnumerator InitInitCoroutine()
     {
         blockConfig = new Dictionary<int, Block>();
         mapConfig = new Dictionary<int, Map>();
         mountainConfig = new Dictionary<int, Mountain>();
+        treeConfig = new Dictionary<int, JsonConfigData.Tree>();
+        rockConfig = new Dictionary<int, Rock>();
 
         ReadConfig("Config/Block", blockConfig);
         ReadConfig("Config/Map", mapConfig);
         ReadConfig("Config/MapMountain", mountainConfig);
+        ReadConfig("Config/Tree", treeConfig);
+        ReadConfig("Config/Rock", rockConfig);
 
         yield return null;
     }
@@ -47,12 +55,5 @@ class ConfigMng : Single<ConfigMng>
         {
             dic[list[i].ID] = list[i];
         }
-    }
-
-    enum ConfigType
-    {
-        Block,
-        Map,
-        Mountain,
     }
 }

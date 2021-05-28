@@ -19,7 +19,7 @@ public class MapBlock : MonoBehaviour
     public void Delete()
     {
         Debug.Log("Delete cube. \n" + data.ToString()); ;
-        WorldMng.E.MapCtl.DeleteMapCell(this);
+        WorldMng.E.MapCtl.DeleteBlock(this);
     }
 
     public void OnClicking(float time)

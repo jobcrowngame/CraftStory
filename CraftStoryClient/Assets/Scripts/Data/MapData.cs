@@ -2,16 +2,20 @@
 using System.Text;
 using System.IO;
 using UnityEngine;
+using System.Collections.Generic;
 
 [Serializable]
 public class MapData
 {
-    [NonSerialized]
-    private BlockData[,,] map;
     private int sizeX { get; set; }
     private int sizeY { get; set; }
     private int sizeZ { get; set; }
     private string strMap { get; set; }
+
+    [NonSerialized]
+    private BlockData[,,] map;
+    [NonSerialized]
+    private List<EntityData> resourcesList;
 
     public MapData(Vector3Int size)
     {
@@ -20,6 +24,7 @@ public class MapData
         sizeZ = size.z;
 
         map = new BlockData[sizeX, sizeY, sizeZ];
+        resourcesList = new List<EntityData>();
     }
     public MapData(BlockData[,,] map, Vector3Int size)
     {
@@ -41,6 +46,7 @@ public class MapData
     {
         return map[pos.x, pos.y, pos.z];
     }
+    public List<EntityData> Resources { get => resourcesList; }
 
     public void Add(BlockData data)
     {
@@ -110,5 +116,10 @@ public class MapData
                 }
             }
         }
+    }
+
+    public void AddResources(EntityData resourceData)
+    {
+        resourcesList.Add(resourceData);
     }
 }

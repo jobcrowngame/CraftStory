@@ -5,30 +5,45 @@ using UnityEngine;
 public class MapDataFactory
 {
     private MapData mData;
+    private Map mapConfig;
 
     public MapData CreateMap(int id)
     {
         var startTime = DateTime.Now;
 
-        var config = ConfigMng.E.Map[id];
-        var mountains = config.Mountains.Split(',');
-        var mapSize = new Vector3Int(config.SizeX, config.SizeY, config.SizeZ);
-        mData = new MapData(mapSize);
+        mapConfig = ConfigMng.E.Map[id];
+        mData = new MapData(new Vector3Int(mapConfig.SizeX, mapConfig.SizeY, mapConfig.SizeZ));
 
-        int groundHeight = config.Block01Height + config.Block02Height + config.Block03Height;
+        AddBaseBlocks();
+        AddMountains();
+        AddTrees();
+        AddRocks();
+        HideBlocks();
 
-        for (int x = 0; x < mapSize.x; x++)
+        TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
+        Debug.LogWarningFormat("mapData 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
+
+        return mData;
+    }
+    private void AddBaseBlocks()
+    {
+        int groundHeight = mapConfig.Block01Height + mapConfig.Block02Height + mapConfig.Block03Height;
+
+        for (int x = 0; x < mData.MapSize.x; x++)
         {
-            for (int z = 0; z < mapSize.z; z++)
+            for (int z = 0; z < mData.MapSize.z; z++)
             {
-                    int offset = UnityEngine.Random.Range(0, 2);
                 for (int y = 0; y < groundHeight; y++)
                 {
-                    int blockId = GetBlockID(config, y);
-                    mData.Map[x, y, z] = new BlockData(blockId, new Vector3Int(x, y + offset, z));
+                    int blockId = GetBlockID(mapConfig, y);
+                    mData.Map[x, y, z] = new BlockData(blockId, new Vector3Int(x, y, z));
                 }
             }
         }
+    }
+    private void AddMountains()
+    {
+        var mountains = mapConfig.Mountains.Split(',');
 
         for (int i = 0; i < mountains.Length; i++)
         {
@@ -44,23 +59,84 @@ public class MapDataFactory
             {
                 Debug.LogError("not find Mountain " + mountains[i]);
                 Debug.LogError(ex.Message);
+                continue;
             }
 
-            int startPosX = mountainConfig.StartPosX - 1;
-            int startPosY = mountainConfig.StartPosY - 1;
-            int startPosZ = mountainConfig.StartPosZ - 1;
+            int startPosX = mountainConfig.StartPosX;
+            int startPosY = mountainConfig.StartPosY;
+            int startPosZ = mountainConfig.StartPosZ;
 
-            if (startPosX < 0) startPosX = UnityEngine.Random.Range(0, config.SizeX);
-            if (startPosZ < 0) startPosZ = UnityEngine.Random.Range(0, config.SizeZ);
+            if (startPosX < 0) startPosX = UnityEngine.Random.Range(0, mapConfig.SizeX);
+            if (startPosZ < 0) startPosZ = UnityEngine.Random.Range(0, mapConfig.SizeZ);
 
-            AddMountain(mData.Map[startPosX, startPosY, startPosZ], mountainConfig.Height, mountainConfig.Wide);
+            Debug.Log(new Vector3Int(startPosX, startPosY, startPosZ));
+
+            AddMountains(mData.Map[startPosX, startPosY, startPosZ], mountainConfig.Height, mountainConfig.Wide);
         }
+    }
+    private void AddTrees()
+    {
+        var trees = mapConfig.Trees.Split(',');
 
-        for (int x = 0; x < mapSize.x; x++)
+        for (int i = 0; i < trees.Length; i++)
         {
-            for (int z = 0; z < mapSize.z; z++)
+            JsonConfigData.Tree treeConfig = null;
+
+            try
             {
-                for (int y = 0; y < mapSize.y; y++)
+                treeConfig = ConfigMng.E.Tree[int.Parse(trees[i])];
+                if (treeConfig == null)
+                    continue;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("not find tree " + trees[i]);
+                Debug.LogError(ex.Message);
+                continue;
+            }
+
+            for (int j = 0; j < treeConfig.Count; j++)
+            {
+                var pos = GetGroundPos(treeConfig.PosX, treeConfig.PosZ, treeConfig.OffsetY);
+                mData.AddResources(new EntityData(treeConfig.ID, EntityType.Tree, pos));
+            }
+        }
+    }
+    private void AddRocks()
+    {
+        var rocks = mapConfig.Rocks.Split(',');
+
+        for (int i = 0; i < rocks.Length; i++)
+        {
+            Rock rockConfig = null;
+
+            try
+            {
+                rockConfig = ConfigMng.E.Rock[int.Parse(rocks[i])];
+                if (rockConfig == null)
+                    continue;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("not find rock " + rocks[i]);
+                Debug.LogError(ex.Message);
+                continue;
+            }
+
+            for (int j = 0; j < rockConfig.Count; j++)
+            {
+                var pos = GetGroundPos(rockConfig.PosX, rockConfig.PosZ, rockConfig.OffsetY);
+                mData.AddResources(new EntityData(rockConfig.ID, EntityType.Rock, pos));
+            }
+        }
+    }
+    private void HideBlocks()
+    {
+        for (int x = 0; x < mData.MapSize.x; x++)
+        {
+            for (int z = 0; z < mData.MapSize.z; z++)
+            {
+                for (int y = 0; y < mData.MapSize.y; y++)
                 {
                     if (mData.Map[x, y, z] == null)
                         continue;
@@ -69,11 +145,6 @@ public class MapDataFactory
                 }
             }
         }
-
-        TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-        Debug.LogWarningFormat("mapData 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
-
-        return mData;
     }
 
     private bool CheckBlockIsSurface(BlockData data)
@@ -106,7 +177,6 @@ public class MapDataFactory
             || pos.y < 0 || pos.y > mData.MapSize.y - 1
             || pos.z < 0 || pos.z > mData.MapSize.z - 1;
     }
-
     private int GetBlockID(Map config, int y)
     {
         if (y < config.Block01Height)
@@ -116,8 +186,27 @@ public class MapDataFactory
         else
             return config.Block03;
     }
+    private BlockData GetGroundBlock(int posX, int posZ)
+    {
+        for (int i = mapConfig.SizeY - 1; i >= 0 ; i--)
+        {
+            if (mData.Map[posX,i,posZ] == null)
+                continue;
 
-    private void AddMountain(BlockData parent, int height, int offset = 0)
+            return mData.Map[posX, i, posZ];
+        }
+        return null;
+    }
+    private Vector3 GetGroundPos(int posX, int posZ, float offsetY)
+    {
+        if (posX < 0) posX = UnityEngine.Random.Range(0, mapConfig.SizeX);
+        if (posZ < 0) posZ = UnityEngine.Random.Range(0, mapConfig.SizeZ);
+        float posY = GetGroundBlock(posX, posZ).Pos.y + 1 + offsetY - 0.5f;
+
+        return new Vector3(posX, posY, posZ);
+    }
+
+    private void AddMountains(BlockData parent, int height, int offset = 0)
     {
         if (parent == null)
         {

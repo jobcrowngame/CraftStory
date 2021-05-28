@@ -39,5 +39,5 @@ public class SettingMng : Single<SettingMng>
     public float cameraPullSpeed = 0.1f;
 
     public float CameraPushSpeed { get => cameraPushSpeed; }
-    public float cameraPushSpeed = 0.5f;
+    public float cameraPushSpeed = 1f;
 }

@@ -13,5 +13,7 @@
         public int Block03 { get; set; }
         public int Block03Height { get; set; }
         public string Mountains { get; set; }
+        public string Trees { get; set; }
+        public string Rocks { get; set; }
     }
 }
