@@ -15,5 +15,6 @@
         public string Mountains { get; set; }
         public string Trees { get; set; }
         public string Rocks { get; set; }
+        public int TransferGateID { get; set; }
     }
 }

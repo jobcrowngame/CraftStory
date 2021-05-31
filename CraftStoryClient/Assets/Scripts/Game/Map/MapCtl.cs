@@ -1,38 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class MapCtl
 {
-    private MapDataFactory mapF;
+    private MapDataFactory mapFactory;
     private Transform mapCellParent;
     private Transform resourceParent;
 
-    private List<ResourceEntity> resourcesEntitys;
+    private List<EntityResources> resourcesEntitys;
     private int entityID;
 
     public Transform CellParent { get => mapCellParent; }
 
     public MapCtl()
     {
-        mapF = new MapDataFactory();
-        resourcesEntitys = new List<ResourceEntity>();
+        mapFactory = new MapDataFactory();
+        resourcesEntitys = new List<EntityResources>();
 
         entityID = 0;
     }
 
-    public void CreateMap()
-    {
-        CreateMap(DataMng.E.MapData);
-    }
     public void CreateMap(int mapID)
     {
-        var mData = mapF.CreateMap(mapID);
-        DataMng.E.MapData = mData;
-        CreateMap(mData);
+        if (mapID == 100 && DataMng.E.HomeData == null)
+            DataMng.E.HomeData = mapFactory.CreateMapData(mapID);
+
+        DataMng.E.MapData = mapID == 100
+            ? DataMng.E.HomeData
+            : mapFactory.CreateMapData(mapID);
+
+        CreateMap(DataMng.E.MapData);
     }
     private void CreateMap(MapData mData)
     {
@@ -43,6 +41,7 @@ public class MapCtl
 
         CreateBlock(mData);
         CreateResources(mData);
+        CreateTransferGate(mData);
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
         Debug.LogWarningFormat("map 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
@@ -70,23 +69,33 @@ public class MapCtl
     }
     private void CreateResources(MapData mData)
     {
+        if (mData.Resources == null)
+            return;
+
         for (int i = 0; i < mData.Resources.Count; i++)
         {
-            string resourcesPath = "";
-            switch (mData.Resources[i].Type)
-            {
-                case EntityType.Tree: resourcesPath = ConfigMng.E.Tree[mData.Resources[i].ID].ResourceName; break;
-                case EntityType.Rock: resourcesPath = ConfigMng.E.Rock[mData.Resources[i].ID].ResourceName; break;
-                default: break;
-            }
-
-            var resourceEntity = CommonFunction.Instantiate<ResourceEntity>(resourcesPath, resourceParent, mData.Resources[i].Pos);
+            var resourceEntity = CommonFunction.Instantiate<EntityResources>(mData.Resources[i].ResourcePath, resourceParent, mData.Resources[i].Pos);
             if (resourceEntity != null)
             {
                 resourceEntity.Init(mData.Resources[i]);
                 resourceEntity.EntityID = entityID++;
             }
         }
+    }
+    private void CreateTransferGate(MapData mData)
+    {
+        if (mData.TransferGate == null)
+            return;
+
+        var entity = CommonFunction.Instantiate<EntityTransferGate>(mData.TransferGate.ResourcePath, resourceParent, mData.TransferGate.Pos);
+        if (entity != null)
+        {
+            entity.Init(mData.TransferGate);
+            entity.EntityID = entityID++;
+        }
+
+        DataMng.E.NextSceneID = entity.Config.NextMap;
+        DataMng.E.NextSceneName = entity.Config.NextMapSceneName;
     }
 
     public void OnQuit()
@@ -99,10 +108,10 @@ public class MapCtl
         if (IsOutRange(pos))
             return null;
 
-        BlockData bData = new BlockData(blockId, pos);
+        MapBlockData bData = new MapBlockData(blockId, pos);
         return CreateBlock(bData);
     }
-    public MapBlock CreateBlock(BlockData data)
+    public MapBlock CreateBlock(MapBlockData data)
     {
         var block = data.ActiveBlock();
         DataMng.E.MapData.Add(data);
@@ -117,7 +126,7 @@ public class MapCtl
         CheckNextToBlocks(block.data);
     }
    
-    private void CheckNextToBlocks(BlockData data)
+    private void CheckNextToBlocks(MapBlockData data)
     {
         var list = GetNextToBlocks(data);
 
@@ -127,7 +136,7 @@ public class MapCtl
             list[i].ActiveBlock(isSurface);
         }
     }
-    public bool CheckBlockIsSurface(BlockData data)
+    public bool CheckBlockIsSurface(MapBlockData data)
     {
         var isSurface = IsSurface(new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
         if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x + 1, data.Pos.y, data.Pos.z));
@@ -145,10 +154,10 @@ public class MapCtl
         return GetNextToBlock(pos) == null;
     }
 
-    private List<BlockData> GetNextToBlocks(BlockData data)
+    private List<MapBlockData> GetNextToBlocks(MapBlockData data)
     {
-        BlockData bData;
-        List<BlockData> blockList = new List<BlockData>();
+        MapBlockData bData;
+        List<MapBlockData> blockList = new List<MapBlockData>();
 
         bData = GetNextToBlock(new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
         if (bData != null) blockList.Add(bData);
@@ -165,7 +174,7 @@ public class MapCtl
 
         return blockList;
     }
-    private BlockData GetNextToBlock(Vector3Int pos)
+    private MapBlockData GetNextToBlock(Vector3Int pos)
     {
         if (IsOutRange(pos))
             return null;

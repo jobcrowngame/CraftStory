@@ -7,7 +7,7 @@ public class MapDataFactory
     private MapData mData;
     private Map mapConfig;
 
-    public MapData CreateMap(int id)
+    public MapData CreateMapData(int id)
     {
         var startTime = DateTime.Now;
 
@@ -18,6 +18,7 @@ public class MapDataFactory
         AddMountains();
         AddTrees();
         AddRocks();
+        AddTransferGateConfig();
         HideBlocks();
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
@@ -36,13 +37,16 @@ public class MapDataFactory
                 for (int y = 0; y < groundHeight; y++)
                 {
                     int blockId = GetBlockID(mapConfig, y);
-                    mData.Map[x, y, z] = new BlockData(blockId, new Vector3Int(x, y, z));
+                    mData.Map[x, y, z] = new MapBlockData(blockId, new Vector3Int(x, y, z));
                 }
             }
         }
     }
     private void AddMountains()
     {
+        if (mapConfig.Mountains == "N")
+            return;
+
         var mountains = mapConfig.Mountains.Split(',');
 
         for (int i = 0; i < mountains.Length; i++)
@@ -98,6 +102,7 @@ public class MapDataFactory
             for (int j = 0; j < treeConfig.Count; j++)
             {
                 var pos = GetGroundPos(treeConfig.PosX, treeConfig.PosZ, treeConfig.OffsetY);
+                FixEntityPos(pos);
                 mData.AddResources(new EntityData(treeConfig.ID, EntityType.Tree, pos));
             }
         }
@@ -126,9 +131,37 @@ public class MapDataFactory
             for (int j = 0; j < rockConfig.Count; j++)
             {
                 var pos = GetGroundPos(rockConfig.PosX, rockConfig.PosZ, rockConfig.OffsetY);
+                FixEntityPos(pos);
                 mData.AddResources(new EntityData(rockConfig.ID, EntityType.Rock, pos));
             }
         }
+    }
+    private void AddTransferGateConfig()
+    {
+        var transferGateID = mapConfig.TransferGateID;
+
+        TransferGate transferGate = null;
+
+        try
+        {
+            transferGate = ConfigMng.E.TransferGate[transferGateID];
+            if (transferGate == null)
+                return;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("not find transferGate " + transferGateID);
+            Debug.LogError(ex.Message);
+            return;
+        }
+
+        var pos = GetGroundPos(transferGate.PosX, transferGate.PosZ);
+        if (transferGate.PosX > 0) pos.x = transferGate.PosX;
+        if (transferGate.PosY > 0) pos.y = transferGate.PosY;
+        if (transferGate.PosZ > 0) pos.z = transferGate.PosZ;
+
+        FixEntityPos(pos);
+        mData.TransferGate = new EntityData(transferGate.ID, EntityType.TransferGate, pos);
     }
     private void HideBlocks()
     {
@@ -147,7 +180,7 @@ public class MapDataFactory
         }
     }
 
-    private bool CheckBlockIsSurface(BlockData data)
+    private bool CheckBlockIsSurface(MapBlockData data)
     {
         var isSurface = IsSurface(new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
         if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x + 1, data.Pos.y, data.Pos.z));
@@ -164,7 +197,7 @@ public class MapDataFactory
 
         return GetNextToBlock(pos) == null;
     }
-    private BlockData GetNextToBlock(Vector3Int pos)
+    private MapBlockData GetNextToBlock(Vector3Int pos)
     {
         if (IsOutRange(pos))
             return null;
@@ -186,7 +219,7 @@ public class MapDataFactory
         else
             return config.Block03;
     }
-    private BlockData GetGroundBlock(int posX, int posZ)
+    private MapBlockData GetGroundBlock(int posX, int posZ)
     {
         for (int i = mapConfig.SizeY - 1; i >= 0 ; i--)
         {
@@ -197,7 +230,7 @@ public class MapDataFactory
         }
         return null;
     }
-    private Vector3 GetGroundPos(int posX, int posZ, float offsetY)
+    private Vector3 GetGroundPos(int posX, int posZ, float offsetY = 0)
     {
         if (posX < 0) posX = UnityEngine.Random.Range(0, mapConfig.SizeX);
         if (posZ < 0) posZ = UnityEngine.Random.Range(0, mapConfig.SizeZ);
@@ -205,8 +238,15 @@ public class MapDataFactory
 
         return new Vector3(posX, posY, posZ);
     }
+    private void FixEntityPos(Vector3 pos) 
+    {
+        if (pos.x < 2) pos.x = 2;
+        if (pos.x > mData.MapSize.x - 3) pos.x = mData.MapSize.x - 3;
+        if (pos.y < 2) pos.y = 2;
+        if (pos.y > mData.MapSize.y - 3) pos.x = mData.MapSize.y - 3;
+    }
 
-    private void AddMountains(BlockData parent, int height, int offset = 0)
+    private void AddMountains(MapBlockData parent, int height, int offset = 0)
     {
         if (parent == null)
         {

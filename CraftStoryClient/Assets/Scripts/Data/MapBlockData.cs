@@ -2,14 +2,14 @@
 using System;
 using UnityEngine;
 
-public class BlockData
+public class MapBlockData
 {
     private int blockID;
     private int x, y, z;
     private bool isIn;
     private MapBlock block;
 
-    public BlockData(int blockID, Vector3Int pos)
+    public MapBlockData(int blockID, Vector3Int pos)
     {
         this.blockID = blockID;
 
@@ -17,7 +17,7 @@ public class BlockData
         y = pos.y;
         z = pos.z;
     }
-    public BlockData(string strData, Vector3Int pos)
+    public MapBlockData(string strData, Vector3Int pos)
     {
         string[] data = strData.Split('^');
 
@@ -48,9 +48,9 @@ public class BlockData
         return string.Format("POS:{0}, BlockType:{1}, DeleteTime:{2}", Pos, BaseData.Name, BaseData.DestroyTime);
     }
 
-    public BlockData Copy()
+    public MapBlockData Copy()
     {
-        return new BlockData(blockID, Pos);
+        return new MapBlockData(blockID, Pos);
     }
 
     public string ToStringData()

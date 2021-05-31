@@ -7,11 +7,11 @@ using UnityEngine;
 
 public class MapBlock : MonoBehaviour
 {
-    public BlockData data { get; set; }
+    public MapBlockData data { get; set; }
 
     private float clickingTime;
 
-    public void SetData(BlockData mcData)
+    public void SetData(MapBlockData mcData)
     {
         data = mcData;
     }

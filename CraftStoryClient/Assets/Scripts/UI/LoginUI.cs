@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 using System.Text;
@@ -39,7 +38,7 @@ public class LoginUI : UIBase
         Ver.text = "Ver:1.0.0";
 
         BGBtn = FindChiled<Button>("BG");
-        BGBtn.onClick.AddListener(()=> { SceneManager.LoadSceneAsync("NowLoading"); });
+        BGBtn.onClick.AddListener(()=> { CommonFunction.GoToNextScene(100, "home"); });
         BGBtn.enabled = false;
 
         Terms01Btn = FindChiled<Button>("Terms01Btn");

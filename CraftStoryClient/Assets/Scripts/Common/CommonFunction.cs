@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CommonFunction
 {
@@ -87,5 +88,14 @@ public class CommonFunction
             componte = obj.AddComponent<T>();
 
         return componte;
+    }
+
+    public static void GoToNextScene(int id, string name)
+    {
+        DataMng.E.NextSceneID = id;
+        DataMng.E.NextSceneName = name;
+        SceneManager.LoadSceneAsync("NowLoading");
+
+        DataMng.E.CurrentSceneID = id;
     }
 }

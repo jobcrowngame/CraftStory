@@ -113,7 +113,6 @@
     <Compile Include="Assets\Scripts\UI\ItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestAngle.cs" />
-    <Compile Include="Assets\Scripts\Data\BlockData.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapBlock.cs" />
     <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion2.cs" />
@@ -122,9 +121,13 @@
     <Compile Include="Assets\Scripts\Common\GS2.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\Entity.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\ResourceEntity.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\EntityResources.cs" />
     <Compile Include="Assets\Scripts\Data\EntityData.cs" />
+    <Compile Include="Assets\Scripts\Data\MapBlockData.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
+    <Compile Include="Assets\Scripts\Data\EntityTransferGate.cs" />
+    <Compile Include="Assets\Scripts\UI\BraveUI.cs" />
+    <Compile Include="Assets\Scripts\UI\BraveLG.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\SD Unity-Chan Haon Custom\Shader\Unity-chan Toon Shader Ver 2.0.6\Toon_DoubleShadeWithFeather_Mobile_TransClipping_StencilMask.shader" />

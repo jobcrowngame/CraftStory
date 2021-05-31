@@ -34,7 +34,7 @@ public class NowLoadingUI : UIBase
     IEnumerator LoadData()
     {
         // シーンの読み込みをする
-        async = SceneManager.LoadSceneAsync("Home");
+        async = SceneManager.LoadSceneAsync(DataMng.E.NextSceneName);
 
         //　読み込みが終わるまで進捗状況をスライダーの値に反映させる
         while (!async.isDone)

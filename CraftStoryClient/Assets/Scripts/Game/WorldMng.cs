@@ -25,10 +25,9 @@ public class WorldMng : MonoBehaviour
         characterCtl = new CharacterCtl();
     }
 
-    public void StartGame()
+    public void CreateGameObjects()
     {
-        //mapCtl.CreateMap();
-        mapCtl.CreateMap(1000);
+        mapCtl.CreateMap(DataMng.E.NextSceneID);
         characterCtl.CreateCharacter();
     }
 

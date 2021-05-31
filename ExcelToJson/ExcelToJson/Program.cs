@@ -76,6 +76,7 @@ namespace ExcelToJson
                     case "MapMountain": list = MapMountain(tbl); break;
                     case "Tree": list = Tree(tbl); break;
                     case "Rock": list = Rock(tbl); break;
+                    case "TransferGate": list = TransferGate(tbl); break;
                     default: Console.WriteLine("not find fileName function."); break;
                 }
 
@@ -122,6 +123,7 @@ namespace ExcelToJson
                 cell.Mountains =        ToString(tbl.Rows[i]["Mountains"]);
                 cell.Trees =            ToString(tbl.Rows[i]["Trees"]);
                 cell.Rocks =            ToString(tbl.Rows[i]["Rocks"]);
+                cell.TransferGateID =   ToInt32(tbl.Rows[i]["TransferGateID"]);
 
                 list.Add(cell);
             }
@@ -188,6 +190,25 @@ namespace ExcelToJson
                 data.GetResourceID = ToInt32(tbl.Rows[i]["GetResourceID"]);
                 data.GetResourceCount = ToInt32(tbl.Rows[i]["GetResourceCount"]);
                 data.Count = ToInt32(tbl.Rows[i]["Count"]);
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object TransferGate(DataTable tbl)
+        {
+            List<TransferGate> list = new List<TransferGate>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new TransferGate();
+
+                data.ID = ToInt32(tbl.Rows[i]["ID"]);
+                data.ResourcesPath = ToString(tbl.Rows[i]["ResourcesPath"]);
+                data.NextMap = ToInt32(tbl.Rows[i]["NextMap"]);
+                data.NextMapSceneName = ToString(tbl.Rows[i]["NextMapSceneName"]);
+                data.PosX = ToInt32(tbl.Rows[i]["PosX"]);
+                data.PosY = ToInt32(tbl.Rows[i]["PosY"]);
+                data.PosZ = ToInt32(tbl.Rows[i]["PosZ"]);
 
                 list.Add(data);
             }

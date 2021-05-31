@@ -11,12 +11,14 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, Mountain> mountainConfig;
     Dictionary<int, JsonConfigData.Tree> treeConfig;
     Dictionary<int, Rock> rockConfig;
+    Dictionary<int, TransferGate> transferGateConfig;
 
     public Dictionary<int, Block> Block { get => blockConfig; }
     public Dictionary<int, Map> Map{ get => mapConfig; }
     public Dictionary<int, Mountain> Mountain { get => mountainConfig; }
     public Dictionary<int, JsonConfigData.Tree> Tree { get => treeConfig; }
     public Dictionary<int, Rock> Rock { get => rockConfig; }
+    public Dictionary<int, TransferGate> TransferGate { get => transferGateConfig; }
 
     public IEnumerator InitInitCoroutine()
     {
@@ -25,12 +27,14 @@ class ConfigMng : Single<ConfigMng>
         mountainConfig = new Dictionary<int, Mountain>();
         treeConfig = new Dictionary<int, JsonConfigData.Tree>();
         rockConfig = new Dictionary<int, Rock>();
+        transferGateConfig = new Dictionary<int, TransferGate>();
 
         ReadConfig("Config/Block", blockConfig);
         ReadConfig("Config/Map", mapConfig);
         ReadConfig("Config/MapMountain", mountainConfig);
         ReadConfig("Config/Tree", treeConfig);
         ReadConfig("Config/Rock", rockConfig);
+        ReadConfig("Config/TransferGate", transferGateConfig);
 
         yield return null;
     }

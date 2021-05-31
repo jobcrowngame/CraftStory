@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class HomeUI : UIBase
 {
+    Text SceneName;
     Image FadeinImg;
 
     Button BagBtn;
@@ -18,7 +19,7 @@ public class HomeUI : UIBase
 
     private void Start()
     {
-        WorldMng.E.StartGame();
+        WorldMng.E.CreateGameObjects();
 
         Init();
     }
@@ -30,6 +31,8 @@ public class HomeUI : UIBase
         HomeLG.E.Init(this);
 
         InitUI();
+
+        SceneName.text = ConfigMng.E.Map[DataMng.E.CurrentSceneID].Name;
 
         StartCoroutine("FadeIn");
     }
@@ -54,6 +57,8 @@ public class HomeUI : UIBase
 
     private void InitUI()
     {
+        SceneName = FindChiled<Text>("SceneName");
+
         FadeinImg = FindChiled<Image>("Fadein");
 
         BagBtn = FindChiled<Button>("BagBtn");

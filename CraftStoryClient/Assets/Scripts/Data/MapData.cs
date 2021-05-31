@@ -11,11 +11,14 @@ public class MapData
     private int sizeY { get; set; }
     private int sizeZ { get; set; }
     private string strMap { get; set; }
+    private string strEntity { get; set; }
 
     [NonSerialized]
-    private BlockData[,,] map;
+    private MapBlockData[,,] map;
     [NonSerialized]
-    private List<EntityData> resourcesList;
+    private List<EntityData> entityList;
+    [NonSerialized]
+    private EntityData transferGate;
 
     public MapData(Vector3Int size)
     {
@@ -23,10 +26,10 @@ public class MapData
         sizeY = size.y;
         sizeZ = size.z;
 
-        map = new BlockData[sizeX, sizeY, sizeZ];
-        resourcesList = new List<EntityData>();
+        map = new MapBlockData[sizeX, sizeY, sizeZ];
+        entityList = new List<EntityData>();
     }
-    public MapData(BlockData[,,] map, Vector3Int size)
+    public MapData(MapBlockData[,,] map, Vector3Int size)
     {
         this.map = map;
         sizeX = size.x;
@@ -38,17 +41,22 @@ public class MapData
     {
         get { return new Vector3Int(sizeX, sizeY, sizeZ); }
     }
-    public BlockData[,,] Map 
+    public MapBlockData[,,] Map 
     { 
         get { return map; }
     }
-    public BlockData GetMap(Vector3Int pos)
+    public MapBlockData GetMap(Vector3Int pos)
     {
         return map[pos.x, pos.y, pos.z];
     }
-    public List<EntityData> Resources { get => resourcesList; }
+    public List<EntityData> Resources { get => entityList; }
+    public EntityData TransferGate
+    {
+        get => transferGate;
+        set => transferGate = value;
+    }
 
-    public void Add(BlockData data)
+    public void Add(MapBlockData data)
     {
         if (data.Pos.x > sizeX || data.Pos.y > sizeY || data.Pos.z > sizeZ)
         {
@@ -69,7 +77,7 @@ public class MapData
         map[(int)pos.x, (int)pos.y, (int)pos.z] = null;
     }
 
-    public void ToStringData()
+    public void MapDataToStringData()
     {
         StringBuilder sb = new StringBuilder();
 
@@ -87,14 +95,28 @@ public class MapData
                 }
             }
         }
-        sb.Append("e");
 
         strMap = sb.ToString();
         Debug.Log(strMap);
     }
+    public void EntityDataToStringData()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(transferGate.ToStringData());
+
+        for (int i = 0; i < Resources.Count; i++)
+        {
+            sb.Append("," + Resources[i].ToStringData());
+        }
+
+        strEntity = sb.ToString();
+        Debug.Log(strEntity);
+    }
+
     public void ParseStringData()
     {
-        map = new BlockData[sizeX, sizeY, sizeZ];
+        map = new MapBlockData[sizeX, sizeY, sizeZ];
 
         string[] blocks = strMap.Split(',');
         string data;
@@ -112,14 +134,22 @@ public class MapData
                     data = blocks[index++];
                     map[x,y,z] = data == "n" 
                         ? null 
-                        : new BlockData(data, new Vector3Int(x,y,z));
+                        : new MapBlockData(data, new Vector3Int(x,y,z));
                 }
             }
+        }
+
+        entityList = new List<EntityData>();
+        string[] entitys = strEntity.Split(',');
+        transferGate = new EntityData(entitys[0]);
+        for (int i = 1; i < entitys.Length; i++)
+        {
+            entityList.Add(new EntityData(entitys[i]));
         }
     }
 
     public void AddResources(EntityData resourceData)
     {
-        resourcesList.Add(resourceData);
+        entityList.Add(resourceData);
     }
 }

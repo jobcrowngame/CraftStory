@@ -86,8 +86,8 @@ public class CameraCtl : MonoBehaviour
 
         Vector3 curPos = transform.localPosition;
         Vector3 targetPos = b ? new Vector3(0, 0, SettingMng.E.CameraDistanseMax) : Vector3.zero;
-        float step = b ? SettingMng.E.cameraPullSpeed : SettingMng.E.cameraPushSpeed;
-        transform.localPosition = Vector3.MoveTowards(curPos, targetPos, step);
+        float step = b ? SettingMng.E.CameraPullSpeed : SettingMng.E.CameraPushSpeed;
+        transform.localPosition = Vector3.MoveTowards(curPos, targetPos, step * Time.deltaTime);
     }
     private bool IsBlock()
     {

@@ -32,7 +32,9 @@ public class CharacterCtl
         if (resource == null)
             return;
 
-        var obj = GameObject.Instantiate(resource, DataMng.E.CharacterData.Pos, Quaternion.Euler(DataMng.E.CharacterData.EulerAngles));
+        var pos = DataMng.E.CharacterData.Pos;
+        pos.y += 3f;
+        var obj = GameObject.Instantiate(resource, pos, Quaternion.Euler(DataMng.E.CharacterData.EulerAngles));
         if (obj == null)
             return;
 

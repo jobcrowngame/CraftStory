@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Home.unity
     guid: cf56fcd8451a40140805385f5ae4b6c2
+  - enabled: 1
+    path: Assets/Scenes/Brave.unity
+    guid: e34f2ba8acc67544daf74707636d1eff
   m_configObjects: {}

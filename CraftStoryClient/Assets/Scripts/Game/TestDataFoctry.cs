@@ -4,14 +4,14 @@ using UnityEngine;
 public class TestDataFoctry
 {
     private static Vector3Int mapSize;
-    private static BlockData[,,] map;
+    private static MapBlockData[,,] map;
 
     public static MapData CreateTestMap()
     {
         var startTime = DateTime.Now;
 
         mapSize = new Vector3Int(50, 50, 50);
-        map = new BlockData[mapSize.x, mapSize.y, mapSize.z];
+        map = new MapBlockData[mapSize.x, mapSize.y, mapSize.z];
         //for (int x = 0; x < mapSize.x; x++)
         //{
         //    for (int z = 0; z < mapSize.z; z++)
@@ -37,7 +37,7 @@ public class TestDataFoctry
                     if (y >= 3 && y < 15) blockId = 1003;
                     if (y >= 4 && y < 20) blockId = 1004;
 
-                    map[x, y, z] = new BlockData(blockId, new Vector3Int(x, y, z));
+                    map[x, y, z] = new MapBlockData(blockId, new Vector3Int(x, y, z));
                 }
             }
         }
@@ -80,13 +80,13 @@ public class TestDataFoctry
         return cData;
     }
 
-    private static BlockData GetNewBlockData(Vector3Int pos)
+    private static MapBlockData GetNewBlockData(Vector3Int pos)
     {
         int blockId = UnityEngine.Random.Range(1001, 1005);
-        return new BlockData(blockId, pos);
+        return new MapBlockData(blockId, pos);
     }
 
-    private static bool CheckBlockIsSurface(BlockData data)
+    private static bool CheckBlockIsSurface(MapBlockData data)
     {
         var isSurface = IsSurface(new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
         if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x + 1, data.Pos.y, data.Pos.z));
@@ -103,7 +103,7 @@ public class TestDataFoctry
 
         return GetNextToBlock(pos) == null;
     }
-    private static BlockData GetNextToBlock(Vector3Int pos)
+    private static MapBlockData GetNextToBlock(Vector3Int pos)
     {
         if (IsOutRange(pos))
             return null;
@@ -117,7 +117,7 @@ public class TestDataFoctry
             || pos.z < 0 || pos.z > mapSize.z - 1;
     }
 
-    private static void AddMountain(BlockData parent, int height, int offset = 0)
+    private static void AddMountain(MapBlockData parent, int height, int offset = 0)
     {
         for (int x = parent.Pos.x - (height - 1 + offset); x <= parent.Pos.x + (height - 1 + offset); x++)
         {

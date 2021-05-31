@@ -8,6 +8,10 @@ public class DataMng : Single<DataMng>
     const string CharacterDataName = "CharacterData.dat";
     const string UserDataName = "UserData.dat";
 
+    public string NextSceneName { get; set; }
+    public int NextSceneID { get; set; }
+    public int CurrentSceneID { get; set; }
+
     private UserData uData;
     public UserData UserData
     {
@@ -18,14 +22,15 @@ public class DataMng : Single<DataMng>
     private MapData mData;
     public MapData MapData 
     {
-        get
-        {
-            if (mData == null)
-                mData = TestDataFoctry.CreateTestMap();
-
-            return mData;
-        }
+        get => mData;
         set => mData = value;
+    }
+
+    private MapData homeData;
+    public MapData HomeData
+    {
+        get => homeData;
+        set => homeData = value;
     }
 
     private CharacterData cData;
@@ -57,10 +62,11 @@ public class DataMng : Single<DataMng>
         if (uData != null)
             SaveLoadFile.E.Save(uData, PublicPar.SaveRootPath + UserDataName);
 
-        if (mData != null)
+        if (homeData != null)
         {
-            mData.ToStringData();
-            SaveLoadFile.E.Save(mData, PublicPar.SaveRootPath + MapDataName);
+            homeData.MapDataToStringData();
+            homeData.EntityDataToStringData();
+            SaveLoadFile.E.Save(homeData, PublicPar.SaveRootPath + MapDataName);
         }
 
         if (cData != null)
@@ -75,12 +81,12 @@ public class DataMng : Single<DataMng>
 
         this.uData = (UserData)uData;
 
-        var mData = SaveLoadFile.E.Load(PublicPar.SaveRootPath + MapDataName);
-        if (mData == null)
+        var homeData = SaveLoadFile.E.Load(PublicPar.SaveRootPath + MapDataName);
+        if (homeData == null)
             return false;
 
-        this.mData = (MapData)mData;
-        this.mData.ParseStringData();
+        this.homeData = (MapData)homeData;
+        this.homeData.ParseStringData();
 
         var cData = SaveLoadFile.E.Load(PublicPar.SaveRootPath + CharacterDataName);
         if (cData == null)
