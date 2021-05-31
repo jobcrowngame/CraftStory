@@ -28,7 +28,7 @@ public class CharacterCtl
             return;
 
         var pos = GetPlayerPos();
-        pos = MapCtl.FixEntityPos(DataMng.E.MapData, pos);
+        pos = MapCtl.FixEntityPos(DataMng.E.MapData, pos, DataMng.E.CurrentMapConfig.CreatePosOffset);
 
         var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
         if (obj == null)
@@ -47,15 +47,14 @@ public class CharacterCtl
     {
         var pos = WorldMng.E.MapCtl.GetRandomGroundPos();
 
-        var posX = ConfigMng.E.Map[DataMng.E.CurrentSceneID].PlayerPosX;
-        var posZ = ConfigMng.E.Map[DataMng.E.CurrentSceneID].PlayerPosZ;
+        var posX = DataMng.E.CurrentMapConfig.PlayerPosX;
+        var posZ = DataMng.E.CurrentMapConfig.PlayerPosZ;
 
         if (posX > 0) pos.x = posX;
         if (posZ > 0) pos.z = posZ;
 
         pos.y += 5;
 
-        Debug.Log(pos);
         return pos;
     }
 }

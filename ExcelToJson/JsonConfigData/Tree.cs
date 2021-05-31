@@ -7,6 +7,7 @@
         public int PosZ { get; set; }
         public int Angle { get; set; }
         public float OffsetY { get; set; }
+        public int CreatePosOffset { get; set; }
         public float Scale { get; set; }
         public int Break { get; set; }
         public int HP { get; set; }

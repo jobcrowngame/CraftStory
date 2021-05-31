@@ -107,27 +107,28 @@ namespace ExcelToJson
             List<Map> list = new List<Map>();
             for (int i = 1; i < tbl.Rows.Count; i++)
             {
-                var cell = new Map();
+                var data = new Map();
 
-                cell.ID =               ToInt32(tbl.Rows[i]["ID"]);
-                cell.Name =             ToString(tbl.Rows[i]["Name"]);
-                cell.SizeX =            ToInt32(tbl.Rows[i]["SizeX"]);
-                cell.SizeY =            ToInt32(tbl.Rows[i]["SizeY"]);
-                cell.SizeZ =            ToInt32(tbl.Rows[i]["SizeZ"]);
-                cell.Block01 =          ToInt32(tbl.Rows[i]["Block01"]);
-                cell.Block01Height =    ToInt32(tbl.Rows[i]["Block01Height"]);
-                cell.Block02 =          ToInt32(tbl.Rows[i]["Block02"]);
-                cell.Block02Height =    ToInt32(tbl.Rows[i]["Block02Height"]);
-                cell.Block03 =          ToInt32(tbl.Rows[i]["Block03"]);
-                cell.Block03Height =    ToInt32(tbl.Rows[i]["Block03Height"]);
-                cell.Mountains =        ToString(tbl.Rows[i]["Mountains"]);
-                cell.Trees =            ToString(tbl.Rows[i]["Trees"]);
-                cell.Rocks =            ToString(tbl.Rows[i]["Rocks"]);
-                cell.TransferGateID =   ToInt32(tbl.Rows[i]["TransferGateID"]);
-                cell.PlayerPosX =       ToInt32(tbl.Rows[i]["PlayerPosX"]);
-                cell.PlayerPosZ =       ToInt32(tbl.Rows[i]["PlayerPosZ"]);
+                data.ID =               ToInt32(tbl.Rows[i]["ID"]);
+                data.Name =             ToString(tbl.Rows[i]["Name"]);
+                data.SizeX =            ToInt32(tbl.Rows[i]["SizeX"]);
+                data.SizeY =            ToInt32(tbl.Rows[i]["SizeY"]);
+                data.SizeZ =            ToInt32(tbl.Rows[i]["SizeZ"]);
+                data.Block01 =          ToInt32(tbl.Rows[i]["Block01"]);
+                data.Block01Height =    ToInt32(tbl.Rows[i]["Block01Height"]);
+                data.Block02 =          ToInt32(tbl.Rows[i]["Block02"]);
+                data.Block02Height =    ToInt32(tbl.Rows[i]["Block02Height"]);
+                data.Block03 =          ToInt32(tbl.Rows[i]["Block03"]);
+                data.Block03Height =    ToInt32(tbl.Rows[i]["Block03Height"]);
+                data.Mountains =        ToString(tbl.Rows[i]["Mountains"]);
+                data.Trees =            ToString(tbl.Rows[i]["Trees"]);
+                data.Rocks =            ToString(tbl.Rows[i]["Rocks"]);
+                data.TransferGateID =   ToInt32(tbl.Rows[i]["TransferGateID"]);
+                data.PlayerPosX =       ToInt32(tbl.Rows[i]["PlayerPosX"]);
+                data.PlayerPosZ =       ToInt32(tbl.Rows[i]["PlayerPosZ"]);
+                data.CreatePosOffset =  ToInt32(tbl.Rows[i]["CreatePosOffset"]);
 
-                list.Add(cell);
+                list.Add(data);
             }
             return list;
         }
@@ -162,6 +163,7 @@ namespace ExcelToJson
                 data.PosZ = ToInt32(tbl.Rows[i]["PosZ"]);
                 data.Angle = ToInt32(tbl.Rows[i]["Angle"]);
                 data.OffsetY = ToFloat(tbl.Rows[i]["OffsetY"]);
+                data.CreatePosOffset =  ToInt32(tbl.Rows[i]["CreatePosOffset"]);
                 data.Scale = ToFloat(tbl.Rows[i]["Scale"]);
                 data.Break = ToInt32(tbl.Rows[i]["Break"]);
                 data.HP = ToInt32(tbl.Rows[i]["HP"]);
@@ -186,6 +188,7 @@ namespace ExcelToJson
                 data.PosZ = ToInt32(tbl.Rows[i]["PosZ"]);
                 data.Angle = ToInt32(tbl.Rows[i]["Angle"]);
                 data.OffsetY = ToFloat(tbl.Rows[i]["OffsetY"]);
+                data.CreatePosOffset =  ToInt32(tbl.Rows[i]["CreatePosOffset"]);
                 data.Scale = ToFloat(tbl.Rows[i]["Scale"]);
                 data.Break = ToInt32(tbl.Rows[i]["Break"]);
                 data.HP = ToInt32(tbl.Rows[i]["HP"]);
@@ -211,6 +214,7 @@ namespace ExcelToJson
                 data.PosX = ToInt32(tbl.Rows[i]["PosX"]);
                 data.PosY = ToInt32(tbl.Rows[i]["PosY"]);
                 data.PosZ = ToInt32(tbl.Rows[i]["PosZ"]);
+                data.CreatePosOffset = ToInt32(tbl.Rows[i]["CreatePosOffset"]);
 
                 list.Add(data);
             }

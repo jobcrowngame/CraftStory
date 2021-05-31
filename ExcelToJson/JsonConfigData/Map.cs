@@ -18,5 +18,6 @@
         public int TransferGateID { get; set; }
         public int PlayerPosX { get; set; }
         public int PlayerPosZ { get; set; }
+        public int CreatePosOffset { get; set; }
     }
 }

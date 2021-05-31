@@ -41,6 +41,6 @@ public class SettingMng : Single<SettingMng>
     public float CameraPushSpeed { get => cameraPushSpeed; }
     private float cameraPushSpeed = 10f;
 
-    public int CreateEntityPosOffSet { get => createEntityPosOffSet; }
-    private int createEntityPosOffSet = 3;
+    public int MoveBoundaryOffset { get => moveBoundaryOffset; }
+    private int moveBoundaryOffset = 3;
 }

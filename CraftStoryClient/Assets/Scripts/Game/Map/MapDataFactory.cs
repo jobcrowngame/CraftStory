@@ -125,12 +125,12 @@ public class MapDataFactory
 
         for (int i = 0; i < trees.Length; i++)
         {
-            JsonConfigData.Tree treeConfig = null;
+            JsonConfigData.Tree config = null;
 
             try
             {
-                treeConfig = ConfigMng.E.Tree[int.Parse(trees[i])];
-                if (treeConfig == null)
+                config = ConfigMng.E.Tree[int.Parse(trees[i])];
+                if (config == null)
                     continue;
             }
             catch (Exception ex)
@@ -140,11 +140,11 @@ public class MapDataFactory
                 continue;
             }
 
-            for (int j = 0; j < treeConfig.Count; j++)
+            for (int j = 0; j < config.Count; j++)
             {
-                var pos = GetGroundPos(treeConfig.PosX, treeConfig.PosZ, treeConfig.OffsetY);
-                pos = MapCtl.FixEntityPos(mData, pos);
-                mData.AddResources(new EntityData(treeConfig.ID, EntityType.Tree, pos));
+                var pos = GetGroundPos(config.PosX, config.PosZ, config.OffsetY);
+                pos = MapCtl.FixEntityPos(mData, pos, config.CreatePosOffset);
+                mData.AddResources(new EntityData(config.ID, EntityType.Tree, pos));
             }
         }
     }
@@ -154,12 +154,12 @@ public class MapDataFactory
 
         for (int i = 0; i < rocks.Length; i++)
         {
-            Rock rockConfig = null;
+            Rock config = null;
 
             try
             {
-                rockConfig = ConfigMng.E.Rock[int.Parse(rocks[i])];
-                if (rockConfig == null)
+                config = ConfigMng.E.Rock[int.Parse(rocks[i])];
+                if (config == null)
                     continue;
             }
             catch (Exception ex)
@@ -169,11 +169,11 @@ public class MapDataFactory
                 continue;
             }
 
-            for (int j = 0; j < rockConfig.Count; j++)
+            for (int j = 0; j < config.Count; j++)
             {
-                var pos = GetGroundPos(rockConfig.PosX, rockConfig.PosZ, rockConfig.OffsetY);
-                pos = MapCtl.FixEntityPos(mData, pos);
-                mData.AddResources(new EntityData(rockConfig.ID, EntityType.Rock, pos));
+                var pos = GetGroundPos(config.PosX, config.PosZ, config.OffsetY);
+                pos = MapCtl.FixEntityPos(mData, pos, config.CreatePosOffset);
+                mData.AddResources(new EntityData(config.ID, EntityType.Rock, pos));
             }
         }
     }
@@ -181,12 +181,12 @@ public class MapDataFactory
     {
         var transferGateID = mapConfig.TransferGateID;
 
-        TransferGate transferGate = null;
+        TransferGate config = null;
 
         try
         {
-            transferGate = ConfigMng.E.TransferGate[transferGateID];
-            if (transferGate == null)
+            config = ConfigMng.E.TransferGate[transferGateID];
+            if (config == null)
                 return;
         }
         catch (Exception ex)
@@ -196,13 +196,13 @@ public class MapDataFactory
             return;
         }
 
-        var pos = GetGroundPos(transferGate.PosX, transferGate.PosZ);
-        if (transferGate.PosX > 0) pos.x = transferGate.PosX;
-        if (transferGate.PosY > 0) pos.y = transferGate.PosY;
-        if (transferGate.PosZ > 0) pos.z = transferGate.PosZ;
+        var pos = GetGroundPos(config.PosX, config.PosZ);
+        if (config.PosX > 0) pos.x = config.PosX;
+        if (config.PosY > 0) pos.y = config.PosY;
+        if (config.PosZ > 0) pos.z = config.PosZ;
 
-        pos = MapCtl.FixEntityPos(mData, pos);
-        mData.TransferGate = new EntityData(transferGate.ID, EntityType.TransferGate, pos);
+        pos = MapCtl.FixEntityPos(mData, pos, config.CreatePosOffset);
+        mData.TransferGate = new EntityData(config.ID, EntityType.TransferGate, pos);
     }
     private void HideBlocks()
     {

@@ -79,9 +79,9 @@ class PlayerEntity : CharacterEntity
 
         playerModel.rotation = Quaternion.Euler(new Vector3(0, angle1 + angle2, 0));
 
-        if (OutOfMapRangeX(moveDirection.x))
+        if (MoveBoundaryCheckPosX(moveDirection.x))
             moveDirection.x = 0;
-        if (OutOfMapRangeZ(moveDirection.z))
+        if (MoveBoundaryCheckPosZ(moveDirection.z))
             moveDirection.z = 0;
 
         controller.Move(moveDirection * Time.deltaTime);
@@ -101,25 +101,25 @@ class PlayerEntity : CharacterEntity
         return -Vector2.SignedAngle(new Vector2(0,1), v);
     }
 
-    private bool OutOfMapRangeX(float posX)
+    private bool MoveBoundaryCheckPosX(float posX)
     {
-        if (transform.position.x < SettingMng.E.CreateEntityPosOffSet 
+        if (transform.position.x < SettingMng.E.MoveBoundaryOffset 
             && transform.position.x + posX < transform.position.x)
                 return true;
 
-        if (transform.position.x > DataMng.E.CurrentMapConfig.SizeX - SettingMng.E.CreateEntityPosOffSet
+        if (transform.position.x > DataMng.E.CurrentMapConfig.SizeX - SettingMng.E.MoveBoundaryOffset
             && transform.position.x + posX > transform.position.x)
             return true;
 
         return false;
     }
-    private bool OutOfMapRangeZ(float posZ)
+    private bool MoveBoundaryCheckPosZ(float posZ)
     {
-        if (transform.position.z < SettingMng.E.CreateEntityPosOffSet
+        if (transform.position.z < SettingMng.E.MoveBoundaryOffset
            && transform.position.z + posZ < transform.position.z)
             return true;
 
-        if (transform.position.z > DataMng.E.CurrentMapConfig.SizeZ - SettingMng.E.CreateEntityPosOffSet
+        if (transform.position.z > DataMng.E.CurrentMapConfig.SizeZ - SettingMng.E.MoveBoundaryOffset
             && transform.position.z + posZ > transform.position.z)
             return true;
 

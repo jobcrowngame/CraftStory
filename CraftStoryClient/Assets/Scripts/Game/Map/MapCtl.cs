@@ -204,19 +204,19 @@ public class MapCtl
         return Vector3.zero;
     }
 
-    public static Vector3 FixEntityPos(MapData mData, Vector3 pos)
+    public static Vector3 FixEntityPos(MapData mData, Vector3 pos, int offset)
     {
-        if (pos.x < SettingMng.E.CreateEntityPosOffSet)
-            pos.x = SettingMng.E.CreateEntityPosOffSet;
+        if (pos.x < offset)
+            pos.x = offset;
 
-        if (pos.x > mData.MapSize.x - SettingMng.E.CreateEntityPosOffSet)
-            pos.x = mData.MapSize.x - SettingMng.E.CreateEntityPosOffSet;
+        if (pos.x > mData.MapSize.x - offset)
+            pos.x = mData.MapSize.x - offset;
 
-        if (pos.z < SettingMng.E.CreateEntityPosOffSet)
-            pos.z = SettingMng.E.CreateEntityPosOffSet;
+        if (pos.z < offset)
+            pos.z = offset;
 
-        if (pos.z > mData.MapSize.z - SettingMng.E.CreateEntityPosOffSet)
-            pos.z = mData.MapSize.z - SettingMng.E.CreateEntityPosOffSet;
+        if (pos.z > mData.MapSize.z - offset)
+            pos.z = mData.MapSize.z - offset;
 
         return pos;
     }
