@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JsonConfigData;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -188,12 +189,35 @@ public class MapCtl
             || pos.z < 0 || pos.z > DataMng.E.MapData.MapSize.z - 1;
     }
 
-    public bool OutOfMapRangeX(float posX)
+    public Vector3 GetRandomGroundPos()
     {
-        return posX > DataMng.E.MapData.MapSize.x - 1 || posX < 0;
+        for (int i = DataMng.E.MapData.MapSize.y - 1; i >= 0; i--)
+        {
+            int randomX = UnityEngine.Random.Range(0, DataMng.E.MapData.MapSize.x);
+            int randomY = UnityEngine.Random.Range(0, DataMng.E.MapData.MapSize.y);
+
+            if (DataMng.E.MapData.Map[randomX, i, randomY] == null)
+                continue;
+
+            return DataMng.E.MapData.Map[randomX, i, randomY].Pos;
+        }
+        return Vector3.zero;
     }
-    public bool OutOfMapRangeZ(float posZ)
+
+    public static Vector3 FixEntityPos(MapData mData, Vector3 pos)
     {
-        return posZ > DataMng.E.MapData.MapSize.z - 1 || posZ < 0;
+        if (pos.x < SettingMng.E.CreateEntityPosOffSet)
+            pos.x = SettingMng.E.CreateEntityPosOffSet;
+
+        if (pos.x > mData.MapSize.x - SettingMng.E.CreateEntityPosOffSet)
+            pos.x = mData.MapSize.x - SettingMng.E.CreateEntityPosOffSet;
+
+        if (pos.z < SettingMng.E.CreateEntityPosOffSet)
+            pos.z = SettingMng.E.CreateEntityPosOffSet;
+
+        if (pos.z > mData.MapSize.z - SettingMng.E.CreateEntityPosOffSet)
+            pos.z = mData.MapSize.z - SettingMng.E.CreateEntityPosOffSet;
+
+        return pos;
     }
 }

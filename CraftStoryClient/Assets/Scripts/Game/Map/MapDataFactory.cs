@@ -5,6 +5,7 @@ using UnityEngine;
 public class MapDataFactory
 {
     private MapData mData;
+    private PlayerData playerData;
     private Map mapConfig;
 
     public MapData CreateMapData(int id)
@@ -13,6 +14,7 @@ public class MapDataFactory
 
         mapConfig = ConfigMng.E.Map[id];
         mData = new MapData(new Vector3Int(mapConfig.SizeX, mapConfig.SizeY, mapConfig.SizeZ));
+        playerData = new PlayerData();
 
         AddBaseBlocks();
         AddMountains();
@@ -20,6 +22,8 @@ public class MapDataFactory
         AddRocks();
         AddTransferGateConfig();
         HideBlocks();
+
+        AddPlayer();
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
         Debug.LogWarningFormat("mapData 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
@@ -78,6 +82,43 @@ public class MapDataFactory
             AddMountains(mData.Map[startPosX, startPosY, startPosZ], mountainConfig.Height, mountainConfig.Wide);
         }
     }
+    private void AddMountains(MapBlockData parent, int height, int offset = 0)
+    {
+        if (parent == null)
+        {
+            Debug.LogError("bad parent ");
+            return;
+        }
+
+        for (int x = parent.Pos.x - (height - 1 + offset); x <= parent.Pos.x + (height - 1 + offset); x++)
+        {
+            for (int z = parent.Pos.z - (height - 1 + offset); z <= parent.Pos.z + (height - 1 + offset); z++)
+            {
+                int abX = Mathf.Abs(x - parent.Pos.x);
+                int abZ = Mathf.Abs(z - parent.Pos.z);
+                int aby = height - abX - abZ + offset;
+
+                if (aby <= 0)
+                    continue;
+
+                int random = UnityEngine.Random.Range(-1, 1);
+
+                for (int i = 1; i <= aby; i++)
+                {
+                    int offsetY = i;
+                    if (offsetY > height)
+                        offsetY = height;
+
+                    Vector3Int newPos = new Vector3Int(x, offsetY + parent.Pos.y + random, z);
+                    if (IsOutRange(newPos))
+                        continue;
+
+                    mData.Map[x, newPos.y, z] = mData.Map[x, parent.Pos.y, z].Copy();
+                    mData.Map[x, newPos.y, z].Pos = newPos;
+                }
+            }
+        }
+    }
     private void AddTrees()
     {
         var trees = mapConfig.Trees.Split(',');
@@ -102,7 +143,7 @@ public class MapDataFactory
             for (int j = 0; j < treeConfig.Count; j++)
             {
                 var pos = GetGroundPos(treeConfig.PosX, treeConfig.PosZ, treeConfig.OffsetY);
-                FixEntityPos(pos);
+                pos = MapCtl.FixEntityPos(mData, pos);
                 mData.AddResources(new EntityData(treeConfig.ID, EntityType.Tree, pos));
             }
         }
@@ -131,7 +172,7 @@ public class MapDataFactory
             for (int j = 0; j < rockConfig.Count; j++)
             {
                 var pos = GetGroundPos(rockConfig.PosX, rockConfig.PosZ, rockConfig.OffsetY);
-                FixEntityPos(pos);
+                pos = MapCtl.FixEntityPos(mData, pos);
                 mData.AddResources(new EntityData(rockConfig.ID, EntityType.Rock, pos));
             }
         }
@@ -160,7 +201,7 @@ public class MapDataFactory
         if (transferGate.PosY > 0) pos.y = transferGate.PosY;
         if (transferGate.PosZ > 0) pos.z = transferGate.PosZ;
 
-        FixEntityPos(pos);
+        pos = MapCtl.FixEntityPos(mData, pos);
         mData.TransferGate = new EntityData(transferGate.ID, EntityType.TransferGate, pos);
     }
     private void HideBlocks()
@@ -178,6 +219,10 @@ public class MapDataFactory
                 }
             }
         }
+    }
+    private void AddPlayer()
+    {
+        DataMng.E.PlayerData = playerData;
     }
 
     private bool CheckBlockIsSurface(MapBlockData data)
@@ -237,50 +282,5 @@ public class MapDataFactory
         float posY = GetGroundBlock(posX, posZ).Pos.y + 1 + offsetY - 0.5f;
 
         return new Vector3(posX, posY, posZ);
-    }
-    private void FixEntityPos(Vector3 pos) 
-    {
-        if (pos.x < 2) pos.x = 2;
-        if (pos.x > mData.MapSize.x - 3) pos.x = mData.MapSize.x - 3;
-        if (pos.y < 2) pos.y = 2;
-        if (pos.y > mData.MapSize.y - 3) pos.x = mData.MapSize.y - 3;
-    }
-
-    private void AddMountains(MapBlockData parent, int height, int offset = 0)
-    {
-        if (parent == null)
-        {
-            Debug.LogError("bad parent ");
-            return;
-        }
-
-        for (int x = parent.Pos.x - (height - 1 + offset); x <= parent.Pos.x + (height - 1 + offset); x++)
-        {
-            for (int z = parent.Pos.z - (height - 1 + offset); z <= parent.Pos.z + (height - 1 + offset); z++)
-            {
-                int abX = Mathf.Abs(x - parent.Pos.x);
-                int abZ = Mathf.Abs(z - parent.Pos.z);
-                int aby = height - abX - abZ + offset;
-
-                if (aby <= 0)
-                    continue;
-
-                int random = UnityEngine.Random.Range(-1, 1);
-
-                for (int i = 1; i <= aby; i++)
-                {
-                    int offsetY = i;
-                    if (offsetY > height)
-                        offsetY = height;
-
-                    Vector3Int newPos = new Vector3Int(x, offsetY + parent.Pos.y + random, z);
-                    if (IsOutRange(newPos))
-                        continue;
-
-                    mData.Map[x, newPos.y, z] = mData.Map[x, parent.Pos.y, z].Copy();
-                    mData.Map[x, newPos.y, z].Pos = newPos;
-                }
-            }
-        }
     }
 }

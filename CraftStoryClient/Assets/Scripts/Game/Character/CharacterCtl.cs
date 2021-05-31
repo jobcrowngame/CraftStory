@@ -4,14 +4,9 @@ using UnityEngine;
 public class CharacterCtl
 {
     private PlayerEntity player;
-    //private List<CharacterEntity> characterList;
-    //private GameObject playerRoot;
 
     public void CreateCharacter()
     {
-        //characterList = new List<CharacterEntity>();
-        //playerRoot = new GameObject("PlayerRoot");
-
         AddPlayer();
     }
 
@@ -22,8 +17,8 @@ public class CharacterCtl
 
         Debug.Log("Save player pos " + player.transform.position);
 
-        player.CharacterData.Pos = player.transform.position;
-        player.CharacterData.EulerAngles = player.transform.rotation.eulerAngles;
+        DataMng.E.PlayerData.Pos = player.transform.position;
+        DataMng.E.PlayerData.EulerAngles = player.transform.rotation.eulerAngles;
     }
 
     public void AddPlayer()
@@ -32,9 +27,10 @@ public class CharacterCtl
         if (resource == null)
             return;
 
-        var pos = DataMng.E.CharacterData.Pos;
-        pos.y += 3f;
-        var obj = GameObject.Instantiate(resource, pos, Quaternion.Euler(DataMng.E.CharacterData.EulerAngles));
+        var pos = GetPlayerPos();
+        pos = MapCtl.FixEntityPos(DataMng.E.MapData, pos);
+
+        var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
         if (obj == null)
             return;
 
@@ -45,7 +41,21 @@ public class CharacterCtl
             return;
         }
 
-        player.CharacterData = DataMng.E.CharacterData;
         player.Init();
+    }
+    private Vector3 GetPlayerPos()
+    {
+        var pos = WorldMng.E.MapCtl.GetRandomGroundPos();
+
+        var posX = ConfigMng.E.Map[DataMng.E.CurrentSceneID].PlayerPosX;
+        var posZ = ConfigMng.E.Map[DataMng.E.CurrentSceneID].PlayerPosZ;
+
+        if (posX > 0) pos.x = posX;
+        if (posZ > 0) pos.z = posZ;
+
+        pos.y += 5;
+
+        Debug.Log(pos);
+        return pos;
     }
 }

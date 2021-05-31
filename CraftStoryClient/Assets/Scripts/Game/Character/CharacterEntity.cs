@@ -2,8 +2,6 @@
 
 public class CharacterEntity : MonoBehaviour
 {
-    public CharacterData CharacterData { get; set; }
-
     public virtual void Init()
     {
     }

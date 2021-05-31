@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [Serializable]
-public class CharacterData
+public class PlayerData
 {
     private float posX { get; set; }
     private float posY { get; set; }

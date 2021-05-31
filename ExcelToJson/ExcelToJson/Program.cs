@@ -124,6 +124,8 @@ namespace ExcelToJson
                 cell.Trees =            ToString(tbl.Rows[i]["Trees"]);
                 cell.Rocks =            ToString(tbl.Rows[i]["Rocks"]);
                 cell.TransferGateID =   ToInt32(tbl.Rows[i]["TransferGateID"]);
+                cell.PlayerPosX =       ToInt32(tbl.Rows[i]["PlayerPosX"]);
+                cell.PlayerPosZ =       ToInt32(tbl.Rows[i]["PlayerPosZ"]);
 
                 list.Add(cell);
             }

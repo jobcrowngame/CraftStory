@@ -79,9 +79,9 @@ class PlayerEntity : CharacterEntity
 
         playerModel.rotation = Quaternion.Euler(new Vector3(0, angle1 + angle2, 0));
 
-        if (WorldMng.E.MapCtl.OutOfMapRangeX(transform.position.x + moveDirection.x * Time.deltaTime))
+        if (OutOfMapRangeX(moveDirection.x))
             moveDirection.x = 0;
-        if (WorldMng.E.MapCtl.OutOfMapRangeZ(transform.position.z + moveDirection.z * Time.deltaTime))
+        if (OutOfMapRangeZ(moveDirection.z))
             moveDirection.z = 0;
 
         controller.Move(moveDirection * Time.deltaTime);
@@ -100,7 +100,32 @@ class PlayerEntity : CharacterEntity
     {
         return -Vector2.SignedAngle(new Vector2(0,1), v);
     }
-   
+
+    private bool OutOfMapRangeX(float posX)
+    {
+        if (transform.position.x < SettingMng.E.CreateEntityPosOffSet 
+            && transform.position.x + posX < transform.position.x)
+                return true;
+
+        if (transform.position.x > DataMng.E.CurrentMapConfig.SizeX - SettingMng.E.CreateEntityPosOffSet
+            && transform.position.x + posX > transform.position.x)
+            return true;
+
+        return false;
+    }
+    private bool OutOfMapRangeZ(float posZ)
+    {
+        if (transform.position.z < SettingMng.E.CreateEntityPosOffSet
+           && transform.position.z + posZ < transform.position.z)
+            return true;
+
+        if (transform.position.z > DataMng.E.CurrentMapConfig.SizeZ - SettingMng.E.CreateEntityPosOffSet
+            && transform.position.z + posZ > transform.position.z)
+            return true;
+
+        return false;
+    }
+
     public void PlayerModelActive(bool b)
     {
         playerModel.gameObject.SetActive(b);

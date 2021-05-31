@@ -58,19 +58,19 @@
   <ItemGroup>
     <Compile Include="Assets\Editor\Installer\LitJSON\JsonData.cs" />
     <Compile Include="Assets\Editor\Installer\LitJSON\JsonWriter.cs" />
+    <Compile Include="Assets\SD Unity-Chan Haon Custom\Shader\Unity-chan Toon Shader Ver 2.0.6\Editor\RemoveUnusedMaterialProperties.cs" />
     <Compile Include="Assets\Editor\Installer\LitJSON\JsonMockWrapper.cs" />
     <Compile Include="Assets\Editor\Installer\LitJSON\JsonException.cs" />
     <Compile Include="Assets\Editor\Installer\LitJSON\Netstandard15Polyfill.cs" />
+    <Compile Include="Assets\SD Unity-Chan Haon Custom\Shader\Unity-chan Toon Shader Ver 2.0.6\Editor\UTS2GUI.cs" />
+    <Compile Include="Assets\SD Unity-Chan Haon Custom\Shader\Unity-chan Toon Shader Ver 2.0.6\Editor\RemoveUnusedShaderKeywordsFromUTS2Material.cs" />
     <Compile Include="Assets\Editor\Installer\LitJSON\JsonReader.cs" />
     <Compile Include="Assets\Editor\Installer\LitJSON\JsonMapper.cs" />
+    <Compile Include="Assets\SD Unity-Chan Haon Custom\Shader\Unity-chan Toon Shader Ver 2.0.6\Editor\CopyMaterialParameter.cs" />
     <Compile Include="Assets\Editor\Installer\WelcomeWindow.cs" />
     <Compile Include="Assets\Editor\Installer\LitJSON\IJsonWrapper.cs" />
     <Compile Include="Assets\Editor\Installer\LitJSON\ParserToken.cs" />
     <Compile Include="Assets\Editor\Installer\LitJSON\Lexer.cs" />
-    <Compile Include="Assets\SD Unity-Chan Haon Custom\Shader\Unity-chan Toon Shader Ver 2.0.6\Editor\CopyMaterialParameter.cs" />
-    <Compile Include="Assets\SD Unity-Chan Haon Custom\Shader\Unity-chan Toon Shader Ver 2.0.6\Editor\UTS2GUI.cs" />
-    <Compile Include="Assets\SD Unity-Chan Haon Custom\Shader\Unity-chan Toon Shader Ver 2.0.6\Editor\RemoveUnusedShaderKeywordsFromUTS2Material.cs" />
-    <Compile Include="Assets\SD Unity-Chan Haon Custom\Shader\Unity-chan Toon Shader Ver 2.0.6\Editor\RemoveUnusedMaterialProperties.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JsonConfigData;
+using System;
 using UnityEngine;
 
 [Serializable]
@@ -11,6 +12,7 @@ public class DataMng : Single<DataMng>
     public string NextSceneName { get; set; }
     public int NextSceneID { get; set; }
     public int CurrentSceneID { get; set; }
+    public Map CurrentMapConfig { get => ConfigMng.E.Map[CurrentSceneID]; }
 
     private UserData uData;
     public UserData UserData
@@ -33,17 +35,11 @@ public class DataMng : Single<DataMng>
         set => homeData = value;
     }
 
-    private CharacterData cData;
-    public CharacterData CharacterData
+    private PlayerData playerData;
+    public PlayerData PlayerData
     {
-        get 
-        {
-            if (cData == null)
-                cData = TestDataFoctry.CreateTestCharacter();
-
-            return cData; 
-        }
-        private set => cData = value;
+        get => playerData;
+        set => playerData = value;
     }
 
     public void NewUser(string id, string pw)
@@ -69,8 +65,8 @@ public class DataMng : Single<DataMng>
             SaveLoadFile.E.Save(homeData, PublicPar.SaveRootPath + MapDataName);
         }
 
-        if (cData != null)
-            SaveLoadFile.E.Save(cData, PublicPar.SaveRootPath + CharacterDataName);
+        if (playerData != null)
+            SaveLoadFile.E.Save(playerData, PublicPar.SaveRootPath + CharacterDataName);
     }
 
     public bool Load()
@@ -92,7 +88,7 @@ public class DataMng : Single<DataMng>
         if (cData == null)
             return false;
 
-        this.cData = (CharacterData)cData;
+        this.playerData = (PlayerData)cData;
 
         return true;
     }
