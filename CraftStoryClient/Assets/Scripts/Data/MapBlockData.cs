@@ -64,8 +64,7 @@ public class MapBlockData
         {
             if (block == null)
             {
-                string sourcesFullPath = PublicPar.BlockRootPath + BaseData.ResourcesName;
-                block = CommonFunction.Instantiate<MapBlock>(sourcesFullPath, WorldMng.E.MapCtl.CellParent, Pos);
+                block = CommonFunction.Instantiate<MapBlock>(BaseData.ResourcesName, WorldMng.E.MapCtl.CellParent, Pos);
                 block.SetData(this);
             }
             else

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UIBase : MonoBehaviour
 {
@@ -63,15 +62,15 @@ public class UIBase : MonoBehaviour
     {
         var resources = ResourcesMng.E.ReadResources(resourcesPath);
         if (resources == null)
-            Debug.LogError("not find resources " + resourcesPath);
+            return null;
 
-        var obj = GameObject.Instantiate(resources, parent);
+        var obj = GameObject.Instantiate(resources, parent) as GameObject;
         if (obj == null)
             return null;
 
         var cell = obj.GetComponent<T>();
         if (cell == null)
-            return null;
+            cell = obj.AddComponent<T>();
 
         return cell;
     }
@@ -82,5 +81,10 @@ public class UIBase : MonoBehaviour
         {
             GameObject.Destroy(t.gameObject);
         }
+    }
+
+    protected T ReadResources<T>(string resourcesPath) where T : Object
+    {
+        return ResourcesMng.E.ReadResources<T>(resourcesPath);
     }
 }

@@ -35,8 +35,9 @@ public class BraveUI : UIBase
 
         FadeinImg = FindChiled<Image>("Fadein");
 
-        PlayerEntity.E.joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
-        PlayerEntity.E.screenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
+        PlayerCtl.E.Joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
+        PlayerCtl.E.ScreenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
+        PlayerCtl.E.CameraCtl = Camera.main.GetComponent<CameraCtl>();
     }
 
     IEnumerator FadeIn()

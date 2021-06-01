@@ -53,6 +53,8 @@ namespace SimpleInputNamespace
 		private Vector2 m_value = Vector2.zero;
 		public Vector2 Value { get { return m_value; } }
 
+		public bool IsWaiting { get => xAxis.value == 0 && yAxis.value == 0; }
+
 		private void Awake()
 		{
 			joystickTR = (RectTransform) transform;

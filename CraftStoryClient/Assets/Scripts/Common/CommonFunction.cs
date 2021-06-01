@@ -71,7 +71,7 @@ public class CommonFunction
         if (resources == null)
             return null;
 
-        var obj = GameObject.Instantiate(resources, parent);
+        var obj = GameObject.Instantiate(resources, parent) as GameObject;
         obj.transform.position = pos;
 
         return obj;

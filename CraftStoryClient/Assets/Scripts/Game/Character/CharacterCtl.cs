@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterCtl
 {
@@ -7,7 +6,7 @@ public class CharacterCtl
 
     public void CreateCharacter()
     {
-        AddPlayer();
+        player = PlayerCtl.E.AddEntity();
     }
 
     public void OnQuit()
@@ -19,42 +18,5 @@ public class CharacterCtl
 
         DataMng.E.PlayerData.Pos = player.transform.position;
         DataMng.E.PlayerData.EulerAngles = player.transform.rotation.eulerAngles;
-    }
-
-    public void AddPlayer()
-    {
-        var resource = Resources.Load("Prefabs/Game/CharacterPlayer") as GameObject;
-        if (resource == null)
-            return;
-
-        var pos = GetPlayerPos();
-        pos = MapCtl.FixEntityPos(DataMng.E.MapData, pos, DataMng.E.CurrentMapConfig.CreatePosOffset);
-
-        var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
-        if (obj == null)
-            return;
-
-        player = obj.GetComponent<PlayerEntity>();
-        if (player == null)
-        {
-            Debug.LogError("not find CharacterEntity component");
-            return;
-        }
-
-        player.Init();
-    }
-    private Vector3 GetPlayerPos()
-    {
-        var pos = WorldMng.E.MapCtl.GetRandomGroundPos();
-
-        var posX = DataMng.E.CurrentMapConfig.PlayerPosX;
-        var posZ = DataMng.E.CurrentMapConfig.PlayerPosZ;
-
-        if (posX > 0) pos.x = posX;
-        if (posZ > 0) pos.z = posZ;
-
-        pos.y += 5;
-
-        return pos;
     }
 }

@@ -42,8 +42,5 @@ public class PublicPar
     // Dataセーブパース
     public static string SaveRootPath = Application.dataPath + "/SaveData/";
 
-    // ブロックルートパース
-    public static string BlockRootPath = "Prefabs/Game/Block/";
-
     #endregion
 }

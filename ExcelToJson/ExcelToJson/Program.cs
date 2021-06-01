@@ -61,28 +61,29 @@ namespace ExcelToJson
             if (ds == null)
                 return;
 
-            foreach (DataTable tbl in ds.Tables)
+            DataTable tbl = ds.Tables[0];
+
+            for (int i = 0; i < tbl.Columns.Count; i++)
             {
-                for (int i = 0; i < tbl.Columns.Count; i++)
-                {
-                    tbl.Columns[i].ColumnName = tbl.Rows[0].ItemArray[i].ToString();
-                }
-
-                object list = null;
-                switch (fileName)
-                {
-                    case "Block": list = Block(tbl); break;
-                    case "Map": list = Map(tbl); break;
-                    case "MapMountain": list = MapMountain(tbl); break;
-                    case "Tree": list = Tree(tbl); break;
-                    case "Rock": list = Rock(tbl); break;
-                    case "TransferGate": list = TransferGate(tbl); break;
-                    default: Console.WriteLine("not find fileName function."); break;
-                }
-
-                var json = JsonConvert.SerializeObject(list, indented);
-                File.WriteAllText(outputPath + fileName + ".json", json);
+                tbl.Columns[i].ColumnName = tbl.Rows[0].ItemArray[i].ToString();
             }
+
+            object list = null;
+
+            switch (fileName)
+            {
+                case "Block": list = Block(tbl); break;
+                case "Map": list = Map(tbl); break;
+                case "MapMountain": list = MapMountain(tbl); break;
+                case "Tree": list = Tree(tbl); break;
+                case "Rock": list = Rock(tbl); break;
+                case "TransferGate": list = TransferGate(tbl); break;
+                case "Item": list = Item(tbl); break;
+                default: Console.WriteLine("not find fileName function."); break;
+            }
+
+            var json = JsonConvert.SerializeObject(list, indented);
+            File.WriteAllText(outputPath + fileName + ".json", json);
         }
 
         private static object Block(DataTable tbl)
@@ -215,6 +216,23 @@ namespace ExcelToJson
                 data.PosY = ToInt32(tbl.Rows[i]["PosY"]);
                 data.PosZ = ToInt32(tbl.Rows[i]["PosZ"]);
                 data.CreatePosOffset = ToInt32(tbl.Rows[i]["CreatePosOffset"]);
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Item(DataTable tbl)
+        {
+            List<Item> list = new List<Item>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Item();
+
+                data.ID = ToInt32(tbl.Rows[i]["ID"]);
+                data.Name = ToString(tbl.Rows[i]["Name"]);
+                data.IconResourcesPath = ToString(tbl.Rows[i]["IconResourcesPath"]);
+                data.Type = ToInt32(tbl.Rows[i]["Type"]);
+                data.ReferenceID = ToInt32(tbl.Rows[i]["ReferenceID"]);
 
                 list.Add(data);
             }

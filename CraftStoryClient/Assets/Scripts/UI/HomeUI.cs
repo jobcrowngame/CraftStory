@@ -10,16 +10,19 @@ public class HomeUI : UIBase
     Button BagBtn;
     Button LotteryBtn;
     Button ShopBtn;
-    Button LockCursorBtn;
 
-    Transform cubeSelection;
-    Button[] cubBtns;
+    Transform btnsParent;
+
+    Transform BuilderPencil;
+    Button BuilderBtn;
+    Button CancelBtn;
 
     private float fadeInTime = 0.05f;
 
     private void Start()
     {
         WorldMng.E.CreateGameObjects();
+        UICtl.E.AddUI(this, UIType.Home);
 
         Init();
     }
@@ -37,24 +40,6 @@ public class HomeUI : UIBase
         StartCoroutine("FadeIn");
     }
 
-    void Update()
-    {
-        if (SettingMng.E.MouseCursorLocked)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-                OnClickBlackBtn();
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-                OnClickBlueBtn();
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-                OnClickRedBtn();
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-                OnClickGreenBtn();
-        }
-
-        if (Input.GetKeyDown(KeyCode.F9))
-            OnClickLockCursorBtn();
-    }
-
     private void InitUI()
     {
         SceneName = FindChiled<Text>("SceneName");
@@ -70,67 +55,56 @@ public class HomeUI : UIBase
         ShopBtn = FindChiled<Button>("ShopBtn");
         ShopBtn.onClick.AddListener(() => { UICtl.E.OpenUI<ShopUI>(UIType.Shop); });
 
-        LockCursorBtn = FindChiled<Button>("LockCursorBtn");
-        FindChiled<Text>("Text", LockCursorBtn.gameObject).text = "F9 Key Lock Cursor";
-        LockCursorBtn.onClick.AddListener(OnClickLockCursorBtn);
+        btnsParent = FindChiled("Grid");
+        AddItemBtns();
 
-        cubeSelection = FindChiled("CubeSelection");
+        BuilderPencil = FindChiled("BuilderPencil");
+        BuilderBtn = FindChiled<Button>("BuilderBtn", BuilderPencil.gameObject);
+        BuilderBtn.onClick.AddListener(BuilderBlueprint);
+        CancelBtn = FindChiled<Button>("CancelBtn", BuilderPencil.gameObject);
+        CancelBtn.onClick.AddListener(CancelBuilderBlueprint);
 
-        cubBtns = new Button[4];
-        cubBtns[0] = FindChiled<Button>("BlackBtn");
-        cubBtns[0].onClick.AddListener(() => { OnClickBlackBtn(); });
-        cubBtns[1] = FindChiled<Button>("BlueBtn");
-        cubBtns[1].onClick.AddListener(() => { OnClickBlueBtn(); });
-        cubBtns[2] = FindChiled<Button>("RedBtn");
-        cubBtns[2].onClick.AddListener(() => { OnClickRedBtn(); });
-        cubBtns[3] = FindChiled<Button>("GreenBtn");
-        cubBtns[3].onClick.AddListener(() => { OnClickGreenBtn(); });
-
-        PlayerEntity.E.joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
-        PlayerEntity.E.screenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
+        PlayerCtl.E.Joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
+        PlayerCtl.E.ScreenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
+        PlayerCtl.E.CameraCtl = Camera.main.GetComponent<CameraCtl>();
     }
 
-    #region ButtonClick
-
-    private void OnClickBlackBtn()
+    private void AddItemBtns()
     {
-        Debug.Log("OnClickBlackBtn");
-        cubeSelection.position = cubBtns[0].transform.position;
-
-        PlayerEntity.E.ChangeSelectBlock(1001);
+        AddItemBtn(101);
+        AddItemBtn(102);
+        AddItemBtn(103);
+        AddItemBtn(104);
+        AddItemBtn(3000);
     }
-    private void OnClickBlueBtn()
+
+    private void AddItemBtn(int itemID)
     {
-        Debug.Log("OnClickBlueBtn");
-        cubeSelection.position = cubBtns[1].transform.position;
+        var config = ConfigMng.E.Item[itemID];
+        var cell = AddCell<ItemBtn>("Prefabs/UI/ItemBtn", btnsParent);
+        if (cell == null)
+            return;
 
-        PlayerEntity.E.ChangeSelectBlock(1002);
+        cell.Init(itemID);
     }
-    private void OnClickRedBtn()
+
+    private void BuilderBlueprint()
     {
-        Debug.Log("OnClickRedBtn");
-        cubeSelection.position = cubBtns[2].transform.position;
+        Debug.Log("BuilderBtn");
 
-        PlayerEntity.E.ChangeSelectBlock(1003);
+        ShowBuilderPencilBtn(false);
     }
-    private void OnClickGreenBtn()
+    private void CancelBuilderBlueprint()
     {
-        Debug.Log("OnClickGreenBtn");
-        cubeSelection.position = cubBtns[3].transform.position;
+        Debug.Log("CancelBtn");
 
-        PlayerEntity.E.ChangeSelectBlock(1004);
+        ShowBuilderPencilBtn(false);
     }
-    private void OnClickLockCursorBtn()
+    public void ShowBuilderPencilBtn(bool b = true)
     {
-        Debug.Log("Lock MouseCursor");
-
-        SettingMng.E.MouseCursorLocked = !SettingMng.E.MouseCursorLocked;
-        FindChiled<Text>("Text", LockCursorBtn.gameObject).text = SettingMng.E.MouseCursorLocked ?
-                "F9 Key UnLock Cursor" :
-                "F9 Key Lock Cursor";
+        BuilderPencil.gameObject.SetActive(b);
+        if (!b ) PlayerCtl.E.BuilderPencil.Cancel();
     }
-
-    #endregion
 
     IEnumerator FadeIn()
     {

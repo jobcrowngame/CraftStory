@@ -46,9 +46,17 @@ public class UICtl : Single<UICtl>
         return entity;
     }
 
-    public UIBase GetUI(UIType uiType)
+    private UIBase GetUI(UIType uiType)
     {
         return uiDic[uiType];
+    }
+    public T GetUI<T>(UIType uiType) where T : UIBase
+    {
+        return uiDic[uiType] as T;
+    }
+    public void AddUI(UIBase ui, UIType uiType)
+    {
+        uiDic[uiType] = ui;
     }
 
     public UIBase OpenUI<T>(UIType uiType, UIOpenType closeType = UIOpenType.None) where T : UIBase

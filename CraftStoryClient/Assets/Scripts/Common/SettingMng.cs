@@ -2,21 +2,6 @@
 
 public class SettingMng : Single<SettingMng>
 {
-    private bool mouseCursorLocked = false;
-    public bool MouseCursorLocked
-    {
-        get { return mouseCursorLocked; }
-        set
-        {
-            mouseCursorLocked = value;
-
-            // Mouse Cursor
-            Cursor.lockState = value ?
-                CursorLockMode.Locked :
-                CursorLockMode.None;
-        }
-    }
-
     public float LookUpAngleMax { get => lookUpAngleMax; }
     private float lookUpAngleMax = 80f;
 
@@ -43,4 +28,13 @@ public class SettingMng : Single<SettingMng>
 
     public int MoveBoundaryOffset { get => moveBoundaryOffset; }
     private int moveBoundaryOffset = 3;
+
+    public float MoveSpeed { get => moveSpeed; }
+    private float moveSpeed = 6.0F;       //歩行速度
+
+    public float JumpSpeed { get => jumpSpeed; }
+    private float jumpSpeed = 8.0F;   //ジャンプ力
+
+    public float Gravity { get => gravity; }
+    private float gravity = 5000.0F;    //重力の大きさ
 }
