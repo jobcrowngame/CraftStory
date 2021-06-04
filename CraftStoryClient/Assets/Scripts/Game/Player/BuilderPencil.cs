@@ -1,9 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using UnityEngine;
 
 public class BuilderPencil
 {
     GameObject startNotation;
     GameObject endNotation;
+
+    BlueprintData selectBlueprintData;
+    Vector3Int buildPos;
+    int angle;
 
     public bool IsStart { get => startNotation == null; }
 
@@ -27,15 +34,135 @@ public class BuilderPencil
         ChangeNotationState();
 
         var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
-        if (homeUI == null)
-            return;
-
-        homeUI.ShowBuilderPencilBtn();
+        if (homeUI != null) homeUI.ShowBuilderPencilBtn();
     }
-    public void Cancel()
+    public void CancelCreateBlueprint()
     {
         if (startNotation != null) DestroyNotation(startNotation);
         if (endNotation != null) DestroyNotation(endNotation);
+
+        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+        if (homeUI != null) homeUI.ShowBuilderPencilBtn(false);
+    }
+    public void CreateBlueprint()
+    {
+        var startPos = startNotation.transform.position;
+        var endPos = endNotation.transform.position;
+
+        int minX, maxX, minZ, maxZ;
+        if (startPos.x >= endPos.x)
+        {
+            minX = (int)endPos.x;
+            maxX = (int)startPos.x + 1;
+        }
+        else
+        {
+            minX = (int)startPos.x;
+            maxX = (int)endPos.x + 1; 
+        }
+
+        if (startPos.z >= endPos.z)
+        {
+            minZ = (int)endPos.z;
+            maxZ = (int)startPos.z + 1;
+        }
+        else
+        {
+            minZ = (int)startPos.z;
+            maxZ = (int)endPos.z + 1;
+        }
+
+        int centerX = (maxX - minX) / 2;
+        int centerZ = (maxZ - minZ) / 2;
+
+        Debug.LogFormat("s:{0}, n:{1}",startPos, endPos);
+
+        List<MapBlockData> blocks = new List<MapBlockData>();
+        for (int y = (int)startPos.y; y < DataMng.E.MapData.MapSize.y - startPos.y; y++)
+        {
+            for (int x = minX; x < maxX; x++)
+            {
+                for (int z = minZ; z < maxZ; z++)
+                {
+                    if (DataMng.E.MapData.Map[x, y, z] == null)
+                        continue;
+
+                    var block = DataMng.E.MapData.Map[x, y, z];
+                    block.Pos = new Vector3Int(x - minX - centerX, y - (int)startPos.y, z - minZ - centerZ);
+                    block.ClearBlock();
+                    blocks.Add(block);
+                }
+            }
+        }
+
+        var blueprintData = new BlueprintData(blocks, new Vector2Int(maxX - minX, maxZ - minZ));
+
+        PlayerCtl.E.AddItem(3001, 1, blueprintData);
+
+        CancelCreateBlueprint();
+    }
+    public void UserBlueprint(Vector3Int startPos, object data)
+    {
+        try
+        {
+            buildPos = startPos;
+            CancelUserBlueprint();
+
+            selectBlueprintData = new BlueprintData(data);
+
+            WorldMng.E.MapCtl.CreateTransparentBlocks(selectBlueprintData, buildPos);
+            WorldMng.E.MapCtl.RotateBuilderPencilParent(angle);
+
+            var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+            if (homeUI != null) homeUI.ShowBlueprintBtn();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError(ex.Message);
+            Debug.LogError(ex.StackTrace);
+        }
+    }
+
+    private void ClearSelectBlueprintDataBlock() 
+    {
+        foreach (var item in selectBlueprintData.BlockList)
+        {
+            item.ClearBlock();
+        }
+    }
+
+    public void SpinBlueprint()
+    {
+        Debug.Log("SpinBlueprint");
+
+        WorldMng.E.MapCtl.DeleteBuilderPencil();
+        ClearSelectBlueprintDataBlock();
+
+        angle += 90;
+        if (angle == 360) angle = 0;
+
+        WorldMng.E.MapCtl.CreateTransparentBlocks(selectBlueprintData, buildPos);
+        WorldMng.E.MapCtl.RotateBuilderPencilParent(angle);
+    }
+    public void CancelUserBlueprint()
+    {
+        Debug.Log("CancelUserBlueprint");
+
+        WorldMng.E.MapCtl.DeleteBuilderPencil();
+        selectBlueprintData = null;
+
+        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+        if (homeUI != null) homeUI.ShowBlueprintBtn(false);
+    }
+    public void BuildBlueprint()
+    {
+        Debug.Log("BuildBlueprint");
+
+        WorldMng.E.MapCtl.CreateBlocks(selectBlueprintData, buildPos);
+        PlayerCtl.E.ConsumableSelectItem();
+
+        CancelUserBlueprint();
+        angle = 0;
     }
 
     private void DestroyNotation(GameObject notation)

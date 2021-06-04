@@ -94,6 +94,7 @@ namespace ExcelToJson
                 var data = new Block();
 
                 data.ID =               ToInt32(tbl.Rows[i]["ID"]);
+                data.ItemID =               ToInt32(tbl.Rows[i]["ItemID"]);
                 data.Name =             ToString(tbl.Rows[i]["Name"]);
                 data.ResourcesName =    ToString(tbl.Rows[i]["ResourcesName"]);
                 data.Type =             ToInt32(tbl.Rows[i]["Type"]);
@@ -233,6 +234,7 @@ namespace ExcelToJson
                 data.IconResourcesPath = ToString(tbl.Rows[i]["IconResourcesPath"]);
                 data.Type = ToInt32(tbl.Rows[i]["Type"]);
                 data.ReferenceID = ToInt32(tbl.Rows[i]["ReferenceID"]);
+                data.MaxCount = ToInt32(tbl.Rows[i]["MaxCount"]);
 
                 list.Add(data);
             }

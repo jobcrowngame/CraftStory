@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MapBlock : MonoBehaviour
 {
@@ -28,6 +23,7 @@ public class MapBlock : MonoBehaviour
 
         if (clickingTime > data.BaseData.DestroyTime)
         {
+            PlayerCtl.E.AddItem(ConfigMng.E.Block[data.ID].ItemID, 1);
             Delete();
         }
     }
@@ -35,9 +31,4 @@ public class MapBlock : MonoBehaviour
     {
         clickingTime = 0;
     }
-
-    //public void OnWillRenderObject()
-    //{
-    //    Debug.Log("OnWillRenderObject");
-    //}
 }

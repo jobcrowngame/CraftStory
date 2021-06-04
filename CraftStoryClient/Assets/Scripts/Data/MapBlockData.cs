@@ -2,13 +2,18 @@
 using System;
 using UnityEngine;
 
+[Serializable]
 public class MapBlockData
 {
-    private int blockID;
-    private int x, y, z;
-    private bool isIn;
+    private int blockID { get; set; }
+    private int x { get; set; }
+    private int y { get; set; }
+    private int z { get; set; }
+    private bool isIn { get; set; }
+    [NonSerialized]
     private MapBlock block;
 
+    public MapBlockData() { }
     public MapBlockData(int blockID, Vector3Int pos)
     {
         this.blockID = blockID;
@@ -29,6 +34,7 @@ public class MapBlockData
         z = pos.z;
     }
 
+    public int ID { get => blockID; }
     public Vector3Int Pos
     {
         get { return new Vector3Int(x, y, z); }
@@ -50,7 +56,11 @@ public class MapBlockData
 
     public MapBlockData Copy()
     {
-        return new MapBlockData(blockID, Pos);
+        return (MapBlockData)MemberwiseClone();
+    }
+    public void ClearBlock()
+    {
+        block = null;
     }
 
     public string ToStringData()
@@ -58,13 +68,13 @@ public class MapBlockData
         return string.Format("{0}^{1}", blockID, isIn ? "t" : "f");
     }
 
-    public MapBlock ActiveBlock(bool active = true)
+    public MapBlock ActiveBlock(Transform parent, bool active = true)
     {
         if (active)
         {
             if (block == null)
             {
-                block = CommonFunction.Instantiate<MapBlock>(BaseData.ResourcesName, WorldMng.E.MapCtl.CellParent, Pos);
+                block = CommonFunction.Instantiate<MapBlock>(BaseData.ResourcesName, parent, Pos);
                 block.SetData(this);
             }
             else
@@ -78,6 +88,12 @@ public class MapBlockData
 
         IsIn = !active;
         return block;
+    }
+   
+    public MapBlock ActiveBlock(bool active = true)
+    {
+        
+        return ActiveBlock(WorldMng.E.MapCtl.CellParent, active);
     }
 }
 

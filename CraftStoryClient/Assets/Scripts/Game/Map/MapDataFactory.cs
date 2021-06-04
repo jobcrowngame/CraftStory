@@ -13,8 +13,7 @@ public class MapDataFactory
         var startTime = DateTime.Now;
 
         mapConfig = ConfigMng.E.Map[id];
-        mData = new MapData(new Vector3Int(mapConfig.SizeX, mapConfig.SizeY, mapConfig.SizeZ));
-        playerData = new PlayerData();
+        mData = new MapData(id, new Vector3Int(mapConfig.SizeX, mapConfig.SizeY, mapConfig.SizeZ));
 
         AddBaseBlocks();
         AddMountains();
@@ -22,8 +21,6 @@ public class MapDataFactory
         AddRocks();
         AddTransferGateConfig();
         HideBlocks();
-
-        AddPlayer();
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
         Debug.LogWarningFormat("mapData 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
@@ -142,7 +139,7 @@ public class MapDataFactory
 
             for (int j = 0; j < config.Count; j++)
             {
-                var pos = GetGroundPos(config.PosX, config.PosZ, config.OffsetY);
+                var pos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ, config.OffsetY);
                 pos = MapCtl.FixEntityPos(mData, pos, config.CreatePosOffset);
                 mData.AddResources(new EntityData(config.ID, EntityType.Tree, pos));
             }
@@ -171,7 +168,7 @@ public class MapDataFactory
 
             for (int j = 0; j < config.Count; j++)
             {
-                var pos = GetGroundPos(config.PosX, config.PosZ, config.OffsetY);
+                var pos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ, config.OffsetY);
                 pos = MapCtl.FixEntityPos(mData, pos, config.CreatePosOffset);
                 mData.AddResources(new EntityData(config.ID, EntityType.Rock, pos));
             }
@@ -196,7 +193,7 @@ public class MapDataFactory
             return;
         }
 
-        var pos = GetGroundPos(config.PosX, config.PosZ);
+        var pos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ);
         if (config.PosX > 0) pos.x = config.PosX;
         if (config.PosY > 0) pos.y = config.PosY;
         if (config.PosZ > 0) pos.z = config.PosZ;
@@ -219,10 +216,6 @@ public class MapDataFactory
                 }
             }
         }
-    }
-    private void AddPlayer()
-    {
-        DataMng.E.PlayerData = playerData;
     }
 
     private bool CheckBlockIsSurface(MapBlockData data)
@@ -263,24 +256,5 @@ public class MapDataFactory
             return config.Block02;
         else
             return config.Block03;
-    }
-    private MapBlockData GetGroundBlock(int posX, int posZ)
-    {
-        for (int i = mapConfig.SizeY - 1; i >= 0 ; i--)
-        {
-            if (mData.Map[posX,i,posZ] == null)
-                continue;
-
-            return mData.Map[posX, i, posZ];
-        }
-        return null;
-    }
-    private Vector3 GetGroundPos(int posX, int posZ, float offsetY = 0)
-    {
-        if (posX < 0) posX = UnityEngine.Random.Range(0, mapConfig.SizeX);
-        if (posZ < 0) posZ = UnityEngine.Random.Range(0, mapConfig.SizeZ);
-        float posY = GetGroundBlock(posX, posZ).Pos.y + 1 + offsetY - 0.5f;
-
-        return new Vector3(posX, posY, posZ);
     }
 }

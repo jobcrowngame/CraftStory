@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,14 @@ public class HomeUI : UIBase
 
     Transform BuilderPencil;
     Button BuilderBtn;
-    Button CancelBtn;
+    Button BuilderPencilCancelBtn;
+
+    Transform Blueprint;
+    Button SpinBtn;
+    Button BlueprintCancelBtn;
+    Button BuildBtn;
+
+    List<ItemBtn> itemBtns;
 
     private float fadeInTime = 0.05f;
 
@@ -37,6 +45,7 @@ public class HomeUI : UIBase
 
         SceneName.text = ConfigMng.E.Map[DataMng.E.CurrentSceneID].Name;
 
+        RefreshItemBtns();
         StartCoroutine("FadeIn");
     }
 
@@ -45,6 +54,7 @@ public class HomeUI : UIBase
         SceneName = FindChiled<Text>("SceneName");
 
         FadeinImg = FindChiled<Image>("Fadein");
+        FadeinImg.enabled = true;
 
         BagBtn = FindChiled<Button>("BagBtn");
         BagBtn.onClick.AddListener(() => { UICtl.E.OpenUI<BagUI>(UIType.Bag); });
@@ -60,9 +70,17 @@ public class HomeUI : UIBase
 
         BuilderPencil = FindChiled("BuilderPencil");
         BuilderBtn = FindChiled<Button>("BuilderBtn", BuilderPencil.gameObject);
-        BuilderBtn.onClick.AddListener(BuilderBlueprint);
-        CancelBtn = FindChiled<Button>("CancelBtn", BuilderPencil.gameObject);
-        CancelBtn.onClick.AddListener(CancelBuilderBlueprint);
+        BuilderBtn.onClick.AddListener(CreateBlueprint);
+        BuilderPencilCancelBtn = FindChiled<Button>("BuilderPencilCancelBtn", BuilderPencil.gameObject);
+        BuilderPencilCancelBtn.onClick.AddListener(CancelBuilderPencilCancelBtn);
+
+        Blueprint = FindChiled("Blueprint");
+        SpinBtn = FindChiled<Button>("SpinBtn", Blueprint.gameObject);
+        SpinBtn.onClick.AddListener(SpinBlueprint);
+        BlueprintCancelBtn = FindChiled<Button>("BlueprintCancelBtn", Blueprint.gameObject);
+        BlueprintCancelBtn.onClick.AddListener(CancelUserBlueprint);
+        BuildBtn = FindChiled<Button>("BuildBtn", Blueprint.gameObject);
+        BuildBtn.onClick.AddListener(BuildBlueprint);
 
         PlayerCtl.E.Joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
         PlayerCtl.E.ScreenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
@@ -71,39 +89,66 @@ public class HomeUI : UIBase
 
     private void AddItemBtns()
     {
-        AddItemBtn(101);
-        AddItemBtn(102);
-        AddItemBtn(103);
-        AddItemBtn(104);
-        AddItemBtn(3000);
+        itemBtns = new List<ItemBtn>();
+
+        for (int i = 0; i < 6; i++)
+        {
+            var cell = AddCell<ItemBtn>("Prefabs/UI/ItemBtn", btnsParent);
+            if (cell == null)
+                return;
+
+            itemBtns.Add(cell);
+        }
     }
 
-    private void AddItemBtn(int itemID)
-    {
-        var config = ConfigMng.E.Item[itemID];
-        var cell = AddCell<ItemBtn>("Prefabs/UI/ItemBtn", btnsParent);
-        if (cell == null)
-            return;
-
-        cell.Init(itemID);
-    }
-
-    private void BuilderBlueprint()
+    private void CreateBlueprint()
     {
         Debug.Log("BuilderBtn");
 
-        ShowBuilderPencilBtn(false);
+        PlayerCtl.E.BuilderPencil.CreateBlueprint();
     }
-    private void CancelBuilderBlueprint()
+    private void CancelBuilderPencilCancelBtn()
     {
         Debug.Log("CancelBtn");
 
-        ShowBuilderPencilBtn(false);
+        PlayerCtl.E.BuilderPencil.CancelCreateBlueprint();
     }
+    private void SpinBlueprint()
+    {
+        PlayerCtl.E.BuilderPencil.SpinBlueprint();
+    }
+    private void CancelUserBlueprint()
+    {
+        PlayerCtl.E.BuilderPencil.CancelUserBlueprint();
+    }
+    private void BuildBlueprint()
+    {
+        PlayerCtl.E.BuilderPencil.BuildBlueprint();
+    }
+
     public void ShowBuilderPencilBtn(bool b = true)
     {
-        BuilderPencil.gameObject.SetActive(b);
-        if (!b ) PlayerCtl.E.BuilderPencil.Cancel();
+        if (BuilderPencil != null)
+            BuilderPencil.gameObject.SetActive(b);
+    }
+    public void ShowBlueprintBtn(bool b = true)
+    {
+        if (Blueprint != null)
+            Blueprint.gameObject.SetActive(b);
+    }
+
+    public void RefreshItemBtns()
+    {
+        for (int i = 0; i < itemBtns.Count; i++)
+        {
+            if (i > DataMng.E.Items.Count - 1)
+            {
+                itemBtns[i].Clear();
+                continue;
+            }
+
+            itemBtns[i].Init(DataMng.E.Items[i]);
+        }
     }
 
     IEnumerator FadeIn()

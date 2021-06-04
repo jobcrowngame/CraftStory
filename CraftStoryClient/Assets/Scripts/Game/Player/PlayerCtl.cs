@@ -1,10 +1,10 @@
-﻿using JsonConfigData;
+﻿using System;
+using JsonConfigData;
 using SimpleInputNamespace;
 using UnityEngine;
 
 public class PlayerCtl : MonoBehaviour
 {
-
     public static PlayerCtl E
     {
         get
@@ -33,19 +33,7 @@ public class PlayerCtl : MonoBehaviour
     private BuilderPencil builderPencil;
 
     PlayerMotionType motionType;
-    private int selectItemID;
-    private Item selectItemConfig
-    {
-        get 
-        {
-            if (selectItemID < 1)
-            {
-                Debug.LogError("not find item " + selectItemID);
-                return null;
-            }
-            return ConfigMng.E.Item[selectItemID]; 
-        }
-    } 
+    private ItemData selectItem;
     private MapBlock clickingBlock;
 
     public CameraCtl CameraCtl
@@ -71,6 +59,11 @@ public class PlayerCtl : MonoBehaviour
         {
             playerEntity.Move(joystick.xAxis.value, joystick.yAxis.value);
         }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            AddItem(3000, 1);
+        }
     }
 
     public PlayerEntity AddEntity()
@@ -79,16 +72,8 @@ public class PlayerCtl : MonoBehaviour
         if (resource == null)
             return null;
 
-        var pos = WorldMng.E.MapCtl.GetRandomGroundPos();
-        var posX = DataMng.E.CurrentMapConfig.PlayerPosX;
-        var posZ = DataMng.E.CurrentMapConfig.PlayerPosZ;
-
-        if (posX > 0) pos.x = posX;
-        if (posZ > 0) pos.z = posZ;
-
-        pos.y += 5;
+        var pos = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5);
         pos = MapCtl.FixEntityPos(DataMng.E.MapData, pos, DataMng.E.CurrentMapConfig.CreatePosOffset);
-
         var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
         if (obj == null)
             return null;
@@ -105,17 +90,20 @@ public class PlayerCtl : MonoBehaviour
         return playerEntity;
     }
 
-    public void ChangeSelectItem(int blockId)
+    public void ChangeSelectItem(ItemData item)
     {
-        selectItemID = blockId;
+        builderPencil.CancelCreateBlueprint();
+        builderPencil.CancelUserBlueprint();
 
-        if (selectItemID == 0)
+        selectItem = item;
+
+        if (selectItem == null)
         {
             motionType = PlayerMotionType.None;
             return;
         }
 
-        switch ((ItemType)selectItemConfig.Type)
+        switch ((ItemType)selectItem.Config.Type)
         {
             case ItemType.Block:
                 motionType = PlayerMotionType.SelectBlock;
@@ -124,17 +112,21 @@ public class PlayerCtl : MonoBehaviour
             case ItemType.BuilderPencil:
                 motionType = PlayerMotionType.SelectBuilderPencil;
                 break;
+
+            case ItemType.Blueprint:
+                motionType = PlayerMotionType.SelectBlueprint;
+                break;
         }
     }
     public void OnClick(GameObject obj, Vector3 pos)
     {
-        if (selectItemID == 0)
+        if (selectItem == null)
             return;
 
-        switch ((ItemType)selectItemConfig.Type)
+        switch ((ItemType)selectItem.Config.Type)
         {
             case ItemType.Block:
-                CreateBlock(selectItemConfig.ReferenceID, obj, new Vector3Int((int)pos.x, (int)pos.y, (int)pos.z));
+                CreateBlock(selectItem.Config.ReferenceID, obj, Vector3Int.CeilToInt(pos));
                 break;
 
             case ItemType.BuilderPencil:
@@ -145,6 +137,10 @@ public class PlayerCtl : MonoBehaviour
                     builderPencil.Start(newPos);
                 else
                     builderPencil.End(newPos);
+                break;
+
+            case ItemType.Blueprint:
+                BuilderPencil.UserBlueprint(Vector3Int.CeilToInt(pos), selectItem.Data);
                 break;
         }
     }
@@ -166,6 +162,39 @@ public class PlayerCtl : MonoBehaviour
             cell.OnClicking(time);
     }
 
+    /// <summary>
+    /// アイテム手にいる
+    /// </summary>
+    public void AddItem(int itemID, int count, object data = null)
+    {
+        DataMng.E.AddItem(itemID, data, count);
+
+        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+        if (homeUI != null) homeUI.RefreshItemBtns();
+    }
+    /// <summary>
+    /// 消耗アイテム
+    /// </summary>
+    public void ConsumableItem(int itemID, int count = 1)
+    {
+        selectItem.Count -= count;
+
+        if (selectItem.Count == 0)
+        {
+            DataMng.E.Items.Remove(selectItem);
+            selectItem = null;
+            ItemBtn.Select(null);
+        }
+
+        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+        if (homeUI != null) homeUI.RefreshItemBtns();
+    }
+
+    public void ConsumableSelectItem(int count = 1)
+    {
+        ConsumableItem(selectItem.ItemID, count);
+    }
+
     private void CreateBlock(int blockID, GameObject collider, Vector3Int pos)
     {
         var cell = collider.GetComponent<MapBlock>();
@@ -173,14 +202,17 @@ public class PlayerCtl : MonoBehaviour
             return;
 
         WorldMng.E.MapCtl.CreateBlock(pos, blockID);
+        ConsumableSelectItem();
 
         Debug.Log("Create block " + pos);
     }
+    
 
     enum PlayerMotionType
     {
         None = 0,
         SelectBlock,
         SelectBuilderPencil,
+        SelectBlueprint,
     }
 }

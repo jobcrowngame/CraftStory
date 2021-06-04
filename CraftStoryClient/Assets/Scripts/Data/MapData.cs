@@ -3,10 +3,16 @@ using System.Text;
 using System.IO;
 using UnityEngine;
 using System.Collections.Generic;
+using JsonConfigData;
 
 [Serializable]
 public class MapData
 {
+    public int MapID { get => mapID; }
+    private int mapID;
+
+    public Map Config { get => ConfigMng.E.Map[mapID]; }
+
     private int sizeX { get; set; }
     private int sizeY { get; set; }
     private int sizeZ { get; set; }
@@ -20,8 +26,10 @@ public class MapData
     [NonSerialized]
     private EntityData transferGate;
 
-    public MapData(Vector3Int size)
+    public MapData(int mapID, Vector3Int size)
     {
+        this.mapID = mapID;
+
         sizeX = size.x;
         sizeY = size.y;
         sizeZ = size.z;
@@ -29,7 +37,7 @@ public class MapData
         map = new MapBlockData[sizeX, sizeY, sizeZ];
         entityList = new List<EntityData>();
     }
-    public MapData(MapBlockData[,,] map, Vector3Int size)
+    public MapData(int mapID, MapBlockData[,,] map, Vector3Int size)
     {
         this.map = map;
         sizeX = size.x;
@@ -97,6 +105,7 @@ public class MapData
         }
 
         strMap = sb.ToString();
+        Debug.Log("Map");
         Debug.Log(strMap);
     }
     public void EntityDataToStringData()
@@ -111,6 +120,7 @@ public class MapData
         }
 
         strEntity = sb.ToString();
+        Debug.Log("Entity");
         Debug.Log(strEntity);
     }
 

@@ -99,4 +99,18 @@ public class CommonFunction
 
         DataMng.E.CurrentSceneID = id;
     }
+
+    public static Vector3 Vector3Sum(Vector3 v1, Vector3 v2)
+    {
+        return new Vector3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+    }
+    public static Vector3Int Vector3Sum(Vector3Int v1, Vector3Int v2)
+    {
+        return new Vector3Int(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+    }
+
+    public static Vector3Int Vector3Minus(Vector3Int v1, Vector3Int v2)
+    {
+        return new Vector3Int(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+    }
 }

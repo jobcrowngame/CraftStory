@@ -15,4 +15,9 @@ public class Single<T> where T : class, new()
             return entity; 
         }
     }
+
+    public virtual void Init()
+    {
+
+    }
 }

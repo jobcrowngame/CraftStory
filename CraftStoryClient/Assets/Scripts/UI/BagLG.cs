@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using Gs2.Unity.Gs2Inventory.Model;
-using System.Collections;
-using System;
+﻿using Gs2.Unity.Gs2Inventory.Model;
 using System.Collections.Generic;
 
 public class BagLG : UILogicBase<BagLG, BagUI>

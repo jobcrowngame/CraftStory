@@ -16,7 +16,7 @@ public class CharacterCtl
 
         Debug.Log("Save player pos " + player.transform.position);
 
-        DataMng.E.PlayerData.Pos = player.transform.position;
-        DataMng.E.PlayerData.EulerAngles = player.transform.rotation.eulerAngles;
+        //DataMng.E.PlayerData.Pos = player.transform.position;
+        //DataMng.E.PlayerData.EulerAngles = player.transform.rotation.eulerAngles;
     }
 }

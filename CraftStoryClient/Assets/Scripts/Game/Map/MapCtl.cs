@@ -8,6 +8,7 @@ public class MapCtl
     private MapDataFactory mapFactory;
     private Transform mapCellParent;
     private Transform resourceParent;
+    private Transform builderPencilParent;
 
     private List<EntityResources> resourcesEntitys;
     private int entityID;
@@ -104,6 +105,36 @@ public class MapCtl
 
     }
 
+    public void CreateTransparentBlocks(BlueprintData blueprint, Vector3Int startPos)
+    {
+        var shader = Shader.Find("SemiTransparent");
+        builderPencilParent = new GameObject("BuilderPancil").transform;
+        builderPencilParent.position = startPos;
+
+        foreach (var item in blueprint.BlockList)
+        {
+            var block = item.ActiveBlock(builderPencilParent);
+            block.transform.localPosition = item.Pos;
+
+            if (shader != null)
+            {
+                block.GetComponent<BoxCollider>().enabled = false;
+
+                var render = block.GetComponent<Renderer>();
+                render.material.shader = shader;
+                render.material.color = new Color(1, 1, 1, 0.5f);
+            }
+        }
+    }
+    public void CreateBlocks(BlueprintData blueprint, Vector3Int startPos)
+    {
+        foreach (var item in blueprint.BlockList)
+        {
+            item.Pos = Vector3Int.CeilToInt(item.Block.transform.position);
+            item.ClearBlock();
+            CreateBlock(item);
+        }
+    }
     public MapBlock CreateBlock(Vector3Int pos, int blockId)
     {
         if (IsOutRange(pos))
@@ -114,7 +145,11 @@ public class MapCtl
     }
     public MapBlock CreateBlock(MapBlockData data)
     {
-        var block = data.ActiveBlock();
+        return CreateBlock(data, WorldMng.E.MapCtl.CellParent);
+    }
+    public MapBlock CreateBlock(MapBlockData data, Transform parent)
+    {
+        var block = data.ActiveBlock(parent);
         DataMng.E.MapData.Add(data);
         CheckNextToBlocks(data);
         return block;
@@ -126,7 +161,17 @@ public class MapCtl
         GameObject.Destroy(block.gameObject);
         CheckNextToBlocks(block.data);
     }
-   
+    public void DeleteBuilderPencil()
+    {
+        if(builderPencilParent != null) GameObject.Destroy(builderPencilParent.gameObject);
+    }
+
+    public void RotateBuilderPencilParent(float angle)
+    {
+        if (builderPencilParent != null)
+            builderPencilParent.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
+    }
+
     private void CheckNextToBlocks(MapBlockData data)
     {
         var list = GetNextToBlocks(data);
@@ -189,20 +234,7 @@ public class MapCtl
             || pos.z < 0 || pos.z > DataMng.E.MapData.MapSize.z - 1;
     }
 
-    public Vector3 GetRandomGroundPos()
-    {
-        for (int i = DataMng.E.MapData.MapSize.y - 1; i >= 0; i--)
-        {
-            int randomX = UnityEngine.Random.Range(0, DataMng.E.MapData.MapSize.x);
-            int randomY = UnityEngine.Random.Range(0, DataMng.E.MapData.MapSize.y);
-
-            if (DataMng.E.MapData.Map[randomX, i, randomY] == null)
-                continue;
-
-            return DataMng.E.MapData.Map[randomX, i, randomY].Pos;
-        }
-        return Vector3.zero;
-    }
+    #region Static Function
 
     public static Vector3 FixEntityPos(MapData mData, Vector3 pos, int offset)
     {
@@ -220,4 +252,26 @@ public class MapCtl
 
         return pos;
     }
+
+    public static Vector3 GetGroundPos(MapData mapData, int posX, int posZ, float offsetY = 0)
+    {
+        if (posX < 0) posX = UnityEngine.Random.Range(0, mapData.Config.SizeX);
+        if (posZ < 0) posZ = UnityEngine.Random.Range(0, mapData.Config.SizeZ);
+
+        MapBlockData block = null;
+        for (int i = mapData.Config.SizeY - 1; i >= 0; i--)
+        {
+            if (mapData.Map[posX, i, posZ] == null)
+                continue;
+
+            block = mapData.Map[posX, i, posZ];
+            break;
+        }
+
+        float posY = block.Pos.y + 1 + offsetY - 0.5f;
+
+        return new Vector3(posX, posY, posZ);
+    }
+
+    #endregion
 }

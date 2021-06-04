@@ -318,13 +318,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7988186479230660708, guid: edd7afb2cd2795e49a6f80ca7dabd869, type: 3}
   m_PrefabInstance: {fileID: 2097480271}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2251250905346967229
+--- !u!1001 &5617297879166138442
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 2097480272}
     m_Modifications:
+    - target: {fileID: 1220529288297529435, guid: 836ce1e377215034bb6848900de7784c, type: 3}
+      propertyPath: m_Name
+      value: BlueprintCancelBtn
+      objectReference: {fileID: 0}
     - target: {fileID: 2431787471377486792, guid: 836ce1e377215034bb6848900de7784c, type: 3}
       propertyPath: m_Name
       value: Home
@@ -412,6 +416,10 @@ PrefabInstance:
     - target: {fileID: 2431787471377486795, guid: 836ce1e377215034bb6848900de7784c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5254957898730274232, guid: 836ce1e377215034bb6848900de7784c, type: 3}
+      propertyPath: m_Name
+      value: BuilderPencilCancelBtn
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 836ce1e377215034bb6848900de7784c, type: 3}

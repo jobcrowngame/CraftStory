@@ -5,17 +5,20 @@ using UnityEngine.UI;
 public class ItemBtn : UIBase
 {
     private static ItemBtn curSelectBtn;
+
     Image Icon;
+    Text Count;
     Transform Selection;
 
     Button btn;
 
-    private int itemID;
-    Item config { get => ConfigMng.E.Item[itemID]; }
+    private ItemData item;
+    Item config { get => ConfigMng.E.Item[item.ItemID]; }
 
     private void Awake()
     {
         Icon = FindChiled<Image>("Icon");
+        Count = FindChiled<Text>("Count");
         Selection = FindChiled("Selection");
 
         btn = GetComponent<Button>();
@@ -24,18 +27,23 @@ public class ItemBtn : UIBase
         OnSelected(false);
     }
 
-    public void Init(int itemID)
+    public void Init(ItemData item)
     {
-        this.itemID = itemID;
+        this.item = item;
 
         Icon.sprite = ReadResources<Sprite>(config.IconResourcesPath);
+        Count.text = item.Config.MaxCount == 1 
+            ? ""
+            : "x" + item.Count;
     }
 
     private void OnClick()
     {
-        Debug.LogFormat("Select item {0}. Type {1}", config.Name, (ItemType)config.Type);
+        if (item == null)
+            return;
 
-        UICtl.E.GetUI<HomeUI>(UIType.Home).ShowBuilderPencilBtn(false);
+        Debug.LogFormat("Select item {0}. Type {1}", config.Name, (ItemType)config.Type);
+        if(item.Data != null) Debug.LogFormat(item.Data.ToString());
 
         if (curSelectBtn == this)
         {
@@ -50,12 +58,27 @@ public class ItemBtn : UIBase
     
     public void OnSelected(bool b = true)
     {
-        PlayerCtl.E.ChangeSelectItem(b ? itemID : 0);
+        PlayerCtl.E.ChangeSelectItem(b ? item : null);
         Selection.gameObject.SetActive(b);
+    }
+
+    public void Clear()
+    {
+        item = null;
+        Icon.sprite = null;
+        Count.text = "";
+        Selection.gameObject.SetActive(false);
     }
 
     public static void Select(ItemBtn itemBtn)
     {
+        if (itemBtn == null)
+        {
+            curSelectBtn.OnSelected(false);
+            curSelectBtn = null;
+            return;
+        }
+
         if (curSelectBtn != null)
             curSelectBtn.OnSelected(false);
 
@@ -68,4 +91,5 @@ public enum ItemType
 {
     Block = 1,
     BuilderPencil = 50,
+    Blueprint = 51,
 }
