@@ -9,6 +9,10 @@ public class BlueprintData
     private int sizeX { get; set; }
     private int sizeZ { get; set; }
 
+    [NonSerialized]
+    private bool isDuplicate;
+    public bool IsDuplicate { get => isDuplicate; set => isDuplicate = value; }
+
     public BlueprintData()
     {
         blocks = new List<MapBlockData>();
@@ -17,6 +21,7 @@ public class BlueprintData
     {
         var bData = (BlueprintData)data;
         blocks = new List<MapBlockData>();
+        IsDuplicate = false;
 
         foreach (MapBlockData item in bData.BlockList)
         {

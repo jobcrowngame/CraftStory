@@ -10,7 +10,6 @@ public class BuilderPencil
 
     BlueprintData selectBlueprintData;
     Vector3Int buildPos;
-    int angle;
 
     public bool IsStart { get => startNotation == null; }
 
@@ -103,46 +102,42 @@ public class BuilderPencil
     }
     public void UserBlueprint(Vector3Int startPos, object data)
     {
-        try
-        {
-            buildPos = startPos;
-            CancelUserBlueprint();
+        Debug.Log("UserBlueprint");
 
+        if (selectBlueprintData == null)
             selectBlueprintData = new BlueprintData(data);
 
-            WorldMng.E.MapCtl.CreateTransparentBlocks(selectBlueprintData, buildPos);
-            WorldMng.E.MapCtl.RotateBuilderPencilParent(angle);
+        WorldMng.E.MapCtl.DeleteBuilderPencil();
+        ClearSelectBlueprintDataBlock();
+        buildPos = startPos;
+        selectBlueprintData.IsDuplicate = false;
 
-            var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
-            if (homeUI != null) homeUI.ShowBlueprintBtn();
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(ex.Message);
-            Debug.LogError(ex.StackTrace);
-        }
+        WorldMng.E.MapCtl.CreateTransparentBlocks(selectBlueprintData, buildPos);
+
+        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+        if (homeUI != null) homeUI.ShowBlueprintBtn();
     }
-
-    private void ClearSelectBlueprintDataBlock() 
-    {
-        foreach (var item in selectBlueprintData.BlockList)
-        {
-            item.ClearBlock();
-        }
-    }
-
     public void SpinBlueprint()
     {
         Debug.Log("SpinBlueprint");
 
         WorldMng.E.MapCtl.DeleteBuilderPencil();
         ClearSelectBlueprintDataBlock();
+        selectBlueprintData.IsDuplicate = false;
 
-        angle += 90;
-        if (angle == 360) angle = 0;
+        for (int i = 0; i < selectBlueprintData.BlockList.Count; i++)
+        {
+            var work = selectBlueprintData.BlockList[i];
+            work.Pos = new Vector3Int(work.Pos.z, work.Pos.y, work.Pos.x);
+        }
+
+        for (int i = 0; i < selectBlueprintData.BlockList.Count; i++)
+        {
+            var work = selectBlueprintData.BlockList[i];
+            work.Pos = new Vector3Int(work.Pos.x, work.Pos.y, -work.Pos.z);
+        }
 
         WorldMng.E.MapCtl.CreateTransparentBlocks(selectBlueprintData, buildPos);
-        WorldMng.E.MapCtl.RotateBuilderPencilParent(angle);
     }
     public void CancelUserBlueprint()
     {
@@ -158,11 +153,12 @@ public class BuilderPencil
     {
         Debug.Log("BuildBlueprint");
 
-        WorldMng.E.MapCtl.CreateBlocks(selectBlueprintData, buildPos);
-        PlayerCtl.E.ConsumableSelectItem();
-
-        CancelUserBlueprint();
-        angle = 0;
+        if (!selectBlueprintData.IsDuplicate)
+        {
+            WorldMng.E.MapCtl.CreateBlocks(selectBlueprintData, buildPos);
+            PlayerCtl.E.ConsumableSelectItem();
+            CancelUserBlueprint();
+        }
     }
 
     private void DestroyNotation(GameObject notation)
@@ -230,5 +226,16 @@ public class BuilderPencil
     {
         obj.transform.localScale = new Vector3(obj.transform.localScale.x, obj.transform.localScale.y, scale + 1);
         obj.transform.localPosition = new Vector3(obj.transform.localPosition.x, obj.transform.localPosition.y, posZ);
+    }
+
+    private void ClearSelectBlueprintDataBlock()
+    {
+        if (selectBlueprintData == null)
+            return;
+        
+        foreach (var item in selectBlueprintData.BlockList)
+        {
+            item.ClearBlock();
+        }
     }
 }

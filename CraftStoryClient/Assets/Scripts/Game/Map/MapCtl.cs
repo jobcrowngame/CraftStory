@@ -122,7 +122,16 @@ public class MapCtl
 
                 var render = block.GetComponent<Renderer>();
                 render.material.shader = shader;
-                render.material.color = new Color(1, 1, 1, 0.5f);
+
+                if (DataMng.E.MapData.GetMap(Vector3Int.CeilToInt(block.transform.position)) != null)
+                {
+                    render.material.color = new Color(1, 0, 0, 0.5f);
+                    blueprint.IsDuplicate = true;
+                }
+                else
+                {
+                    render.material.color = new Color(1, 1, 1, 0.5f);
+                }
             }
         }
     }
@@ -164,12 +173,6 @@ public class MapCtl
     public void DeleteBuilderPencil()
     {
         if(builderPencilParent != null) GameObject.Destroy(builderPencilParent.gameObject);
-    }
-
-    public void RotateBuilderPencilParent(float angle)
-    {
-        if (builderPencilParent != null)
-            builderPencilParent.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
     }
 
     private void CheckNextToBlocks(MapBlockData data)
