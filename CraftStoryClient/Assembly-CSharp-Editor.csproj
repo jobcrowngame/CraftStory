@@ -66,7 +66,6 @@
     <Compile Include="Assets\Editor\Installer\WelcomeWindow.cs" />
     <Compile Include="Assets\Editor\Installer\LitJSON\IJsonWrapper.cs" />
     <Compile Include="Assets\Editor\Installer\LitJSON\ParserToken.cs" />
-    <Compile Include="Assets\unity-chan!\Unity-chan! Model\Editor\CreateLocatorHere.cs" />
     <Compile Include="Assets\Editor\Installer\LitJSON\Lexer.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,31 +2,31 @@
   {
     "ItemID": 101,
     "Name": "Rock",
-    "ResourcesName": "Prefabs/Game/Block/rock",
+    "ResourcesName": "Prefabs/Game/Block/box_rock",
     "Type": 1,
     "DestroyTime": 1.0,
     "ID": 1001
   },
   {
     "ItemID": 102,
-    "Name": "Rock2",
-    "ResourcesName": "Prefabs/Game/Block/rock2",
+    "Name": "Sand",
+    "ResourcesName": "Prefabs/Game/Block/box_sand",
     "Type": 2,
     "DestroyTime": 1.0,
     "ID": 1002
   },
   {
     "ItemID": 103,
-    "Name": "Sand",
-    "ResourcesName": "Prefabs/Game/Block/sand",
+    "Name": "Soil",
+    "ResourcesName": "Prefabs/Game/Block/box_soil",
     "Type": 3,
     "DestroyTime": 1.2,
     "ID": 1003
   },
   {
     "ItemID": 104,
-    "Name": "Grass",
-    "ResourcesName": "Prefabs/Game/Block/grass",
+    "Name": "WoodNormal",
+    "ResourcesName": "Prefabs/Game/Block/box_wood_normal",
     "Type": 4,
     "DestroyTime": 1.2,
     "ID": 1004
