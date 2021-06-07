@@ -35,6 +35,8 @@ public class MapBlockData
     }
 
     public int ID { get => blockID; }
+    public int ItemID { get => Config.ItemID; }
+    public Block Config { get => ConfigMng.E.Block[ID]; }
     public Vector3Int Pos
     {
         get { return new Vector3Int(x, y, z); }

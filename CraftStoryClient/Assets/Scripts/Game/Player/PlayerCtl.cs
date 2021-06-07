@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using JsonConfigData;
 using SimpleInputNamespace;
 using UnityEngine;
@@ -140,7 +141,7 @@ public class PlayerCtl : MonoBehaviour
                 break;
 
             case ItemType.Blueprint:
-                BuilderPencil.UserBlueprint(Vector3Int.CeilToInt(pos), selectItem.Data);
+                BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.Data);
                 break;
         }
     }
@@ -172,28 +173,8 @@ public class PlayerCtl : MonoBehaviour
         var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
         if (homeUI != null) homeUI.RefreshItemBtns();
     }
-    /// <summary>
-    /// 消耗アイテム
-    /// </summary>
-    public void ConsumableItem(int itemID, int count = 1)
-    {
-        selectItem.Count -= count;
-
-        if (selectItem.Count == 0)
-        {
-            DataMng.E.Items.Remove(selectItem);
-            selectItem = null;
-            ItemBtn.Select(null);
-        }
-
-        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
-        if (homeUI != null) homeUI.RefreshItemBtns();
-    }
-
-    public void ConsumableSelectItem(int count = 1)
-    {
-        ConsumableItem(selectItem.ItemID, count);
-    }
+    
+   
 
     private void CreateBlock(int blockID, GameObject collider, Vector3Int pos)
     {
@@ -206,7 +187,42 @@ public class PlayerCtl : MonoBehaviour
 
         Debug.Log("Create block " + pos);
     }
-    
+
+    public void ConsumableSelectItem(int count = 1)
+    {
+        DataMng.E.ConsumableItem(selectItem.ItemID, count);
+
+        if (selectItem.Count == 0)
+        {
+            selectItem = null;
+            ItemBtn.Select(null);
+        }
+
+        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+        if (homeUI != null) homeUI.RefreshItemBtns();
+    }
+    public bool ConsumableItems(Dictionary<int, int> items)
+    {
+        bool ret = false;
+
+        foreach (var item in items)
+        {
+            ret = DataMng.E.CheckConsumableItem(item.Key, item.Value);
+
+            if (ret == false)
+                break;
+        }
+
+        foreach (var item in items)
+        {
+            ret = DataMng.E.ConsumableItem(item.Key, item.Value);
+
+            if (ret == false)
+                break;
+        }
+
+        return ret;
+    }
 
     enum PlayerMotionType
     {

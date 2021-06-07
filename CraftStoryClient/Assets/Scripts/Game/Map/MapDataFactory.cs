@@ -140,7 +140,10 @@ public class MapDataFactory
             for (int j = 0; j < config.Count; j++)
             {
                 var pos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ, config.OffsetY);
+
                 pos = MapCtl.FixEntityPos(mData, pos, config.CreatePosOffset);
+                pos = MapCtl.GetGroundPos(mData, (int)pos.x, (int)pos.z);
+
                 mData.AddResources(new EntityData(config.ID, EntityType.Tree, pos));
             }
         }
@@ -169,7 +172,10 @@ public class MapDataFactory
             for (int j = 0; j < config.Count; j++)
             {
                 var pos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ, config.OffsetY);
+
                 pos = MapCtl.FixEntityPos(mData, pos, config.CreatePosOffset);
+                pos = MapCtl.GetGroundPos(mData, (int)pos.x, (int)pos.z);
+
                 mData.AddResources(new EntityData(config.ID, EntityType.Rock, pos));
             }
         }
@@ -199,6 +205,8 @@ public class MapDataFactory
         if (config.PosZ > 0) pos.z = config.PosZ;
 
         pos = MapCtl.FixEntityPos(mData, pos, config.CreatePosOffset);
+        pos = MapCtl.GetGroundPos(mData, (int)pos.x, (int)pos.z);
+
         mData.TransferGate = new EntityData(config.ID, EntityType.TransferGate, pos);
     }
     private void HideBlocks()

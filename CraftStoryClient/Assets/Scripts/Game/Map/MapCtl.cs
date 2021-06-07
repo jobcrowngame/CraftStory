@@ -137,6 +137,12 @@ public class MapCtl
     }
     public void CreateBlocks(BlueprintData blueprint, Vector3Int startPos)
     {
+        if (blueprint == null)
+        {
+            Debug.LogError("blueprint is null");
+            return;
+        }
+
         foreach (var item in blueprint.BlockList)
         {
             item.Pos = Vector3Int.CeilToInt(item.Block.transform.position);

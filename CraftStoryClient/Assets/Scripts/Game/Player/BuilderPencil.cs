@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JsonConfigData;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -35,14 +36,7 @@ public class BuilderPencil
         var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
         if (homeUI != null) homeUI.ShowBuilderPencilBtn();
     }
-    public void CancelCreateBlueprint()
-    {
-        if (startNotation != null) DestroyNotation(startNotation);
-        if (endNotation != null) DestroyNotation(endNotation);
 
-        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
-        if (homeUI != null) homeUI.ShowBuilderPencilBtn(false);
-    }
     public void CreateBlueprint()
     {
         var startPos = startNotation.transform.position;
@@ -100,7 +94,16 @@ public class BuilderPencil
 
         CancelCreateBlueprint();
     }
-    public void UserBlueprint(Vector3Int startPos, object data)
+    public void CancelCreateBlueprint()
+    {
+        if (startNotation != null) DestroyNotation(startNotation);
+        if (endNotation != null) DestroyNotation(endNotation);
+
+        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+        if (homeUI != null) homeUI.ShowBuilderPencilBtn(false);
+    }
+
+    public void UseBlueprint(Vector3Int startPos, object data)
     {
         Debug.Log("UserBlueprint");
 
@@ -116,6 +119,16 @@ public class BuilderPencil
 
         var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
         if (homeUI != null) homeUI.ShowBlueprintBtn();
+    }
+    public void CancelUserBlueprint()
+    {
+        Debug.Log("CancelUserBlueprint");
+
+        WorldMng.E.MapCtl.DeleteBuilderPencil();
+        selectBlueprintData = null;
+
+        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+        if (homeUI != null) homeUI.ShowBlueprintBtn(false);
     }
     public void SpinBlueprint()
     {
@@ -139,24 +152,39 @@ public class BuilderPencil
 
         WorldMng.E.MapCtl.CreateTransparentBlocks(selectBlueprintData, buildPos);
     }
-    public void CancelUserBlueprint()
-    {
-        Debug.Log("CancelUserBlueprint");
-
-        WorldMng.E.MapCtl.DeleteBuilderPencil();
-        selectBlueprintData = null;
-
-        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
-        if (homeUI != null) homeUI.ShowBlueprintBtn(false);
-    }
     public void BuildBlueprint()
     {
         Debug.Log("BuildBlueprint");
 
         if (!selectBlueprintData.IsDuplicate)
         {
+            Dictionary<int, int> consumableItems = new Dictionary<int, int>();
+
+            foreach (MapBlockData item in selectBlueprintData.BlockList)
+            {
+                if (consumableItems.ContainsKey(item.ID))
+                {
+                    consumableItems[item.ItemID]++;
+                }
+                else
+                {
+                    consumableItems[item.ItemID] = 1;
+                }
+            }
+
+            var ret = PlayerCtl.E.ConsumableItems(consumableItems);
+            if (!ret)
+            {
+                Debug.Log("持っているアイテム数が足りないです。");
+                return;
+            }
+
+            // ブロックを作る
             WorldMng.E.MapCtl.CreateBlocks(selectBlueprintData, buildPos);
+
+            // 設計図を消耗
             PlayerCtl.E.ConsumableSelectItem();
+
             CancelUserBlueprint();
         }
     }
@@ -227,7 +255,6 @@ public class BuilderPencil
         obj.transform.localScale = new Vector3(obj.transform.localScale.x, obj.transform.localScale.y, scale + 1);
         obj.transform.localPosition = new Vector3(obj.transform.localPosition.x, obj.transform.localPosition.y, posZ);
     }
-
     private void ClearSelectBlueprintDataBlock()
     {
         if (selectBlueprintData == null)

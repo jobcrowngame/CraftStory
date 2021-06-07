@@ -148,6 +148,61 @@ public class DataMng : Single<DataMng>
             Items.Add(item);
         }
     }
+    /// <summary>
+    /// 消耗アイテム
+    /// </summary>
+    public bool ConsumableItem(int itemID, int count = 1)
+    {
+        bool itemCheck = CheckConsumableItem(itemID, count);
+        if (!itemCheck) return itemCheck;
+
+        List<ItemData> playerItems = null;
+        TryGetItems(itemID, out playerItems);
+
+        for (int i = 0; i < playerItems.Count; i++)
+        {
+            if (count == 0)
+                break;
+
+            if (playerItems[i].Count >= count)
+            {
+                playerItems[i].Count -= count;
+                count = 0;
+            }
+            else
+            {
+                playerItems[i].Count = 0;
+                count -= playerItems[i].Count;
+            }
+
+            if (playerItems[i].Count == 0)
+                Items.Remove(playerItems[i]);
+        }
+
+        itemCheck = true;
+
+        return itemCheck;
+    }
+    /// <summary>
+    /// 消耗するアイテムの数が足りかをチェック
+    /// </summary>
+    /// <param name="itemID">アイテムID</param>
+    /// <param name="count">消耗数</param>
+    /// <returns>消耗できるかの結果</returns>
+    public bool CheckConsumableItem(int itemID, int count = 1)
+    {
+        int itemCount = 0;
+        List<ItemData> items = null;
+        TryGetItems(itemID, out items);
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            itemCount += items[i].Count;
+        }
+
+        return itemCount >= count;
+    }
+
     private ItemData NewItem(int itemID, object data)
     {
         return new ItemData(itemID, data);
