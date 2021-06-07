@@ -68,7 +68,8 @@ public class MapData
     {
         try
         {
-            if (data.Pos.x > sizeX || data.Pos.y > sizeY || data.Pos.z > sizeZ)
+            if (data.Pos.x > sizeX || data.Pos.y > sizeY || data.Pos.z > sizeZ 
+                || data.Pos.x < 0 || data.Pos.y < 0 || data.Pos.z < 0)
             {
                 Debug.LogError("add mapdata file." + data.Pos);
                 return;

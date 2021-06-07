@@ -9,9 +9,10 @@ public class MapBlockData
     private int x { get; set; }
     private int y { get; set; }
     private int z { get; set; }
-    private bool isIn { get; set; }
     [NonSerialized]
     private MapBlock block;
+    [NonSerialized]
+    private bool noInstantiate;
 
     public MapBlockData() { }
     public MapBlockData(int blockID, Vector3Int pos)
@@ -27,7 +28,6 @@ public class MapBlockData
         string[] data = strData.Split('^');
 
         blockID = int.Parse(data[0]);
-        IsIn = data[1] == "t";
 
         x = pos.x;
         y = pos.y;
@@ -48,12 +48,13 @@ public class MapBlockData
         }
     }
     public Block BaseData { get => ConfigMng.E.Block[blockID]; }
-    public bool IsIn { get => isIn; set => isIn = value; }
     public MapBlock Block { get => block; }
+    public bool NoInstantiate { get => noInstantiate; set => noInstantiate = value; }
 
     public override string ToString()
     {
-        return string.Format("POS:{0}, BlockType:{1}, DeleteTime:{2}", Pos, BaseData.Name, BaseData.DestroyTime);
+        return string.Format("POS:{0}, BlockType:{1}, DeleteTime:{2} NoInstantiate:{3}", 
+            Pos, BaseData.Name, BaseData.DestroyTime, noInstantiate);
     }
 
     public MapBlockData Copy()
@@ -67,7 +68,7 @@ public class MapBlockData
 
     public string ToStringData()
     {
-        return string.Format("{0}^{1}", blockID, isIn ? "t" : "f");
+        return string.Format("{0}", blockID);
     }
 
     public MapBlock ActiveBlock(Transform parent, bool active = true)
@@ -78,9 +79,6 @@ public class MapBlockData
             {
                 block = CommonFunction.Instantiate<MapBlock>(BaseData.ResourcesName, parent, Pos);
                 block.SetData(this);
-
-                if (Pos.y > 15)
-                    Debug.Log("Creeate Block." + this);
             }
             else
                 block.gameObject.SetActive(active);
@@ -91,7 +89,6 @@ public class MapBlockData
                 block.gameObject.SetActive(false);
         }
 
-        IsIn = !active;
         return block;
     }
    

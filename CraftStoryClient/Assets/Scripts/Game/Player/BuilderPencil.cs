@@ -80,7 +80,7 @@ public class BuilderPencil
                     if (DataMng.E.MapData.Map[x, y, z] == null)
                         continue;
 
-                    var block = DataMng.E.MapData.Map[x, y, z];
+                    var block = DataMng.E.MapData.Map[x, y, z].Copy();
                     block.Pos = new Vector3Int(x - minX - centerX, y - (int)startPos.y, z - minZ - centerZ);
                     block.ClearBlock();
                     blocks.Add(block);

@@ -41,29 +41,30 @@ public class MapCtl
 
         var startTime = DateTime.Now;
 
-        CreateBlock(mData);
+        CreateBlocks(mData);
         CreateResources(mData);
         CreateTransferGate(mData);
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
         Debug.LogWarningFormat("map 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
     }
-    private void CreateBlock(MapData mData)
+    private void CreateBlocks(MapData mData)
     {
+        HideBlocks(mData);
 
-        for (int i = 0; i < mData.MapSize.x; i++)
+        for (int y = 0; y < mData.MapSize.y; y++)
         {
-            for (int j = 0; j < mData.MapSize.y; j++)
+            for (int z = 0; z < mData.MapSize.z; z++)
             {
-                for (int k = 0; k < mData.MapSize.z; k++)
+                for (int x = 0; x < mData.MapSize.x; x++)
                 {
-                    if (mData.Map[i, j, k] != null)
+                    if (mData.Map[x, y, z] != null)
                     {
-                        if (mData.Map[i, j, k].IsIn)
+                        if (mData.Map[x, y, z].NoInstantiate)
                             continue;
 
-                        mData.Add(mData.Map[i, j, k]);
-                        mData.Map[i, j, k].ActiveBlock();
+                        mData.Add(mData.Map[x, y, z]);
+                        mData.Map[x, y, z].ActiveBlock();
                     }
                 }
             }
@@ -152,7 +153,7 @@ public class MapCtl
     }
     public MapBlock CreateBlock(Vector3Int pos, int blockId)
     {
-        if (IsOutRange(pos))
+        if (IsOutRange(DataMng.E.MapData, pos))
             return null;
 
         MapBlockData bData = new MapBlockData(blockId, pos);
@@ -193,22 +194,14 @@ public class MapCtl
     }
     public bool CheckBlockIsSurface(MapBlockData data)
     {
-        var isSurface = IsSurface(new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x + 1, data.Pos.y, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x, data.Pos.y - 1, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x, data.Pos.y + 1, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z - 1));
-        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z + 1));
+        var isSurface = IsSurface(DataMng.E.MapData, new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
+        if (!isSurface) isSurface = IsSurface(DataMng.E.MapData, new Vector3Int(data.Pos.x + 1, data.Pos.y, data.Pos.z));
+        if (!isSurface) isSurface = IsSurface(DataMng.E.MapData, new Vector3Int(data.Pos.x, data.Pos.y - 1, data.Pos.z));
+        if (!isSurface) isSurface = IsSurface(DataMng.E.MapData, new Vector3Int(data.Pos.x, data.Pos.y + 1, data.Pos.z));
+        if (!isSurface) isSurface = IsSurface(DataMng.E.MapData, new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z - 1));
+        if (!isSurface) isSurface = IsSurface(DataMng.E.MapData, new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z + 1));
         return isSurface;
     }
-    private bool IsSurface(Vector3Int pos)
-    {
-        if (IsOutRange(pos))
-            return false;
-
-        return GetNextToBlock(pos) == null;
-    }
-
     private List<MapBlockData> GetNextToBlocks(MapBlockData data)
     {
         MapBlockData bData;
@@ -231,16 +224,10 @@ public class MapCtl
     }
     private MapBlockData GetNextToBlock(Vector3Int pos)
     {
-        if (IsOutRange(pos))
+        if (IsOutRange(DataMng.E.MapData, pos))
             return null;
 
         return DataMng.E.MapData.GetMap(pos);
-    }
-    private bool IsOutRange(Vector3Int pos)
-    {
-        return pos.x < 0 || pos.x > DataMng.E.MapData.MapSize.x - 1
-            || pos.y < 0 || pos.y > DataMng.E.MapData.MapSize.y - 1
-            || pos.z < 0 || pos.z > DataMng.E.MapData.MapSize.z - 1;
     }
 
     #region Static Function
@@ -280,6 +267,53 @@ public class MapCtl
         float posY = block.Pos.y + 1 + offsetY - 0.5f;
 
         return new Vector3(posX, posY, posZ);
+    }
+
+    public static void HideBlocks(MapData mapData)
+    {
+        for (int x = 0; x < mapData.MapSize.x; x++)
+        {
+            for (int z = 0; z < mapData.MapSize.z; z++)
+            {
+                for (int y = 0; y < mapData.MapSize.y; y++)
+                {
+                    if (mapData.Map[x, y, z] == null)
+                        continue;
+
+                    mapData.Map[x, y, z].NoInstantiate = !CheckBlockIsSurface(mapData, mapData.Map[x, y, z]);
+                    if (y>14)
+                    {
+                        Debug.Log(mapData.Map[x, y, z]);
+                    }
+                }
+            }
+        }
+    }
+    private static bool CheckBlockIsSurface(MapData mapData, MapBlockData data)
+    {
+        var isSurface = IsSurface(mapData, new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
+        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(data.Pos.x + 1, data.Pos.y, data.Pos.z));
+        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(data.Pos.x, data.Pos.y - 1, data.Pos.z));
+        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(data.Pos.x, data.Pos.y + 1, data.Pos.z));
+        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z - 1));
+        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z + 1));
+        return isSurface;
+    }
+    private static bool IsSurface(MapData mapData, Vector3Int pos)
+    {
+        if (IsOutRange(mapData, pos))
+            return false;
+
+        return mapData.Map[pos.x, pos.y, pos.z] == null;
+    }
+    /// <summary>
+    /// マップの最大サイズ外
+    /// </summary>
+    public static bool IsOutRange(MapData mapData, Vector3Int pos)
+    {
+        return pos.x < 0 || pos.x > mapData.MapSize.x - 1
+            || pos.y < 0 || pos.y > mapData.MapSize.y - 1
+            || pos.z < 0 || pos.z > mapData.MapSize.z - 1;
     }
 
     #endregion
