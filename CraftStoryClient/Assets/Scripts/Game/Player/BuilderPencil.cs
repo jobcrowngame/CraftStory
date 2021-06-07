@@ -162,7 +162,7 @@ public class BuilderPencil
 
             foreach (MapBlockData item in selectBlueprintData.BlockList)
             {
-                if (consumableItems.ContainsKey(item.ID))
+                if (consumableItems.ContainsKey(item.ItemID))
                 {
                     consumableItems[item.ItemID]++;
                 }
