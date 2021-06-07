@@ -78,6 +78,9 @@ public class MapBlockData
             {
                 block = CommonFunction.Instantiate<MapBlock>(BaseData.ResourcesName, parent, Pos);
                 block.SetData(this);
+
+                if (Pos.y > 15)
+                    Debug.Log("Creeate Block." + this);
             }
             else
                 block.gameObject.SetActive(active);

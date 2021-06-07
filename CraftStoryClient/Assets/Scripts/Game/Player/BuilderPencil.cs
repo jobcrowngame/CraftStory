@@ -20,6 +20,9 @@ public class BuilderPencil
             DestroyNotation(startNotation);
 
         startNotation = CommonFunction.Instantiate("Prefabs/Game/Order/Notation", null, pos);
+
+        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+        if (homeUI != null) homeUI.ShowBuilderPencilBtn();
     }
     public void End(Vector3 pos)
     {
@@ -32,9 +35,6 @@ public class BuilderPencil
         endNotation = CommonFunction.Instantiate("Prefabs/Game/Order/Notation", null, pos);
 
         ChangeNotationState();
-
-        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
-        if (homeUI != null) homeUI.ShowBuilderPencilBtn();
     }
 
     public void CreateBlueprint()

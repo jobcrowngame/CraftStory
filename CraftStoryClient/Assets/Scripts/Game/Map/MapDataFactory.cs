@@ -74,8 +74,6 @@ public class MapDataFactory
             if (startPosX < 0) startPosX = UnityEngine.Random.Range(0, mapConfig.SizeX);
             if (startPosZ < 0) startPosZ = UnityEngine.Random.Range(0, mapConfig.SizeZ);
 
-            Debug.Log(new Vector3Int(startPosX, startPosY, startPosZ));
-
             AddMountains(mData.Map[startPosX, startPosY, startPosZ], mountainConfig.Height, mountainConfig.Wide);
         }
     }
