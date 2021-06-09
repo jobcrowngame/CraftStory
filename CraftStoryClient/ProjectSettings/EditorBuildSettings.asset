@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Brave.unity
     guid: e34f2ba8acc67544daf74707636d1eff
+  - enabled: 1
+    path: Assets/Scenes/Test/IAPTest.unity
+    guid: 17bfb488f1dbf4e4a88d38c3f3920c46
   m_configObjects: {}
