@@ -7,12 +7,21 @@ public class IAPTest : MonoBehaviour
 {
     MyIAPManager iapMng;
     public Text text;
+    public Button InitBtn;
+
+    private void Awake()
+    {
+        InitBtn.onClick.AddListener(() => 
+        {
+            iapMng = new MyIAPManager();
+            iapMng.Init(this);
+        });
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        iapMng = new MyIAPManager();
-        iapMng.Init(this);
+
     }
 
     // Update is called once per frame
@@ -28,16 +37,8 @@ public class IAPTest : MonoBehaviour
         iapMng.OnPurchaseClicked(credits);
     }
 
-    public void OnInitializeFailed()
+    public void ShowMsg(string msg)
     {
-        text.text = "OnInitializeFailed";
-    }
-    public void ProcessPurchase()
-    {
-        text.text = "ProcessPurchase";
-    }
-    public void OnPurchaseFailed()
-    {
-        text.text = "OnPurchaseFailed";
+        text.text += msg + "\n";
     }
 }

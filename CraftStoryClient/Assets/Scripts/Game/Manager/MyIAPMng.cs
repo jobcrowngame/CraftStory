@@ -7,22 +7,27 @@ public class MyIAPManager : IStoreListener
     private IExtensionProvider extensions;
     private IAPTest iap;
 
-    public MyIAPManager()
-    {
-        var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-        builder.AddProduct("100_gold_coins", ProductType.Consumable, new IDs
-        {
-            {"100_gold_coins_google", GooglePlay.Name},
-            {"100_gold_coins_mac", MacAppStore.Name}
-        });
-
-        UnityPurchasing.Initialize(this, builder);
-        Debug.Log("UnityPurchasing 初期化完了");
-    }
-
     public void Init(IAPTest iap)
     {
         this.iap = iap;
+
+        iap.ShowMsg("初期化開始");
+
+        try
+        {
+            var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+            builder.AddProduct("100_gold_coins", ProductType.Consumable, new IDs
+            {
+                {"100_gold_coins_google", GooglePlay.Name},
+                {"100_gold_coins_mac", MacAppStore.Name}
+            });
+
+            UnityPurchasing.Initialize(this, builder);
+        }
+        catch (System.Exception ex)
+        {
+            iap.ShowMsg(ex.Message);
+        }
     }
 
     /// <summary>
@@ -34,6 +39,8 @@ public class MyIAPManager : IStoreListener
 
         this.controller = controller;
         this.extensions = extensions;
+
+        iap.ShowMsg("UnityPurchasing 初期化完了");
     }
 
     /// <summary>
@@ -44,8 +51,7 @@ public class MyIAPManager : IStoreListener
     /// </summary>
     public void OnInitializeFailed(InitializationFailureReason error)
     {
-        Debug.Log("OnInitializeFailed");
-        iap.OnInitializeFailed();
+        iap.ShowMsg("UnityPurchasing 初期化失敗." + error);
     }
 
     /// <summary>
@@ -55,8 +61,7 @@ public class MyIAPManager : IStoreListener
     /// </summary>
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
     {
-        Debug.Log("ProcessPurchase");
-        iap.ProcessPurchase();
+        iap.ShowMsg("購入成功.");
         return PurchaseProcessingResult.Complete;
     }
 
@@ -65,15 +70,14 @@ public class MyIAPManager : IStoreListener
     /// </summary>
     public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
     {
-        Debug.Log("OnPurchaseFailed");
-        iap.OnPurchaseFailed();
+        iap.ShowMsg("購入失敗.");
     }
 
     // 購入処理を開始するために、ユーザーが '購入' ボタン
     // を押すと、関数が呼び出されます。
     public void OnPurchaseClicked(string productId)
     {
-        Debug.Log("OnPurchaseClicked " + productId);
+        iap.ShowMsg("購入開始." + productId);
         controller.InitiatePurchase(productId);
     }
 }
