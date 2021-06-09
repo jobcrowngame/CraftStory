@@ -63,13 +63,14 @@
     <Compile Include="Assets\Scripts\UI\BagUI.cs" />
     <Compile Include="Assets\Scripts\Common\ConfigMng.cs" />
     <Compile Include="Assets\Scripts\UI\ShopLG.cs" />
+    <Compile Include="Assets\Scripts\UI\ChargeLG.cs" />
     <Compile Include="Assets\Scripts\Test\TestTriger.cs" />
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
     <Compile Include="Assets\Scripts\Test\TestAtt.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
     <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
-    <Compile Include="Assets\Scripts\Game\WorldMng.cs" />
+    <Compile Include="Assets\Scripts\Game\Manager\WorldMng.cs" />
     <Compile Include="Assets\Scripts\Test\LookChange.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
@@ -124,14 +125,18 @@
     <Compile Include="Assets\Scripts\Data\BlueprintData.cs" />
     <Compile Include="Assets\Scripts\Game\Player\BuilderPencil.cs" />
     <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
+    <Compile Include="Assets\Scripts\UI\ChargeCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestAngle.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapBlock.cs" />
+    <Compile Include="Assets\Scripts\UI\ChargeUI.cs" />
     <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion2.cs" />
     <Compile Include="Assets\Scripts\UI\ShopItemCell.cs" />
     <Compile Include="Assets\Scripts\Data\MapData.cs" />
     <Compile Include="Assets\Scripts\Common\GS2.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
+    <Compile Include="Assets\Scripts\Test\IAPTest.cs" />
+    <Compile Include="Assets\Scripts\Game\Manager\MyIAPMng.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />
@@ -365,11 +370,11 @@
     <Reference Include="JsonConfigData">
       <HintPath>Assets\Plugins\Lib\JsonConfigData.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Assets\Plugins\Lib\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="gs2_Google.Protobuf">
       <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\Plugins\Lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="gs2_LitJSON">
       <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_LitJSON.dll</HintPath>
@@ -725,14 +730,17 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="Gs2.Weave.Core">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Core.dll</HintPath>
+    <Reference Include="Purchasing.Common">
+      <HintPath>Library\ScriptAssemblies\Purchasing.Common.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Gs2.Weave.Inventory">
       <HintPath>Library\ScriptAssemblies\Gs2.Weave.Inventory.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
@@ -743,29 +751,17 @@
     <Reference Include="Gs2.Weave.Login.Editor">
       <HintPath>Library\ScriptAssemblies\Gs2.Weave.Login.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Gs2.Weave.Credential.Editor">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Credential.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Timeline.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
-    <Reference Include="Gs2.Weave.Inventory.Editor">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Inventory.Editor.dll</HintPath>
+    <Reference Include="UnityEngine.Purchasing.SecurityStub">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.SecurityStub.dll</HintPath>
     </Reference>
-    <Reference Include="Gs2.Weave.Login">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Login.dll</HintPath>
-    </Reference>
-    <Reference Include="Gs2.Weave.Core.Editor">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Core.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Gs2.Weave.EditorExtension">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.EditorExtension.dll</HintPath>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
@@ -779,11 +775,50 @@
     <Reference Include="Gs2.Weave.Credential">
       <HintPath>Library\ScriptAssemblies\Gs2.Weave.Credential.dll</HintPath>
     </Reference>
-    <Reference Include="Gs2.Editor">
-      <HintPath>Library\ScriptAssemblies\Gs2.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.EditorCoroutines.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2.Weave.Core">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing.SecurityCore">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.SecurityCore.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing.Codeless">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.Codeless.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2.Weave.Credential.Editor">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Credential.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2.Weave.Login">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Login.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing.Stores">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.Stores.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2.Weave.Inventory.Editor">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Inventory.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Monetization">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Monetization.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2.Weave.Core.Editor">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2.Weave.EditorExtension">
+      <HintPath>Library\ScriptAssemblies\Gs2.Weave.EditorExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Purchasing">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements.Editor">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Advertisements.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Gs2.Editor">
+      <HintPath>Library\ScriptAssemblies\Gs2.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Gs2">
       <HintPath>Library\ScriptAssemblies\Gs2.dll</HintPath>

@@ -65,6 +65,10 @@ public class PlayerCtl : MonoBehaviour
         {
             AddItem(3000, 1);
         }
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            UICtl.E.OpenUI<ChargeUI>(UIType.Charge);
+        }
     }
 
     public PlayerEntity AddEntity()

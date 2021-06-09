@@ -15,8 +15,14 @@ using Gs2.Unity.Gs2Showcase.Model;
 using Gs2.Core.Exception;
 using Gs2.Unity;
 
+using Gs2.Weave.Core.Watcher;
+using Weave.Core.Runtime;
+using Gs2.Weave.Core.CallbackEvent;
+using Gs2.Unity.Gs2Distributor.Result;
+
 public class GS2 : MonoBehaviour
 {
+    public bool running;
 
     #region Common
 
@@ -343,6 +349,48 @@ public class GS2 : MonoBehaviour
             PublicPar.moneyNS,   //  ネームスペースの名前
             slot   //  スロット番号
         );
+    }
+
+    StampSheetRunner _stampSheetRunner;
+    public void GetChargeList(GetShowcaseEvent rp, ErrorEvent onError)
+    {
+        StartCoroutine(GetChargeListIE(rp, onError));
+    }
+    private IEnumerator GetChargeListIE(GetShowcaseEvent rp, ErrorEvent onError)
+    {
+        _stampSheetRunner = new StampSheetRunner(gs2);
+        _stampSheetRunner.AddCompleteStampSheetEvent(
+            GetSheetCompleteAction()
+        );
+
+        var watcher = new ShowcaseWatcher();
+
+        yield return watcher.Run(
+            gs2,
+            gameSession,
+            PublicPar.ShowcaseNS,
+#if UNITY_IOS
+                "ios",
+#else
+                "android",
+#endif
+                rp,
+            onError
+        );
+
+        running = true;
+    }
+    public UnityAction<EzStampSheet, EzRunStampSheetResult> GetSheetCompleteAction()
+    {
+        return (sheet, sheetResult) =>
+        {
+            Debug.Log("MoneyDirector::StateMachineOnCompleteStampSheet");
+
+            if (sheet.Action == "Gs2Money:DepositByUserId")
+            {
+                Debug.Log(sheet.UserId);
+            }
+        };
     }
 
     #endregion

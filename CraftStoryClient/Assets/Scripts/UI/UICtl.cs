@@ -30,7 +30,7 @@ public class UICtl : Single<UICtl>
 
     private bool CreateGlobalEntity()
     {
-        UserTest.E.Init();
+        //UserTest.E.Init();
         WorldMng.E.Init();
 
         return true;
@@ -151,6 +151,7 @@ public class UICtl : Single<UICtl>
             case UIType.Terms: return "Prefabs/UI/Terms";
             case UIType.Terms01: return "Prefabs/UI/Terms01";
             case UIType.Terms02: return "Prefabs/UI/Terms02";
+            case UIType.Charge: return "Prefabs/UI/Charge";
             default: Debug.LogError("not find UIType " + ui); return "";
         }
     }
@@ -174,4 +175,5 @@ public enum UIType
     Terms,
     Terms01,
     Terms02,
+    Charge,
 }

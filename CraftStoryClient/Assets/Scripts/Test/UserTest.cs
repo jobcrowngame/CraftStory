@@ -22,23 +22,6 @@ public class UserTest : MonoBehaviour
     public string id2 = "e89190f3-a18f-4f51-acdb-f34ec65f56ac";
     public string pw2 = "dvSte5fBIeojTfaVwdnvmQIVlVx4ESzY";
 
-    public void Init()
-    {
-
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            GetGachaItem();
-        }
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            GetShowcase();
-        }
-    }
-
     private void GetGachaItem()
     {
         Debug.Log("get gacha item");
