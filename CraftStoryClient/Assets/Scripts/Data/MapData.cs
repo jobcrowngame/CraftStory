@@ -66,23 +66,43 @@ public class MapData
 
     public void Add(MapBlockData data)
     {
-        if (data.Pos.x > sizeX || data.Pos.y > sizeY || data.Pos.z > sizeZ)
+        try
         {
-            Debug.LogError("add mapdata file." + data.Pos);
-            return;
-        }
+            if (data.Pos.x > sizeX || data.Pos.y > sizeY || data.Pos.z > sizeZ 
+                || data.Pos.x < 0 || data.Pos.y < 0 || data.Pos.z < 0)
+            {
+                Debug.LogError("add mapdata file." + data.Pos);
+                return;
+            }
 
-        map[data.Pos.x, data.Pos.y, data.Pos.z] = data.Copy(); ;
+            map[data.Pos.x, data.Pos.y, data.Pos.z] = data.Copy(); ;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Add blockData file." + data.Pos);
+            Debug.LogError(ex.Message);
+            Debug.LogError(ex.StackTrace);
+        }
+        
     }
     public void Remove(Vector3 pos)
     {
-        if (pos.x > sizeX || pos.y > sizeY || pos.z > sizeZ)
+        try
         {
-            Debug.LogError("Remove mapdata file." + pos);
-            return;
-        }
+            if (pos.x > sizeX || pos.y > sizeY || pos.z > sizeZ)
+            {
+                Debug.LogError("Remove mapdata file." + pos);
+                return;
+            }
 
-        map[(int)pos.x, (int)pos.y, (int)pos.z] = null;
+            map[(int)pos.x, (int)pos.y, (int)pos.z] = null;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Remove blockData file." + pos);
+            Debug.LogError(ex.Message);
+            Debug.LogError(ex.StackTrace);
+        }
     }
 
     public void MapDataToStringData()

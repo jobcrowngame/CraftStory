@@ -20,7 +20,6 @@ public class MapDataFactory
         AddTrees();
         AddRocks();
         AddTransferGateConfig();
-        HideBlocks();
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
         Debug.LogWarningFormat("mapData 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
@@ -37,7 +36,15 @@ public class MapDataFactory
             {
                 for (int y = 0; y < groundHeight; y++)
                 {
-                    int blockId = GetBlockID(mapConfig, y);
+                    int blockId = 0;
+
+                    if (y < mapConfig.Block01Height)
+                        blockId = mapConfig.Block01;
+                    else if (y < mapConfig.Block02Height + mapConfig.Block01Height)
+                        blockId = mapConfig.Block02;
+                    else
+                        blockId = mapConfig.Block03;
+
                     mData.Map[x, y, z] = new MapBlockData(blockId, new Vector3Int(x, y, z));
                 }
             }
@@ -74,8 +81,6 @@ public class MapDataFactory
             if (startPosX < 0) startPosX = UnityEngine.Random.Range(0, mapConfig.SizeX);
             if (startPosZ < 0) startPosZ = UnityEngine.Random.Range(0, mapConfig.SizeZ);
 
-            Debug.Log(new Vector3Int(startPosX, startPosY, startPosZ));
-
             AddMountains(mData.Map[startPosX, startPosY, startPosZ], mountainConfig.Height, mountainConfig.Wide);
         }
     }
@@ -107,7 +112,7 @@ public class MapDataFactory
                         offsetY = height;
 
                     Vector3Int newPos = new Vector3Int(x, offsetY + parent.Pos.y + random, z);
-                    if (IsOutRange(newPos))
+                    if (MapCtl.IsOutRange(mData, newPos))
                         continue;
 
                     mData.Map[x, newPos.y, z] = mData.Map[x, parent.Pos.y, z].Copy();
@@ -208,61 +213,5 @@ public class MapDataFactory
         pos = MapCtl.GetGroundPos(mData, (int)pos.x, (int)pos.z);
 
         mData.TransferGate = new EntityData(config.ID, EntityType.TransferGate, pos);
-    }
-    private void HideBlocks()
-    {
-        for (int x = 0; x < mData.MapSize.x; x++)
-        {
-            for (int z = 0; z < mData.MapSize.z; z++)
-            {
-                for (int y = 0; y < mData.MapSize.y; y++)
-                {
-                    if (mData.Map[x, y, z] == null)
-                        continue;
-
-                    mData.Map[x, y, z].IsIn = !CheckBlockIsSurface(mData.Map[x, y, z]);
-                }
-            }
-        }
-    }
-
-    private bool CheckBlockIsSurface(MapBlockData data)
-    {
-        var isSurface = IsSurface(new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x + 1, data.Pos.y, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x, data.Pos.y - 1, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x, data.Pos.y + 1, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z - 1));
-        if (!isSurface) isSurface = IsSurface(new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z + 1));
-        return isSurface;
-    }
-    private bool IsSurface(Vector3Int pos)
-    {
-        if (IsOutRange(pos))
-            return false;
-
-        return GetNextToBlock(pos) == null;
-    }
-    private MapBlockData GetNextToBlock(Vector3Int pos)
-    {
-        if (IsOutRange(pos))
-            return null;
-
-        return mData.Map[pos.x, pos.y, pos.z];
-    }
-    private bool IsOutRange(Vector3Int pos)
-    {
-        return pos.x < 0 || pos.x > mData.MapSize.x - 1
-            || pos.y < 0 || pos.y > mData.MapSize.y - 1
-            || pos.z < 0 || pos.z > mData.MapSize.z - 1;
-    }
-    private int GetBlockID(Map config, int y)
-    {
-        if (y < config.Block01Height)
-            return config.Block01;
-        else if (y < config.Block02Height + config.Block01Height)
-            return config.Block02;
-        else
-            return config.Block03;
     }
 }
