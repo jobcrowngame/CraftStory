@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -116,10 +117,14 @@ public class CommonFunction
 
     public static string ToUTF8Bom(string msg)
     {
-        //まずはバイト配列に変換する
-        byte[] bytes = Encoding.Default.GetBytes(msg);
+        using (var stream = new MemoryStream())
+        {
+            using (var sw = new StreamWriter(stream, new UTF8Encoding(encoderShouldEmitUTF8Identifier: true)))
+            {
+                sw.Write(msg);
+            }
 
-        //バイト配列をUTF8の文字コードとしてStringに変換する
-        return Encoding.UTF8.GetString(bytes);
+            return BitConverter.ToString(stream.ToArray());
+        }
     }
 }
