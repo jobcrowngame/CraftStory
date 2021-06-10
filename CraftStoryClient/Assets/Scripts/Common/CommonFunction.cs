@@ -113,4 +113,13 @@ public class CommonFunction
     {
         return new Vector3Int(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
     }
+
+    public static string ToUTF8Bom(string msg)
+    {
+        //まずはバイト配列に変換する
+        byte[] bytes = Encoding.Default.GetBytes(msg);
+
+        //バイト配列をUTF8の文字コードとしてStringに変換する
+        return Encoding.UTF8.GetString(bytes);
+    }
 }

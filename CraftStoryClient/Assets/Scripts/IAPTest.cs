@@ -1,3 +1,4 @@
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,6 +40,6 @@ public class IAPTest : MonoBehaviour
 
     public void ShowMsg(string msg)
     {
-        text.text += msg + "\n";
+        text.text += CommonFunction.ToUTF8Bom(msg) + "\n";
     }
 }
