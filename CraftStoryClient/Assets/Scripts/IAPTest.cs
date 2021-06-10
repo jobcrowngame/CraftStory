@@ -43,5 +43,6 @@ public class IAPTest : MonoBehaviour
     public void ShowMsg(string msg)
     {
         text.text += CommonFunction.ToUTF8Bom(msg) + "\n";
+        Debug.LogError(msg);
     }
 }
