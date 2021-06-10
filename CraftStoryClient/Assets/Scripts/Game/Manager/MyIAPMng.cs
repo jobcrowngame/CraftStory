@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.Purchasing;
 
 public class MyIAPManager : IStoreListener
@@ -11,7 +11,7 @@ public class MyIAPManager : IStoreListener
     {
         this.iap = iap;
 
-        iap.ShowMsg("‰Šú‰»ŠJn");
+        iap.ShowMsg("åˆæœŸåŒ–é–‹å§‹");
 
         try
         {
@@ -31,7 +31,7 @@ public class MyIAPManager : IStoreListener
     }
 
     /// <summary>
-    /// Unity IAP ‚ªw“üˆ—‚ğs‚¦‚éê‡‚ÉŒÄ‚Ño‚³‚ê‚Ü‚·
+    /// Unity IAP ãŒè³¼å…¥å‡¦ç†ã‚’è¡Œãˆã‚‹å ´åˆã«å‘¼ã³å‡ºã•ã‚Œã¾ã™
     /// </summary>
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
@@ -40,44 +40,44 @@ public class MyIAPManager : IStoreListener
         this.controller = controller;
         this.extensions = extensions;
 
-        iap.ShowMsg("UnityPurchasing Init OK! ‰Šú‰»Š®—¹");
+        iap.ShowMsg("UnityPurchasing Init OK! åˆæœŸåŒ–å®Œäº†");
     }
 
     /// <summary>
-    ///  Unity IAP ‰ñ•œ•s‰Â”\‚È‰ŠúƒGƒ‰[‚É‘˜‹ö‚µ‚½‚Æ‚«‚ÉŒÄ‚Ño‚³‚ê‚Ü‚·B
+    ///  Unity IAP å›å¾©ä¸å¯èƒ½ãªåˆæœŸã‚¨ãƒ©ãƒ¼ã«é­é‡ã—ãŸã¨ãã«å‘¼ã³å‡ºã•ã‚Œã¾ã™ã€‚
     ///
-    /// ‚±‚ê‚ÍAƒCƒ“ƒ^[ƒlƒbƒg‚ªg—p‚Å‚«‚È‚¢ê‡‚ÍŒÄ‚Ño‚³‚ê‚¸A
-    /// ƒCƒ“ƒ^[ƒlƒbƒg‚ªg—p‰Â”\‚É‚È‚é‚Ü‚Å‰Šú‰»‚ğ‚İ‚Ü‚·B
+    /// ã“ã‚Œã¯ã€ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒƒãƒˆãŒä½¿ç”¨ã§ããªã„å ´åˆã¯å‘¼ã³å‡ºã•ã‚Œãšã€
+    /// ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒƒãƒˆãŒä½¿ç”¨å¯èƒ½ã«ãªã‚‹ã¾ã§åˆæœŸåŒ–ã‚’è©¦ã¿ã¾ã™ã€‚
     /// </summary>
     public void OnInitializeFailed(InitializationFailureReason error)
     {
-        iap.ShowMsg("UnityPurchasing Init Fail! ‰Šú‰»¸”s.\n" + error);
+        iap.ShowMsg("UnityPurchasing Init Fail! åˆæœŸåŒ–å¤±æ•—.\n" + error);
     }
 
     /// <summary>
-    /// w“ü‚ªI—¹‚µ‚½‚Æ‚«‚ÉŒÄ‚Ño‚³‚ê‚Ü‚·B
+    /// è³¼å…¥ãŒçµ‚äº†ã—ãŸã¨ãã«å‘¼ã³å‡ºã•ã‚Œã¾ã™ã€‚
     ///
-    ///  OnInitialized() ŒãA‚¢‚Â‚Å‚àŒÄ‚Ño‚³‚ê‚éê‡‚ª‚ ‚è‚Ü‚·B
+    ///  OnInitialized() å¾Œã€ã„ã¤ã§ã‚‚å‘¼ã³å‡ºã•ã‚Œã‚‹å ´åˆãŒã‚ã‚Šã¾ã™ã€‚
     /// </summary>
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
     {
-        iap.ShowMsg("w“ü¬Œ÷.");
+        iap.ShowMsg("è³¼å…¥æˆåŠŸ.");
         return PurchaseProcessingResult.Complete;
     }
 
     /// <summary>
-    /// w“ü‚ª¸”s‚µ‚½‚Æ‚«‚ÉŒÄ‚Ño‚³‚ê‚Ü‚·B
+    /// è³¼å…¥ãŒå¤±æ•—ã—ãŸã¨ãã«å‘¼ã³å‡ºã•ã‚Œã¾ã™ã€‚
     /// </summary>
     public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
     {
-        iap.ShowMsg("w“ü¸”s.");
+        iap.ShowMsg("è³¼å…¥å¤±æ•—.");
     }
 
-    // w“üˆ—‚ğŠJn‚·‚é‚½‚ß‚ÉAƒ†[ƒU[‚ª 'w“ü' ƒ{ƒ^ƒ“
-    // ‚ğ‰Ÿ‚·‚ÆAŠÖ”‚ªŒÄ‚Ño‚³‚ê‚Ü‚·B
+    // è³¼å…¥å‡¦ç†ã‚’é–‹å§‹ã™ã‚‹ãŸã‚ã«ã€ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒ 'è³¼å…¥' ãƒœã‚¿ãƒ³
+    // ã‚’æŠ¼ã™ã¨ã€é–¢æ•°ãŒå‘¼ã³å‡ºã•ã‚Œã¾ã™ã€‚
     public void OnPurchaseClicked(string productId)
     {
-        iap.ShowMsg("w“üŠJn." + productId);
+        iap.ShowMsg("è³¼å…¥é–‹å§‹." + productId);
         controller.InitiatePurchase(productId);
     }
 }
