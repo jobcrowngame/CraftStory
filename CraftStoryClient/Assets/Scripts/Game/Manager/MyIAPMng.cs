@@ -16,9 +16,12 @@ public class MyIAPManager : IStoreListener
         try
         {
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-            builder.AddProduct("100_gold_coins", ProductType.Consumable, new IDs
+            builder.AddProduct("craftstory_120", ProductType.Consumable, new IDs
             {
                 {"craftstory_120", AppleAppStore.Name},
+            });
+            builder.AddProduct("craftstory_free", ProductType.Consumable, new IDs
+            {
                 {"craftstory_free", AppleAppStore.Name}
             });
 
