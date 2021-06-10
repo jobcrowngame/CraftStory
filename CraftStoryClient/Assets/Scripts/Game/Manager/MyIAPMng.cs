@@ -18,8 +18,8 @@ public class MyIAPManager : IStoreListener
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
             builder.AddProduct("100_gold_coins", ProductType.Consumable, new IDs
             {
-                {"craftstory_120", MacAppStore.Name},
-                {"craftstory_120", AppleAppStore.Name}
+                {"craftstory_120", AppleAppStore.Name},
+                {"craftstory_free", AppleAppStore.Name}
             });
 
             UnityPurchasing.Initialize(this, builder);
