@@ -117,14 +117,7 @@ public class CommonFunction
 
     public static string ToUTF8Bom(string msg)
     {
-        using (var stream = new MemoryStream())
-        {
-            using (var sw = new StreamWriter(stream, new UTF8Encoding(encoderShouldEmitUTF8Identifier: true)))
-            {
-                sw.Write(msg);
-            }
-
-            return BitConverter.ToString(stream.ToArray());
-        }
+        var en = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true);
+        return en.GetString(Encoding.Default.GetBytes(msg));
     }
 }

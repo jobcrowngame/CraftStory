@@ -40,7 +40,7 @@ public class MyIAPManager : IStoreListener
         this.controller = controller;
         this.extensions = extensions;
 
-        iap.ShowMsg("UnityPurchasing ‰Šú‰»Š®—¹");
+        iap.ShowMsg("UnityPurchasing Init OK! ‰Šú‰»Š®—¹");
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ public class MyIAPManager : IStoreListener
     /// </summary>
     public void OnInitializeFailed(InitializationFailureReason error)
     {
-        iap.ShowMsg("UnityPurchasing ‰Šú‰»¸”s." + error);
+        iap.ShowMsg("UnityPurchasing Init Fail! ‰Šú‰»¸”s.\n" + error);
     }
 
     /// <summary>
