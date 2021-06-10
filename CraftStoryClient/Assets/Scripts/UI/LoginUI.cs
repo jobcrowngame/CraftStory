@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 using System.Text;
@@ -11,8 +11,8 @@ public class LoginUI : UIBase
     Button Terms01Btn;
     Button Terms02Btn;
 
-    string LoginText01 = "ƒƒOƒCƒ“...";
-    string LoginText02 = "ƒQ[ƒ€ƒXƒ^[ƒg";
+    string LoginText01 = "ãƒ­ã‚°ã‚¤ãƒ³...";
+    string LoginText02 = "ã‚²ãƒ¼ãƒ ã‚¹ã‚¿ãƒ¼ãƒˆ";
 
     string[] texts;
 
@@ -50,8 +50,8 @@ public class LoginUI : UIBase
 
     public void LoginResponse()
     {
-        Debug.Log("ƒƒOƒCƒ“¬Œ÷‚µ‚Ü‚µ‚½B");
-        Debug.LogFormat("‚æ‚¤‚±‚»A{0}—l", DataMng.E.UserData.UserID);
+        Debug.Log("ãƒ­ã‚°ã‚¤ãƒ³æˆåŠŸã—ã¾ã—ãŸã€‚");
+        Debug.LogFormat("ã‚ˆã†ã“ãã€{0}æ§˜", DataMng.E.UserData.UserID);
 
         Login.text = LoginText02;
 
