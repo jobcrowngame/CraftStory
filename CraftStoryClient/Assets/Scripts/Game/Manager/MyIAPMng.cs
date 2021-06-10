@@ -16,11 +16,11 @@ public class MyIAPManager : IStoreListener
         try
         {
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-            //builder.AddProduct("100_gold_coins", ProductType.Consumable, new IDs
-            //{
-            //    {"100_gold_coins_google", GooglePlay.Name},
-            //    {"100_gold_coins_mac", MacAppStore.Name}
-            //});
+            builder.AddProduct("100_gold_coins", ProductType.Consumable, new IDs
+            {
+                {"craftstory_120", MacAppStore.Name},
+                {"craftstory_120", AppleAppStore.Name}
+            });
 
             UnityPurchasing.Initialize(this, builder);
         }
