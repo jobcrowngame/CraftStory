@@ -137,6 +137,8 @@
     <Compile Include="Assets\Scripts\Common\GS2.cs" />
     <Compile Include="Assets\Scripts\Game\Manager\MyIAPMng.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
+    <Compile Include="Assets\Scripts\Network\NWMng.cs" />
+    <Compile Include="Assets\Scripts\Network\NWData.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />

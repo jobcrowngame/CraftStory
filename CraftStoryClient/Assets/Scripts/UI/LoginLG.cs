@@ -4,19 +4,14 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
 {
     public void CreateNewAccount()
     {
-        GS2.E.CreateAccount((userId, pw) => 
+        NWMng.E.CreateNewAccount((rp) => 
         {
-            CreateNewAccountResponse(userId, pw);
+            Debug.Log("新しいアカウント作成成功しました。");
+            Debug.LogFormat("ID:\n{0}, \nPW:\n{1}", rp[0], rp[1]);
+
+            DataMng.E.NewUser(rp[0], rp[1]);
+            Login();
         });
-    }
-
-    private void CreateNewAccountResponse(string id, string pw)
-    {
-        Debug.Log("新しいアカウント作成成功しました。");
-        Debug.LogFormat("ID:\n{0}, \nPW:\n{1}", id, pw);
-
-        DataMng.E.NewUser(id, pw);
-        Login();
     }
 
     public void Login()
@@ -31,9 +26,9 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
         string id = DataMng.E.UserData.UserID;
         string pw = DataMng.E.UserData.UserPW;
 
-        GS2.E.Login((session) => 
+        NWMng.E.Login(id, pw, (rp) => 
         {
             ui.LoginResponse();
-        }, id, pw);
+        });
     }
 }

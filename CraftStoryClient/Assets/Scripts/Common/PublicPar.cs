@@ -37,6 +37,8 @@ public class PublicPar
 
     #endregion
 
+    public static string URL = "13.230.170.40/Main.php";
+
     #region Game
 
     // Dataセーブパース

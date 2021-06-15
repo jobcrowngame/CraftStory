@@ -24,7 +24,7 @@ public class Main : MonoBehaviour
         yield return ResourcesMng.E.InitInitCoroutine();
         yield return UICtl.E.InitCoroutine(gameObject, uiRoot);
         yield return LoadData();
-        yield return GS2.E.InitCoroutine();
+        yield return NWMng.E.InitCoroutine();
 
         LoginLg.E.Login();
     }
