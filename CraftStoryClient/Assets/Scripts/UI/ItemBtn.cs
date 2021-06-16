@@ -20,8 +20,13 @@ public class ItemBtn : UIBase
                 if (curSelectBtn != null) curSelectBtn.OnSelected(false);
 
                 curSelectBtn = value;
-                if (curSelectBtn != null) curSelectBtn.OnSelected();
-                PlayerCtl.E.ChangeSelectItem(curSelectBtn.itemData);
+                if (curSelectBtn != null)
+                {
+                    curSelectBtn.OnSelected();
+                    PlayerCtl.E.ChangeSelectItem(curSelectBtn.itemData);
+                }
+                else
+                    PlayerCtl.E.ChangeSelectItem(null);
             }
         }
     }
@@ -65,6 +70,9 @@ public class ItemBtn : UIBase
     public void Refresh()
     {
         itemData = DataMng.E.GetItemByEquipedSite(Index + 1);
+
+        if (CurSelectBtn == this && CurSelectBtn.itemData == null)
+            CurSelectBtn = null;
 
         if (itemData == null)
         {
