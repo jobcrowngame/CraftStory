@@ -5,6 +5,26 @@ using UnityEngine.UI;
 public class ItemBtn : UIBase
 {
     private static ItemBtn curSelectBtn;
+    public static ItemBtn CurSelectBtn
+    {
+        get => curSelectBtn;
+        set
+        {
+            if (curSelectBtn == value)
+            {
+                if(curSelectBtn != null) curSelectBtn.OnSelected(false);
+                curSelectBtn = null;
+            }
+            else
+            {
+                if (curSelectBtn != null) curSelectBtn.OnSelected(false);
+
+                curSelectBtn = value;
+                if (curSelectBtn != null) curSelectBtn.OnSelected();
+                PlayerCtl.E.ChangeSelectItem(curSelectBtn.itemData);
+            }
+        }
+    }
 
     Image Icon;
     Text Count;
@@ -13,6 +33,8 @@ public class ItemBtn : UIBase
     Button btn;
 
     private ItemData itemData;
+
+    public int Index { get; set; }
 
     private void Awake()
     {
@@ -24,11 +46,25 @@ public class ItemBtn : UIBase
         btn.onClick.AddListener(OnClick);
 
         OnSelected(false);
+        CurSelectBtn = null;
+    }
+   
+
+    private void OnClick()
+    {
+        if (itemData == null)
+            return;
+
+        CurSelectBtn = this;
+    }
+    private void OnSelected(bool b = true)
+    {
+        Selection.gameObject.SetActive(b);
     }
 
-    public void Init(ItemData itemData)
+    public void Refresh()
     {
-        this.itemData = itemData;
+        itemData = DataMng.E.GetItemByEquipedSite(Index + 1);
 
         if (itemData == null)
         {
@@ -43,55 +79,6 @@ public class ItemBtn : UIBase
                 ? ""
                 : "x" + itemData.count;
         }
-    }
-
-    private void OnClick()
-    {
-        if (itemData == null)
-            return;
-
-        Debug.LogFormat("Select item {0}. Type {1}", itemData.Config().Name, (ItemType)itemData.Config().Type);
-        if(itemData.Data != null) Debug.LogFormat(itemData.Data.ToString());
-
-        if (curSelectBtn == this)
-        {
-            OnSelected(false);
-
-            curSelectBtn = null;
-            return;
-        }
-
-        Select(this);
-    }
-    
-    public void OnSelected(bool b = true)
-    {
-        PlayerCtl.E.ChangeSelectItem(b ? itemData : null);
-        Selection.gameObject.SetActive(b);
-    }
-
-    public void Clear()
-    {
-        itemData = null;
-        Icon.sprite = null;
-        Count.text = "";
-        Selection.gameObject.SetActive(false);
-    }
-
-    public static void Select(ItemBtn itemBtn)
-    {
-        if (itemBtn == null)
-        {
-            curSelectBtn.OnSelected(false);
-            curSelectBtn = null;
-            return;
-        }
-
-        if (curSelectBtn != null)
-            curSelectBtn.OnSelected(false);
-
-        curSelectBtn = itemBtn;
-        curSelectBtn.OnSelected();
     }
 }
 

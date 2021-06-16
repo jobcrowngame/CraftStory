@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class BagSelectItem : UIBase
 {
     Image Icon;
-    public int index { get; set; }
+    public int Index { get; set; }
+
+    private ItemData itemData;
 
     private void Awake()
     {
@@ -19,16 +23,29 @@ public class BagSelectItem : UIBase
             : ReadResources<Sprite>(itemData.Config().IconResourcesPath);
     }
 
+    public void Refresh()
+    {
+        itemData = DataMng.E.GetItemByEquipedSite(Index + 1);
+
+        Icon.sprite = itemData == null
+            ? null
+            : ReadResources<Sprite>(itemData.Config().IconResourcesPath);
+    }
+
     private void OnClickSelectItem()
     {
         if (BagLG.E.SelectItem == null)
             return;
-
         NWMng.E.EquitItem((rp) => 
         {
-            HomeLG.E.UI.RefreshItemBtns(index, BagLG.E.SelectItem.ItemData);
-            BagLG.E.UI.RefreshSelectItemBtns(index, BagLG.E.SelectItem.ItemData);
-            BagLG.E.SelectItem = null;
-        }, BagLG.E.SelectItem.ItemData.id, index + 1);
+            NWMng.E.GetItemList((rp2) =>
+            {
+                DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp2[0]);
+
+                HomeLG.E.UI.RefreshItemBtns();
+                BagLG.E.UI.RefreshSelectItemBtns();
+                BagLG.E.SelectItem = null;
+            });
+        }, BagLG.E.SelectItem.ItemData.id, Index + 1);
     }
 }

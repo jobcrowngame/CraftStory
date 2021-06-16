@@ -109,6 +109,7 @@ public class HomeUI : UIBase
             if (cell == null)
                 return;
 
+            cell.Index = i;
             itemBtns.Add(cell);
         }
     }
@@ -151,27 +152,10 @@ public class HomeUI : UIBase
 
     public void RefreshItemBtns()
     {
-        for (int i = 0; i < itemBtns.Count; i++)
+        foreach (var item in itemBtns)
         {
-            itemBtns[i].Init(null);
+            item.Refresh();
         }
-
-        for (int i = 0; i < DataMng.E.Items.Count; i++)
-        {
-            if (DataMng.E.Items[i].equipSite > 0)
-            {
-                itemBtns[DataMng.E.Items[i].equipSite - 1].Init(DataMng.E.Items[i]);
-            }
-        }
-    }
-    public void RefreshItemBtns(int index, ItemData itemData) 
-    {
-        for (int i = 0; i < itemBtns.Count; i++)
-        {
-            itemBtns[i].Init(null);
-        }
-
-        itemBtns[index].Init(itemData);
     }
 
     IEnumerator FadeIn()

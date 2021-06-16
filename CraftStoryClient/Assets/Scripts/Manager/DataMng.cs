@@ -103,9 +103,26 @@ public class DataMng : Single<DataMng>
 
     public ItemData GetItemByGuid(int guid)
     {
+        if (items == null)
+            return null;
+
         for (int i = 0; i < items.Count; i++)
         {
             if (items[i].id == guid)
+            {
+                return items[i];
+            }
+        }
+        return null;
+    }
+    public ItemData GetItemByEquipedSite(int site)
+    {
+        if (items == null)
+            return null;
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].equipSite == site)
             {
                 return items[i];
             }
@@ -189,6 +206,7 @@ public class DataMng : Single<DataMng>
 
         return itemCount >= count;
     }
+    
 
     private bool TryGetItems(int itemID, out List<ItemData> itemList)
     {

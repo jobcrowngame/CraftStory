@@ -37,7 +37,7 @@ public class BagUI : UIBase
             for (int i = 0; i < 6; i++)
             {
                 selectItems[i] = SelectItemBar.GetChild(i).gameObject.AddComponent<BagSelectItem>();
-                selectItems[i].index = i;
+                selectItems[i].Index = i;
             }
         }
     }
@@ -95,26 +95,9 @@ public class BagUI : UIBase
 
     public void RefreshSelectItemBtns()
     {
-        for (int i = 0; i < selectItems.Length; i++)
+        foreach (var item in selectItems)
         {
-            selectItems[i].SetItem(null);
+            item.Refresh();
         }
-
-        for (int i = 0; i < DataMng.E.Items.Count; i++)
-        {
-            if (DataMng.E.Items[i].equipSite > 0)
-            {
-                selectItems[DataMng.E.Items[i].equipSite - 1].SetItem(DataMng.E.Items[i]);
-            }
-        }
-    }
-    public void RefreshSelectItemBtns(int index, ItemData itemData)
-    {
-        for (int i = 0; i < selectItems.Length; i++)
-        {
-            selectItems[i].SetItem(null);
-        }
-
-        selectItems[index].SetItem(itemData);
     }
 }
