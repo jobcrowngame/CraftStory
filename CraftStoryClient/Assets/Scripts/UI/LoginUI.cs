@@ -51,7 +51,7 @@ public class LoginUI : UIBase
     public void LoginResponse()
     {
         Debug.Log("ログイン成功しました。");
-        Debug.LogFormat("ようこそ、{0}様", DataMng.E.UserData.UserID);
+        Debug.LogFormat("ようこそ、{0}様", DataMng.E.UserData.Account);
 
         Login.text = LoginText02;
 

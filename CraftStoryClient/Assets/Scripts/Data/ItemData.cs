@@ -4,27 +4,33 @@ using System;
 [Serializable]
 public class ItemData
 {
-    public int ItemID { get => itemID; }
-    private int itemID;
+    public int id { get; set; }
 
-    public int Count { get => count; set => count = value; }
-    private int count;
+    public int itemId { get; set; }
+
+    public int count { get; set; }
+
+    public int equipSite { get; set; }
 
     public object Data { get => data; set => data = value; }
     private object data;
 
-    public int CanAddCount { get => Config.MaxCount - count; }
-    public Item Config { get => ConfigMng.E.Item[itemID]; }
+    public int CanAddCount { get => Config().MaxCount - count; }
 
     public ItemData() { }
-    public ItemData(int id, object data) 
+    public ItemData(int id, object data)
     {
-        itemID = id;
+        itemId = id;
         this.data = data;
     }
 
-    public string ToString()
+    public Item Config()
     {
-        return ItemID + "x" + Count;
+        return ConfigMng.E.Item[itemId];
+    }
+
+    public override string ToString()
+    {
+        return itemId + "x" + count;
     }
 }

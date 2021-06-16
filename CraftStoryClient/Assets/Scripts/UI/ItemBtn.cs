@@ -12,8 +12,7 @@ public class ItemBtn : UIBase
 
     Button btn;
 
-    private ItemData item;
-    Item config { get => ConfigMng.E.Item[item.ItemID]; }
+    private ItemData itemData;
 
     private void Awake()
     {
@@ -27,23 +26,32 @@ public class ItemBtn : UIBase
         OnSelected(false);
     }
 
-    public void Init(ItemData item)
+    public void Init(ItemData itemData)
     {
-        this.item = item;
+        this.itemData = itemData;
 
-        Icon.sprite = ReadResources<Sprite>(config.IconResourcesPath);
-        Count.text = item.Config.MaxCount == 1 
-            ? ""
-            : "x" + item.Count;
+        if (itemData == null)
+        {
+            Icon.sprite = null;
+            Count.text = "";
+            OnSelected(false);
+        }
+        else
+        {
+            Icon.sprite = ReadResources<Sprite>(itemData.Config().IconResourcesPath);
+            Count.text = itemData.Config().MaxCount == 1
+                ? ""
+                : "x" + itemData.count;
+        }
     }
 
     private void OnClick()
     {
-        if (item == null)
+        if (itemData == null)
             return;
 
-        Debug.LogFormat("Select item {0}. Type {1}", config.Name, (ItemType)config.Type);
-        if(item.Data != null) Debug.LogFormat(item.Data.ToString());
+        Debug.LogFormat("Select item {0}. Type {1}", itemData.Config().Name, (ItemType)itemData.Config().Type);
+        if(itemData.Data != null) Debug.LogFormat(itemData.Data.ToString());
 
         if (curSelectBtn == this)
         {
@@ -58,13 +66,13 @@ public class ItemBtn : UIBase
     
     public void OnSelected(bool b = true)
     {
-        PlayerCtl.E.ChangeSelectItem(b ? item : null);
+        PlayerCtl.E.ChangeSelectItem(b ? itemData : null);
         Selection.gameObject.SetActive(b);
     }
 
     public void Clear()
     {
-        item = null;
+        itemData = null;
         Icon.sprite = null;
         Count.text = "";
         Selection.gameObject.SetActive(false);

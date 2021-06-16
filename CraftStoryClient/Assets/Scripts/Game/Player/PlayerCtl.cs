@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using JsonConfigData;
+using Newtonsoft.Json;
 using SimpleInputNamespace;
 using UnityEngine;
 
@@ -108,7 +109,7 @@ public class PlayerCtl : MonoBehaviour
             return;
         }
 
-        switch ((ItemType)selectItem.Config.Type)
+        switch ((ItemType)selectItem.Config().Type)
         {
             case ItemType.Block:
                 motionType = PlayerMotionType.SelectBlock;
@@ -128,10 +129,10 @@ public class PlayerCtl : MonoBehaviour
         if (selectItem == null)
             return;
 
-        switch ((ItemType)selectItem.Config.Type)
+        switch ((ItemType)selectItem.Config().Type)
         {
             case ItemType.Block:
-                CreateBlock(selectItem.Config.ReferenceID, obj, Vector3Int.CeilToInt(pos));
+                CreateBlock(selectItem.Config().ReferenceID, obj, Vector3Int.CeilToInt(pos));
                 break;
 
             case ItemType.BuilderPencil:
@@ -173,12 +174,7 @@ public class PlayerCtl : MonoBehaviour
     public void AddItem(int itemID, int count, object data = null)
     {
         DataMng.E.AddItem(itemID, data, count);
-
-        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
-        if (homeUI != null) homeUI.RefreshItemBtns();
     }
-    
-   
 
     private void CreateBlock(int blockID, GameObject collider, Vector3Int pos)
     {
@@ -194,16 +190,7 @@ public class PlayerCtl : MonoBehaviour
 
     public void ConsumableSelectItem(int count = 1)
     {
-        DataMng.E.ConsumableItem(selectItem.ItemID, count);
-
-        if (selectItem.Count == 0)
-        {
-            selectItem = null;
-            ItemBtn.Select(null);
-        }
-
-        var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
-        if (homeUI != null) homeUI.RefreshItemBtns();
+        DataMng.E.ConsumableSelectItem(selectItem.id, count);
     }
     public bool ConsumableItems(Dictionary<int, int> items)
     {

@@ -11,14 +11,4 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
     {
         get { return showcaseName; }
     }
-
-    public void GetShowcase(string showcaseName)
-    {
-        GS2.E.GetShowcase((r) =>
-        {
-            this.showcaseName = r.Name;
-
-            ui.AddItems(r);
-        }, showcaseName);
-    }
 }

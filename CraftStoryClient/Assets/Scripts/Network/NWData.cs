@@ -15,6 +15,10 @@ public class NWData
 
         data += msg;
     }
+    public void Add(int msg)
+    {
+        Add(msg.ToString());
+    }
 
     public override string ToString()
     {

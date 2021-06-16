@@ -1,4 +1,5 @@
 ﻿using JsonConfigData;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine;
 public class DataMng : Single<DataMng>
 {
     const string MapDataName = "MapData.dat";
-    //const string CharacterDataName = "CharacterData.dat";
+    const string CharacterDataName = "CharacterData.dat";
     const string UserDataName = "UserData.dat";
     const string ItemsDataName = "ItemsData.dat";
 
@@ -15,6 +16,7 @@ public class DataMng : Single<DataMng>
     public int NextSceneID { get; set; }
     public int CurrentSceneID { get; set; }
     public Map CurrentMapConfig { get => ConfigMng.E.Map[CurrentSceneID]; }
+    public string session { get; set; }
 
     public UserData UserData
     {
@@ -37,32 +39,39 @@ public class DataMng : Single<DataMng>
     }
     private MapData homeData;
 
-    public PlayerData PlayerData
+    public RuntimeData RuntimeData
     {
-        get => playerData;
-        set => playerData = value;
+        get => runtimeData;
+        private set => runtimeData = value;
     }
-    private PlayerData playerData;
+    private RuntimeData runtimeData;
 
-    public List<ItemData> Items { get
+    public List<ItemData> Items { 
+        get
         {
             if (items == null)
                 items = new List<ItemData>();
 
             return items;
         }
+        set => items = value;
     }
     private List<ItemData> items;
+
+    public override void Init()
+    {
+        base.Init();
+
+        runtimeData = new RuntimeData();
+    }
 
     public void NewUser(string id, string pw)
     {
         uData = new UserData()
         {
-            UserID = id,
+            Account = id,
             UserPW = pw
         };
-
-        AddItem(3000, null);
     }
 
     public void Save()
@@ -78,12 +87,6 @@ public class DataMng : Single<DataMng>
             homeData.EntityDataToStringData();
             SaveLoadFile.E.Save(homeData, PublicPar.SaveRootPath + MapDataName);
         }
-
-        //if (playerData != null)
-        //    SaveLoadFile.E.Save(playerData, PublicPar.SaveRootPath + CharacterDataName);
-
-        if (items != null)
-            SaveLoadFile.E.Save(items, PublicPar.SaveRootPath + ItemsDataName);
     }
 
     public bool Load()
@@ -93,93 +96,77 @@ public class DataMng : Single<DataMng>
         homeData = (MapData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + MapDataName);
         if(homeData != null) homeData.ParseStringData();
 
-        //playerData = (PlayerData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + CharacterDataName);
-
-        items = (List<ItemData>)SaveLoadFile.E.Load(PublicPar.SaveRootPath + ItemsDataName);
-
         return true;
     }
 
     #region Item
 
+    public ItemData GetItemByGuid(int guid)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].id == guid)
+            {
+                return items[i];
+            }
+        }
+        return null;
+    }
+
     public void AddItem(int itemID, object data, int count = 1)
     {
-        var config = ConfigMng.E.Item[itemID];
-        int addItemObjCount = count / config.MaxCount;
-
-        for (int i = 0; i < addItemObjCount; i++)
+        NWMng.E.AddItem((rp)=> 
         {
-            var item = NewItem(itemID, data);
-            item.Count = item.Config.MaxCount;
-            Items.Add(item);
-            count -= item.Config.MaxCount;
-        }
-
-        List<ItemData> itemList;
-        if (!TryGetItems(itemID, out itemList))
-        {
-            var item = NewItem(itemID, data);
-            item.Count = count;
-            count = 0;
-            Items.Add(item);
-        }
-
-        foreach (var item in itemList)
-        {
-            if (item.Count == item.Config.MaxCount)
-                continue;
-
-            if (item.CanAddCount >= count)
+            NWMng.E.GetItemList((rp2) =>
             {
-                item.Count += count;
-                count = 0;
-            }
-            else
-            {
-                item.Count += item.CanAddCount;
-                count -= item.CanAddCount;
-            }
-        }
+                Items = JsonConvert.DeserializeObject<List<ItemData>>(rp2[0]);
 
-        if (count > 0)
-        {
-            var item = NewItem(itemID, data);
-            item.Count = count;
-            Items.Add(item);
-        }
+                var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+                if (homeUI != null) homeUI.RefreshItemBtns();
+            });
+        }, itemID, count);
     }
     /// <summary>
     /// 消耗アイテム
     /// </summary>
+    public void ConsumableSelectItem(int guid, int count = 1)
+    {
+        if (GetItemByGuid(guid).count < count)
+        {
+            Debug.LogWarning("No item stip");
+        }
+        else
+        {
+            NWMng.E.RemoveItemByGuid((rp) =>
+            {
+                NWMng.E.GetItemList((rp2) =>
+                {
+                    Items = JsonConvert.DeserializeObject<List<ItemData>>(rp2[0]);
+                    if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
+                    if (BagLG.E.UI != null) BagLG.E.UI.RefreshItemByGuid(guid);
+                });
+            }, guid, count);
+        }
+    }
     public bool ConsumableItem(int itemID, int count = 1)
     {
         bool itemCheck = CheckConsumableItem(itemID, count);
-        if (!itemCheck) return itemCheck;
-
-        List<ItemData> playerItems = null;
-        TryGetItems(itemID, out playerItems);
-
-        for (int i = 0; i < playerItems.Count; i++)
+        if (itemCheck)
         {
-            if (count == 0)
-                break;
-
-            if (playerItems[i].Count >= count)
+            NWMng.E.RemoveItem((rp) =>
             {
-                playerItems[i].Count -= count;
-                count = 0;
-            }
-            else
-            {
-                playerItems[i].Count = 0;
-                count -= playerItems[i].Count;
-            }
-
-            if (playerItems[i].Count == 0)
-                Items.Remove(playerItems[i]);
+                NWMng.E.GetItemList((rp2) =>
+                {
+                    Items = JsonConvert.DeserializeObject<List<ItemData>>(rp2[0]);
+                    if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
+                    if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
+                });
+            }, itemID, count);
         }
-
-        itemCheck = true;
+        else
+        {
+            Debug.LogWarning("No item stip");
+        }
 
         return itemCheck;
     }
@@ -197,23 +184,19 @@ public class DataMng : Single<DataMng>
 
         for (int i = 0; i < items.Count; i++)
         {
-            itemCount += items[i].Count;
+            itemCount += items[i].count;
         }
 
         return itemCount >= count;
     }
 
-    private ItemData NewItem(int itemID, object data)
-    {
-        return new ItemData(itemID, data);
-    }
     private bool TryGetItems(int itemID, out List<ItemData> itemList)
     {
         itemList = new List<ItemData>();
 
         for (int i = 0; i < items.Count; i++)
         {
-            if (items[i].ItemID == itemID)
+            if (items[i].itemId == itemID)
             {
                 itemList.Add(items[i]);
             }

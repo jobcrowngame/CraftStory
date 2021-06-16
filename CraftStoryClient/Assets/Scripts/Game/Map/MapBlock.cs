@@ -23,7 +23,7 @@ public class MapBlock : MonoBehaviour
 
         if (clickingTime > data.BaseData.DestroyTime)
         {
-            PlayerCtl.E.AddItem(ConfigMng.E.Block[data.ID].ItemID, 1);
+            DataMng.E.AddItem(ConfigMng.E.Block[data.ID].ItemID, 1);
             Delete();
         }
     }

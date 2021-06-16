@@ -12,6 +12,18 @@ public class PlayerData
     private float qY { get; set; }
     private float qZ { get; set; }
 
+    public int[] EquipedItems 
+    {
+        get
+        {
+            if (equipedItems == null)
+                equipedItems = new int[6];
+            
+            return equipedItems; 
+        }
+    }
+    private int[] equipedItems;
+
     public Vector3 Pos
     {
         get { return new Vector3(posX, posY, posZ); }
@@ -32,5 +44,16 @@ public class PlayerData
             qY = value.y;
             qZ = value.z;
         }
+    }
+
+    public void EquipItem(int index, int itemGuid)
+    {
+        for (int i = 0; i < equipedItems.Length; i++)
+        {
+            if (equipedItems[i] == itemGuid)
+                equipedItems[i] = 0;
+        }
+
+        equipedItems[index] = itemGuid;
     }
 }

@@ -18,11 +18,11 @@ public class Main : MonoBehaviour
 
     IEnumerator Init()
     {
-        var uiRoot = GameObject.Find("Canvas");
+        DataMng.E.Init();
 
         yield return ConfigMng.E.InitInitCoroutine();
         yield return ResourcesMng.E.InitInitCoroutine();
-        yield return UICtl.E.InitCoroutine(gameObject, uiRoot);
+        yield return UICtl.E.InitCoroutine(gameObject);
         yield return LoadData();
         yield return NWMng.E.InitCoroutine();
 

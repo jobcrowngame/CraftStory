@@ -24,9 +24,9 @@ public class LotteryUI : UIBase
         if (CloseBtn != null) CloseBtn.onClick.AddListener(() => { Close(); });
 
         OneBtn = FindChiled<Button>("OneBtn");
-        if(OneBtn != null) OneBtn.onClick.AddListener(() => { LotteryLG.E.LotteryOne(); });
+        if(OneBtn != null) OneBtn.onClick.AddListener(() => {  });
 
         TenBtn = FindChiled<Button>("TenBtn");
-        if (TenBtn != null) TenBtn.onClick.AddListener(() => { LotteryLG.E.LotteryTen(); });
+        if (TenBtn != null) TenBtn.onClick.AddListener(() => {  });
     }
 }

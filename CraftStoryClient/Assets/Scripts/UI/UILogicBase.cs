@@ -17,6 +17,8 @@ public class UILogicBase<T, K> where T : class, new()
         }
     }
 
+    public K UI { get => ui; }
+
     public virtual void Init(K ui)
     {
         this.ui = ui;

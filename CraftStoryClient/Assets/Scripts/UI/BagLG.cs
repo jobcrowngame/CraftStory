@@ -1,31 +1,23 @@
 ﻿using Gs2.Unity.Gs2Inventory.Model;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class BagLG : UILogicBase<BagLG, BagUI>
 {
-    public void GetMoney(int slot)
+    public ItemCell SelectItem 
     {
-        GS2.E.GetMoney((item) =>
+        get => selectItem;
+        set
         {
-            ui.RefreshMoneyResponse(item);
-        }, slot);
-    }
+            if (selectItem != null)
+            {
+                selectItem.IsSelected(false);
+            }
 
-    public void GetInventory()
-    {
-        GS2.E.GetInventory();
+            selectItem = value;
+            if (selectItem != null) selectItem.IsSelected(true);
+        }
     }
-
-    public void GetItemList()
-    {
-        GS2.E.ListItems((items)=> 
-        {
-            ui.AddItems(items);
-        },"1", 5);
-    }
-
-    public void DecreaseRespones(List<EzItemSet> r)
-    {
-        ui.DecreaseRespones(r);
-    }
+    private ItemCell selectItem;
 }

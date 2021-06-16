@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +7,13 @@ using UnityEngine.UI;
 
 public class HomeUI : UIBase
 {
-    Text SceneName;
+    //Text SceneName;
     Image FadeinImg;
 
+    Button MenuBtn;
     Button BagBtn;
-    Button LotteryBtn;
-    Button ShopBtn;
+    //Button LotteryBtn;
+    //Button ShopBtn;
 
     Transform btnsParent;
 
@@ -32,38 +35,47 @@ public class HomeUI : UIBase
         WorldMng.E.CreateGameObjects();
         UICtl.E.AddUI(this, UIType.Home);
 
+        NWMng.E.GetItemList((rp) =>
+        {
+            DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
+        });
+
         Init();
     }
 
     public override void Init()
     {
         base.Init();
-
         HomeLG.E.Init(this);
-
         InitUI();
 
-        SceneName.text = ConfigMng.E.Map[DataMng.E.CurrentSceneID].Name;
+        NWMng.E.GetItemList((rp) =>
+        {
+            DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
+            RefreshItemBtns();
+        });
 
-        RefreshItemBtns();
         StartCoroutine("FadeIn");
     }
 
     private void InitUI()
     {
-        SceneName = FindChiled<Text>("SceneName");
+        //SceneName = FindChiled<Text>("SceneName");
 
         FadeinImg = FindChiled<Image>("Fadein");
         FadeinImg.enabled = true;
 
+        MenuBtn = FindChiled<Button>("MenuBtn");
+        MenuBtn.onClick.AddListener(() => { Debug.Log("MenuBtn"); UICtl.E.OpenUI<MenuUI>(UIType.Menu); });
+
         BagBtn = FindChiled<Button>("BagBtn");
         BagBtn.onClick.AddListener(() => { UICtl.E.OpenUI<BagUI>(UIType.Bag); });
 
-        LotteryBtn = FindChiled<Button>("LotteryBtn");
-        LotteryBtn.onClick.AddListener(() => { UICtl.E.OpenUI<LotteryUI>(UIType.Lottery); });
+        //LotteryBtn = FindChiled<Button>("LotteryBtn");
+        //LotteryBtn.onClick.AddListener(() => { UICtl.E.OpenUI<LotteryUI>(UIType.Lottery); });
 
-        ShopBtn = FindChiled<Button>("ShopBtn");
-        ShopBtn.onClick.AddListener(() => { UICtl.E.OpenUI<ShopUI>(UIType.Shop); });
+        //ShopBtn = FindChiled<Button>("ShopBtn");
+        //ShopBtn.onClick.AddListener(() => { UICtl.E.OpenUI<ShopUI>(UIType.Shop); });
 
         btnsParent = FindChiled("Grid");
         AddItemBtns();
@@ -141,14 +153,25 @@ public class HomeUI : UIBase
     {
         for (int i = 0; i < itemBtns.Count; i++)
         {
-            if (i > DataMng.E.Items.Count - 1)
-            {
-                itemBtns[i].Clear();
-                continue;
-            }
-
-            itemBtns[i].Init(DataMng.E.Items[i]);
+            itemBtns[i].Init(null);
         }
+
+        for (int i = 0; i < DataMng.E.Items.Count; i++)
+        {
+            if (DataMng.E.Items[i].equipSite > 0)
+            {
+                itemBtns[DataMng.E.Items[i].equipSite - 1].Init(DataMng.E.Items[i]);
+            }
+        }
+    }
+    public void RefreshItemBtns(int index, ItemData itemData) 
+    {
+        for (int i = 0; i < itemBtns.Count; i++)
+        {
+            itemBtns[i].Init(null);
+        }
+
+        itemBtns[index].Init(itemData);
     }
 
     IEnumerator FadeIn()

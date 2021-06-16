@@ -56,12 +56,12 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Common\ResourcesMng.cs" />
+    <Compile Include="Assets\Scripts\Manager\ResourcesMng.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingLG.cs" />
     <Compile Include="Assets\Scripts\Test\DragObj.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerCtl.cs" />
     <Compile Include="Assets\Scripts\UI\BagUI.cs" />
-    <Compile Include="Assets\Scripts\Common\ConfigMng.cs" />
+    <Compile Include="Assets\Scripts\Manager\ConfigMng.cs" />
     <Compile Include="Assets\Scripts\UI\ShopLG.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeLG.cs" />
     <Compile Include="Assets\Scripts\Test\TestTriger.cs" />
@@ -70,12 +70,13 @@
     <Compile Include="Assets\Scripts\Test\TestAtt.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
     <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
-    <Compile Include="Assets\Scripts\Game\Manager\WorldMng.cs" />
+    <Compile Include="Assets\Scripts\Manager\WorldMng.cs" />
     <Compile Include="Assets\Scripts\Test\LookChange.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerEntity.cs" />
     <Compile Include="Assets\Scripts\UI\ShopUI.cs" />
+    <Compile Include="Assets\Scripts\Manager\NWMng.cs" />
     <Compile Include="Assets\Scripts\Test\Test2.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
@@ -83,7 +84,6 @@
     <Compile Include="Assets\Scripts\Game\Player\ScreenDraggingCtl.cs" />
     <Compile Include="Assets\Scripts\UI\UILogicBase.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapCtl.cs" />
-    <Compile Include="Assets\Scripts\Test\UserTest.cs" />
     <Compile Include="Assets\Scripts\UI\UICtl.cs" />
     <Compile Include="Assets\Scripts\UI\LoginLG.cs" />
     <Compile Include="Assets\Scripts\Data\EntityData.cs" />
@@ -94,7 +94,7 @@
     <Compile Include="Assets\Scripts\Test\Gs2AccountSample2.cs" />
     <Compile Include="Assets\Scripts\Common\Single.cs" />
     <Compile Include="Assets\Scripts\UI\LoginUI.cs" />
-    <Compile Include="Assets\Scripts\Common\SettingMng.cs" />
+    <Compile Include="Assets\Scripts\Manager\SettingMng.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerButton.cs" />
     <Compile Include="Assets\Scripts\UI\BraveLG.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterEntity.cs" />
@@ -106,7 +106,7 @@
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Common\SaveLoadFile.cs" />
-    <Compile Include="Assets\Scripts\Data\DataMng.cs" />
+    <Compile Include="Assets\Scripts\Manager\DataMng.cs" />
     <Compile Include="Assets\Scripts\Test\TestRender.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion1.cs" />
     <Compile Include="Assets\Scripts\Game\Player\CameraCtl.cs" />
@@ -123,22 +123,25 @@
     <Compile Include="Assets\Scripts\Data\MapBlockData.cs" />
     <Compile Include="Assets\Scripts\UI\ItemCell.cs" />
     <Compile Include="Assets\Scripts\Data\BlueprintData.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuLG.cs" />
+    <Compile Include="Assets\Scripts\Common\IAPStore.cs" />
+    <Compile Include="Assets\Scripts\Network\NWData.cs" />
     <Compile Include="Assets\Scripts\Game\Player\BuilderPencil.cs" />
     <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeCell.cs" />
     <Compile Include="Assets\Scripts\IAPTest.cs" />
     <Compile Include="Assets\Scripts\Test\TestAngle.cs" />
+    <Compile Include="Assets\Scripts\UI\BagSelectItem.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapBlock.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeUI.cs" />
     <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion2.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuUI.cs" />
     <Compile Include="Assets\Scripts\UI\ShopItemCell.cs" />
     <Compile Include="Assets\Scripts\Data\MapData.cs" />
-    <Compile Include="Assets\Scripts\Common\GS2.cs" />
-    <Compile Include="Assets\Scripts\Game\Manager\MyIAPMng.cs" />
+    <Compile Include="Assets\Scripts\Manager\IAPManager.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
-    <Compile Include="Assets\Scripts\Network\NWMng.cs" />
-    <Compile Include="Assets\Scripts\Network\NWData.cs" />
+    <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />

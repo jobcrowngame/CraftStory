@@ -23,12 +23,14 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             return;
         }
 
-        string id = DataMng.E.UserData.UserID;
+        string id = DataMng.E.UserData.Account;
         string pw = DataMng.E.UserData.UserPW;
 
-        NWMng.E.Login(id, pw, (rp) => 
+        NWMng.E.Login((rp) => 
         {
+            DataMng.E.session = rp[0];
+            Debug.Log("token: " + DataMng.E.session);
             ui.LoginResponse();
-        });
+        }, id, pw);
     }
 }

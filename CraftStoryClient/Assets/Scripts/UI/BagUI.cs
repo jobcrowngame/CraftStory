@@ -10,6 +10,7 @@ public class BagUI : UIBase
     Transform itemGridRoot;
     Button closeBtn;
     Dictionary<string, ItemCell> cellDic;
+    BagSelectItem[] selectItems;
 
     public override void Init()
     {
@@ -17,9 +18,9 @@ public class BagUI : UIBase
 
         BagLG.E.Init(this);
         cellDic = new Dictionary<string, ItemCell>();
+        selectItems = new BagSelectItem[6];
 
         InitUI();
-        RefreshMoney();
     }
 
     private void InitUI()
@@ -29,14 +30,24 @@ public class BagUI : UIBase
 
         closeBtn = FindChiled<Button>("CloseBtn");
         closeBtn.onClick.AddListener(()=> { Close(); });
+
+        var SelectItemBar = FindChiled("SelectItemBar");
+        if (SelectItemBar.childCount == 6)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                selectItems[i] = SelectItemBar.GetChild(i).gameObject.AddComponent<BagSelectItem>();
+                selectItems[i].index = i;
+            }
+        }
     }
 
     public override void Open()
     {
         base.Open();
 
-        BagLG.E.GetItemList();
-        RefreshMoney();
+        RefreshItems();
+        RefreshSelectItemBtns();
     }
     public override void Close()
     {
@@ -45,45 +56,65 @@ public class BagUI : UIBase
         ClearCell(itemGridRoot);
     }
 
-    public void AddItems(List<EzItemSet> itemList)
+    public void RefreshItems()
     {
-        foreach (var item in itemList)
+        ClearCell(itemGridRoot);
+
+        if (DataMng.E.Items == null)
+            return;
+
+        foreach (var item in DataMng.E.Items)
         {
             AddItem(item);
         }
     }
-    private void AddItem(EzItemSet item)
+    public void RefreshItemByGuid(int guid)
     {
-        var cell = AddCell<ItemCell>("Prefabs/UI/Item", itemGridRoot);
+        foreach (var item in cellDic)
+        {
+            if (item.Value.ItemData.id == guid)
+            {
+                item.Value.Refresh(item.Value.ItemData);
+            }
+        }
+    }
+    private void AddItem(ItemData item)
+    {
+        var cell = AddCell<ItemCell>("Prefabs/UI/IconItem", itemGridRoot);
         if (cell != null)
         {
             cell.Init();
             cell.Add(item);
 
-            if (!cellDic.ContainsKey(item.Name))
+            if (!cellDic.ContainsKey(item.Config().Name))
             {
-                cellDic[item.Name] = cell;
+                cellDic[item.Config().Name] = cell;
             }
         }
     }
 
-    private void RefreshMoney()
+    public void RefreshSelectItemBtns()
     {
-        BagLG.E.GetMoney(0);
-    }
-    public void RefreshMoneyResponse(EzWallet item)
-    {
-        moneyText.text = (item.Free + item.Paid).ToString();
-    }
-
-    public void DecreaseRespones(List<EzItemSet> r)
-    {
-        foreach (var i in r)
+        for (int i = 0; i < selectItems.Length; i++)
         {
-            if (cellDic.ContainsKey(i.Name))
+            selectItems[i].SetItem(null);
+        }
+
+        for (int i = 0; i < DataMng.E.Items.Count; i++)
+        {
+            if (DataMng.E.Items[i].equipSite > 0)
             {
-                cellDic[i.Name].Refresh(i);
+                selectItems[DataMng.E.Items[i].equipSite - 1].SetItem(DataMng.E.Items[i]);
             }
         }
+    }
+    public void RefreshSelectItemBtns(int index, ItemData itemData)
+    {
+        for (int i = 0; i < selectItems.Length; i++)
+        {
+            selectItems[i].SetItem(null);
+        }
+
+        selectItems[index].SetItem(itemData);
     }
 }

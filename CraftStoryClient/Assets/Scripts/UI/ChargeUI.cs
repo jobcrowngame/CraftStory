@@ -17,8 +17,6 @@ public class ChargeUI : UIBase
         ChargeLG.E.Init(this);
 
         InitUI();
-
-        ChargeLG.E.ShowItems();
     }
 
     private void InitUI()

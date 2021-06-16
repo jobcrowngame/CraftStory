@@ -6,20 +6,30 @@ using UnityEngine;
 public class UICtl : Single<UICtl>
 {
     private static Transform glubalObjTran;
-    private static Transform uiRootTran;
     private UIBase curentOpenUI;
 
     private Dictionary<UIType, UIBase> uiDic;
     private List<UIBase> OpenningUI;
 
-    public IEnumerator InitCoroutine(GameObject glubalObj, GameObject uiRoot)
+    private static Transform uiRootTran;
+    public Transform Root
+    {
+        get
+        {
+            if (uiRootTran == null)
+                uiRootTran = GameObject.Find("Canvas").transform;
+
+            return uiRootTran;
+        }
+    }
+
+    public IEnumerator InitCoroutine(GameObject glubalObj)
     {
         Debug.Log("èâä˙âª UICtl");
 
         bool ret = false;
 
         glubalObjTran = glubalObj.transform;
-        uiRootTran = uiRoot.transform;
         uiDic = new Dictionary<UIType, UIBase>();
         OpenningUI = new List<UIBase>();
 
@@ -96,7 +106,7 @@ public class UICtl : Single<UICtl>
             if (prefab == null)
                 return null;
 
-            var obj = GameObject.Instantiate(prefab, uiRootTran);
+            var obj = GameObject.Instantiate(prefab, Root);
             if (obj == null)
                 return null;
 
@@ -144,6 +154,7 @@ public class UICtl : Single<UICtl>
             case UIType.Login: return "Prefabs/UI/Login";
             case UIType.NowLoading: return "Prefabs/UI/NowLoading";
             case UIType.Home: return "Prefabs/UI/Home";
+            case UIType.Menu: return "Prefabs/UI/Menu";
             case UIType.Bag: return "Prefabs/UI/Bag";
             case UIType.Lottery: return "Prefabs/UI/Lottery";
             case UIType.GiftBox: return "Prefabs/UI/GiftBox";
@@ -168,6 +179,7 @@ public enum UIType
     Login,
     NowLoading,
     Home,
+    Menu,
     Bag,
     Lottery,
     GiftBox,

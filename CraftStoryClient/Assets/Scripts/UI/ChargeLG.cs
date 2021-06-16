@@ -13,11 +13,4 @@ public class ChargeLG : UILogicBase<ChargeLG, ChargeUI>
     {
 
     }
-
-   public void ShowItems()
-    {
-         GS2.E.GetChargeList(
-            ui.onGetShowcase,
-            ui.onError);
-    }
 }

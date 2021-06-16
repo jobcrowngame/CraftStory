@@ -1,55 +1,51 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using Gs2.Unity.Gs2Inventory.Model;
 
 public class ItemCell : UIBase
 {
-    private Text itemName;
-    private Text itemCount;
-    private Button increaseBtn;
-    private Button decreaseBtn;
+    Text itemName;
+    Text itemCount;
+    Image Icon;
+    Button clickBtn;
+    Transform selected;
 
-    private EzItemSet item;
+    private ItemData itemData;
+    public ItemData ItemData { get => itemData; }
 
-    public void Add(EzItemSet ezitem)
+    public void Add(ItemData itemData)
     {
         InitUI();
 
-        item = ezitem;
+        this.itemData = itemData;
 
-        itemName.text = item.ItemName;
-        itemCount.text = "x" + item.Count;
+        itemName.text = itemData.Config().Name;
+        itemCount.text = "x" + itemData.count;
+        Icon.sprite = ReadResources<Sprite>(itemData.Config().IconResourcesPath);
     }
 
     private void InitUI()
     {
         itemName = FindChiled<Text>("Name");
         itemCount = FindChiled<Text>("Count");
+        Icon = FindChiled<Image>("Icon");
+        selected = FindChiled("Select");
 
-        increaseBtn = FindChiled<Button>("Increase");
-        increaseBtn.onClick.AddListener(Increase);
-
-        decreaseBtn = FindChiled<Button>("Decrease");
-        decreaseBtn.onClick.AddListener(Decrease);
+        clickBtn = transform.GetComponent<Button>();
+        clickBtn.onClick.AddListener(() => { BagLG.E.SelectItem = this; });
     }
 
-    public void Increase()
+    public void Refresh(ItemData itemData = null)
     {
-        GS2.E.GetItem(item.ItemName);
-    }
+        if(itemData != null) 
+            this.itemData = itemData;
 
-    public void Decrease()
-    {
-        GS2.E.Consume(item.ItemName, 1, item.Name);
+        itemName.text = itemData.Config().Name;
+        itemCount.text = "x" + itemData.count;
     }
-    public void Refresh(EzItemSet i)
+    public void IsSelected(bool b)
     {
-        if (i.Count <= 0)
-        {
-            Destroy(this.gameObject);
-        }
-
-        itemName.text = i.ItemName;
-        itemCount.text = "x" + i.Count;
+        selected.gameObject.SetActive(b);
     }
 }

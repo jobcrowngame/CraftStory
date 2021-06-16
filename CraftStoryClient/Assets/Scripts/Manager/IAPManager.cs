@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.Purchasing;
 
-public class MyIAPManager : IStoreListener
+public class IAPManager : IStoreListener
 {
     private IStoreController controller;
     private IExtensionProvider extensions;
     private IAPTest iap;
 
+    private IAPStore iapStore;
+
     public void Init(IAPTest iap)
     {
         this.iap = iap;
+
+        iapStore = new IAPStore();
 
         iap.ShowMsg("初期化開始");
 

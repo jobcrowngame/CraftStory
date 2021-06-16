@@ -19,8 +19,6 @@ public class ShopUI : UIBase
     public override void Open()
     {
         base.Open();
-
-        ShopLG.E.GetShowcase("ShowcaseShop01");
     }
     public override void Close()
     {

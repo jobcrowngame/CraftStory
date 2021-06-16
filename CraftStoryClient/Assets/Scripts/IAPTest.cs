@@ -7,7 +7,7 @@ using System;
 
 public class IAPTest : MonoBehaviour
 {
-    MyIAPManager iapMng;
+    IAPManager iapMng;
     public Text text;
     public Button InitBtn;
 
@@ -15,7 +15,7 @@ public class IAPTest : MonoBehaviour
     {
         InitBtn.onClick.AddListener(() => 
         {
-            iapMng = new MyIAPManager();
+            iapMng = new IAPManager();
             iapMng.Init(this);
         });
     }

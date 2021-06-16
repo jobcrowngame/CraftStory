@@ -14,7 +14,7 @@ public class ShopItemCell : UIBase
         Name = FindChiled<Text>("Name");
 
         BuyBtn = FindChiled<Button>("BuyBtn");
-        BuyBtn.onClick.AddListener(() => { Buy(); });
+        BuyBtn.onClick.AddListener(() => { Debug.Log("BuyBtn"); });
     }
 
     public void Add(EzDisplayItem item)
@@ -24,14 +24,5 @@ public class ShopItemCell : UIBase
         InitUI();
 
         Name.text = item.SalesItem.Name;
-    }
-
-    public void Buy()
-    {
-        GS2.E.Buy((r) =>
-        {
-            var giftUI = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox) as GiftBoxUI;
-            giftUI.AddItem(r);
-        }, ShopLG.E.ShowcaseName, item);
     }
 }
