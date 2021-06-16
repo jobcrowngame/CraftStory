@@ -123,12 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &249755027
+--- !u!1001 &291211705
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 806836690}
+    m_TransformParent: {fileID: 822176759}
     m_Modifications:
     - target: {fileID: 4164046782654301316, guid: 921ceb1bebe3a184eaea1cf3a347c16c, type: 3}
       propertyPath: m_Pivot.x
@@ -218,13 +218,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Login
       objectReference: {fileID: 0}
-    - target: {fileID: 4164046782654301317, guid: 921ceb1bebe3a184eaea1cf3a347c16c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 921ceb1bebe3a184eaea1cf3a347c16c, type: 3}
---- !u!1001 &806836689
+--- !u!1001 &822176758
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -319,24 +315,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 7988186479230660714, guid: edd7afb2cd2795e49a6f80ca7dabd869, type: 3}
-      propertyPath: m_UiScaleMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7988186479230660714, guid: edd7afb2cd2795e49a6f80ca7dabd869, type: 3}
-      propertyPath: m_ReferenceResolution.x
-      value: 960
-      objectReference: {fileID: 0}
-    - target: {fileID: 7988186479230660714, guid: edd7afb2cd2795e49a6f80ca7dabd869, type: 3}
-      propertyPath: m_ReferenceResolution.y
-      value: 640
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edd7afb2cd2795e49a6f80ca7dabd869, type: 3}
---- !u!224 &806836690 stripped
+--- !u!224 &822176759 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7988186479230660708, guid: edd7afb2cd2795e49a6f80ca7dabd869, type: 3}
-  m_PrefabInstance: {fileID: 806836689}
+  m_PrefabInstance: {fileID: 822176758}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1197793909
 GameObject:
