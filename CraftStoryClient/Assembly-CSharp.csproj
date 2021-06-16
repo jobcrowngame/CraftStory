@@ -142,6 +142,7 @@
     <Compile Include="Assets\Scripts\Manager\IAPManager.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
     <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
+    <Compile Include="Assets\Scripts\Splash\SplashController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />
