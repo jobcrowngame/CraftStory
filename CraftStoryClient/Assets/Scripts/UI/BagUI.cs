@@ -9,7 +9,7 @@ public class BagUI : UIBase
     Text moneyText;
     Transform itemGridRoot;
     Button closeBtn;
-    Dictionary<string, ItemCell> cellDic;
+    Dictionary<string, BagItemCell> cellDic;
     BagSelectItem[] selectItems;
 
     public override void Init()
@@ -17,7 +17,7 @@ public class BagUI : UIBase
         base.Init();
 
         BagLG.E.Init(this);
-        cellDic = new Dictionary<string, ItemCell>();
+        cellDic = new Dictionary<string, BagItemCell>();
         selectItems = new BagSelectItem[6];
 
         InitUI();
@@ -80,7 +80,7 @@ public class BagUI : UIBase
     }
     private void AddItem(ItemData item)
     {
-        var cell = AddCell<ItemCell>("Prefabs/UI/IconItem", itemGridRoot);
+        var cell = AddCell<BagItemCell>("Prefabs/UI/IconItem", itemGridRoot);
         if (cell != null)
         {
             cell.Init();

@@ -121,7 +121,7 @@
     <Compile Include="Assets\Scripts\UI\HomeUI.cs" />
     <Compile Include="Assets\Scripts\UI\ItemBtn.cs" />
     <Compile Include="Assets\Scripts\Data\MapBlockData.cs" />
-    <Compile Include="Assets\Scripts\UI\ItemCell.cs" />
+    <Compile Include="Assets\Scripts\UI\BagItemCell.cs" />
     <Compile Include="Assets\Scripts\Data\BlueprintData.cs" />
     <Compile Include="Assets\Scripts\UI\MenuLG.cs" />
     <Compile Include="Assets\Scripts\Common\IAPStore.cs" />
@@ -143,6 +143,10 @@
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
     <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
     <Compile Include="Assets\Scripts\Splash\SplashController.cs" />
+    <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
+    <Compile Include="Assets\Scripts\UI\CraftLG.cs" />
+    <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
+    <Compile Include="Assets\Scripts\UI\CraftItemCell.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />

@@ -81,17 +81,17 @@ public class HomeUI : UIBase
         AddItemBtns();
 
         BuilderPencil = FindChiled("BuilderPencil");
-        BuilderBtn = FindChiled<Button>("BuilderBtn", BuilderPencil.gameObject);
+        BuilderBtn = FindChiled<Button>("BuilderBtn", BuilderPencil);
         BuilderBtn.onClick.AddListener(CreateBlueprint);
-        BuilderPencilCancelBtn = FindChiled<Button>("BuilderPencilCancelBtn", BuilderPencil.gameObject);
+        BuilderPencilCancelBtn = FindChiled<Button>("BuilderPencilCancelBtn", BuilderPencil);
         BuilderPencilCancelBtn.onClick.AddListener(CancelBuilderPencilCancelBtn);
 
         Blueprint = FindChiled("Blueprint");
-        SpinBtn = FindChiled<Button>("SpinBtn", Blueprint.gameObject);
+        SpinBtn = FindChiled<Button>("SpinBtn", Blueprint);
         SpinBtn.onClick.AddListener(SpinBlueprint);
-        BlueprintCancelBtn = FindChiled<Button>("BlueprintCancelBtn", Blueprint.gameObject);
+        BlueprintCancelBtn = FindChiled<Button>("BlueprintCancelBtn", Blueprint);
         BlueprintCancelBtn.onClick.AddListener(CancelUserBlueprint);
-        BuildBtn = FindChiled<Button>("BuildBtn", Blueprint.gameObject);
+        BuildBtn = FindChiled<Button>("BuildBtn", Blueprint);
         BuildBtn.onClick.AddListener(BuildBlueprint);
 
         PlayerCtl.E.Joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");

@@ -20,6 +20,6 @@ public class MenuUI : UIBase
         CloseBtn.onClick.AddListener(() => { Close(); });
 
         CraftBtn = FindChiled<Button>("CraftBtn");
-        CraftBtn.onClick.AddListener(() => { Debug.Log("CraftBtn"); });
+        CraftBtn.onClick.AddListener(() => { UICtl.E.OpenUI<CraftUI>(UIType.Craft); });
     }
 }

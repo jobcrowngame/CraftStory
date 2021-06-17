@@ -79,6 +79,7 @@ namespace ExcelToJson
                 case "Rock": list = Rock(tbl); break;
                 case "TransferGate": list = TransferGate(tbl); break;
                 case "Item": list = Item(tbl); break;
+                case "Craft": list = Craft(tbl); break;
                 default: Console.WriteLine("not find fileName function."); break;
             }
 
@@ -235,6 +236,28 @@ namespace ExcelToJson
                 data.Type = ToInt32(tbl.Rows[i]["Type"]);
                 data.ReferenceID = ToInt32(tbl.Rows[i]["ReferenceID"]);
                 data.MaxCount = ToInt32(tbl.Rows[i]["MaxCount"]);
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Craft(DataTable tbl)
+        {
+            List<Craft> list = new List<Craft>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Craft();
+
+                data.ID = ToInt32(tbl.Rows[i]["ID"]);
+                data.ItemID = ToInt32(tbl.Rows[i]["ItemID"]);
+                data.Cost1 = ToInt32(tbl.Rows[i]["Cost1"]);
+                data.Cost1Count = ToInt32(tbl.Rows[i]["Cost1Count"]);
+                data.Cost2 = ToInt32(tbl.Rows[i]["Cost2"]);
+                data.Cost2Count = ToInt32(tbl.Rows[i]["Cost2Count"]);
+                data.Cost3 = ToInt32(tbl.Rows[i]["Cost3"]);
+                data.Cost3Count = ToInt32(tbl.Rows[i]["Cost3Count"]);
+                data.Cost4 = ToInt32(tbl.Rows[i]["Cost4"]);
+                data.Cost4Count = ToInt32(tbl.Rows[i]["Cost4Count"]);
 
                 list.Add(data);
             }

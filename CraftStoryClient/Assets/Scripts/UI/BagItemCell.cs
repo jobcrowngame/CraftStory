@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Gs2.Unity.Gs2Inventory.Model;
 
-public class ItemCell : UIBase
+public class BagItemCell : UIBase
 {
     Text itemName;
     Text itemCount;
@@ -16,17 +16,8 @@ public class ItemCell : UIBase
 
     public void Add(ItemData itemData)
     {
-        InitUI();
-
         this.itemData = itemData;
 
-        itemName.text = itemData.Config().Name;
-        itemCount.text = "x" + itemData.count;
-        Icon.sprite = ReadResources<Sprite>(itemData.Config().IconResourcesPath);
-    }
-
-    private void InitUI()
-    {
         itemName = FindChiled<Text>("Name");
         itemCount = FindChiled<Text>("Count");
         Icon = FindChiled<Image>("Icon");
@@ -34,6 +25,10 @@ public class ItemCell : UIBase
 
         clickBtn = transform.GetComponent<Button>();
         clickBtn.onClick.AddListener(() => { BagLG.E.SelectItem = this; });
+
+        itemName.text = itemData.Config().Name;
+        itemCount.text = "x" + itemData.count;
+        Icon.sprite = ReadResources<Sprite>(itemData.Config().IconResourcesPath);
     }
 
     public void Refresh(ItemData itemData = null)

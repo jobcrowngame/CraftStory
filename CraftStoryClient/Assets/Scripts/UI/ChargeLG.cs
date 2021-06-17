@@ -1,11 +1,4 @@
-﻿using Gs2.Weave.Core.CallbackEvent;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Weave.Core.Runtime;
+﻿
 
 public class ChargeLG : UILogicBase<ChargeLG, ChargeUI>
 {

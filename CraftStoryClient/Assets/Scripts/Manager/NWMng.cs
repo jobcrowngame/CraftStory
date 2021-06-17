@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JsonConfigData;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -110,7 +111,16 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.EquitItem));
     }
-    
+    public void Craft(Action<string[]> rp, Craft craft, int count)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.session);
+        data.Add(Newtonsoft.Json.JsonConvert.SerializeObject(craft));
+        data.Add(count);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.EquitItem));
+    }
+
 
     public enum CMD
     {
@@ -122,5 +132,6 @@ public class NWMng : MonoBehaviour
         RemoveItemByItemId = 1003,
         AddItem = 1004,
         EquitItem = 1005,
+        Craft = 1006,
     }
 }

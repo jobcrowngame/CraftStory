@@ -129,6 +129,20 @@ public class DataMng : Single<DataMng>
         }
         return null;
     }
+    public int GetItemCountByItemID(int itemId)
+    {
+        int count = 0;
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].itemId == itemId)
+            {
+                count += items[i].count;
+            }
+        }
+
+        return count;
+    }
 
     public void AddItem(int itemID, object data, int count = 1)
     {

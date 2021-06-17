@@ -27,10 +27,10 @@ public class UIBase : MonoBehaviour
         gameObject.SetActive(b);
     }
 
-    protected T FindChiled<T>(string chiledName, GameObject parent = null) where T : Component
+    protected T FindChiled<T>(string chiledName, Transform parent = null) where T : Component
     {
         if (parent == null)
-            parent = gameObject;
+            parent = gameObject.transform;
         
         var findObj = CommonFunction.FindChiledByName(parent.transform, chiledName);
         if (findObj != null)

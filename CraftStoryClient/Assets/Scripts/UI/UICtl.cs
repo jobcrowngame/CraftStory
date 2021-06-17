@@ -163,6 +163,7 @@ public class UICtl : Single<UICtl>
             case UIType.Terms01: return "Prefabs/UI/Terms01";
             case UIType.Terms02: return "Prefabs/UI/Terms02";
             case UIType.Charge: return "Prefabs/UI/Charge";
+            case UIType.Craft: return "Prefabs/UI/Craft";
             default: Debug.LogError("not find UIType " + ui); return "";
         }
     }
@@ -188,4 +189,5 @@ public enum UIType
     Terms01,
     Terms02,
     Charge,
+    Craft,
 }

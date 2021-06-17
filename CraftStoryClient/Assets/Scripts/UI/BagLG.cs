@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BagLG : UILogicBase<BagLG, BagUI>
 {
-    public ItemCell SelectItem 
+    public BagItemCell SelectItem 
     {
         get => selectItem;
         set
@@ -19,5 +19,5 @@ public class BagLG : UILogicBase<BagLG, BagUI>
             if (selectItem != null) selectItem.IsSelected(true);
         }
     }
-    private ItemCell selectItem;
+    private BagItemCell selectItem;
 }
