@@ -131,6 +131,9 @@ public class DataMng : Single<DataMng>
     }
     public int GetItemCountByItemID(int itemId)
     {
+        if (items == null)
+            return 0;
+
         int count = 0;
 
         for (int i = 0; i < items.Count; i++)
@@ -148,13 +151,10 @@ public class DataMng : Single<DataMng>
     {
         NWMng.E.AddItem((rp)=> 
         {
-            NWMng.E.GetItemList((rp2) =>
-            {
-                Items = JsonConvert.DeserializeObject<List<ItemData>>(rp2[0]);
+            Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
 
-                var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
-                if (homeUI != null) homeUI.RefreshItemBtns();
-            });
+            var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+            if (homeUI != null) homeUI.RefreshItemBtns();
         }, itemID, count);
     }
     /// <summary>

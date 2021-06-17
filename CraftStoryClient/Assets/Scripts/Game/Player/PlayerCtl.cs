@@ -127,7 +127,29 @@ public class PlayerCtl : MonoBehaviour
     public void OnClick(GameObject obj, Vector3 pos)
     {
         if (selectItem == null)
+        {
+            if (obj != null)
+            {
+                var entity = obj.GetComponent<EntityResources>();
+                if (entity != null)
+                {
+                    switch (entity.EntityType)
+                    {
+                        case EntityType.Tree:
+                            break;
+                        case EntityType.Rock:
+                            break;
+                        case EntityType.TransferGate:
+                            break;
+                        case EntityType.Craft: UICtl.E.OpenUI<CraftUI>(UIType.Craft); break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
             return;
+        }
 
         switch ((ItemType)selectItem.Config().Type)
         {

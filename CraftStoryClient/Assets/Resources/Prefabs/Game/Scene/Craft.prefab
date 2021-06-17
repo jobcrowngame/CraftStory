@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 6534540502606880139}
   - component: {fileID: -7177314980037074076}
   m_Layer: 0
-  m_Name: "\u4F5C\u696D\u53F0(Clone)"
+  m_Name: Craft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

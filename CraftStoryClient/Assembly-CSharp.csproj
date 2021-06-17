@@ -71,9 +71,11 @@
     <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
     <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
     <Compile Include="Assets\Scripts\Manager\WorldMng.cs" />
+    <Compile Include="Assets\Scripts\UI\CraftLG.cs" />
     <Compile Include="Assets\Scripts\Test\LookChange.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
+    <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerEntity.cs" />
     <Compile Include="Assets\Scripts\UI\ShopUI.cs" />
     <Compile Include="Assets\Scripts\Manager\NWMng.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Assets\Scripts\Game\Player\ScreenDraggingCtl.cs" />
     <Compile Include="Assets\Scripts\UI\UILogicBase.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapCtl.cs" />
+    <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
     <Compile Include="Assets\Scripts\UI\UICtl.cs" />
     <Compile Include="Assets\Scripts\UI\LoginLG.cs" />
     <Compile Include="Assets\Scripts\Data\EntityData.cs" />
@@ -121,6 +124,7 @@
     <Compile Include="Assets\Scripts\UI\HomeUI.cs" />
     <Compile Include="Assets\Scripts\UI\ItemBtn.cs" />
     <Compile Include="Assets\Scripts\Data\MapBlockData.cs" />
+    <Compile Include="Assets\Scripts\Splash\SplashController.cs" />
     <Compile Include="Assets\Scripts\UI\BagItemCell.cs" />
     <Compile Include="Assets\Scripts\Data\BlueprintData.cs" />
     <Compile Include="Assets\Scripts\UI\MenuLG.cs" />
@@ -135,18 +139,14 @@
     <Compile Include="Assets\Scripts\Game\Map\MapBlock.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeUI.cs" />
     <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
+    <Compile Include="Assets\Scripts\UI\CraftItemCell.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion2.cs" />
     <Compile Include="Assets\Scripts\UI\MenuUI.cs" />
     <Compile Include="Assets\Scripts\UI\ShopItemCell.cs" />
     <Compile Include="Assets\Scripts\Data\MapData.cs" />
     <Compile Include="Assets\Scripts\Manager\IAPManager.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
-    <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
-    <Compile Include="Assets\Scripts\Splash\SplashController.cs" />
-    <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
-    <Compile Include="Assets\Scripts\UI\CraftLG.cs" />
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
-    <Compile Include="Assets\Scripts\UI\CraftItemCell.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />

@@ -20,6 +20,7 @@ public class MapDataFactory
         AddTrees();
         AddRocks();
         AddTransferGateConfig();
+        AddBuildings();
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
         Debug.LogWarningFormat("mapData 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
@@ -213,5 +214,30 @@ public class MapDataFactory
         pos = MapCtl.GetGroundPos(mData, (int)pos.x, (int)pos.z);
 
         mData.TransferGate = new EntityData(config.ID, EntityType.TransferGate, pos);
+    }
+    private void AddBuildings()
+    {
+        var buildings = mapConfig.Buildings.Split(',');
+
+        for (int i = 0; i < buildings.Length; i++)
+        {
+            Building config = null;
+
+            try
+            {
+                config = ConfigMng.E.Building[int.Parse(buildings[i])];
+                if (config == null)
+                    continue;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("not find building " + buildings[i]);
+                Debug.LogError(ex.Message);
+                continue;
+            }
+
+            var pos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ, config.OffsetY);
+            mData.AddResources(new EntityData(config.ID, EntityType.Craft, pos));
+        }
     }
 }

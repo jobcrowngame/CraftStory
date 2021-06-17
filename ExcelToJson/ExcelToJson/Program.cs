@@ -80,6 +80,7 @@ namespace ExcelToJson
                 case "TransferGate": list = TransferGate(tbl); break;
                 case "Item": list = Item(tbl); break;
                 case "Craft": list = Craft(tbl); break;
+                case "Building": list = Building(tbl); break;
                 default: Console.WriteLine("not find fileName function."); break;
             }
 
@@ -127,6 +128,7 @@ namespace ExcelToJson
                 data.Trees =            ToString(tbl.Rows[i]["Trees"]);
                 data.Rocks =            ToString(tbl.Rows[i]["Rocks"]);
                 data.TransferGateID =   ToInt32(tbl.Rows[i]["TransferGateID"]);
+                data.Buildings =        ToString(tbl.Rows[i]["Buildings"]);
                 data.PlayerPosX =       ToInt32(tbl.Rows[i]["PlayerPosX"]);
                 data.PlayerPosZ =       ToInt32(tbl.Rows[i]["PlayerPosZ"]);
                 data.CreatePosOffset =  ToInt32(tbl.Rows[i]["CreatePosOffset"]);
@@ -258,6 +260,26 @@ namespace ExcelToJson
                 data.Cost3Count = ToInt32(tbl.Rows[i]["Cost3Count"]);
                 data.Cost4 = ToInt32(tbl.Rows[i]["Cost4"]);
                 data.Cost4Count = ToInt32(tbl.Rows[i]["Cost4Count"]);
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Building(DataTable tbl)
+        {
+            List<Building> list = new List<Building>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Building();
+
+                data.ID = ToInt32(tbl.Rows[i]["ID"]);
+                data.ItemID = ToInt32(tbl.Rows[i]["ItemID"]);
+                data.ResourceName = ToString(tbl.Rows[i]["ResourceName"]);
+                data.PosX = ToInt32(tbl.Rows[i]["PosX"]);
+                data.PosY = ToInt32(tbl.Rows[i]["PosY"]);
+                data.PosZ = ToInt32(tbl.Rows[i]["PosZ"]);
+                data.Angle = ToInt32(tbl.Rows[i]["Angle"]);
+                data.OffsetY = ToFloat(tbl.Rows[i]["OffsetY"]);
 
                 list.Add(data);
             }

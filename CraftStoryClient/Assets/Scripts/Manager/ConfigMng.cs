@@ -14,6 +14,7 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, TransferGate> transferGateConfig;
     Dictionary<int, Item> itemConfig;
     Dictionary<int, Craft> craftConfig;
+    Dictionary<int, Building> buildingConfig;
 
     public Dictionary<int, Block> Block { get => blockConfig; }
     public Dictionary<int, Map> Map{ get => mapConfig; }
@@ -23,6 +24,7 @@ class ConfigMng : Single<ConfigMng>
     public Dictionary<int, TransferGate> TransferGate { get => transferGateConfig; }
     public Dictionary<int, Item> Item { get => itemConfig; }
     public Dictionary<int, Craft> Craft { get => craftConfig; }
+    public Dictionary<int, Building> Building { get => buildingConfig; }
 
     public IEnumerator InitInitCoroutine()
     {
@@ -34,6 +36,7 @@ class ConfigMng : Single<ConfigMng>
         transferGateConfig = new Dictionary<int, TransferGate>();
         itemConfig = new Dictionary<int, Item>();
         craftConfig = new Dictionary<int, Craft>();
+        buildingConfig = new Dictionary<int, Building>();
 
         ReadConfig("Config/Block", blockConfig);
         ReadConfig("Config/Map", mapConfig);
@@ -43,6 +46,7 @@ class ConfigMng : Single<ConfigMng>
         ReadConfig("Config/TransferGate", transferGateConfig);
         ReadConfig("Config/Item", itemConfig);
         ReadConfig("Config/Craft", craftConfig);
+        ReadConfig("Config/Building", buildingConfig);
 
         yield return null;
     }

@@ -29,7 +29,7 @@ public class NWMng : MonoBehaviour
         wwwForm.AddField("code", (int)cmd);
         wwwForm.AddField("data", data.ToString());
 
-        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.URL, wwwForm))
+        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.LocalURL, wwwForm))
         {
             yield return www.SendWebRequest();
 
@@ -60,7 +60,8 @@ public class NWMng : MonoBehaviour
     }
     public void CreateNewAccount(Action<string[]> rp)
     {
-        NWData data = new NWData();
+        var data = new NWData();
+
         StartCoroutine(HttpRequest(rp, data, CMD.CreateNewAccount));
     }
 
@@ -87,6 +88,7 @@ public class NWMng : MonoBehaviour
     {
         var data = new NWData();
         data.Add(DataMng.E.session);
+        data.Add(DataMng.E.UserData.Account);
         data.Add(guid);
         data.Add(count);
 
@@ -106,6 +108,7 @@ public class NWMng : MonoBehaviour
     {
         var data = new NWData();
         data.Add(DataMng.E.session);
+        data.Add(DataMng.E.UserData.Account);
         data.Add(guid);
         data.Add(site);
 
@@ -115,10 +118,11 @@ public class NWMng : MonoBehaviour
     {
         var data = new NWData();
         data.Add(DataMng.E.session);
-        data.Add(Newtonsoft.Json.JsonConvert.SerializeObject(craft));
+        data.Add(DataMng.E.UserData.Account);
+        data.Add(craft.ID);
         data.Add(count);
 
-        StartCoroutine(HttpRequest(rp, data, CMD.EquitItem));
+        StartCoroutine(HttpRequest(rp, data, CMD.Craft));
     }
 
 

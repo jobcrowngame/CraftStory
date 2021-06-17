@@ -38,14 +38,11 @@ public class BagSelectItem : UIBase
             return;
         NWMng.E.EquitItem((rp) => 
         {
-            NWMng.E.GetItemList((rp2) =>
-            {
-                DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp2[0]);
+            DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
 
-                HomeLG.E.UI.RefreshItemBtns();
-                BagLG.E.UI.RefreshSelectItemBtns();
-                BagLG.E.SelectItem = null;
-            });
+            HomeLG.E.UI.RefreshItemBtns();
+            BagLG.E.UI.RefreshSelectItemBtns();
+            BagLG.E.SelectItem = null;
         }, BagLG.E.SelectItem.ItemData.id, Index + 1);
     }
 }

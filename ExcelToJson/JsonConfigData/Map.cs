@@ -16,6 +16,7 @@
         public string Trees { get; set; }
         public string Rocks { get; set; }
         public int TransferGateID { get; set; }
+        public string Buildings { get; set; }
         public int PlayerPosX { get; set; }
         public int PlayerPosZ { get; set; }
         public int CreatePosOffset { get; set; }

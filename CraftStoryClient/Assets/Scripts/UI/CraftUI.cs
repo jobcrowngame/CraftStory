@@ -1,4 +1,6 @@
 using JsonConfigData;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -104,6 +106,7 @@ public class CraftUI : UIBase
             NWMng.E.Craft((rp) => 
             {
                 Debug.LogWarning("craft surr hint");
+                DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
             }, selectCraft, selectCount);
         }
     }
@@ -120,10 +123,12 @@ public class CraftUI : UIBase
 
     public bool CanCreate(Craft config, int count)
     {
-        bool ret = DataMng.E.GetItemCountByItemID(config.Cost1) >= count;
-        if (ret) ret = DataMng.E.GetItemCountByItemID(config.Cost2) >= count;
-        if (ret) ret = DataMng.E.GetItemCountByItemID(config.Cost3) >= count;
-        if (ret) ret = DataMng.E.GetItemCountByItemID(config.Cost4) >= count;
+        bool ret = true;
+
+        if (ret && config.Cost1 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost1) >= count;
+        if (ret && config.Cost2 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost2) >= count;
+        if (ret && config.Cost3 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost3) >= count;
+        if (ret && config.Cost4 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost4) >= count;
 
         return ret;
     }

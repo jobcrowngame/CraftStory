@@ -11,4 +11,6 @@ public class EntityBase : MonoBehaviour
     {
         this.data = data;
     }
+
+    public EntityType EntityType { get => data.Type; }
 }
