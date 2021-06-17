@@ -50,6 +50,13 @@ public class CraftUI : UIBase
         RefreshCraftItemList();
     }
 
+    public override void Open()
+    {
+        base.Open();
+
+        selectCount = 1;
+    }
+
     private void RefreshCraftItemList()
     {
         foreach (Craft item in ConfigMng.E.Craft.Values)
@@ -72,6 +79,7 @@ public class CraftUI : UIBase
         {
             selectCount++;
             SelectCount.text = selectCount.ToString();
+            RefreshCost(selectCraft);
         }
     }
     private void RemoveCount()
@@ -80,6 +88,7 @@ public class CraftUI : UIBase
         {
             selectCount--;
             SelectCount.text = selectCount.ToString();
+            RefreshCost(selectCraft);
         }
     }
     private void OnCraft()

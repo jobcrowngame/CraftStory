@@ -9,10 +9,10 @@ public class CraftItemCell : UIBase
         get => selectedCraftItem;
         set
         {
-            selectedCraftItem.IsSelected(false);
+            if(selectedCraftItem != null) selectedCraftItem.IsSelected(false);
 
             selectedCraftItem = value;
-            selectedCraftItem.IsSelected(true);
+            if (selectedCraftItem != null) selectedCraftItem.IsSelected(true);
         }
     }
     private static CraftItemCell selectedCraftItem;
@@ -39,7 +39,11 @@ public class CraftItemCell : UIBase
         itemName.text = itemConfig.Name;
         itemCount.text = "x1";
         Icon.sprite = ReadResources<Sprite>(itemConfig.IconResourcesPath);
-        clickBtn.onClick.AddListener(() => { CraftLG.E.UI.RefreshCost(config); });
+        clickBtn.onClick.AddListener(() => 
+        {
+            SelectedCraftItem = this;
+            CraftLG.E.UI.RefreshCost(config); 
+        });
     }
 
     private void IsSelected(bool b)
