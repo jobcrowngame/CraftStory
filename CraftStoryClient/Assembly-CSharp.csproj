@@ -150,6 +150,7 @@
     <Compile Include="Assets\Scripts\Game\Player\PlayerBehavior.cs" />
     <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerAnimatorEvent.cs" />
+    <Compile Include="Assets\Scripts\Game\Adventure\AdventureCtl.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />

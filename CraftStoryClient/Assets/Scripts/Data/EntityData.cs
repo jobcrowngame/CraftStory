@@ -42,8 +42,7 @@ public class EntityData
         {
             switch (type)
             {
-                case EntityType.Tree: return ConfigMng.E.Tree[id].ResourceName;
-                case EntityType.Rock: return ConfigMng.E.Rock[id].ResourceName;
+                case EntityType.Resources: return ConfigMng.E.Resource[id].ResourcePath;
                 case EntityType.TransferGate: return ConfigMng.E.TransferGate[id].ResourcesPath;
                 case EntityType.Craft: return ConfigMng.E.Building[id].ResourceName;
                 default: Debug.LogError("not find config " + type); break;
@@ -61,8 +60,7 @@ public class EntityData
 
 public enum EntityType
 {
-    Tree,
-    Rock,
+    Resources,
     TransferGate,
     Craft,
 }

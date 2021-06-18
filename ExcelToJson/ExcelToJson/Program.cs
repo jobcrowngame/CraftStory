@@ -73,10 +73,10 @@ namespace ExcelToJson
             switch (fileName)
             {
                 case "Block": list = Block(tbl); break;
+                case "Bonus": list = Bonus(tbl); break;
                 case "Map": list = Map(tbl); break;
                 case "MapMountain": list = MapMountain(tbl); break;
-                case "Tree": list = Tree(tbl); break;
-                case "Rock": list = Rock(tbl); break;
+                case "Resource": list = Resource(tbl); break;
                 case "TransferGate": list = TransferGate(tbl); break;
                 case "Item": list = Item(tbl); break;
                 case "Craft": list = Craft(tbl); break;
@@ -106,6 +106,31 @@ namespace ExcelToJson
             }
             return list;
         }
+        private static object Bonus(DataTable tbl)
+        {
+            List<Bonus> list = new List<Bonus>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Bonus();
+
+                data.ID = ToInt32(tbl.Rows[i]["ID"]);
+                data.Bonus1 = ToInt32(tbl.Rows[i]["Bonus1"]);
+                data.BonusCount1 = ToInt32(tbl.Rows[i]["BonusCount1"]);
+                data.Bonus2 = ToInt32(tbl.Rows[i]["Bonus2"]);
+                data.BonusCount2 = ToInt32(tbl.Rows[i]["BonusCount2"]);
+                data.Bonus3 = ToInt32(tbl.Rows[i]["Bonus3"]);
+                data.BonusCount3 = ToInt32(tbl.Rows[i]["BonusCount3"]);
+                data.Bonus4 = ToInt32(tbl.Rows[i]["Bonus4"]);
+                data.BonusCount4 = ToInt32(tbl.Rows[i]["BonusCount4"]);
+                data.Bonus5 = ToInt32(tbl.Rows[i]["Bonus5"]);
+                data.BonusCount5 = ToInt32(tbl.Rows[i]["BonusCount5"]);
+                data.Bonus6 = ToInt32(tbl.Rows[i]["Bonus6"]);
+                data.BonusCount6 = ToInt32(tbl.Rows[i]["BonusCount6"]);
+
+                list.Add(data);
+            }
+            return list;
+        }
         private static object Map(DataTable tbl)
         {
             List<Map> list = new List<Map>();
@@ -125,8 +150,7 @@ namespace ExcelToJson
                 data.Block03 =          ToInt32(tbl.Rows[i]["Block03"]);
                 data.Block03Height =    ToInt32(tbl.Rows[i]["Block03Height"]);
                 data.Mountains =        ToString(tbl.Rows[i]["Mountains"]);
-                data.Trees =            ToString(tbl.Rows[i]["Trees"]);
-                data.Rocks =            ToString(tbl.Rows[i]["Rocks"]);
+                data.Resources =         ToString(tbl.Rows[i]["Resources"]);
                 data.TransferGateID =   ToInt32(tbl.Rows[i]["TransferGateID"]);
                 data.Buildings =        ToString(tbl.Rows[i]["Buildings"]);
                 data.PlayerPosX =       ToInt32(tbl.Rows[i]["PlayerPosX"]);
@@ -155,51 +179,26 @@ namespace ExcelToJson
             }
             return list;
         }
-        private static object Tree(DataTable tbl)
+        private static object Resource(DataTable tbl)
         {
-            List<Tree> list = new List<Tree>();
+            List<Resource> list = new List<Resource>();
             for (int i = 1; i < tbl.Rows.Count; i++)
             {
-                var data = new Tree();
+                var data = new Resource();
 
                 data.ID = ToInt32(tbl.Rows[i]["ID"]);
-                data.ResourceName = ToString(tbl.Rows[i]["ResourceName"]);
+                data.ResourcePath = ToString(tbl.Rows[i]["ResourcePath"]);
+                data.Type = ToInt32(tbl.Rows[i]["Type"]);
                 data.PosX = ToInt32(tbl.Rows[i]["PosX"]);
                 data.PosZ = ToInt32(tbl.Rows[i]["PosZ"]);
                 data.Angle = ToInt32(tbl.Rows[i]["Angle"]);
                 data.OffsetY = ToFloat(tbl.Rows[i]["OffsetY"]);
                 data.CreatePosOffset =  ToInt32(tbl.Rows[i]["CreatePosOffset"]);
                 data.Scale = ToFloat(tbl.Rows[i]["Scale"]);
-                data.Break = ToInt32(tbl.Rows[i]["Break"]);
-                data.HP = ToInt32(tbl.Rows[i]["HP"]);
-                data.GetResourceID = ToInt32(tbl.Rows[i]["GetResourceID"]);
-                data.GetResourceCount = ToInt32(tbl.Rows[i]["GetResourceCount"]);
                 data.Count = ToInt32(tbl.Rows[i]["Count"]);
-
-                list.Add(data);
-            }
-            return list;
-        }
-        private static object Rock(DataTable tbl)
-        {
-            List<Rock> list = new List<Rock>();
-            for (int i = 1; i < tbl.Rows.Count; i++)
-            {
-                var data = new Rock();
-
-                data.ID = ToInt32(tbl.Rows[i]["ID"]);
-                data.ResourceName = ToString(tbl.Rows[i]["ResourceName"]);
-                data.PosX = ToInt32(tbl.Rows[i]["PosX"]);
-                data.PosZ = ToInt32(tbl.Rows[i]["PosZ"]);
-                data.Angle = ToInt32(tbl.Rows[i]["Angle"]);
-                data.OffsetY = ToFloat(tbl.Rows[i]["OffsetY"]);
-                data.CreatePosOffset =  ToInt32(tbl.Rows[i]["CreatePosOffset"]);
-                data.Scale = ToFloat(tbl.Rows[i]["Scale"]);
-                data.Break = ToInt32(tbl.Rows[i]["Break"]);
-                data.HP = ToInt32(tbl.Rows[i]["HP"]);
-                data.GetResourceID = ToInt32(tbl.Rows[i]["GetResourceID"]);
-                data.GetResourceCount = ToInt32(tbl.Rows[i]["GetResourceCount"]);
-                data.Count = ToInt32(tbl.Rows[i]["Count"]);
+                data.CanBreak = ToInt32(tbl.Rows[i]["CanBreak"]);
+                data.DestroyTime = ToFloat(tbl.Rows[i]["DestroyTime"]);
+                data.BonusID = ToInt32(tbl.Rows[i]["BonusID"]);
 
                 list.Add(data);
             }

@@ -36,6 +36,7 @@ public class PlayerCtl : MonoBehaviour
 
     private ItemData selectItem;
     private MapBlock clickingBlock;
+    private EntityResources clickingResource;
 
     public CameraCtl CameraCtl
     {
@@ -113,15 +114,7 @@ public class PlayerCtl : MonoBehaviour
                 {
                     switch (entity.EntityType)
                     {
-                        case EntityType.Tree:
-                            break;
-                        case EntityType.Rock:
-                            break;
-                        case EntityType.TransferGate:
-                            break;
                         case EntityType.Craft: UICtl.E.OpenUI<CraftUI>(UIType.Craft); break;
-                        default:
-                            break;
                     }
                 }
             }
@@ -157,6 +150,8 @@ public class PlayerCtl : MonoBehaviour
         if (collider == null)
             return;
 
+        PlayerEntity.Behavior.Type = PlayerBehaviorType.BreackBlock;
+
         var cell = collider.GetComponent<MapBlock>();
         if (cell != null && DataMng.E.MapData.IsHome)
         {
@@ -171,7 +166,19 @@ public class PlayerCtl : MonoBehaviour
             }
         }
 
-
+        var recource = collider.GetComponent<EntityResources>();
+        if (recource != null && DataMng.E.MapData.IsHome)
+        {
+            if (clickingResource == null || clickingResource != recource)
+            {
+                clickingResource = recource;
+                clickingResource.CancelClicking();
+            }
+            else
+            {
+                recource.OnClicking(time);
+            }
+        }
     }
 
     private void CreateBlock(int blockID, GameObject collider, Vector3Int pos)

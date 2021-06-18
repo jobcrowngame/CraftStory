@@ -13,8 +13,7 @@
         public int Block03 { get; set; }
         public int Block03Height { get; set; }
         public string Mountains { get; set; }
-        public string Trees { get; set; }
-        public string Rocks { get; set; }
+        public string Resources { get; set; }
         public int TransferGateID { get; set; }
         public string Buildings { get; set; }
         public int PlayerPosX { get; set; }

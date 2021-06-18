@@ -7,20 +7,20 @@ using JsonConfigData;
 class ConfigMng : Single<ConfigMng>
 {
     Dictionary<int, Block> blockConfig;
+    Dictionary<int, Bonus> bonusConfig;
     Dictionary<int, Map> mapConfig;
     Dictionary<int, Mountain> mountainConfig;
-    Dictionary<int, JsonConfigData.Tree> treeConfig;
-    Dictionary<int, Rock> rockConfig;
+    Dictionary<int, Resource> resourceConfig;
     Dictionary<int, TransferGate> transferGateConfig;
     Dictionary<int, Item> itemConfig;
     Dictionary<int, Craft> craftConfig;
     Dictionary<int, Building> buildingConfig;
 
     public Dictionary<int, Block> Block { get => blockConfig; }
+    public Dictionary<int, Bonus> Bonus { get => bonusConfig; }
     public Dictionary<int, Map> Map{ get => mapConfig; }
     public Dictionary<int, Mountain> Mountain { get => mountainConfig; }
-    public Dictionary<int, JsonConfigData.Tree> Tree { get => treeConfig; }
-    public Dictionary<int, Rock> Rock { get => rockConfig; }
+    public Dictionary<int, Resource> Resource { get => resourceConfig; }
     public Dictionary<int, TransferGate> TransferGate { get => transferGateConfig; }
     public Dictionary<int, Item> Item { get => itemConfig; }
     public Dictionary<int, Craft> Craft { get => craftConfig; }
@@ -29,20 +29,20 @@ class ConfigMng : Single<ConfigMng>
     public IEnumerator InitInitCoroutine()
     {
         blockConfig = new Dictionary<int, Block>();
+        bonusConfig = new Dictionary<int, Bonus>();
         mapConfig = new Dictionary<int, Map>();
         mountainConfig = new Dictionary<int, Mountain>();
-        treeConfig = new Dictionary<int, JsonConfigData.Tree>();
-        rockConfig = new Dictionary<int, Rock>();
+        resourceConfig = new Dictionary<int, Resource>();
         transferGateConfig = new Dictionary<int, TransferGate>();
         itemConfig = new Dictionary<int, Item>();
         craftConfig = new Dictionary<int, Craft>();
         buildingConfig = new Dictionary<int, Building>();
 
         ReadConfig("Config/Block", blockConfig);
+        ReadConfig("Config/Bonus", bonusConfig);
         ReadConfig("Config/Map", mapConfig);
         ReadConfig("Config/MapMountain", mountainConfig);
-        ReadConfig("Config/Tree", treeConfig);
-        ReadConfig("Config/Rock", rockConfig);
+        ReadConfig("Config/Resource", resourceConfig);
         ReadConfig("Config/TransferGate", transferGateConfig);
         ReadConfig("Config/Item", itemConfig);
         ReadConfig("Config/Craft", craftConfig);

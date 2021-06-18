@@ -11,12 +11,6 @@ public class MapBlock : MonoBehaviour
         data = mcData;
     }
 
-    public void Delete()
-    {
-        Debug.Log("Delete cube. \n" + data.ToString()); ;
-        WorldMng.E.MapCtl.DeleteBlock(this);
-    }
-
     public void OnClicking(float time)
     {
         clickingTime += time;
@@ -24,7 +18,9 @@ public class MapBlock : MonoBehaviour
         if (clickingTime > data.BaseData.DestroyTime)
         {
             DataMng.E.AddItem(ConfigMng.E.Block[data.ID].ItemID, 1);
-            Delete();
+
+            Debug.Log("Delete cube. \n" + data.ToString()); ;
+            WorldMng.E.MapCtl.DeleteBlock(this);
         }
     }
     public void CancelClicking()

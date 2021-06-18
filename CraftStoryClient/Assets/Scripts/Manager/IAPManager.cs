@@ -21,7 +21,7 @@ public class IAPManager : IStoreListener
         {
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
             builder.AddProduct("craftstory_120", ProductType.Consumable);
-            builder.AddProduct("craftstory_free", ProductType.Consumable);
+            //builder.AddProduct("craftstory_free", ProductType.Consumable);
 
             UnityPurchasing.Initialize(this, builder);
         }

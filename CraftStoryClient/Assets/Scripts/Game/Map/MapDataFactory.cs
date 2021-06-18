@@ -17,8 +17,7 @@ public class MapDataFactory
 
         AddBaseBlocks();
         AddMountains();
-        AddTrees();
-        AddRocks();
+        AddResources();
         AddTransferGateConfig();
         AddBuildings();
 
@@ -122,25 +121,25 @@ public class MapDataFactory
             }
         }
     }
-    private void AddTrees()
+    private void AddResources()
     {
-        var trees = mapConfig.Trees.Split(',');
-        if (trees[0] == "N")
+        var data = mapConfig.Resources.Split(',');
+        if (data[0] == "N")
             return;
 
-        for (int i = 0; i < trees.Length; i++)
+        for (int i = 0; i < data.Length; i++)
         {
-            JsonConfigData.Tree config = null;
+            Resource config = null;
 
             try
             {
-                config = ConfigMng.E.Tree[int.Parse(trees[i])];
+                config = ConfigMng.E.Resource[int.Parse(data[i])];
                 if (config == null)
                     continue;
             }
             catch (Exception ex)
             {
-                Debug.LogError("not find tree " + trees[i]);
+                Debug.LogError("not find resource " + data[i]);
                 Debug.LogError(ex.Message);
                 continue;
             }
@@ -152,41 +151,7 @@ public class MapDataFactory
                 pos = MapCtl.FixEntityPos(mData, pos, config.CreatePosOffset);
                 pos = MapCtl.GetGroundPos(mData, (int)pos.x, (int)pos.z);
 
-                mData.AddResources(new EntityData(config.ID, EntityType.Tree, pos));
-            }
-        }
-    }
-    private void AddRocks()
-    {
-        var rocks = mapConfig.Rocks.Split(',');
-        if (rocks[0] == "N")
-            return;
-
-        for (int i = 0; i < rocks.Length; i++)
-        {
-            Rock config = null;
-
-            try
-            {
-                config = ConfigMng.E.Rock[int.Parse(rocks[i])];
-                if (config == null)
-                    continue;
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("not find rock " + rocks[i]);
-                Debug.LogError(ex.Message);
-                continue;
-            }
-
-            for (int j = 0; j < config.Count; j++)
-            {
-                var pos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ, config.OffsetY);
-
-                pos = MapCtl.FixEntityPos(mData, pos, config.CreatePosOffset);
-                pos = MapCtl.GetGroundPos(mData, (int)pos.x, (int)pos.z);
-
-                mData.AddResources(new EntityData(config.ID, EntityType.Rock, pos));
+                mData.AddResources(new EntityData(config.ID, EntityType.Resources, pos));
             }
         }
     }

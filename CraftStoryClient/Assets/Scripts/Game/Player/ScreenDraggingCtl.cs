@@ -114,7 +114,6 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
             return;
 
         PlayerCtl.E.OnClicking(Time.deltaTime, obj);
-        PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.BreackBlock;
     }
 
     private void OnClick(Vector2 pos)

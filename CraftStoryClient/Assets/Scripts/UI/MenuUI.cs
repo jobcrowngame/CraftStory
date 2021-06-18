@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
 public class MenuUI : UIBase
 {
     Button CloseBtn;
     Button CraftBtn;
+    Button AdventureBtn;
 
     public override void Init()
     {
@@ -21,5 +21,8 @@ public class MenuUI : UIBase
 
         CraftBtn = FindChiled<Button>("CraftBtn");
         CraftBtn.onClick.AddListener(() => { UICtl.E.OpenUI<CraftUI>(UIType.Craft); });
+
+        AdventureBtn = FindChiled<Button>("AdventureBtn");
+        AdventureBtn.onClick.AddListener(() => { CommonFunction.GoToNextScene(1000, "Brave"); });
     }
 }
