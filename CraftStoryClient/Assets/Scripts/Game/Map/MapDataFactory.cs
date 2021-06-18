@@ -224,6 +224,8 @@ public class MapDataFactory
     private void AddBuildings()
     {
         var buildings = mapConfig.Buildings.Split(',');
+        if (buildings[0] == "N")
+            return;
 
         for (int i = 0; i < buildings.Length; i++)
         {

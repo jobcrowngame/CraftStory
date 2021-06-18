@@ -48,8 +48,6 @@ public class PlayerCtl : MonoBehaviour
     }
     private CameraCtl cameraCtl;
 
-    private bool lockCtl;
-
     public void Init()
     {
         builderPencil = new BuilderPencil();
@@ -185,7 +183,7 @@ public class PlayerCtl : MonoBehaviour
         WorldMng.E.MapCtl.CreateBlock(pos, blockID);
         ConsumableSelectItem();
 
-        Lock();
+        //Lock();
         PlayerEntity.Behavior.Type = PlayerBehaviorType.CreateBlock;
 
         Debug.Log("Create block " + pos);
@@ -216,18 +214,5 @@ public class PlayerCtl : MonoBehaviour
         }
 
         return ret;
-    }
-
-    public void Lock()
-    {
-        lockCtl = true;
-    }
-    public void UnLock()
-    {
-        lockCtl = false;
-    }
-    public bool IsLocked()
-    {
-        return lockCtl;
     }
 }
