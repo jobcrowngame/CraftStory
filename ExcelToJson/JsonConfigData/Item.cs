@@ -8,5 +8,7 @@ namespace JsonConfigData
         public int Type { get; set; }
         public int ReferenceID { get; set; }
         public int MaxCount { get; set; }
+
+        public Item() { }
     }
 }

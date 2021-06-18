@@ -9,5 +9,6 @@
         public int PosY { get; set; }
         public int PosZ { get; set; }
         public int CreatePosOffset { get; set; }
+        public TransferGate() { }
     }
 }

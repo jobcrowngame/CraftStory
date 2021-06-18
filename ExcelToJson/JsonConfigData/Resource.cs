@@ -14,5 +14,7 @@
         public int CanBreak { get; set; }
         public float DestroyTime { get; set; }
         public int BonusID { get; set; }
+
+        public Resource() { }
     }
 }

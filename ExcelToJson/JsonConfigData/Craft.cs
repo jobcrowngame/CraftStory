@@ -11,5 +11,7 @@
         public int Cost3Count { get; set; }
         public int Cost4 { get; set; }
         public int Cost4Count { get; set; }
+
+        public Craft() { }
     }
 }

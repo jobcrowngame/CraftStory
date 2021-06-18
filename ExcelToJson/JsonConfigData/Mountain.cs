@@ -7,5 +7,7 @@
         public int StartPosZ { get; set; }
         public int Height { get; set; }
         public int Wide { get; set; }
+
+        public Mountain() { }
     }
 }

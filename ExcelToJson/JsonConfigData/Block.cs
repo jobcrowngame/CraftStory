@@ -7,5 +7,7 @@
         public string ResourcesName { get; set; }
         public int Type { get; set; }
         public float DestroyTime { get; set; }
+
+        public Block() { }
     }
 }
