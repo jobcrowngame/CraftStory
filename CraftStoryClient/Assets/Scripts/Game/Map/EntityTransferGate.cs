@@ -10,8 +10,13 @@ public class EntityTransferGate : EntityBase
         var characterCtl = other.GetComponent<CharacterController>();
         if (characterCtl != null)
         {
-            Debug.Log("go to map " + DataMng.E.NextSceneID);
-            CommonFunction.GoToNextScene(DataMng.E.NextSceneID, DataMng.E.NextSceneName);
+            
         }
+    }
+
+    private void GoToNextMap()
+    {
+        Debug.Log("go to map " + DataMng.E.NextSceneID);
+        CommonFunction.GoToNextScene(DataMng.E.NextSceneID, DataMng.E.NextSceneName);
     }
 }

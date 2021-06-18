@@ -2,21 +2,16 @@
 
 public class EntityResources : EntityBase
 {
-    public MapBlockData data { get; set; }
-
     private float clickingTime;
-
 
     public void OnClicking(float time)
     {
         clickingTime += time;
 
-        if (clickingTime > data.BaseData.DestroyTime)
+        if (clickingTime > Data.Config.DestroyTime)
         {
-            DataMng.E.AddItem(ConfigMng.E.Block[data.ID].ItemID, 1);
-
-            Debug.Log("Delete cube. \n" + data.ToString()); ;
-            //WorldMng.E.MapCtl.DeleteBlock(this);
+            AdventureCtl.E.BreackResources(Data.ID);
+            WorldMng.E.MapCtl.DeleteResource(this);
         }
     }
     public void CancelClicking()

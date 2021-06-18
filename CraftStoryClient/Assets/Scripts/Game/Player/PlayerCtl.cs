@@ -167,7 +167,7 @@ public class PlayerCtl : MonoBehaviour
         }
 
         var recource = collider.GetComponent<EntityResources>();
-        if (recource != null && DataMng.E.MapData.IsHome)
+        if (recource != null)
         {
             if (clickingResource == null || clickingResource != recource)
             {

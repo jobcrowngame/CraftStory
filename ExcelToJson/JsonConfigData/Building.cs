@@ -1,4 +1,6 @@
-﻿namespace JsonConfigData
+﻿using Newtonsoft.Json;
+
+namespace JsonConfigData
 {
     public class Building : Base
     {
@@ -10,6 +12,7 @@
         public int Angle { get; set; }
         public float OffsetY { get; set; }
 
+        [JsonConstructor]
         public Building() { }
     }
 }

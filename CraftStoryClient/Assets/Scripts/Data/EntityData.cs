@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using JsonConfigData;
+using UnityEngine;
 
 public class EntityData
 {
@@ -35,6 +36,7 @@ public class EntityData
         get => pos;
         set => pos = value;
     }
+    public Resource Config { get => ConfigMng.E.Resource[id]; }
 
     public string ResourcePath
     {

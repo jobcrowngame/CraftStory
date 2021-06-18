@@ -1,4 +1,6 @@
-﻿namespace JsonConfigData
+﻿using Newtonsoft.Json;
+
+namespace JsonConfigData
 {
     public class Block : Base
     {
@@ -8,6 +10,7 @@
         public int Type { get; set; }
         public float DestroyTime { get; set; }
 
+        [JsonConstructor]
         public Block() { }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace JsonConfigData
+﻿using Newtonsoft.Json;
+
+namespace JsonConfigData
 {
     public class Craft : Base
     {
@@ -12,6 +14,7 @@
         public int Cost4 { get; set; }
         public int Cost4Count { get; set; }
 
+        [JsonConstructor]
         public Craft() { }
     }
 }

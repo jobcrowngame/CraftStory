@@ -181,6 +181,11 @@ public class MapCtl
     {
         if(builderPencilParent != null) GameObject.Destroy(builderPencilParent.gameObject);
     }
+    public void DeleteResource(EntityResources resource)
+    {
+        resourcesEntitys.Remove(resource);
+        GameObject.Destroy(resource.gameObject);
+    }
 
     private void CheckNextToBlocks(MapBlockData data)
     {
@@ -281,10 +286,6 @@ public class MapCtl
                         continue;
 
                     mapData.Map[x, y, z].NoInstantiate = !CheckBlockIsSurface(mapData, mapData.Map[x, y, z]);
-                    if (y>14)
-                    {
-                        Debug.Log(mapData.Map[x, y, z]);
-                    }
                 }
             }
         }

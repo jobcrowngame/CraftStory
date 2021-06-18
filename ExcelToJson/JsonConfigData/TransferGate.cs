@@ -1,4 +1,6 @@
-﻿namespace JsonConfigData
+﻿using Newtonsoft.Json;
+
+namespace JsonConfigData
 {
     public class TransferGate : Base
     {
@@ -9,6 +11,8 @@
         public int PosY { get; set; }
         public int PosZ { get; set; }
         public int CreatePosOffset { get; set; }
+
+        [JsonConstructor]
         public TransferGate() { }
     }
 }

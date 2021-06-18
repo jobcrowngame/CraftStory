@@ -1,4 +1,6 @@
-﻿namespace JsonConfigData
+﻿using Newtonsoft.Json;
+
+namespace JsonConfigData
 {
     public class Map : Base
     {
@@ -19,6 +21,8 @@
         public int PlayerPosX { get; set; }
         public int PlayerPosZ { get; set; }
         public int CreatePosOffset { get; set; }
+
+        [JsonConstructor]
         public Map() { }
     }
 }

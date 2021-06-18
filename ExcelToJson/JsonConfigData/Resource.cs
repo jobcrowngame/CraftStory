@@ -1,4 +1,6 @@
-﻿namespace JsonConfigData
+﻿using Newtonsoft.Json;
+
+namespace JsonConfigData
 {
     public class Resource : Base
     {
@@ -15,6 +17,7 @@
         public float DestroyTime { get; set; }
         public int BonusID { get; set; }
 
+        [JsonConstructor]
         public Resource() { }
     }
 }
