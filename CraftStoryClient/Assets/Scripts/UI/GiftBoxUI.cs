@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Gs2.Unity.Gs2Exchange.Model;
-using Gs2.Unity.Gs2Showcase.Model;
 
 public class GiftBoxUI : UIBase
 {
@@ -44,10 +42,6 @@ public class GiftBoxUI : UIBase
         {
 
         }
-    }
-    public void AddItem(EzRateModel r)
-    {
-        //AddItem(r);
     }
     private void AddItem(string itemName, int count)
     {

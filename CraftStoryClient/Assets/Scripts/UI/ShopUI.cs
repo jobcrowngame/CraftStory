@@ -1,4 +1,3 @@
-using Gs2.Unity.Gs2Showcase.Model;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,20 +34,4 @@ public class ShopUI : UIBase
         CloseBtn.onClick.AddListener(() => { Close(); });
     }
 
-    public void AddItems(EzShowcase showcase)
-    {
-        foreach (var item in showcase.DisplayItems)
-        {
-            AddItem(item);
-        }
-    }
-    private void AddItem(EzDisplayItem item)
-    {
-        var cell =  AddCell<ShopItemCell>("Prefabs/UI/ShopItem", itemGridRoot);
-        if (cell != null)
-        {
-            cell.Init();
-            cell.Add(item);
-        }
-    }
 }

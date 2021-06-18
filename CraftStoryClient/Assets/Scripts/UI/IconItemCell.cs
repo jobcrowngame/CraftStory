@@ -1,4 +1,3 @@
-using Gs2.Unity.Gs2Showcase.Model;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

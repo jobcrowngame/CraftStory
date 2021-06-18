@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Gs2.Unity.Gs2Inventory.Model;
-using Gs2.Unity.Gs2Money.Model;
 
 public class BagUI : UIBase
 {

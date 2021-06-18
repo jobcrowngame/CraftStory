@@ -1,5 +1,4 @@
-﻿using Gs2.Unity.Gs2Inventory.Model;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine;
 

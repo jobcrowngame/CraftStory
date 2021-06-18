@@ -1,13 +1,7 @@
-using Gs2.Core.Exception;
-using Gs2.Unity.Util;
-using Gs2.Weave.Core.CallbackEvent;
 using UnityEngine;
 
 public class ChargeUI : UIBase
 {
-    public GetShowcaseEvent onGetShowcase;
-    public ErrorEvent onError;
-
     Transform gridRoot;
 
     public override void Init()
