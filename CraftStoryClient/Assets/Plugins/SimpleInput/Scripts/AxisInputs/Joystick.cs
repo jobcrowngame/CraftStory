@@ -53,7 +53,8 @@ namespace SimpleInputNamespace
 		private Vector2 m_value = Vector2.zero;
 		public Vector2 Value { get { return m_value; } }
 
-		public bool IsWaiting { get => xAxis.value == 0 && yAxis.value == 0; }
+		public bool IsWaiting { get => isWaiting; }
+		private bool isWaiting = true;
 
 		private void Awake()
 		{
@@ -188,6 +189,8 @@ namespace SimpleInputNamespace
 
 			xAxis.value = m_value.x;
 			yAxis.value = m_value.y;
+
+			isWaiting = false;
 		}
 
 		public void OnPointerUp( PointerEventData eventData )
@@ -201,6 +204,8 @@ namespace SimpleInputNamespace
 
 			xAxis.value = 0f;
 			yAxis.value = 0f;
+
+			isWaiting = true;
 		}
 
 		private void OnUpdate()

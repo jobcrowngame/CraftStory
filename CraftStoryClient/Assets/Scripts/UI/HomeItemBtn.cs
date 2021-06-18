@@ -2,10 +2,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemBtn : UIBase
+public class HomeItemBtn : UIBase
 {
-    private static ItemBtn curSelectBtn;
-    public static ItemBtn CurSelectBtn
+    private static HomeItemBtn curSelectBtn;
+    public static HomeItemBtn CurSelectBtn
     {
         get => curSelectBtn;
         set
@@ -20,14 +20,12 @@ public class ItemBtn : UIBase
                 if (curSelectBtn != null) curSelectBtn.OnSelected(false);
 
                 curSelectBtn = value;
-                if (curSelectBtn != null)
-                {
-                    curSelectBtn.OnSelected();
-                    PlayerCtl.E.ChangeSelectItem(curSelectBtn.itemData);
-                }
-                else
-                    PlayerCtl.E.ChangeSelectItem(null);
+                if (curSelectBtn != null) curSelectBtn.OnSelected();
             }
+
+            PlayerCtl.E.ChangeSelectItem(curSelectBtn == null
+                ? null
+                : curSelectBtn.itemData);
         }
     }
 
@@ -92,6 +90,7 @@ public class ItemBtn : UIBase
 
 public enum ItemType
 {
+    None = 0,
     Block = 1,
     BuilderPencil = 50,
     Blueprint = 51,

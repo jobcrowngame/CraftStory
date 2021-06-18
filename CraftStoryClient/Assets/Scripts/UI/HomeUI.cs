@@ -26,7 +26,7 @@ public class HomeUI : UIBase
     Button BlueprintCancelBtn;
     Button BuildBtn;
 
-    List<ItemBtn> itemBtns;
+    List<HomeItemBtn> itemBtns;
 
     private float fadeInTime = 0.05f;
 
@@ -101,11 +101,11 @@ public class HomeUI : UIBase
 
     private void AddItemBtns()
     {
-        itemBtns = new List<ItemBtn>();
+        itemBtns = new List<HomeItemBtn>();
 
         for (int i = 0; i < 6; i++)
         {
-            var cell = AddCell<ItemBtn>("Prefabs/UI/ItemBtn", btnsParent);
+            var cell = AddCell<HomeItemBtn>("Prefabs/UI/ItemBtn", btnsParent);
             if (cell == null)
                 return;
 

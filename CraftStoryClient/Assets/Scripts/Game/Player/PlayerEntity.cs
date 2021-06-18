@@ -6,8 +6,7 @@ public class PlayerEntity : CharacterEntity
     private CharacterController controller;
 
     private Vector3 moveDirection = Vector3.zero;
-    private float h, v;
-
+    private float x, y;
 
     public override void Init()
     {
@@ -21,12 +20,27 @@ public class PlayerEntity : CharacterEntity
         controller.Move(new Vector3(0, -SettingMng.E.Gravity * Time.deltaTime, 0) * Time.deltaTime);
     }
 
-    public void Move(float h, float v)
+    public void Move(Joystick joystick)
     {
-        this.h = h;
-        this.v = v;
+        if (joystick == null || PlayerCtl.E.IsLocked())
+            return;
 
-        var angle1 = GetAngleFromV2(new Vector2(h, v).normalized);
+        if (Behavior.Type == PlayerBehaviorType.CreateBlock
+            || Behavior.Type == PlayerBehaviorType.BreackBlock)
+            return;
+
+        if (joystick.IsWaiting)
+        {
+            Behavior.Type = PlayerBehaviorType.Waiting;
+            return;
+        }
+
+        Behavior.Type = PlayerBehaviorType.Run;
+
+        x = joystick.xAxis.value;
+        y = joystick.yAxis.value;
+
+        var angle1 = GetAngleFromV2(new Vector2(x, y).normalized);
         var angle2 = PlayerCtl.E.CameraCtl.GetEulerAngleY;
         var vec = GetV2FromAngle(angle1 + angle2);
 
@@ -85,5 +99,10 @@ public class PlayerEntity : CharacterEntity
             return true;
 
         return false;
+    }
+
+    public void Wait()
+    {
+        Debug.Log("Wait");
     }
 }

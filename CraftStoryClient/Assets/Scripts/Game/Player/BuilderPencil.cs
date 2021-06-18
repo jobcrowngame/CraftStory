@@ -90,7 +90,7 @@ public class BuilderPencil
 
         var blueprintData = new BlueprintData(blocks, new Vector2Int(maxX - minX, maxZ - minZ));
 
-        PlayerCtl.E.AddItem(3001, 1, blueprintData);
+        DataMng.E.AddItem(3001, blueprintData, 1);
 
         CancelCreateBlueprint();
     }

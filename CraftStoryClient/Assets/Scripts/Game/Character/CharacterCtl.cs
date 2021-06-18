@@ -6,7 +6,7 @@ public class CharacterCtl
 
     public void CreateCharacter()
     {
-        player = PlayerCtl.E.AddEntity();
+        player = PlayerCtl.E.AddPlayerEntity();
     }
 
     public void OnQuit()

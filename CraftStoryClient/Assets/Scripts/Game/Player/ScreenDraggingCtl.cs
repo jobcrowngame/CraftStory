@@ -88,9 +88,14 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         if (!isClicking)
             OnClick(eventData.position);
 
+        if (isClicking)
+            PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.Waiting;
+
         isClick = false;
         isClicking = false;
         clickingTime = 0;
+
+        //PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.Waiting;
     }
 
     public void OnClicking(Vector2 pos)
@@ -100,6 +105,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
             return;
 
         PlayerCtl.E.OnClicking(Time.deltaTime, obj);
+        PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.BreackBlock;
     }
 
     private void OnClick(Vector2 pos)
