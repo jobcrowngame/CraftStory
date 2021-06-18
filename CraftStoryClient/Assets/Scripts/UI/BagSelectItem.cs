@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,7 +40,7 @@ public class BagSelectItem : UIBase
         {
             NWMng.E.EquitItem((rp) =>
             {
-                DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
+                //DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
 
                 HomeLG.E.UI.RefreshItemBtns();
                 BagLG.E.UI.RefreshSelectItemBtns();
@@ -54,7 +53,7 @@ public class BagSelectItem : UIBase
             {
                 NWMng.E.EquitItem((rp) =>
                 {
-                    DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
+                    //DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
 
                     HomeLG.E.UI.RefreshItemBtns();
                     BagLG.E.UI.RefreshSelectItemBtns();

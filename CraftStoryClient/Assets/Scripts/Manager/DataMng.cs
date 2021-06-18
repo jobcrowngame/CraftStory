@@ -1,5 +1,4 @@
 ﻿using JsonConfigData;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -151,7 +150,7 @@ public class DataMng : Single<DataMng>
     {
         NWMng.E.AddItem((rp)=> 
         {
-            Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
+            //Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
 
             var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
             if (homeUI != null) homeUI.RefreshItemBtns();
@@ -172,7 +171,7 @@ public class DataMng : Single<DataMng>
             {
                 NWMng.E.GetItemList((rp2) =>
                 {
-                    Items = JsonConvert.DeserializeObject<List<ItemData>>(rp2[0]);
+                    //Items = JsonConvert.DeserializeObject<List<ItemData>>(rp2[0]);
                     if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
                     if (BagLG.E.UI != null) BagLG.E.UI.RefreshItemByGuid(guid);
                 });
@@ -188,7 +187,7 @@ public class DataMng : Single<DataMng>
             {
                 NWMng.E.GetItemList((rp2) =>
                 {
-                    Items = JsonConvert.DeserializeObject<List<ItemData>>(rp2[0]);
+                    //Items = JsonConvert.DeserializeObject<List<ItemData>>(rp2[0]);
                     if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
                     if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
                 });

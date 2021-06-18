@@ -1,5 +1,4 @@
 ﻿
-using Newtonsoft.Json;
 
 namespace JsonConfigData
 {
@@ -10,8 +9,5 @@ namespace JsonConfigData
         public int Type { get; set; }
         public int ReferenceID { get; set; }
         public int MaxCount { get; set; }
-
-        [JsonConstructor]
-        public Item() { }
     }
 }

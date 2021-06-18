@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public class BagLG : UILogicBase<BagLG, BagUI>
 {
     public BagItemCell SelectItem 

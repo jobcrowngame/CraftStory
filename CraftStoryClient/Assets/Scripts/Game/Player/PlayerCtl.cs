@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using JsonConfigData;
-using Newtonsoft.Json;
 using SimpleInputNamespace;
 using UnityEngine;
 

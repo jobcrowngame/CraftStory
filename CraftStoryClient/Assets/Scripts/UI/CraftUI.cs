@@ -1,5 +1,4 @@
 using JsonConfigData;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -106,7 +105,7 @@ public class CraftUI : UIBase
             NWMng.E.Craft((rp) => 
             {
                 Debug.LogWarning("craft surr hint");
-                DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
+                //DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
             }, selectCraft, selectCount);
         }
     }

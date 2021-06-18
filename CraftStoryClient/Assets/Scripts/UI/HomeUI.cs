@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,10 +34,10 @@ public class HomeUI : UIBase
         WorldMng.E.CreateGameObjects();
         UICtl.E.AddUI(this, UIType.Home);
 
-        NWMng.E.GetItemList((rp) =>
-        {
-            DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
-        });
+        //NWMng.E.GetItemList((rp) =>
+        //{
+        //    //DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
+        //});
 
         Init();
     }
@@ -51,7 +50,7 @@ public class HomeUI : UIBase
 
         NWMng.E.GetItemList((rp) =>
         {
-            DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
+            //DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
             RefreshItemBtns();
         });
 

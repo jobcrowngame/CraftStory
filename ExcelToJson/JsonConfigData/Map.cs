@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-
+﻿
 namespace JsonConfigData
 {
     public class Map : Base
@@ -22,7 +21,5 @@ namespace JsonConfigData
         public int PlayerPosZ { get; set; }
         public int CreatePosOffset { get; set; }
 
-        [JsonConstructor]
-        public Map() { }
     }
 }
