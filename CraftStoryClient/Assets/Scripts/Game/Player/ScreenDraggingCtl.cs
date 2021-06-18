@@ -9,6 +9,14 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     private bool isDrag;
     private bool isClick;
+    private bool IsClicking
+    {
+        get => isClicking;
+        set
+        {
+            isClicking = value;
+        }
+    }
     private bool isClicking;
 
     Vector2 startPos;
@@ -25,7 +33,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
             if (clickingTime > 0.2f && !isDrag)
             {
-                isClicking = true;
+                IsClicking = true;
                 OnClicking(eventData.position);
             }
         }
@@ -43,6 +51,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         //Debug.Log("OnDrag");
 
+
         Vector2 pointerPos = eventData.position - startPos;
 
         offsetX = pointerPos.x;
@@ -53,6 +62,8 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         startPos = eventData.position;
         offsetX = 0;
         offsetY = 0;
+
+        PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.Waiting;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -61,7 +72,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         isDrag = false;
         isClick = false;
-        isClicking = false;
+        IsClicking = false;
         clickingTime = 0;
 
         offsetX = 0;
@@ -85,17 +96,15 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         if (isDrag)
             return;
 
-        if (!isClicking)
+        if (!IsClicking)
             OnClick(eventData.position);
 
-        if (isClicking)
+        if (IsClicking)
             PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.Waiting;
 
         isClick = false;
-        isClicking = false;
+        IsClicking = false;
         clickingTime = 0;
-
-        //PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.Waiting;
     }
 
     public void OnClicking(Vector2 pos)
