@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JsonConfigData;
@@ -60,16 +59,16 @@ class ConfigMng : Single<ConfigMng>
             return;
         }
 
-        var list = JsonConvert.DeserializeObject<List<T>>(config.text);
-        if (list == null)
-        {
-            Debug.LogError("DeserializeObject file fail." + path);
-            return;
-        }
+        //var list = JsonConvert.DeserializeObject<List<T>>(config.text);
+        //if (list == null)
+        //{
+        //    Debug.LogError("DeserializeObject file fail." + path);
+        //    return;
+        //}
 
-        for (int i = 0; i < list.Count; i++)
-        {
-            dic[list[i].ID] = list[i];
-        }
+        //for (int i = 0; i < list.Count; i++)
+        //{
+        //    dic[list[i].ID] = list[i];
+        //}
     }
 }

@@ -84,7 +84,9 @@ namespace ExcelToJson
                 default: Console.WriteLine("not find fileName function."); break;
             }
 
-            var json = JsonConvert.SerializeObject(list, indented);
+            var json = LitJson.JsonMapper.ToJson(list);
+
+            //var json = JsonConvert.SerializeObject(list, indented);
             File.WriteAllText(outputPath + fileName + ".json", json);
         }
 
