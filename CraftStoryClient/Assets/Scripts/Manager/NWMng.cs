@@ -1,6 +1,7 @@
 ﻿using JsonConfigData;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -126,6 +127,16 @@ public class NWMng : MonoBehaviour
     }
 
 
+    public void ClearAdventure(Action<string[]> rp, List<int> resources)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.UserData.Account);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.ClearAdventure));
+    }
+
+
     public enum CMD
     {
         CreateNewAccount = 100,
@@ -137,5 +148,6 @@ public class NWMng : MonoBehaviour
         AddItem = 1004,
         EquitItem = 1005,
         Craft = 1006,
+        ClearAdventure = 1007,
     }
 }

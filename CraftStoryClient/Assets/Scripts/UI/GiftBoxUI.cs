@@ -38,9 +38,12 @@ public class GiftBoxUI : UIBase
         ClearCell(itemGridRoot);
     }
 
-    public void AddItem(EzSalesItem r)
+    public void AddItems(List<ItemData> items)
     {
-        AddItem(r.Name, 1);
+        for (int i = 0; i < items.Count; i++)
+        {
+
+        }
     }
     public void AddItem(EzRateModel r)
     {
@@ -54,26 +57,4 @@ public class GiftBoxUI : UIBase
             cell.Add(itemName, count);
         }
     }
-
-    //public void AddItems(List<EzItemSet> itemList)
-    //{
-    //    foreach (var item in itemList)
-    //    {
-    //        AddItem(item);
-    //    }
-    //}
-    //private void AddItem(EzItemSet item)
-    //{
-    //    var resources = CommonFunction.ReadResourcesPrefab("Prefabs/UI/Item");
-
-    //    var obj = GameObject.Instantiate(resources, itemGridRoot);
-    //    if (obj == null)
-    //        return;
-
-    //    var cell = obj.GetComponent<ItemCell>();
-    //    if (cell == null)
-    //        return;
-
-    //    cell.Init(item);
-    //}
 }

@@ -151,6 +151,16 @@
     <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerAnimatorEvent.cs" />
     <Compile Include="Assets\Scripts\Game\Adventure\AdventureCtl.cs" />
+    <Compile Include="Assets\Scripts\JsonClass\Mountain.cs" />
+    <Compile Include="Assets\Scripts\JsonClass\Resource.cs" />
+    <Compile Include="Assets\Scripts\JsonClass\TransferGate.cs" />
+    <Compile Include="Assets\Scripts\JsonClass\Map.cs" />
+    <Compile Include="Assets\Scripts\JsonClass\Block.cs" />
+    <Compile Include="Assets\Scripts\JsonClass\Item.cs" />
+    <Compile Include="Assets\Scripts\JsonClass\Craft.cs" />
+    <Compile Include="Assets\Scripts\JsonClass\Base.cs" />
+    <Compile Include="Assets\Scripts\JsonClass\Building.cs" />
+    <Compile Include="Assets\Scripts\JsonClass\Bonus.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />
@@ -371,9 +381,6 @@
     </Reference>
     <Reference Include="gs2_websocket-sharp">
       <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_websocket-sharp.dll</HintPath>
-    </Reference>
-    <Reference Include="JsonConfigData">
-      <HintPath>Assets\Plugins\Lib\JsonConfigData.dll</HintPath>
     </Reference>
     <Reference Include="gs2_Google.Protobuf">
       <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_Google.Protobuf.dll</HintPath>
