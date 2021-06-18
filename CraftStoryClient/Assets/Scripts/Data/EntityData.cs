@@ -9,6 +9,9 @@ public class EntityData
     public EntityData(string data)
     {
         string[] datas = data.Split('^');
+        if (string.IsNullOrEmpty(datas[0]))
+            return;
+
         id = int.Parse(datas[0]);
         type = (EntityType)int.Parse(datas[1]);
         pos = new Vector3(float.Parse(datas[2]), float.Parse(datas[3]), float.Parse(datas[4]));

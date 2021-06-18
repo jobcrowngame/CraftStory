@@ -125,6 +125,8 @@ public class MapDataFactory
     private void AddTrees()
     {
         var trees = mapConfig.Trees.Split(',');
+        if (trees[0] == "N")
+            return;
 
         for (int i = 0; i < trees.Length; i++)
         {
@@ -157,6 +159,8 @@ public class MapDataFactory
     private void AddRocks()
     {
         var rocks = mapConfig.Rocks.Split(',');
+        if (rocks[0] == "N")
+            return;
 
         for (int i = 0; i < rocks.Length; i++)
         {
@@ -189,6 +193,8 @@ public class MapDataFactory
     private void AddTransferGateConfig()
     {
         var transferGateID = mapConfig.TransferGateID;
+        if (transferGateID < 0)
+            return;
 
         TransferGate config = null;
 

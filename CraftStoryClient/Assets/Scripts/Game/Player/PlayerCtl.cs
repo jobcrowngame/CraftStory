@@ -57,7 +57,7 @@ public class PlayerCtl : MonoBehaviour
 
     private void Update()
     {
-        playerEntity.Move(joystick);
+        if(joystick != null) playerEntity.Move(joystick);
 
         if (Input.GetKeyDown(KeyCode.F1))
         {

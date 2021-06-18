@@ -87,7 +87,7 @@ public class MapCtl
     }
     private void CreateTransferGate(MapData mData)
     {
-        if (mData.TransferGate == null)
+        if (mData.TransferGate == null || mData.TransferGate.ID == 0)
             return;
 
         var entity = CommonFunction.Instantiate<EntityTransferGate>(mData.TransferGate.ResourcePath, resourceParent, mData.TransferGate.Pos);
