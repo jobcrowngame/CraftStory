@@ -8,4 +8,15 @@ public class AdventureCtl : Single<AdventureCtl>
 {
     private List<int> getResourcesList;
 
+    public override void Init()
+    {
+        base.Init();
+
+        getResourcesList = new List<int>();
+    }
+
+    public void BreackResources(int id)
+    {
+        getResourcesList.Add(id);
+    }
 }

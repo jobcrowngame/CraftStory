@@ -29,6 +29,8 @@ public class WorldMng : MonoBehaviour
     {
         mapCtl.CreateMap(DataMng.E.NextSceneID);
         characterCtl.CreateCharacter();
+
+        AdventureCtl.E.Init();
     }
 
     public void OnQuit()
