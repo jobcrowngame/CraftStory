@@ -28,6 +28,8 @@ public class CharacterEntity : MonoBehaviour
     public void ModelActive(bool b)
     {
         model.gameObject.SetActive(b);
+
+        if (b) Behavior.Type = PlayerBehaviorType.Waiting;
     }
 
     public void EntityBehaviorChange(int stage)

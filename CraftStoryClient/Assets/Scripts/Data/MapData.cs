@@ -11,6 +11,8 @@ public class MapData
     public int MapID { get => mapID; }
     private int mapID;
 
+    public bool IsHome { get => mapID == 100; }
+
     public Map Config { get => ConfigMng.E.Map[mapID]; }
 
     private int sizeX { get; set; }
@@ -132,7 +134,7 @@ public class MapData
     {
         StringBuilder sb = new StringBuilder();
 
-        sb.Append(transferGate.ToStringData());
+        if(transferGate != null) sb.Append(transferGate.ToStringData());
 
         for (int i = 0; i < Resources.Count; i++)
         {
