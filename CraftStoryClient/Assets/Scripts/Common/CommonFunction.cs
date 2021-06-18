@@ -96,6 +96,7 @@ public class CommonFunction
         DataMng.E.NextSceneID = id;
         DataMng.E.NextSceneName = name;
 
+        UICtl.E.Clear();
         SceneManager.LoadSceneAsync("NowLoading");
 
         DataMng.E.CurrentSceneID = id;

@@ -146,6 +146,10 @@ public class UICtl : Single<UICtl>
     {
         ui.Close();
     }
+    public void Clear()
+    {
+        uiDic = new Dictionary<UIType, UIBase>();
+    }
 
     private string GetUIResourcesPath(UIType ui)
     {
