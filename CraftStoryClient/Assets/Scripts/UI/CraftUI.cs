@@ -105,7 +105,7 @@ public class CraftUI : UIBase
             NWMng.E.Craft((rp) => 
             {
                 Debug.LogWarning("craft surr hint");
-                //DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
+                ConfigMng.JsonToItemList(rp[0]);
             }, selectCraft, selectCount);
         }
     }

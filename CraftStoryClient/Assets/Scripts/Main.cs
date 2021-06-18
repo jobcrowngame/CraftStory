@@ -20,7 +20,7 @@ public class Main : MonoBehaviour
     {
         DataMng.E.Init();
 
-        //yield return ConfigMng.E.InitInitCoroutine();
+        yield return ConfigMng.E.InitInitCoroutine();
         yield return ResourcesMng.E.InitInitCoroutine();
         yield return UICtl.E.InitCoroutine(gameObject);
         yield return LoadData();

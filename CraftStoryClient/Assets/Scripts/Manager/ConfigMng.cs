@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using JsonConfigData;
+using LitJson;
 
 class ConfigMng : Single<ConfigMng>
 {
@@ -59,8 +60,7 @@ class ConfigMng : Single<ConfigMng>
             return;
         }
 
-        var list = LitJson.JsonMapper.ToObject< List < T >>(config.text);
-        //var list = JsonConvert.DeserializeObject<List<T>>(config.text);
+        var list = JsonMapper.ToObject<List<T>>(config.text);
         if (list == null)
         {
             Debug.LogError("DeserializeObject file fail." + path);
@@ -71,5 +71,10 @@ class ConfigMng : Single<ConfigMng>
         {
             dic[list[i].ID] = list[i];
         }
+    }
+
+    public static void JsonToItemList(string jsonData)
+    {
+        DataMng.E.Items = JsonMapper.ToObject<List<ItemData>>(jsonData);
     }
 }

@@ -40,8 +40,7 @@ public class BagSelectItem : UIBase
         {
             NWMng.E.EquitItem((rp) =>
             {
-                //DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
-
+                ConfigMng.JsonToItemList(rp[0]);
                 HomeLG.E.UI.RefreshItemBtns();
                 BagLG.E.UI.RefreshSelectItemBtns();
                 BagLG.E.SelectItem = null;
@@ -53,8 +52,7 @@ public class BagSelectItem : UIBase
             {
                 NWMng.E.EquitItem((rp) =>
                 {
-                    //DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
-
+                    ConfigMng.JsonToItemList(rp[0]);
                     HomeLG.E.UI.RefreshItemBtns();
                     BagLG.E.UI.RefreshSelectItemBtns();
                     BagLG.E.SelectItem = null;

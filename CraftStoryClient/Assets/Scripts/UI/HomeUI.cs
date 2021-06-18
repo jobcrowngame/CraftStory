@@ -50,7 +50,7 @@ public class HomeUI : UIBase
 
         NWMng.E.GetItemList((rp) =>
         {
-            //DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
+            ConfigMng.JsonToItemList(rp[0]);
             RefreshItemBtns();
         });
 
