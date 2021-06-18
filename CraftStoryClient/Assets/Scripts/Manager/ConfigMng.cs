@@ -59,16 +59,17 @@ class ConfigMng : Single<ConfigMng>
             return;
         }
 
+        var list = LitJson.JsonMapper.ToObject< List < T >>(config.text);
         //var list = JsonConvert.DeserializeObject<List<T>>(config.text);
-        //if (list == null)
-        //{
-        //    Debug.LogError("DeserializeObject file fail." + path);
-        //    return;
-        //}
+        if (list == null)
+        {
+            Debug.LogError("DeserializeObject file fail." + path);
+            return;
+        }
 
-        //for (int i = 0; i < list.Count; i++)
-        //{
-        //    dic[list[i].ID] = list[i];
-        //}
+        for (int i = 0; i < list.Count; i++)
+        {
+            dic[list[i].ID] = list[i];
+        }
     }
 }
