@@ -160,18 +160,20 @@ public class PlayerCtl : MonoBehaviour
             return;
 
         var cell = collider.GetComponent<MapBlock>();
-        if (cell == null)
-            return;
+        if (cell != null && DataMng.E.MapData.IsHome)
+        {
+            if (clickingBlock == null || clickingBlock != cell)
+            {
+                clickingBlock = cell;
+                clickingBlock.CancelClicking();
+            }
+            else
+            {
+                cell.OnClicking(time);
+            }
+        }
 
-        if (clickingBlock == null || clickingBlock != cell)
-        {
-            clickingBlock = cell;
-            clickingBlock.CancelClicking();
-        }
-        else
-        {
-            cell.OnClicking(time);
-        }
+
     }
 
     private void CreateBlock(int blockID, GameObject collider, Vector3Int pos)
