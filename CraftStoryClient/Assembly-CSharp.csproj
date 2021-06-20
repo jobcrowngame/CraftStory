@@ -152,16 +152,16 @@
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
-    <Compile Include="Assets\Datas\Mountain.cs" />
-    <Compile Include="Assets\Datas\Map.cs" />
-    <Compile Include="Assets\Datas\Resource.cs" />
-    <Compile Include="Assets\Datas\Block.cs" />
-    <Compile Include="Assets\Datas\Craft.cs" />
-    <Compile Include="Assets\Datas\Item.cs" />
-    <Compile Include="Assets\Datas\Base.cs" />
-    <Compile Include="Assets\Datas\TransferGate.cs" />
-    <Compile Include="Assets\Datas\Bonus.cs" />
-    <Compile Include="Assets\Datas\Building.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Mountain.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Map.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Resource.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Block.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Craft.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Item.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\TransferGate.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Bonus.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Building.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />
