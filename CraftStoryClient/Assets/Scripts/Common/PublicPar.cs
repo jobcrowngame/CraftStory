@@ -43,7 +43,7 @@ public class PublicPar
     #region Game
 
     // Dataセーブパース
-    public static string SaveRootPath = Application.persistentDataPath + "/SaveData/";
+    public static string SaveRootPath = Application.persistentDataPath;
 
     #endregion
 }
