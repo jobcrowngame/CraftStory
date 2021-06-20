@@ -31,6 +31,15 @@ public class Main : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        Debug.LogWarning("OnApplicationQuit");
+        if (WorldMng.E != null) WorldMng.E.OnQuit();
+        if (DataMng.E != null) DataMng.E.Save();
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        Debug.LogWarning("OnApplicationPause:" + pauseStatus);
+
         if (WorldMng.E != null) WorldMng.E.OnQuit();
         if (DataMng.E != null) DataMng.E.Save();
     }
