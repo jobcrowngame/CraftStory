@@ -23,6 +23,7 @@ public class GiftBoxUI : UIBase
         OKBtn.onClick.AddListener(() => 
         {
             Close();
+            PlayerCtl.E.Lock = false;
             CommonFunction.GoToNextScene();
         });
 
@@ -32,6 +33,8 @@ public class GiftBoxUI : UIBase
     public override void Open()
     {
         base.Open();
+
+        PlayerCtl.E.Lock = true;
     }
     public override void Close()
     {

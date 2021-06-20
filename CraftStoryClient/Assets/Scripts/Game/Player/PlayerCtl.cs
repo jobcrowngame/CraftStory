@@ -21,6 +21,8 @@ public class PlayerCtl : MonoBehaviour
     }
     private static PlayerCtl entity;
 
+    public bool Lock { get; set; }
+
     public PlayerEntity PlayerEntity { get => playerEntity; }
     private PlayerEntity playerEntity;
 

@@ -22,7 +22,7 @@ public class PlayerEntity : CharacterEntity
 
     public void Move(Joystick joystick)
     {
-        if (joystick == null)
+        if (joystick == null || PlayerCtl.E.Lock)
             return;
 
         if (Behavior.Type == PlayerBehaviorType.CreateBlock
