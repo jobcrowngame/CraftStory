@@ -11,10 +11,6 @@ public class DataMng : Single<DataMng>
     const string UserDataName = "UserData.dat";
     const string ItemsDataName = "ItemsData.dat";
 
-    public string NextSceneName { get; set; }
-    public int NextSceneID { get; set; }
-    public int CurrentSceneID { get; set; }
-    public Map CurrentMapConfig { get => ConfigMng.E.Map[CurrentSceneID]; }
     public string session { get; set; }
 
     public UserData UserData
@@ -26,7 +22,12 @@ public class DataMng : Single<DataMng>
 
     public MapData MapData 
     {
-        get => mData;
+        get {
+            if (mData == null)
+                mData = new MapData();
+
+            return mData;
+        }
         set => mData = value;
     }
     private MapData mData;

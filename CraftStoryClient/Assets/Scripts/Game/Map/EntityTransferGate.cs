@@ -10,13 +10,13 @@ public class EntityTransferGate : EntityBase
         var characterCtl = other.GetComponent<CharacterController>();
         if (characterCtl != null)
         {
-            
+            NWMng.E.ClearAdventure((rp)=> 
+            {
+                ConfigMng.JsonToItemList(rp[0]);
+                GiftBoxUI ui = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox) as GiftBoxUI;
+                ui.AddBonus(AdventureCtl.E.BonusList);
+                //AdventureCtl.E.Clear();
+            },AdventureCtl.E.BonusList);
         }
-    }
-
-    private void GoToNextMap()
-    {
-        Debug.Log("go to map " + DataMng.E.NextSceneID);
-        CommonFunction.GoToNextScene(DataMng.E.NextSceneID, DataMng.E.NextSceneName);
     }
 }

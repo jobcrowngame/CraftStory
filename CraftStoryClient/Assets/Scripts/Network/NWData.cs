@@ -8,16 +8,16 @@ public class NWData
 {
     private string data;
 
-    public void Add(string msg)
+    public void Add(string msg, string split = "^")
     {
         if (!string.IsNullOrEmpty(data))
-            data += "^";
+            data += split;
 
         data += msg;
     }
-    public void Add(int msg)
+    public void Add(int msg, string split = "^")
     {
-        Add(msg.ToString());
+        Add(msg.ToString(), split);
     }
 
     public override string ToString()

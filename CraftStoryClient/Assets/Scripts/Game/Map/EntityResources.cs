@@ -10,7 +10,7 @@ public class EntityResources : EntityBase
 
         if (clickingTime > Data.Config.DestroyTime)
         {
-            AdventureCtl.E.BreackResources(Data.ID);
+            AdventureCtl.E.AddBonus(Data.Config.BonusID);
             WorldMng.E.MapCtl.DeleteResource(this);
         }
     }

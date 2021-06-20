@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JsonConfigData;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -91,15 +92,10 @@ public class CommonFunction
         return componte;
     }
 
-    public static void GoToNextScene(int id, string name)
+    public static void GoToNextScene()
     {
-        DataMng.E.NextSceneID = id;
-        DataMng.E.NextSceneName = name;
-
         UICtl.E.Clear();
         SceneManager.LoadSceneAsync("NowLoading");
-
-        DataMng.E.CurrentSceneID = id;
     }
 
     public static Vector3 Vector3Sum(Vector3 v1, Vector3 v2)

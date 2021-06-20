@@ -27,7 +27,7 @@ public class WorldMng : MonoBehaviour
 
     public void CreateGameObjects()
     {
-        mapCtl.CreateMap(DataMng.E.NextSceneID);
+        mapCtl.CreateMap(DataMng.E.MapData.NextMapID);
         characterCtl.CreateCharacter();
 
         AdventureCtl.E.Init();

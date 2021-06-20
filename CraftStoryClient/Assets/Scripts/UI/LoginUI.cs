@@ -38,7 +38,8 @@ public class LoginUI : UIBase
         Ver.text = "Ver:1.0.0";
 
         BGBtn = FindChiled<Button>("BG");
-        BGBtn.onClick.AddListener(()=> { CommonFunction.GoToNextScene(100, "home"); });
+        DataMng.E.MapData.TransferGate = new EntityData(100, EntityType.TransferGate);
+        BGBtn.onClick.AddListener(CommonFunction.GoToNextScene);
         BGBtn.enabled = false;
 
         Terms01Btn = FindChiled<Button>("Terms01Btn");

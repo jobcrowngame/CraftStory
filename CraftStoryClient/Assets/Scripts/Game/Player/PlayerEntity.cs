@@ -79,7 +79,7 @@ public class PlayerEntity : CharacterEntity
             && transform.position.x + posX < transform.position.x)
                 return true;
 
-        if (transform.position.x > DataMng.E.CurrentMapConfig.SizeX - SettingMng.E.MoveBoundaryOffset
+        if (transform.position.x > DataMng.E.MapData.Config.SizeX - SettingMng.E.MoveBoundaryOffset
             && transform.position.x + posX > transform.position.x)
             return true;
 
@@ -94,7 +94,7 @@ public class PlayerEntity : CharacterEntity
            && transform.position.z + posZ < transform.position.z)
             return true;
 
-        if (transform.position.z > DataMng.E.CurrentMapConfig.SizeZ - SettingMng.E.MoveBoundaryOffset
+        if (transform.position.z > DataMng.E.MapData.Config.SizeZ - SettingMng.E.MoveBoundaryOffset
             && transform.position.z + posZ > transform.position.z)
             return true;
 

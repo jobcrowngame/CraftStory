@@ -24,7 +24,7 @@ public class BraveUI : UIBase
 
         InitUI();
 
-        SceneName.text = ConfigMng.E.Map[DataMng.E.CurrentSceneID].Name;
+        SceneName.text = ConfigMng.E.Map[DataMng.E.MapData.Config.ID].Name;
 
         StartCoroutine("FadeIn");
     }

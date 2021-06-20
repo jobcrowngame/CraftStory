@@ -20,7 +20,11 @@ public class GiftBoxUI : UIBase
     private void InitUI()
     {
         OKBtn = FindChiled<Button>("OKBtn");
-        OKBtn.onClick.AddListener(() => { Close(); });
+        OKBtn.onClick.AddListener(() => 
+        {
+            Close();
+            CommonFunction.GoToNextScene();
+        });
 
         itemGridRoot = FindChiled("Content");
     }
@@ -36,19 +40,23 @@ public class GiftBoxUI : UIBase
         ClearCell(itemGridRoot);
     }
 
-    public void AddItems(List<ItemData> items)
+    public void AddBonus(List<int> bonus)
     {
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < bonus.Count; i++)
         {
-
+            var config = ConfigMng.E.Bonus[bonus[i]];
+            AddItem(config.Bonus1, config.BonusCount1);
         }
     }
-    private void AddItem(string itemName, int count)
+    private void AddItem(int itemID, int count)
     {
+        if (itemID < 0)
+            return;
+
         var cell = AddCell<IconItemCell>("Prefabs/UI/IconItem", itemGridRoot);
         if (cell != null)
         {
-            cell.Add(itemName, count);
+            cell.Add(ConfigMng.E.Item[itemID], count);
         }
     }
 }

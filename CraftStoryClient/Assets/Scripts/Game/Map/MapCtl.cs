@@ -96,9 +96,6 @@ public class MapCtl
             entity.Init(mData.TransferGate);
             entity.EntityID = entityID++;
         }
-
-        DataMng.E.NextSceneID = entity.Config.NextMap;
-        DataMng.E.NextSceneName = entity.Config.NextMapSceneName;
     }
 
     public void OnQuit()

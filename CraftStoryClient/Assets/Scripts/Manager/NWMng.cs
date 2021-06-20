@@ -30,7 +30,7 @@ public class NWMng : MonoBehaviour
         wwwForm.AddField("code", (int)cmd);
         wwwForm.AddField("data", data.ToString());
 
-        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.URL, wwwForm))
+        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.LocalURL, wwwForm))
         {
             yield return www.SendWebRequest();
 
@@ -132,6 +132,21 @@ public class NWMng : MonoBehaviour
         var data = new NWData();
         data.Add(DataMng.E.session);
         data.Add(DataMng.E.UserData.Account);
+
+        string msg = "";
+        if (resources != null && resources.Count > 0)
+        {
+            msg = resources[0].ToString();
+            for (int i = 1; i < resources.Count; i++)
+            {
+                msg += "," + resources[i];
+            }
+        }
+        else
+        {
+            msg = "-1";
+        }
+        data.Add(msg);
 
         StartCoroutine(HttpRequest(rp, data, CMD.ClearAdventure));
     }

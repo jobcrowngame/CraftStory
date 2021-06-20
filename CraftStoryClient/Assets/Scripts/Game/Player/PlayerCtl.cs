@@ -74,7 +74,7 @@ public class PlayerCtl : MonoBehaviour
             return null;
 
         var pos = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5);
-        pos = MapCtl.FixEntityPos(DataMng.E.MapData, pos, DataMng.E.CurrentMapConfig.CreatePosOffset);
+        pos = MapCtl.FixEntityPos(DataMng.E.MapData, pos, DataMng.E.MapData.Config.CreatePosOffset);
         var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
         if (obj == null)
             return null;

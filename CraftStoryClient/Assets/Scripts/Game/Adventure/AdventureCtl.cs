@@ -6,17 +6,23 @@ using System.Threading.Tasks;
 
 public class AdventureCtl : Single<AdventureCtl>
 {
-    private List<int> getResourcesList;
+    private List<int> bonusList;
+    public List<int> BonusList { get => bonusList; }
 
     public override void Init()
     {
         base.Init();
 
-        getResourcesList = new List<int>();
+        bonusList = new List<int>();
     }
 
-    public void BreackResources(int id)
+    public void AddBonus(int id)
     {
-        getResourcesList.Add(id);
+        bonusList.Add(id);
+    }
+
+    public void Clear()
+    {
+        bonusList.Clear();
     }
 }
