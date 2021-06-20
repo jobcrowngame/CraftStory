@@ -8,6 +8,8 @@ public class PlayerEntity : CharacterEntity
     private Vector3 moveDirection = Vector3.zero;
     private float x, y;
 
+    private bool modelActive;
+
     public override void Init()
     {
         base.Init();
@@ -20,6 +22,19 @@ public class PlayerEntity : CharacterEntity
         controller.Move(new Vector3(0, -SettingMng.E.Gravity * Time.deltaTime, 0) * Time.deltaTime);
     }
 
+    public override void ModelActive(bool b)
+    {
+        if (modelActive == b)
+            return;
+
+        modelActive = b;
+
+        if (b!) Behavior.Type = PlayerBehaviorType.None;
+        
+        base.ModelActive(b);
+
+        if (b) Behavior.Type = PlayerBehaviorType.Run;
+    }
     public void Move(Joystick joystick)
     {
         if (joystick == null || PlayerCtl.E.Lock)

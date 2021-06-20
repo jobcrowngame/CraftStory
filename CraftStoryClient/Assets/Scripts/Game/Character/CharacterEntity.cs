@@ -25,7 +25,7 @@ public class CharacterEntity : MonoBehaviour
         Behavior.Type = PlayerBehaviorType.Waiting;
     }
 
-    public void ModelActive(bool b)
+    public virtual void ModelActive(bool b)
     {
         model.gameObject.SetActive(b);
     }

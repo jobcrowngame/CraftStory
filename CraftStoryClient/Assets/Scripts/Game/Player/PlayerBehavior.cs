@@ -21,6 +21,7 @@ public class PlayerBehavior
                 case PlayerBehaviorType.Run: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(1); break;
                 case PlayerBehaviorType.CreateBlock: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(2); break;
                 case PlayerBehaviorType.BreackBlock: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(3); break;
+                case PlayerBehaviorType.None: break;
 
                 default: Debug.LogError("Not find behavior type " + value); break;
             }
