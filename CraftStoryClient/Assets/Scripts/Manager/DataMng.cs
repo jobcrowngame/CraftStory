@@ -6,10 +6,10 @@ using UnityEngine;
 [Serializable]
 public class DataMng : Single<DataMng>
 {
-    const string MapDataName = "MapData.dat";
-    const string CharacterDataName = "CharacterData.dat";
-    const string UserDataName = "UserData.dat";
-    const string ItemsDataName = "ItemsData.dat";
+    const string MapDataName = "/MapData.dat";
+    const string CharacterDataName = "/CharacterData.dat";
+    const string UserDataName = "/UserData.dat";
+    const string ItemsDataName = "/ItemsData.dat";
 
     public string session { get; set; }
 
