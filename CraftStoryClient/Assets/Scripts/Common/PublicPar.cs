@@ -43,7 +43,12 @@ public class PublicPar
     #region Game
 
     // Dataセーブパース
-    public static string SaveRootPath = Application.persistentDataPath;
+    public static string SaveRootPath =
+#if UNITY_IOS
+        Application.persistentDataPath;
+#elif UNITY_EDITOR
+        Application.persistentDataPath;
+#endif
 
     #endregion
 }
