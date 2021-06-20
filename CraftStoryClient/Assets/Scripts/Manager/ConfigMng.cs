@@ -53,23 +53,30 @@ class ConfigMng : Single<ConfigMng>
 
     private void ReadConfig<T>(string path, Dictionary<int, T> dic) where T : Base
     {
-        var config = Resources.Load<TextAsset>(path);
-        if (config == null)
+        try
         {
-            Debug.LogError("load Resources fail." + path);
-            return;
-        }
+            var config = Resources.Load<TextAsset>(path);
+            if (config == null)
+            {
+                Debug.LogError("load Resources fail." + path);
+                return;
+            }
 
-        var list = JsonMapper.ToObject<List<T>>(config.text);
-        if (list == null)
-        {
-            Debug.LogError("DeserializeObject file fail." + path);
-            return;
-        }
+            var list = JsonMapper.ToObject<List<T>>(config.text);
+            if (list == null)
+            {
+                Debug.LogError("DeserializeObject file fail." + path);
+                return;
+            }
 
-        for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < list.Count; i++)
+            {
+                dic[list[i].ID] = list[i];
+            }
+        }
+        catch (System.Exception ex)
         {
-            dic[list[i].ID] = list[i];
+            Debug.LogError(ex);
         }
     }
 
