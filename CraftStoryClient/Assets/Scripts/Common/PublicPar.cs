@@ -47,7 +47,7 @@ public class PublicPar
 #if UNITY_IOS
         Application.persistentDataPath;
 #elif UNITY_EDITOR
-        Application.persistentDataPath;
+        Application.persistentDataPath + /SaveData;
 #endif
 
     #endregion
