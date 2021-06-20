@@ -56,47 +56,89 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Common\SaveLoadFile.cs" />
+    <Compile Include="Assets\Scripts\Manager\DataMng.cs" />
+    <Compile Include="Assets\Scripts\Test\TestRender.cs" />
+    <Compile Include="Assets\Scripts\Test\Locomotion1.cs" />
     <Compile Include="Assets\Scripts\Manager\ResourcesMng.cs" />
+    <Compile Include="Assets\Scripts\Game\Player\CameraCtl.cs" />
+    <Compile Include="Assets\Scripts\UI\Terms02UI.cs" />
+    <Compile Include="Assets\Scripts\UI\LotteryUI.cs" />
+    <Compile Include="Assets\Scripts\UI\GiftBoxLG.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingLG.cs" />
+    <Compile Include="Assets\Scripts\UI\BraveUI.cs" />
+    <Compile Include="Assets\Scripts\Test\TestCreateObj.cs" />
     <Compile Include="Assets\Scripts\Test\DragObj.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\EntityResources.cs" />
+    <Compile Include="Assets\Scripts\Test\RunTest.cs" />
+    <Compile Include="Assets\Scripts\UI\BagLG.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerCtl.cs" />
+    <Compile Include="Assets\Scripts\UI\Terms01UI.cs" />
     <Compile Include="Assets\Scripts\UI\BagUI.cs" />
+    <Compile Include="Assets\Scripts\UI\HomeUI.cs" />
     <Compile Include="Assets\Scripts\Manager\ConfigMng.cs" />
+    <Compile Include="Assets\Scripts\UI\HomeItemBtn.cs" />
+    <Compile Include="Assets\Scripts\Data\MapBlockData.cs" />
+    <Compile Include="Assets\Scripts\Common\MiniJSON.cs" />
     <Compile Include="Assets\Scripts\UI\ShopLG.cs" />
+    <Compile Include="Assets\Scripts\Splash\SplashController.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeLG.cs" />
     <Compile Include="Assets\Scripts\Test\TestTriger.cs" />
+    <Compile Include="Assets\Scripts\UI\BagItemCell.cs" />
+    <Compile Include="Assets\Scripts\Data\BlueprintData.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuLG.cs" />
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
     <Compile Include="Assets\Scripts\Test\TestAtt.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
+    <Compile Include="Assets\Scripts\Common\IAPStore.cs" />
     <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
     <Compile Include="Assets\Scripts\Manager\WorldMng.cs" />
     <Compile Include="Assets\Scripts\UI\CraftLG.cs" />
+    <Compile Include="Assets\Scripts\Game\Player\PlayerAnimatorEvent.cs" />
+    <Compile Include="Assets\Scripts\Network\NWData.cs" />
     <Compile Include="Assets\Scripts\Test\LookChange.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
     <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerEntity.cs" />
+    <Compile Include="Assets\Scripts\Game\Adventure\AdventureCtl.cs" />
     <Compile Include="Assets\Scripts\UI\ShopUI.cs" />
     <Compile Include="Assets\Scripts\Manager\NWMng.cs" />
+    <Compile Include="Assets\Scripts\Game\Player\BuilderPencil.cs" />
     <Compile Include="Assets\Scripts\Test\Test2.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
+    <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
+    <Compile Include="Assets\Scripts\UI\ChargeCell.cs" />
+    <Compile Include="Assets\Scripts\IAPTest.cs" />
     <Compile Include="Assets\Scripts\Data\UserData.cs" />
+    <Compile Include="Assets\Scripts\Test\TestAngle.cs" />
     <Compile Include="Assets\Scripts\Game\Player\ScreenDraggingCtl.cs" />
     <Compile Include="Assets\Scripts\UI\UILogicBase.cs" />
+    <Compile Include="Assets\Scripts\UI\BagSelectItem.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapCtl.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\MapBlock.cs" />
     <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
     <Compile Include="Assets\Scripts\UI\UICtl.cs" />
     <Compile Include="Assets\Scripts\UI\LoginLG.cs" />
+    <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
     <Compile Include="Assets\Scripts\Data\EntityData.cs" />
+    <Compile Include="Assets\Scripts\UI\ChargeUI.cs" />
+    <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
     <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\UI\CraftItemCell.cs" />
+    <Compile Include="Assets\Scripts\Test\Locomotion2.cs" />
+    <Compile Include="Assets\Scripts\Game\Player\PlayerBehavior.cs" />
     <Compile Include="Assets\Scripts\UI\HomeLG.cs" />
     <Compile Include="Assets\Scripts\UI\TermsLG.cs" />
-    <Compile Include="Assets\Scripts\Common\Single.cs" />
     <Compile Include="Assets\Scripts\UI\LoginUI.cs" />
+    <Compile Include="Assets\Scripts\Common\Single.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuUI.cs" />
     <Compile Include="Assets\Scripts\Manager\SettingMng.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopItemCell.cs" />
+    <Compile Include="Assets\Scripts\Data\MapData.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerButton.cs" />
     <Compile Include="Assets\Scripts\UI\BraveLG.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterEntity.cs" />
@@ -104,53 +146,22 @@
     <Compile Include="Assets\Scripts\Game\Map\EntityTransferGate.cs" />
     <Compile Include="Assets\Scripts\Common\CommonFunction.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
+    <Compile Include="Assets\Scripts\Manager\IAPManager.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
-    <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
-    <Compile Include="Assets\Scripts\Common\SaveLoadFile.cs" />
-    <Compile Include="Assets\Scripts\Manager\DataMng.cs" />
-    <Compile Include="Assets\Scripts\Test\TestRender.cs" />
-    <Compile Include="Assets\Scripts\Test\Locomotion1.cs" />
-    <Compile Include="Assets\Scripts\Game\Player\CameraCtl.cs" />
-    <Compile Include="Assets\Scripts\UI\Terms02UI.cs" />
-    <Compile Include="Assets\Scripts\UI\LotteryUI.cs" />
-    <Compile Include="Assets\Scripts\UI\GiftBoxLG.cs" />
-    <Compile Include="Assets\Scripts\UI\BraveUI.cs" />
-    <Compile Include="Assets\Scripts\Test\TestCreateObj.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\EntityResources.cs" />
-    <Compile Include="Assets\Scripts\UI\BagLG.cs" />
-    <Compile Include="Assets\Scripts\UI\Terms01UI.cs" />
-    <Compile Include="Assets\Scripts\UI\HomeUI.cs" />
-    <Compile Include="Assets\Scripts\UI\HomeItemBtn.cs" />
-    <Compile Include="Assets\Scripts\Data\MapBlockData.cs" />
-    <Compile Include="Assets\Scripts\Splash\SplashController.cs" />
-    <Compile Include="Assets\Scripts\UI\BagItemCell.cs" />
-    <Compile Include="Assets\Scripts\Data\BlueprintData.cs" />
-    <Compile Include="Assets\Scripts\UI\MenuLG.cs" />
-    <Compile Include="Assets\Scripts\Common\IAPStore.cs" />
-    <Compile Include="Assets\Scripts\Network\NWData.cs" />
-    <Compile Include="Assets\Scripts\Game\Player\BuilderPencil.cs" />
-    <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
-    <Compile Include="Assets\Scripts\UI\ChargeCell.cs" />
-    <Compile Include="Assets\Scripts\IAPTest.cs" />
-    <Compile Include="Assets\Scripts\Test\TestAngle.cs" />
-    <Compile Include="Assets\Scripts\UI\BagSelectItem.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\MapBlock.cs" />
-    <Compile Include="Assets\Scripts\UI\ChargeUI.cs" />
-    <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
-    <Compile Include="Assets\Scripts\UI\CraftItemCell.cs" />
-    <Compile Include="Assets\Scripts\Test\Locomotion2.cs" />
-    <Compile Include="Assets\Scripts\UI\MenuUI.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopItemCell.cs" />
-    <Compile Include="Assets\Scripts\Data\MapData.cs" />
-    <Compile Include="Assets\Scripts\Manager\IAPManager.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
-    <Compile Include="Assets\Scripts\Game\Player\PlayerBehavior.cs" />
-    <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
-    <Compile Include="Assets\Scripts\Game\Player\PlayerAnimatorEvent.cs" />
-    <Compile Include="Assets\Scripts\Game\Adventure\AdventureCtl.cs" />
-    <Compile Include="Assets\Scripts\Common\MiniJSON.cs" />
+    <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
+    <Compile Include="Assets\Datas\Mountain.cs" />
+    <Compile Include="Assets\Datas\Map.cs" />
+    <Compile Include="Assets\Datas\Resource.cs" />
+    <Compile Include="Assets\Datas\Block.cs" />
+    <Compile Include="Assets\Datas\Craft.cs" />
+    <Compile Include="Assets\Datas\Item.cs" />
+    <Compile Include="Assets\Datas\Base.cs" />
+    <Compile Include="Assets\Datas\TransferGate.cs" />
+    <Compile Include="Assets\Datas\Bonus.cs" />
+    <Compile Include="Assets\Datas\Building.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />
@@ -368,9 +379,6 @@
     </Reference>
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
-    </Reference>
-    <Reference Include="JsonConfigData">
-      <HintPath>Assets\Plugins\Lib\JsonConfigData.dll</HintPath>
     </Reference>
     <Reference Include="LitJSON">
       <HintPath>Assets\Plugins\Lib\LitJSON.dll</HintPath>
@@ -732,14 +740,23 @@
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Purchasing.SecurityCore">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.SecurityCore.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Purchasing">
       <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing.Codeless">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.Codeless.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
@@ -750,8 +767,17 @@
     <Reference Include="UnityEngine.Purchasing.SecurityStub">
       <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.SecurityStub.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Purchasing.Stores">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.Stores.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Monetization">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.Monetization.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Advertisements">
       <HintPath>Library\ScriptAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Purchasing">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
@@ -759,29 +785,11 @@
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing.SecurityCore">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.SecurityCore.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing.Codeless">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.Codeless.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Timeline.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing.Stores">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.Stores.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Monetization">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.Monetization.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Purchasing">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.Purchasing.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.Advertisements.Editor">
       <HintPath>Library\ScriptAssemblies\UnityEngine.Advertisements.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

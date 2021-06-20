@@ -4847,11 +4847,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5208175636263491426, guid: c093021a5884cbf4ab1137d88dd42bca, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -318
       objectReference: {fileID: 0}
     - target: {fileID: 7891827718188579263, guid: c093021a5884cbf4ab1137d88dd42bca, type: 3}
       propertyPath: m_Name
       value: GiftBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 7891827718188579263, guid: c093021a5884cbf4ab1137d88dd42bca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c093021a5884cbf4ab1137d88dd42bca, type: 3}
