@@ -147,7 +147,7 @@ public class DataMng : Single<DataMng>
         return count;
     }
 
-    public void AddItem(int itemID, object data, int count = 1, Action action = null)
+    public void AddItem(int itemID, int count = 1, Action action = null)
     {
         NWMng.E.AddItem((rp)=> 
         {
@@ -175,6 +175,20 @@ public class DataMng : Single<DataMng>
             if (action != null)
                 action();
         }, items);
+    }
+    public void AddItemInData(int itemID, int count, string data, Action action = null)
+    {
+
+        NWMng.E.AddItemInData((rp) =>
+        {
+            ConfigMng.JsonToItemList(rp[0]);
+
+            var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+            if (homeUI != null) homeUI.RefreshItemBtns();
+
+            if (action != null)
+                action();
+        }, itemID, count, data);
     }
     /// <summary>
     /// 消耗アイテム
