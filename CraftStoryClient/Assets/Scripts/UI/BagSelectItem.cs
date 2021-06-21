@@ -41,6 +41,8 @@ public class BagSelectItem : UIBase
             NWMng.E.EquitItem((rp) =>
             {
                 ConfigMng.JsonToItemList(rp[0]);
+                if(BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
+
                 BagLG.E.SelectItem = null;
             }, BagLG.E.SelectItem.ItemData.id, Index + 1);
         }
@@ -51,6 +53,8 @@ public class BagSelectItem : UIBase
                 NWMng.E.EquitItem((rp) =>
                 {
                     ConfigMng.JsonToItemList(rp[0]);
+                    if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
+
                     BagLG.E.SelectItem = null;
                 }, BagLG.E.SelectItem.ItemData.id, Index + 1);
             }, itemData.id, 0);
