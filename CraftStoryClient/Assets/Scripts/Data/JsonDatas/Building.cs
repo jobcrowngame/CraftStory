@@ -10,6 +10,5 @@ namespace JsonConfigData
         public int PosZ { get; set; }
         public int Angle { get; set; }
         public float OffsetY { get; set; }
-        public float DestroyTime { get; set; }
     }
 }

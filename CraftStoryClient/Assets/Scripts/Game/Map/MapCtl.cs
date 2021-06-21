@@ -10,7 +10,7 @@ public class MapCtl
     private Transform resourceParent;
     private Transform builderPencilParent;
 
-    private List<EntityResources> entityList;
+    private List<EntityResources> resourcesEntitys;
     private int entityID;
 
     public Transform CellParent { get => mapCellParent; }
@@ -18,7 +18,7 @@ public class MapCtl
     public MapCtl()
     {
         mapFactory = new MapDataFactory();
-        entityList = new List<EntityResources>();
+        resourcesEntitys = new List<EntityResources>();
 
         entityID = 0;
     }
@@ -63,7 +63,7 @@ public class MapCtl
                         if (mData.Map[x, y, z].NoInstantiate)
                             continue;
 
-                        mData.AddBlock(mData.Map[x, y, z]);
+                        mData.Add(mData.Map[x, y, z]);
                         mData.Map[x, y, z].ActiveBlock();
                     }
                 }
@@ -81,7 +81,7 @@ public class MapCtl
             if (resourceEntity != null)
             {
                 resourceEntity.Init(mData.Resources[i]);
-                entityList.Add(resourceEntity);
+                resourceEntity.EntityID = entityID++;
             }
         }
     }
@@ -94,6 +94,7 @@ public class MapCtl
         if (entity != null)
         {
             entity.Init(mData.TransferGate);
+            entity.EntityID = entityID++;
         }
     }
 
@@ -162,35 +163,14 @@ public class MapCtl
     public MapBlock CreateBlock(MapBlockData data, Transform parent)
     {
         var block = data.ActiveBlock(parent);
-        DataMng.E.MapData.AddBlock(data);
+        DataMng.E.MapData.Add(data);
         CheckNextToBlocks(data);
         return block;
     }
-
-    public EntityResources CreateResources(Vector3Int pos, int resourcesId)
-    {
-        if (!ConfigMng.E.Resource.ContainsKey(resourcesId))
-            return null;
-
-        if (IsOutRange(DataMng.E.MapData, pos))
-            return null;
-
-        var config = ConfigMng.E.Resource[resourcesId];
-        var entityData = new EntityData(config.ID, (ItemType)config.Type, pos);
-        
-        var resourceEntity = CommonFunction.Instantiate<EntityResources>(config.ResourcePath, resourceParent, pos);
-        if (resourceEntity != null)
-        {
-            resourceEntity.Init(entityData);
-            DataMng.E.MapData.AddResources(resourceEntity.Data);
-        }
-
-        return resourceEntity;
-    }
-
+   
     public void DeleteBlock(MapBlock block)
     {
-        DataMng.E.MapData.RemoveBlock(block.data.Pos);
+        DataMng.E.MapData.Remove(block.data.Pos);
         GameObject.Destroy(block.gameObject);
         CheckNextToBlocks(block.data);
     }
@@ -200,8 +180,7 @@ public class MapCtl
     }
     public void DeleteResource(EntityResources resource)
     {
-        DataMng.E.MapData.RemoveEntity(resource.Data);
-        entityList.Remove(resource);
+        resourcesEntitys.Remove(resource);
         GameObject.Destroy(resource.gameObject);
     }
 

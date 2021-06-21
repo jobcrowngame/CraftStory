@@ -113,13 +113,9 @@ public class PlayerCtl : MonoBehaviour
                 var entity = obj.GetComponent<EntityResources>();
                 if (entity != null)
                 {
-                    switch (entity.Type)
+                    switch (entity.EntityType)
                     {
-                        case ItemType.Workbench: 
-                        case ItemType.Kamado:
-                            var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft) as CraftUI;
-                            ui.SetType((ItemType)entity.Data.Config.Type);
-                            break;
+                        case EntityType.Craft: UICtl.E.OpenUI<CraftUI>(UIType.Craft); break;
                     }
                 }
             }
@@ -145,12 +141,7 @@ public class PlayerCtl : MonoBehaviour
                     break;
 
                 case ItemType.Blueprint:
-                    BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.relationData);
-                    break;
-
-                case ItemType.Workbench:
-                case ItemType.Kamado:
-                    CreateResources(selectItem.Config().ReferenceID, obj, Vector3Int.CeilToInt(pos));
+                    BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.Data);
                     break;
             }
         }
@@ -160,7 +151,7 @@ public class PlayerCtl : MonoBehaviour
         if (collider == null)
             return;
 
-        PlayerEntity.Behavior.Type = PlayerBehaviorType.Breack;
+        PlayerEntity.Behavior.Type = PlayerBehaviorType.BreackBlock;
 
         var cell = collider.GetComponent<MapBlock>();
         if (cell != null && DataMng.E.MapData.IsHome)
@@ -200,16 +191,8 @@ public class PlayerCtl : MonoBehaviour
         WorldMng.E.MapCtl.CreateBlock(pos, blockID);
         ConsumableSelectItem();
 
-        PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
-
-        Debug.Log("Create block " + pos);
-    }
-    private void CreateResources(int resourcesId, GameObject collider, Vector3Int pos)
-    {
-        WorldMng.E.MapCtl.CreateResources(pos, resourcesId);
-        ConsumableSelectItem();
-
-        PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
+        //Lock();
+        PlayerEntity.Behavior.Type = PlayerBehaviorType.CreateBlock;
 
         Debug.Log("Create block " + pos);
     }

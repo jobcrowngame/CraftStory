@@ -19,8 +19,8 @@ public class PlayerBehavior
             {
                 case PlayerBehaviorType.Waiting: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(0); break;
                 case PlayerBehaviorType.Run: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(1); break;
-                case PlayerBehaviorType.Create: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(2); break;
-                case PlayerBehaviorType.Breack: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(3); break;
+                case PlayerBehaviorType.CreateBlock: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(2); break;
+                case PlayerBehaviorType.BreackBlock: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(3); break;
                 case PlayerBehaviorType.None: break;
 
                 default: Debug.LogError("Not find behavior type " + value); break;
@@ -44,14 +44,13 @@ public class PlayerBehavior
             switch (selectItemType)
             {
                 case ItemType.None:
-                case ItemType.Block:
-                case ItemType.BuilderPencil:
-                case ItemType.NullBlueprint:
-                case ItemType.Blueprint:
-                case ItemType.Workbench:
-                case ItemType.Kamado:
                     break;
-
+                case ItemType.Block:
+                    break;
+                case ItemType.BuilderPencil:
+                    break;
+                case ItemType.Blueprint:
+                    break;
                 default: Debug.LogError("Not find ItemType " + value); break;
             }
         }
@@ -64,6 +63,6 @@ public enum PlayerBehaviorType
     None,
     Waiting,
     Run,
-    Create,
-    Breack,
+    CreateBlock,
+    BreackBlock,
 }

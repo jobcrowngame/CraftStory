@@ -4,7 +4,7 @@ using UnityEngine;
 public class EntityData
 {
     private int id;
-    private ItemType type;
+    private EntityType type;
     private Vector3 pos;
 
     public EntityData(string data)
@@ -14,15 +14,15 @@ public class EntityData
             return;
 
         id = int.Parse(datas[0]);
-        type = (ItemType)int.Parse(datas[1]);
+        type = (EntityType)int.Parse(datas[1]);
         pos = new Vector3(float.Parse(datas[2]), float.Parse(datas[3]), float.Parse(datas[4]));
     }
-    public EntityData(int id, ItemType type)
+    public EntityData(int id, EntityType type)
     {
         this.id = id;
         this.type = type;
     }
-    public EntityData(int id, ItemType type, Vector3 pos)
+    public EntityData(int id, EntityType type, Vector3 pos)
     {
         this.id = id;
         this.type = type;
@@ -30,7 +30,7 @@ public class EntityData
     }
 
     public int ID { get => id; }
-    public ItemType Type{ get => type; }
+    public EntityType Type{ get => type; }
     public Vector3 Pos
     {
         get => pos;
@@ -44,11 +44,9 @@ public class EntityData
         {
             switch (type)
             {
-                case ItemType.Block: 
-                case ItemType.Workbench: 
-                case ItemType.Kamado: return ConfigMng.E.Resource[id].ResourcePath;
-
-                case ItemType.TransferGate: return ConfigMng.E.TransferGate[id].ResourcesPath;
+                case EntityType.Resources: return ConfigMng.E.Resource[id].ResourcePath;
+                case EntityType.TransferGate: return ConfigMng.E.TransferGate[id].ResourcesPath;
+                case EntityType.Craft: return ConfigMng.E.Building[id].ResourceName;
                 default: Debug.LogError("not find config " + type); break;
             }
 
@@ -60,4 +58,11 @@ public class EntityData
     {
         return string.Format("{0}^{1}^{2}^{3}^{4}", id, (int)type, pos.x, pos.y, pos.z);
     }
+}
+
+public enum EntityType
+{
+    Resources,
+    TransferGate,
+    Craft,
 }
