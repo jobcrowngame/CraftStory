@@ -253,6 +253,7 @@ namespace ExcelToJson
 
                 data.ID = ToInt32(tbl.Rows[i]["ID"]);
                 data.ItemID = ToInt32(tbl.Rows[i]["ItemID"]);
+                data.Type = ToInt32(tbl.Rows[i]["Type"]);
                 data.Cost1 = ToInt32(tbl.Rows[i]["Cost1"]);
                 data.Cost1Count = ToInt32(tbl.Rows[i]["Cost1Count"]);
                 data.Cost2 = ToInt32(tbl.Rows[i]["Cost2"]);
@@ -281,6 +282,7 @@ namespace ExcelToJson
                 data.PosZ = ToInt32(tbl.Rows[i]["PosZ"]);
                 data.Angle = ToInt32(tbl.Rows[i]["Angle"]);
                 data.OffsetY = ToFloat(tbl.Rows[i]["OffsetY"]);
+                data.DestroyTime = ToFloat(tbl.Rows[i]["DestroyTime"]);
 
                 list.Add(data);
             }

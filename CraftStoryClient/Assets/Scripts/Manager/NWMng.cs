@@ -1,4 +1,5 @@
 ﻿using JsonConfigData;
+using LitJson;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ public class NWMng : MonoBehaviour
         wwwForm.AddField("code", (int)cmd);
         wwwForm.AddField("data", data.ToString());
 
-        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.URL, wwwForm))
+        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.LocalURL, wwwForm))
         {
             yield return www.SendWebRequest();
 
@@ -84,6 +85,32 @@ public class NWMng : MonoBehaviour
         data.Add(count);
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItem));
+    }
+    public void AddItemInData(Action<string[]> rp, int itemId, int count, string rdata)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.UserData.Account);
+        data.Add(itemId);
+        data.Add(count);
+        data.Add(rdata);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.AddItemInData));
+    }
+    public void AddItems(Action<string[]> rp, Dictionary<int, int> items)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.UserData.Account);
+
+        List<NWItemData> list = new List<NWItemData>();
+        foreach (var item in items)
+        {
+            list.Add(new NWItemData() { itemId = item.Key, count = item.Value });
+        }
+        data.Add(JsonMapper.ToJson(list));
+
+        StartCoroutine(HttpRequest(rp, data, CMD.AddItems));
     }
     public void RemoveItemByGuid(Action<string[]> rp, int guid, int count)
     {
@@ -158,11 +185,19 @@ public class NWMng : MonoBehaviour
         Login = 101,
 
         ItemList = 1001,
-        RemoveItemByGuid = 1002,
-        RemoveItemByItemId = 1003,
-        AddItem = 1004,
-        EquitItem = 1005,
-        Craft = 1006,
-        ClearAdventure = 1007,
+        RemoveItemByGuid,
+        RemoveItemByItemId,
+        AddItem,
+        AddItemInData,
+        AddItems,
+        EquitItem,
+        Craft,
+        ClearAdventure,
+    }
+
+    struct NWItemData
+    {
+        public int itemId;
+        public int count;
     }
 }

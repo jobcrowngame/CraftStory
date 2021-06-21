@@ -45,32 +45,11 @@ public class GiftBoxUI : UIBase
 
     public void AddBonus(List<int> bonus)
     {
-        Dictionary<int, int> items = new Dictionary<int, int>();
-        for (int i = 0; i < bonus.Count; i++)
-        {
-            var config = ConfigMng.E.Bonus[bonus[i]];
-            BonusToItems(items, config.Bonus1, config.BonusCount1);
-            BonusToItems(items, config.Bonus2, config.BonusCount2);
-            BonusToItems(items, config.Bonus3, config.BonusCount3);
-            BonusToItems(items, config.Bonus4, config.BonusCount4);
-            BonusToItems(items, config.Bonus5, config.BonusCount5);
-            BonusToItems(items, config.Bonus6, config.BonusCount6);
-        }
+        Dictionary<int, int> items = CommonFunction.GetItemsByBonus(bonus);
 
         foreach (var item in items)
         {
             AddItem(item.Key, item.Value);
-        }
-    }
-    private void BonusToItems(Dictionary<int, int> items, int itemId, int count)
-    {
-        if (items.ContainsKey(itemId))
-        {
-            items[itemId] += count;
-        }
-        else
-        {
-            items[itemId] = count;
         }
     }
     private void AddItem(int itemID, int count)

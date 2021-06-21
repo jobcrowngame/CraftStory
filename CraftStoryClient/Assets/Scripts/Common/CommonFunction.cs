@@ -117,4 +117,44 @@ public class CommonFunction
         var en = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true);
         return en.GetString(Encoding.Default.GetBytes(msg));
     }
+
+   
+
+    public static Dictionary<int, int> GetItemsByBonus(List<int> bonusIds)
+    {
+        Dictionary<int, int> items = new Dictionary<int, int>();
+        for (int i = 0; i < bonusIds.Count; i++)
+        {
+            GetItemsByBonus(bonusIds[i], ref items);
+        }
+
+        return items;
+    }
+    public static void GetItemsByBonus(int bonusId, ref Dictionary<int, int> items)
+    {
+        var config = ConfigMng.E.Bonus[bonusId];
+        if (config != null)
+        {
+            BonusToItems(config.Bonus1, config.BonusCount1, ref items);
+            BonusToItems(config.Bonus2, config.BonusCount2, ref items);
+            BonusToItems(config.Bonus3, config.BonusCount3, ref items);
+            BonusToItems(config.Bonus4, config.BonusCount4, ref items);
+            BonusToItems(config.Bonus5, config.BonusCount5, ref items);
+            BonusToItems(config.Bonus6, config.BonusCount6, ref items);
+        }
+    }
+    private static void BonusToItems(int itemId, int count, ref Dictionary<int, int> items)
+    {
+        if (itemId < 0)
+            return;
+        
+        if (items.ContainsKey(itemId))
+        {
+            items[itemId] += count;
+        }
+        else
+        {
+            items[itemId] = count;
+        }
+    }
 }

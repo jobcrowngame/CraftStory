@@ -2,7 +2,6 @@
 
 public class WorldMng : MonoBehaviour
 {
-    private static WorldMng entity;
     public static WorldMng E
     {
         get
@@ -13,29 +12,47 @@ public class WorldMng : MonoBehaviour
             return entity;
         }
     }
+    private static WorldMng entity;
 
-    private MapCtl mapCtl;
+    public CharacterCtl CharacterCtl
+    {
+        get
+        {
+            if (characterCtl == null)
+                characterCtl = new CharacterCtl();
+
+            return characterCtl;
+        }
+    }
     private CharacterCtl characterCtl;
 
-    public MapCtl MapCtl { get { return mapCtl; } }
+    public MapCtl MapCtl
+    {
+        get
+        {
+            if (mapCtl == null)
+                mapCtl = new MapCtl();
+
+            return mapCtl;
+        }
+    }
+    private MapCtl mapCtl;
 
     public void Init()
     {
-        mapCtl = new MapCtl();
-        characterCtl = new CharacterCtl();
     }
 
     public void CreateGameObjects()
     {
-        mapCtl.CreateMap(DataMng.E.MapData.NextMapID);
-        characterCtl.CreateCharacter();
+        MapCtl.CreateMap(DataMng.E.MapData.NextMapID);
+        CharacterCtl.CreateCharacter();
 
         AdventureCtl.E.Init();
     }
 
     public void OnQuit()
     {
-        if (mapCtl != null) mapCtl.OnQuit();
-        if (characterCtl != null) characterCtl.OnQuit();
+        if (MapCtl != null) MapCtl.OnQuit();
+        if (CharacterCtl != null) CharacterCtl.OnQuit();
     }
 }

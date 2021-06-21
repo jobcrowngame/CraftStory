@@ -25,8 +25,7 @@ public class MapData
 
     [NonSerialized]
     private MapBlockData[,,] map;
-    [NonSerialized]
-    private List<EntityData> entityList;
+    
 
     
     public EntityData TransferGate
@@ -47,7 +46,6 @@ public class MapData
         sizeZ = size.z;
 
         map = new MapBlockData[sizeX, sizeY, sizeZ];
-        entityList = new List<EntityData>();
     }
     public MapData(int mapID, MapBlockData[,,] map, Vector3Int size)
     {
@@ -69,10 +67,22 @@ public class MapData
     {
         return map[pos.x, pos.y, pos.z];
     }
-    public List<EntityData> Resources { get => entityList; }
-   
 
-    public void Add(MapBlockData data)
+    public List<EntityData> Resources 
+    {
+        get
+        {
+            if (entityList == null)
+                entityList = new List<EntityData>();
+            
+            return entityList;
+        }
+    }
+    [NonSerialized]
+    private List<EntityData> entityList;
+
+
+    public void AddBlock(MapBlockData data)
     {
         try
         {
@@ -93,7 +103,7 @@ public class MapData
         }
         
     }
-    public void Remove(Vector3 pos)
+    public void RemoveBlock(Vector3 pos)
     {
         try
         {
@@ -111,6 +121,15 @@ public class MapData
             Debug.LogError(ex.Message);
             Debug.LogError(ex.StackTrace);
         }
+    }
+
+    public void AddEntity(EntityData entity)
+    {
+        Resources.Add(entity);
+    }
+    public void RemoveEntity(EntityData entity)
+    {
+        Resources.Remove(entity);
     }
 
     public void MapDataToStringData()
@@ -177,17 +196,16 @@ public class MapData
             }
         }
 
-        entityList = new List<EntityData>();
         string[] entitys = strEntity.Split(',');
         transferGate = new EntityData(entitys[0]);
         for (int i = 1; i < entitys.Length; i++)
         {
-            entityList.Add(new EntityData(entitys[i]));
+            Resources.Add(new EntityData(entitys[i]));
         }
     }
 
     public void AddResources(EntityData resourceData)
     {
-        entityList.Add(resourceData);
+        Resources.Add(resourceData);
     }
 }
