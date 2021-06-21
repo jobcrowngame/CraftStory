@@ -51,16 +51,12 @@ public class CraftUI : UIBase
         }
     }
 
-    public override void Open()
-    {
-        base.Open();
-
-        selectCount = 1;
-    }
-
     public void SetType(ItemType type)
     {
         ClearCell(craftItemParent);
+
+        selectCount = 1;
+        SelectCount.text = selectCount.ToString();
 
         selectCraft = null;
         RefreshCost(null);
@@ -118,7 +114,10 @@ public class CraftUI : UIBase
         {
             NWMng.E.Craft((rp) => 
             {
-                ConfigMng.JsonToItemList(rp[0]);
+                NWMng.E.GetItemList((rp2) =>
+                {
+                    ConfigMng.JsonToItemList(rp[0]);
+                });
             }, selectCraft, selectCount);
         }
     }

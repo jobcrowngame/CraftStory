@@ -151,10 +151,11 @@ public class DataMng : Single<DataMng>
     {
         NWMng.E.AddItem((rp)=> 
         {
-            ConfigMng.JsonToItemList(rp[0]);
-
-            if (action != null)
-                action();
+            NWMng.E.GetItemList((rp2) =>
+            {
+                ConfigMng.JsonToItemList(rp[0]);
+                if (action != null) action();
+            });
         }, itemID, count);
     }
     public void AddItems(Dictionary<int,int> items, Action action = null)
@@ -164,10 +165,11 @@ public class DataMng : Single<DataMng>
 
         NWMng.E.AddItems((rp) =>
         {
-            ConfigMng.JsonToItemList(rp[0]);
-
-            if (action != null)
-                action();
+            NWMng.E.GetItemList((rp2) =>
+            {
+                ConfigMng.JsonToItemList(rp[0]);
+                if (action != null) action();
+            });
         }, items);
     }
     public void AddItemInData(int itemID, int count, string data, Action action = null)
@@ -175,10 +177,11 @@ public class DataMng : Single<DataMng>
 
         NWMng.E.AddItemInData((rp) =>
         {
-            ConfigMng.JsonToItemList(rp[0]);
-
-            if (action != null)
-                action();
+            NWMng.E.GetItemList((rp2) =>
+            {
+                ConfigMng.JsonToItemList(rp[0]);
+                if (action != null) action();
+            });
         }, itemID, count, data);
     }
     /// <summary>

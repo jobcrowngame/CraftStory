@@ -49,7 +49,6 @@ public class HomeItemBtn : UIBase
         btn.onClick.AddListener(OnClick);
 
         OnSelected(false);
-        CurSelectBtn = null;
     }
    
 
