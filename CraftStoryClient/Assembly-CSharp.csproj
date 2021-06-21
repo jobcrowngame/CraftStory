@@ -62,9 +62,11 @@
     <Compile Include="Assets\Scripts\Test\Locomotion1.cs" />
     <Compile Include="Assets\Scripts\Manager\ResourcesMng.cs" />
     <Compile Include="Assets\Scripts\Game\Player\CameraCtl.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\TransferGate.cs" />
     <Compile Include="Assets\Scripts\UI\Terms02UI.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryUI.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxLG.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Craft.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingLG.cs" />
     <Compile Include="Assets\Scripts\UI\BraveUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestCreateObj.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="Assets\Scripts\Game\Map\EntityResources.cs" />
     <Compile Include="Assets\Scripts\Test\RunTest.cs" />
     <Compile Include="Assets\Scripts\UI\BagLG.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Item.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerCtl.cs" />
     <Compile Include="Assets\Scripts\UI\Terms01UI.cs" />
     <Compile Include="Assets\Scripts\UI\BagUI.cs" />
@@ -87,10 +90,12 @@
     <Compile Include="Assets\Scripts\UI\BagItemCell.cs" />
     <Compile Include="Assets\Scripts\Data\BlueprintData.cs" />
     <Compile Include="Assets\Scripts\UI\MenuLG.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Building.cs" />
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
     <Compile Include="Assets\Scripts\Test\TestAtt.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Resource.cs" />
     <Compile Include="Assets\Scripts\Common\IAPStore.cs" />
     <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
     <Compile Include="Assets\Scripts\Manager\WorldMng.cs" />
@@ -109,6 +114,7 @@
     <Compile Include="Assets\Scripts\Test\Test2.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Block.cs" />
     <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeCell.cs" />
     <Compile Include="Assets\Scripts\IAPTest.cs" />
@@ -122,6 +128,7 @@
     <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
     <Compile Include="Assets\Scripts\UI\UICtl.cs" />
     <Compile Include="Assets\Scripts\UI\LoginLG.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Mountain.cs" />
     <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
     <Compile Include="Assets\Scripts\Data\EntityData.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeUI.cs" />
@@ -142,26 +149,19 @@
     <Compile Include="Assets\Scripts\Test\PlayerButton.cs" />
     <Compile Include="Assets\Scripts\UI\BraveLG.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterEntity.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Bonus.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterCtl.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityTransferGate.cs" />
     <Compile Include="Assets\Scripts\Common\CommonFunction.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Map.cs" />
     <Compile Include="Assets\Scripts\Manager\IAPManager.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Mountain.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Map.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Resource.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Block.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Craft.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Item.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\TransferGate.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Bonus.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Building.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />
