@@ -85,6 +85,10 @@ class ConfigMng : Single<ConfigMng>
         try
         {
             DataMng.E.Items = JsonMapper.ToObject<List<ItemData>>(jsonData);
+
+            Debug.Log("Item refresh " + DataMng.E.Items.Count);
+
+            if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
         }
         catch (System.Exception e)
         {

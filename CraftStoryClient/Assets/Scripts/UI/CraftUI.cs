@@ -60,8 +60,10 @@ public class CraftUI : UIBase
 
     public void SetType(ItemType type)
     {
-
         ClearCell(craftItemParent);
+
+        selectCraft = null;
+        RefreshCost(null);
 
         itemType = type;
         RefreshCraftItemList();
@@ -116,7 +118,6 @@ public class CraftUI : UIBase
         {
             NWMng.E.Craft((rp) => 
             {
-                Debug.LogWarning("craft surr hint");
                 ConfigMng.JsonToItemList(rp[0]);
             }, selectCraft, selectCount);
         }
@@ -126,10 +127,20 @@ public class CraftUI : UIBase
     {
         selectCraft = config;
 
-        costCells[0].SetInfo(config.Cost1, config.Cost1Count, selectCount);
-        costCells[1].SetInfo(config.Cost2, config.Cost2Count, selectCount);
-        costCells[2].SetInfo(config.Cost3, config.Cost3Count, selectCount);
-        costCells[3].SetInfo(config.Cost4, config.Cost4Count, selectCount);
+        if (config == null)
+        {
+            for (int i = 0; i < costCells.Length; i++)
+            {
+                costCells[i].SetInfo(-1, 0, 0);
+            }
+        }
+        else
+        {
+            costCells[0].SetInfo(config.Cost1, config.Cost1Count, selectCount);
+            costCells[1].SetInfo(config.Cost2, config.Cost2Count, selectCount);
+            costCells[2].SetInfo(config.Cost3, config.Cost3Count, selectCount);
+            costCells[3].SetInfo(config.Cost4, config.Cost4Count, selectCount);
+        }
     }
 
     public bool CanCreate(Craft config, int count)

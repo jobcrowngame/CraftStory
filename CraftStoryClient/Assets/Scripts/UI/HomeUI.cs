@@ -51,7 +51,6 @@ public class HomeUI : UIBase
         NWMng.E.GetItemList((rp) =>
         {
             ConfigMng.JsonToItemList(rp[0]);
-            RefreshItemBtns();
         });
 
         StartCoroutine("FadeIn");

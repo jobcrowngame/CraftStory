@@ -44,8 +44,15 @@ public class BagUI : UIBase
     {
         base.Open();
 
-        RefreshItems();
-        RefreshSelectItemBtns();
+        Debug.Log("Bag Open");
+
+        NWMng.E.GetItemList((rp) =>
+        {
+            ConfigMng.JsonToItemList(rp[0]);
+
+            RefreshItems();
+            RefreshSelectItemBtns();
+        });
     }
     public override void Close()
     {

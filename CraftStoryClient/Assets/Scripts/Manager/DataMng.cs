@@ -153,9 +153,6 @@ public class DataMng : Single<DataMng>
         {
             ConfigMng.JsonToItemList(rp[0]);
 
-            var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
-            if (homeUI != null) homeUI.RefreshItemBtns();
-
             if (action != null)
                 action();
         }, itemID, count);
@@ -169,9 +166,6 @@ public class DataMng : Single<DataMng>
         {
             ConfigMng.JsonToItemList(rp[0]);
 
-            var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
-            if (homeUI != null) homeUI.RefreshItemBtns();
-
             if (action != null)
                 action();
         }, items);
@@ -182,9 +176,6 @@ public class DataMng : Single<DataMng>
         NWMng.E.AddItemInData((rp) =>
         {
             ConfigMng.JsonToItemList(rp[0]);
-
-            var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
-            if (homeUI != null) homeUI.RefreshItemBtns();
 
             if (action != null)
                 action();
@@ -206,7 +197,6 @@ public class DataMng : Single<DataMng>
                 NWMng.E.GetItemList((rp2) =>
                 {
                     ConfigMng.JsonToItemList(rp2[0]);
-                    if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
                     if (BagLG.E.UI != null) BagLG.E.UI.RefreshItemByGuid(guid);
                 });
             }, guid, count);
@@ -222,8 +212,6 @@ public class DataMng : Single<DataMng>
                 NWMng.E.GetItemList((rp2) =>
                 {
                     ConfigMng.JsonToItemList(rp2[0]);
-                    if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
-                    if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
                 });
             }, itemID, count);
         }

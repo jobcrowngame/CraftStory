@@ -15,7 +15,6 @@ public class EntityTransferGate : EntityBase
                 ConfigMng.JsonToItemList(rp[0]);
                 GiftBoxUI ui = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox) as GiftBoxUI;
                 ui.AddBonus(AdventureCtl.E.BonusList);
-                //AdventureCtl.E.Clear();
             },AdventureCtl.E.BonusList);
         }
     }
