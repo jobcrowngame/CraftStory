@@ -40,8 +40,8 @@ public class PlayerEntity : CharacterEntity
         if (joystick == null || PlayerCtl.E.Lock)
             return;
 
-        if (Behavior.Type == PlayerBehaviorType.CreateBlock
-            || Behavior.Type == PlayerBehaviorType.BreackBlock)
+        if (Behavior.Type == PlayerBehaviorType.Create
+            || Behavior.Type == PlayerBehaviorType.Breack)
             return;
 
         if (joystick.IsWaiting)

@@ -94,4 +94,7 @@ public enum ItemType
     Block = 1,
     BuilderPencil = 50,
     Blueprint = 51,
+    Workbench = 1000,
+    Kamado = 1001,
+    TransferGate = 9999,
 }

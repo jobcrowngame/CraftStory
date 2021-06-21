@@ -17,6 +17,7 @@ public class MapBlock : MonoBehaviour
 
         if (clickingTime > data.BaseData.DestroyTime)
         {
+            clickingTime = 0;
             DataMng.E.AddItem(ConfigMng.E.Block[data.ID].ItemID, 1);
 
             Debug.Log("Delete cube. \n" + data.ToString()); ;

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class EntityResources : EntityBase
 {
@@ -10,8 +11,17 @@ public class EntityResources : EntityBase
 
         if (clickingTime > Data.Config.DestroyTime)
         {
-            AdventureCtl.E.AddBonus(Data.Config.BonusID);
-            WorldMng.E.MapCtl.DeleteResource(this);
+            clickingTime = 0;
+            var items = new Dictionary<int, int>();
+            CommonFunction.GetItemsByBonus(Data.Config.BonusID, ref items);
+
+            foreach (var key in items.Keys)
+            {
+                DataMng.E.AddItems(items, ()=> 
+                {
+                    WorldMng.E.MapCtl.DeleteResource(this);
+                });
+            }
         }
     }
     public void CancelClicking()

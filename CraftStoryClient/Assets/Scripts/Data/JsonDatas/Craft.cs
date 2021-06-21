@@ -4,6 +4,7 @@ namespace JsonConfigData
     public class Craft : Base
     {
         public int ItemID { get; set; }
+        public int Type { get; set; }
         public int Cost1 { get; set; }
         public int Cost1Count { get; set; }
         public int Cost2 { get; set; }

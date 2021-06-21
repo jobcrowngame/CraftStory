@@ -16,6 +16,8 @@ public class CraftUI : UIBase
     int selectCount = 1;
     Craft selectCraft;
 
+    private ItemType itemType;
+
     public override void Init()
     {
         base.Init();
@@ -47,8 +49,6 @@ public class CraftUI : UIBase
         {
             costCells[i] = costCellParent.GetChild(i).gameObject.AddComponent<CraftCostCell>();
         }
-
-        RefreshCraftItemList();
     }
 
     public override void Open()
@@ -58,11 +58,23 @@ public class CraftUI : UIBase
         selectCount = 1;
     }
 
+    public void SetType(ItemType type)
+    {
+
+        ClearCell(craftItemParent);
+
+        itemType = type;
+        RefreshCraftItemList();
+    }
+
     private void RefreshCraftItemList()
     {
         foreach (Craft item in ConfigMng.E.Craft.Values)
         {
-            AddCraftItem(item);
+            if (item.Type == (int)itemType)
+            {
+                AddCraftItem(item);
+            }
         }
     }
     private void AddCraftItem(Craft config)

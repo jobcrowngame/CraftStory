@@ -147,14 +147,34 @@ public class DataMng : Single<DataMng>
         return count;
     }
 
-    public void AddItem(int itemID, object data, int count = 1)
+    public void AddItem(int itemID, object data, int count = 1, Action action = null)
     {
         NWMng.E.AddItem((rp)=> 
         {
             ConfigMng.JsonToItemList(rp[0]);
+
             var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
             if (homeUI != null) homeUI.RefreshItemBtns();
+
+            if (action != null)
+                action();
         }, itemID, count);
+    }
+    public void AddItems(Dictionary<int,int> items, Action action = null)
+    {
+        if (items.Count <= 0)
+            return;
+
+        NWMng.E.AddItems((rp) =>
+        {
+            ConfigMng.JsonToItemList(rp[0]);
+
+            var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
+            if (homeUI != null) homeUI.RefreshItemBtns();
+
+            if (action != null)
+                action();
+        }, items);
     }
     /// <summary>
     /// 消耗アイテム
