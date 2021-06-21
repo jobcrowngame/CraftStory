@@ -152,11 +152,6 @@ public class PlayerCtl : MonoBehaviour
                 case ItemType.Kamado:
                     CreateResources(selectItem.Config().ReferenceID, obj, Vector3Int.CeilToInt(pos));
                     break;
-
-                case ItemType.Workbench:
-                case ItemType.Kamado:
-                    CreateResources(selectItem.Config().ReferenceID, obj, Vector3Int.CeilToInt(pos));
-                    break;
             }
         }
     }
