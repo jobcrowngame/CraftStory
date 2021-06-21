@@ -44,7 +44,6 @@ public class PlayerBehavior
             switch (selectItemType)
             {
                 case ItemType.None:
-<<<<<<< HEAD
                     break;
 
                 case ItemType.Block:
@@ -53,25 +52,15 @@ public class PlayerBehavior
                 case ItemType.BuilderPencil:
                     break;
 
-=======
-                case ItemType.Block:
-                case ItemType.BuilderPencil:
-                case ItemType.NullBlueprint:
->>>>>>> parent of fa89fe2 (update)
                 case ItemType.Blueprint:
-                case ItemType.Workbench:
-                case ItemType.Kamado:
                     break;
 
-<<<<<<< HEAD
                 case ItemType.Workbench:
                     break;
 
                 case ItemType.Kamado:
                     break;
 
-=======
->>>>>>> parent of fa89fe2 (update)
                 default: Debug.LogError("Not find ItemType " + value); break;
             }
         }

@@ -31,7 +31,7 @@ public class NWMng : MonoBehaviour
         wwwForm.AddField("code", (int)cmd);
         wwwForm.AddField("data", data.ToString());
 
-        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.LocalURL, wwwForm))
+        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.URL, wwwForm))
         {
             yield return www.SendWebRequest();
 
@@ -85,17 +85,6 @@ public class NWMng : MonoBehaviour
         data.Add(count);
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItem));
-    }
-    public void AddItemInData(Action<string[]> rp, int itemId, int count, string rdata)
-    {
-        var data = new NWData();
-        data.Add(DataMng.E.session);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(itemId);
-        data.Add(count);
-        data.Add(rdata);
-
-        StartCoroutine(HttpRequest(rp, data, CMD.AddItemInData));
     }
     public void AddItems(Action<string[]> rp, Dictionary<int, int> items)
     {
@@ -188,7 +177,6 @@ public class NWMng : MonoBehaviour
         RemoveItemByGuid,
         RemoveItemByItemId,
         AddItem,
-        AddItemInData,
         AddItems,
         EquitItem,
         Craft,

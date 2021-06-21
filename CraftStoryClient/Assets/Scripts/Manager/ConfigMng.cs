@@ -82,14 +82,6 @@ class ConfigMng : Single<ConfigMng>
 
     public static void JsonToItemList(string jsonData)
     {
-        try
-        {
-            DataMng.E.Items = JsonMapper.ToObject<List<ItemData>>(jsonData);
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError(jsonData);
-            Debug.LogError(e);
-        }
+        DataMng.E.Items = JsonMapper.ToObject<List<ItemData>>(jsonData);
     }
 }

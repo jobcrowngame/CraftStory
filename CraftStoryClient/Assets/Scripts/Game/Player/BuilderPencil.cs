@@ -90,7 +90,7 @@ public class BuilderPencil
 
         var blueprintData = new BlueprintData(blocks, new Vector2Int(maxX - minX, maxZ - minZ));
 
-        DataMng.E.AddItemInData(3002, 1, blueprintData.ToJosn());
+        DataMng.E.AddItem(3001, blueprintData, 1);
 
         CancelCreateBlueprint();
     }
@@ -103,7 +103,7 @@ public class BuilderPencil
         if (homeUI != null) homeUI.ShowBuilderPencilBtn(false);
     }
 
-    public void UseBlueprint(Vector3Int startPos, string data)
+    public void UseBlueprint(Vector3Int startPos, object data)
     {
         Debug.Log("UserBlueprint");
 
