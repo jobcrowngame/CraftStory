@@ -44,20 +44,11 @@ public class PlayerBehavior
             switch (selectItemType)
             {
                 case ItemType.None:
-                    break;
-
                 case ItemType.Block:
-                    break;
-
                 case ItemType.BuilderPencil:
-                    break;
-
+                case ItemType.NullBlueprint:
                 case ItemType.Blueprint:
-                    break;
-
                 case ItemType.Workbench:
-                    break;
-
                 case ItemType.Kamado:
                     break;
 
