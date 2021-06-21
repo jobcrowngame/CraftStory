@@ -145,7 +145,7 @@ public class PlayerCtl : MonoBehaviour
                     break;
 
                 case ItemType.Blueprint:
-                    BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.Data);
+                    BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.relationData);
                     break;
 
                 case ItemType.Workbench:

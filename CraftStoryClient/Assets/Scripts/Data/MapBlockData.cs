@@ -34,7 +34,7 @@ public class MapBlockData
         z = pos.z;
     }
 
-    public int ID { get => blockID; }
+    public int ID { get => blockID; set => blockID = value; }
     public int ItemID { get => Config.ItemID; }
     public Block Config { get => ConfigMng.E.Block[ID]; }
     public Vector3Int Pos
