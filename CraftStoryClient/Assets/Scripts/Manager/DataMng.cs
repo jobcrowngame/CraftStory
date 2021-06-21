@@ -167,7 +167,7 @@ public class DataMng : Single<DataMng>
         {
             NWMng.E.GetItemList((rp2) =>
             {
-                ConfigMng.JsonToItemList(rp[0]);
+                ConfigMng.JsonToItemList(rp2[0]);
                 if (action != null) action();
             });
         }, items);
@@ -179,7 +179,7 @@ public class DataMng : Single<DataMng>
         {
             NWMng.E.GetItemList((rp2) =>
             {
-                ConfigMng.JsonToItemList(rp[0]);
+                ConfigMng.JsonToItemList(rp2[0]);
                 if (action != null) action();
             });
         }, itemID, count, data);

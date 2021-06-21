@@ -43,6 +43,7 @@ public class BagSelectItem : UIBase
                 ConfigMng.JsonToItemList(rp[0]);
                 if(BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
 
+                PlayerCtl.E.ChangeSelectItem(BagLG.E.SelectItem.ItemData);
                 BagLG.E.SelectItem = null;
             }, BagLG.E.SelectItem.ItemData.id, Index + 1);
         }
@@ -55,9 +56,12 @@ public class BagSelectItem : UIBase
                     ConfigMng.JsonToItemList(rp[0]);
                     if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
 
+                    PlayerCtl.E.ChangeSelectItem(BagLG.E.SelectItem.ItemData);
                     BagLG.E.SelectItem = null;
                 }, BagLG.E.SelectItem.ItemData.id, Index + 1);
             }, itemData.id, 0);
         }
+
+        PlayerCtl.E.ChangeSelectItem(null);
     }
 }
