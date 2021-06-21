@@ -62,6 +62,8 @@ public class UICtl : Single<UICtl>
     }
     public T GetUI<T>(UIType uiType) where T : UIBase
     {
+        if (!uiDic.ContainsKey(uiType))
+            return null;
         return uiDic[uiType] as T;
     }
     public void AddUI(UIBase ui, UIType uiType)

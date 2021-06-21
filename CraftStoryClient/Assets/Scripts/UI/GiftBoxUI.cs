@@ -23,6 +23,7 @@ public class GiftBoxUI : UIBase
         OKBtn.onClick.AddListener(() => 
         {
             Close();
+            AdventureCtl.E.Clear();
             PlayerCtl.E.Lock = false;
             CommonFunction.GoToNextScene();
         });

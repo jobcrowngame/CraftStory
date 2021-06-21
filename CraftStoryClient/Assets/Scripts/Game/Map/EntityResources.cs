@@ -12,16 +12,9 @@ public class EntityResources : EntityBase
         if (clickingTime > Data.Config.DestroyTime)
         {
             clickingTime = 0;
+            AdventureCtl.E.AddBonus(Data.Config.BonusID);
             var items = new Dictionary<int, int>();
-            CommonFunction.GetItemsByBonus(Data.Config.BonusID, ref items);
-
-            foreach (var key in items.Keys)
-            {
-                DataMng.E.AddItems(items, ()=> 
-                {
-                    WorldMng.E.MapCtl.DeleteResource(this);
-                });
-            }
+            WorldMng.E.MapCtl.DeleteResource(this);
         }
     }
     public void CancelClicking()
