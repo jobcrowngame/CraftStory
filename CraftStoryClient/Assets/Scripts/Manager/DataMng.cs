@@ -1,4 +1,5 @@
 ﻿using JsonConfigData;
+using LitJson;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -153,7 +154,7 @@ public class DataMng : Single<DataMng>
         {
             NWMng.E.GetItemList((rp2) =>
             {
-                ConfigMng.JsonToItemList(rp2[0]);
+                GetItems(rp2[0]);
                 if (action != null) action();
             });
         }, itemID, count);
@@ -167,7 +168,7 @@ public class DataMng : Single<DataMng>
         {
             NWMng.E.GetItemList((rp2) =>
             {
-                ConfigMng.JsonToItemList(rp2[0]);
+                GetItems(rp2[0]);
                 if (action != null) action();
             });
         }, items);
@@ -179,7 +180,7 @@ public class DataMng : Single<DataMng>
         {
             NWMng.E.GetItemList((rp2) =>
             {
-                ConfigMng.JsonToItemList(rp2[0]);
+                GetItems(rp2[0]);
                 if (action != null) action();
             });
         }, itemID, count, data);
@@ -199,7 +200,7 @@ public class DataMng : Single<DataMng>
             {
                 NWMng.E.GetItemList((rp2) =>
                 {
-                    ConfigMng.JsonToItemList(rp2[0]);
+                    GetItems(rp2[0]);
                     if (BagLG.E.UI != null) BagLG.E.UI.RefreshItemByGuid(guid);
                 });
             }, guid, count);
@@ -214,7 +215,7 @@ public class DataMng : Single<DataMng>
             {
                 NWMng.E.GetItemList((rp2) =>
                 {
-                    ConfigMng.JsonToItemList(rp2[0]);
+                    GetItems(rp2[0]);
                 });
             }, itemID, count);
         }
@@ -261,5 +262,39 @@ public class DataMng : Single<DataMng>
         return itemList.Count > 0;
     }
 
+    public static void GetItems(string jsonData)
+    {
+        try
+        {
+            E.Items = JsonMapper.ToObject<List<ItemData>>(jsonData);
+
+            Debug.Log("Item refresh. ItemCount:" + E.Items.Count);
+
+            if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(jsonData);
+            Debug.LogError(e);
+        }
+    }
+    public static void GetCoins(string jsonData)
+    {
+        if (string.IsNullOrEmpty(jsonData))
+            return;
+
+        var coins = JsonMapper.ToObject<GetCoinsResponse>(jsonData);
+        E.UserData.Coin1 = coins.coin1;
+        E.UserData.Coin2 = coins.coin2;
+        E.UserData.Coin3 = coins.coin3;
+    }
+
     #endregion
+
+    struct GetCoinsResponse
+    {
+        public int coin1;
+        public int coin2;
+        public int coin3;
+    }
 }

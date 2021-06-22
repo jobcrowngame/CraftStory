@@ -48,7 +48,7 @@ public class BagUI : UIBase
 
         NWMng.E.GetItemList((rp) =>
         {
-            ConfigMng.JsonToItemList(rp[0]);
+            DataMng.GetItems(rp[0]);
 
             RefreshItems();
             RefreshSelectItemBtns();

@@ -84,20 +84,5 @@ class ConfigMng : Single<ConfigMng>
         }
     }
 
-    public static void JsonToItemList(string jsonData)
-    {
-        try
-        {
-            DataMng.E.Items = JsonMapper.ToObject<List<ItemData>>(jsonData);
-
-            Debug.Log("Item refresh. ItemCount:" + DataMng.E.Items.Count);
-
-            if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError(jsonData);
-            Debug.LogError(e);
-        }
-    }
+   
 }

@@ -40,7 +40,24 @@ public class ShopItemCell : UIBase
 
     private void OnClickBuyBtn()
     {
-
-        Debug.Log("OnClickBuyBtn " + config.ID);
+        if (config.Type == 1)
+        {
+            Debug.Log("OnClickBuyBtn " + config.ID);
+        }
+        else if (config.Type == 2)
+        {
+            NWMng.E.Buy((rp)=> 
+            {
+                NWMng.E.GetItemList((rp2) =>
+                {
+                    DataMng.GetItems(rp2[0]);
+                });
+                NWMng.E.GetCoins((rp3) => 
+                {
+                    DataMng.GetCoins(rp3[0]);
+                    ShopLG.E.UI.Refresh();
+                });
+            }, config.ID);
+        }
     }
 }

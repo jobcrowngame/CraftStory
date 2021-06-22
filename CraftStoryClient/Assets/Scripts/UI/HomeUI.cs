@@ -50,7 +50,11 @@ public class HomeUI : UIBase
 
         NWMng.E.GetItemList((rp) =>
         {
-            ConfigMng.JsonToItemList(rp[0]);
+            DataMng.GetItems(rp[0]);
+        });
+        NWMng.E.GetCoins((rp) =>
+        {
+            DataMng.GetCoins(rp[0]);
         });
 
         StartCoroutine("FadeIn");

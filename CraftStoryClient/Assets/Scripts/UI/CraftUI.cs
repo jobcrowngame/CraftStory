@@ -116,7 +116,7 @@ public class CraftUI : UIBase
             {
                 NWMng.E.GetItemList((rp2) =>
                 {
-                    ConfigMng.JsonToItemList(rp2[0]);
+                    DataMng.GetItems(rp2[0]);
                 });
             }, selectCraft, selectCount);
         }

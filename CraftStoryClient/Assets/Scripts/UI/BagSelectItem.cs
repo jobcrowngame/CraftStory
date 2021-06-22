@@ -33,7 +33,7 @@ public class BagSelectItem : UIBase
         {
             NWMng.E.EquitItem((rp) =>
             {
-                ConfigMng.JsonToItemList(rp[0]);
+                DataMng.GetItems(rp[0]);
                 if(BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
 
                 PlayerCtl.E.ChangeSelectItem(BagLG.E.SelectItem.ItemData);
@@ -46,7 +46,7 @@ public class BagSelectItem : UIBase
             {
                 NWMng.E.EquitItem((rp) =>
                 {
-                    ConfigMng.JsonToItemList(rp[0]);
+                    DataMng.GetItems(rp[0]);
                     if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
 
                     PlayerCtl.E.ChangeSelectItem(BagLG.E.SelectItem.ItemData);

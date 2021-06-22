@@ -157,8 +157,17 @@ public class NWMng : MonoBehaviour
         var data = new NWData();
         data.Add(DataMng.E.session);
         data.Add(DataMng.E.UserData.Account);
+        data.Add(shopId);
 
         StartCoroutine(HttpRequest(rp, data, CMD.Buy));
+    }
+    public void GetCoins(Action<string[]> rp)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.UserData.Account);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetCoins));
     }
 
 
@@ -201,7 +210,8 @@ public class NWMng : MonoBehaviour
         EquitItem,
         Craft,
         ClearAdventure,
-        Buy,
+        Buy = 1010,
+        GetCoins,
     }
 
     struct NWItemData
