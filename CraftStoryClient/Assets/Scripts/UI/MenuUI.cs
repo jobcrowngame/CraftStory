@@ -5,6 +5,7 @@ public class MenuUI : UIBase
     Button CloseBtn;
     //Button CraftBtn;
     Button AdventureBtn;
+    Button ShopBtn;
 
     public override void Init()
     {
@@ -20,5 +21,8 @@ public class MenuUI : UIBase
         AdventureBtn = FindChiled<Button>("AdventureBtn");
         DataMng.E.MapData.TransferGate = new EntityData(1000, ItemType.TransferGate);
         AdventureBtn.onClick.AddListener(CommonFunction.GoToNextScene);
+
+        ShopBtn = FindChiled<Button>("ShopBtn");
+        ShopBtn.onClick.AddListener(() => { UICtl.E.OpenUI<ShopUI>(UIType.Shop); });
     }
 }

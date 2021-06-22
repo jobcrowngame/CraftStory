@@ -73,7 +73,7 @@ public class HomeItemBtn : UIBase
 
         if (itemData == null)
         {
-            Icon.sprite = null;
+            Icon.sprite = ReadResources<Sprite>("Textures/icon_noimg");
             Count.text = "";
             OnSelected(false);
         }

@@ -15,19 +15,12 @@ public class BagSelectItem : UIBase
         transform.GetComponent<Button>().onClick.AddListener(OnClickSelectItem);
     }
 
-    public void SetItem(ItemData itemData)
-    {
-        Icon.sprite = itemData == null
-            ? null
-            : ReadResources<Sprite>(itemData.Config().IconResourcesPath);
-    }
-
     public void Refresh()
     {
         itemData = DataMng.E.GetItemByEquipedSite(Index + 1);
 
         Icon.sprite = itemData == null
-            ? null
+            ? ReadResources<Sprite>("Textures/icon_noimg")
             : ReadResources<Sprite>(itemData.Config().IconResourcesPath);
     }
 

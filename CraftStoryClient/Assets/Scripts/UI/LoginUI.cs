@@ -5,34 +5,17 @@ using System.Text;
 
 public class LoginUI : UIBase
 {
-    Text Login;
+    Image Start;
     Text Ver;
     Button BGBtn;
     Button Terms01Btn;
     Button Terms02Btn;
 
-    string LoginText01 = "ログイン...";
-    string LoginText02 = "ゲームスタート";
-
-    string[] texts;
-
     private void Awake()
     {
-        //var textAsset = Resources.Load("TestText/Test") as TextAsset;
-        //texts = textAsset.text.Split('^');
-        //Debug.Log(textAsset);
-
-        Init();
-    }
-
-    public override void Init()
-    {
-        base.Init();
-
         LoginLg.E.Init(this);
 
-        Login = FindChiled<Text>("Login");
-        Login.text = LoginText01;
+        Start = FindChiled<Image>("Start");
 
         Ver = FindChiled<Text>("Ver");
         Ver.text = "Ver:1.0.0";
@@ -54,7 +37,7 @@ public class LoginUI : UIBase
         Debug.Log("ログイン成功しました。");
         Debug.LogFormat("ようこそ、{0}様", DataMng.E.UserData.Account);
 
-        Login.text = LoginText02;
+        Start.sprite = ReadResources<Sprite>("Textures/icon_gamestart");
 
         BGBtn.enabled = true;
     }

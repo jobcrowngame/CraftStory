@@ -17,7 +17,7 @@ public class CraftCostCell : UIBase
         if (itemId < 0)
         {
             Count.text = "";
-            Icon.sprite = null;
+            Icon.sprite = ReadResources<Sprite>("Textures/icon_noimg");
         }
         else
         {

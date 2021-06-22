@@ -81,6 +81,7 @@ namespace ExcelToJson
                 case "Item": list = Item(tbl); break;
                 case "Craft": list = Craft(tbl); break;
                 case "Building": list = Building(tbl); break;
+                case "Shop": list = Shop(tbl); break;
                 default: Console.WriteLine("not find fileName function."); break;
             }
 
@@ -283,6 +284,28 @@ namespace ExcelToJson
                 data.Angle = ToInt32(tbl.Rows[i]["Angle"]);
                 data.OffsetY = ToFloat(tbl.Rows[i]["OffsetY"]);
                 data.DestroyTime = ToFloat(tbl.Rows[i]["DestroyTime"]);
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Shop(DataTable tbl)
+        {
+            List<Shop> list = new List<Shop>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Shop();
+                               
+                data.ID = ToInt32(tbl.Rows[i]["ID"]);
+                data.IconResources = ToString(tbl.Rows[i]["IconResources"]);
+                data.Type = ToInt32(tbl.Rows[i]["Type"]);
+                data.Name = ToString(tbl.Rows[i]["Name"]);
+                data.Des = ToString(tbl.Rows[i]["Des"]);
+                data.BtnText = ToString(tbl.Rows[i]["BtnText"]);
+                data.LimitedCount = ToInt32(tbl.Rows[i]["LimitedCount"]);
+                data.CostItemID = ToInt32(tbl.Rows[i]["CostItemID"]);
+                data.CostCount = ToInt32(tbl.Rows[i]["CostCount"]);
+                data.Bonus = ToInt32(tbl.Rows[i]["Bonus"]);
 
                 list.Add(data);
             }

@@ -1,14 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UnityEngine;
 
 public class ShopLG : UILogicBase<ShopLG, ShopUI>
 {
-    private string showcaseName;
-    public string ShowcaseName
+    public ShopUiType ShopUIType
     {
-        get { return showcaseName; }
+        get => shopUIType;
+        set
+        {
+            if (shopUIType == value)
+                return;
+
+            shopUIType = value;
+
+            UI.IsChargeWind(shopUIType == ShopUiType.Charge);
+            UI.SetTitle2(GetTitle2Text());
+            UI.RefreshItems(shopUIType);
+        }
     }
+    private ShopUiType shopUIType;
+
+    private string GetTitle2Text()
+    {
+        switch (ShopUIType)
+        {
+            case ShopUiType.Charge: return "クラフトシート";
+            case ShopUiType.Exchange: return "交換";
+
+            default: Debug.LogError("not find shop ui type " + ShopUIType); break;
+        }
+
+        return "";
+    }
+}
+
+public enum ShopUiType
+{
+    Charge = 1,
+    Exchange,
 }
