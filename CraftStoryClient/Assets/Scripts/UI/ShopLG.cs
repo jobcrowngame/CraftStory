@@ -23,7 +23,7 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
     {
         switch (ShopUIType)
         {
-            case ShopUiType.Charge: return "クラフトシート";
+            case ShopUiType.Charge: return "クラフトシード";
             case ShopUiType.Exchange: return "交換";
 
             default: Debug.LogError("not find shop ui type " + ShopUIType); break;

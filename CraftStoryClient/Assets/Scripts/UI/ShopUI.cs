@@ -29,7 +29,7 @@ public class ShopUI : UIBase
         ChageWind = FindChiled("ChargeWind");
 
         title = FindChiled<TitleUI>("Title");
-        title.SetTitle("もちもの");
+        title.SetTitle("ショップ");
         title.SetOnClose(() => { Close(); });
 
         itemGridRoot = FindChiled("Grid", ItemsWind.gameObject);

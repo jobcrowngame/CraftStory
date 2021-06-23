@@ -7,10 +7,10 @@ public class ShopItemCell : UIBase
 {
     Transform Limited;
     Image Icon;
-    Text Name;
     Text Des;
     Button BuyBtn;
     Text BuyBtnText;
+    Image BtnCostIcon;
 
     private Shop config;
 
@@ -18,12 +18,12 @@ public class ShopItemCell : UIBase
     {
         Limited = FindChiled("Limited");
         Icon = FindChiled<Image>("Icon");
-        Name = FindChiled<Text>("Name");
         Des = FindChiled<Text>("Des");
 
         BuyBtn = FindChiled<Button>("BuyBtn");
         BuyBtnText = FindChiled<Text>("Text", BuyBtn.transform);
         BuyBtn.onClick.AddListener(OnClickBuyBtn);
+        BtnCostIcon = FindChiled<Image>("Image", BuyBtn.transform);
     }
 
     public override void Init<T>(T t)
@@ -34,17 +34,21 @@ public class ShopItemCell : UIBase
 
         Limited.gameObject.SetActive(config.LimitedCount > 0);
         Icon.sprite = ReadResources<Sprite>(config.IconResources);
-        Name.text = config.Name;
         Des.text = config.Des;
         BuyBtnText.text = config.BtnText;
+
+        if (config.Type != 1)
+        {
+            BtnCostIcon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[config.CostItemID].IconResourcesPath);
+            BtnCostIcon.gameObject.SetActive(true);
+        }
     }
 
     private void OnClickBuyBtn()
     {
         if (config.Type == 1)
         {
-            Debug.Log("OnClickBuyBtn " + config.Name);
-
+            //Debug.Log("OnClickBuyBtn " + config.Name);
             //NWMng.E.IAP.OnPurchaseClicked(config.Name);
         }
         else if (config.Type == 2)
