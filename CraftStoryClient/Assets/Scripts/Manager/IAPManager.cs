@@ -66,6 +66,8 @@ public class IAPManager : IStoreListener
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
     {
         Logger.E.Log("購入成功.");
+        Logger.E.Log("[ID]" + e.purchasedProduct.transactionID);
+        Logger.E.Log("[receipt]" + e.purchasedProduct.receipt);
         return PurchaseProcessingResult.Complete;
     }
 
