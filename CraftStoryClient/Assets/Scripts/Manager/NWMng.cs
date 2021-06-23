@@ -169,6 +169,18 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetCoins));
     }
+    public void Charge(Action<string[]> rp, string productId, int money, string transactionID, string rereceipt)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.UserData.Account);
+        data.Add(productId);
+        data.Add(money);
+        data.Add(transactionID);
+        data.Add(rereceipt);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.Charge));
+    }
 
 
     public void ClearAdventure(Action<string[]> rp, List<int> resources)
@@ -212,6 +224,8 @@ public class NWMng : MonoBehaviour
         ClearAdventure,
         Buy = 1010,
         GetCoins,
+
+        Charge = 9000,
     }
 
     struct NWItemData

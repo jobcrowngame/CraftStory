@@ -27,6 +27,12 @@ public class IAPManager : IStoreListener
             builder.AddProduct("craftstory_limit_4400", ProductType.Consumable);
 
             UnityPurchasing.Initialize(this, builder);
+
+            string receipt = builder.Configure<IAppleConfiguration>().appReceipt;
+            Debug.Log(receipt);
+
+            bool canMakePayments = builder.Configure<IAppleConfiguration>().canMakePayments;
+            Debug.Log(canMakePayments);
         }
         catch (System.Exception ex)
         {
@@ -43,6 +49,43 @@ public class IAPManager : IStoreListener
 
         this.controller = controller;
         this.extensions = extensions;
+
+        foreach (var product in controller.products.all)
+        {
+            Logger.E.Log("[ProductId]" + product.definition.storeSpecificId);
+            Logger.E.Log("[Title]" + product.metadata.localizedTitle);
+        }
+
+        extensions.GetExtension<IAppleExtensions>().RegisterPurchaseDeferredListener(product => {
+            Logger.E.Log("RegisterPurchaseDeferredListener" + product.definition.id);
+        });
+
+        extensions.GetExtension<IAppleExtensions>().RestoreTransactions(result => {
+            if (result)
+            {
+                // なにかがリストアされたというわけではありません
+                // 単にリストアの処理が終了したということです
+                Logger.E.Log("リストア成功");
+            }
+            else
+            {
+                // リストア失敗
+                Logger.E.Log("リストア失敗");
+            }
+        });
+
+        extensions.GetExtension<IAppleExtensions>().RefreshAppReceipt(receipt => {
+            // リクエストが成功したら、このハンドラーが呼び出されます
+            // レシートは最新の App Store レシート
+            Logger.E.Log(receipt);
+            Logger.E.Log("successCallback");
+        },
+        () => {
+            // リクエストが失敗したら、このハンドラーが呼び出されます。
+            // 例えば、ネットワークが使用不可であったり、
+            // ユーザーが誤ったパスワードを入力した場合など。
+            Logger.E.Log("RefreshAppReceipt Error");
+        });
 
         Logger.E.Log("UnityPurchasing Init OK! 初期化完了");
     }
@@ -66,9 +109,23 @@ public class IAPManager : IStoreListener
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
     {
         Logger.E.Log("購入成功.");
+        Product product = e.purchasedProduct;
+
+        Logger.E.Log(e.purchasedProduct.metadata.isoCurrencyCode);
         Logger.E.Log("[ID]" + e.purchasedProduct.transactionID);
-        Logger.E.Log("[receipt]" + e.purchasedProduct.receipt);
-        return PurchaseProcessingResult.Complete;
+
+        var productId = product.definition.storeSpecificId;
+        var money = 120;
+        var receiptId = e.purchasedProduct.transactionID;
+        var receipt = product.receipt;
+
+        NWMng.E.Charge((rp) => 
+        {
+            controller.ConfirmPendingPurchase(product);
+        }, productId, money, receiptId, receipt);
+
+
+        return PurchaseProcessingResult.Pending;
     }
 
     /// <summary>
@@ -77,6 +134,12 @@ public class IAPManager : IStoreListener
     public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
     {
         Logger.E.Error("購入失敗.");
+
+        if (p == PurchaseFailureReason.PurchasingUnavailable)
+        {
+            // デバイス設定で IAP が無効である場合があります。
+            Logger.E.Error("PurchaseFailureReason.PurchasingUnavailable");
+        }
     }
 
     // 購入処理を開始するために、ユーザーが '購入' ボタン
