@@ -31,7 +31,7 @@ public class NWMng : MonoBehaviour
         wwwForm.AddField("code", (int)cmd);
         wwwForm.AddField("data", data.ToString());
 
-        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.URL, wwwForm))
+        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.LocalURL, wwwForm))
         {
             yield return www.SendWebRequest();
 
@@ -169,15 +169,13 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetCoins));
     }
-    public void Charge(Action<string[]> rp, string productId, int money, string transactionID, string rereceipt)
+    public void Charge(Action<string[]> rp, string productId, string transactionID)
     {
         var data = new NWData();
         data.Add(DataMng.E.session);
         data.Add(DataMng.E.UserData.Account);
         data.Add(productId);
-        data.Add(money);
         data.Add(transactionID);
-        data.Add(rereceipt);
 
         StartCoroutine(HttpRequest(rp, data, CMD.Charge));
     }

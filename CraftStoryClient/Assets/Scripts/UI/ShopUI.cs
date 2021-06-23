@@ -16,6 +16,8 @@ public class ShopUI : UIBase
 
     IAPManager IAP;
 
+    ShopItemCell[] chargeBtns;
+
     public override void Init()
     {
         base.Init();
@@ -23,13 +25,15 @@ public class ShopUI : UIBase
         ShopLG.E.Init(this);
         btns = new Button[2];
 
+        ItemsWind = FindChiled("ItemsWind");
+        ChageWind = FindChiled("ChargeWind");
+
         title = FindChiled<TitleUI>("Title");
         title.SetTitle("‚à‚¿‚à‚Ì");
         title.SetOnClose(() => { Close(); });
 
-        var itemsParent = FindChiled("Items");
-        itemGridRoot = FindChiled("ItemGrid");
-        Title2 = FindChiled<Text>("ItemsTitle", itemsParent);
+        itemGridRoot = FindChiled("Grid", ItemsWind.gameObject);
+        Title2 = FindChiled<Text>("ItemsTitle");
 
         var btnsParent = FindChiled("BtnGrid");
         btns[0] = FindChiled<Button>("Button (1)");
@@ -37,15 +41,28 @@ public class ShopUI : UIBase
         btns[1] = FindChiled<Button>("Button (2)");
         btns[1].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Exchange; });
 
-        ItemsWind = FindChiled("ItemsWind");
-        ChageWind = FindChiled("ChargeWind");
-
         ShopLG.E.ShopUIType = ShopUiType.Charge;
 
         Refresh();
 
         IAP = new IAPManager();
         IAP.Init();
+
+        var chargeBtnParent = FindChiled("Grid", ChageWind.gameObject);
+        chargeBtns = new ShopItemCell[chargeBtnParent.childCount];
+        for (int i = 0; i < chargeBtnParent.childCount; i++)
+        {
+            chargeBtns[i] = chargeBtnParent.GetChild(i).GetComponent<ShopItemCell>();
+        }
+
+        chargeBtns[0].Init(ConfigMng.E.Shop[1]);
+        chargeBtns[1].Init(ConfigMng.E.Shop[2]);
+        chargeBtns[2].Init(ConfigMng.E.Shop[3]);
+        chargeBtns[3].Init(ConfigMng.E.Shop[4]);
+        chargeBtns[4].Init(ConfigMng.E.Shop[5]);
+        chargeBtns[5].Init(ConfigMng.E.Shop[6]);
+        chargeBtns[6].Init(ConfigMng.E.Shop[7]);
+        chargeBtns[7].Init(ConfigMng.E.Shop[8]);
     }
 
     public void Refresh()

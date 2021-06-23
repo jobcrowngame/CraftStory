@@ -83,6 +83,4 @@ class ConfigMng : Single<ConfigMng>
             Debug.LogError(ex);
         }
     }
-
-   
 }

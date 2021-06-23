@@ -115,15 +115,19 @@ public class IAPManager : IStoreListener
         Logger.E.Log("[ID]" + e.purchasedProduct.transactionID);
 
         var productId = product.definition.storeSpecificId;
-        var money = 120;
         var receiptId = e.purchasedProduct.transactionID;
         var receipt = product.receipt;
 
         NWMng.E.Charge((rp) => 
         {
             controller.ConfirmPendingPurchase(product);
-        }, productId, money, receiptId, receipt);
 
+            NWMng.E.GetCoins((rp) =>
+            {
+                DataMng.GetCoins(rp[0]);
+                if (ShopLG.E.UI != null) ShopLG.E.UI.Refresh();
+            });
+        }, productId, receiptId);
 
         return PurchaseProcessingResult.Pending;
     }
