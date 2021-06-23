@@ -11,8 +11,10 @@ public class LoginUI : UIBase
     Button Terms01Btn;
     Button Terms02Btn;
 
-    private void Awake()
+    public override void Init()
     {
+        base.Init();
+
         LoginLg.E.Init(this);
 
         Start = FindChiled<Image>("Start");

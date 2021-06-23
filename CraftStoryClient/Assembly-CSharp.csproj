@@ -165,6 +165,8 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
     <Compile Include="Assets\Scripts\UI\Common\TitleUI.cs" />
     <Compile Include="Assets\Scripts\Manager\Logger.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\HIntBarUI.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\ErrorMsg.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />

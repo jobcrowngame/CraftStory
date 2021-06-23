@@ -91,6 +91,22 @@ public class CommonFunction
 
         return componte;
     }
+    public static T InstantiateUI<T>(string resourcesPath, Transform parent) where T : UIBase
+    {
+        var resources = ResourcesMng.E.ReadResources(resourcesPath);
+        if (resources == null)
+            return null;
+
+        var obj = GameObject.Instantiate(resources, parent) as GameObject;
+        if (obj == null)
+            return null;
+
+        var cell = obj.GetComponent<T>();
+        if (cell == null)
+            cell = obj.AddComponent<T>();
+
+        return cell;
+    }
 
     public static void GoToNextScene()
     {
@@ -155,6 +171,15 @@ public class CommonFunction
         else
         {
             items[itemId] = count;
+        }
+    }
+
+    public static void ShowMsgBar(int errCode)
+    {
+        var ui = InstantiateUI<HIntBarUI>("Prefabs/UI/Common/HintBar", UICtl.E.Root);
+        if (ui != null)
+        {
+            ui.SetMsg(ConfigMng.E.ErrorMsg[errCode].Message);
         }
     }
 }

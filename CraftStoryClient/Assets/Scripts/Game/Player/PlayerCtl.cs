@@ -65,7 +65,7 @@ public class PlayerCtl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            UICtl.E.OpenUI<ChargeUI>(UIType.Charge);
+            CommonFunction.ShowMsgBar(1);
         }
     }
 

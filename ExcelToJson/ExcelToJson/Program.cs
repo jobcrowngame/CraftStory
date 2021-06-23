@@ -82,6 +82,7 @@ namespace ExcelToJson
                 case "Craft": list = Craft(tbl); break;
                 case "Building": list = Building(tbl); break;
                 case "Shop": list = Shop(tbl); break;
+                case "ErrorMsg": list = ErrorMsg(tbl); break;
                 default: Console.WriteLine("not find fileName function."); break;
             }
 
@@ -306,6 +307,20 @@ namespace ExcelToJson
                 data.CostItemID = ToInt32(tbl.Rows[i]["CostItemID"]);
                 data.CostCount = ToInt32(tbl.Rows[i]["CostCount"]);
                 data.Bonus = ToInt32(tbl.Rows[i]["Bonus"]);
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object ErrorMsg(DataTable tbl)
+        {
+            List<ErrorMsg> list = new List<ErrorMsg>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new ErrorMsg();
+
+                data.ID = ToInt32(tbl.Rows[i]["ID"]);
+                data.Message = ToString(tbl.Rows[i]["Message"]);
 
                 list.Add(data);
             }

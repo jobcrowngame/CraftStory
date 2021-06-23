@@ -104,10 +104,15 @@ public class CraftUI : UIBase
     }
     private void OnCraft()
     {
-        Debug.Log("CraftBtn");
+        if (selectCraft == null)
+        { 
+            CommonFunction.ShowMsgBar(2);
+            return;
+        }
+
         if (!CanCreate(selectCraft, selectCount))
         {
-            Debug.LogWarning("no item hint");
+            CommonFunction.ShowMsgBar(1);
             return;
         }
         else
@@ -144,6 +149,9 @@ public class CraftUI : UIBase
 
     public bool CanCreate(Craft config, int count)
     {
+        if (config == null)
+            return false;
+
         bool ret = true;
 
         if (ret && config.Cost1 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost1) >= count;

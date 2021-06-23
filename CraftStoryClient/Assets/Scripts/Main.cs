@@ -26,6 +26,7 @@ public class Main : MonoBehaviour
         yield return LoadData();
         yield return NWMng.E.InitCoroutine();
 
+        UICtl.E.OpenUI<LoginUI>(UIType.Login);
         LoginLg.E.Login();
     }
 
