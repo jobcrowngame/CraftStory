@@ -1,4 +1,4 @@
-using JsonConfigData;
+ï»¿using JsonConfigData;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.UI;
@@ -29,7 +29,7 @@ public class ShopUI : UIBase
         ChageWind = FindChiled("ChargeWind");
 
         title = FindChiled<TitleUI>("Title");
-        title.SetTitle("‚à‚¿‚à‚Ì");
+        title.SetTitle("ã‚‚ã¡ã‚‚ã®");
         title.SetOnClose(() => { Close(); });
 
         itemGridRoot = FindChiled("Grid", ItemsWind.gameObject);
