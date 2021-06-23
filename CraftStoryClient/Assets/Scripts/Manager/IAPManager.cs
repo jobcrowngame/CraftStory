@@ -5,29 +5,32 @@ public class IAPManager : IStoreListener
 {
     private IStoreController controller;
     private IExtensionProvider extensions;
-    private IAPTest iap;
 
     private IAPStore iapStore;
 
-    public void Init(IAPTest iap)
+    public void Init()
     {
-        this.iap = iap;
-
         iapStore = new IAPStore();
 
-        iap.ShowMsg("初期化開始");
+        Logger.E.Log("初期化開始");
 
         try
         {
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
             builder.AddProduct("craftstory_120", ProductType.Consumable);
-            //builder.AddProduct("craftstory_free", ProductType.Consumable);
+            builder.AddProduct("craftstory_980", ProductType.Consumable);
+            builder.AddProduct("craftstory_1960", ProductType.Consumable);
+            builder.AddProduct("craftstory_3060", ProductType.Consumable);
+            builder.AddProduct("craftstory_4900", ProductType.Consumable);
+            builder.AddProduct("craftstory_limit_490", ProductType.Consumable);
+            builder.AddProduct("craftstory_limit_1480", ProductType.Consumable);
+            builder.AddProduct("craftstory_limit_4400", ProductType.Consumable);
 
             UnityPurchasing.Initialize(this, builder);
         }
         catch (System.Exception ex)
         {
-            iap.ShowMsg(ex.Message);
+            Logger.E.Error(ex.Message);
         }
     }
 
@@ -36,12 +39,12 @@ public class IAPManager : IStoreListener
     /// </summary>
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
-        Debug.Log("OnInitialized");
+        Logger.E.Log("OnInitialized");
 
         this.controller = controller;
         this.extensions = extensions;
 
-        iap.ShowMsg("UnityPurchasing Init OK! 初期化完了");
+        Logger.E.Log("UnityPurchasing Init OK! 初期化完了");
     }
 
     /// <summary>
@@ -52,7 +55,7 @@ public class IAPManager : IStoreListener
     /// </summary>
     public void OnInitializeFailed(InitializationFailureReason error)
     {
-        iap.ShowMsg("UnityPurchasing Init Fail! 初期化失敗.\n" + error);
+        Logger.E.Error("UnityPurchasing Init Fail! 初期化失敗.\n" + error);
     }
 
     /// <summary>
@@ -62,7 +65,7 @@ public class IAPManager : IStoreListener
     /// </summary>
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
     {
-        iap.ShowMsg("購入成功.");
+        Logger.E.Log("購入成功.");
         return PurchaseProcessingResult.Complete;
     }
 
@@ -71,14 +74,14 @@ public class IAPManager : IStoreListener
     /// </summary>
     public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
     {
-        iap.ShowMsg("購入失敗.");
+        Logger.E.Error("購入失敗.");
     }
 
     // 購入処理を開始するために、ユーザーが '購入' ボタン
     // を押すと、関数が呼び出されます。
     public void OnPurchaseClicked(string productId)
     {
-        iap.ShowMsg("購入開始." + productId);
+        Logger.E.Log("購入開始." + productId);
         controller.InitiatePurchase(productId);
     }
 }

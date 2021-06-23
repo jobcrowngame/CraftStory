@@ -1,9 +1,5 @@
-﻿using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 public class IAPTest : MonoBehaviour
 {
@@ -16,7 +12,7 @@ public class IAPTest : MonoBehaviour
         InitBtn.onClick.AddListener(() => 
         {
             iapMng = new IAPManager();
-            iapMng.Init(this);
+            iapMng.Init();
         });
     }
 

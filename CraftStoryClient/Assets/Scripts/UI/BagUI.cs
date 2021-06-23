@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class BagUI : UIBase
 {
-    Text moneyText;
+    TitleUI title;
     Transform itemGridRoot;
-    Button closeBtn;
     Dictionary<string, BagItemCell> cellDic;
     BagSelectItem[] selectItems;
+
 
     public override void Init()
     {
@@ -23,11 +23,13 @@ public class BagUI : UIBase
 
     private void InitUI()
     {
-        moneyText = FindChiled<Text>("Money");
-        itemGridRoot = FindChiled("Content");
+        title = FindChiled<TitleUI>("Title");
+        title.SetTitle("もちもの");
+        title.SetOnClose(() => { Close(); });
+        title.EnActiveCoin(2);
+        title.EnActiveCoin(3);
 
-        closeBtn = FindChiled<Button>("CloseBtn");
-        closeBtn.onClick.AddListener(()=> { Close(); });
+        itemGridRoot = FindChiled("Content");
 
         var SelectItemBar = FindChiled("SelectItemBar");
         if (SelectItemBar.childCount == 6)
@@ -38,6 +40,8 @@ public class BagUI : UIBase
                 selectItems[i].Index = i;
             }
         }
+
+        title.RefreshCoins();
     }
 
     public override void Open()

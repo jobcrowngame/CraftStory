@@ -1,6 +1,7 @@
 using JsonConfigData;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Purchasing;
 
 public class ShopItemCell : UIBase
 {
@@ -42,17 +43,19 @@ public class ShopItemCell : UIBase
     {
         if (config.Type == 1)
         {
-            Debug.Log("OnClickBuyBtn " + config.ID);
+            Debug.Log("OnClickBuyBtn " + config.Name);
+
+            //NWMng.E.IAP.OnPurchaseClicked(config.Name);
         }
         else if (config.Type == 2)
         {
-            NWMng.E.Buy((rp)=> 
+            NWMng.E.Buy((rp) =>
             {
                 NWMng.E.GetItemList((rp2) =>
                 {
                     DataMng.GetItems(rp2[0]);
                 });
-                NWMng.E.GetCoins((rp3) => 
+                NWMng.E.GetCoins((rp3) =>
                 {
                     DataMng.GetCoins(rp3[0]);
                     ShopLG.E.UI.Refresh();

@@ -1,18 +1,11 @@
 using JsonConfigData;
 using UnityEngine;
+using UnityEngine.Purchasing;
 using UnityEngine.UI;
 
 public class ShopUI : UIBase
 {
-    Button CloseBtn;
-    Text Title1;
-
-    Text Coin1;
-    Image Coin1Image;
-    Text Coin2;
-    Image Coin2Image;
-    Text Coin3;
-    Image Coin3Image;
+    TitleUI title;
 
     Transform itemGridRoot;
     Text Title2;
@@ -21,6 +14,8 @@ public class ShopUI : UIBase
     Transform ItemsWind;
     Transform ChageWind;
 
+    IAPManager IAP;
+
     public override void Init()
     {
         base.Init();
@@ -28,23 +23,9 @@ public class ShopUI : UIBase
         ShopLG.E.Init(this);
         btns = new Button[2];
 
-        var titleParent = FindChiled("Title");
-        CloseBtn = FindChiled<Button>("CloseBtn", titleParent);
-        CloseBtn.onClick.AddListener(() => { Close(); });
-
-        Title1 = FindChiled<Text>("TitleText", titleParent);
-        Coin1 = FindChiled<Text>("Coin1", titleParent);
-        Coin1.text = "0";
-        Coin1Image = FindChiled<Image>("Image", Coin1.transform);
-        Coin1Image.sprite = ReadResources<Sprite>(ConfigMng.E.Item[9000].IconResourcesPath);
-        Coin2 = FindChiled<Text>("Coin2", titleParent);
-        Coin2.text = "0";
-        Coin2Image = FindChiled<Image>("Image", Coin2.transform);
-        Coin2Image.sprite = ReadResources<Sprite>(ConfigMng.E.Item[9001].IconResourcesPath);
-        Coin3 = FindChiled<Text>("Coin3", titleParent);
-        Coin3.text = "0";
-        Coin3Image = FindChiled<Image>("Image", Coin3.transform);
-        Coin3Image.sprite = ReadResources<Sprite>(ConfigMng.E.Item[9002].IconResourcesPath);
+        title = FindChiled<TitleUI>("Title");
+        title.SetTitle("‚à‚¿‚à‚Ì");
+        title.SetOnClose(() => { Close(); });
 
         var itemsParent = FindChiled("Items");
         itemGridRoot = FindChiled("ItemGrid");
@@ -62,13 +43,14 @@ public class ShopUI : UIBase
         ShopLG.E.ShopUIType = ShopUiType.Charge;
 
         Refresh();
+
+        IAP = new IAPManager();
+        IAP.Init();
     }
 
     public void Refresh()
     {
-        Coin1.text = DataMng.E.UserData.Coin1.ToString();
-        Coin2.text = DataMng.E.UserData.Coin2.ToString();
-        Coin3.text = DataMng.E.UserData.Coin3.ToString();
+        title.RefreshCoins();
     }
 
     public void SetTitle2(string msg)
@@ -78,8 +60,6 @@ public class ShopUI : UIBase
 
     public void IsChargeWind(bool b)
     {
-        return;
-
         ChageWind.gameObject.SetActive(b);
         ItemsWind.gameObject.SetActive(!b);
     }
@@ -90,11 +70,19 @@ public class ShopUI : UIBase
 
         foreach (var item in ConfigMng.E.Shop.Values)
         {
+            if (item.Type == 1)
+                continue;
+
             if (item.Type == (int)type)
             {
                 var cell = AddCell<ShopItemCell>("Prefabs/UI/ShopItem", itemGridRoot);
                 cell.Init(item);
             }
         }
+    }
+
+    public void GrantCredits(string credits)
+    {
+        IAP.OnPurchaseClicked(credits);
     }
 }

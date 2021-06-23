@@ -52,7 +52,7 @@ public class PlayerBehavior
                 case ItemType.Kamado:
                     break;
 
-                default: Debug.LogError("Not find ItemType " + value); break;
+                //default: Debug.LogError("Not find ItemType " + value); break;
             }
         }
     }
