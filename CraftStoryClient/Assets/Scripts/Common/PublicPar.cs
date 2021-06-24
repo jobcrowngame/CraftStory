@@ -38,6 +38,7 @@ public class PublicPar
     #endregion
 
     public static string URL = "13.230.170.40/Main.php";
+    public static string URL2 = "54.65.41.68/Main.php";
     public static string LocalURL = "http://localhost/Game/Main.php";
 
     #region Game
