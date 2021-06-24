@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{C85E1AE6-1292-3581-E007-24E077556706}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -82,6 +83,7 @@
     <Compile Include="Assets\Scripts\Manager\ConfigMng.cs" />
     <Compile Include="Assets\Scripts\UI\HomeItemBtn.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Shop.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\TitleUI.cs" />
     <Compile Include="Assets\Scripts\Data\MapBlockData.cs" />
     <Compile Include="Assets\Scripts\Common\MiniJSON.cs" />
     <Compile Include="Assets\Scripts\UI\ShopLG.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
     <Compile Include="Assets\Scripts\Test\TestAtt.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
+    <Compile Include="Assets\Scripts\Manager\Logger.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Resource.cs" />
     <Compile Include="Assets\Scripts\Common\IAPStore.cs" />
     <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
@@ -124,6 +127,7 @@
     <Compile Include="Assets\Scripts\Game\Player\ScreenDraggingCtl.cs" />
     <Compile Include="Assets\Scripts\UI\UILogicBase.cs" />
     <Compile Include="Assets\Scripts\UI\BagSelectItem.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\HintBarUI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapCtl.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapBlock.cs" />
     <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
@@ -144,6 +148,7 @@
     <Compile Include="Assets\Scripts\UI\LoginUI.cs" />
     <Compile Include="Assets\Scripts\Common\Single.cs" />
     <Compile Include="Assets\Scripts\UI\MenuUI.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\ErrorMsg.cs" />
     <Compile Include="Assets\Scripts\Manager\SettingMng.cs" />
     <Compile Include="Assets\Scripts\UI\ShopItemCell.cs" />
     <Compile Include="Assets\Scripts\Data\MapData.cs" />
@@ -163,15 +168,12 @@
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
-    <Compile Include="Assets\Scripts\UI\Common\TitleUI.cs" />
-    <Compile Include="Assets\Scripts\Manager\Logger.cs" />
-    <Compile Include="Assets\Scripts\UI\Common\HIntBarUI.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\ErrorMsg.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\HintBoxUI.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\Resources\Shader\Simple.shader" />
-     <None Include="Assets\Resources\Shader\SemiTransparent.shader" />
-     <None Include="Assets\Resources\Shader\Test01.shader" />
+    <None Include="Assets\Resources\Shader\Simple.shader" />
+    <None Include="Assets\Resources\Shader\SemiTransparent.shader" />
+    <None Include="Assets\Resources\Shader\Test01.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

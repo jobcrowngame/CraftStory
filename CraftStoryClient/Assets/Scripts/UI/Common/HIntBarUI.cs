@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HIntBarUI : UIBase
+public class HintBarUI : UIBase
 {
     Text MsgText;
     Animation anim;

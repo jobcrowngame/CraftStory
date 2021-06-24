@@ -174,12 +174,20 @@ public class CommonFunction
         }
     }
 
-    public static void ShowMsgBar(int errCode)
+    public static void ShowHintBar(int errCode)
     {
-        var ui = InstantiateUI<HIntBarUI>("Prefabs/UI/Common/HintBar", UICtl.E.Root);
+        var ui = InstantiateUI<HintBarUI>("Prefabs/UI/Common/HintBar", UICtl.E.Root);
         if (ui != null)
         {
             ui.SetMsg(ConfigMng.E.ErrorMsg[errCode].Message);
+        }
+    }
+    public static void ShowHintBox(string iconPath, string msg, Action okAction, Action cancelAction = null)
+    {
+        var ui = InstantiateUI<HintBoxUI>("Prefabs/UI/Common/HintBox", UICtl.E.Root);
+        if (ui != null)
+        {
+            ui.Init(iconPath, msg, okAction, cancelAction);
         }
     }
 }

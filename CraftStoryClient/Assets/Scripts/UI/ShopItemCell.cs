@@ -53,18 +53,21 @@ public class ShopItemCell : UIBase
         }
         else if (config.Type == 2)
         {
-            NWMng.E.Buy((rp) =>
-            {
-                NWMng.E.GetItemList((rp2) =>
-                {
-                    DataMng.GetItems(rp2[0]);
+            CommonFunction.ShowHintBox(config.IconResources, config.Des2, 
+                () => {
+                    NWMng.E.Buy((rp) =>
+                    {
+                        NWMng.E.GetItemList((rp2) =>
+                        {
+                            DataMng.GetItems(rp2[0]);
+                        });
+                        NWMng.E.GetCoins((rp3) =>
+                        {
+                            DataMng.GetCoins(rp3[0]);
+                            ShopLG.E.UI.Refresh();
+                        });
+                    }, config.ID);
                 });
-                NWMng.E.GetCoins((rp3) =>
-                {
-                    DataMng.GetCoins(rp3[0]);
-                    ShopLG.E.UI.Refresh();
-                });
-            }, config.ID);
         }
     }
 }

@@ -106,13 +106,13 @@ public class CraftUI : UIBase
     {
         if (selectCraft == null)
         { 
-            CommonFunction.ShowMsgBar(2);
+            CommonFunction.ShowHintBar(2);
             return;
         }
 
         if (!CanCreate(selectCraft, selectCount))
         {
-            CommonFunction.ShowMsgBar(1);
+            CommonFunction.ShowHintBar(1);
             return;
         }
         else

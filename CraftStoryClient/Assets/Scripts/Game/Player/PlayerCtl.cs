@@ -65,7 +65,7 @@ public class PlayerCtl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            CommonFunction.ShowMsgBar(1);
+            CommonFunction.ShowHintBar(1);
         }
     }
 

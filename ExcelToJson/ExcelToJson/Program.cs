@@ -302,6 +302,7 @@ namespace ExcelToJson
                 data.Type = ToInt32(tbl.Rows[i]["Type"]);
                 data.Name = ToString(tbl.Rows[i]["Name"]);
                 data.Des = ToString(tbl.Rows[i]["Des"]);
+                data.Des2 = ToString(tbl.Rows[i]["Des2"]);
                 data.BtnText = ToString(tbl.Rows[i]["BtnText"]);
                 data.LimitedCount = ToInt32(tbl.Rows[i]["LimitedCount"]);
                 data.CostItemID = ToInt32(tbl.Rows[i]["CostItemID"]);

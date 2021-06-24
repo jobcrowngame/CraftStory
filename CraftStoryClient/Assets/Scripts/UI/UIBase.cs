@@ -24,6 +24,10 @@ public class UIBase : MonoBehaviour
     {
         Active(true);
     }
+    public virtual void Destroy()
+    {
+        Destroy(gameObject);
+    }
 
     private void Active(bool b)
     {
