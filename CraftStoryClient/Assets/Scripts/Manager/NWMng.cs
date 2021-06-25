@@ -104,13 +104,14 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItem));
     }
-    public void AddItemInData(Action<string[]> rp, int itemId, int count, string rdata)
+    public void AddItemInData(Action<string[]> rp, int itemId, int count, string newName, string rdata)
     {
         var data = new NWData();
         data.Add(DataMng.E.session);
         data.Add(DataMng.E.UserData.Account);
         data.Add(itemId);
         data.Add(count);
+        data.Add(newName);
         data.Add(rdata);
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItemInData));

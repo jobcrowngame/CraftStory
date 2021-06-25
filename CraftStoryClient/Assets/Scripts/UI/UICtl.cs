@@ -71,7 +71,7 @@ public class UICtl : Single<UICtl>
         uiDic[uiType] = ui;
     }
 
-    public UIBase OpenUI<T>(UIType uiType, UIOpenType closeType = UIOpenType.None) where T : UIBase
+    public T OpenUI<T>(UIType uiType, UIOpenType closeType = UIOpenType.None) where T : UIBase
     {
         switch (closeType)
         {
@@ -114,7 +114,7 @@ public class UICtl : Single<UICtl>
 
             uiClass = obj.GetComponent<T>();
             if (uiClass == null)
-                return null;
+                uiClass = obj.AddComponent<T>();
 
             uiClass.Init();
 
@@ -136,7 +136,7 @@ public class UICtl : Single<UICtl>
 
         curentOpenUI = uiClass;
 
-        return uiClass;
+        return uiClass as T;
     }
 
     public void CloseUI(UIType uiType)
@@ -170,6 +170,7 @@ public class UICtl : Single<UICtl>
             case UIType.Terms02: return "Prefabs/UI/Terms02";
             case UIType.Charge: return "Prefabs/UI/Charge";
             case UIType.Craft: return "Prefabs/UI/Craft";
+            case UIType.BlueprintReName: return "Prefabs/UI/BlueprintReName";
             default: Debug.LogError("not find UIType " + ui); return "";
         }
     }
@@ -196,4 +197,5 @@ public enum UIType
     Terms02,
     Charge,
     Craft,
+    BlueprintReName,
 }

@@ -173,7 +173,7 @@ public class DataMng : Single<DataMng>
             });
         }, items);
     }
-    public void AddItemInData(int itemID, int count, string data, Action action = null)
+    public void AddItemInData(int itemID, int count, string newName, string data, Action action = null)
     {
 
         NWMng.E.AddItemInData((rp) =>
@@ -183,7 +183,7 @@ public class DataMng : Single<DataMng>
                 GetItems(rp2[0]);
                 if (action != null) action();
             });
-        }, itemID, count, data);
+        }, itemID, count, newName, data);
     }
     /// <summary>
     /// 消耗アイテム

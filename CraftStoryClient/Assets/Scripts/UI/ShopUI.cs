@@ -31,6 +31,7 @@ public class ShopUI : UIBase
         title = FindChiled<TitleUI>("Title");
         title.SetTitle("ショップ");
         title.SetOnClose(() => { Close(); });
+        title.EnActiveCoin(3);
 
         itemGridRoot = FindChiled("Grid", ItemsWind.gameObject);
         Title2 = FindChiled<Text>("ItemsTitle");
@@ -60,9 +61,9 @@ public class ShopUI : UIBase
         chargeBtns[2].Init(ConfigMng.E.Shop[3]);
         chargeBtns[3].Init(ConfigMng.E.Shop[4]);
         chargeBtns[4].Init(ConfigMng.E.Shop[5]);
-        chargeBtns[5].Init(ConfigMng.E.Shop[6]);
-        chargeBtns[6].Init(ConfigMng.E.Shop[7]);
-        chargeBtns[7].Init(ConfigMng.E.Shop[8]);
+        //chargeBtns[5].Init(ConfigMng.E.Shop[6]);
+        //chargeBtns[6].Init(ConfigMng.E.Shop[7]);
+        //chargeBtns[7].Init(ConfigMng.E.Shop[8]);
     }
 
     public void Refresh()

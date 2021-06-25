@@ -169,6 +169,7 @@
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
     <Compile Include="Assets\Scripts\Manager\CryptMng.cs" />
+    <Compile Include="Assets\Scripts\UI\BlueprintReNameUI.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />

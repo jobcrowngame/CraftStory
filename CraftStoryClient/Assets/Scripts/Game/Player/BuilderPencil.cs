@@ -90,9 +90,8 @@ public class BuilderPencil
 
         var blueprintData = new BlueprintData(blocks, new Vector2Int(maxX - minX, maxZ - minZ));
 
-
-
-        DataMng.E.AddItemInData(3002, 1, blueprintData.ToJosn());
+        var ui = UICtl.E.OpenUI<BlueprintReNameUI>(UIType.BlueprintReName);
+        ui.SetMapData(blueprintData.ToJosn());
 
         CancelCreateBlueprint();
     }
