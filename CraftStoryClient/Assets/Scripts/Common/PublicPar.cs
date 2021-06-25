@@ -39,6 +39,7 @@ public class PublicPar
 
     public static string URL = "13.230.170.40/Main.php";
     public static string URL2 = "craftstory.awscraftstoryserver.com/Main.php";
+    public static string URL3 = "54.65.41.68/Main.php";
     public static string LocalURL = "http://localhost/Game/Main.php";
 
     public static string Prmkey =   "4h5f2h4d31h4f1gf";
