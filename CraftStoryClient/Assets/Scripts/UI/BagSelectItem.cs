@@ -29,6 +29,9 @@ public class BagSelectItem : UIBase
         if (BagLG.E.SelectItem == null)
             return;
 
+        if (BagLG.E.SelectItem.ItemData.Config().Type == 2)
+            return;
+
         if (itemData == null)
         {
             NWMng.E.EquitItem((rp) =>
