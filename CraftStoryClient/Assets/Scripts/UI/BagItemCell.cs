@@ -25,17 +25,18 @@ public class BagItemCell : UIBase
         clickBtn = transform.GetComponent<Button>();
         clickBtn.onClick.AddListener(() => { BagLG.E.SelectItem = this; });
 
-        itemName.text = itemData.Config().Name;
-        itemCount.text = "x" + itemData.count;
-        Icon.sprite = ReadResources<Sprite>(itemData.Config().IconResourcesPath);
+        Refresh();
     }
 
-    public void Refresh(ItemData itemData = null)
+    public void Refresh()
     {
-        if(itemData != null) 
-            this.itemData = itemData;
+        if (itemData == null)
+            return;
 
-        itemName.text = itemData.Config().Name;
+        itemName.text = string.IsNullOrEmpty(ItemData.newName)
+            ? itemData.Config().Name
+            : itemData.newName;
+        Icon.sprite = ReadResources<Sprite>(itemData.Config().IconResourcesPath);
         itemCount.text = "x" + itemData.count;
     }
     public void IsSelected(bool b)

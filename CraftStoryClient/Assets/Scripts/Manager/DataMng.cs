@@ -201,7 +201,7 @@ public class DataMng : Single<DataMng>
                 NWMng.E.GetItemList((rp2) =>
                 {
                     GetItems(rp2[0]);
-                    if (BagLG.E.UI != null) BagLG.E.UI.RefreshItemByGuid(guid);
+                    if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
                 });
             }, guid, count);
         }

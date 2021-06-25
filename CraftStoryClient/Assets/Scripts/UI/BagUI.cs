@@ -77,16 +77,6 @@ public class BagUI : UIBase
             AddItem(item);
         }
     }
-    public void RefreshItemByGuid(int guid)
-    {
-        foreach (var item in cellDic)
-        {
-            if (item.Value.ItemData.id == guid)
-            {
-                item.Value.Refresh(item.Value.ItemData);
-            }
-        }
-    }
     private void AddItem(ItemData item)
     {
         var cell = AddCell<BagItemCell>("Prefabs/UI/IconItem", itemGridRoot);

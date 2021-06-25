@@ -7,6 +7,7 @@ public class ItemData
     public int id { get; set; }
     public int itemId { get; set; }
     public int count { get; set; }
+    public string newName { get; set; }
     public int equipSite { get; set; }
     public string relationData { get; set; }
 
