@@ -176,6 +176,12 @@ public class CommonFunction
 
     public static void ShowHintBar(int errCode)
     {
+        if (!ConfigMng.E.ErrorMsg.ContainsKey(errCode))
+        {
+            Debug.LogError("not find errcode " + errCode);
+            return;
+        }
+
         var ui = InstantiateUI<HintBarUI>("Prefabs/UI/Common/HintBar", UICtl.E.Root);
         if (ui != null)
         {

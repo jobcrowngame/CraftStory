@@ -3,6 +3,7 @@ using LitJson;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -27,11 +28,14 @@ public class NWMng : MonoBehaviour
 
     private IEnumerator HttpRequest(Action<string[]> rp, NWData data, CMD cmd)
     {
+        string cryptData = CryptMng.E.EncryptString(data.ToString());
+
+
         WWWForm wwwForm = new WWWForm();
         wwwForm.AddField("code", (int)cmd);
-        wwwForm.AddField("data", data.ToString());
+        wwwForm.AddField("data", cryptData);
 
-        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.URL2, wwwForm))
+        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.URL, wwwForm))
         {
             yield return www.SendWebRequest();
 
@@ -39,10 +43,12 @@ public class NWMng : MonoBehaviour
                 Debug.LogError(www.error);
             else
             {
-                string[] datas = www.downloadHandler.text.Split('^');
+                var result = CryptMng.E.DecryptString(www.downloadHandler.text);
+                string[] datas = result.Split('^');
                 if (datas[0] == "error")
                 {
-                    Debug.LogError(datas[1]);
+                    int errcode = int.Parse(datas[1]);
+                    CommonFunction.ShowHintBar(errcode);
                 }
                 else
                 {
@@ -51,6 +57,7 @@ public class NWMng : MonoBehaviour
             }
         }
     }
+
 
     public void Login(Action<string[]> rp, string id, string pw)
     {
