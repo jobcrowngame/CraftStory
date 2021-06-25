@@ -38,7 +38,12 @@ public class BagSelectItem : UIBase
                     DataMng.GetItems(rp2[0]);
                     if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
 
-                    PlayerCtl.E.ChangeSelectItem(BagLG.E.SelectItem.ItemData);
+                    if (PlayerCtl.E.SelectItem != null &&
+                        Index + 1 == PlayerCtl.E.SelectItem.equipSite)
+                    {
+                        PlayerCtl.E.SelectItem = BagLG.E.SelectItem.ItemData;
+                    }
+
                     BagLG.E.SelectItem = null;
                 });
             }, BagLG.E.SelectItem.ItemData.id, Index + 1);
@@ -54,13 +59,16 @@ public class BagSelectItem : UIBase
                         DataMng.GetItems(rp3[0]);
                         if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
 
-                        PlayerCtl.E.ChangeSelectItem(BagLG.E.SelectItem.ItemData);
+                        if (PlayerCtl.E.SelectItem != null && 
+                            Index + 1 == PlayerCtl.E.SelectItem.equipSite)
+                        {
+                            PlayerCtl.E.SelectItem = BagLG.E.SelectItem.ItemData;
+                        }
+
                         BagLG.E.SelectItem = null;
                     });
                 }, BagLG.E.SelectItem.ItemData.id, Index + 1);
             }, itemData.id, 0);
         }
-
-        PlayerCtl.E.ChangeSelectItem(null);
     }
 }

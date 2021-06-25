@@ -35,6 +35,11 @@ public class PlayerCtl : MonoBehaviour
     public BuilderPencil BuilderPencil { get => builderPencil; }
     private BuilderPencil builderPencil;
 
+    public ItemData SelectItem 
+    {
+        get => selectItem; 
+        set => selectItem = value;
+    }
     private ItemData selectItem;
     private MapBlock clickingBlock;
     private EntityResources clickingResource;
