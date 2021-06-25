@@ -33,24 +33,30 @@ public class BagSelectItem : UIBase
         {
             NWMng.E.EquitItem((rp) =>
             {
-                DataMng.GetItems(rp[0]);
-                if(BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
+                NWMng.E.GetItemList((rp2) =>
+                {
+                    DataMng.GetItems(rp2[0]);
+                    if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
 
-                PlayerCtl.E.ChangeSelectItem(BagLG.E.SelectItem.ItemData);
-                BagLG.E.SelectItem = null;
+                    PlayerCtl.E.ChangeSelectItem(BagLG.E.SelectItem.ItemData);
+                    BagLG.E.SelectItem = null;
+                });
             }, BagLG.E.SelectItem.ItemData.id, Index + 1);
         }
         else
         {
             NWMng.E.EquitItem((rp) =>
             {
-                NWMng.E.EquitItem((rp) =>
+                NWMng.E.EquitItem((rp2) =>
                 {
-                    DataMng.GetItems(rp[0]);
-                    if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
+                    NWMng.E.GetItemList((rp3) => 
+                    {
+                        DataMng.GetItems(rp3[0]);
+                        if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
 
-                    PlayerCtl.E.ChangeSelectItem(BagLG.E.SelectItem.ItemData);
-                    BagLG.E.SelectItem = null;
+                        PlayerCtl.E.ChangeSelectItem(BagLG.E.SelectItem.ItemData);
+                        BagLG.E.SelectItem = null;
+                    });
                 }, BagLG.E.SelectItem.ItemData.id, Index + 1);
             }, itemData.id, 0);
         }

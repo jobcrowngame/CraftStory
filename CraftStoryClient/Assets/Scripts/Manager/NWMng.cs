@@ -28,12 +28,16 @@ public class NWMng : MonoBehaviour
 
     private IEnumerator HttpRequest(Action<string[]> rp, NWData data, CMD cmd)
     {
-        string cryptData = CryptMng.E.EncryptString(data.ToString());
+        string cryptData = string.IsNullOrEmpty(data.ToString())
+            ? ""
+            : CryptMng.E.EncryptString(data.ToString());
 
 
         WWWForm wwwForm = new WWWForm();
         wwwForm.AddField("code", (int)cmd);
         wwwForm.AddField("data", cryptData);
+
+        Debug.LogFormat("Send:[CMD]{0}", (int)cmd);
 
         using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.URL, wwwForm))
         {
@@ -193,7 +197,14 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.Charge));
     }
-
+    public void GetBonus(Action<string[]> rp, int bonusId)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.UserData.Account);
+        data.Add(bonusId);
+        StartCoroutine(HttpRequest(rp, data, CMD.GetBonus));
+    }
 
     public void ClearAdventure(Action<string[]> rp, List<int> resources)
     {
@@ -236,6 +247,7 @@ public class NWMng : MonoBehaviour
         ClearAdventure,
         Buy = 1010,
         GetCoins,
+        GetBonus,
 
         Charge = 9000,
     }
