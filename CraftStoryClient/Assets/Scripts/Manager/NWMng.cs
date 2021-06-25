@@ -43,16 +43,23 @@ public class NWMng : MonoBehaviour
                 Debug.LogError(www.error);
             else
             {
-                var result = CryptMng.E.DecryptString(www.downloadHandler.text);
-                string[] datas = result.Split('^');
-                if (datas[0] == "error")
+                if (string.IsNullOrEmpty(www.downloadHandler.text))
                 {
-                    int errcode = int.Parse(datas[1]);
-                    CommonFunction.ShowHintBar(errcode);
+                    if (rp != null) rp(new string[] { "" });
                 }
                 else
                 {
-                    if(rp != null) rp(datas);
+                    var result = CryptMng.E.DecryptString(www.downloadHandler.text);
+                    string[] datas = result.Split('^');
+                    if (datas[0] == "error")
+                    {
+                        int errcode = int.Parse(datas[1]);
+                        CommonFunction.ShowHintBar(errcode);
+                    }
+                    else
+                    {
+                        if (rp != null) rp(datas);
+                    }
                 }
             }
         }

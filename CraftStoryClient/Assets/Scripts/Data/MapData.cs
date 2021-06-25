@@ -167,8 +167,6 @@ public class MapData
         }
 
         strEntity = sb.ToString();
-        Debug.Log("Entity");
-        Debug.Log(strEntity);
     }
 
     public void ParseStringData()

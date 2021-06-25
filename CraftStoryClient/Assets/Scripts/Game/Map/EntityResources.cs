@@ -12,7 +12,8 @@ public class EntityResources : EntityBase
         if (clickingTime > Data.Config.DestroyTime)
         {
             clickingTime = 0;
-            AdventureCtl.E.AddBonus(Data.Config.BonusID);
+            DataMng.E.AddItem(Data.ID, 1);
+
             var items = new Dictionary<int, int>();
             WorldMng.E.MapCtl.DeleteResource(this);
         }
