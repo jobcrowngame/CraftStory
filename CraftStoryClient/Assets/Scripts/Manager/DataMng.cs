@@ -97,6 +97,7 @@ public class DataMng : Single<DataMng>
         homeData = (MapData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + MapDataName);
 
         Logger.Log(AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\'));
+        Logger.Log(Application.dataPath);
 
         if (homeData == null)
             homeData = (MapData)SaveLoadFile.E.Load(Application.dataPath + "/SaveData/MapData.dat");
@@ -278,7 +279,7 @@ public class DataMng : Single<DataMng>
 
             if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
         }
-        catch (System.Exception e)
+        catch (Exception e)
         {
             Logger.Error(jsonData);
             Logger.Error(e.Message);
