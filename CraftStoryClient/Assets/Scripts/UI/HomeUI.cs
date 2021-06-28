@@ -21,6 +21,7 @@ public class HomeUI : UIBase
     Button BuilderPencilCancelBtn;
 
     Transform Blueprint;
+    Transform BlueprintCellGrid;
     Button SpinBtn;
     Button BlueprintCancelBtn;
     Button BuildBtn;
@@ -33,11 +34,6 @@ public class HomeUI : UIBase
     {
         WorldMng.E.CreateGameObjects();
         UICtl.E.AddUI(this, UIType.Home);
-
-        //NWMng.E.GetItemList((rp) =>
-        //{
-        //    //DataMng.E.Items = JsonConvert.DeserializeObject<List<ItemData>>(rp[0]);
-        //});
 
         Init();
     }
@@ -89,6 +85,7 @@ public class HomeUI : UIBase
         BuilderPencilCancelBtn.onClick.AddListener(CancelBuilderPencilCancelBtn);
 
         Blueprint = FindChiled("Blueprint");
+        BlueprintCellGrid = FindChiled("Content", Blueprint.gameObject);
         SpinBtn = FindChiled<Button>("SpinBtn", Blueprint);
         SpinBtn.onClick.AddListener(SpinBlueprint);
         BlueprintCancelBtn = FindChiled<Button>("BlueprintCancelBtn", Blueprint);
@@ -113,6 +110,32 @@ public class HomeUI : UIBase
 
             cell.Index = i;
             itemBtns.Add(cell);
+        }
+    }
+    public void AddBlueprintCostItems(List<MapBlockData> blocks)
+    {
+        ClearCell(BlueprintCellGrid);
+
+        Dictionary<int, int> costs = new Dictionary<int, int>();
+        foreach (var item in blocks)
+        {
+            if (costs.ContainsKey(item.ItemID))
+            {
+                costs[item.ItemID]++;
+            }
+            else
+            {
+                costs[item.ItemID] = 1;
+            }
+        }
+
+        foreach (var key in costs.Keys)
+        {
+            var cell = AddCell<BlueprintCell>("Prefabs/UI/BlueprintCell", BlueprintCellGrid);
+            if (cell == null)
+                return;
+
+            cell.Init(key, costs[key]);
         }
     }
 

@@ -120,6 +120,8 @@ public class BuilderPencil
 
         WorldMng.E.MapCtl.CreateTransparentBlocks(selectBlueprintData, buildPos);
 
+        HomeLG.E.UI.AddBlueprintCostItems(selectBlueprintData.BlockList);
+
         var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
         if (homeUI != null) homeUI.ShowBlueprintBtn();
     }
