@@ -172,6 +172,8 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Blueprint.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintCell.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayDescriptionUI.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayDescriptionLG.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />

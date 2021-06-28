@@ -7,6 +7,7 @@ public class MenuUI : UIBase
     Button AdventureBtn { get => FindChiled<Button>("AdventureBtn"); }
     Button ShopBtn { get => FindChiled<Button>("ShopBtn"); }
     Button HomeBtn { get => FindChiled<Button>("HomeBtn"); }
+    Button PlayDescriptionBtn { get => FindChiled<Button>("PlayDescriptionBtn"); }
 
     MenuUIType menuType
     {
@@ -43,10 +44,9 @@ public class MenuUI : UIBase
 
         DataMng.E.MapData.TransferGate = new EntityData(1000, ItemType.TransferGate);
         AdventureBtn.onClick.AddListener(CommonFunction.GoToNextScene);
-
         ShopBtn.onClick.AddListener(() => { UICtl.E.OpenUI<ShopUI>(UIType.Shop); });
-
         HomeBtn.onClick.AddListener(CommonFunction.GoToHome);
+        PlayDescriptionBtn.onClick.AddListener(()=> { UICtl.E.OpenUI<PlayDescriptionUI>(UIType.PlayDescription); });
     }
 
     public enum MenuUIType

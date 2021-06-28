@@ -11,6 +11,8 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
 
             DataMng.E.NewUser(rp[0], rp[1]);
             Login();
+
+            PlayDescriptionLG.E.IsFirst = true;
         });
     }
 

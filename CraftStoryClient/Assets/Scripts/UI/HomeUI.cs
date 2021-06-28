@@ -35,6 +35,11 @@ public class HomeUI : UIBase
         WorldMng.E.CreateGameObjects();
         UICtl.E.AddUI(this, UIType.Home);
 
+        if (PlayDescriptionLG.E.IsFirst)
+        {
+            UICtl.E.OpenUI<PlayDescriptionUI>(UIType.PlayDescription);
+        }
+
         Init();
     }
 
