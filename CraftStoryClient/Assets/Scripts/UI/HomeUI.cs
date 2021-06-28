@@ -35,6 +35,8 @@ public class HomeUI : UIBase
         WorldMng.E.CreateGameObjects();
         UICtl.E.AddUI(this, UIType.Home);
 
+        NowLoadingLG.E.IsGoHome = false;
+
         Init();
     }
 
@@ -42,29 +44,18 @@ public class HomeUI : UIBase
     {
         base.Init();
         HomeLG.E.Init(this);
-        InitUI();
 
-        NWMng.E.GetItemList((rp) =>
-        {
-            DataMng.GetItems(rp[0]);
-        });
-        NWMng.E.GetCoins((rp) =>
-        {
-            DataMng.GetCoins(rp[0]);
-        });
-
-        StartCoroutine("FadeIn");
-    }
-
-    private void InitUI()
-    {
         //SceneName = FindChiled<Text>("SceneName");
 
         FadeinImg = FindChiled<Image>("Fadein");
         FadeinImg.enabled = true;
 
         MenuBtn = FindChiled<Button>("MenuBtn");
-        MenuBtn.onClick.AddListener(() => { Logger.Log("MenuBtn"); UICtl.E.OpenUI<MenuUI>(UIType.Menu); });
+        MenuBtn.onClick.AddListener(() => 
+        {
+            var menu = UICtl.E.OpenUI<MenuUI>(UIType.Menu); 
+            menu.Init(MenuUI.MenuUIType.Home);
+        });
 
         BagBtn = FindChiled<Button>("BagBtn");
         BagBtn.onClick.AddListener(() => { UICtl.E.OpenUI<BagUI>(UIType.Bag); });
@@ -96,6 +87,17 @@ public class HomeUI : UIBase
         PlayerCtl.E.Joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
         PlayerCtl.E.ScreenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
         PlayerCtl.E.CameraCtl = Camera.main.GetComponent<CameraCtl>();
+
+        NWMng.E.GetItemList((rp) =>
+        {
+            DataMng.GetItems(rp[0]);
+        });
+        NWMng.E.GetCoins((rp) =>
+        {
+            DataMng.GetCoins(rp[0]);
+        });
+
+        StartCoroutine("FadeIn");
     }
 
     private void AddItemBtns()

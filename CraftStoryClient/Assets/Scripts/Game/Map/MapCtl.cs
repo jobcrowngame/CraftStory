@@ -34,7 +34,7 @@ public class MapCtl
 
         CreateMap(DataMng.E.MapData);
     }
-    private void CreateMap(MapData mData)
+    public void CreateMap(MapData mData)
     {
         mapCellParent = new GameObject("Ground").transform;
         resourceParent = new GameObject("Resources").transform;

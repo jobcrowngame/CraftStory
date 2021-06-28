@@ -113,6 +113,12 @@ public class CommonFunction
         UICtl.E.Clear();
         SceneManager.LoadSceneAsync("NowLoading");
     }
+    public static void GoToHome()
+    {
+        NowLoadingLG.E.IsGoHome = true;
+        UICtl.E.Clear();
+        SceneManager.LoadSceneAsync("NowLoading");
+    }
 
     public static Vector3 Vector3Sum(Vector3 v1, Vector3 v2)
     {

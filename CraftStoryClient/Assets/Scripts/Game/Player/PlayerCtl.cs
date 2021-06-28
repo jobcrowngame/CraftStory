@@ -80,7 +80,10 @@ public class PlayerCtl : MonoBehaviour
         if (resource == null)
             return null;
 
-        var pos = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5);
+        var pos = NowLoadingLG.E.IsGoHome
+            ? MapCtl.GetGroundPos(DataMng.E.HomeData, DataMng.E.HomeData.Config.PlayerPosX, DataMng.E.HomeData.Config.PlayerPosZ, 5)
+            : MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5);
+
         pos = MapCtl.FixEntityPos(DataMng.E.MapData, pos, DataMng.E.MapData.Config.CreatePosOffset);
         var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
         if (obj == null)

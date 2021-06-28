@@ -44,7 +44,11 @@ public class WorldMng : MonoBehaviour
 
     public void CreateGameObjects()
     {
-        MapCtl.CreateMap(DataMng.E.MapData.NextMapID);
+        if (NowLoadingLG.E.IsGoHome)
+            MapCtl.CreateMap(DataMng.E.HomeData);
+        else
+            MapCtl.CreateMap(DataMng.E.MapData.NextMapID);
+
         CharacterCtl.CreateCharacter();
 
         AdventureCtl.E.Init();

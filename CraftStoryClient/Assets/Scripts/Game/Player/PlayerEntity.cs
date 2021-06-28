@@ -20,6 +20,11 @@ public class PlayerEntity : CharacterEntity
     private void Update()
     {
         controller.Move(new Vector3(0, -SettingMng.E.Gravity * Time.deltaTime, 0) * Time.deltaTime);
+
+        if (transform.position.y < -10)
+        {
+            transform.position = MapCtl.GetGroundPos(DataMng.E.HomeData, DataMng.E.HomeData.Config.PlayerPosX, DataMng.E.HomeData.Config.PlayerPosZ, 5);
+        }
     }
 
     public override void ModelActive(bool b)
