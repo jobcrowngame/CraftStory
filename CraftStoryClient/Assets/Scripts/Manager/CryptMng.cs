@@ -27,7 +27,7 @@ public class CryptMng : Single<CryptMng>
         //memory stream
         CryptoStream cryptoStream = new CryptoStream(memoryStream, aesEncryptor, CryptoStreamMode.Write);
         //Convert the plainText string into a byte array
-        byte[] plainBytes = Encoding.ASCII.GetBytes(plainText);
+        byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
         //Encrypt the input plaintext string
         cryptoStream.Write(plainBytes, 0, plainBytes.Length);
         //Complete the encryption process
@@ -74,7 +74,7 @@ public class CryptMng : Single<CryptMng>
             //Convert the decrypted data from a MemoryStream to a byte array
             byte[] plainBytes = memoryStream.ToArray();
             //Convert the decrypted byte array to string
-            plainText = Encoding.ASCII.GetString(plainBytes, 0, plainBytes.Length);
+            plainText = Encoding.UTF8.GetString(plainBytes, 0, plainBytes.Length);
         }
         catch (Exception e)
         {

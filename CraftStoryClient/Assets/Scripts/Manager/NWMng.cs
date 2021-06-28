@@ -28,6 +28,7 @@ public class NWMng : MonoBehaviour
 
     private IEnumerator HttpRequest(Action<string[]> rp, NWData data, CMD cmd)
     {
+        Debug.LogFormat("Send:[data]{0}", data.ToString());
         string cryptData = string.IsNullOrEmpty(data.ToString())
             ? ""
             : CryptMng.E.EncryptString(data.ToString());
@@ -35,11 +36,11 @@ public class NWMng : MonoBehaviour
 
         WWWForm wwwForm = new WWWForm();
         wwwForm.AddField("code", (int)cmd);
-        wwwForm.AddField("data", cryptData);
+        wwwForm.AddField("data", cryptData, System.Text.Encoding.UTF8);
 
         Debug.LogFormat("Send:[CMD]{0}", (int)cmd);
 
-        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.LocalURL, wwwForm))
+        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.URL, wwwForm))
         {
             yield return www.SendWebRequest();
 
