@@ -33,13 +33,13 @@ public class IAPTest : MonoBehaviour
     public void GrantCredits(string credits)
     {
         //userCredits = userCredits + credits;
-        Debug.Log("You received " + credits + " Credits!");
+        Logger.Log("You received " + credits + " Credits!");
         iapMng.OnPurchaseClicked(credits);
     }
 
     public void ShowMsg(string msg)
     {
         text.text += CommonFunction.ToUTF8Bom(msg) + "\n";
-        Debug.LogError(msg);
+        Logger.Error(msg);
     }
 }

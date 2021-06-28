@@ -49,7 +49,7 @@ public class EntityData
                 case ItemType.Kamado: return ConfigMng.E.Resource[id].ResourcePath;
 
                 case ItemType.TransferGate: return ConfigMng.E.TransferGate[id].ResourcesPath;
-                default: Debug.LogError("not find config " + type); break;
+                default: Logger.Error("not find config " + type); break;
             }
 
             return "";

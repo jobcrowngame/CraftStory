@@ -118,6 +118,6 @@ public class PlayerEntity : CharacterEntity
 
     public void Wait()
     {
-        Debug.Log("Wait");
+        Logger.Log("Wait");
     }
 }

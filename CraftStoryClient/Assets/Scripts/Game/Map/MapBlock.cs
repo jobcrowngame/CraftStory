@@ -20,7 +20,7 @@ public class MapBlock : MonoBehaviour
             clickingTime = 0;
             DataMng.E.AddItem(ConfigMng.E.Block[data.ID].ItemID, 1);
 
-            Debug.Log("Delete cube. \n" + data.ToString()); ;
+            Logger.Log("Delete cube. \n" + data.ToString()); ;
             WorldMng.E.MapCtl.DeleteBlock(this);
         }
     }

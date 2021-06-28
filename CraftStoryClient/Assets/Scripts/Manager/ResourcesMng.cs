@@ -22,7 +22,7 @@ public class ResourcesMng : Single<ResourcesMng>
             gameObj = Resources.Load(path);
             if (gameObj == null)
             {
-                Debug.LogError("not find resources " + path);
+                Logger.Error("not find resources " + path);
                 return null;
             }
 
@@ -40,7 +40,7 @@ public class ResourcesMng : Single<ResourcesMng>
             gameObj = Resources.Load<T>(path);
             if (gameObj == null)
             {
-                Debug.LogError("not find resources " + path);
+                Logger.Error("not find resources " + path);
                 return null;
             }
 

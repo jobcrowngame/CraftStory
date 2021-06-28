@@ -25,7 +25,7 @@ public class UICtl : Single<UICtl>
 
     public IEnumerator InitCoroutine(GameObject glubalObj)
     {
-        Debug.Log("èâä˙âª UICtl");
+         Logger.Log("èâä˙âª UICtl");
 
         bool ret = false;
 
@@ -100,7 +100,7 @@ public class UICtl : Single<UICtl>
             string uiResourcesPath = GetUIResourcesPath(uiType);
             if (uiResourcesPath == "")
             {
-                Debug.LogError("bad ui path " + uiType.ToString());
+                Logger.Error("bad ui path " + uiType.ToString());
                 return null;
             }
 
@@ -171,7 +171,7 @@ public class UICtl : Single<UICtl>
             case UIType.Charge: return "Prefabs/UI/Charge";
             case UIType.Craft: return "Prefabs/UI/Craft";
             case UIType.BlueprintReName: return "Prefabs/UI/BlueprintReName";
-            default: Debug.LogError("not find UIType " + ui); return "";
+            default: Logger.Error("not find UIType " + ui); return "";
         }
     }
 }

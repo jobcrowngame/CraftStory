@@ -41,7 +41,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnBeginDrag");
+        //Logger.Log("OnBeginDrag");
 
         isDrag = true;
         startPos = eventData.position;
@@ -49,7 +49,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnDrag");
+        //Logger.Log("OnDrag");
 
 
         Vector2 pointerPos = eventData.position - startPos;
@@ -68,7 +68,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnEndDrag");
+        //Logger.Log("OnEndDrag");
 
         isDrag = false;
         isClick = false;
@@ -81,8 +81,8 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        //Debug.Log("OnPointerDown");
-        //Debug.Log(eventData.position);
+        //Logger.Log("OnPointerDown");
+        //Logger.Log(eventData.position);
 
         this.eventData = eventData;
 
@@ -91,7 +91,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        //Debug.Log("OnPointerUp");
+        //Logger.Log("OnPointerUp");
 
         if (isDrag)
             return;

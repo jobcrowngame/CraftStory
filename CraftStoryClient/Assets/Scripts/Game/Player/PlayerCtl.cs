@@ -89,7 +89,7 @@ public class PlayerCtl : MonoBehaviour
         playerEntity = obj.GetComponent<PlayerEntity>();
         if (playerEntity == null)
         {
-            Debug.LogError("not find CharacterEntity component");
+            Logger.Error("not find CharacterEntity component");
             return null;
         }
 
@@ -207,7 +207,7 @@ public class PlayerCtl : MonoBehaviour
 
         PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
 
-        Debug.Log("Create block " + pos);
+         Logger.Log("Create block " + pos);
     }
     private void CreateResources(int resourcesId, GameObject collider, Vector3Int pos)
     {
@@ -216,7 +216,7 @@ public class PlayerCtl : MonoBehaviour
 
         PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
 
-        Debug.Log("Create block " + pos);
+         Logger.Log("Create block " + pos);
     }
 
     public void ConsumableSelectItem(int count = 1)

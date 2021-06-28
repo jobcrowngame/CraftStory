@@ -70,14 +70,14 @@ class ConfigMng : Single<ConfigMng>
             var config = Resources.Load<TextAsset>(path);
             if (config == null)
             {
-                Debug.LogError("load Resources fail." + path);
+                Logger.Error("load Resources fail." + path);
                 return;
             }
 
             var list = JsonMapper.ToObject<List<T>>(config.text);
             if (list == null)
             {
-                Debug.LogError("DeserializeObject file fail." + path);
+                Logger.Error("DeserializeObject file fail." + path);
                 return;
             }
 
@@ -88,7 +88,7 @@ class ConfigMng : Single<ConfigMng>
         }
         catch (System.Exception ex)
         {
-            Debug.LogError(ex);
+            Logger.Error(ex);
         }
     }
 }

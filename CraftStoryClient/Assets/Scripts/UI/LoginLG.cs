@@ -6,8 +6,8 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
     {
         NWMng.E.CreateNewAccount((rp) => 
         {
-            Debug.Log("新しいアカウント作成成功しました。");
-            Debug.LogFormat("ID:\n{0}, \nPW:\n{1}", rp[0], rp[1]);
+            Logger.Log("新しいアカウント作成成功しました。");
+            Logger.Log("ID:\n{0}, \nPW:\n{1}", rp[0], rp[1]);
 
             DataMng.E.NewUser(rp[0], rp[1]);
             Login();
@@ -29,7 +29,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
         NWMng.E.Login((rp) => 
         {
             DataMng.E.session = rp[0];
-            Debug.Log("token: " + DataMng.E.session);
+            Logger.Log("token: " + DataMng.E.session);
             ui.LoginResponse();
         }, id, pw);
     }

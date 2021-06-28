@@ -68,7 +68,7 @@ public class CameraCtl : MonoBehaviour
 
         if (lookUpAngle > SettingMng.E.LookUpAngleMin && lookUpAngle < 360)
         {
-            //Debug.Log(lookUpAngle);
+            //Logger.Log(lookUpAngle);
             CameraPull(false);
         }
 

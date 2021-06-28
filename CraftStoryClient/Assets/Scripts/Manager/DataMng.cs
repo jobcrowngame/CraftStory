@@ -77,7 +77,7 @@ public class DataMng : Single<DataMng>
 
     public void Save()
     {
-        Debug.Log("Save Data");
+        Logger.Log("Save Data");
 
         if (uData != null)
             SaveLoadFile.E.Save(uData, PublicPar.SaveRootPath + UserDataName);
@@ -95,12 +95,18 @@ public class DataMng : Single<DataMng>
         uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + UserDataName);
 
         homeData = (MapData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + MapDataName);
-        if(homeData != null) homeData.ParseStringData();
+
+        Logger.Log(AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\'));
+
+        if (homeData == null)
+            homeData = (MapData)SaveLoadFile.E.Load(Application.dataPath + "/SaveData/MapData.dat");
+
+        if (homeData != null) homeData.ParseStringData();
 
         return true;
     }
 
-    #region Item
+#region Item
 
     public ItemData GetItemByGuid(int guid)
     {
@@ -192,7 +198,7 @@ public class DataMng : Single<DataMng>
     {
         if (GetItemByGuid(guid).count < count)
         {
-            Debug.LogWarning("No item stip");
+            Logger.Log("No item stip");
         }
         else
         {
@@ -268,14 +274,14 @@ public class DataMng : Single<DataMng>
         {
             E.Items = JsonMapper.ToObject<List<ItemData>>(jsonData);
 
-            Debug.Log("Item refresh. ItemCount:" + E.Items.Count);
+            Logger.Log("Item refresh. ItemCount:" + E.Items.Count);
 
             if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
         }
         catch (System.Exception e)
         {
-            Debug.LogError(jsonData);
-            Debug.LogError(e);
+            Logger.Error(jsonData);
+            Logger.Error(e.Message);
         }
     }
     public static void GetCoins(string jsonData)
@@ -289,7 +295,7 @@ public class DataMng : Single<DataMng>
         E.UserData.Coin3 = coins.coin3;
     }
 
-    #endregion
+#endregion
 
     struct GetCoinsResponse
     {

@@ -18,7 +18,7 @@ public class PlayerAnimatorEvent : MonoBehaviour
 
     public void Wait()
     {
-        Debug.Log("PlayerAnimatorEvent");
+        Logger.Log("PlayerAnimatorEvent");
         PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.Waiting;
         //PlayerCtl.E.UnLock();
     }

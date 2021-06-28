@@ -64,7 +64,7 @@ public class HomeUI : UIBase
         FadeinImg.enabled = true;
 
         MenuBtn = FindChiled<Button>("MenuBtn");
-        MenuBtn.onClick.AddListener(() => { Debug.Log("MenuBtn"); UICtl.E.OpenUI<MenuUI>(UIType.Menu); });
+        MenuBtn.onClick.AddListener(() => { Logger.Log("MenuBtn"); UICtl.E.OpenUI<MenuUI>(UIType.Menu); });
 
         BagBtn = FindChiled<Button>("BagBtn");
         BagBtn.onClick.AddListener(() => { UICtl.E.OpenUI<BagUI>(UIType.Bag); });
@@ -141,13 +141,13 @@ public class HomeUI : UIBase
 
     private void CreateBlueprint()
     {
-        Debug.Log("BuilderBtn");
+        Logger.Log("BuilderBtn");
 
         PlayerCtl.E.BuilderPencil.CreateBlueprint();
     }
     private void CancelBuilderPencilCancelBtn()
     {
-        Debug.Log("CancelBtn");
+        Logger.Log("CancelBtn");
 
         PlayerCtl.E.BuilderPencil.CancelCreateBlueprint();
     }

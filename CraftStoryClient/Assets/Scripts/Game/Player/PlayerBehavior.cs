@@ -11,7 +11,7 @@ public class PlayerBehavior
             if (behaviorType == value)
                 return;
 
-            Debug.Log("動作変換 -> " + value);
+             Logger.Log("動作変換 -> " + value);
 
             behaviorType = value;
 
@@ -23,7 +23,7 @@ public class PlayerBehavior
                 case PlayerBehaviorType.Breack: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(3); break;
                 case PlayerBehaviorType.None: break;
 
-                default: Debug.LogError("Not find behavior type " + value); break;
+                default: Logger.Error("Not find behavior type " + value); break;
             }
         }
     }
@@ -37,7 +37,7 @@ public class PlayerBehavior
             if (selectItemType == value)
                 return;
 
-            Debug.Log("選択アイテム変化 -> " + value);
+             Logger.Log("選択アイテム変化 -> " + value);
 
             selectItemType = value;
 
@@ -52,7 +52,7 @@ public class PlayerBehavior
                 case ItemType.Kamado:
                     break;
 
-                //default: Debug.LogError("Not find ItemType " + value); break;
+                //default: Logger.Error("Not find ItemType " + value); break;
             }
         }
     }

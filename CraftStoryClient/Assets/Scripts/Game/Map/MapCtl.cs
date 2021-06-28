@@ -46,7 +46,7 @@ public class MapCtl
         CreateTransferGate(mData);
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-        Debug.LogWarningFormat("map 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
+        Logger.Warning("map 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
     }
     private void CreateBlocks(MapData mData)
     {
@@ -136,7 +136,7 @@ public class MapCtl
     {
         if (blueprint == null)
         {
-            Debug.LogError("blueprint is null");
+            Logger.Error("blueprint is null");
             return;
         }
 

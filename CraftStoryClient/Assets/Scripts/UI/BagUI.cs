@@ -47,7 +47,7 @@ public class BagUI : UIBase
     {
         base.Open();
 
-        Debug.Log("Bag Open");
+        Logger.Log("Bag Open");
 
         NWMng.E.GetItemList((rp) =>
         {

@@ -12,7 +12,7 @@ public class IAPManager : IStoreListener
     {
         iapStore = new IAPStore();
 
-        Logger.E.Log("初期化開始");
+        Logger.Log("初期化開始");
 
         try
         {
@@ -29,14 +29,14 @@ public class IAPManager : IStoreListener
             UnityPurchasing.Initialize(this, builder);
 
             string receipt = builder.Configure<IAppleConfiguration>().appReceipt;
-            Debug.Log(receipt);
+             Logger.Log(receipt);
 
             bool canMakePayments = builder.Configure<IAppleConfiguration>().canMakePayments;
-            Debug.Log(canMakePayments);
+             Logger.Log(canMakePayments);
         }
         catch (System.Exception ex)
         {
-            Logger.E.Error(ex.Message);
+            Logger.Error(ex.Message);
         }
     }
 
@@ -45,19 +45,19 @@ public class IAPManager : IStoreListener
     /// </summary>
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
-        Logger.E.Log("OnInitialized");
+        Logger.Log("OnInitialized");
 
         this.controller = controller;
         this.extensions = extensions;
 
         foreach (var product in controller.products.all)
         {
-            Logger.E.Log("[ProductId]" + product.definition.storeSpecificId);
-            Logger.E.Log("[Title]" + product.metadata.localizedTitle);
+            Logger.Log("[ProductId]" + product.definition.storeSpecificId);
+            Logger.Log("[Title]" + product.metadata.localizedTitle);
         }
 
         extensions.GetExtension<IAppleExtensions>().RegisterPurchaseDeferredListener(product => {
-            Logger.E.Log("RegisterPurchaseDeferredListener" + product.definition.id);
+            Logger.Log("RegisterPurchaseDeferredListener" + product.definition.id);
         });
 
         extensions.GetExtension<IAppleExtensions>().RestoreTransactions(result => {
@@ -65,29 +65,29 @@ public class IAPManager : IStoreListener
             {
                 // なにかがリストアされたというわけではありません
                 // 単にリストアの処理が終了したということです
-                Logger.E.Log("リストア成功");
+                Logger.Log("リストア成功");
             }
             else
             {
                 // リストア失敗
-                Logger.E.Log("リストア失敗");
+                Logger.Log("リストア失敗");
             }
         });
 
         extensions.GetExtension<IAppleExtensions>().RefreshAppReceipt(receipt => {
             // リクエストが成功したら、このハンドラーが呼び出されます
             // レシートは最新の App Store レシート
-            Logger.E.Log(receipt);
-            Logger.E.Log("successCallback");
+             Logger.Log(receipt);
+             Logger.Log("successCallback");
         },
         () => {
             // リクエストが失敗したら、このハンドラーが呼び出されます。
             // 例えば、ネットワークが使用不可であったり、
             // ユーザーが誤ったパスワードを入力した場合など。
-            Logger.E.Log("RefreshAppReceipt Error");
+             Logger.Log("RefreshAppReceipt Error");
         });
 
-        Logger.E.Log("UnityPurchasing Init OK! 初期化完了");
+         Logger.Log("UnityPurchasing Init OK! 初期化完了");
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ public class IAPManager : IStoreListener
     /// </summary>
     public void OnInitializeFailed(InitializationFailureReason error)
     {
-        Logger.E.Error("UnityPurchasing Init Fail! 初期化失敗.\n" + error);
+        Logger.Error("UnityPurchasing Init Fail! 初期化失敗.\n" + error);
     }
 
     /// <summary>
@@ -108,11 +108,11 @@ public class IAPManager : IStoreListener
     /// </summary>
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
     {
-        Logger.E.Log("購入成功.");
+         Logger.Log("購入成功.");
         Product product = e.purchasedProduct;
 
-        Logger.E.Log(e.purchasedProduct.metadata.isoCurrencyCode);
-        Logger.E.Log("[ID]" + e.purchasedProduct.transactionID);
+         Logger.Log(e.purchasedProduct.metadata.isoCurrencyCode);
+         Logger.Log("[ID]" + e.purchasedProduct.transactionID);
 
         var productId = product.definition.storeSpecificId;
         var receiptId = e.purchasedProduct.transactionID;
@@ -137,12 +137,12 @@ public class IAPManager : IStoreListener
     /// </summary>
     public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
     {
-        Logger.E.Error("購入失敗.");
+        Logger.Error("購入失敗.");
 
         if (p == PurchaseFailureReason.PurchasingUnavailable)
         {
             // デバイス設定で IAP が無効である場合があります。
-            Logger.E.Error("PurchaseFailureReason.PurchasingUnavailable");
+            Logger.Error("PurchaseFailureReason.PurchasingUnavailable");
         }
     }
 
@@ -150,7 +150,7 @@ public class IAPManager : IStoreListener
     // を押すと、関数が呼び出されます。
     public void OnPurchaseClicked(string productId)
     {
-        Logger.E.Log("購入開始." + productId);
+        Logger.Log("購入開始." + productId);
         controller.InitiatePurchase(productId);
     }
 }

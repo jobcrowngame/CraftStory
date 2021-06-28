@@ -31,7 +31,7 @@ public class CommonFunction
     public static GameObject FindChiledByName(Transform parent, string name)
     {
         if (parent == null)
-            Debug.LogError(parent.gameObject.name + "---" + name + " is null");
+            Logger.Error(parent.gameObject.name + "---" + name + " is null");
 
         Transform childTrans = parent.Find(name);
         if (childTrans != null)
@@ -178,7 +178,7 @@ public class CommonFunction
     {
         if (!ConfigMng.E.ErrorMsg.ContainsKey(errCode))
         {
-            Debug.LogError("not find errcode " + errCode);
+            Logger.Error("not find errcode " + errCode);
             return;
         }
 

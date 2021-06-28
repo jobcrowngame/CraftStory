@@ -23,8 +23,8 @@ public class SaveLoadFile : Single<SaveLoadFile>
 		}
 		catch (IOException e1)
 		{
-			Debug.LogError("ファイルオープンエラー");
-			Debug.LogError(e1.Message);
+			Logger.Error("ファイルオープンエラー");
+			Logger.Error(e1.Message);
 		}
 		finally
 		{
@@ -46,7 +46,7 @@ public class SaveLoadFile : Single<SaveLoadFile>
 			fileStream = File.Open(path, FileMode.Open);
             if (fileStream.Length < 1)
             {
-				Debug.LogError("Load fial. Bad save data." + path);
+				Logger.Error("Load fial. Bad save data." + path);
 				return null;
 			}
 
@@ -54,13 +54,13 @@ public class SaveLoadFile : Single<SaveLoadFile>
 		}
 		catch (FileNotFoundException e1)
 		{
-			Debug.LogError("ファイルがありません");
-			Debug.LogError(e1.Message);
+			Logger.Error("ファイルがありません");
+			Logger.Error(e1.Message);
 		}
 		catch (IOException e2)
 		{
-			Debug.LogError("ファイルオープンエラー");
-			Debug.LogError(e2.Message);
+			Logger.Error("ファイルオープンエラー");
+			Logger.Error(e2.Message);
 		}
 		finally
 		{
@@ -68,7 +68,7 @@ public class SaveLoadFile : Single<SaveLoadFile>
 				fileStream.Close();
 		}
 
-		Debug.LogError("not find save file." + path);
+		Logger.Error("not find save file." + path);
 
 		return null;
 	}

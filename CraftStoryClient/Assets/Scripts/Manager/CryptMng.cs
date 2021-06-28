@@ -78,7 +78,7 @@ public class CryptMng : Single<CryptMng>
         }
         catch (Exception e)
         {
-            Debug.LogError(e);
+            Logger.Error(e);
         }
         finally
         {

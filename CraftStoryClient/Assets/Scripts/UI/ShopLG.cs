@@ -27,7 +27,7 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
             case ShopUiType.Exchange: return "交換";
             case ShopUiType.Blueprint: return "設計図";
 
-            default: Debug.LogError("not find shop ui type " + ShopUIType); break;
+            default: Logger.Error("not find shop ui type " + ShopUIType); break;
         }
 
         return "";

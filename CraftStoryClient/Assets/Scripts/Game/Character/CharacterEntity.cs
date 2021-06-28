@@ -34,7 +34,7 @@ public class CharacterEntity : MonoBehaviour
     {
         if (animator == null)
         {
-            Debug.LogError("not find animator");
+            Logger.Error("not find animator");
             return;
         }
 

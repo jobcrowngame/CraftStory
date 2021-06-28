@@ -22,7 +22,7 @@ public class MapDataFactory
         //AddBuildings();
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-        Debug.LogWarningFormat("mapData 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
+        Logger.Warning("mapData 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
 
         return mData;
     }
@@ -69,8 +69,8 @@ public class MapDataFactory
             }
             catch (Exception ex)
             {
-                Debug.LogError("not find Mountain " + mountains[i]);
-                Debug.LogError(ex.Message);
+                Logger.Error("not find Mountain " + mountains[i]);
+                Logger.Error(ex.Message);
                 continue;
             }
 
@@ -88,7 +88,7 @@ public class MapDataFactory
     {
         if (parent == null)
         {
-            Debug.LogError("bad parent ");
+            Logger.Error("bad parent ");
             return;
         }
 
@@ -139,8 +139,8 @@ public class MapDataFactory
             }
             catch (Exception ex)
             {
-                Debug.LogError("not find resource " + data[i]);
-                Debug.LogError(ex.Message);
+                Logger.Error("not find resource " + data[i]);
+                Logger.Error(ex.Message);
                 continue;
             }
 
@@ -171,8 +171,8 @@ public class MapDataFactory
         }
         catch (Exception ex)
         {
-            Debug.LogError("not find transferGate " + transferGateID);
-            Debug.LogError(ex.Message);
+            Logger.Error("not find transferGate " + transferGateID);
+            Logger.Error(ex.Message);
             return;
         }
 

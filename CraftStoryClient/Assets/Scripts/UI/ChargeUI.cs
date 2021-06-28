@@ -20,11 +20,11 @@ public class ChargeUI : UIBase
 
     public void ShowItems()
     {
-        Debug.Log("ShowItems");
+        Logger.Log("ShowItems");
     }
     public void OnError()
     {
-        Debug.Log("OnError");
-        //Debug.Log(error.Message);
+        Logger.Log("OnError");
+        //Logger.Log(error.Message);
     }
 }

@@ -48,7 +48,7 @@ public class ShopItemCell : UIBase
     {
         if (config.Type == 1)
         {
-            //Debug.Log("OnClickBuyBtn " + config.Name);
+            //Logger.Log("OnClickBuyBtn " + config.Name);
             //NWMng.E.IAP.OnPurchaseClicked(config.Name);
         }
         else if (config.Type == 2 || config.Type == 3)

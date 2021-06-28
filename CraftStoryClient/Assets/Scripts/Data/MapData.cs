@@ -89,7 +89,7 @@ public class MapData
             if (data.Pos.x > sizeX || data.Pos.y > sizeY || data.Pos.z > sizeZ 
                 || data.Pos.x < 0 || data.Pos.y < 0 || data.Pos.z < 0)
             {
-                Debug.LogError("add mapdata file." + data.Pos);
+                Logger.Error("add mapdata file." + data.Pos);
                 return;
             }
 
@@ -97,9 +97,9 @@ public class MapData
         }
         catch (Exception ex)
         {
-            Debug.LogError("Add blockData file." + data.Pos);
-            Debug.LogError(ex.Message);
-            Debug.LogError(ex.StackTrace);
+            Logger.Error("Add blockData file." + data.Pos);
+            Logger.Error(ex.Message);
+            Logger.Error(ex.StackTrace);
         }
         
     }
@@ -109,7 +109,7 @@ public class MapData
         {
             if (pos.x > sizeX || pos.y > sizeY || pos.z > sizeZ)
             {
-                Debug.LogError("Remove mapdata file." + pos);
+                Logger.Error("Remove mapdata file." + pos);
                 return;
             }
 
@@ -117,9 +117,9 @@ public class MapData
         }
         catch (Exception ex)
         {
-            Debug.LogError("Remove blockData file." + pos);
-            Debug.LogError(ex.Message);
-            Debug.LogError(ex.StackTrace);
+            Logger.Error("Remove blockData file." + pos);
+            Logger.Error(ex.Message);
+            Logger.Error(ex.StackTrace);
         }
     }
 
@@ -152,8 +152,8 @@ public class MapData
         }
 
         strMap = sb.ToString();
-        Debug.Log("Map");
-        Debug.Log(strMap);
+        Logger.Log("Map");
+        Logger.Log(strMap);
     }
     public void EntityDataToStringData()
     {

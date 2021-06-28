@@ -14,7 +14,7 @@ public class CharacterCtl
         if (player == null)
             return;
 
-        Debug.Log("Save player pos " + player.transform.position);
+        Logger.Log("Save player pos " + player.transform.position);
 
         //DataMng.E.PlayerData.Pos = player.transform.position;
         //DataMng.E.PlayerData.EulerAngles = player.transform.rotation.eulerAngles;

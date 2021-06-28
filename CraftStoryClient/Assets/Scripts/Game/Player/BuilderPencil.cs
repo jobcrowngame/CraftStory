@@ -68,7 +68,7 @@ public class BuilderPencil
         int centerX = (maxX - minX) / 2;
         int centerZ = (maxZ - minZ) / 2;
 
-        Debug.LogFormat("s:{0}, n:{1}",startPos, endPos);
+        Logger.Log("s:{0}, n:{1}",startPos, endPos);
 
         List<MapBlockData> blocks = new List<MapBlockData>();
         for (int y = (int)startPos.y; y < DataMng.E.MapData.MapSize.y - startPos.y; y++)
@@ -93,7 +93,7 @@ public class BuilderPencil
         var ui = UICtl.E.OpenUI<BlueprintReNameUI>(UIType.BlueprintReName);
         ui.SetMapData(blueprintData.ToJosn());
 
-        Debug.Log(blueprintData.ToJosn());
+        Logger.Log(blueprintData.ToJosn());
 
         CancelCreateBlueprint();
     }
@@ -108,7 +108,7 @@ public class BuilderPencil
 
     public void UseBlueprint(Vector3Int startPos, string data)
     {
-        Debug.Log("UserBlueprint");
+        Logger.Log("UserBlueprint");
 
         if (selectBlueprintData == null)
             selectBlueprintData = new BlueprintData(data);
@@ -127,7 +127,7 @@ public class BuilderPencil
     }
     public void CancelUserBlueprint()
     {
-        Debug.Log("CancelUserBlueprint");
+        Logger.Log("CancelUserBlueprint");
 
         WorldMng.E.MapCtl.DeleteBuilderPencil();
         selectBlueprintData = null;
@@ -137,7 +137,7 @@ public class BuilderPencil
     }
     public void SpinBlueprint()
     {
-        Debug.Log("SpinBlueprint");
+        Logger.Log("SpinBlueprint");
 
         WorldMng.E.MapCtl.DeleteBuilderPencil();
         ClearSelectBlueprintDataBlock();
@@ -159,7 +159,7 @@ public class BuilderPencil
     }
     public void BuildBlueprint()
     {
-        Debug.Log("BuildBlueprint");
+        Logger.Log("BuildBlueprint");
 
         if (!selectBlueprintData.IsDuplicate)
         {
@@ -180,7 +180,7 @@ public class BuilderPencil
             var ret = PlayerCtl.E.ConsumableItems(consumableItems);
             if (!ret)
             {
-                Debug.Log("持っているアイテム数が足りないです。");
+                Logger.Log("持っているアイテム数が足りないです。");
                 return;
             }
 
