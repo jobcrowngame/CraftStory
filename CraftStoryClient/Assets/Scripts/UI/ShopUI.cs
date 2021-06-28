@@ -23,7 +23,7 @@ public class ShopUI : UIBase
         base.Init();
 
         ShopLG.E.Init(this);
-        btns = new Button[2];
+        btns = new Button[3];
 
         ItemsWind = FindChiled("ItemsWind");
         ChageWind = FindChiled("ChargeWind");
@@ -41,6 +41,8 @@ public class ShopUI : UIBase
         btns[0].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Charge; });
         btns[1] = FindChiled<Button>("Button (2)");
         btns[1].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Exchange; });
+        btns[2] = FindChiled<Button>("Button (3)");
+        btns[2].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint; });
 
         ShopLG.E.ShopUIType = ShopUiType.Charge;
 

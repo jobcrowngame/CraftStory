@@ -17,6 +17,7 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, Building> buildingConfig;
     Dictionary<int, Shop> shopConfig;
     Dictionary<int, ErrorMsg> errorMsgConfig;
+    Dictionary<int, Blueprint> blueprintConfig;
 
     public Dictionary<int, Block> Block { get => blockConfig; }
     public Dictionary<int, Bonus> Bonus { get => bonusConfig; }
@@ -29,6 +30,7 @@ class ConfigMng : Single<ConfigMng>
     public Dictionary<int, Building> Building { get => buildingConfig; }
     public Dictionary<int, Shop> Shop { get => shopConfig; }
     public Dictionary<int, ErrorMsg> ErrorMsg { get => errorMsgConfig; }
+    public Dictionary<int, Blueprint> Blueprint { get => blueprintConfig; }
 
     public IEnumerator InitInitCoroutine()
     {
@@ -43,6 +45,7 @@ class ConfigMng : Single<ConfigMng>
         buildingConfig = new Dictionary<int, Building>();
         shopConfig = new Dictionary<int, Shop>();
         errorMsgConfig = new Dictionary<int, ErrorMsg>();
+        blueprintConfig = new Dictionary<int, Blueprint>();
 
         ReadConfig("Config/Block", blockConfig);
         ReadConfig("Config/Bonus", bonusConfig);
@@ -55,6 +58,7 @@ class ConfigMng : Single<ConfigMng>
         ReadConfig("Config/Building", buildingConfig);
         ReadConfig("Config/Shop", shopConfig);
         ReadConfig("Config/ErrorMsg", errorMsgConfig);
+        ReadConfig("Config/Blueprint", blueprintConfig);
 
         yield return null;
     }

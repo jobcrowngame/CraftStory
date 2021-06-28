@@ -221,7 +221,7 @@ public class DataMng : Single<DataMng>
         }
         else
         {
-            Debug.LogWarning("No item stip");
+            CommonFunction.ShowHintBar(1);
         }
 
         return itemCheck;

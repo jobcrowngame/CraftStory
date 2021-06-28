@@ -83,6 +83,7 @@ namespace ExcelToJson
                 case "Building": list = Building(tbl); break;
                 case "Shop": list = Shop(tbl); break;
                 case "ErrorMsg": list = ErrorMsg(tbl); break;
+                case "Blueprint": list = Blueprint(tbl); break;
                 default: Console.WriteLine("not find fileName function."); break;
             }
 
@@ -308,6 +309,7 @@ namespace ExcelToJson
                 data.CostItemID = ToInt32(tbl.Rows[i]["CostItemID"]);
                 data.CostCount = ToInt32(tbl.Rows[i]["CostCount"]);
                 data.Bonus = ToInt32(tbl.Rows[i]["Bonus"]);
+                data.Relation = ToInt32(tbl.Rows[i]["Relation"]);
 
                 list.Add(data);
             }
@@ -322,6 +324,20 @@ namespace ExcelToJson
 
                 data.ID = ToInt32(tbl.Rows[i]["ID"]);
                 data.Message = ToString(tbl.Rows[i]["Message"]);
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Blueprint(DataTable tbl)
+        {
+            List<Blueprint> list = new List<Blueprint>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Blueprint();
+
+                data.ID = ToInt32(tbl.Rows[i]["ID"]);
+                data.Data = ToString(tbl.Rows[i]["Data"]);
 
                 list.Add(data);
             }

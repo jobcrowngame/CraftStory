@@ -12,5 +12,6 @@
         public int CostItemID { get; set; }
         public int CostCount { get; set; }
         public int Bonus { get; set; }
+        public int Relation { get; set; }
     }
 }

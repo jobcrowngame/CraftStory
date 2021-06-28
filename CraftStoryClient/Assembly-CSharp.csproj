@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\Common\SaveLoadFile.cs" />
     <Compile Include="Assets\Scripts\Manager\DataMng.cs" />
     <Compile Include="Assets\Scripts\Test\TestRender.cs" />
+    <Compile Include="Assets\Scripts\UI\BlueprintReNameUI.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion1.cs" />
     <Compile Include="Assets\Scripts\Manager\ResourcesMng.cs" />
     <Compile Include="Assets\Scripts\Game\Player\CameraCtl.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
     <Compile Include="Assets\Scripts\Test\TestAtt.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
+    <Compile Include="Assets\Scripts\Manager\CryptMng.cs" />
     <Compile Include="Assets\Scripts\Manager\Logger.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Resource.cs" />
     <Compile Include="Assets\Scripts\Common\IAPStore.cs" />
@@ -168,8 +170,7 @@
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
-    <Compile Include="Assets\Scripts\Manager\CryptMng.cs" />
-    <Compile Include="Assets\Scripts\UI\BlueprintReNameUI.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Blueprint.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />
