@@ -115,7 +115,7 @@ public class CommonFunction
     }
     public static void GoToHome()
     {
-        NowLoadingLG.E.IsGoHome = true;
+        DataMng.E.MapData.TransferGate = new EntityData(100, ItemType.TransferGate);
         UICtl.E.Clear();
         SceneManager.LoadSceneAsync("NowLoading");
     }

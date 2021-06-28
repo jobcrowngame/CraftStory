@@ -35,8 +35,6 @@ public class HomeUI : UIBase
         WorldMng.E.CreateGameObjects();
         UICtl.E.AddUI(this, UIType.Home);
 
-        NowLoadingLG.E.IsGoHome = false;
-
         Init();
     }
 

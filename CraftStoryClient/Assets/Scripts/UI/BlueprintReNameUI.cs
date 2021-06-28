@@ -7,7 +7,7 @@ public class BlueprintReNameUI : UIBase
     Button CancelBtn;
     InputField input;
 
-    private string mapData;
+    public string mapData { get; set; }
 
     private void Awake()
     {
