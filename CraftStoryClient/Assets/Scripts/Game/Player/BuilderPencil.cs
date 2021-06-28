@@ -93,7 +93,7 @@ public class BuilderPencil
         var ui = UICtl.E.OpenUI<BlueprintReNameUI>(UIType.BlueprintReName);
         ui.SetMapData(blueprintData.ToJosn());
 
-        Logger.Log(blueprintData.ToJosn());
+        Debug.Log(ui.mapData);
 
         CancelCreateBlueprint();
     }
