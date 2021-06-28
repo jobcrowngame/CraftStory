@@ -118,8 +118,10 @@ public class BuilderPencil
         buildPos = startPos;
         selectBlueprintData.IsDuplicate = false;
 
+        // 半透明ブロックを作る
         WorldMng.E.MapCtl.CreateTransparentBlocks(selectBlueprintData, buildPos);
 
+        // コストブロックを設定
         HomeLG.E.UI.AddBlueprintCostItems(selectBlueprintData.BlockList);
 
         var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
@@ -180,7 +182,7 @@ public class BuilderPencil
             var ret = PlayerCtl.E.ConsumableItems(consumableItems);
             if (!ret)
             {
-                Logger.Log("持っているアイテム数が足りないです。");
+                CommonFunction.ShowHintBar(1);
                 return;
             }
 
@@ -191,6 +193,10 @@ public class BuilderPencil
             PlayerCtl.E.ConsumableSelectItem();
 
             CancelUserBlueprint();
+        }
+        else
+        {
+            Logger.Warning("重複されたヒント");
         }
     }
 

@@ -10,5 +10,8 @@ public class BlueprintCell : UIBase
     {
         Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[itemId].IconResourcesPath);
         Count.text = "x" + count.ToString();
+        Count.color = DataMng.E.GetItemCountByItemID(itemId) < count
+            ? Color.red
+            : Color.white;
     }
 }
