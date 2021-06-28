@@ -9,7 +9,6 @@ public class BagUI : UIBase
     Dictionary<string, BagItemCell> cellDic;
     BagSelectItem[] selectItems;
 
-
     public override void Init()
     {
         base.Init();
@@ -56,6 +55,11 @@ public class BagUI : UIBase
 
             RefreshItems();
             RefreshSelectItemBtns();
+        });
+        NWMng.E.GetCoins((rp) =>
+        {
+            DataMng.GetCoins(rp[0]);
+            title.RefreshCoins();
         });
     }
     public override void Close()

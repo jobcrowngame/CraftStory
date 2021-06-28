@@ -40,7 +40,7 @@ public class NWMng : MonoBehaviour
 
         Debug.LogFormat("Send:[CMD]{0}", (int)cmd);
 
-        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.URL, wwwForm))
+        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.LocalURL, wwwForm))
         {
             yield return www.SendWebRequest();
 

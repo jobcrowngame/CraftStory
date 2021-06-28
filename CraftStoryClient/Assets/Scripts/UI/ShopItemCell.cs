@@ -66,6 +66,8 @@ public class ShopItemCell : UIBase
                             DataMng.GetCoins(rp3[0]);
                             ShopLG.E.UI.Refresh();
                         });
+
+                        CommonFunction.ShowHintBar(5);
                     }, config.ID);
                 });
         }
