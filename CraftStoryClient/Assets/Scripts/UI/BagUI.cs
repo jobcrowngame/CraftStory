@@ -25,7 +25,7 @@ public class BagUI : UIBase
         title = FindChiled<TitleUI>("Title");
         title.SetTitle("もちもの");
         title.SetOnClose(() => { Close(); });
-        title.EnActiveCoin(2);
+        title.EnActiveCoin(1);
         title.EnActiveCoin(3);
 
         itemGridRoot = FindChiled("Content");
