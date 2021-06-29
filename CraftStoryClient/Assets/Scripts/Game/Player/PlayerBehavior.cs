@@ -41,6 +41,12 @@ public class PlayerBehavior
 
                 default: Logger.Error("Not find behavior type " + value); break;
             }
+
+            // Breack以外ならDestroyEffectを削除する
+            if (behaviorType != PlayerBehaviorType.Breack)
+            {
+                EffectMng.E.RemoveDestroyEffect();
+            }
         }
     }
     private PlayerBehaviorType behaviorType = PlayerBehaviorType.None;

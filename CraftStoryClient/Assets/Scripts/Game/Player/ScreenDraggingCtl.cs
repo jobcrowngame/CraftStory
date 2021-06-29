@@ -135,8 +135,6 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
                 recource.CancelClicking();
             }
         }
-
-        EffectMng.E.RemoveDestroyEffect();
     }
 
     private void OnClick(Vector2 pos)
