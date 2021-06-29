@@ -36,11 +36,17 @@ public class PlayDescriptionUI : UIBase
     {
         base.Init();
 
+        PlayDescriptionLG.E.IsFirst = false;
         PlayDescriptionLG.E.Init(this);
 
         RightBtn.onClick.AddListener(() => { Index++; });
         LeftBtn.onClick.AddListener(() => { Index--; });
         OkBtn.onClick.AddListener(() => { Close(); });
+    }
+
+    public override void Open()
+    {
+        base.Open();
 
         Index = 1;
     }
