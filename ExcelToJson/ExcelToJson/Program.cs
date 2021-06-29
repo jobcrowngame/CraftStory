@@ -278,14 +278,10 @@ namespace ExcelToJson
                 var data = new Building();
 
                 data.ID = ToInt32(tbl.Rows[i]["ID"]);
-                data.ItemID = ToInt32(tbl.Rows[i]["ItemID"]);
-                data.ResourceName = ToString(tbl.Rows[i]["ResourceName"]);
+                data.Relation = ToInt32(tbl.Rows[i]["Relation"]);
                 data.PosX = ToInt32(tbl.Rows[i]["PosX"]);
                 data.PosY = ToInt32(tbl.Rows[i]["PosY"]);
                 data.PosZ = ToInt32(tbl.Rows[i]["PosZ"]);
-                data.Angle = ToInt32(tbl.Rows[i]["Angle"]);
-                data.OffsetY = ToFloat(tbl.Rows[i]["OffsetY"]);
-                data.DestroyTime = ToFloat(tbl.Rows[i]["DestroyTime"]);
 
                 list.Add(data);
             }

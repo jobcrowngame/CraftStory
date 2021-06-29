@@ -19,7 +19,7 @@ public class MapDataFactory
         AddMountains();
         AddResources();
         AddTransferGateConfig();
-        //AddBuildings();
+        AddBuildings();
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
         Logger.Log("mapData 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
@@ -185,5 +185,38 @@ public class MapDataFactory
         pos = MapCtl.GetGroundPos(mData, (int)pos.x, (int)pos.z);
 
         mData.TransferGate = new EntityData(config.ID, ItemType.TransferGate, pos);
+    }
+    private void AddBuildings()
+    {
+        var data = mapConfig.Buildings.Split(',');
+        if (data[0] == "N")
+            return;
+
+        for (int i = 0; i < data.Length; i++)
+        {
+            Building config = null;
+
+            try
+            {
+                config = ConfigMng.E.Building[int.Parse(data[i])];
+                if (config == null)
+                    continue;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("not find Building " + data[i]);
+                Logger.Error(ex.Message);
+                continue;
+            }
+
+            var blueprintData = new BlueprintData(ConfigMng.E.Blueprint[config.Relation].Data);
+            var pos = new Vector3Int(config.PosX, config.PosY, config.PosZ);
+
+            foreach (var item in blueprintData.BlockList)
+            {
+                item.Pos = CommonFunction.Vector3Sum(item.Pos, pos);
+                mData.AddBlock(item);
+            }
+        }
     }
 }
