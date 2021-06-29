@@ -22,6 +22,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     Vector2 startPos;
     PointerEventData eventData;
     private RaycastHit _cacheRaycastHit;
+    private GameObject clickingObj;
 
     float clickingTime;
 
@@ -100,7 +101,10 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
             OnClick(eventData.position);
 
         if (IsClicking)
+        {
             PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.Waiting;
+            CancelClicking();
+        }
 
         isClick = false;
         IsClicking = false;
@@ -109,11 +113,30 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnClicking(Vector2 pos)
     {
-        var obj = RayCastHits(pos);
-        if (obj == null)
+        clickingObj = RayCastHits(pos);
+        if (clickingObj == null)
             return;
 
-        PlayerCtl.E.OnClicking(Time.deltaTime, obj);
+        PlayerCtl.E.OnClicking(Time.deltaTime, clickingObj);
+    }
+    public void CancelClicking()
+    {
+        if (clickingObj != null)
+        {
+            var cell = clickingObj.GetComponent<MapBlock>();
+            if (cell != null && DataMng.E.MapData.IsHome)
+            {
+                cell.CancelClicking();
+            }
+
+            var recource = clickingObj.GetComponent<EntityResources>();
+            if (recource != null)
+            {
+                recource.CancelClicking();
+            }
+        }
+
+        EffectMng.E.RemoveDestroyEffect();
     }
 
     private void OnClick(Vector2 pos)

@@ -17,10 +17,26 @@ public class PlayerBehavior
 
             switch (behaviorType)
             {
-                case PlayerBehaviorType.Waiting: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(0); break;
-                case PlayerBehaviorType.Run: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(1); break;
-                case PlayerBehaviorType.Create: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(2); break;
-                case PlayerBehaviorType.Breack: PlayerCtl.E.PlayerEntity.EntityBehaviorChange(3); break;
+                case PlayerBehaviorType.Waiting: 
+                    PlayerCtl.E.PlayerEntity.EntityBehaviorChange(0);
+                    PlayerCtl.E.PlayerEntity.ShowDestroyEffect(false);
+                    break;
+
+                case PlayerBehaviorType.Run:
+                    PlayerCtl.E.PlayerEntity.EntityBehaviorChange(1); 
+                    PlayerCtl.E.PlayerEntity.ShowDestroyEffect(false);
+                    break;
+
+                case PlayerBehaviorType.Create:
+                    PlayerCtl.E.PlayerEntity.EntityBehaviorChange(2);
+                    PlayerCtl.E.PlayerEntity.ShowDestroyEffect(false);
+                    break;
+
+                case PlayerBehaviorType.Breack: 
+                    PlayerCtl.E.PlayerEntity.EntityBehaviorChange(3); 
+                    PlayerCtl.E.PlayerEntity.ShowDestroyEffect(true);
+                    break;
+
                 case PlayerBehaviorType.None: break;
 
                 default: Logger.Error("Not find behavior type " + value); break;

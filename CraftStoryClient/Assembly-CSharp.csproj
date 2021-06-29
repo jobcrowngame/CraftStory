@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\Game\Player\PlayerCtl.cs" />
     <Compile Include="Assets\Scripts\UI\Terms01UI.cs" />
     <Compile Include="Assets\Scripts\UI\BagUI.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayDescriptionUI.cs" />
     <Compile Include="Assets\Scripts\UI\HomeUI.cs" />
     <Compile Include="Assets\Scripts\Manager\ConfigMng.cs" />
     <Compile Include="Assets\Scripts\UI\HomeItemBtn.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Assets\Scripts\Game\Map\MapCtl.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapBlock.cs" />
     <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayDescriptionLG.cs" />
     <Compile Include="Assets\Scripts\UI\UICtl.cs" />
     <Compile Include="Assets\Scripts\UI\LoginLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mountain.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="Assets\Scripts\Test\PlayerController.cs" />
     <Compile Include="Assets\Scripts\UI\CraftItemCell.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion2.cs" />
+    <Compile Include="Assets\Scripts\UI\BlueprintCell.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerBehavior.cs" />
     <Compile Include="Assets\Scripts\UI\HomeLG.cs" />
     <Compile Include="Assets\Scripts\UI\TermsLG.cs" />
@@ -153,6 +156,7 @@
     <Compile Include="Assets\Scripts\Manager\SettingMng.cs" />
     <Compile Include="Assets\Scripts\UI\ShopItemCell.cs" />
     <Compile Include="Assets\Scripts\Data\MapData.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Blueprint.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerButton.cs" />
     <Compile Include="Assets\Scripts\UI\BraveLG.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterEntity.cs" />
@@ -170,10 +174,7 @@
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Blueprint.cs" />
-    <Compile Include="Assets\Scripts\UI\BlueprintCell.cs" />
-    <Compile Include="Assets\Scripts\UI\PlayDescriptionUI.cs" />
-    <Compile Include="Assets\Scripts\UI\PlayDescriptionLG.cs" />
+    <Compile Include="Assets\Scripts\Manager\EffectMng.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />

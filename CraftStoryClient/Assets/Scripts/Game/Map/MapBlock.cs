@@ -13,6 +13,9 @@ public class MapBlock : MonoBehaviour
 
     public void OnClicking(float time)
     {
+        if (clickingTime == 0)
+            EffectMng.E.AddDestroyEffect(transform.position);
+
         clickingTime += time;
 
         if (clickingTime > data.BaseData.DestroyTime)
@@ -22,6 +25,8 @@ public class MapBlock : MonoBehaviour
 
             Logger.Log("Delete cube. \n" + data.ToString()); ;
             WorldMng.E.MapCtl.DeleteBlock(this);
+
+            EffectMng.E.RemoveDestroyEffect();
         }
     }
     public void CancelClicking()

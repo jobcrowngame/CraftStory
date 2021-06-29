@@ -6,6 +6,8 @@ public class CharacterEntity : MonoBehaviour
     public Transform Model { get => model; }
     private Animator animator;
 
+    private Transform deleteEffect;
+
     public PlayerBehavior Behavior
     {
         get
@@ -23,6 +25,8 @@ public class CharacterEntity : MonoBehaviour
         model = CommonFunction.FindChiledByName(transform, "Model").transform;
         animator = model.GetComponent<Animator>();
         Behavior.Type = PlayerBehaviorType.Waiting;
+
+        deleteEffect = CommonFunction.FindChiledByName(transform, "DeleteEffect").transform;
     }
 
     public virtual void ModelActive(bool b)
@@ -39,5 +43,13 @@ public class CharacterEntity : MonoBehaviour
         }
 
         animator.SetInteger("State", stage);
+    }
+
+    public void ShowDestroyEffect(bool b = true)
+    {
+        if (deleteEffect != null)
+        {
+            deleteEffect.gameObject.SetActive(b);
+        }
     }
 }

@@ -9,11 +9,13 @@ public class MapCtl
     private Transform mapCellParent;
     private Transform resourceParent;
     private Transform builderPencilParent;
+    private Transform effectParent;
 
     private List<EntityResources> entityList;
     private int entityID;
 
     public Transform CellParent { get => mapCellParent; }
+    public Transform EffectParent { get => effectParent; }
 
     public MapCtl()
     {
@@ -35,6 +37,7 @@ public class MapCtl
 
         mapCellParent = new GameObject("Ground").transform;
         resourceParent = new GameObject("Resources").transform;
+        effectParent = new GameObject("Effects").transform;
 
         var startTime = DateTime.Now;
 
