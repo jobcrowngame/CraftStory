@@ -35,9 +35,15 @@ public class BlueprintReNameUI : UIBase
 
         DataMng.E.AddItemInData(3002, 1, input.text, mapData, ()=> 
         {
-            NWMng.E.RemoveItemByGuid(null, PlayerCtl.E.SelectItem.id, 1);
-            PlayerCtl.E.SelectItem = null;
-            Close();
+            NWMng.E.RemoveItemByGuid((rp)=> 
+            {
+                NWMng.E.GetItemList((rp2) =>
+                {
+                    DataMng.GetItems(rp2[0]);
+                    PlayerCtl.E.SelectItem = null;
+                    Close();
+                });
+            }, PlayerCtl.E.SelectItem.id, 1);
         });
     }
 }
