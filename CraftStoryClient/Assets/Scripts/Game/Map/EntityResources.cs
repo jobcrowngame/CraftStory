@@ -7,6 +7,9 @@ public class EntityResources : EntityBase
 
     public void OnClicking(float time)
     {
+        if (clickingTime == 0)
+            EffectMng.E.AddDestroyEffect(transform.position);
+
         clickingTime += time;
 
         if (clickingTime > Data.Config.DestroyTime)
@@ -29,6 +32,8 @@ public class EntityResources : EntityBase
 
             var items = new Dictionary<int, int>();
             WorldMng.E.MapCtl.DeleteResource(this);
+
+            EffectMng.E.RemoveDestroyEffect();
         }
     }
     public void CancelClicking()

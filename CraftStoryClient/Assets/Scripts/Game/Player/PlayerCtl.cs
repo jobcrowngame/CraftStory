@@ -165,7 +165,6 @@ public class PlayerCtl : MonoBehaviour
         if (collider == null)
             return;
 
-        PlayerEntity.Behavior.Type = PlayerBehaviorType.Breack;
 
         var cell = collider.GetComponent<MapBlock>();
         if (cell != null && DataMng.E.MapData.IsHome)
@@ -177,6 +176,7 @@ public class PlayerCtl : MonoBehaviour
             }
             else
             {
+                PlayerEntity.Behavior.Type = PlayerBehaviorType.Breack;
                 cell.OnClicking(time);
             }
         }
@@ -191,6 +191,7 @@ public class PlayerCtl : MonoBehaviour
             }
             else
             {
+                PlayerEntity.Behavior.Type = PlayerBehaviorType.Breack;
                 recource.OnClicking(time);
             }
         }
