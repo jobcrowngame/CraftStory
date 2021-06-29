@@ -40,7 +40,7 @@ public class NWMng : MonoBehaviour
 
         Logger.Log("Send:[CMD]{0}", (int)cmd);
 
-        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.URL2, wwwForm))
+        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.LocalURL, wwwForm))
         {
             yield return www.SendWebRequest();
 
@@ -150,7 +150,7 @@ public class NWMng : MonoBehaviour
         data.Add(itemid);
         data.Add(count);
 
-        StartCoroutine(HttpRequest(rp, data, CMD.RemoveItemByGuid));
+        StartCoroutine(HttpRequest(rp, data, CMD.RemoveItemByItemId));
     }
     public void EquitItem(Action<string[]> rp, int guid, int site)
     {
