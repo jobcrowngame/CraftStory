@@ -24,9 +24,9 @@ public class PlayDescriptionUI : UIBase
 
             switch (index)
             {
-                case 1: img.sprite = ReadResources<Sprite>("Textures/grass"); break;
-                case 2: img.sprite = ReadResources<Sprite>("Textures/blueprint"); break;
-                case 3: img.sprite = ReadResources<Sprite>("Textures/sand"); break;
+                case 1: img.sprite = ReadResources<Sprite>("Textures/tutorial_01"); break;
+                case 2: img.sprite = ReadResources<Sprite>("Textures/tutorial_02"); break;
+                case 3: img.sprite = ReadResources<Sprite>("Textures/tutorial_03"); break;
             }
         }
     }

@@ -35,7 +35,7 @@ public class BlueprintReNameUI : UIBase
 
         DataMng.E.AddItemInData(3002, 1, input.text, mapData, ()=> 
         {
-            NWMng.E.RemoveItemByGuid((rp)=> 
+            NWMng.E.RemoveItem((rp)=> 
             {
                 NWMng.E.GetItemList((rp2) =>
                 {
@@ -43,7 +43,7 @@ public class BlueprintReNameUI : UIBase
                     PlayerCtl.E.SelectItem = null;
                     Close();
                 });
-            }, PlayerCtl.E.SelectItem.id, 1);
+            }, PlayerCtl.E.SelectItem.itemId, 1);
         });
     }
 }

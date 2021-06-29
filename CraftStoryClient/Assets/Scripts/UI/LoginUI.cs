@@ -38,7 +38,7 @@ public class LoginUI : UIBase
         Logger.Log("ログイン成功しました。");
         Logger.Log("ようこそ、{0}様", DataMng.E.UserData.Account);
 
-        Start.sprite = ReadResources<Sprite>("Textures/icon_gamestart");
+        Start.sprite = ReadResources<Sprite>("Textures/button_2d_003");
 
         BGBtn.enabled = true;
     }
