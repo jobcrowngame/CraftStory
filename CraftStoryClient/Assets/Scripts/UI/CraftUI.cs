@@ -122,6 +122,7 @@ public class CraftUI : UIBase
                 NWMng.E.GetItemList((rp2) =>
                 {
                     DataMng.GetItems(rp2[0]);
+                    CommonFunction.ShowHintBar(6);
                 });
             }, selectCraft, selectCount);
         }

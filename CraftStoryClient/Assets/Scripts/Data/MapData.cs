@@ -11,9 +11,9 @@ public class MapData
     public int MapID { get => mapID; }
     private int mapID;
 
-    public bool IsHome { get => mapID == 100; }
+    public bool IsHome { get => MapID == 100; }
 
-    public Map Config { get => ConfigMng.E.Map[mapID]; }
+    public Map Config { get => ConfigMng.E.Map[MapID]; }
     public string NextSceneName { get => ConfigMng.E.TransferGate[transferGate.ID].NextMapSceneName; }
     public int NextMapID { get => ConfigMng.E.TransferGate[transferGate.ID].NextMap; }
 

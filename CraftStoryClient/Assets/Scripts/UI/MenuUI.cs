@@ -19,12 +19,14 @@ public class MenuUI : UIBase
                     AdventureBtn.gameObject.SetActive(true);
                     ShopBtn.gameObject.SetActive(true);
                     HomeBtn.gameObject.SetActive(false);
+                    PlayDescriptionBtn.gameObject.SetActive(true);
                     break;
 
                 case MenuUIType.Brave:
                     AdventureBtn.gameObject.SetActive(false);
                     ShopBtn.gameObject.SetActive(false);
                     HomeBtn.gameObject.SetActive(true);
+                    PlayDescriptionBtn.gameObject.SetActive(false);
                     break;
             }
         }
@@ -43,10 +45,26 @@ public class MenuUI : UIBase
         //CraftBtn.onClick.AddListener(() => { UICtl.E.OpenUI<CraftUI>(UIType.Craft); });
 
         DataMng.E.MapData.TransferGate = new EntityData(1000, ItemType.TransferGate);
-        AdventureBtn.onClick.AddListener(CommonFunction.GoToNextScene);
-        ShopBtn.onClick.AddListener(() => { UICtl.E.OpenUI<ShopUI>(UIType.Shop); });
-        HomeBtn.onClick.AddListener(CommonFunction.GoToHome);
-        PlayDescriptionBtn.onClick.AddListener(()=> { UICtl.E.OpenUI<PlayDescriptionUI>(UIType.PlayDescription); });
+        AdventureBtn.onClick.AddListener(()=> 
+        { 
+            CommonFunction.GoToNextScene();
+            Close();
+        });
+        ShopBtn.onClick.AddListener(() => 
+        {
+            UICtl.E.OpenUI<ShopUI>(UIType.Shop); 
+            Close();
+        });
+        HomeBtn.onClick.AddListener(()=> 
+        {
+            CommonFunction.GoToHome();
+            Close();
+        });
+        PlayDescriptionBtn.onClick.AddListener(()=> 
+        {
+            UICtl.E.OpenUI<PlayDescriptionUI>(UIType.PlayDescription);
+            Close();
+        });
     }
 
     public enum MenuUIType

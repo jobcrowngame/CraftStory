@@ -411,7 +411,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 80, y: 110}
+  m_CellSize: {x: 80, y: 120}
   m_Spacing: {x: 3, y: 3}
   m_Constraint: 1
   m_ConstraintCount: 5
@@ -462,9 +462,9 @@ RectTransform:
   m_Father: {fileID: 7273278364525151068}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 220, y: -172}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -110, y: 50}
   m_SizeDelta: {x: 180, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &480416708615389432
@@ -709,7 +709,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 660, y: 440}
+  m_SizeDelta: {x: 660, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7273278364525151066
 CanvasRenderer:
@@ -784,7 +784,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -10}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7273278365012843245
@@ -995,8 +995,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -209.99997, y: -10}
-  m_SizeDelta: {x: 200, y: -20}
+  m_AnchoredPosition: {x: -209.99997, y: -20}
+  m_SizeDelta: {x: 200, y: -120}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5405927202395126576
 MonoBehaviour:
@@ -1013,13 +1013,13 @@ MonoBehaviour:
   m_Padding:
     m_Left: 10
     m_Right: 10
-    m_Top: 10
-    m_Bottom: 10
+    m_Top: 5
+    m_Bottom: 5
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 180, y: 80}
-  m_Spacing: {x: 3, y: 3}
+  m_CellSize: {x: 180, y: 65}
+  m_Spacing: {x: 5, y: 5}
   m_Constraint: 1
   m_ConstraintCount: 1
 --- !u!1 &8408150460890274296
@@ -1153,6 +1153,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CraftCostCell (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2908817810126424834, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908817810126424834, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908817810126424834, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 3333026933752242202, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
       propertyPath: m_Text
       value: 
@@ -1267,6 +1279,18 @@ PrefabInstance:
     - target: {fileID: 416444423488218218, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
       propertyPath: m_Name
       value: CraftCostCell (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908817810126424834, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908817810126424834, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908817810126424834, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3333026933752242202, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
       propertyPath: m_Text
@@ -1383,6 +1407,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CraftCostCell (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2908817810126424834, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 53
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908817810126424834, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 53
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908817810126424834, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 3333026933752242202, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
       propertyPath: m_Text
       value: 
@@ -1497,6 +1533,18 @@ PrefabInstance:
     - target: {fileID: 416444423488218218, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
       propertyPath: m_Name
       value: CraftCostCell (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908817810126424834, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908817810126424834, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908817810126424834, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3333026933752242202, guid: c88ed0d035e7d414ebf70e2ede872573, type: 3}
       propertyPath: m_Text

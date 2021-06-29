@@ -82,11 +82,11 @@ public class DataMng : Single<DataMng>
         if (uData != null)
             SaveLoadFile.E.Save(uData, PublicPar.SaveRootPath + UserDataName);
 
-        if (homeData != null)
+        if (HomeData != null)
         {
-            homeData.MapDataToStringData();
-            homeData.EntityDataToStringData();
-            SaveLoadFile.E.Save(homeData, PublicPar.SaveRootPath + MapDataName);
+            HomeData.MapDataToStringData();
+            HomeData.EntityDataToStringData();
+            SaveLoadFile.E.Save(HomeData, PublicPar.SaveRootPath + MapDataName);
         }
     }
 
@@ -94,15 +94,8 @@ public class DataMng : Single<DataMng>
     {
         uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + UserDataName);
 
-        homeData = (MapData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + MapDataName);
-
-        Logger.Log(AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\'));
-        Logger.Log(Application.dataPath);
-
-        if (homeData == null)
-            homeData = (MapData)SaveLoadFile.E.Load(Application.dataPath + "/SaveData/MapData.dat");
-
-        if (homeData != null) homeData.ParseStringData();
+        HomeData = (MapData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + MapDataName);
+        if (HomeData != null) HomeData.ParseStringData();
 
         return true;
     }
@@ -274,9 +267,6 @@ public class DataMng : Single<DataMng>
         try
         {
             E.Items = JsonMapper.ToObject<List<ItemData>>(jsonData);
-
-            Logger.Log("Item refresh. ItemCount:" + E.Items.Count);
-
             if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
         }
         catch (Exception e)
