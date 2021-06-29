@@ -15,10 +15,6 @@ public class Terms01UI : UIBase
         TitleText.text = "利用規約";
 
         MsgText = FindChiled<Text>("MsgText");
-        MsgText.text = @"aaa
-            aa
-            aaaa
-            aaaaa";
 
         OKBtn = FindChiled<Button>("OKBtn");
         OKBtn.onClick.AddListener(() => { Close(); });

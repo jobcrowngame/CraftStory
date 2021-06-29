@@ -15,10 +15,6 @@ public class Terms02UI : UIBase
         TitleText.text = "プライバシーポリシー";
 
         MsgText = FindChiled<Text>("MsgText");
-        MsgText.text = @"bbb
-            abba
-            aaaa
-            aaaaa";
 
         OKBtn = FindChiled<Button>("OKBtn");
         OKBtn.onClick.AddListener(() => { Close(); });
