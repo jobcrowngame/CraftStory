@@ -25,6 +25,7 @@ public class MapCtl
 
     public void CreateMap(int mapID)
     {
+        // ホームデータがない場合デフォルトデータを作る
         if (mapID == 100 && DataMng.E.HomeData == null)
             DataMng.E.HomeData = mapFactory.CreateMapData(mapID);
 
@@ -32,21 +33,17 @@ public class MapCtl
             ? DataMng.E.HomeData
             : mapFactory.CreateMapData(mapID);
 
-        CreateMap(DataMng.E.MapData);
-    }
-    public void CreateMap(MapData mData)
-    {
         mapCellParent = new GameObject("Ground").transform;
         resourceParent = new GameObject("Resources").transform;
 
         var startTime = DateTime.Now;
 
-        CreateBlocks(mData);
-        CreateResources(mData);
-        CreateTransferGate(mData);
+        CreateBlocks(DataMng.E.MapData);
+        CreateResources(DataMng.E.MapData);
+        CreateTransferGate(DataMng.E.MapData);
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-        Logger.Warning("map 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
+        Logger.Log("map 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
     }
     private void CreateBlocks(MapData mData)
     {

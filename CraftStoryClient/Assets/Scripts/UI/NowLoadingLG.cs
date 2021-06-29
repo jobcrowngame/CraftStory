@@ -8,7 +8,6 @@ public class NowLoadingLG : UILogicBase<NowLoadingLG, NowLoadingUI>
 
     public IEnumerator LoadData()
     {
-        Logger.Warning("NextScene:" + DataMng.E.MapData.NextSceneName);
         // シーンの読み込みをする
         async = SceneManager.LoadSceneAsync(DataMng.E.MapData.NextSceneName);
 

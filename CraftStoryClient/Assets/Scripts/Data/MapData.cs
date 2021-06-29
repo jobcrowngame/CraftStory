@@ -8,14 +8,7 @@ using JsonConfigData;
 [Serializable]
 public class MapData
 {
-    public int MapID { get => mapID; }
     private int mapID;
-
-    public bool IsHome { get => MapID == 100; }
-
-    public Map Config { get => ConfigMng.E.Map[MapID]; }
-    public string NextSceneName { get => ConfigMng.E.TransferGate[transferGate.ID].NextMapSceneName; }
-    public int NextMapID { get => ConfigMng.E.TransferGate[transferGate.ID].NextMap; }
 
     private int sizeX { get; set; }
     private int sizeY { get; set; }
@@ -23,11 +16,16 @@ public class MapData
     private string strMap { get; set; }
     private string strEntity { get; set; }
 
+    public bool IsHome { get => mapID == 100; }
+    public Map Config { get => ConfigMng.E.Map[mapID]; }
+    public string NextSceneName { get => ConfigMng.E.TransferGate[TransferGate.ID].NextMapSceneName; }
+    public int NextMapID { get => ConfigMng.E.TransferGate[TransferGate.ID].NextMap; }
+    public Vector3Int MapSize { get => new Vector3Int(sizeX, sizeY, sizeZ); }
+
+    public MapBlockData[,,] Map { get => map; }
     [NonSerialized]
     private MapBlockData[,,] map;
-    
 
-    
     public EntityData TransferGate
     {
         get => transferGate;
@@ -47,26 +45,6 @@ public class MapData
 
         map = new MapBlockData[sizeX, sizeY, sizeZ];
     }
-    public MapData(int mapID, MapBlockData[,,] map, Vector3Int size)
-    {
-        this.map = map;
-        sizeX = size.x;
-        sizeY = size.y;
-        sizeZ = size.z;
-    }
-
-    public Vector3Int MapSize
-    {
-        get { return new Vector3Int(sizeX, sizeY, sizeZ); }
-    }
-    public MapBlockData[,,] Map 
-    { 
-        get { return map; }
-    }
-    public MapBlockData GetMap(Vector3Int pos)
-    {
-        return map[pos.x, pos.y, pos.z];
-    }
 
     public List<EntityData> Resources 
     {
@@ -81,6 +59,10 @@ public class MapData
     [NonSerialized]
     private List<EntityData> entityList;
 
+    public MapBlockData GetMap(Vector3Int pos)
+    {
+        return map[pos.x, pos.y, pos.z];
+    }
 
     public void AddBlock(MapBlockData data)
     {
@@ -159,7 +141,7 @@ public class MapData
     {
         StringBuilder sb = new StringBuilder();
 
-        if(transferGate != null) sb.Append(transferGate.ToStringData());
+        if(TransferGate != null) sb.Append(TransferGate.ToStringData());
 
         for (int i = 0; i < Resources.Count; i++)
         {
@@ -195,7 +177,7 @@ public class MapData
         }
 
         string[] entitys = strEntity.Split(',');
-        transferGate = new EntityData(entitys[0]);
+        TransferGate = new EntityData(entitys[0]);
         for (int i = 1; i < entitys.Length; i++)
         {
             Resources.Add(new EntityData(entitys[i]));

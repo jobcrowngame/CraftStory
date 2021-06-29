@@ -12,7 +12,7 @@ public class BraveUI : UIBase
 
     private void Start()
     {
-        WorldMng.E.CreateGameObjects();
+        WorldMng.E.CreateGameObjects(false);
 
         Init();
     }

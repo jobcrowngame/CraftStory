@@ -42,10 +42,9 @@ public class WorldMng : MonoBehaviour
     {
     }
 
-    public void CreateGameObjects()
+    public void CreateGameObjects(bool isHome = true)
     {
-        MapCtl.CreateMap(DataMng.E.MapData.NextMapID);
-
+        MapCtl.CreateMap(isHome　? 100: DataMng.E.MapData.NextMapID);
         CharacterCtl.CreateCharacter();
 
         AdventureCtl.E.Init();

@@ -22,7 +22,7 @@ public class MapDataFactory
         //AddBuildings();
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-        Logger.Warning("mapData 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
+        Logger.Log("mapData 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
 
         return mData;
     }

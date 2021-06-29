@@ -44,9 +44,9 @@ public class MenuUI : UIBase
         //CraftBtn = FindChiled<Button>("CraftBtn");
         //CraftBtn.onClick.AddListener(() => { UICtl.E.OpenUI<CraftUI>(UIType.Craft); });
 
-        DataMng.E.MapData.TransferGate = new EntityData(1000, ItemType.TransferGate);
         AdventureBtn.onClick.AddListener(()=> 
         { 
+            DataMng.E.MapData.TransferGate = new EntityData(1000, ItemType.TransferGate);
             CommonFunction.GoToNextScene();
             Close();
         });
