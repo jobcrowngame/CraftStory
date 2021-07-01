@@ -318,12 +318,16 @@ public class MapCtl
         if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z + 1));
         return isSurface;
     }
+    /// <summary>
+    /// 表面であるかをチェック
+    /// </summary>
     private static bool IsSurface(MapData mapData, Vector3Int pos)
     {
         if (IsOutRange(mapData, pos))
             return false;
 
-        return mapData.Map[pos.x, pos.y, pos.z] == null;
+        return mapData.Map[pos.x, pos.y, pos.z] == null 
+            || mapData.Map[pos.x, pos.y, pos.z].Config.Type == 2;
     }
     /// <summary>
     /// マップの最大サイズ外
