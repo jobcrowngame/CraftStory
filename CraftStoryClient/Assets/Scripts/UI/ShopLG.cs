@@ -7,9 +7,6 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
         get => shopUIType;
         set
         {
-            if (shopUIType == value)
-                return;
-
             shopUIType = value;
 
             UI.IsChargeWind(shopUIType == ShopUiType.Charge);

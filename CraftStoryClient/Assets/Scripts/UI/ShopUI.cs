@@ -14,8 +14,6 @@ public class ShopUI : UIBase
     Transform ItemsWind;
     Transform ChageWind;
 
-    IAPManager IAP;
-
     ShopItemCell[] chargeBtns;
 
     public override void Init()
@@ -47,9 +45,6 @@ public class ShopUI : UIBase
         ShopLG.E.ShopUIType = ShopUiType.Charge;
 
         Refresh();
-
-        IAP = new IAPManager();
-        IAP.Init();
 
         var chargeBtnParent = FindChiled("Grid", ChageWind.gameObject);
         chargeBtns = new ShopItemCell[chargeBtnParent.childCount];
@@ -103,6 +98,6 @@ public class ShopUI : UIBase
 
     public void GrantCredits(string credits)
     {
-        IAP.OnPurchaseClicked(credits);
+        IAPMng.E.OnPurchaseClicked(credits);
     }
 }

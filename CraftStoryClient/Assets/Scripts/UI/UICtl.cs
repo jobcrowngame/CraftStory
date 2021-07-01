@@ -41,6 +41,7 @@ public class UICtl : Single<UICtl>
     private bool CreateGlobalEntity()
     {
         //UserTest.E.Init();
+        IAPMng.E.Init();
         WorldMng.E.Init();
 
         return true;

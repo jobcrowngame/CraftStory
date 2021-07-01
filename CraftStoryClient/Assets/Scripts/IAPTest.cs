@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class IAPTest : MonoBehaviour
 {
-    IAPManager iapMng;
+    IAPMng iapMng;
     public Text text;
     public Button InitBtn;
 
@@ -11,7 +11,7 @@ public class IAPTest : MonoBehaviour
     {
         InitBtn.onClick.AddListener(() => 
         {
-            iapMng = new IAPManager();
+            iapMng = new IAPMng();
             iapMng.Init();
         });
     }

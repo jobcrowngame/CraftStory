@@ -168,7 +168,7 @@
     <Compile Include="Assets\Scripts\Common\CommonFunction.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Map.cs" />
-    <Compile Include="Assets\Scripts\Manager\IAPManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\IAPMng.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />

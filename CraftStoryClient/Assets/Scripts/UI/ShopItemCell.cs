@@ -5,26 +5,14 @@ using UnityEngine.Purchasing;
 
 public class ShopItemCell : UIBase
 {
-    Transform Limited;
-    Image Icon;
-    Text Des;
-    Button BuyBtn;
-    Text BuyBtnText;
-    Image BtnCostIcon;
+    Transform Limited { get => FindChiled("Limited"); }
+    Image Icon { get => FindChiled<Image>("Icon"); }
+    Text Des { get => FindChiled<Text>("Des"); }
+    Button BuyBtn { get => FindChiled<Button>("BuyBtn"); }
+    Text BuyBtnText { get => FindChiled<Text>("Text", BuyBtn.transform); }
+    Image BtnCostIcon { get => FindChiled<Image>("Image", BuyBtn.transform); }
 
     private Shop config;
-
-    private void Awake()
-    {
-        Limited = FindChiled("Limited");
-        Icon = FindChiled<Image>("Icon");
-        Des = FindChiled<Text>("Des");
-
-        BuyBtn = FindChiled<Button>("BuyBtn");
-        BuyBtnText = FindChiled<Text>("Text", BuyBtn.transform);
-        BuyBtn.onClick.AddListener(OnClickBuyBtn);
-        BtnCostIcon = FindChiled<Image>("Image", BuyBtn.transform);
-    }
 
     public override void Init<T>(T t)
     {
@@ -32,6 +20,7 @@ public class ShopItemCell : UIBase
 
         config = t as Shop;
 
+        BuyBtn.onClick.AddListener(OnClickBuyBtn);
         Limited.gameObject.SetActive(config.LimitedCount > 0);
         Icon.sprite = ReadResources<Sprite>(config.IconResources);
         Des.text = config.Des;

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Purchasing;
 
-public class IAPManager : IStoreListener
+public class IAPMng : Single<IAPMng>, IStoreListener
 {
     private IStoreController controller;
     private IExtensionProvider extensions;

@@ -114,12 +114,15 @@ public class CommonFunction
         PlayerCtl.E.SelectItem = null;
 
         SceneManager.LoadSceneAsync("NowLoading");
+        Logger.Warning("GoToNextScene TransferGate ID " + DataMng.E.MapData.TransferGate.ID);
     }
     public static void GoToHome()
     {
-        DataMng.E.MapData.TransferGate = new EntityData(100, ItemType.TransferGate);
         UICtl.E.Clear();
+
+        DataMng.E.MapData.TransferGate = new EntityData(100, ItemType.TransferGate);
         SceneManager.LoadSceneAsync("NowLoading");
+        Logger.Warning("GotoHome TransferGate ID " + DataMng.E.MapData.TransferGate.ID);
     }
 
     public static Vector3 Vector3Sum(Vector3 v1, Vector3 v2)
