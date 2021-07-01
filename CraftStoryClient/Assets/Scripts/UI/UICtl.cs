@@ -172,6 +172,7 @@ public class UICtl : Single<UICtl>
             case UIType.Craft: return "Prefabs/UI/Craft";
             case UIType.BlueprintReName: return "Prefabs/UI/BlueprintReName";
             case UIType.PlayDescription: return "Prefabs/UI/PlayDescription";
+            case UIType.PersonalMessage: return "Prefabs/UI/PersonalMessage";
             default: Logger.Error("not find UIType " + ui); return "";
         }
     }
@@ -200,4 +201,5 @@ public enum UIType
     Craft,
     BlueprintReName,
     PlayDescription,
+    PersonalMessage,
 }

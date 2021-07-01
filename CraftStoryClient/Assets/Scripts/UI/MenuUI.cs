@@ -8,6 +8,7 @@ public class MenuUI : UIBase
     Button ShopBtn { get => FindChiled<Button>("ShopBtn"); }
     Button HomeBtn { get => FindChiled<Button>("HomeBtn"); }
     Button PlayDescriptionBtn { get => FindChiled<Button>("PlayDescriptionBtn"); }
+    Button PersonalMessageBtn { get => FindChiled<Button>("PersonalMessageBtn"); }
 
     MenuUIType menuType
     {
@@ -20,6 +21,7 @@ public class MenuUI : UIBase
                     ShopBtn.gameObject.SetActive(true);
                     HomeBtn.gameObject.SetActive(false);
                     PlayDescriptionBtn.gameObject.SetActive(true);
+                    PersonalMessageBtn.gameObject.SetActive(true);
                     break;
 
                 case MenuUIType.Brave:
@@ -27,6 +29,7 @@ public class MenuUI : UIBase
                     ShopBtn.gameObject.SetActive(false);
                     HomeBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn.gameObject.SetActive(false);
+                    PersonalMessageBtn.gameObject.SetActive(false);
                     break;
             }
         }
@@ -63,6 +66,11 @@ public class MenuUI : UIBase
         PlayDescriptionBtn.onClick.AddListener(()=> 
         {
             UICtl.E.OpenUI<PlayDescriptionUI>(UIType.PlayDescription);
+            Close();
+        });
+        PersonalMessageBtn.onClick.AddListener(() =>
+        {
+            UICtl.E.OpenUI<PersonalMessageUI>(UIType.PersonalMessage);
             Close();
         });
     }

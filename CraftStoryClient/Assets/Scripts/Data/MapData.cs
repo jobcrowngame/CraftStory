@@ -18,8 +18,8 @@ public class MapData
 
     public bool IsHome { get => mapID == 100; }
     public Map Config { get => ConfigMng.E.Map[mapID]; }
-    public string NextSceneName { get => ConfigMng.E.TransferGate[TransferGate.ID].NextMapSceneName; }
-    public int NextMapID { get => ConfigMng.E.TransferGate[TransferGate.ID].NextMap; }
+    public string NextSceneName { get; set; }
+    public int NextMapID { get; set; }
     public Vector3Int MapSize { get => new Vector3Int(sizeX, sizeY, sizeZ); }
 
     public MapBlockData[,,] Map { get => map; }
@@ -29,7 +29,21 @@ public class MapData
     public EntityData TransferGate
     {
         get => transferGate;
-        set => transferGate = value;
+        set 
+        {
+            transferGate = value;
+
+            if (transferGate.ID != 0)
+            {
+                NextMapID = ConfigMng.E.TransferGate[TransferGate.ID].NextMap;
+                NextSceneName = ConfigMng.E.TransferGate[TransferGate.ID].NextMapSceneName;
+            }
+            else
+            {
+                NextMapID = 100;
+                NextSceneName = "Home";
+            }
+        }
     }
     [NonSerialized]
     private EntityData transferGate;

@@ -111,13 +111,17 @@ public class CommonFunction
     public static void GoToNextScene()
     {
         UICtl.E.Clear();
+        PlayerCtl.E.SelectItem = null;
+
         SceneManager.LoadSceneAsync("NowLoading");
+        Logger.Warning("GoToNextScene " + DataMng.E.MapData.TransferGate.ID);
     }
     public static void GoToHome()
     {
         DataMng.E.MapData.TransferGate = new EntityData(100, ItemType.TransferGate);
         UICtl.E.Clear();
         SceneManager.LoadSceneAsync("NowLoading");
+        Logger.Warning("GotoHome " + DataMng.E.MapData.TransferGate.ID);
     }
 
     public static Vector3 Vector3Sum(Vector3 v1, Vector3 v2)

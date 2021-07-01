@@ -493,7 +493,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 260}
+  m_SizeDelta: {x: 640, y: 260}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8372007587470525329
 CanvasRenderer:
@@ -690,12 +690,12 @@ GameObject:
   - component: {fileID: 6776239797927943401}
   - component: {fileID: 5094246626190083541}
   m_Layer: 5
-  m_Name: Button (5)
+  m_Name: PersonalMessageBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &9123823339657589032
 RectTransform:
   m_ObjectHideFlags: 0
@@ -711,10 +711,10 @@ RectTransform:
   m_Father: {fileID: 8284793920831962828}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -180}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2709725253172436286
 CanvasRenderer:
@@ -1517,7 +1517,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: "\u500B\u4EBA\u60C5\u5831"
 --- !u!1 &8082717532322143730
 GameObject:
   m_ObjectHideFlags: 0
