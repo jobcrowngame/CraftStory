@@ -43,6 +43,18 @@ public class HomeUI : UIBase
         Init();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            PlayerCtl.E.CameraCtl.ChangeCameraPos(1);
+        }
+        if (Input.GetKey(KeyCode.F6))
+        {
+            PlayerCtl.E.CameraCtl.ChangeCameraPos(-1);
+        }
+    }
+
     public override void Init()
     {
         base.Init();

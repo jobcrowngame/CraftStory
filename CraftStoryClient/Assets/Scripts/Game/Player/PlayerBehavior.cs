@@ -8,10 +8,13 @@ public class PlayerBehavior
         get => behaviorType;
         set
         {
-            if (behaviorType == value)
-                return;
+            //if (behaviorType == value)
+                //return;
 
-             Logger.Log("動作変換 -> " + value);
+            if (behaviorType != value)
+            {
+                Logger.Log("動作変換 -> " + value);
+            }
 
             behaviorType = value;
 

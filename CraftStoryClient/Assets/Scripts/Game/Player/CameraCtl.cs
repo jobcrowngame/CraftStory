@@ -102,7 +102,7 @@ public class CameraCtl : MonoBehaviour
         if (IsBlock())
             return;
 
-        CameraPosZ += v * 0.1f;
+        CameraPosZ += v * 0.3f;
 
         if (CameraPosZ <= cameraPosMinZ)
         {

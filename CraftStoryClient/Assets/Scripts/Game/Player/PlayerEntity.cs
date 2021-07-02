@@ -105,9 +105,4 @@ public class PlayerEntity : CharacterEntity
 
         return false;
     }
-
-    public void Wait()
-    {
-        Logger.Log("Wait");
-    }
 }
