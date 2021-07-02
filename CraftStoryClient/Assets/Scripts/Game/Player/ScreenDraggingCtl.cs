@@ -43,7 +43,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
             }
         }
 
-        if (Input.touchCount == 2)
+        if (Input.touchCount == 2 && BlueprintPreviewLG.E.UI.IsActive)
         {
             if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[1].phase == TouchPhase.Ended)
             {
