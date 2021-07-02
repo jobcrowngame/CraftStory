@@ -23,6 +23,8 @@ public class HomeUI : UIBase
     Button BlueprintCancelBtn;
     Button BuildBtn;
 
+    Text Behavior { get => FindChiled<Text>("Behavior"); }
+
     MyButton PlussBtn { get => FindChiled<MyButton>("PlussBtn"); }
     MyButton MinusBtn { get => FindChiled<MyButton>("MinusBtn"); }
 
@@ -49,6 +51,11 @@ public class HomeUI : UIBase
         {
             PlayerCtl.E.CameraCtl.ChangeCameraPos(-1);
         }
+    }
+
+    public void ChangeType(string msg)
+    {
+        Behavior.text = msg;
     }
 
     public override void Init()

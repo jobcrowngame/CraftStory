@@ -18,6 +18,11 @@ public class PlayerBehavior
 
             behaviorType = value;
 
+            if (HomeLG.E.UI != null)
+            {
+                HomeLG.E.UI.ChangeType(value.ToString());
+            }
+
             switch (behaviorType)
             {
                 case PlayerBehaviorType.Waiting: 
