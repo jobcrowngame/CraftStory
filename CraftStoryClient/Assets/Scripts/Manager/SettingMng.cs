@@ -12,7 +12,7 @@ public class SettingMng : Single<SettingMng>
     private float cameraDistanseMax = -10f;
 
     public float EnactiveCharacterModelDistanse { get => enactiveCharacterModelDistanse; }
-    private float enactiveCharacterModelDistanse = -3f;
+    private float enactiveCharacterModelDistanse = -2f;
 
     public float CamRotSpeed { get => camRotSpeed; }
     private float camRotSpeed = 0.5f;    //視点の上下スピード
@@ -24,13 +24,13 @@ public class SettingMng : Single<SettingMng>
     private float cameraPullSpeed = 10f;
 
     public float CameraPushSpeed { get => cameraPushSpeed; }
-    private float cameraPushSpeed = 10f;
+    private float cameraPushSpeed = 20f;
 
     public int MoveBoundaryOffset { get => moveBoundaryOffset; }
     private int moveBoundaryOffset = 3;
 
     public float MoveSpeed { get => moveSpeed; }
-    private float moveSpeed = 6.0F;       //歩行速度
+    private float moveSpeed = 4.5F;       //歩行速度
 
     public float JumpSpeed { get => jumpSpeed; }
     private float jumpSpeed = 8.0F;   //ジャンプ力

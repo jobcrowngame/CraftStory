@@ -10,8 +10,20 @@ public class CameraCtl : MonoBehaviour
     private Transform cameraRotateX;
     private Transform cameraRotateY;
 
-    private float triggerExitTime;
+    //private float triggerExitTime;
     private RaycastHit _cacheRaycastHit;
+
+    private float CameraPosZ
+    {
+        get => cameraPosZ;
+        set
+        {
+            cameraPosZ = value;
+        }
+    }
+    private float cameraPosZ = -10;
+    private float cameraPosMinZ = SettingMng.E.CameraDistanseMax;
+    private float cameraPosMaxZ = 0;
 
     public float GetEulerAngleY { get => cameraRotateY.transform.localEulerAngles.y; }
 
@@ -21,7 +33,7 @@ public class CameraCtl : MonoBehaviour
         cameraRotateY = CommonFunction.FindChiledByName(PlayerCtl.E.PlayerEntity.transform, "Y").transform;
 
         transform.SetParent(cameraRotateX);
-        transform.localPosition = new Vector3(0, 0, SettingMng.E.CameraDistanseMax);
+        transform.localPosition = new Vector3(0, 0, cameraPosZ);
         transform.localRotation = Quaternion.identity;
 
         //isBacking = false;
@@ -34,11 +46,11 @@ public class CameraCtl : MonoBehaviour
             CameraPull(false);
         }
 
-        if (Time.time - triggerExitTime > 3 && transform.localPosition.z > SettingMng.E.CameraDistanseMax)
-            CameraPull(true);
+        //if (Time.time - triggerExitTime > 3 && transform.localPosition.z > SettingMng.E.CameraDistanseMax)
+        //    CameraPull(true);
 
         if (PlayerCtl.E.PlayerEntity != null)
-            PlayerCtl.E.PlayerEntity.ModelActive(transform.localPosition.z < SettingMng.E.EnactiveCharacterModelDistanse);
+            PlayerCtl.E.PlayerEntity.IsActive = transform.localPosition.z < SettingMng.E.EnactiveCharacterModelDistanse;
     }
 
     public void OnTriggerStay(Collider other)
@@ -46,14 +58,14 @@ public class CameraCtl : MonoBehaviour
         if (other.GetType() == typeof(CharacterController))
             return;
 
-        triggerExitTime = Time.time;
+        //triggerExitTime = Time.time;
     }
     public void OnTriggerExit(Collider other)
     {
         if (other.GetType() == typeof(CharacterController))
             return;
 
-        triggerExitTime = Time.time;
+        //triggerExitTime = Time.time;
     }
 
     public void CameraRotate(float mx, float my)
@@ -77,13 +89,38 @@ public class CameraCtl : MonoBehaviour
     }
     private void CameraPull(bool b)
     {
-        if (!b) triggerExitTime = Time.time;
+        //if (!b) triggerExitTime = Time.time;
 
-        Vector3 curPos = transform.localPosition;
-        Vector3 targetPos = b ? new Vector3(0, 0, SettingMng.E.CameraDistanseMax) : Vector3.zero;
-        float step = b ? SettingMng.E.CameraPullSpeed : SettingMng.E.CameraPushSpeed;
-        transform.localPosition = Vector3.MoveTowards(curPos, targetPos, step * Time.deltaTime);
+        //Vector3 curPos = transform.localPosition;
+        //Vector3 targetPos = b ? new Vector3(0, 0, SettingMng.E.CameraDistanseMax) : Vector3.zero;
+        //float step = b ? SettingMng.E.CameraPullSpeed : ;
+        transform.localPosition = Vector3.MoveTowards(transform.localPosition, Vector3.zero, SettingMng.E.CameraPushSpeed * Time.deltaTime);
+        CameraPosZ = transform.localPosition.z;
     }
+    public void ChangeCameraPos(float v)
+    {
+        if (IsBlock())
+            return;
+
+        CameraPosZ += v * 0.1f;
+
+        if (CameraPosZ <= cameraPosMinZ)
+        {
+            CameraPosZ = cameraPosMinZ;
+        }
+
+        if (CameraPosZ >= cameraPosMaxZ)
+        {
+            CameraPosZ = cameraPosMaxZ;
+        }
+
+        RefreshCameraPos();
+    }
+    public void RefreshCameraPos()
+    {
+        transform.localPosition = new Vector3(0, 0, CameraPosZ);
+    }
+
     private bool IsBlock()
     {
         if (transform.localPosition.z > -1f)

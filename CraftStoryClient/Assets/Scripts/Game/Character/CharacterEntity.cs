@@ -8,6 +8,22 @@ public class CharacterEntity : MonoBehaviour
 
     private Transform deleteEffect;
 
+    public bool IsActive
+    {
+        get => model.gameObject.activeSelf;
+        set
+        {
+            if (model.gameObject.activeSelf == value)
+                return;
+            
+            model.gameObject.SetActive(value);
+
+            Behavior.Type = value
+                ? PlayerBehaviorType.Run
+                : PlayerBehaviorType.None;
+        }
+    }
+
     public PlayerBehavior Behavior
     {
         get
@@ -27,11 +43,6 @@ public class CharacterEntity : MonoBehaviour
         Behavior.Type = PlayerBehaviorType.Waiting;
 
         deleteEffect = CommonFunction.FindChiledByName(transform, "DeleteEffect").transform;
-    }
-
-    public virtual void ModelActive(bool b)
-    {
-        model.gameObject.SetActive(b);
     }
 
     public void EntityBehaviorChange(int stage)

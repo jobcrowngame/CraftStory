@@ -23,6 +23,9 @@ public class HomeUI : UIBase
     Button BlueprintCancelBtn;
     Button BuildBtn;
 
+    MyButton PlussBtn { get => FindChiled<MyButton>("PlussBtn"); }
+    MyButton MinusBtn { get => FindChiled<MyButton>("MinusBtn"); }
+
     List<HomeItemBtn> itemBtns;
 
     private float fadeInTime = 0.05f;
@@ -75,6 +78,9 @@ public class HomeUI : UIBase
         BlueprintCancelBtn.onClick.AddListener(CancelUserBlueprint);
         BuildBtn = FindChiled<Button>("BuildBtn", Blueprint);
         BuildBtn.onClick.AddListener(BuildBlueprint);
+
+        PlussBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(1); });
+        MinusBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(-1); });
 
         PlayerCtl.E.Joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
         PlayerCtl.E.ScreenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
