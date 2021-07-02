@@ -7,6 +7,15 @@ public class BlueprintPreviewCtl : MonoBehaviour
     Transform cameraRotateX { get => CommonFunction.FindChiledByName(transform, "X").transform; }
     Transform cameraRotateY { get => CommonFunction.FindChiledByName(transform, "Y").transform; }
 
+    private float CameraPosZ
+    {
+        get => cameraPosZ;
+        set
+        {
+            cameraPosZ = value;
+            BlueprintPreviewLG.E.UI.SetBarValue(Mathf.Abs((cameraPosZ - cameraPosMaxZ) / (cameraPosMaxZ - cameraPosMinZ)));
+        }
+    }
     private float cameraPosZ = -30;
     private float cameraPosMinZ = -100;
     private float cameraPosMaxZ = -10;
@@ -15,41 +24,50 @@ public class BlueprintPreviewCtl : MonoBehaviour
 
     bool isActive = false;
 
+    public void Deforuto()
+    {
+        CameraPosZ = -30;
+        RefreshCameraPos();
+
+        cameraRotateY.transform.rotation = Quaternion.Euler(0, 0, 0);
+        cameraRotateX.transform.rotation = Quaternion.Euler(30, 0, 0);
+        BlueprintPreviewLG.E.UI.SetBarValue(Mathf.Abs((cameraPosZ - cameraPosMaxZ) / (cameraPosMaxZ - cameraPosMinZ)));
+    }
     public void ChangeCameraPos(float v)
     {
-        cameraPosZ += v * 0.01f;
+        CameraPosZ += v * 0.01f;
 
-        if (cameraPosZ < cameraPosMinZ)
+        if (CameraPosZ < cameraPosMinZ)
         {
-            cameraPosZ = cameraPosMinZ;
+            CameraPosZ = cameraPosMinZ;
         }
 
-        if (cameraPosZ > cameraPosMaxZ)
+        if (CameraPosZ > cameraPosMaxZ)
         {
-            cameraPosZ = cameraPosMaxZ;
+            CameraPosZ = cameraPosMaxZ;
         }
 
         RefreshCameraPos();
     }
     public void OnClickPlussBtn()
     {
-        if (cameraPosZ < cameraPosMaxZ)
+        if (CameraPosZ < cameraPosMaxZ)
         {
-            cameraPosZ += 5;
+            CameraPosZ += 5;
             RefreshCameraPos();
         }
     }
     public void OnClickMinusBtn()
     {
-        if (cameraPosZ > cameraPosMinZ)
+        if (CameraPosZ > cameraPosMinZ)
         {
-            cameraPosZ -= 5;
+            CameraPosZ -= 5;
             RefreshCameraPos();
         }
     }
     public void RefreshCameraPos()
     {
-        BlueprintCamera.localPosition = new Vector3(0, 0, cameraPosZ);
+        BlueprintCamera.localPosition = new Vector3(0, 0, CameraPosZ);
     }
 
     public void CameraRotate(float mx, float my)
@@ -80,6 +98,11 @@ public class BlueprintPreviewCtl : MonoBehaviour
     {
         isActive = b;
         gameObject.SetActive(b);
+
+        if (b)
+        {
+            Deforuto();
+        }
     }
 
     public void CreateBlock(BlueprintData data)

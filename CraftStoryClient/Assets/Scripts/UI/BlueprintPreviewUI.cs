@@ -11,10 +11,12 @@ public class BlueprintPreviewUI : UIBase
     Button BlueprintPreviewCloseBtn { get => FindChiled<Button>("BlueprintPreviewCloseBtn"); }
     Button BlueprintPreviewPlussBtn { get => FindChiled<Button>("BlueprintPreviewPlussBtn"); }
     Button BlueprintPreviewMinusBtn { get => FindChiled<Button>("BlueprintPreviewMinusBtn"); }
+    Slider Bar { get => FindChiled<Slider>("Slider"); }
 
     public override void Init()
     {
         base.Init();
+        BlueprintPreviewLG.E.Init(this);
 
         BlueprintPreviewCloseBtn.onClick.AddListener(Close);
         BlueprintPreviewPlussBtn.onClick.AddListener(PlayerCtl.E.BlueprintPreviewCtl.OnClickPlussBtn);
@@ -39,5 +41,10 @@ public class BlueprintPreviewUI : UIBase
         var data = new BlueprintData(config.Data);
 
         PlayerCtl.E.BlueprintPreviewCtl.CreateBlock(data);
+    }
+
+    public void SetBarValue(float v)
+    {
+        Bar.value = v;
     }
 }
