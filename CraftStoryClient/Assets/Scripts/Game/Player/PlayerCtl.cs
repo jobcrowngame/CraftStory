@@ -140,6 +140,8 @@ public class PlayerCtl : MonoBehaviour
                     Lock = true;
                     CreateBlock(selectItem.Config().ReferenceID, obj, Vector3Int.CeilToInt(pos));
                     PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
+
+                    StartCoroutine(UnLock());
                     break;
 
                 case ItemType.BuilderPencil:
@@ -245,5 +247,11 @@ public class PlayerCtl : MonoBehaviour
         }
 
         return ret;
+    }
+
+    private System.Collections.IEnumerator UnLock()
+    {
+        yield return new WaitForSeconds(0.1f);
+        PlayerCtl.E.Lock = false;
     }
 }
