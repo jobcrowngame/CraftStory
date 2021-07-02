@@ -107,6 +107,13 @@ public class CommonFunction
 
         return cell;
     }
+    public static void ClearCell(Transform parent)
+    {
+        foreach (Transform t in parent)
+        {
+            GameObject.Destroy(t.gameObject);
+        }
+    }
 
     public static void GoToNextScene()
     {

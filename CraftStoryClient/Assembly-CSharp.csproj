@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\UI\BagUI.cs" />
     <Compile Include="Assets\Scripts\UI\PlayDescriptionUI.cs" />
     <Compile Include="Assets\Scripts\UI\HomeUI.cs" />
+    <Compile Include="Assets\Scripts\Game\Player\BlueprintPreviewCtl.cs" />
     <Compile Include="Assets\Scripts\Manager\ConfigMng.cs" />
     <Compile Include="Assets\Scripts\UI\HomeItemBtn.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Shop.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Assets\Scripts\Manager\CryptMng.cs" />
     <Compile Include="Assets\Scripts\Manager\Logger.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Resource.cs" />
+    <Compile Include="Assets\Scripts\UI\PersonalMessageLG.cs" />
     <Compile Include="Assets\Scripts\Common\IAPStore.cs" />
     <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
     <Compile Include="Assets\Scripts\Manager\WorldMng.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Assets\Scripts\UI\ShopUI.cs" />
     <Compile Include="Assets\Scripts\Manager\NWMng.cs" />
     <Compile Include="Assets\Scripts\Game\Player\BuilderPencil.cs" />
+    <Compile Include="Assets\Scripts\UI\PersonalMessageUI.cs" />
     <Compile Include="Assets\Scripts\Test\Test2.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
@@ -175,8 +178,8 @@
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
-    <Compile Include="Assets\Scripts\UI\PersonalMessageUI.cs" />
-    <Compile Include="Assets\Scripts\UI\PersonalMessageLG.cs" />
+    <Compile Include="Assets\Scripts\UI\BlueprintPreviewUI.cs" />
+    <Compile Include="Assets\Scripts\UI\BlueprintPreviewLG.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />

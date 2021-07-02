@@ -55,6 +55,16 @@ public class PlayerCtl : MonoBehaviour
     }
     private CameraCtl cameraCtl;
 
+    public BlueprintPreviewCtl BlueprintPreviewCtl
+    {
+        get => blueprintPreviewCtl;
+        set
+        {
+            blueprintPreviewCtl = value;
+        }
+    }
+    private BlueprintPreviewCtl blueprintPreviewCtl;
+
     public void Init()
     {
         builderPencil = new BuilderPencil();

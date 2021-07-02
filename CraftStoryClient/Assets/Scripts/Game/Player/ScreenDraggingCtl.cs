@@ -25,6 +25,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     private GameObject clickingObj;
 
     float clickingTime;
+    float baseDistance = 0;
 
     private void Update()
     {
@@ -36,6 +37,26 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
             {
                 IsClicking = true;
                 OnClicking(eventData.position);
+            }
+        }
+
+        if (Input.touchCount == 2)
+        {
+            if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[1].phase == TouchPhase.Ended)
+            {
+                baseDistance = 0;
+            }
+            else
+            {
+                if (baseDistance == 0)
+                {
+                    baseDistance = Vector2.Distance(Input.touches[0].position, Input.touches[1].position);
+                }
+                else
+                {
+                    var newDistance = Vector2.Distance(Input.touches[0].position, Input.touches[1].position);
+                    PlayerCtl.E.BlueprintPreviewCtl.ChangeCameraPos(newDistance - baseDistance);
+                }
             }
         }
     }
@@ -59,6 +80,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         offsetY = pointerPos.y;
 
         PlayerCtl.E.CameraCtl.CameraRotate(offsetX, offsetY);
+        PlayerCtl.E.BlueprintPreviewCtl.CameraRotate(offsetX, offsetY);
 
         startPos = eventData.position;
         offsetX = 0;

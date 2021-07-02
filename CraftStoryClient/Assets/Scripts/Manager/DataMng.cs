@@ -130,16 +130,16 @@ public class DataMng : Single<DataMng>
     }
     public int GetItemCountByItemID(int itemId)
     {
-        if (items == null)
+        if (Items == null)
             return 0;
 
         int count = 0;
 
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < Items.Count; i++)
         {
-            if (items[i].itemId == itemId)
+            if (Items[i].itemId == itemId)
             {
-                count += items[i].count;
+                count += Items[i].count;
             }
         }
 

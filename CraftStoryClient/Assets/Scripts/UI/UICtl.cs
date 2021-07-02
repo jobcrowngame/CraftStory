@@ -9,7 +9,6 @@ public class UICtl : Single<UICtl>
     private UIBase curentOpenUI;
 
     private Dictionary<UIType, UIBase> uiDic;
-    private List<UIBase> OpenningUI;
 
     private static Transform uiRootTran;
     public Transform Root
@@ -31,7 +30,6 @@ public class UICtl : Single<UICtl>
 
         glubalObjTran = glubalObj.transform;
         uiDic = new Dictionary<UIType, UIBase>();
-        OpenningUI = new List<UIBase>();
 
         ret = CreateGlobalEntity();
 
@@ -77,17 +75,16 @@ public class UICtl : Single<UICtl>
         switch (closeType)
         {
             case UIOpenType.AllClose:
-                foreach (var item in OpenningUI)
+                foreach (var item in uiDic.Values)
                 {
-                    item.Close();
+                    if (item != null && item.IsActive)
+                        item.Close();
                 }
                 break;
 
             case UIOpenType.BeforeClose:
                 if (curentOpenUI != null)
-                {
                     curentOpenUI.Close();
-                }
                 break;
 
             default:
@@ -128,7 +125,6 @@ public class UICtl : Single<UICtl>
         }
 
         uiClass.Open();
-        OpenningUI.Add(uiClass);
 
         if (curentOpenUI != null)
         {
@@ -151,7 +147,7 @@ public class UICtl : Single<UICtl>
     }
     public void Clear()
     {
-        uiDic = new Dictionary<UIType, UIBase>();
+        uiDic.Clear();
     }
 
     private string GetUIResourcesPath(UIType ui)
@@ -174,6 +170,7 @@ public class UICtl : Single<UICtl>
             case UIType.BlueprintReName: return "Prefabs/UI/BlueprintReName";
             case UIType.PlayDescription: return "Prefabs/UI/PlayDescription";
             case UIType.PersonalMessage: return "Prefabs/UI/PersonalMessage";
+            case UIType.BlueprintPreview: return "Prefabs/UI/BlueprintPreview";
             default: Logger.Error("not find UIType " + ui); return "";
         }
     }
@@ -203,4 +200,5 @@ public enum UIType
     BlueprintReName,
     PlayDescription,
     PersonalMessage,
+    BlueprintPreview
 }

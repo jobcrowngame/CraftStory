@@ -50,11 +50,11 @@ public class IAPMng : Single<IAPMng>, IStoreListener
         this.controller = controller;
         this.extensions = extensions;
 
-        foreach (var product in controller.products.all)
-        {
-            Logger.Log("[ProductId]" + product.definition.storeSpecificId);
-            Logger.Log("[Title]" + product.metadata.localizedTitle);
-        }
+        //foreach (var product in controller.products.all)
+        //{
+        //    Logger.Log("[ProductId]" + product.definition.storeSpecificId);
+        //    Logger.Log("[Title]" + product.metadata.localizedTitle);
+        //}
 
         extensions.GetExtension<IAppleExtensions>().RegisterPurchaseDeferredListener(product => {
             Logger.Log("RegisterPurchaseDeferredListener" + product.definition.id);

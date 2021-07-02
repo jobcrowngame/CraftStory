@@ -9,6 +9,7 @@ public class ShopItemCell : UIBase
     Image Icon { get => FindChiled<Image>("Icon"); }
     Text Des { get => FindChiled<Text>("Des"); }
     Button BuyBtn { get => FindChiled<Button>("BuyBtn"); }
+    Button PreviewBtn { get => FindChiled<Button>("PreviewBtn"); }
     Text BuyBtnText { get => FindChiled<Text>("Text", BuyBtn.transform); }
     Image BtnCostIcon { get => FindChiled<Image>("Image", BuyBtn.transform); }
 
@@ -30,6 +31,12 @@ public class ShopItemCell : UIBase
         {
             BtnCostIcon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[config.CostItemID].IconResourcesPath);
             BtnCostIcon.gameObject.SetActive(true);
+        }
+
+        if (config.Type == 3)
+        {
+            PreviewBtn.gameObject.SetActive(true);
+            PreviewBtn.onClick.AddListener(OnClickPreviewBtn);
         }
     }
 
@@ -60,5 +67,11 @@ public class ShopItemCell : UIBase
                     }, config.ID);
                 });
         }
+    }
+
+    private void OnClickPreviewBtn()
+    {
+        var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
+        ui.SetData(config.Relation);
     }
 }

@@ -44,9 +44,17 @@ public class WorldMng : MonoBehaviour
 
     public void CreateGameObjects(bool isHome = true)
     {
-        MapCtl.CreateMap(isHome　? 100: DataMng.E.MapData.NextMapID);
-        CharacterCtl.CreateCharacter();
+        if (isHome)
+        {
+            MapCtl.CreateMap(100);
+            PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
+        }
+        else
+        {
+            MapCtl.CreateMap(DataMng.E.MapData.NextMapID);
+        }
 
+        CharacterCtl.CreateCharacter();
         AdventureCtl.E.Init();
     }
 

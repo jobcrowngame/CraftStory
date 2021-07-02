@@ -6,13 +6,10 @@ using UnityEngine.UI;
 
 public class HomeUI : UIBase
 {
-    //Text SceneName;
     Image FadeinImg;
 
     Button MenuBtn;
     Button BagBtn;
-    //Button LotteryBtn;
-    //Button ShopBtn;
 
     Transform btnsParent;
 
@@ -48,8 +45,6 @@ public class HomeUI : UIBase
         base.Init();
         HomeLG.E.Init(this);
 
-        //SceneName = FindChiled<Text>("SceneName");
-
         FadeinImg = FindChiled<Image>("Fadein");
         FadeinImg.enabled = true;
 
@@ -62,12 +57,6 @@ public class HomeUI : UIBase
 
         BagBtn = FindChiled<Button>("BagBtn");
         BagBtn.onClick.AddListener(() => { UICtl.E.OpenUI<BagUI>(UIType.Bag); });
-
-        //LotteryBtn = FindChiled<Button>("LotteryBtn");
-        //LotteryBtn.onClick.AddListener(() => { UICtl.E.OpenUI<LotteryUI>(UIType.Lottery); });
-
-        //ShopBtn = FindChiled<Button>("ShopBtn");
-        //ShopBtn.onClick.AddListener(() => { UICtl.E.OpenUI<ShopUI>(UIType.Shop); });
 
         btnsParent = FindChiled("Grid");
         AddItemBtns();
@@ -100,7 +89,7 @@ public class HomeUI : UIBase
             DataMng.GetCoins(rp[0]);
         });
 
-        StartCoroutine("FadeIn");
+        StartCoroutine(FadeIn());
     }
 
     private void AddItemBtns()

@@ -123,6 +123,7 @@ public class CraftUI : UIBase
                 {
                     DataMng.GetItems(rp2[0]);
                     CommonFunction.ShowHintBar(6);
+                    RefreshCost(selectCraft);
                 });
             }, selectCraft, selectCount);
         }
@@ -155,10 +156,10 @@ public class CraftUI : UIBase
 
         bool ret = true;
 
-        if (ret && config.Cost1 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost1) >= count;
-        if (ret && config.Cost2 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost2) >= count;
-        if (ret && config.Cost3 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost3) >= count;
-        if (ret && config.Cost4 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost4) >= count;
+        if (ret && config.Cost1 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost1) >= config.Cost1Count * count;
+        if (ret && config.Cost2 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost2) >= config.Cost2Count * count;
+        if (ret && config.Cost3 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost3) >= config.Cost3Count * count;
+        if (ret && config.Cost4 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost4) >= config.Cost4Count * count;
 
         return ret;
     }

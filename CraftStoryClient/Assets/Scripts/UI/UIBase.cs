@@ -3,6 +3,7 @@
 public class UIBase : MonoBehaviour
 {
     private UIBase beforeUI;
+    public bool IsActive { get => gameObject.activeSelf; }
 
     public virtual void Init()
     {
@@ -18,20 +19,15 @@ public class UIBase : MonoBehaviour
 
     public virtual void Close()
     {
-        Active(false);
+        gameObject.SetActive(false);
     }
     public virtual void Open()
     {
-        Active(true);
+        gameObject.SetActive(true);
     }
     public virtual void Destroy()
     {
         Destroy(gameObject);
-    }
-
-    private void Active(bool b)
-    {
-        gameObject.SetActive(b);
     }
 
     protected T FindChiled<T>(string chiledName, Transform parent = null) where T : Component
