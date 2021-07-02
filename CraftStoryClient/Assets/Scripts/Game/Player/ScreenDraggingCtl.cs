@@ -32,18 +32,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         isDoubleTouch = Input.touchCount == 2;
 
-        if (isClick)
-        {
-            clickingTime += Time.deltaTime;
-
-            if (clickingTime > 0.2f && !isDrag)
-            {
-                IsClicking = true;
-                OnClicking(eventData.position);
-            }
-        }
-
-        if (Input.touchCount == 2 && BlueprintPreviewLG.E.UI.IsActive)
+        if (Input.touchCount == 2)
         {
             if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[1].phase == TouchPhase.Ended)
             {
@@ -59,6 +48,19 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
                 {
                     var newDistance = Vector2.Distance(Input.touches[0].position, Input.touches[1].position);
                     PlayerCtl.E.BlueprintPreviewCtl.ChangeCameraPos(newDistance - baseDistance);
+                }
+            }
+        }
+        else
+        {
+            if (isClick)
+            {
+                clickingTime += Time.deltaTime;
+
+                if (clickingTime > 0.2f && !isDrag)
+                {
+                    IsClicking = true;
+                    OnClicking(eventData.position);
                 }
             }
         }
