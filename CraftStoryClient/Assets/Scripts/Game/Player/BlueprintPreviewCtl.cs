@@ -35,7 +35,7 @@ public class BlueprintPreviewCtl : MonoBehaviour
     }
     public void ChangeCameraPos(float v)
     {
-        CameraPosZ += v * 0.01f;
+        CameraPosZ += v * 0.5f;
 
         if (CameraPosZ < cameraPosMinZ)
         {
@@ -48,22 +48,6 @@ public class BlueprintPreviewCtl : MonoBehaviour
         }
 
         RefreshCameraPos();
-    }
-    public void OnClickPlussBtn()
-    {
-        if (CameraPosZ < cameraPosMaxZ)
-        {
-            CameraPosZ += 5;
-            RefreshCameraPos();
-        }
-    }
-    public void OnClickMinusBtn()
-    {
-        if (CameraPosZ > cameraPosMinZ)
-        {
-            CameraPosZ -= 5;
-            RefreshCameraPos();
-        }
     }
     public void RefreshCameraPos()
     {

@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
 public class BlueprintPreviewUI : UIBase
 {
     Button BlueprintPreviewCloseBtn { get => FindChiled<Button>("BlueprintPreviewCloseBtn"); }
-    Button BlueprintPreviewPlussBtn { get => FindChiled<Button>("BlueprintPreviewPlussBtn"); }
-    Button BlueprintPreviewMinusBtn { get => FindChiled<Button>("BlueprintPreviewMinusBtn"); }
+    MyButton BlueprintPreviewPlussBtn { get => FindChiled<MyButton>("BlueprintPreviewPlussBtn"); }
+    MyButton BlueprintPreviewMinusBtn { get => FindChiled<MyButton>("BlueprintPreviewMinusBtn"); }
     Slider Bar { get => FindChiled<Slider>("Slider"); }
 
     public override void Init()
@@ -19,8 +13,8 @@ public class BlueprintPreviewUI : UIBase
         BlueprintPreviewLG.E.Init(this);
 
         BlueprintPreviewCloseBtn.onClick.AddListener(Close);
-        BlueprintPreviewPlussBtn.onClick.AddListener(PlayerCtl.E.BlueprintPreviewCtl.OnClickPlussBtn);
-        BlueprintPreviewMinusBtn.onClick.AddListener(PlayerCtl.E.BlueprintPreviewCtl.OnClickMinusBtn);
+        BlueprintPreviewPlussBtn.AddClickingListener(()=> { PlayerCtl.E.BlueprintPreviewCtl.ChangeCameraPos(1); });
+        BlueprintPreviewMinusBtn.AddClickingListener(()=> { PlayerCtl.E.BlueprintPreviewCtl.ChangeCameraPos(-1); });
     }
     public override void Open()
     {

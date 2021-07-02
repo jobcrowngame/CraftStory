@@ -180,6 +180,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintPreviewUI.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintPreviewLG.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\MyButton.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />
