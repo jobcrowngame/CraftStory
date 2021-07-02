@@ -8,8 +8,8 @@ public class BlueprintPreviewCtl : MonoBehaviour
     Transform cameraRotateY { get => CommonFunction.FindChiledByName(transform, "Y").transform; }
 
     private float cameraPosZ = -30;
-    private float cameraPosMaxZ = -100;
-    private float cameraPosMinZ = -10;
+    private float cameraPosMinZ = -100;
+    private float cameraPosMaxZ = -10;
     private float mX, mY;
     private float lookUpAngle;
 
@@ -17,12 +17,23 @@ public class BlueprintPreviewCtl : MonoBehaviour
 
     public void ChangeCameraPos(float v)
     {
-        cameraPosZ += v;
+        cameraPosZ += v * 0.01f;
+
+        if (cameraPosZ < cameraPosMinZ)
+        {
+            cameraPosZ = cameraPosMinZ;
+        }
+
+        if (cameraPosZ > cameraPosMaxZ)
+        {
+            cameraPosZ = cameraPosMaxZ;
+        }
+
         RefreshCameraPos();
     }
     public void OnClickPlussBtn()
     {
-        if (cameraPosZ < cameraPosMinZ)
+        if (cameraPosZ < cameraPosMaxZ)
         {
             cameraPosZ += 5;
             RefreshCameraPos();
@@ -30,7 +41,7 @@ public class BlueprintPreviewCtl : MonoBehaviour
     }
     public void OnClickMinusBtn()
     {
-        if (cameraPosZ > cameraPosMaxZ)
+        if (cameraPosZ > cameraPosMinZ)
         {
             cameraPosZ -= 5;
             RefreshCameraPos();
