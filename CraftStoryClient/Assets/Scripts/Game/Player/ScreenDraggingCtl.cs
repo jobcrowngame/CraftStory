@@ -9,6 +9,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     private bool isDrag;
     private bool isClick;
+    private bool isDoubleTouch;
     private bool IsClicking
     {
         get => isClicking;
@@ -29,6 +30,8 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     private void Update()
     {
+        isDoubleTouch = Input.touchCount == 2;
+
         if (isClick)
         {
             clickingTime += Time.deltaTime;
@@ -64,6 +67,8 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public void OnBeginDrag(PointerEventData eventData)
     {
         //Logger.Log("OnBeginDrag");
+        if (isDoubleTouch)
+            return;
 
         isDrag = true;
         startPos = eventData.position;
@@ -73,6 +78,8 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         //Logger.Log("OnDrag");
 
+        if (isDoubleTouch)
+            return;
 
         Vector2 pointerPos = eventData.position - startPos;
 
@@ -93,6 +100,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         //Logger.Log("OnEndDrag");
 
+        if (isDoubleTouch)
+            return;
+
         isDrag = false;
         isClick = false;
         IsClicking = false;
@@ -104,6 +114,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (isDoubleTouch)
+            return;
+
         //Logger.Log("OnPointerDown");
         //Logger.Log(eventData.position);
 
@@ -116,7 +129,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         //Logger.Log("OnPointerUp");
 
-        if (isDrag)
+        if (isDrag || isDoubleTouch)
             return;
 
         if (!IsClicking)
