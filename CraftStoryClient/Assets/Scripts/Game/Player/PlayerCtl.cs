@@ -73,15 +73,6 @@ public class PlayerCtl : MonoBehaviour
     private void Update()
     {
         if(joystick != null) playerEntity.Move(joystick);
-
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            DataMng.E.AddItem(3000, 1);
-        }
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            CommonFunction.ShowHintBar(1);
-        }
     }
 
     public PlayerEntity AddPlayerEntity()
@@ -148,6 +139,7 @@ public class PlayerCtl : MonoBehaviour
                 case ItemType.Block:
                     Lock = true;
                     CreateBlock(selectItem.Config().ReferenceID, obj, Vector3Int.CeilToInt(pos));
+                    PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
                     break;
 
                 case ItemType.BuilderPencil:
@@ -167,6 +159,7 @@ public class PlayerCtl : MonoBehaviour
                 case ItemType.Workbench:
                 case ItemType.Kamado:
                     CreateResources(selectItem.Config().ReferenceID, obj, Vector3Int.CeilToInt(pos));
+                    PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
                     break;
             }
         }
@@ -217,16 +210,12 @@ public class PlayerCtl : MonoBehaviour
         WorldMng.E.MapCtl.CreateBlock(pos, blockID);
         ConsumableSelectItem();
 
-        PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
-
          Logger.Log("Create block " + pos);
     }
     private void CreateResources(int resourcesId, GameObject collider, Vector3Int pos)
     {
         WorldMng.E.MapCtl.CreateResources(pos, resourcesId);
         ConsumableSelectItem();
-
-        PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
 
          Logger.Log("Create block " + pos);
     }

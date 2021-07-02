@@ -13,7 +13,7 @@ public class PlayerBehavior
 
             if (behaviorType != value)
             {
-                Logger.Log("動作変換 -> " + value);
+                Logger.Warning("動作変換 -> " + value);
             }
 
             behaviorType = value;

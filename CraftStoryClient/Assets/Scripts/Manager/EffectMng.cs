@@ -11,7 +11,7 @@ public class EffectMng : Single<EffectMng>
 
     public void AddDestroyEffect(Vector3 pos)
     {
-        Debug.Log("Add Effect");
+        Logger.Log("Add Effect");
 
         if (destroyEffect != null)
             RemoveDestroyEffect();
@@ -22,7 +22,7 @@ public class EffectMng : Single<EffectMng>
     {
         if (destroyEffect != null)
         {
-            Debug.Log("Destroy Effect");
+            Logger.Log("Destroy Effect");
             GameObject.Destroy(destroyEffect);
             destroyEffect = null;
         }
