@@ -19,7 +19,13 @@ public class PlayerAnimatorEvent : MonoBehaviour
     public void Wait()
     {
         Logger.Log("PlayerAnimatorEvent");
+        StartCoroutine(Over());
+    }
+
+    IEnumerator Over()
+    {
+        yield return new WaitForSeconds(0.05f);
         PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.Waiting;
-        //PlayerCtl.E.UnLock();
+        PlayerCtl.E.Lock = false;
     }
 }

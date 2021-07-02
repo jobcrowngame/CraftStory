@@ -146,6 +146,7 @@ public class PlayerCtl : MonoBehaviour
             switch ((ItemType)selectItem.Config().Type)
             {
                 case ItemType.Block:
+                    Lock = true;
                     CreateBlock(selectItem.Config().ReferenceID, obj, Vector3Int.CeilToInt(pos));
                     break;
 
