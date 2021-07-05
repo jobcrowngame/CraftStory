@@ -118,6 +118,18 @@ public class BuilderPencil
         buildPos = startPos;
         selectBlueprintData.IsDuplicate = false;
 
+        // チェックPos
+        foreach (var item in selectBlueprintData.BlockList)
+        {
+            var newPos = CommonFunction.Vector3Sum(item.Pos, buildPos);
+            if (MapCtl.IsOutRange(DataMng.E.MapData, newPos))
+            {
+                CommonFunction.ShowHintBar(8);
+                CancelUserBlueprint();
+                return;
+            }
+        }
+
         // 半透明ブロックを作る
         WorldMng.E.MapCtl.CreateTransparentBlocks(selectBlueprintData, buildPos);
 
@@ -155,6 +167,18 @@ public class BuilderPencil
         {
             var work = selectBlueprintData.BlockList[i];
             work.Pos = new Vector3Int(work.Pos.x, work.Pos.y, -work.Pos.z);
+        }
+
+        // チェックPos
+        foreach (var item in selectBlueprintData.BlockList)
+        {
+            var newPos = CommonFunction.Vector3Sum(item.Pos, buildPos);
+            if (MapCtl.IsOutRange(DataMng.E.MapData, newPos))
+            {
+                CommonFunction.ShowHintBar(8);
+                CancelUserBlueprint();
+                return;
+            }
         }
 
         WorldMng.E.MapCtl.CreateTransparentBlocks(selectBlueprintData, buildPos);
@@ -196,7 +220,7 @@ public class BuilderPencil
         }
         else
         {
-            Logger.Warning("重複されたヒント");
+            CommonFunction.ShowHintBar(8);
         }
     }
 

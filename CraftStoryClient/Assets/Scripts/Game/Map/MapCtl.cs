@@ -150,7 +150,13 @@ public class MapCtl
     public MapBlock CreateBlock(Vector3Int pos, int blockId)
     {
         if (IsOutRange(DataMng.E.MapData, pos))
+        {
+            if (pos.y > DataMng.E.MapData.MapSize.y - 1)
+            {
+                CommonFunction.ShowHintBar(7);
+            }
             return null;
+        }
 
         MapBlockData bData = new MapBlockData(blockId, pos);
         return CreateBlock(bData);
@@ -174,7 +180,13 @@ public class MapCtl
             return null;
 
         if (IsOutRange(DataMng.E.MapData, pos))
+        {
+            if (pos.y > DataMng.E.MapData.MapSize.y - 1)
+            {
+                CommonFunction.ShowHintBar(7);
+            }
             return null;
+        }
 
         var config = ConfigMng.E.Resource[resourcesId];
         var entityData = new EntityData(config.ID, (ItemType)config.Type, pos);
