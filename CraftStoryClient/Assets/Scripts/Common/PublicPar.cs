@@ -45,6 +45,12 @@ public class PublicPar
     public static string Prmkey =   "4h5f2h4d31h4f1gf";
     public static string PrmVi =    "ggsd5g1h6r3f1h0d";
 
+
+    public static string Maintenance = @"ただいま、メンテナンスを実施中です。
+完了までしばらくお待ちください。
+ご利用のお客様にはご不便をおかけいたしますが、
+何卒ご理解とご協力をよろしくお願い申し上げます。";
+
     #region Game
 
     // Dataセーブパース

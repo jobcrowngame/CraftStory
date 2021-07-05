@@ -24,7 +24,7 @@ public class HintBoxUI : UIBase
         CancelBtn.onClick.AddListener(OnClickCancelBtn);
     }
 
-    public void Init(string iconPath, string msg, Action okAction, Action cancelAction = null)
+    public void Init(string iconPath, string msg, Action okAction, Action cancelAction)
     {
         this.okAction = okAction;
         this.cancelAction = cancelAction;
@@ -34,6 +34,20 @@ public class HintBoxUI : UIBase
 
         Icon.sprite = ReadResources<Sprite>(iconPath);
         Icon.gameObject.SetActive(true);
+
+        Msg2.gameObject.SetActive(false);
+    }
+
+    public void Init(string msg, Action okAction)
+    {
+        this.okAction = okAction;
+
+        Msg2.gameObject.SetActive(true);
+        Msg2.text = msg;
+
+        Msg1.gameObject.SetActive(false);
+        Icon.gameObject.SetActive(false);
+        CancelBtn.gameObject.SetActive(false);
     }
 
     private void OnClickOkBtn()

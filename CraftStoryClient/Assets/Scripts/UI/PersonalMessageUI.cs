@@ -4,6 +4,7 @@ public class PersonalMessageUI : UIBase
 {
     TitleUI title;
     Text Account { get => FindChiled<Text>("Account"); }
+    Text Pasword { get => FindChiled<Text>("Ps"); }
 
     public override void Init()
     {
@@ -18,5 +19,6 @@ public class PersonalMessageUI : UIBase
         title.EnActiveCoin(3);
 
         Account.text = DataMng.E.UserData.Account;
+        Pasword.text = DataMng.E.UserData.UserPW;
     }
 }

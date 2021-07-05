@@ -59,7 +59,15 @@ public class NWMng : MonoBehaviour
                     if (datas[0] == "error")
                     {
                         int errcode = int.Parse(datas[1]);
-                        CommonFunction.ShowHintBar(errcode);
+
+                        if (errcode == 998)
+                        {
+                            CommonFunction.ShowHintBox(PublicPar.Maintenance, () => { Logger.Warning("Quit"); Application.Quit(); });
+                        }
+                        else
+                        {
+                            CommonFunction.ShowHintBar(errcode);
+                        }
                     }
                     else
                     {
@@ -74,6 +82,7 @@ public class NWMng : MonoBehaviour
     public void Login(Action<string[]> rp, string id, string pw)
     {
         var data = new NWData();
+        data.Add("N");
         data.Add(id);
         data.Add(pw);
 
