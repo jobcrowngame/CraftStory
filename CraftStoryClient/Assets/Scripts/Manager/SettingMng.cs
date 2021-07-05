@@ -36,5 +36,9 @@ public class SettingMng : Single<SettingMng>
     private float jumpSpeed = 8.0F;   //ジャンプ力
 
     public float Gravity { get => gravity; }
-    private float gravity = 1000.0F;    //重力の大きさ
+<<<<<<< HEAD
+    private float gravity = 400.0F;    //重力の大きさ
+=======
+    private float gravity = 5000.0F;    //重力の大きさ
+>>>>>>> parent of 99a5d10 (update)
 }
