@@ -163,6 +163,7 @@ public class MapCtl
     {
         var block = data.ActiveBlock(parent);
         DataMng.E.MapData.AddBlock(data);
+        PlayerCtl.E.ConsumableSelectItem();
         CheckNextToBlocks(data);
         return block;
     }
@@ -183,6 +184,7 @@ public class MapCtl
         {
             resourceEntity.Init(entityData);
             DataMng.E.MapData.AddResources(resourceEntity.Data);
+            PlayerCtl.E.ConsumableSelectItem();
         }
 
         return resourceEntity;

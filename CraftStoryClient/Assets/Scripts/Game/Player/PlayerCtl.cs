@@ -210,16 +210,12 @@ public class PlayerCtl : MonoBehaviour
             return;
 
         WorldMng.E.MapCtl.CreateBlock(pos, blockID);
-        ConsumableSelectItem();
-
-         Logger.Log("Create block " + pos);
+        Logger.Log("Create block " + pos);
     }
     private void CreateResources(int resourcesId, GameObject collider, Vector3Int pos)
     {
         WorldMng.E.MapCtl.CreateResources(pos, resourcesId);
-        ConsumableSelectItem();
-
-         Logger.Log("Create block " + pos);
+        Logger.Log("Create block " + pos);
     }
 
     public void ConsumableSelectItem(int count = 1)
