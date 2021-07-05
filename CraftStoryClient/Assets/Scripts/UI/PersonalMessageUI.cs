@@ -1,4 +1,4 @@
-using UnityEngine.UI;
+ï»¿using UnityEngine.UI;
 
 public class PersonalMessageUI : UIBase
 {
@@ -12,7 +12,7 @@ public class PersonalMessageUI : UIBase
         PersonalMessageLG.E.Init(this);
 
         title = FindChiled<TitleUI>("Title");
-        title.SetTitle("ŒÂlî•ñ");
+        title.SetTitle("å€‹äººæƒ…å ±");
         title.SetOnClose(() => { Close(); });
         title.EnActiveCoin(1);
         title.EnActiveCoin(2);
