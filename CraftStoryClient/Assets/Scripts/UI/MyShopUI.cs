@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +14,7 @@ public class MyShopUI : UIBase
         MyShopLG.E.Init(this);
 
         title = FindChiled<TitleUI>("Title");
-        title.SetTitle("ƒ}ƒCƒVƒ‡ƒbƒv");
+        title.SetTitle("ãƒžã‚¤ã‚·ãƒ§ãƒƒãƒ—");
         title.SetOnClose(() => { Close(); });
         title.EnActiveCoin(2);
         title.EnActiveCoin(3);
