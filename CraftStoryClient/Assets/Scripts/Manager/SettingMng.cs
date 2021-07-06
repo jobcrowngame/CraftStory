@@ -37,4 +37,10 @@ public class SettingMng : Single<SettingMng>
 
     public float Gravity { get => gravity; }
     private float gravity = 400.0F;    //重力の大きさ
+
+    public int MyShopCostLv1 { get => myShopCostLv1; }
+    private int myShopCostLv1 = 100;    //マイショップレベルアップコスト1
+
+    public int MyShopCostLv2 { get => myShopCostLv2; }
+    private int myShopCostLv2 = 500;    //マイショップレベルアップコスト2
 }

@@ -121,7 +121,7 @@ public class CraftUI : UIBase
             {
                 NWMng.E.GetItemList((rp2) =>
                 {
-                    DataMng.GetItems(rp2[0]);
+                    DataMng.GetItems(rp2);
                     CommonFunction.ShowHintBar(6);
                     RefreshCost(selectCraft);
                 });

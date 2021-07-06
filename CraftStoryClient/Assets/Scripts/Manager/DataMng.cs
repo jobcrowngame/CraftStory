@@ -10,7 +10,7 @@ public class DataMng : Single<DataMng>
     const string MapDataName = "/MapData.dat";
     const string UserDataName = "/UserData.dat";
 
-    public string session { get; set; }
+    public string token { get; set; }
 
     public UserData UserData
     {
@@ -152,7 +152,7 @@ public class DataMng : Single<DataMng>
         {
             NWMng.E.GetItemList((rp2) =>
             {
-                GetItems(rp2[0]);
+                GetItems(rp2);
                 if (action != null) action();
             });
         }, itemID, count);
@@ -166,7 +166,7 @@ public class DataMng : Single<DataMng>
         {
             NWMng.E.GetItemList((rp2) =>
             {
-                GetItems(rp2[0]);
+                GetItems(rp2);
                 if (action != null) action();
             });
         }, items);
@@ -178,7 +178,7 @@ public class DataMng : Single<DataMng>
         {
             NWMng.E.GetItemList((rp2) =>
             {
-                GetItems(rp2[0]);
+                GetItems(rp2);
                 if (action != null) action();
             });
         }, itemID, count, newName, data);
@@ -186,7 +186,7 @@ public class DataMng : Single<DataMng>
     /// <summary>
     /// 消耗アイテム
     /// </summary>
-    public void ConsumableSelectItem(int guid, int count = 1)
+    public void ConsumableItemByGUID(int guid, int count = 1)
     {
         if (GetItemByGuid(guid).count < count)
         {
@@ -198,7 +198,7 @@ public class DataMng : Single<DataMng>
             {
                 NWMng.E.GetItemList((rp2) =>
                 {
-                    GetItems(rp2[0]);
+                    GetItems(rp2);
                     if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
                 });
             }, guid, count);
@@ -213,7 +213,7 @@ public class DataMng : Single<DataMng>
             {
                 NWMng.E.GetItemList((rp2) =>
                 {
-                    GetItems(rp2[0]);
+                    GetItems(rp2);
                 });
             }, itemID, count);
         }
@@ -260,36 +260,30 @@ public class DataMng : Single<DataMng>
         return itemList.Count > 0;
     }
 
-    public static void GetItems(string jsonData)
+    public static void GetItems(JsonData jsonData)
     {
         try
         {
-            E.Items = JsonMapper.ToObject<List<ItemData>>(jsonData);
+            if (string.IsNullOrEmpty(jsonData.ToString()))
+                return;
+
+            E.Items = JsonMapper.ToObject<List<ItemData>>(jsonData.ToJson());
             if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
         }
         catch (Exception e)
         {
-            Logger.Error(jsonData);
             Logger.Error(e.Message);
         }
     }
-    public static void GetCoins(string jsonData)
+    public static void GetCoins(JsonData jsonData)
     {
-        if (string.IsNullOrEmpty(jsonData))
+        if (string.IsNullOrEmpty(jsonData.ToString()))
             return;
 
-        var coins = JsonMapper.ToObject<GetCoinsResponse>(jsonData);
-        E.UserData.Coin1 = coins.coin1;
-        E.UserData.Coin2 = coins.coin2;
-        E.UserData.Coin3 = coins.coin3;
+        E.RuntimeData.Coin1 = (int)jsonData["coin1"];
+        E.RuntimeData.Coin2 = (int)jsonData["coin2"];
+        E.RuntimeData.Coin3 = (int)jsonData["coin3"];
     }
 
 #endregion
-
-    struct GetCoinsResponse
-    {
-        public int coin1;
-        public int coin2;
-        public int coin3;
-    }
 }

@@ -51,14 +51,14 @@ public class BagUI : UIBase
 
         NWMng.E.GetItemList((rp) =>
         {
-            DataMng.GetItems(rp[0]);
+            DataMng.GetItems(rp);
 
             RefreshItems();
             RefreshSelectItemBtns();
         });
         NWMng.E.GetCoins((rp) =>
         {
-            DataMng.GetCoins(rp[0]);
+            DataMng.GetCoins(rp);
             title.RefreshCoins();
         });
     }

@@ -55,11 +55,11 @@ public class ShopItemCell : UIBase
                     {
                         NWMng.E.GetItemList((rp2) =>
                         {
-                            DataMng.GetItems(rp2[0]);
+                            DataMng.GetItems(rp2);
                         });
                         NWMng.E.GetCoins((rp3) =>
                         {
-                            DataMng.GetCoins(rp3[0]);
+                            DataMng.GetCoins(rp3);
                             ShopLG.E.UI.Refresh();
                         });
 

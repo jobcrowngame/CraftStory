@@ -9,27 +9,31 @@ public class MenuUI : UIBase
     Button HomeBtn { get => FindChiled<Button>("HomeBtn"); }
     Button PlayDescriptionBtn { get => FindChiled<Button>("PlayDescriptionBtn"); }
     Button PersonalMessageBtn { get => FindChiled<Button>("PersonalMessageBtn"); }
+    Button MyShopBtn { get => FindChiled<Button>("MyShopBtn"); }
 
     MenuUIType menuType
     {
         set
         {
+            AdventureBtn.gameObject.SetActive(false);
+            ShopBtn.gameObject.SetActive(false);
+            HomeBtn.gameObject.SetActive(false);
+            PlayDescriptionBtn.gameObject.SetActive(false);
+            PersonalMessageBtn.gameObject.SetActive(false);
+            MyShopBtn.gameObject.SetActive(false);
+
             switch (value)
             {
                 case MenuUIType.Home:
                     AdventureBtn.gameObject.SetActive(true);
                     ShopBtn.gameObject.SetActive(true);
-                    HomeBtn.gameObject.SetActive(false);
                     PlayDescriptionBtn.gameObject.SetActive(true);
                     PersonalMessageBtn.gameObject.SetActive(true);
+                    MyShopBtn.gameObject.SetActive(true);
                     break;
 
                 case MenuUIType.Brave:
-                    AdventureBtn.gameObject.SetActive(false);
-                    ShopBtn.gameObject.SetActive(false);
                     HomeBtn.gameObject.SetActive(true);
-                    PlayDescriptionBtn.gameObject.SetActive(false);
-                    PersonalMessageBtn.gameObject.SetActive(false);
                     break;
             }
         }
@@ -71,6 +75,11 @@ public class MenuUI : UIBase
         PersonalMessageBtn.onClick.AddListener(() =>
         {
             UICtl.E.OpenUI<PersonalMessageUI>(UIType.PersonalMessage);
+            Close();
+        });
+        MyShopBtn.onClick.AddListener(() =>
+        {
+            UICtl.E.OpenUI<MyShopUI>(UIType.MyShop);
             Close();
         });
     }

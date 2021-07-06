@@ -12,7 +12,7 @@ public class EntityTransferGate : EntityBase
         {
             NWMng.E.ClearAdventure((rp)=> 
             {
-                DataMng.GetItems(rp[0]);
+                DataMng.GetItems(rp);
                 GiftBoxUI ui = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox) as GiftBoxUI;
                 ui.AddBonus(AdventureCtl.E.BonusList);
             },AdventureCtl.E.BonusList);

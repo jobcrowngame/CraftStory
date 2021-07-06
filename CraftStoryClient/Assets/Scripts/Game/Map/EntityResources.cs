@@ -23,7 +23,7 @@ public class EntityResources : EntityBase
                 {
                     NWMng.E.GetItemList((rp2) =>
                     {
-                        DataMng.GetItems(rp2[0]);
+                        DataMng.GetItems(rp2);
                     });
                 }, Data.Config.BonusID);
             }

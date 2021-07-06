@@ -44,8 +44,6 @@ public class ShopUI : UIBase
 
         ShopLG.E.ShopUIType = ShopUiType.Charge;
 
-        Refresh();
-
         var chargeBtnParent = FindChiled("Grid", ChageWind.gameObject);
         chargeBtns = new ShopItemCell[chargeBtnParent.childCount];
         for (int i = 0; i < chargeBtnParent.childCount; i++)
@@ -61,6 +59,12 @@ public class ShopUI : UIBase
         //chargeBtns[5].Init(ConfigMng.E.Shop[6]);
         //chargeBtns[6].Init(ConfigMng.E.Shop[7]);
         //chargeBtns[7].Init(ConfigMng.E.Shop[8]);
+    }
+
+    public override void Open()
+    {
+        base.Open();
+        Refresh();
     }
 
     public void Refresh()

@@ -159,17 +159,13 @@ public class MapCtl
         }
 
         MapBlockData bData = new MapBlockData(blockId, pos);
+        PlayerCtl.E.ConsumableSelectItem();
         return CreateBlock(bData);
     }
     public MapBlock CreateBlock(MapBlockData data)
     {
-        return CreateBlock(data, WorldMng.E.MapCtl.CellParent);
-    }
-    public MapBlock CreateBlock(MapBlockData data, Transform parent)
-    {
-        var block = data.ActiveBlock(parent);
+        var block = data.ActiveBlock(WorldMng.E.MapCtl.CellParent);
         DataMng.E.MapData.AddBlock(data);
-        PlayerCtl.E.ConsumableSelectItem();
         CheckNextToBlocks(data);
         return block;
     }

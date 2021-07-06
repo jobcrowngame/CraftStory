@@ -38,7 +38,7 @@ public class BagSelectItem : UIBase
             {
                 NWMng.E.GetItemList((rp2) =>
                 {
-                    DataMng.GetItems(rp2[0]);
+                    DataMng.GetItems(rp2);
                     if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
 
                     if (PlayerCtl.E.SelectItem != null &&
@@ -59,7 +59,7 @@ public class BagSelectItem : UIBase
                 {
                     NWMng.E.GetItemList((rp3) => 
                     {
-                        DataMng.GetItems(rp3[0]);
+                        DataMng.GetItems(rp3);
                         if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
 
                         if (PlayerCtl.E.SelectItem != null && 

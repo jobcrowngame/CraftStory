@@ -29,25 +29,25 @@ public class HintBoxUI : UIBase
         this.okAction = okAction;
         this.cancelAction = cancelAction;
 
-        Msg1.text = msg;
-        Msg1.gameObject.SetActive(true);
+        if (!string.IsNullOrEmpty(iconPath))
+        {
+            Icon.gameObject.SetActive(true);
+            Msg1.gameObject.SetActive(true);
+            Msg2.gameObject.SetActive(false);
 
-        Icon.sprite = ReadResources<Sprite>(iconPath);
-        Icon.gameObject.SetActive(true);
+            Icon.sprite = ReadResources<Sprite>(iconPath);
+            Msg1.text = msg;
+        }
+        else
+        {
+            Icon.gameObject.SetActive(false);
+            Msg1.gameObject.SetActive(false);
+            Msg2.gameObject.SetActive(true);
 
-        Msg2.gameObject.SetActive(false);
-    }
+            Msg2.text = msg;
+        }
 
-    public void Init(string msg, Action okAction)
-    {
-        this.okAction = okAction;
-
-        Msg2.gameObject.SetActive(true);
-        Msg2.text = msg;
-
-        Msg1.gameObject.SetActive(false);
-        Icon.gameObject.SetActive(false);
-        CancelBtn.gameObject.SetActive(false);
+        CancelBtn.gameObject.SetActive(cancelAction != null);
     }
 
     private void OnClickOkBtn()

@@ -171,6 +171,8 @@ public class UICtl : Single<UICtl>
             case UIType.PlayDescription: return "Prefabs/UI/PlayDescription";
             case UIType.PersonalMessage: return "Prefabs/UI/PersonalMessage";
             case UIType.BlueprintPreview: return "Prefabs/UI/BlueprintPreview";
+            case UIType.MyShop: return "Prefabs/UI/MyShop";
+            case UIType.MyShopSelectItem: return "Prefabs/UI/MyShopSelectItem";
             default: Logger.Error("not find UIType " + ui); return "";
         }
     }
@@ -200,5 +202,7 @@ public enum UIType
     BlueprintReName,
     PlayDescription,
     PersonalMessage,
-    BlueprintPreview
+    BlueprintPreview,
+    MyShop,
+    MyShopSelectItem,
 }

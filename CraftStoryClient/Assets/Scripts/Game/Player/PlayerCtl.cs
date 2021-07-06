@@ -220,7 +220,7 @@ public class PlayerCtl : MonoBehaviour
 
     public void ConsumableSelectItem(int count = 1)
     {
-        DataMng.E.ConsumableSelectItem(selectItem.id, count);
+        DataMng.E.ConsumableItemByGUID(selectItem.id, count);
     }
     public bool ConsumableItems(Dictionary<int, int> items)
     {

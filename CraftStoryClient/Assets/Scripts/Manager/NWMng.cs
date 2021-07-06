@@ -26,19 +26,16 @@ public class NWMng : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator HttpRequest(Action<string[]> rp, NWData data, CMD cmd)
+    private IEnumerator HttpRequest(Action<JsonData> rp, NWData data, CMD cmd)
     {
-        Logger.Log("Send:[data]{0}", data.ToString());
+        Logger.Log("Send:[CMD:{0}],[data]{1}", (int)cmd, data.ToString());
         string cryptData = string.IsNullOrEmpty(data.ToString())
             ? ""
             : CryptMng.E.EncryptString(data.ToString());
 
-
         WWWForm wwwForm = new WWWForm();
         wwwForm.AddField("code", (int)cmd);
         wwwForm.AddField("data", cryptData, System.Text.Encoding.UTF8);
-
-        Logger.Log("Send:[CMD]{0}", (int)cmd);
 
         using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.URL, wwwForm))
         {
@@ -48,38 +45,47 @@ public class NWMng : MonoBehaviour
                 Logger.Error(www.error);
             else
             {
-                if (string.IsNullOrEmpty(www.downloadHandler.text))
+                try
                 {
-                    if (rp != null) rp(new string[] { "" });
-                }
-                else
-                {
-                    var result = CryptMng.E.DecryptString(www.downloadHandler.text);
-                    string[] datas = result.Split('^');
-                    if (datas[0] == "error")
+                    if (string.IsNullOrEmpty(www.downloadHandler.text))
                     {
-                        int errcode = int.Parse(datas[1]);
-
-                        if (errcode == 998)
-                        {
-                            CommonFunction.ShowHintBox(PublicPar.Maintenance, () => { Logger.Warning("Quit"); Application.Quit(); });
-                        }
-                        else
-                        {
-                            CommonFunction.ShowHintBar(errcode);
-                        }
+                        rp("");
                     }
                     else
                     {
-                        if (rp != null) rp(datas);
+                        var resultJson = CryptMng.E.DecryptString(www.downloadHandler.text);
+                        JsonData jd = JsonMapper.ToObject(resultJson);
+                        int errorCode = (int)jd["error"];
+
+                        if (errorCode > 0)
+                        {
+                            if (errorCode == 998)
+                                CommonFunction.ShowHintBox(PublicPar.Maintenance, () => { Logger.Warning("Quit"); Application.Quit(); });
+                            else
+                                CommonFunction.ShowHintBar(errorCode);
+                        }
+                        else
+                        {
+                            if (rp != null)
+                                rp(jd["result"]);
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex.Message);
                 }
             }
         }
     }
 
+    public void CreateNewAccount(Action<JsonData> rp)
+    {
+        var data = new NWData();
 
-    public void Login(Action<string[]> rp, string id, string pw)
+        StartCoroutine(HttpRequest(rp, data, CMD.CreateNewAccount));
+    }
+    public void Login(Action<JsonData> rp, string id, string pw)
     {
         var data = new NWData();
         data.Add("N");
@@ -88,36 +94,30 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.Login));
     }
-    public void CreateNewAccount(Action<string[]> rp)
+
+
+    public void GetItemList(Action<JsonData> rp)
     {
         var data = new NWData();
-
-        StartCoroutine(HttpRequest(rp, data, CMD.CreateNewAccount));
-    }
-
-
-    public void GetItemList(Action<string[]> rp)
-    {
-        var data = new NWData();
-        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
 
         StartCoroutine(HttpRequest(rp, data, CMD.ItemList));
     }
-    public void AddItem(Action<string[]> rp, int itemId, int count)
+    public void AddItem(Action<JsonData> rp, int itemId, int count)
     {
         var data = new NWData();
-        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
         data.Add(itemId);
         data.Add(count);
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItem));
     }
-    public void AddItemInData(Action<string[]> rp, int itemId, int count, string newName, string rdata)
+    public void AddItemInData(Action<JsonData> rp, int itemId, int count, string newName, string rdata)
     {
         var data = new NWData();
-        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
         data.Add(itemId);
         data.Add(count);
@@ -126,10 +126,10 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItemInData));
     }
-    public void AddItems(Action<string[]> rp, Dictionary<int, int> items)
+    public void AddItems(Action<JsonData> rp, Dictionary<int, int> items)
     {
         var data = new NWData();
-        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
 
         List<NWItemData> list = new List<NWItemData>();
@@ -141,86 +141,86 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItems));
     }
-    public void RemoveItemByGuid(Action<string[]> rp, int guid, int count)
+    public void RemoveItemByGuid(Action<JsonData> rp, int guid, int count)
     {
         var data = new NWData();
-        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
         data.Add(guid);
         data.Add(count);
 
         StartCoroutine(HttpRequest(rp, data, CMD.RemoveItemByGuid));
     }
-    public void RemoveItem(Action<string[]> rp, int itemid, int count)
+    public void RemoveItem(Action<JsonData> rp, int itemid, int count)
     {
         var data = new NWData();
-        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
         data.Add(itemid);
         data.Add(count);
 
         StartCoroutine(HttpRequest(rp, data, CMD.RemoveItemByItemId));
     }
-    public void EquitItem(Action<string[]> rp, int guid, int site)
+    public void EquitItem(Action<JsonData> rp, int guid, int site)
     {
         var data = new NWData();
-        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
         data.Add(guid);
         data.Add(site);
 
         StartCoroutine(HttpRequest(rp, data, CMD.EquitItem));
     }
-    public void Craft(Action<string[]> rp, Craft craft, int count)
+    public void Craft(Action<JsonData> rp, Craft craft, int count)
     {
         var data = new NWData();
-        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
         data.Add(craft.ID);
         data.Add(count);
 
         StartCoroutine(HttpRequest(rp, data, CMD.Craft));
     }
-    public void Buy(Action<string[]> rp, int shopId)
+    public void Buy(Action<JsonData> rp, int shopId)
     {
         var data = new NWData();
-        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
         data.Add(shopId);
 
         StartCoroutine(HttpRequest(rp, data, CMD.Buy));
     }
-    public void GetCoins(Action<string[]> rp)
+    public void GetCoins(Action<JsonData> rp)
     {
         var data = new NWData();
-        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetCoins));
     }
-    public void Charge(Action<string[]> rp, string productId, string transactionID)
+    public void Charge(Action<JsonData> rp, string productId, string transactionID)
     {
         var data = new NWData();
-        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
         data.Add(productId);
         data.Add(transactionID);
 
         StartCoroutine(HttpRequest(rp, data, CMD.Charge));
     }
-    public void GetBonus(Action<string[]> rp, int bonusId)
+    public void GetBonus(Action<JsonData> rp, int bonusId)
     {
         var data = new NWData();
-        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
         data.Add(bonusId);
         StartCoroutine(HttpRequest(rp, data, CMD.GetBonus));
     }
 
-    public void ClearAdventure(Action<string[]> rp, List<int> resources)
+    public void ClearAdventure(Action<JsonData> rp, List<int> resources)
     {
         var data = new NWData();
-        data.Add(DataMng.E.session);
+        data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
 
         string msg = "";
@@ -239,6 +239,34 @@ public class NWMng : MonoBehaviour
         data.Add(msg);
 
         StartCoroutine(HttpRequest(rp, data, CMD.ClearAdventure));
+    }
+    public void LevelUpMyShop(Action<JsonData> rp)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.token);
+        data.Add(DataMng.E.UserData.Account);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.LevelUpMyShop));
+    }
+    public void UploadBlueprintToMyShop(Action<JsonData> rp, int itemGuid, int site)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.token);
+        data.Add(DataMng.E.UserData.Account);
+        data.Add(DataMng.E.UserData.NickName);
+        data.Add(itemGuid);
+        data.Add(site);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.UploadBlueprintToMyShop));
+    }
+    public void UpdateNickName(Action<JsonData> rp, string nickName)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.token);
+        data.Add(DataMng.E.UserData.Account);
+        data.Add(nickName);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.UpdateNickName));
     }
 
 
@@ -259,6 +287,9 @@ public class NWMng : MonoBehaviour
         Buy = 1010,
         GetCoins,
         GetBonus,
+        LevelUpMyShop,
+        UploadBlueprintToMyShop,
+        UpdateNickName,
 
         Charge = 9000,
     }

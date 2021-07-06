@@ -206,13 +206,9 @@ public class CommonFunction
             ui.SetMsg(ConfigMng.E.ErrorMsg[errCode].Message);
         }
     }
-    public static void ShowHintBox(string msg, Action okAction)
+    public static void ShowHintBox(string msg, Action okAction, Action cancelAction = null)
     {
-        var ui = InstantiateUI<HintBoxUI>("Prefabs/UI/Common/HintBox", UICtl.E.Root);
-        if (ui != null)
-        {
-            ui.Init(msg, okAction);
-        }
+        ShowHintBox(null, msg, okAction, cancelAction);
     }
     public static void ShowHintBox(string iconPath, string msg, Action okAction, Action cancelAction = null)
     {

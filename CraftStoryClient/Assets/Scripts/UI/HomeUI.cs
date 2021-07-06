@@ -41,6 +41,8 @@ public class HomeUI : UIBase
         }
 
         Init();
+
+        RefreshItemBtns();
     }
 
     private void Update()
@@ -96,11 +98,11 @@ public class HomeUI : UIBase
 
         NWMng.E.GetItemList((rp) =>
         {
-            DataMng.GetItems(rp[0]);
+            DataMng.GetItems(rp);
         });
         NWMng.E.GetCoins((rp) =>
         {
-            DataMng.GetCoins(rp[0]);
+            DataMng.GetCoins(rp);
         });
 
         StartCoroutine(FadeIn());

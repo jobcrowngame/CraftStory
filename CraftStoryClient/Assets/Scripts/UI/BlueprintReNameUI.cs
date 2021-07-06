@@ -39,7 +39,7 @@ public class BlueprintReNameUI : UIBase
             {
                 NWMng.E.GetItemList((rp2) =>
                 {
-                    DataMng.GetItems(rp2[0]);
+                    DataMng.GetItems(rp2);
                     PlayerCtl.E.SelectItem = null;
                     Close();
                 });
