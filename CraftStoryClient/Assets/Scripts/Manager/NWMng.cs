@@ -248,7 +248,7 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.LevelUpMyShop));
     }
-    public void UploadBlueprintToMyShop(Action<JsonData> rp, int itemGuid, int site)
+    public void UploadBlueprintToMyShop(Action<JsonData> rp, int itemGuid, int site, int price)
     {
         var data = new NWData();
         data.Add(DataMng.E.token);
@@ -256,6 +256,7 @@ public class NWMng : MonoBehaviour
         data.Add(DataMng.E.UserData.NickName);
         data.Add(itemGuid);
         data.Add(site);
+        data.Add(price);
 
         StartCoroutine(HttpRequest(rp, data, CMD.UploadBlueprintToMyShop));
     }

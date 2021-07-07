@@ -173,6 +173,7 @@ public class UICtl : Single<UICtl>
             case UIType.BlueprintPreview: return "Prefabs/UI/BlueprintPreview";
             case UIType.MyShop: return "Prefabs/UI/MyShop";
             case UIType.MyShopSelectItem: return "Prefabs/UI/MyShopSelectItem";
+            case UIType.MyShopUpload: return "Prefabs/UI/MyShopUpload";
             default: Logger.Error("not find UIType " + ui); return "";
         }
     }
@@ -205,4 +206,5 @@ public enum UIType
     BlueprintPreview,
     MyShop,
     MyShopSelectItem,
+    MyShopUpload,
 }

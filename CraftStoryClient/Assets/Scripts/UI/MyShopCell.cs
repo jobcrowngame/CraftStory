@@ -9,6 +9,7 @@ public class MyShopCell : UIBase
     Text Time;
     Button UnlockBtn { get => FindChiled<Button>("UnlockBtn"); }
     Text UnlockBtnText { get => FindChiled<Text>("Text", UnlockBtn.transform); }
+    Button PreviewBtn { get => FindChiled<Button>("PreviewBtn"); }
 
     MyShopItem item;
     bool OpenTimer = true;
@@ -50,9 +51,14 @@ public class MyShopCell : UIBase
             Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[item.itemId].IconResourcesPath);
 
             if (item.itemId > 0)
+            {
                 RefreshTime();
+                PreviewBtn.gameObject.SetActive(true);
+            }
             else
+            {
                 Time.text = "";
+            }
         }
     }
     private int index;
@@ -70,8 +76,19 @@ public class MyShopCell : UIBase
                 MyShopLG.E.UpdateMyShopLevel();
             }, () => { });
         });
+        PreviewBtn.onClick.AddListener(() =>
+        {
+            var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
+            ui.SetData(item.data);
+        });
         Icon.transform.GetComponent<Button>().onClick.AddListener(() => 
         {
+            if (DataMng.E.RuntimeData.MyShop.myShopLv < Index - 1)
+            {
+                CommonFunction.ShowHintBar(13);
+                return;
+            }
+
             if (DataMng.E.RuntimeData.MyShop.myShopItem[Index - 1].itemId == 0)
             {
                 MyShopSelectItemLG.E.Index = Index;

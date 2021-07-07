@@ -36,6 +36,11 @@ public class BlueprintPreviewUI : UIBase
 
         PlayerCtl.E.BlueprintPreviewCtl.CreateBlock(data);
     }
+    public void SetData(string jsonData)
+    {
+        var data = new BlueprintData(jsonData);
+        PlayerCtl.E.BlueprintPreviewCtl.CreateBlock(data);
+    }
 
     public void SetBarValue(float v)
     {

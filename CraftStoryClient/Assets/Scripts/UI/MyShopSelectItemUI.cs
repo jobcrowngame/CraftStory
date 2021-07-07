@@ -25,21 +25,8 @@ public class MyShopSelectItemUI : UIBase
 
             if (MyShopSelectItemLG.E.SelectItem.ItemData != null)
             {
-                NWMng.E.UploadBlueprintToMyShop((rp) =>
-                {
-                    DataMng.E.ConsumableItemByGUID((int)rp["itemGuid"]);
-
-                    if (!string.IsNullOrEmpty(rp["myShopItems"].ToString()))
-                    {
-                        List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp["myShopItems"].ToJson());
-                        for (int i = 0; i < shopItems.Count; i++)
-                        {
-                            DataMng.E.RuntimeData.MyShop.myShopItem[i] = shopItems[i];
-                        }
-                    }
-
-                    MyShopLG.E.UI.RefreshUI();
-                }, MyShopSelectItemLG.E.SelectItem.ItemData.id, MyShopSelectItemLG.E.Index);
+                var ui = UICtl.E.OpenUI<MyShopUploadUI>(UIType.MyShopUpload);
+                ui.SetItemData(MyShopSelectItemLG.E.SelectItem.ItemData, MyShopSelectItemLG.E.Index);
             }
             
             Close();
