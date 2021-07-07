@@ -133,7 +133,7 @@ public class ShopUI : UIBase
         {
             foreach (var item in items)
             {
-                var cell = AddCell<MyShopItemCell>("Prefabs/UI/ShopItem", itemGridRoot2);
+                var cell = AddCell<ShopMyShopItemCell>("Prefabs/UI/ShopItem", itemGridRoot2);
                 cell.Set(item);
             }
         }

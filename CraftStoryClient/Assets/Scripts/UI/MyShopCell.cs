@@ -79,7 +79,7 @@ public class MyShopCell : UIBase
         PreviewBtn.onClick.AddListener(() =>
         {
             var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
-            ui.SetData(item.data);
+            ui.SetData(item.data, MyShopLG.E.UI);
         });
         Icon.transform.GetComponent<Button>().onClick.AddListener(() => 
         {

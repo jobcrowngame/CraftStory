@@ -7,6 +7,8 @@ public class BlueprintPreviewUI : UIBase
     MyButton BlueprintPreviewMinusBtn { get => FindChiled<MyButton>("BlueprintPreviewMinusBtn"); }
     Slider Bar { get => FindChiled<Slider>("Slider"); }
 
+    UIBase beforUI;
+
     public override void Init()
     {
         base.Init();
@@ -25,21 +27,26 @@ public class BlueprintPreviewUI : UIBase
     {
         base.Close();
         PlayerCtl.E.BlueprintPreviewCtl.Show(false);
-        UICtl.E.OpenUI<HomeUI>(UIType.Home);
-        UICtl.E.OpenUI<ShopUI>(UIType.Shop);
+
+        HomeLG.E.UI.Open();
+        if (beforUI != null) beforUI.Open();
     }
 
-    public void SetData(int blueprintId)
+    public void SetData(int blueprintId, UIBase beforUI)
     {
         var config = ConfigMng.E.Blueprint[blueprintId];
         var data = new BlueprintData(config.Data);
 
         PlayerCtl.E.BlueprintPreviewCtl.CreateBlock(data);
+
+        this.beforUI = beforUI;
     }
-    public void SetData(string jsonData)
+    public void SetData(string jsonData, UIBase beforUI)
     {
         var data = new BlueprintData(jsonData);
         PlayerCtl.E.BlueprintPreviewCtl.CreateBlock(data);
+
+        this.beforUI = beforUI;
     }
 
     public void SetBarValue(float v)

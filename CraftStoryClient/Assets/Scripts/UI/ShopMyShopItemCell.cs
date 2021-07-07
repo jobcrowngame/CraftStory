@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MyShopItemCell : UIBase
+public class ShopMyShopItemCell : UIBase
 {
     Image Icon { get => FindChiled<Image>("Icon"); }
     Text Des { get => FindChiled<Text>("Des"); }
@@ -42,7 +42,7 @@ public class MyShopItemCell : UIBase
         PreviewBtn.onClick.AddListener(() => 
         {
             var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
-            ui.SetData(data.data);
+            ui.SetData(data.data, ShopLG.E.UI);
         });
     }
 }

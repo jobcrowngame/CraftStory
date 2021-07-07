@@ -126,11 +126,6 @@ public class UICtl : Single<UICtl>
 
         uiClass.Open();
 
-        if (curentOpenUI != null)
-        {
-            uiClass.SetBeforUI(curentOpenUI);
-        }
-
         curentOpenUI = uiClass;
 
         return uiClass as T;

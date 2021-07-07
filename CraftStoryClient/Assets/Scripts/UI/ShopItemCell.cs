@@ -72,6 +72,6 @@ public class ShopItemCell : UIBase
     private void OnClickPreviewBtn()
     {
         var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
-        ui.SetData(config.Relation);
+        ui.SetData(config.Relation, ShopLG.E.UI);
     }
 }
