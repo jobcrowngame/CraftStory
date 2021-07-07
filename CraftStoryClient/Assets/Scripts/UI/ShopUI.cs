@@ -80,6 +80,12 @@ public class ShopUI : UIBase
 
         ShopLG.E.SelectPage = 1;
         InputField.text = "";
+
+        NWMng.E.GetCoins((rp) =>
+        {
+            DataMng.GetCoins(rp);
+            RefreshCoins();
+        });
     }
 
     public void SetTitle2(string msg)
@@ -133,7 +139,7 @@ public class ShopUI : UIBase
         {
             foreach (var item in items)
             {
-                var cell = AddCell<ShopMyShopItemCell>("Prefabs/UI/ShopItem", itemGridRoot2);
+                var cell = AddCell<ShopMyShopItemCell>("Prefabs/UI/ShopMyShopItem", itemGridRoot2);
                 cell.Set(item);
             }
         }

@@ -275,14 +275,23 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.SearchMyShopItems));
     }
-    public void BuyMyShopItem(Action<JsonData> rp, int id)
+    public void BuyMyShopItem(Action<JsonData> rp, int guid)
     {
         var data = new NWData();
         data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
-        data.Add(id);
+        data.Add(guid);
 
         StartCoroutine(HttpRequest(rp, data, CMD.BuyMyShopItem));
+    }
+    public void LoadBlueprint(Action<JsonData> rp, int guid)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.token);
+        data.Add(DataMng.E.UserData.Account);
+        data.Add(guid);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.LoadBlueprint));
     }
 
 
@@ -308,6 +317,7 @@ public class NWMng : MonoBehaviour
         UpdateNickName,
         SearchMyShopItems,
         BuyMyShopItem,
+        LoadBlueprint,
 
         Charge = 9000,
     }

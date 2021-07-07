@@ -35,6 +35,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             DataMng.E.RuntimeData.MyShop.firstUseMyShop = (int)rp["firstUseMyShop"];
             DataMng.E.RuntimeData.MyShop.myShopLv = (int)rp["myShopLv"];
 
+            DataMng.E.RuntimeData.MyShop.Clear();
             if (!string.IsNullOrEmpty(rp["myShopItems"].ToString()))
             {
                 List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp["myShopItems"].ToJson());

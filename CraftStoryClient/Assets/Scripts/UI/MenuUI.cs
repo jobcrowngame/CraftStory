@@ -39,35 +39,26 @@ public class MenuUI : UIBase
         }
     }
 
-    public void Init(MenuUIType uiType)
+    public void Awake()
     {
-        base.Init();
-        MenuLG.E.Init(this);
-
-        menuType = uiType;
-
         CloseBtn.onClick.AddListener(() => { Close(); });
-
-        //CraftBtn = FindChiled<Button>("CraftBtn");
-        //CraftBtn.onClick.AddListener(() => { UICtl.E.OpenUI<CraftUI>(UIType.Craft); });
-        AdventureBtn.onClick.RemoveAllListeners();
-        AdventureBtn.onClick.AddListener(()=> 
-        { 
+        AdventureBtn.onClick.AddListener(() =>
+        {
             DataMng.E.MapData.TransferGate = new EntityData(1000, ItemType.TransferGate);
             CommonFunction.GoToNextScene();
             Close();
         });
-        ShopBtn.onClick.AddListener(() => 
+        ShopBtn.onClick.AddListener(() =>
         {
-            UICtl.E.OpenUI<ShopUI>(UIType.Shop); 
+            UICtl.E.OpenUI<ShopUI>(UIType.Shop);
             Close();
         });
-        HomeBtn.onClick.AddListener(()=> 
+        HomeBtn.onClick.AddListener(() =>
         {
             CommonFunction.GoToHome();
             Close();
         });
-        PlayDescriptionBtn.onClick.AddListener(()=> 
+        PlayDescriptionBtn.onClick.AddListener(() =>
         {
             UICtl.E.OpenUI<PlayDescriptionUI>(UIType.PlayDescription);
             Close();
@@ -82,6 +73,14 @@ public class MenuUI : UIBase
             UICtl.E.OpenUI<MyShopUI>(UIType.MyShop);
             Close();
         });
+    }
+
+    public void Init(MenuUIType uiType)
+    {
+        base.Init();
+        MenuLG.E.Init(this);
+
+        menuType = uiType;
     }
 
     public enum MenuUIType

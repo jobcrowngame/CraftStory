@@ -8,7 +8,7 @@ public class MyShopUploadUI : UIBase
 {
     Button OKBtn { get => FindChiled<Button>("OKBtn"); }
     Button CancelBtn { get => FindChiled<Button>("CancelBtn"); }
-    InputField InputField { get => FindChiled<InputField>("InputField"); }
+    Dropdown Dropdown { get => FindChiled<Dropdown>("Dropdown"); }
 
     ItemData itemData;
     int Index;
@@ -18,21 +18,29 @@ public class MyShopUploadUI : UIBase
         base.Init();
         MyShopUploadLG.E.Init(this);
 
+        Dropdown.options.Clear();
+        Dropdown.AddOptions(new List<string>
+        {
+            "100ポイント",
+            "300ポイント",
+            "500ポイント",
+            "1000ポイント",
+            "2000ポイント",
+            "5000ポイント",
+            "10000ポイント"
+        });
+        Dropdown.value = 0;
+
         OKBtn.onClick.AddListener(() => 
         {
             if (itemData == null)
                 return;
 
-            if (string.IsNullOrEmpty(InputField.text))
-            {
-                CommonFunction.ShowHintBar(14);
-                return;
-            }
-
             NWMng.E.UploadBlueprintToMyShop((rp) =>
             {
                 //DataMng.E.ConsumableItemByGUID((int)rp["itemGuid"]);
 
+                DataMng.E.RuntimeData.MyShop.Clear();
                 if (!string.IsNullOrEmpty(rp["myShopItems"].ToString()))
                 {
                     List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp["myShopItems"].ToJson());
@@ -43,7 +51,7 @@ public class MyShopUploadUI : UIBase
                 }
 
                 MyShopLG.E.UI.RefreshUI();
-            }, itemData.id, Index, int.Parse(InputField.text));
+            }, itemData.id, Index, GetPrice());
 
             Close();
         });
@@ -53,7 +61,6 @@ public class MyShopUploadUI : UIBase
     {
         base.Open();
 
-        InputField.text = "";
     }
     public override void Close()
     {
@@ -64,5 +71,20 @@ public class MyShopUploadUI : UIBase
     {
         itemData = data;
         Index = index;
+    }
+
+    private int GetPrice()
+    {
+        switch (Dropdown.value)
+        {
+            case 0: return 100;
+            case 1: return 300;
+            case 2: return 500;
+            case 3: return 1000;
+            case 4: return 2000;
+            case 5: return 5000;
+            case 6: return 10000;
+        }
+        return 0;
     }
 }

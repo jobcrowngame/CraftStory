@@ -1,14 +1,18 @@
-﻿using System;
+﻿using LitJson;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MyShopCell : UIBase
 {
     Image Icon { get => FindChiled<Image>("Icon"); }
+    Text NewName { get => FindChiled<Text>("NewName"); }
     Text Time;
-    Button UnlockBtn { get => FindChiled<Button>("UnlockBtn"); }
-    Text UnlockBtnText { get => FindChiled<Text>("Text", UnlockBtn.transform); }
+    Button UnLockBtn { get => FindChiled<Button>("UnLockBtn"); }
+    Button LoadBtn { get => FindChiled<Button>("LoadBtn"); }
+    Text UnLockBtnText { get => FindChiled<Text>("Text", UnLockBtn.transform); }
     Button PreviewBtn { get => FindChiled<Button>("PreviewBtn"); }
 
     MyShopItem item;
@@ -25,39 +29,48 @@ public class MyShopCell : UIBase
             switch (value)
             {
                 case 1:
-                    UnlockBtn.gameObject.SetActive(false);
+                    UnLockBtn.gameObject.SetActive(false);
                     break;
 
                 case 2:
-                    UnlockBtn.gameObject.SetActive(DataMng.E.RuntimeData.MyShop.myShopLv < 1);
-                    UnlockBtnText.text = SettingMng.E.MyShopCostLv1 + "個";
+                    UnLockBtn.gameObject.SetActive(DataMng.E.RuntimeData.MyShop.myShopLv < 1);
+                    UnLockBtnText.text = SettingMng.E.MyShopCostLv1 + "個";
                     break;
 
                 case 3:
-                    UnlockBtn.gameObject.SetActive(DataMng.E.RuntimeData.MyShop.myShopLv < 2);
-                    UnlockBtnText.text = SettingMng.E.MyShopCostLv2 + "個";
+                    UnLockBtn.gameObject.SetActive(DataMng.E.RuntimeData.MyShop.myShopLv < 2);
+                    UnLockBtnText.text = SettingMng.E.MyShopCostLv2 + "個";
                     break;
             }
 
             item = DataMng.E.RuntimeData.MyShop.myShopItem[value - 1];
-            if ((DateTime.Now - item.created_at).Days >= 7)
-            {
-                DataMng.E.RuntimeData.MyShop.myShopItem[value - 1] = new MyShopItem();
-                item = DataMng.E.RuntimeData.MyShop.myShopItem[value - 1];
-            }
-
-            item.created_at = item.created_at.AddDays(7);
-
-            Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[item.itemId].IconResourcesPath);
-
             if (item.itemId > 0)
             {
+                if ((DateTime.Now - item.created_at).Days >= 7)
+                {
+                    DataMng.E.RuntimeData.MyShop.myShopItem[value - 1] = new MyShopItem();
+                    item = DataMng.E.RuntimeData.MyShop.myShopItem[value - 1];
+                }
+
+                item.created_at = item.created_at.AddDays(7);
+
+                NewName.text = item.newName;
+                Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[item.itemId].IconResourcesPath);
+
                 RefreshTime();
                 PreviewBtn.gameObject.SetActive(true);
+                LoadBtn.gameObject.SetActive(true);
+                Time.gameObject.SetActive(true);
+                NewName.gameObject.SetActive(true);
             }
             else
             {
-                Time.text = "";
+                Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[0].IconResourcesPath); ;
+
+                PreviewBtn.gameObject.SetActive(false);
+                LoadBtn.gameObject.SetActive(false);
+                Time.gameObject.SetActive(false);
+                NewName.gameObject.SetActive(false);
             }
         }
     }
@@ -67,7 +80,27 @@ public class MyShopCell : UIBase
     {
         Time = FindChiled<Text>("Time");
 
-        UnlockBtn.onClick.AddListener(() =>
+        LoadBtn.onClick.AddListener(() =>
+        {
+            if (item.itemId > 0)
+            {
+                NWMng.E.LoadBlueprint((rp) =>
+                {
+                    DataMng.E.RuntimeData.MyShop.Clear();
+                    if (!string.IsNullOrEmpty(rp["myShopItems"].ToString()))
+                    {
+                        List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp["myShopItems"].ToJson());
+                        for (int i = 0; i < shopItems.Count; i++)
+                        {
+                            DataMng.E.RuntimeData.MyShop.myShopItem[i] = shopItems[i];
+                        }
+                    }
+
+                    MyShopLG.E.UI.RefreshUI();
+                }, item.id);
+            }
+        });
+        UnLockBtn.onClick.AddListener(() =>
         {
             int cost = DataMng.E.RuntimeData.MyShop.myShopLv == 0 ? SettingMng.E.MyShopCostLv1 : SettingMng.E.MyShopCostLv2;
             string msg = string.Format("{0}{1}個消耗して解放しますか。", "クラフトシード", cost);

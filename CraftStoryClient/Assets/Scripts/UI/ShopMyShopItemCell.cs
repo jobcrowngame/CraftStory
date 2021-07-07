@@ -1,11 +1,15 @@
 ﻿
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopMyShopItemCell : UIBase
 {
     Image Icon { get => FindChiled<Image>("Icon"); }
-    Text Des { get => FindChiled<Text>("Des"); }
+    Text NickName { get => FindChiled<Text>("NickName"); }
+    Text ItemName { get => FindChiled<Text>("ItemName"); }
+    Text Time { get => FindChiled<Text>("Time"); }
     Button BuyBtn { get => FindChiled<Button>("BuyBtn"); }
     Button PreviewBtn { get => FindChiled<Button>("PreviewBtn"); }
     Text BuyBtnText { get => FindChiled<Text>("Text", BuyBtn.transform); }
@@ -14,7 +18,8 @@ public class ShopMyShopItemCell : UIBase
     public void Set(MyShopBlueprintData data)
     {
         Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[data.itemId].IconResourcesPath);
-        Des.text = data.newName;
+        NickName.text = data.nickName;
+        ItemName.text = data.newName;
         BuyBtnText.text = data.price.ToString();
         BtnCostIcon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[9002].IconResourcesPath);
 
@@ -44,5 +49,18 @@ public class ShopMyShopItemCell : UIBase
             var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
             ui.SetData(data.data, ShopLG.E.UI);
         });
+
+        data.created_at = data.created_at.AddDays(7);
+        StartCoroutine(RefreshTime(data));
+    }
+
+    private IEnumerator RefreshTime(MyShopBlueprintData data)
+    {
+        while (true)
+        {
+            TimeSpan t = data.created_at - DateTime.Now;
+            Time.text = string.Format("{0}日{1}:{2}:{3}", t.Days, t.Hours, t.Minutes, t.Seconds);
+            yield return new WaitForSeconds(1);
+        }
     }
 }
