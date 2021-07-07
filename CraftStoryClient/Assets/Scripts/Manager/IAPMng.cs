@@ -125,7 +125,7 @@ public class IAPMng : Single<IAPMng>, IStoreListener
             NWMng.E.GetCoins((rp) =>
             {
                 DataMng.GetCoins(rp);
-                if (ShopLG.E.UI != null) ShopLG.E.UI.Refresh();
+                if (ShopLG.E.UI != null) ShopLG.E.UI.RefreshCoins();
             });
         }, productId, receiptId);
 

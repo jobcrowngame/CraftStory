@@ -25,7 +25,6 @@ public class NWMng : MonoBehaviour
     {
         yield return null;
     }
-
     private IEnumerator HttpRequest(Action<JsonData> rp, NWData data, CMD cmd)
     {
         Logger.Log("Send:[CMD:{0}],[data]{1}", (int)cmd, data.ToString());
@@ -94,8 +93,6 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.Login));
     }
-
-
     public void GetItemList(Action<JsonData> rp)
     {
         var data = new NWData();
@@ -216,7 +213,6 @@ public class NWMng : MonoBehaviour
         data.Add(bonusId);
         StartCoroutine(HttpRequest(rp, data, CMD.GetBonus));
     }
-
     public void ClearAdventure(Action<JsonData> rp, List<int> resources)
     {
         var data = new NWData();
@@ -269,6 +265,25 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.UpdateNickName));
     }
+    public void SearchMyShopItems(Action<JsonData> rp, int page, string nickName)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.token);
+        data.Add(DataMng.E.UserData.Account);
+        data.Add(page);
+        data.Add(nickName);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.SearchMyShopItems));
+    }
+    public void BuyMyShopItem(Action<JsonData> rp, int id)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.token);
+        data.Add(DataMng.E.UserData.Account);
+        data.Add(id);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.BuyMyShopItem));
+    }
 
 
     public enum CMD
@@ -291,6 +306,8 @@ public class NWMng : MonoBehaviour
         LevelUpMyShop,
         UploadBlueprintToMyShop,
         UpdateNickName,
+        SearchMyShopItems,
+        BuyMyShopItem,
 
         Charge = 9000,
     }

@@ -60,12 +60,12 @@ public class ShopItemCell : UIBase
                         NWMng.E.GetCoins((rp3) =>
                         {
                             DataMng.GetCoins(rp3);
-                            ShopLG.E.UI.Refresh();
+                            ShopLG.E.UI.RefreshCoins();
                         });
 
                         CommonFunction.ShowHintBar(5);
                     }, config.ID);
-                });
+                },()=> { });
         }
     }
 

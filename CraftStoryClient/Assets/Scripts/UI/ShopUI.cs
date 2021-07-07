@@ -1,4 +1,6 @@
 ﻿using JsonConfigData;
+using LitJson;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.UI;
@@ -6,41 +8,51 @@ using UnityEngine.UI;
 public class ShopUI : UIBase
 {
     TitleUI title;
-
-    Transform itemGridRoot;
-    Text Title2;
     Button[] btns;
-
-    Transform ItemsWind;
-    Transform ChageWind;
-
     ShopItemCell[] chargeBtns;
+
+    Text Title2 { get => FindChiled<Text>("ItemsTitle"); }
+
+    Transform ChageWind { get => FindChiled("ChargeWind"); }
+    Transform ItemsWind { get => FindChiled("ItemsWind"); }
+    Transform itemGridRoot { get => FindChiled("Grid", ItemsWind.gameObject); }
+
+    Transform Blueprint2Wind { get => FindChiled("Blueprint2Wind"); }
+    Transform itemGridRoot2 { get => FindChiled("Grid", Blueprint2Wind.gameObject); }
+    Text Page { get => FindChiled<Text>("Page", Blueprint2Wind); }
+    InputField InputField { get => FindChiled<InputField>("InputField", Blueprint2Wind); }
+    Button LeftBtn { get => FindChiled<Button>("LeftBtn", Blueprint2Wind); }
+    Button RightBtn { get => FindChiled<Button>("RightBtn", Blueprint2Wind); }
+    Button SearchBtn { get => FindChiled<Button>("SearchBtn", Blueprint2Wind); }
+
+    
+
 
     public override void Init()
     {
         base.Init();
 
         ShopLG.E.Init(this);
-        btns = new Button[3];
-
-        ItemsWind = FindChiled("ItemsWind");
-        ChageWind = FindChiled("ChargeWind");
 
         title = FindChiled<TitleUI>("Title");
         title.SetTitle("ショップ");
         title.SetOnClose(() => { Close(); });
-        title.EnActiveCoin(3);
 
-        itemGridRoot = FindChiled("Grid", ItemsWind.gameObject);
-        Title2 = FindChiled<Text>("ItemsTitle");
+        LeftBtn.onClick.AddListener(()=> { ShopLG.E.OnClickLeftBtn(InputField.text); });
+        RightBtn.onClick.AddListener(()=> { ShopLG.E.OnClickRightBtn(InputField.text); });
+        SearchBtn.onClick.AddListener(()=> { ShopLG.E.GetBlueprint2Items(InputField.text); });
 
         var btnsParent = FindChiled("BtnGrid");
+        btns = new Button[btnsParent.childCount];
         btns[0] = FindChiled<Button>("Button (1)");
         btns[0].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Charge; });
         btns[1] = FindChiled<Button>("Button (2)");
         btns[1].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Exchange; });
         btns[2] = FindChiled<Button>("Button (3)");
         btns[2].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint; });
+        btns[3] = FindChiled<Button>("Button (4)");
+        btns[3].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint2; });
+
 
         ShopLG.E.ShopUIType = ShopUiType.Charge;
 
@@ -64,38 +76,65 @@ public class ShopUI : UIBase
     public override void Open()
     {
         base.Open();
-        Refresh();
-    }
+        RefreshCoins();
 
-    public void Refresh()
-    {
-        title.RefreshCoins();
+        ShopLG.E.SelectPage = 1;
+        InputField.text = "";
     }
 
     public void SetTitle2(string msg)
     {
         Title2.text = msg;
     }
-
-    public void IsChargeWind(bool b)
+    public void SetPageText(string v)
     {
-        ChageWind.gameObject.SetActive(b);
-        ItemsWind.gameObject.SetActive(!b);
+        Page.text = v;
     }
 
+    public void ChangeUIType(ShopUiType uiType)
+    {
+        ChageWind.gameObject.SetActive(uiType == ShopUiType.Charge);
+        ItemsWind.gameObject.SetActive(uiType == ShopUiType.Exchange || uiType == ShopUiType.Blueprint);
+        Blueprint2Wind.gameObject.SetActive(uiType == ShopUiType.Blueprint2);
+    }
+
+    public void RefreshCoins()
+    {
+        title.RefreshCoins();
+    }
     public void RefreshItems(ShopUiType type)
     {
         ClearCell(itemGridRoot);
+        ClearCell(itemGridRoot2);
 
-        foreach (var item in ConfigMng.E.Shop.Values)
+        if (type == ShopUiType.Blueprint2)
         {
-            if (item.Type == 1)
-                continue;
-
-            if (item.Type == (int)type)
+            ShopLG.E.GetBlueprint2Items(InputField.text);
+        }
+        else
+        {
+            foreach (var item in ConfigMng.E.Shop.Values)
             {
-                var cell = AddCell<ShopItemCell>("Prefabs/UI/ShopItem", itemGridRoot);
-                cell.Init(item);
+                if (item.Type == 1)
+                    continue;
+
+                if (item.Type == (int)type)
+                {
+                    var cell = AddCell<ShopItemCell>("Prefabs/UI/ShopItem", itemGridRoot);
+                    cell.Init(item);
+                }
+            }
+        }
+    }
+    public void RefreshBlueprint2(List<MyShopBlueprintData> items)
+    {
+        ClearCell(itemGridRoot2);
+        if (items != null)
+        {
+            foreach (var item in items)
+            {
+                var cell = AddCell<MyShopItemCell>("Prefabs/UI/ShopItem", itemGridRoot2);
+                cell.Set(item);
             }
         }
     }
