@@ -108,8 +108,8 @@ public class ShopUI : UIBase
 
         ShopLG.E.SelectPage = 1;
         InputField.text = "";
-        SelectBtnIndex = 0;
-        ShopLG.E.ShopUIType = ShopUiType.Charge;
+        //SelectBtnIndex = 0;
+        //ShopLG.E.ShopUIType = ShopUiType.Charge;
 
         NWMng.E.GetCoins((rp) =>
         {
