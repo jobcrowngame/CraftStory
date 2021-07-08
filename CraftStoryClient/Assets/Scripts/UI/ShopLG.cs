@@ -26,6 +26,7 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
             case ShopUiType.Exchange: return "交換";
             case ShopUiType.Blueprint: return "設計図";
             case ShopUiType.Blueprint2: return "設計図";
+            case ShopUiType.Point: return "ポイント";
 
             default: Logger.Error("not find shop ui type " + ShopUIType); break;
         }
@@ -76,7 +77,8 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
 public enum ShopUiType
 {
     Charge = 1,
-    Exchange,
-    Blueprint,
+    Exchange = 2,
+    Blueprint = 3,
+    Point = 4,
     Blueprint2,
 }

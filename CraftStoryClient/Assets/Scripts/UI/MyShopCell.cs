@@ -96,7 +96,6 @@ public class MyShopCell : UIBase
                     }
                     else
                     {
-
                         NWMng.E.LoadBlueprint((rp) =>
                         {
                             DataMng.E.MyShop.Clear();
@@ -108,6 +107,8 @@ public class MyShopCell : UIBase
                                     DataMng.E.MyShop.myShopItem[i] = shopItems[i];
                                 }
                             }
+
+                            DataMng.E.UserData.Coin1 -= 100;
 
                             MyShopLG.E.UI.RefreshUI();
                         }, item.id);
@@ -144,7 +145,7 @@ public class MyShopCell : UIBase
                     }
                     else
                     {
-                        MyShopLG.E.UpdateMyShopLevel();
+                        MyShopLG.E.UpdateMyShopLevel(cost);
                         CommonFunction.ShowHintBar(13);
                     }
                 }, () => { });

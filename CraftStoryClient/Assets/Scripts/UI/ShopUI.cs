@@ -23,6 +23,22 @@ public class ShopUI : UIBase
     Button SearchBtn { get => FindChiled<Button>("SearchBtn", Blueprint2Wind); }
     Dropdown Dropdown { get => FindChiled<Dropdown>("Dropdown", Blueprint2Wind); }
 
+    private int SelectBtnIndex
+    {
+        get => selectBtnIndex;
+        set
+        {
+            selectBtnIndex = value;
+
+            foreach (var btn in btns)
+            {
+                btn.GetComponent<Image>().color = Color.gray;
+            }
+
+            btns[selectBtnIndex].GetComponent<Image>().color = Color.white;
+        }
+    }
+    private int selectBtnIndex;
 
     public override void Init()
     {
@@ -54,14 +70,15 @@ public class ShopUI : UIBase
         var btnsParent = FindChiled("BtnGrid");
         btns = new Button[btnsParent.childCount];
         btns[0] = FindChiled<Button>("Button (1)");
-        btns[0].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Charge; });
-        btns[1] = FindChiled<Button>("Button (2)");
-        btns[1].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Exchange; });
-        btns[2] = FindChiled<Button>("Button (3)");
-        btns[2].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint; });
-        btns[3] = FindChiled<Button>("Button (4)");
-        btns[3].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint2; });
-
+        btns[0].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Charge; SelectBtnIndex = 0; });
+        btns[1] = FindChiled<Button>("Button (5)");
+        btns[1].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Point; SelectBtnIndex = 1; });
+        btns[2] = FindChiled<Button>("Button (2)");
+        btns[2].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Exchange; SelectBtnIndex = 2; });
+        btns[3] = FindChiled<Button>("Button (3)");
+        btns[3].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint; SelectBtnIndex = 3; });
+        btns[4] = FindChiled<Button>("Button (4)");
+        btns[4].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint2; SelectBtnIndex = 4; });
 
         ShopLG.E.ShopUIType = ShopUiType.Charge;
 
@@ -80,6 +97,8 @@ public class ShopUI : UIBase
         //chargeBtns[5].Init(ConfigMng.E.Shop[6]);
         //chargeBtns[6].Init(ConfigMng.E.Shop[7]);
         //chargeBtns[7].Init(ConfigMng.E.Shop[8]);
+
+        SelectBtnIndex = 0;
     }
 
     public override void Open()
@@ -89,6 +108,8 @@ public class ShopUI : UIBase
 
         ShopLG.E.SelectPage = 1;
         InputField.text = "";
+        SelectBtnIndex = 0;
+        ShopLG.E.ShopUIType = ShopUiType.Charge;
 
         NWMng.E.GetCoins((rp) =>
         {
@@ -109,7 +130,9 @@ public class ShopUI : UIBase
     public void ChangeUIType(ShopUiType uiType)
     {
         ChageWind.gameObject.SetActive(uiType == ShopUiType.Charge);
-        ItemsWind.gameObject.SetActive(uiType == ShopUiType.Exchange || uiType == ShopUiType.Blueprint);
+        ItemsWind.gameObject.SetActive(uiType == ShopUiType.Exchange 
+            || uiType == ShopUiType.Blueprint
+            || uiType == ShopUiType.Point);
         Blueprint2Wind.gameObject.SetActive(uiType == ShopUiType.Blueprint2);
     }
 

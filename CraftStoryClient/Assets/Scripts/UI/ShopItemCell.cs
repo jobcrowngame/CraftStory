@@ -47,7 +47,7 @@ public class ShopItemCell : UIBase
             //Logger.Log("OnClickBuyBtn " + config.Name);
             //NWMng.E.IAP.OnPurchaseClicked(config.Name);
         }
-        else if (config.Type == 2 || config.Type == 3)
+        else if (config.Type == 2 || config.Type == 3 || config.Type == 4)
         {
             CommonFunction.ShowHintBox(config.IconResources, config.Des2, 
                 () => {
