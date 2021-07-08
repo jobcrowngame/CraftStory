@@ -1,4 +1,4 @@
-using LitJson;
+ï»¿using LitJson;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -19,13 +19,13 @@ public class MyShopUploadUI : UIBase
         Dropdown.options.Clear();
         Dropdown.AddOptions(new List<string>
         {
-            "110ƒ|ƒCƒ“ƒg",
-            "330ƒ|ƒCƒ“ƒg",
-            "550ƒ|ƒCƒ“ƒg",
-            "1100ƒ|ƒCƒ“ƒg",
-            "2200ƒ|ƒCƒ“ƒg",
-            "5500ƒ|ƒCƒ“ƒg",
-            "11000ƒ|ƒCƒ“ƒg"
+            "110ãƒã‚¤ãƒ³ãƒˆ",
+            "330ãƒã‚¤ãƒ³ãƒˆ",
+            "550ãƒã‚¤ãƒ³ãƒˆ",
+            "1100ãƒã‚¤ãƒ³ãƒˆ",
+            "2200ãƒã‚¤ãƒ³ãƒˆ",
+            "5500ãƒã‚¤ãƒ³ãƒˆ",
+            "11000ãƒã‚¤ãƒ³ãƒˆ"
         });
         Dropdown.value = 0;
 
