@@ -265,13 +265,14 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.UpdateNickName));
     }
-    public void SearchMyShopItems(Action<JsonData> rp, int page, string nickName)
+    public void SearchMyShopItems(Action<JsonData> rp, int page, string nickName, int sortType)
     {
         var data = new NWData();
         data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
         data.Add(page);
         data.Add(nickName);
+        data.Add(sortType);
 
         StartCoroutine(HttpRequest(rp, data, CMD.SearchMyShopItems));
     }

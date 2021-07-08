@@ -38,12 +38,17 @@ public class DataMng : Single<DataMng>
     }
     private MapData homeData;
 
-    public RuntimeData RuntimeData
+    public MyShopData MyShop
     {
-        get => runtimeData;
-        private set => runtimeData = value;
+        get
+        {
+            if (myShop == null)
+                myShop = new MyShopData();
+            return myShop;
+        }
+        set => myShop = value;
     }
-    private RuntimeData runtimeData;
+    private MyShopData myShop;
 
     public List<ItemData> Items { 
         get
@@ -60,8 +65,6 @@ public class DataMng : Single<DataMng>
     public override void Init()
     {
         base.Init();
-
-        runtimeData = new RuntimeData();
     }
 
     public void NewUser(string id, string pw)
@@ -280,9 +283,9 @@ public class DataMng : Single<DataMng>
         if (string.IsNullOrEmpty(jsonData.ToString()))
             return;
 
-        E.RuntimeData.Coin1 = (int)jsonData["coin1"];
-        E.RuntimeData.Coin2 = (int)jsonData["coin2"];
-        E.RuntimeData.Coin3 = (int)jsonData["coin3"];
+        E.UserData.Coin1 = (int)jsonData["coin1"];
+        E.UserData.Coin2 = (int)jsonData["coin2"];
+        E.UserData.Coin3 = (int)jsonData["coin3"];
     }
 
 #endregion

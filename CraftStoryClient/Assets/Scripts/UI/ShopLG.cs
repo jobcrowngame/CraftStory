@@ -44,21 +44,21 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
     }
     int selectPage = 1;
 
-    public void OnClickLeftBtn(string nickName)
+    public void OnClickLeftBtn(string nickName, int sortType)
     {
         if (SelectPage > 1)
         {
             SelectPage--;
-            GetBlueprint2Items(nickName);
+            GetBlueprint2Items(nickName, sortType);
         }
     }
-    public void OnClickRightBtn(string nickName)
+    public void OnClickRightBtn(string nickName, int sortType)
     {
         SelectPage++;
-        GetBlueprint2Items(nickName);
+        GetBlueprint2Items(nickName, sortType);
     }
 
-    public void GetBlueprint2Items(string nickName)
+    public void GetBlueprint2Items(string nickName, int sortType)
     {
         NWMng.E.SearchMyShopItems((rp) =>
         {
@@ -69,7 +69,7 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
             }
             
             UI.RefreshBlueprint2(items);
-        }, SelectPage, nickName);
+        }, SelectPage, nickName, sortType);
     }
 }
 

@@ -23,7 +23,7 @@ public class MyShopSelectItemUI : UIBase
                 return;
             }
 
-            if (MyShopSelectItemLG.E.SelectItem.ItemData != null)
+            if (MyShopSelectItemLG.E.SelectItem != null && MyShopSelectItemLG.E.SelectItem.ItemData != null)
             {
                 var ui = UICtl.E.OpenUI<MyShopUploadUI>(UIType.MyShopUpload);
                 ui.SetItemData(MyShopSelectItemLG.E.SelectItem.ItemData, MyShopSelectItemLG.E.Index);

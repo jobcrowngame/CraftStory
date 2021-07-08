@@ -206,16 +206,19 @@ public class CommonFunction
             ui.SetMsg(ConfigMng.E.ErrorMsg[errCode].Message);
         }
     }
-    public static void ShowHintBox(string msg, Action okAction, Action cancelAction = null)
+    public static void ShowHintBox(string msg, Action okAction, Action cancelAction = null, 
+        string okBtn = "button_2D_007", string cancelBtn = "button_2D_006")
     {
-        ShowHintBox(null, msg, okAction, cancelAction);
+        ShowHintBox(null, msg, okAction, cancelAction, okBtn, cancelBtn);
     }
-    public static void ShowHintBox(string iconPath, string msg, Action okAction, Action cancelAction = null)
+    public static void ShowHintBox(string iconPath, string msg, Action okAction, Action cancelAction = null, 
+        string okBtn = "button_2D_007", string cancelBtn = "button_2D_006")
     {
         var ui = InstantiateUI<HintBoxUI>("Prefabs/UI/Common/HintBox", UICtl.E.Root);
         if (ui != null)
         {
             ui.Init(iconPath, msg, okAction, cancelAction);
+            ui.SetBtnName(okBtn, cancelBtn);
         }
     }
 }

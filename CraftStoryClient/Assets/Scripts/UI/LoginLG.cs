@@ -32,16 +32,16 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
         NWMng.E.Login((rp) =>
         {
             DataMng.E.token = (string)rp["token"];
-            DataMng.E.RuntimeData.MyShop.firstUseMyShop = (int)rp["firstUseMyShop"];
-            DataMng.E.RuntimeData.MyShop.myShopLv = (int)rp["myShopLv"];
+            DataMng.E.MyShop.firstUseMyShop = (int)rp["firstUseMyShop"];
+            DataMng.E.MyShop.myShopLv = (int)rp["myShopLv"];
 
-            DataMng.E.RuntimeData.MyShop.Clear();
+            DataMng.E.MyShop.Clear();
             if (!string.IsNullOrEmpty(rp["myShopItems"].ToString()))
             {
                 List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp["myShopItems"].ToJson());
                 for (int i = 0; i < shopItems.Count; i++)
                 {
-                    DataMng.E.RuntimeData.MyShop.myShopItem[i] = shopItems[i];
+                    DataMng.E.MyShop.myShopItem[i] = shopItems[i];
                 }
             }
 

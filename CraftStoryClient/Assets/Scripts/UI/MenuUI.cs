@@ -70,6 +70,19 @@ public class MenuUI : UIBase
         });
         MyShopBtn.onClick.AddListener(() =>
         {
+            if (string.IsNullOrEmpty(DataMng.E.UserData.NickName))
+            {
+                string msg = @"マイショップを利用するには、
+ニックネームを登録する必要があります。";
+
+                CommonFunction.ShowHintBox(msg, ()=> 
+                {
+                    UICtl.E.OpenUI<PersonalMessageUI>(UIType.PersonalMessage);
+                    Close();
+                });
+                return;
+            }
+
             UICtl.E.OpenUI<MyShopUI>(UIType.MyShop);
             Close();
         });

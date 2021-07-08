@@ -28,10 +28,12 @@ public class ShopMyShopItemCell : UIBase
 
         BuyBtn.onClick.AddListener(() => 
         {
-            string msg = string.Format("{0}ポイントを消耗して交換しますか。", data.price);
+            string msg = string.Format(@"ポイントを「{0}」消費して、
+この設計図を購入しますか？", data.price);
+
             CommonFunction.ShowHintBox(msg,
                 () => {
-                    if (DataMng.E.RuntimeData.Coin3 < data.price)
+                    if (DataMng.E.UserData.Coin3 < data.price)
                     {
                         CommonFunction.ShowHintBar(15);
                         return;
@@ -39,8 +41,10 @@ public class ShopMyShopItemCell : UIBase
 
                     NWMng.E.BuyMyShopItem((rp) =>
                     {
-                        DataMng.E.RuntimeData.Coin3 -= data.price;
+                        DataMng.E.UserData.Coin3 -= data.price;
                         ShopLG.E.UI.RefreshCoins();
+
+                        CommonFunction.ShowHintBar(17);
                     }, data.id);
                 }, () => { });
         });

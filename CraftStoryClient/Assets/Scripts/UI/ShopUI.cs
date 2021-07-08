@@ -1,8 +1,5 @@
-﻿using JsonConfigData;
-using LitJson;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Purchasing;
 using UnityEngine.UI;
 
 public class ShopUI : UIBase
@@ -24,8 +21,7 @@ public class ShopUI : UIBase
     Button LeftBtn { get => FindChiled<Button>("LeftBtn", Blueprint2Wind); }
     Button RightBtn { get => FindChiled<Button>("RightBtn", Blueprint2Wind); }
     Button SearchBtn { get => FindChiled<Button>("SearchBtn", Blueprint2Wind); }
-
-    
+    Dropdown Dropdown { get => FindChiled<Dropdown>("Dropdown", Blueprint2Wind); }
 
 
     public override void Init()
@@ -38,9 +34,22 @@ public class ShopUI : UIBase
         title.SetTitle("ショップ");
         title.SetOnClose(() => { Close(); });
 
-        LeftBtn.onClick.AddListener(()=> { ShopLG.E.OnClickLeftBtn(InputField.text); });
-        RightBtn.onClick.AddListener(()=> { ShopLG.E.OnClickRightBtn(InputField.text); });
-        SearchBtn.onClick.AddListener(()=> { ShopLG.E.GetBlueprint2Items(InputField.text); });
+        LeftBtn.onClick.AddListener(()=> { ShopLG.E.OnClickLeftBtn(InputField.text, Dropdown.value); });
+        RightBtn.onClick.AddListener(()=> { ShopLG.E.OnClickRightBtn(InputField.text, Dropdown.value); });
+        SearchBtn.onClick.AddListener(()=> { ShopLG.E.GetBlueprint2Items(InputField.text, Dropdown.value); });
+        Dropdown.options.Clear();
+        Dropdown.AddOptions(new List<string>
+        {
+            "ポイントが高い順",
+            "ポイントが安い順",
+            "登録が新しい順",
+            "登録が古い順"
+        });
+        Dropdown.value = 0;
+        Dropdown.onValueChanged.AddListener((value) => 
+        {
+            ShopLG.E.GetBlueprint2Items(InputField.text, value);
+        });
 
         var btnsParent = FindChiled("BtnGrid");
         btns = new Button[btnsParent.childCount];
@@ -115,7 +124,7 @@ public class ShopUI : UIBase
 
         if (type == ShopUiType.Blueprint2)
         {
-            ShopLG.E.GetBlueprint2Items(InputField.text);
+            ShopLG.E.GetBlueprint2Items(InputField.text, Dropdown.value);
         }
         else
         {

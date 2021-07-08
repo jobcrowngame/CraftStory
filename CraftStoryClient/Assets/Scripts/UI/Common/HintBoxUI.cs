@@ -4,23 +4,19 @@ using UnityEngine.UI;
 
 public class HintBoxUI : UIBase
 {
-    Image Icon;
-    Text Msg1;
-    Text Msg2;
-    Button OkBtn;
-    Button CancelBtn;
+    Image Icon { get => FindChiled<Image>("Icon"); }
+    Transform Msg1Parent { get => FindChiled("Msg1"); }
+    Text Msg1 { get => FindChiled<Text>("Text"); }
+    Text Msg2 { get => FindChiled<Text>("Msg2"); }
+    Button OkBtn { get => FindChiled<Button>("OKBtn"); }
+    Button CancelBtn { get => FindChiled<Button>("CancelBtn"); }
 
     Action okAction;
     Action cancelAction;
 
     private void Awake()
     {
-        Icon = FindChiled<Image>("Icon");
-        Msg1 = FindChiled<Text>("Msg1");
-        Msg2 = FindChiled<Text>("Msg2");
-        OkBtn = FindChiled<Button>("OKBtn");
         OkBtn.onClick.AddListener(OnClickOkBtn);
-        CancelBtn = FindChiled<Button>("CancelBtn");
         CancelBtn.onClick.AddListener(OnClickCancelBtn);
     }
 
@@ -32,7 +28,7 @@ public class HintBoxUI : UIBase
         if (!string.IsNullOrEmpty(iconPath))
         {
             Icon.gameObject.SetActive(true);
-            Msg1.gameObject.SetActive(true);
+            Msg1Parent.gameObject.SetActive(true);
             Msg2.gameObject.SetActive(false);
 
             Icon.sprite = ReadResources<Sprite>(iconPath);
@@ -41,7 +37,7 @@ public class HintBoxUI : UIBase
         else
         {
             Icon.gameObject.SetActive(false);
-            Msg1.gameObject.SetActive(false);
+            Msg1Parent.gameObject.SetActive(false);
             Msg2.gameObject.SetActive(true);
 
             Msg2.text = msg;
@@ -61,5 +57,11 @@ public class HintBoxUI : UIBase
             cancelAction();
 
         Destroy();
+    }
+
+    public void SetBtnName(string btn1, string btn2)
+    {
+        OkBtn.GetComponent<Image>().sprite = ReadResources<Sprite>("Textures/" + btn1);
+        CancelBtn.GetComponent<Image>().sprite = ReadResources<Sprite>("Textures/" + btn2);
     }
 }

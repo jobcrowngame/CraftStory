@@ -90,10 +90,12 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Shop.cs" />
     <Compile Include="Assets\Scripts\UI\Common\TitleUI.cs" />
     <Compile Include="Assets\Scripts\Data\MapBlockData.cs" />
+    <Compile Include="Assets\Scripts\UI\MyShopUploadUI.cs" />
     <Compile Include="Assets\Scripts\Common\MiniJSON.cs" />
     <Compile Include="Assets\Scripts\UI\ShopLG.cs" />
     <Compile Include="Assets\Scripts\Splash\SplashController.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeLG.cs" />
+    <Compile Include="Assets\Scripts\UI\MyShopUploadLG.cs" />
     <Compile Include="Assets\Scripts\Test\TestTriger.cs" />
     <Compile Include="Assets\Scripts\UI\BagItemCell.cs" />
     <Compile Include="Assets\Scripts\Data\BlueprintData.cs" />
@@ -117,7 +119,6 @@
     <Compile Include="Assets\Scripts\Test\LookChange.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
-    <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyButton.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerEntity.cs" />
     <Compile Include="Assets\Scripts\Game\Adventure\AdventureCtl.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemCell.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Block.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopMyShopItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemLG.cs" />
     <Compile Include="Assets\Scripts\Manager\EffectMng.cs" />
     <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
@@ -188,9 +190,6 @@
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
-    <Compile Include="Assets\Scripts\UI\MyShopUploadUI.cs" />
-    <Compile Include="Assets\Scripts\UI\MyShopUploadLG.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopMyShopItemCell.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />
