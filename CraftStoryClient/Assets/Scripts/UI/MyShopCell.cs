@@ -182,6 +182,7 @@ public class MyShopCell : UIBase
 
         if (item.itemId > 0)
         {
+            OpenTimer = true;
             StartCoroutine(RefreshTime());
         }
     }
