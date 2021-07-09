@@ -111,7 +111,7 @@ public class MyShopCell : UIBase
                             DataMng.E.UserData.Coin1 -= 100;
 
                             MyShopLG.E.UI.RefreshUI();
-                        }, item.id);
+                        }, item.id, 0);
                     }
                 }, () => { });
             }
@@ -190,7 +190,30 @@ public class MyShopCell : UIBase
         while (OpenTimer)
         {
             TimeSpan t = item.created_at - DateTime.Now;
-            Time.text = string.Format("{0}日{1}:{2}:{3}", t.Days, t.Hours, t.Minutes, t.Seconds);
+            if (t.TotalSeconds < 0)
+            {
+                NWMng.E.LoadBlueprint((rp) =>
+                {
+                    DataMng.E.MyShop.Clear();
+                    if (!string.IsNullOrEmpty(rp["myShopItems"].ToString()))
+                    {
+                        List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp["myShopItems"].ToJson());
+                        for (int i = 0; i < shopItems.Count; i++)
+                        {
+                            DataMng.E.MyShop.myShopItem[i] = shopItems[i];
+                        }
+                    }
+
+                    MyShopLG.E.UI.RefreshUI();
+                    OpenTimer = false;
+                }, item.id, 1);
+            }
+            else
+            {
+                Time.text = string.Format("{0}日{1}:{2}:{3}", t.Days, t.Hours, t.Minutes, t.Seconds);
+
+            }
+
             yield return new WaitForSeconds(1);
         }
     }

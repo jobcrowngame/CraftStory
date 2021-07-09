@@ -9,6 +9,7 @@ public class BagItemCell : UIBase
     Image Icon;
     Button clickBtn;
     Transform selected;
+    Transform Lock { get => FindChiled("Lock"); }
 
     private ItemData itemData;
     public ItemData ItemData { get => itemData; }
@@ -24,6 +25,8 @@ public class BagItemCell : UIBase
 
         clickBtn = transform.GetComponent<Button>();
         clickBtn.onClick.AddListener(() => { BagLG.E.SelectItem = this; });
+
+        Lock.gameObject.SetActive(itemData.islocked == 1);
 
         Refresh();
     }

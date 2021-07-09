@@ -55,7 +55,7 @@ public class MyShopSelectItemUI : UIBase
 
         foreach (var item in DataMng.E.Items)
         {
-            if (item.Config().Type == (int)ItemType.Blueprint)
+            if (item.Config().Type == (int)ItemType.Blueprint && !item.IsLocked)
             {
                 AddItem(item);
             }

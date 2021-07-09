@@ -10,6 +10,7 @@ public class ItemData
     public string newName { get; set; }
     public int equipSite { get; set; }
     public string relationData { get; set; }
+    public int islocked { get; set; }
 
     public Item Config()
     {
@@ -20,4 +21,6 @@ public class ItemData
     {
         return itemId + "x" + count;
     }
+
+    public bool IsLocked { get => islocked == 1; }
 }

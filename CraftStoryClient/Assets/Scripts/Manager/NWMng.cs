@@ -285,12 +285,13 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.BuyMyShopItem));
     }
-    public void LoadBlueprint(Action<JsonData> rp, int guid)
+    public void LoadBlueprint(Action<JsonData> rp, int guid, int isfree)
     {
         var data = new NWData();
         data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);
         data.Add(guid);
+        data.Add(isfree);
 
         StartCoroutine(HttpRequest(rp, data, CMD.LoadBlueprint));
     }

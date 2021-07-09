@@ -9,6 +9,7 @@ public class MyShopSelectItemCell : UIBase
     Image Icon { get => FindChiled<Image>("Icon"); }
     Button clickBtn { get => transform.GetComponent<Button>(); }
     Transform selected { get => FindChiled("Select"); }
+    Transform Lock { get => FindChiled("Lock"); }
 
     private ItemData itemData;
     public ItemData ItemData { get => itemData; }
@@ -35,6 +36,8 @@ public class MyShopSelectItemCell : UIBase
             : itemData.newName;
         Icon.sprite = ReadResources<Sprite>(itemData.Config().IconResourcesPath);
         itemCount.text = "x" + itemData.count;
+
+        Lock.gameObject.SetActive(itemData.islocked == 1);
     }
     public void IsSelected(bool b)
     {
