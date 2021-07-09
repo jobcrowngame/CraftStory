@@ -10,6 +10,7 @@ public class MenuUI : UIBase
     Button PlayDescriptionBtn { get => FindChiled<Button>("PlayDescriptionBtn"); }
     Button PersonalMessageBtn { get => FindChiled<Button>("PersonalMessageBtn"); }
     Button MyShopBtn { get => FindChiled<Button>("MyShopBtn"); }
+    Button MessageBtn { get => FindChiled<Button>("MessageBtn"); }
 
     MenuUIType menuType
     {
@@ -84,6 +85,11 @@ public class MenuUI : UIBase
             }
 
             UICtl.E.OpenUI<MyShopUI>(UIType.MyShop);
+            Close();
+        });
+        MessageBtn.onClick.AddListener(() =>
+        {
+            UICtl.E.OpenUI<EmailUI>(UIType.Email);
             Close();
         });
     }

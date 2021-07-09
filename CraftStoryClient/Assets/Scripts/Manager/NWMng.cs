@@ -301,6 +301,24 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.LoadBlueprint));
     }
+    public void GetEmail(Action<JsonData> rp, int page)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.token);
+        data.Add(DataMng.E.UserData.Account);
+        data.Add(page);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetEmail));
+    }
+    public void ReadEmail(Action<JsonData> rp, int guid)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.token);
+        data.Add(DataMng.E.UserData.Account);
+        data.Add(guid);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.ReadEmail));
+    }
 
 
     public enum CMD
@@ -327,6 +345,8 @@ public class NWMng : MonoBehaviour
         SearchMyShopItems,
         BuyMyShopItem,
         LoadBlueprint,
+        GetEmail,
+        ReadEmail = 1020,
 
         Charge = 9000,
     }
