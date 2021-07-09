@@ -227,4 +227,17 @@ public class CommonFunction
             ui.SetBtnName(okBtn, cancelBtn);
         }
     }
+
+    public static bool MenuRedPoint()
+    {
+        bool ret = false;
+        if (!ret) ret = NewMessage();
+        return ret;
+    }
+    public static bool NewMessage()
+    {
+        return DataMng.E.RuntimeData.NewEmailCount > 0
+            ? true
+            : false;
+    }
 }

@@ -196,6 +196,7 @@
     <Compile Include="Assets\Scripts\UI\EmailCell.cs" />
     <Compile Include="Assets\Scripts\UI\EmailDetailsUI.cs" />
     <Compile Include="Assets\Scripts\UI\EmailDetailsLG.cs" />
+    <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />

@@ -26,6 +26,8 @@ public class HomeUI : UIBase
     MyButton PlussBtn { get => FindChiled<MyButton>("PlussBtn"); }
     MyButton MinusBtn { get => FindChiled<MyButton>("MinusBtn"); }
 
+    Transform RedPoint { get => FindChiled("RedPoint"); }
+
     List<HomeItemBtn> itemBtns;
 
     private float fadeInTime = 0.05f;
@@ -106,6 +108,7 @@ public class HomeUI : UIBase
         });
 
         StartCoroutine(FadeIn());
+        RefreshRedPoint();
     }
 
     private void AddItemBtns()
@@ -172,6 +175,10 @@ public class HomeUI : UIBase
     private void BuildBlueprint()
     {
         PlayerCtl.E.BuilderPencil.BuildBlueprint();
+    }
+    public void RefreshRedPoint()
+    {
+        RedPoint.gameObject.SetActive(CommonFunction.MenuRedPoint());
     }
 
     public void ShowBuilderPencilBtn(bool b = true)

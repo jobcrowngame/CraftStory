@@ -33,6 +33,8 @@ public class EmailDetailsUI : UIBase
             NWMng.E.ReadEmail((rp) => 
             {
                 cell.Read();
+                DataMng.E.RuntimeData.NewEmailCount--;
+                if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshRedPoint();
             }, cell.Data.id);
         }
     }

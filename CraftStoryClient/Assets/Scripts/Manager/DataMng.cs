@@ -12,6 +12,8 @@ public class DataMng : Single<DataMng>
 
     public string token { get; set; }
 
+    public RuntimeData RuntimeData { get; set; }
+
     public UserData UserData
     {
         get => uData;
@@ -65,6 +67,8 @@ public class DataMng : Single<DataMng>
     public override void Init()
     {
         base.Init();
+
+        RuntimeData = new RuntimeData();
     }
 
     public void NewUser(string id, string pw)

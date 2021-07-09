@@ -46,6 +46,11 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             }
 
             ui.LoginResponse();
+
+            NWMng.E.GetNewEmailCount((rp) =>
+            {
+                DataMng.E.RuntimeData.NewEmailCount = (int)rp["count"];
+            });
         }, id, pw);
     }
 }

@@ -101,6 +101,16 @@ public class MenuUI : UIBase
 
         menuType = uiType;
     }
+    public override void Open()
+    {
+        base.Open();
+        RefreshRedPoint();
+    }
+    public void RefreshRedPoint()
+    {
+        var RedPoint = FindChiled("RedPoint", MessageBtn.gameObject);
+        if(RedPoint != null) RedPoint.gameObject.SetActive(CommonFunction.NewMessage());
+    }
 
     public enum MenuUIType
     {

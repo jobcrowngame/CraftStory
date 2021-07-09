@@ -319,6 +319,15 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.ReadEmail));
     }
+    public void GetNewEmailCount(Action<JsonData> rp)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.token);
+        data.Add(DataMng.E.UserData.Account);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetNewEmailCount));
+    }
+
 
 
     public enum CMD
@@ -347,6 +356,7 @@ public class NWMng : MonoBehaviour
         LoadBlueprint,
         GetEmail,
         ReadEmail = 1020,
+        GetNewEmailCount,
 
         Charge = 9000,
     }
