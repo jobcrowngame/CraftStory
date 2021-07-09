@@ -10,6 +10,12 @@ using UnityEngine.SceneManagement;
 
 public class CommonFunction
 {
+    public static void QuitGame()
+    {
+        Logger.Error("Quit app");
+        Application.Quit();
+    }
+
     public static T CreateGlobalObject<T>() where T : Component
     {
         var obj = new GameObject();

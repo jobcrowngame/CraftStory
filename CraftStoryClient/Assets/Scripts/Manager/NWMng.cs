@@ -78,6 +78,12 @@ public class NWMng : MonoBehaviour
         }
     }
 
+    public void GetVersion(Action<JsonData> rp)
+    {
+        var data = new NWData();
+
+        StartCoroutine(HttpRequest(rp, data, CMD.Version));
+    }
     public void CreateNewAccount(Action<JsonData> rp)
     {
         var data = new NWData();
@@ -299,6 +305,7 @@ public class NWMng : MonoBehaviour
 
     public enum CMD
     {
+        Version = 99,
         CreateNewAccount = 100,
         Login = 101,
 

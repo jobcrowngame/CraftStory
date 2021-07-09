@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Text;
 using System.Collections;
 using UnityEngine;
+using System.Collections.Specialized;
 
 public class Main : MonoBehaviour
 {
@@ -27,7 +28,27 @@ public class Main : MonoBehaviour
         yield return NWMng.E.InitCoroutine();
 
         UICtl.E.OpenUI<LoginUI>(UIType.Login);
-        LoginLg.E.Login();
+
+
+        NWMng.E.GetVersion((rp) =>
+        {
+            if (Application.version == (string)rp["version"])
+            {
+                LoginLg.E.Login();
+            }
+            else
+            {
+                string msg = string.Format(@"アプリバージョンが古いです。
+最新のバージョンに更新してください。
+
+今のバージョン: v.{0}
+最新のバージョン: v.{1}",
+Application.version,
+(string)rp["version"]);
+
+                CommonFunction.ShowHintBox(msg, () => { CommonFunction.QuitGame(); });
+            }
+        });
     }
 
     private void OnApplicationQuit()
@@ -45,7 +66,7 @@ public class Main : MonoBehaviour
 
     private IEnumerator LoadData()
     {
-        Logger.Log("������ LoadData");
+        Logger.Log("初期化 LoadData");
 
         yield return DataMng.E.Load();
     }

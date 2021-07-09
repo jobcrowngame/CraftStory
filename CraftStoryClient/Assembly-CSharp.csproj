@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{C85E1AE6-1292-3581-E007-24E077556706}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -193,9 +194,11 @@
     <Compile Include="Assets\Scripts\Test\TestToggle.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\Resources\Shader\Simple.shader" />
-     <None Include="Assets\Resources\Shader\SemiTransparent.shader" />
-     <None Include="Assets\Resources\Shader\Test01.shader" />
+    <None Include="app.config" />
+    <None Include="Assets\Resources\Shader\Simple.shader" />
+    <None Include="Assets\Resources\Shader\SemiTransparent.shader" />
+    <None Include="Assets\Resources\Shader\Test01.shader" />
+    <Reference Include="System.Configuration" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
