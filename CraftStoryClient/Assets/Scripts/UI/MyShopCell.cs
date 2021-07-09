@@ -155,7 +155,6 @@ public class MyShopCell : UIBase
                 if (DataMng.E.MyShop.myShopItem[Index - 1].itemId == 0)
                 {
                     MyShopSelectItemLG.E.Index = Index;
-                    UICtl.E.OpenUI<MyShopSelectItemUI>(UIType.MyShopSelectItem);
 
                     string msg = string.Format(@"マイショップに設計図をアップロードすると
 7日間全ユーザーへ公開されます。
@@ -165,7 +164,7 @@ public class MyShopCell : UIBase
 
                     CommonFunction.ShowHintBox(null, msg, () =>
                     {
-
+                        UICtl.E.OpenUI<MyShopSelectItemUI>(UIType.MyShopSelectItem);
                     }, null, "button_2D_008");
                 }
                 else
