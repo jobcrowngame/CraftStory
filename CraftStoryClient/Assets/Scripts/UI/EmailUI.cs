@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +15,7 @@ public class EmailUI : UIBase
         base.Init();
         EmailLG.E.Init(this);
 
-        title.SetTitle("ƒƒbƒZ[ƒW");
+        title.SetTitle("ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸");
         title.SetOnClose(() => { Close(); });
         title.EnActiveCoin(1);
         title.EnActiveCoin(2);
