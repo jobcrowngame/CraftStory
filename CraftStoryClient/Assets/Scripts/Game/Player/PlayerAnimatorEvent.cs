@@ -15,6 +15,6 @@ public class PlayerAnimatorEvent : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
         PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.Waiting;
         PlayerCtl.E.Lock = false;
-        Logger.Warning("Un Lock");
+        Logger.Log("Un Lock");
     }
 }

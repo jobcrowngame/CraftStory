@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class Logger : Single<Logger>
 {
-    private static LogLV level = LogLV.Log;
+#if UNITY_EDITOR
+    private static LogLV level = LogLV.Warning;
+#else
+    private static LogLV level = LogLV.Error;
+#endif
 
     public static void Log(string format, params object[] args)
     {

@@ -6,11 +6,14 @@ using UnityEngine;
 
 public class CryptMng : Single<CryptMng>
 {
+    string Prmkey = "4h5f2h4d31h4f1gf";
+    string PrmVi = "ggsd5g1h6r3f1h0d";
+
     //暗号化
     public string EncryptString(string plainText)
     {
-        byte[] key = Encoding.UTF8.GetBytes(PublicPar.Prmkey);
-        byte[] iv = Encoding.UTF8.GetBytes(PublicPar.PrmVi);
+        byte[] key = Encoding.UTF8.GetBytes(Prmkey);
+        byte[] iv = Encoding.UTF8.GetBytes(PrmVi);
         //Instantiate a new Aes object to perform string symmetric encryption
         Aes encryptor = Aes.Create();
         encryptor.Mode = CipherMode.CBC;
@@ -44,8 +47,8 @@ public class CryptMng : Single<CryptMng>
     }
     public string DecryptString(string cipherText)
     {
-        byte[] key = Encoding.UTF8.GetBytes(PublicPar.Prmkey);
-        byte[] iv = Encoding.UTF8.GetBytes(PublicPar.PrmVi);
+        byte[] key = Encoding.UTF8.GetBytes(Prmkey);
+        byte[] iv = Encoding.UTF8.GetBytes(PrmVi);
         //Instantiate a new Aes object to perform string symmetric encryption
         Aes encryptor = Aes.Create();
         encryptor.Mode = CipherMode.CBC;

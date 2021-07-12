@@ -37,14 +37,11 @@ public class PublicPar
 
     #endregion
 
-    public static string URL = "13.230.170.40/Main.php";
-    public static string URL2 = "craftstory.awscraftstoryserver.com/Main.php";
-    public static string URL3 = "35.75.48.37/Main.php";
-    public static string LocalURL = "http://localhost/Game/Main.php";
-
-    public static string Prmkey =   "4h5f2h4d31h4f1gf";
-    public static string PrmVi =    "ggsd5g1h6r3f1h0d";
-
+    public static string LocalURL = "http://localhost/UrlLocal.php";
+    public static string DevelopURL = "13.230.170.40/UrlDevelop.php";
+    public static string TestURL = "13.230.170.40/UrlTest.php";
+    public static string ReleaseURL = "13.230.170.40/UrlRelease.php";
+    public static string ProductionURL = "craftstory.awscraftstoryserver.com/UrlProduction.php";
 
     public static string Maintenance = @"ただいま、メンテナンスを実施中です。
 完了までしばらくお待ちください。

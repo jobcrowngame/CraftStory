@@ -30,24 +30,30 @@ public class Main : MonoBehaviour
         UICtl.E.OpenUI<LoginUI>(UIType.Login);
 
 
-        NWMng.E.GetVersion((rp) =>
+        NWMng.E.Connect((rp) =>
         {
-            if (Application.version == (string)rp["version"])
+            NWMng.E.URL = (string)rp["url"];
+            Logger.Warning("[URL]-" + NWMng.E.URL);
+
+            NWMng.E.GetVersion((rp) =>
             {
-                LoginLg.E.Login();
-            }
-            else
-            {
-                string msg = string.Format(@"アプリバージョンが古いです。
+                if (Application.version == (string)rp["version"])
+                {
+                    LoginLg.E.Login();
+                }
+                else
+                {
+                    string msg = string.Format(@"アプリバージョンが古いです。
 最新のバージョンに更新してください。
 
 今のバージョン: v.{0}
 最新のバージョン: v.{1}",
-Application.version,
-(string)rp["version"]);
+    Application.version,
+    (string)rp["version"]);
 
-                CommonFunction.ShowHintBox(msg, () => { CommonFunction.QuitGame(); });
-            }
+                    CommonFunction.ShowHintBox(msg, () => { CommonFunction.QuitGame(); });
+                }
+            });
         });
     }
 

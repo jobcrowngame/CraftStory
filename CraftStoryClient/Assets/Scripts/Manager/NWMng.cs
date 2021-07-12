@@ -21,9 +21,34 @@ public class NWMng : MonoBehaviour
     }
     private static NWMng entity;
 
+    private string url;
+    public string URL { get => url; set => url = value; }
+
     public IEnumerator InitCoroutine()
     {
         yield return null;
+    }
+    private IEnumerator ConnectIE(Action<JsonData> rp)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.TestURL))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+                Logger.Error(www.error);
+            else
+            {
+                try
+                {
+                    JsonData jd = JsonMapper.ToObject(www.downloadHandler.text);
+                    rp(jd);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex.Message);
+                }
+            }
+        }
     }
     private IEnumerator HttpRequest(Action<JsonData> rp, NWData data, CMD cmd)
     {
@@ -36,7 +61,7 @@ public class NWMng : MonoBehaviour
         wwwForm.AddField("code", (int)cmd);
         wwwForm.AddField("data", cryptData, System.Text.Encoding.UTF8);
 
-        using (UnityWebRequest www = UnityWebRequest.Post(PublicPar.URL, wwwForm))
+        using (UnityWebRequest www = UnityWebRequest.Post(url, wwwForm))
         {
             yield return www.SendWebRequest();
 
@@ -78,6 +103,10 @@ public class NWMng : MonoBehaviour
         }
     }
 
+    public void Connect(Action<JsonData> rp)
+    {
+        StartCoroutine(ConnectIE(rp));
+    }
     public void GetVersion(Action<JsonData> rp)
     {
         var data = new NWData();
