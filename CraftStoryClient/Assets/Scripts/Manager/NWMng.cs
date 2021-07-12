@@ -21,6 +21,7 @@ public class NWMng : MonoBehaviour
     }
     private static NWMng entity;
     
+    
 
 
     private string url;
