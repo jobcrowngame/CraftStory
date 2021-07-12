@@ -77,7 +77,7 @@ public class MapCtl
 
         for (int i = 0; i < mData.Resources.Count; i++)
         {
-            var resourceEntity = CommonFunction.Instantiate<EntityResources>(mData.Resources[i].ResourcePath, resourceParent, mData.Resources[i].Pos);
+            var resourceEntity = CommonFunction.Instantiate<EntityResources>(mData.Resources[i].Config.ResourcePath, resourceParent, mData.Resources[i].Pos);
             if (resourceEntity != null)
             {
                 resourceEntity.Init(mData.Resources[i]);
@@ -90,7 +90,7 @@ public class MapCtl
         if (mData.TransferGate == null || mData.TransferGate.ID == 0)
             return;
 
-        var entity = CommonFunction.Instantiate<EntityTransferGate>(mData.TransferGate.ResourcePath, resourceParent, mData.TransferGate.Pos);
+        var entity = CommonFunction.Instantiate<EntityTransferGate>(mData.TransferGate.Config.ResourcePath, resourceParent, mData.TransferGate.Pos);
         if (entity != null)
         {
             entity.Init(mData.TransferGate);

@@ -4,7 +4,7 @@ using UnityEngine;
 public class Logger : Single<Logger>
 {
 #if UNITY_EDITOR
-    private static LogLV level = LogLV.Warning;
+    private static LogLV level = LogLV.Log;
 #else
     private static LogLV level = LogLV.Error;
 #endif

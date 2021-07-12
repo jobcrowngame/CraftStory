@@ -82,6 +82,7 @@ public class CryptMng : Single<CryptMng>
         catch (Exception e)
         {
             Logger.Error(e);
+            Logger.Error(cipherText);
         }
         finally
         {
