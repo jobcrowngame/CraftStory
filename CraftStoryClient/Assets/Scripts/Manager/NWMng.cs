@@ -30,7 +30,7 @@ public class NWMng : MonoBehaviour
     }
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.LocalURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.DevelopURL))
         {
             yield return www.SendWebRequest();
 
