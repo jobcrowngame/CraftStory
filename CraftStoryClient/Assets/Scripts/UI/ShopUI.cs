@@ -120,6 +120,9 @@ public class ShopUI : UIBase
 
         foreach (var item in myshopItems)
         {
+            if (item == null)
+                continue;
+
             item.Open();
         }
     }
