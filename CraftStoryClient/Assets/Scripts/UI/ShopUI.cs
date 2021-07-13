@@ -7,6 +7,7 @@ public class ShopUI : UIBase
     TitleUI title;
     Button[] btns;
     ShopItemCell[] chargeBtns;
+    List<ShopMyShopItemCell> myshopItems = new List<ShopMyShopItemCell>();
 
     Text Title2 { get => FindChiled<Text>("ItemsTitle"); }
 
@@ -116,6 +117,11 @@ public class ShopUI : UIBase
             DataMng.GetCoins(rp);
             RefreshCoins();
         });
+
+        foreach (var item in myshopItems)
+        {
+            item.Open();
+        }
     }
 
     public void SetTitle2(string msg)
@@ -173,6 +179,7 @@ public class ShopUI : UIBase
             {
                 var cell = AddCell<ShopMyShopItemCell>("Prefabs/UI/ShopMyShopItem", itemGridRoot2);
                 cell.Set(item);
+                myshopItems.Add(cell);
             }
         }
     }

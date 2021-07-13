@@ -15,6 +15,8 @@ public class ShopMyShopItemCell : UIBase
     Text BuyBtnText { get => FindChiled<Text>("Text", BuyBtn.transform); }
     Image BtnCostIcon { get => FindChiled<Image>("Image", BuyBtn.transform); }
 
+    MyShopBlueprintData data;
+
     public void Set(MyShopBlueprintData data)
     {
         Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[data.itemId].IconResourcesPath);
@@ -55,6 +57,15 @@ public class ShopMyShopItemCell : UIBase
         });
 
         data.created_at = data.created_at.AddDays(7);
+
+        this.data = data;
+        StartCoroutine(RefreshTime(data));
+    }
+
+    public override void Open()
+    {
+        base.Open();
+
         StartCoroutine(RefreshTime(data));
     }
 
