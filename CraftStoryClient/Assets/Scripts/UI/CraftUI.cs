@@ -5,16 +5,17 @@ using UnityEngine.UI;
 
 public class CraftUI : UIBase
 {
-    Transform craftItemParent;
-    Text SelectCount;
-    Button CloseBtn;
-    Button CraftBtn;
-    Button RightBtn;
-    Button LeftBtn;
+    Transform craftItemParent { get => FindChiled("Content"); }
+    Transform selectParent { get => FindChiled("SelectParent"); }
+    Text SelectCount { get => FindChiled<Text>("SelectCount", selectParent); }
+    Button CloseBtn { get => FindChiled<Button>("CloseBtn"); }
+    Button CraftBtn { get => FindChiled<Button>("CraftBtn"); }
+    Button RightBtn { get => FindChiled<Button>("RightBtn"); }
+    Button RightBtn10 { get => FindChiled<Button>("RightBtn10"); }
+    Button LeftBtn { get => FindChiled<Button>("LeftBtn"); }
+    Button LeftBtn10 { get => FindChiled<Button>("LeftBtn10"); }
     CraftCostCell[] costCells;
 
-    int selectCount = 1;
-    Craft selectCraft;
 
     private ItemType itemType;
 
@@ -24,27 +25,16 @@ public class CraftUI : UIBase
 
         CraftLG.E.Init(this);
 
-        costCells = new CraftCostCell[4];
 
-        craftItemParent = FindChiled("Content");
-
-        var selectParent = FindChiled("SelectParent");
-        SelectCount = FindChiled<Text>("SelectCount", selectParent);
-        SelectCount.text = selectCount.ToString();
-
-        RightBtn = FindChiled<Button>("RightBtn");
-        RightBtn.onClick.AddListener(AddCount);
-
-        LeftBtn = FindChiled<Button>("LeftBtn");
-        LeftBtn.onClick.AddListener(RemoveCount);
-
-        CloseBtn = FindChiled<Button>("CloseBtn");
+        RightBtn.onClick.AddListener(CraftLG.E.OnClickAdd);
+        RightBtn10.onClick.AddListener(CraftLG.E.OnClickAdd10);
+        LeftBtn.onClick.AddListener(CraftLG.E.OnClickRemove);
+        LeftBtn10.onClick.AddListener(CraftLG.E.OnClickRemove10);
         CloseBtn.onClick.AddListener(() => { Close(); });
-
-        CraftBtn = FindChiled<Button>("CraftBtn");
         CraftBtn.onClick.AddListener(OnCraft);
 
         var costCellParent = FindChiled("CostList");
+        costCells = new CraftCostCell[costCellParent.childCount];
         for (int i = 0; i < costCellParent.childCount; i++)
         {
             costCells[i] = costCellParent.GetChild(i).gameObject.AddComponent<CraftCostCell>();
@@ -55,14 +45,16 @@ public class CraftUI : UIBase
     {
         ClearCell(craftItemParent);
 
-        selectCount = 1;
-        SelectCount.text = selectCount.ToString();
-
-        selectCraft = null;
-        RefreshCost(null);
-
+        CraftLG.E.SelectCount = 1;
+        CraftLG.E.SelectCraft = null;
         itemType = type;
+
+        RefreshCost();
         RefreshCraftItemList();
+    }
+    public void SetSelectCountText(string text)
+    {
+        SelectCount.text = text;
     }
 
     private void RefreshCraftItemList()
@@ -71,46 +63,23 @@ public class CraftUI : UIBase
         {
             if (item.Type == (int)itemType)
             {
-                AddCraftItem(item);
+                var cell = AddCell<CraftItemCell>("Prefabs/UI/IconItem", craftItemParent);
+                if (cell != null)
+                {
+                    cell.Init(item);
+                }
             }
-        }
-    }
-    private void AddCraftItem(Craft config)
-    {
-        var cell = AddCell<CraftItemCell>("Prefabs/UI/IconItem", craftItemParent);
-        if (cell != null)
-        {
-            cell.Init(config);
-        }
-    }
-
-    private void AddCount()
-    {
-        if (selectCount < 100)
-        {
-            selectCount++;
-            SelectCount.text = selectCount.ToString();
-            RefreshCost(selectCraft);
-        }
-    }
-    private void RemoveCount()
-    {
-        if (selectCount > 1)
-        {
-            selectCount--;
-            SelectCount.text = selectCount.ToString();
-            RefreshCost(selectCraft);
         }
     }
     private void OnCraft()
     {
-        if (selectCraft == null)
+        if (CraftLG.E.SelectCraft == null)
         { 
             CommonFunction.ShowHintBar(2);
             return;
         }
 
-        if (!CanCreate(selectCraft, selectCount))
+        if (!CanCreate(CraftLG.E.SelectCraft, CraftLG.E.SelectCount))
         {
             CommonFunction.ShowHintBar(1);
             return;
@@ -123,17 +92,15 @@ public class CraftUI : UIBase
                 {
                     DataMng.GetItems(rp2);
                     CommonFunction.ShowHintBar(6);
-                    RefreshCost(selectCraft);
+                    RefreshCost();
                 });
-            }, selectCraft, selectCount);
+            }, CraftLG.E.SelectCraft, CraftLG.E.SelectCount);
         }
     }
 
-    public void RefreshCost(Craft config)
+    public void RefreshCost()
     {
-        selectCraft = config;
-
-        if (config == null)
+        if (CraftLG.E.SelectCraft == null)
         {
             for (int i = 0; i < costCells.Length; i++)
             {
@@ -142,14 +109,14 @@ public class CraftUI : UIBase
         }
         else
         {
-            costCells[0].SetInfo(config.Cost1, config.Cost1Count, selectCount);
-            costCells[1].SetInfo(config.Cost2, config.Cost2Count, selectCount);
-            costCells[2].SetInfo(config.Cost3, config.Cost3Count, selectCount);
-            costCells[3].SetInfo(config.Cost4, config.Cost4Count, selectCount);
+            costCells[0].SetInfo(CraftLG.E.SelectCraft.Cost1, CraftLG.E.SelectCraft.Cost1Count, CraftLG.E.SelectCount);
+            costCells[1].SetInfo(CraftLG.E.SelectCraft.Cost2, CraftLG.E.SelectCraft.Cost2Count, CraftLG.E.SelectCount);
+            costCells[2].SetInfo(CraftLG.E.SelectCraft.Cost3, CraftLG.E.SelectCraft.Cost3Count, CraftLG.E.SelectCount);
+            costCells[3].SetInfo(CraftLG.E.SelectCraft.Cost4, CraftLG.E.SelectCraft.Cost4Count, CraftLG.E.SelectCount);
         }
     }
 
-    public bool CanCreate(Craft config, int count)
+    private bool CanCreate(Craft config, int count)
     {
         if (config == null)
             return false;

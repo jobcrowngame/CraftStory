@@ -165,7 +165,7 @@ public class MyShopCell : UIBase
                     CommonFunction.ShowHintBox(null, msg, () =>
                     {
                         UICtl.E.OpenUI<MyShopSelectItemUI>(UIType.MyShopSelectItem);
-                    }, null, "button_2D_008");
+                    }, null, "button_2D_022");
                 }
                 else
                 {

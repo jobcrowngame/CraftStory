@@ -42,7 +42,8 @@ public class CraftItemCell : UIBase
         clickBtn.onClick.AddListener(() => 
         {
             SelectedCraftItem = this;
-            CraftLG.E.UI.RefreshCost(config); 
+            CraftLG.E.SelectCraft = config;
+            CraftLG.E.UI.RefreshCost(); 
         });
     }
 
