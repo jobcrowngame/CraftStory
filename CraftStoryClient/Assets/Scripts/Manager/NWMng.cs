@@ -32,7 +32,7 @@ public class NWMng : MonoBehaviour
     }
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.TestURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.DevelopURL))
         {
             yield return www.SendWebRequest();
 
@@ -75,7 +75,7 @@ public class NWMng : MonoBehaviour
                 {
                     if (string.IsNullOrEmpty(www.downloadHandler.text))
                     {
-                        rp("");
+                        Logger.Error("Bad result [{0}]:{1}", cmd, data.ToString());
                     }
                     else
                     {
@@ -124,7 +124,6 @@ public class NWMng : MonoBehaviour
     public void Login(Action<JsonData> rp, string id, string pw)
     {
         var data = new NWData();
-        data.Add("N");
         data.Add(id);
         data.Add(pw);
 
