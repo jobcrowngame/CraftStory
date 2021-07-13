@@ -23,6 +23,7 @@ public class EmailUI : UIBase
 
         LeftBtn.onClick.AddListener(EmailLG.E.OnClickLeftBtn);
         RightBtn.onClick.AddListener(EmailLG.E.OnClickRightBtn);
+        EmailLG.E.SelectPage = 1;
     }
 
     public override void Open()
