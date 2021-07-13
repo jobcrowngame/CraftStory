@@ -1,7 +1,7 @@
 ﻿
 namespace JsonConfigData
 {
-    public class Map : Base
+    public class Map : ConfigBase
     {
         public string Name { get; set; }
         public int SizeX { get; set; }

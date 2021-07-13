@@ -1,6 +1,6 @@
 ﻿namespace JsonConfigData
 {
-    public class ErrorMsg : Base
+    public class ErrorMsg : ConfigBase
     {
         public string Message { get; set; }
     }

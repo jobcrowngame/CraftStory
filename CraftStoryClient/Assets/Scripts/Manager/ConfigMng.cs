@@ -63,7 +63,7 @@ class ConfigMng : Single<ConfigMng>
         yield return null;
     }
 
-    private void ReadConfig<T>(string path, Dictionary<int, T> dic) where T : Base
+    private void ReadConfig<T>(string path, Dictionary<int, T> dic) where T : ConfigBase
     {
         try
         {

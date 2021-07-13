@@ -1,7 +1,7 @@
 ﻿
 namespace JsonConfigData
 {
-    public class Bonus : Base
+    public class Bonus : ConfigBase
     {
         public int Bonus1 { get; set; }
         public int BonusCount1 { get; set; }

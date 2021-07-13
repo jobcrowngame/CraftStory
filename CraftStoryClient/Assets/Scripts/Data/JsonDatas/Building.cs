@@ -1,7 +1,7 @@
 ﻿
 namespace JsonConfigData
 {
-    public class Building : Base
+    public class Building : ConfigBase
     {
         public int Relation { get; set; }
         public int PosX { get; set; }

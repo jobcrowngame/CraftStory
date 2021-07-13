@@ -1,7 +1,7 @@
 ﻿
 namespace JsonConfigData
 {
-    public class Resource : Base
+    public class Resource : ConfigBase
     {
         public string ResourcePath { get; set; }
         public int Type { get; set; }

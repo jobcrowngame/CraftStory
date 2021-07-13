@@ -1,7 +1,7 @@
 ﻿
 namespace JsonConfigData
 {
-    public class TransferGate : Base
+    public class TransferGate : ConfigBase
     {
         public string ResourcesPath { get; set; }
         public int NextMap { get; set; }

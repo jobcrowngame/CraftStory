@@ -1,7 +1,7 @@
 ﻿
 namespace JsonConfigData
 {
-    public class Block : Base
+    public class Block : ConfigBase
     {
         public int ItemID { get; set; }
         public string Name { get; set; }

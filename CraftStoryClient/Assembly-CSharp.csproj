@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\UI\BraveUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestCreateObj.cs" />
     <Compile Include="Assets\Scripts\Test\DragObj.cs" />
+    <Compile Include="Assets\Scripts\UI\EmailUI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityResources.cs" />
     <Compile Include="Assets\Scripts\Test\RunTest.cs" />
     <Compile Include="Assets\Scripts\UI\BagLG.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Assets\Scripts\UI\PlayDescriptionUI.cs" />
     <Compile Include="Assets\Scripts\UI\HomeUI.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopLG.cs" />
+    <Compile Include="Assets\Scripts\UI\EmailDetailsLG.cs" />
     <Compile Include="Assets\Scripts\Game\Player\BlueprintPreviewCtl.cs" />
     <Compile Include="Assets\Scripts\Manager\ConfigMng.cs" />
     <Compile Include="Assets\Scripts\UI\HomeItemBtn.cs" />
@@ -105,6 +107,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Building.cs" />
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
+    <Compile Include="Assets\Scripts\UI\EmailCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestAtt.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
     <Compile Include="Assets\Scripts\Manager\CryptMng.cs" />
@@ -146,6 +149,7 @@
     <Compile Include="Assets\Scripts\UI\BagSelectItem.cs" />
     <Compile Include="Assets\Scripts\UI\Common\HintBarUI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapCtl.cs" />
+    <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapBlock.cs" />
     <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
     <Compile Include="Assets\Scripts\UI\PlayDescriptionLG.cs" />
@@ -172,7 +176,9 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\ErrorMsg.cs" />
     <Compile Include="Assets\Scripts\Manager\SettingMng.cs" />
     <Compile Include="Assets\Scripts\UI\ShopItemCell.cs" />
+    <Compile Include="Assets\Scripts\UI\EmailLG.cs" />
     <Compile Include="Assets\Scripts\Data\MapData.cs" />
+    <Compile Include="Assets\Scripts\UI\EmailDetailsUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Blueprint.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerButton.cs" />
     <Compile Include="Assets\Scripts\UI\BraveLG.cs" />
@@ -190,13 +196,7 @@
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
-    <Compile Include="Assets\Scripts\UI\EmailUI.cs" />
-    <Compile Include="Assets\Scripts\UI\EmailLG.cs" />
-    <Compile Include="Assets\Scripts\UI\EmailCell.cs" />
-    <Compile Include="Assets\Scripts\UI\EmailDetailsUI.cs" />
-    <Compile Include="Assets\Scripts\UI\EmailDetailsLG.cs" />
-    <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />

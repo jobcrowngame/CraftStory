@@ -2,7 +2,7 @@
 
 namespace JsonConfigData
 {
-    public class Item : Base
+    public class Item : ConfigBase
     {
         public string Name { get; set; }
         public string IconResourcesPath { get; set; }

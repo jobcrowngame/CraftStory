@@ -37,6 +37,7 @@ public class EntityData
         set => pos = value;
     }
     public Resource Config { get => ConfigMng.E.Resource[id]; }
+    public TransferGate TransferGateConfig { get => ConfigMng.E.TransferGate[id]; }
 
     public string ResourcePath
     {

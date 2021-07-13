@@ -90,7 +90,7 @@ public class MapCtl
         if (mData.TransferGate == null || mData.TransferGate.ID == 0)
             return;
 
-        var entity = CommonFunction.Instantiate<EntityTransferGate>(mData.TransferGate.Config.ResourcePath, resourceParent, mData.TransferGate.Pos);
+        var entity = CommonFunction.Instantiate<EntityTransferGate>(mData.TransferGate.TransferGateConfig.ResourcesPath, resourceParent, mData.TransferGate.Pos);
         if (entity != null)
         {
             entity.Init(mData.TransferGate);
