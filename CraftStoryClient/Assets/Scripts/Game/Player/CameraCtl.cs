@@ -26,6 +26,7 @@ public class CameraCtl : MonoBehaviour
     private float cameraPosMaxZ = 0;
 
     private float curMaxDistance = SettingMng.E.CameraDistanseMax;
+    private float curMaxDistance2 = SettingMng.E.CameraDistanseMax;
 
     public float GetEulerAngleY { get => cameraRotateY.transform.localEulerAngles.y; }
 
@@ -87,11 +88,18 @@ public class CameraCtl : MonoBehaviour
 
         if (lookUpAngle > SettingMng.E.LookUpAngleMin && lookUpAngle < 360)
         {
-            float v = (360 - lookUpAngle) / (360 - SettingMng.E.LookUpAngleMin);
-            v = Mathf.Sqrt(v);
+            float curV = 360 - lookUpAngle;
+            float offset = curV > 360 - SettingMng.E.LookUpAngleMin - 10 ? 0 : 10;
+            float maxV = 360 - SettingMng.E.LookUpAngleMin - offset;
+            float v = Mathf.Sqrt(curV / maxV);
             v *= curMaxDistance;
             CameraPosZ = curMaxDistance - v;
+            curMaxDistance2 = CameraPosZ;
             RefreshCameraPos();
+        }
+        else
+        {
+            curMaxDistance2 = SettingMng.E.CameraDistanseMax;
         }
 
         cameraRotateX.transform.Rotate(new Vector3(-mY, 0, 0));
@@ -113,6 +121,11 @@ public class CameraCtl : MonoBehaviour
         if (CameraPosZ >= cameraPosMaxZ)
         {
             CameraPosZ = cameraPosMaxZ;
+        }
+
+        if (CameraPosZ < curMaxDistance2)
+        {
+            CameraPosZ = curMaxDistance2;
         }
 
         curMaxDistance = CameraPosZ;
