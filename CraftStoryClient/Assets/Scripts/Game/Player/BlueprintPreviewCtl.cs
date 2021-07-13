@@ -51,7 +51,7 @@ public class BlueprintPreviewCtl : MonoBehaviour
     }
     public void RefreshCameraPos()
     {
-        BlueprintCamera.localPosition = new Vector3(0, 0, CameraPosZ);
+        BlueprintCamera.localPosition = new Vector3(0, 5, CameraPosZ);
     }
 
     public void CameraRotate(float mx, float my)
