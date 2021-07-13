@@ -75,7 +75,8 @@ public class NWMng : MonoBehaviour
                 {
                     if (string.IsNullOrEmpty(www.downloadHandler.text))
                     {
-                        Logger.Error("Bad result [{0}]:{1}", cmd, data.ToString());
+                        rp("");
+                        //Logger.Error("Null result [{0}]:{1}", cmd, data.ToString());
                     }
                     else
                     {
