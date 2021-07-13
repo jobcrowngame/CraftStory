@@ -104,7 +104,8 @@ public class MenuUI : UIBase
         });
         PlayDescriptionBtn2.onClick.AddListener(() =>
         {
-            string msg = "詳しい遊び方を紹介している、公式のホームページに遷移します。";
+            string msg = "詳しい遊び方を紹介している、" +
+"公式のホームページに遷移します。";
 
             CommonFunction.ShowHintBox(msg, () =>
             {
