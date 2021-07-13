@@ -47,14 +47,6 @@ public class HomeUI : UIBase
         RefreshItemBtns();
     }
 
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.F6))
-        {
-            PlayerCtl.E.CameraCtl.ChangeCameraPos(-1);
-        }
-    }
-
     public override void Init()
     {
         base.Init();

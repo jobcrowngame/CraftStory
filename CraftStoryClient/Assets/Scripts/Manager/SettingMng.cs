@@ -24,7 +24,7 @@ public class SettingMng : Single<SettingMng>
     private float cameraPullSpeed = 10f;
 
     public float CameraPushSpeed { get => cameraPushSpeed; }
-    private float cameraPushSpeed = 20f;
+    private float cameraPushSpeed = 50f;
 
     public int MoveBoundaryOffset { get => moveBoundaryOffset; }
     private int moveBoundaryOffset = 3;

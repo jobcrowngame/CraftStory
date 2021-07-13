@@ -25,6 +25,8 @@ public class CameraCtl : MonoBehaviour
     private float cameraPosMinZ = SettingMng.E.CameraDistanseMax;
     private float cameraPosMaxZ = 0;
 
+    private float curMaxDistance = SettingMng.E.CameraDistanseMax;
+
     public float GetEulerAngleY { get => cameraRotateY.transform.localEulerAngles.y; }
 
     public void Init()
@@ -41,16 +43,21 @@ public class CameraCtl : MonoBehaviour
 
     void Update()
     {
-        if (IsBlock())
-        {
-            CameraPull(false);
-        }
+        //if (IsBlock())
+        //{
+        //    CameraPull(false);
+        //}
 
         //if (Time.time - triggerExitTime > 3 && transform.localPosition.z > SettingMng.E.CameraDistanseMax)
         //    CameraPull(true);
 
         if (PlayerCtl.E.PlayerEntity != null)
+        {
             PlayerCtl.E.PlayerEntity.IsActive = transform.localPosition.z < SettingMng.E.EnactiveCharacterModelDistanse;
+            PlayerCtl.E.PlayerEntity.IsModelActive(transform.localPosition.z < SettingMng.E.EnactiveCharacterModelDistanse);
+        }
+
+        
     }
 
     public void OnTriggerStay(Collider other)
@@ -80,27 +87,21 @@ public class CameraCtl : MonoBehaviour
 
         if (lookUpAngle > SettingMng.E.LookUpAngleMin && lookUpAngle < 360)
         {
-            //Logger.Log(lookUpAngle);
-            CameraPull(false);
+            float v = (360 - lookUpAngle) / (360 - SettingMng.E.LookUpAngleMin);
+            v = Mathf.Sqrt(v);
+            v *= curMaxDistance;
+            CameraPosZ = curMaxDistance - v;
+            RefreshCameraPos();
         }
 
         cameraRotateX.transform.Rotate(new Vector3(-mY, 0, 0));
         cameraRotateY.transform.Rotate(new Vector3(0, mX, 0));
     }
-    private void CameraPull(bool b)
-    {
-        //if (!b) triggerExitTime = Time.time;
 
-        //Vector3 curPos = transform.localPosition;
-        //Vector3 targetPos = b ? new Vector3(0, 0, SettingMng.E.CameraDistanseMax) : Vector3.zero;
-        //float step = b ? SettingMng.E.CameraPullSpeed : ;
-        transform.localPosition = Vector3.MoveTowards(transform.localPosition, Vector3.zero, SettingMng.E.CameraPushSpeed * Time.deltaTime);
-        CameraPosZ = transform.localPosition.z;
-    }
     public void ChangeCameraPos(float v)
     {
-        if (IsBlock())
-            return;
+        //if (IsBlock())
+        //    return;
 
         CameraPosZ += v * 0.3f;
 
@@ -114,6 +115,7 @@ public class CameraCtl : MonoBehaviour
             CameraPosZ = cameraPosMaxZ;
         }
 
+        curMaxDistance = CameraPosZ;
         RefreshCameraPos();
     }
     public void RefreshCameraPos()

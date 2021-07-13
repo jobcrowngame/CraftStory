@@ -104,4 +104,9 @@ public class PlayerEntity : CharacterEntity
 
         return false;
     }
+
+    public void IsModelActive(bool b)
+    {
+        controller.radius = b ? 0.45f : 0.01f;
+    }
 }
