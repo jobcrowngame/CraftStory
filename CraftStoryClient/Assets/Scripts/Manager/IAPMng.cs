@@ -6,12 +6,8 @@ public class IAPMng : Single<IAPMng>, IStoreListener
     private IStoreController controller;
     private IExtensionProvider extensions;
 
-    private IAPStore iapStore;
-
     public void Init()
     {
-        iapStore = new IAPStore();
-
         Logger.Log("初期化開始");
 
         try
