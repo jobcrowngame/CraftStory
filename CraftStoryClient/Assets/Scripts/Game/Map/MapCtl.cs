@@ -248,6 +248,7 @@ public class MapCtl
 
         return mapData.Map[pos.x, pos.y, pos.z] == 0 
             || mapData.Map[pos.x, pos.y, pos.z] == (int)EntityType.Obstacle
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z]].Type == (int)EntityType.Block2
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z]].Type == (int)EntityType.Craft
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z]].Type == (int)EntityType.Kamado
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z]].Type == (int)EntityType.Resources
