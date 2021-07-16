@@ -361,6 +361,9 @@ public class NWMng : MonoBehaviour
     }
     public void SaveHomeData(Action<JsonData> rp, string homedata)
     {
+        if (DataMng.E.UserData == null)
+            return;
+
         var data = new NWData();
         data.Add(DataMng.E.token);
         data.Add(DataMng.E.UserData.Account);

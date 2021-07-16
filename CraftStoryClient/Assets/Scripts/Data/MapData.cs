@@ -213,7 +213,7 @@ public class MapData
                 for (int z = 0; z < 100; z++)
                 {
                     data = maps[index++];
-                    map[x, y, z] = int.Parse(data);
+                    map[x, y, z] = data == "n" ? 0 : int.Parse(data);
                 }
             }
         }
