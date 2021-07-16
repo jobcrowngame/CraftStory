@@ -93,10 +93,13 @@ public class BlueprintPreviewCtl : MonoBehaviour
     {
         CommonFunction.ClearCell(Parent);
 
-        foreach (var item in data.BlockList)
+        Debug.Log(data.ToJosn());
+
+        foreach (var item in data.blocks)
         {
-            item.Pos = new Vector3Int(item.Pos.x, (int)transform.position.y + item.Pos.y, item.Pos.z);
-            item.ActiveBlock(Parent);
+            var config = ConfigMng.E.Entity[item.id];
+            var entity = CommonFunction.Instantiate<EntityBase>(config.Resources, Parent, Vector3Int.zero);
+            entity.transform.localPosition = item.GetPos();
         }
     }
 }

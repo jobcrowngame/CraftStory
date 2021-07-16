@@ -1,6 +1,6 @@
 ﻿namespace JsonConfigData
 {
-    public class Shop : Base
+    public class Shop : ConfigBase
     {
         public string IconResources { get; set; }
         public int Type { get; set; }

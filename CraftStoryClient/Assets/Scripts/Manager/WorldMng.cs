@@ -51,7 +51,7 @@ public class WorldMng : MonoBehaviour
         }
         else
         {
-            MapCtl.CreateMap(DataMng.E.MapData.NextMapID);
+            MapCtl.CreateMap(NowLoadingLG.E.NextMapID);
         }
 
         CharacterCtl.CreateCharacter();
@@ -60,7 +60,6 @@ public class WorldMng : MonoBehaviour
 
     public void OnQuit()
     {
-        if (MapCtl != null) MapCtl.OnQuit();
         if (CharacterCtl != null) CharacterCtl.OnQuit();
     }
 }

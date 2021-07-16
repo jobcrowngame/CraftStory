@@ -6,100 +6,120 @@ using UnityEngine;
 [Serializable]
 public class BlueprintData
 {
-    public List<MapBlockData> BlockList 
+    public int sizeX { get; set; }
+    public int sizeZ { get; set; }
+
+    public List<BlueprintEntityData> blocks 
     { 
         get
         {
-            if (blocks == null)
-                blocks = new List<MapBlockData>();
+            if (mblocks == null)
+                mblocks = new List<BlueprintEntityData>();
             
-            return blocks; 
+            return mblocks; 
         } 
-        set => blocks = value;
+        set => mblocks = value;
     }
-    private List<MapBlockData> blocks;
-
-    private int sizeX { get; set; }
-    private int sizeZ { get; set; }
+    private List<BlueprintEntityData> mblocks;
 
     [NonSerialized]
     private bool isDuplicate;
     public bool IsDuplicate { get => isDuplicate; set => isDuplicate = value; }
 
+    bool isOld = false;
+
+    public BlueprintData() { }
+    public BlueprintData(string json, bool isOld)
+    {
+        this.isOld = isOld;
+
+        var obj = JsonMapper.ToObject<BlueprintData>(json);
+        sizeX = obj.sizeX;
+        sizeZ = obj.sizeZ;
+        mblocks = obj.blocks;
+
+        foreach (var item in mblocks)
+        {
+            item.id -= 1000;
+        }
+    }
     public BlueprintData(string json)
     {
-        BlueprintJsonData data = ToData(json);
-        BlockList = new List<MapBlockData>();
-        IsDuplicate = false;
-
-        for (int i = 0; i < data.blocks.Count; i++)
+        var obj = JsonMapper.ToObject<BlueprintData>(json);
+        sizeX = obj.sizeX;
+        sizeZ = obj.sizeZ;
+        mblocks = obj.blocks;
+    }
+    public BlueprintData(List<EntityBase> entitys, Vector2Int size, Vector3Int centerPos)
+    {
+        sizeX = size.x;
+        sizeZ = size.y;
+        foreach (var entity in entitys)
         {
-            BlockList.Add(new MapBlockData()
+            blocks.Add(new BlueprintEntityData()
             {
-                ID = data.blocks[i].id,
-                Pos = new Vector3Int(data.blocks[i].posX, data.blocks[i].posY, data.blocks[i].posZ)
+                id = entity.EntityID,
+                posX = entity.Pos.x - centerPos.x,
+                posY = entity.Pos.y - centerPos.y,
+                posZ = entity.Pos.z - centerPos.z
             });
-        }
-
-        sizeX = data.sizeX;
-        sizeZ = data.sizeZ;
-    }
-    public BlueprintData(List<MapBlockData> blocks, Vector2Int size)
-    {
-        BlockList = blocks;
-        Size = size;
-    }
-
-    public Vector2Int Size
-    {
-        get => new Vector2Int(sizeX, sizeZ);
-        set
-        {
-            sizeX = value.x;
-            sizeZ = value.y;
         }
     }
 
     public string ToJosn()
     {
-        BlueprintJsonData data = new BlueprintJsonData();
-        data.sizeX = sizeX;
-        data.sizeZ = sizeZ;
-        data.blocks = new List<BlueprintBlockData>();
+        return JsonMapper.ToJson(this);
+    }
 
-        for (int i = 0; i < BlockList.Count; i++)
+    /// <summary>
+    /// 有効範囲チェック
+    /// </summary>
+    public bool CheckPos(Vector3Int buildPos)
+    {
+        foreach (var item in mblocks)
         {
-            data.blocks.Add(new BlueprintBlockData()
+            var newPos = CommonFunction.Vector3Sum(item.GetPos(), buildPos);
+            if (MapCtl.IsOutRange(DataMng.E.MapData, newPos))
             {
-                id = BlockList[i].ID,
-                posX = BlockList[i].Pos.x,
-                posY = BlockList[i].Pos.y,
-                posZ = BlockList[i].Pos.z
-            });
+                CommonFunction.ShowHintBar(8);
+                return false;
+            }
         }
 
-        return JsonMapper.ToJson(data);
-    }
-    public BlueprintJsonData ToData(string json)
-    {
-        if (string.IsNullOrEmpty(json))
-            return new BlueprintJsonData();
-        
-        return JsonMapper.ToObject<BlueprintJsonData>(json);
+        return true;
     }
 
-    public struct BlueprintJsonData
+    public class BlueprintEntityData
     {
-        public int sizeX;
-        public int sizeZ;
-        public List<BlueprintBlockData> blocks;
-    }
+        public int id { get; set; }
+        public int posX { get; set; }
+        public int posY { get; set; }
+        public int posZ { get; set; }
 
-    public struct BlueprintBlockData
-    {
-        public int id;
-        public int posX;
-        public int posY;
-        public int posZ;
+        public Vector3Int GetPos()
+        {
+            return new Vector3Int(posX, posY, posZ);
+        }
+        public void SetPos(Vector3Int Pos)
+        {
+            posX = Pos.x;
+            posY = Pos.y;
+            posZ = Pos.z;
+        }
     }
+}
+
+public struct BlueprintDataOld
+{
+    public int sizeX;
+    public int sizeZ;
+    public List<BlueprintDataCellOld> blocks;
+}
+
+public struct BlueprintDataCellOld
+{
+    public int id;
+    public int posX;
+    public int posY;
+    public int posZ;
 }

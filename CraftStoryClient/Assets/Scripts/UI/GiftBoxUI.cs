@@ -25,7 +25,7 @@ public class GiftBoxUI : UIBase
             Close();
             AdventureCtl.E.Clear();
             PlayerCtl.E.Lock = false;
-            CommonFunction.GoToNextScene();
+            CommonFunction.GoToNextScene(DataMng.E.MapData.Config.TransferGateID);
         });
 
         itemGridRoot = FindChiled("Content");

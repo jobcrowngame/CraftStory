@@ -23,12 +23,7 @@ public class DataMng : Single<DataMng>
 
     public MapData MapData 
     {
-        get {
-            if (mData == null)
-                mData = new MapData();
-
-            return mData;
-        }
+        get => mData;
         set => mData = value;
     }
     private MapData mData;
@@ -88,24 +83,20 @@ public class DataMng : Single<DataMng>
             SaveLoadFile.E.Save(uData, PublicPar.SaveRootPath + UserDataName);
 
         if (HomeData != null)
-        {
-            HomeData.MapDataToStringData();
-            HomeData.EntityDataToStringData();
-            SaveLoadFile.E.Save(HomeData, PublicPar.SaveRootPath + MapDataName);
-        }
+            NWMng.E.SaveHomeData(null, HomeData.ToStringData());
     }
 
     public bool Load()
     {
         uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + UserDataName);
 
-        HomeData = (MapData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + MapDataName);
-        if (HomeData != null) HomeData.ParseStringData();
+        string HomeDataStr = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + MapDataName);
+        if (HomeDataStr != null) HomeData.ParseStringData(HomeDataStr);
 
         return true;
     }
 
-#region Item
+    #region Item
 
     public ItemData GetItemByGuid(int guid)
     {
@@ -153,17 +144,6 @@ public class DataMng : Single<DataMng>
         return count;
     }
 
-    public void AddItem(int itemID, int count = 1, Action action = null)
-    {
-        NWMng.E.AddItem((rp)=> 
-        {
-            NWMng.E.GetItemList((rp2) =>
-            {
-                GetItems(rp2);
-                if (action != null) action();
-            });
-        }, itemID, count);
-    }
     public void AddItems(Dictionary<int,int> items, Action action = null)
     {
         if (items.Count <= 0)
@@ -272,9 +252,10 @@ public class DataMng : Single<DataMng>
         try
         {
             if (string.IsNullOrEmpty(jsonData.ToString()))
-                return;
+                E.Items.Clear();
+            else
+                E.Items = JsonMapper.ToObject<List<ItemData>>(jsonData.ToJson());
 
-            E.Items = JsonMapper.ToObject<List<ItemData>>(jsonData.ToJson());
             if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
         }
         catch (Exception e)

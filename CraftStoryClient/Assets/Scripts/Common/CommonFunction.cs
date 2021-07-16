@@ -121,19 +121,22 @@ public class CommonFunction
         }
     }
 
-    public static void GoToNextScene()
+    public static void GoToNextScene(int TransferGateID)
     {
         UICtl.E.Clear();
         PlayerCtl.E.SelectItem = null;
 
+        NowLoadingLG.E.NextMapID = ConfigMng.E.TransferGate[TransferGateID].NextMap;
+        NowLoadingLG.E.NextSceneName = ConfigMng.E.TransferGate[TransferGateID].NextMapSceneName;
         SceneManager.LoadSceneAsync("NowLoading");
-        Logger.Warning("GoToNextScene TransferGate ID " + DataMng.E.MapData.TransferGate.ID);
     }
     public static void GoToHome()
     {
         UICtl.E.Clear();
 
-        DataMng.E.MapData.TransferGate = new EntityData(100, ItemType.TransferGate);
+        NowLoadingLG.E.NextMapID = 100;
+        NowLoadingLG.E.NextSceneName = "Home";
+        if (DataMng.E.HomeData != null) DataMng.E.HomeData.ClearMapObj();
         SceneManager.LoadSceneAsync("NowLoading");
     }
 

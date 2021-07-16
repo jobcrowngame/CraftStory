@@ -5,201 +5,195 @@ using UnityEngine;
 using System.Collections.Generic;
 using JsonConfigData;
 
-[Serializable]
 public class MapData
 {
-    private int mapID;
+    private int id;
 
-    private int sizeX { get; set; }
-    private int sizeY { get; set; }
-    private int sizeZ { get; set; }
-    private string strMap { get; set; }
-    private string strEntity { get; set; }
+    public Vector3Int MapSize { get => new Vector3Int(ConfigMng.E.Map[id].SizeX, ConfigMng.E.Map[id].SizeY, ConfigMng.E.Map[id].SizeZ); }
 
-    public bool IsHome { get => mapID == 100; }
-    public Map Config { get => ConfigMng.E.Map[mapID]; }
-    public string NextSceneName { get; set; }
-    public int NextMapID { get; set; }
-    public Vector3Int MapSize { get => new Vector3Int(sizeX, sizeY, sizeZ); }
+    public Map Config { get => ConfigMng.E.Map[id]; }
+    public bool IsHome { get => id == 100; }
 
-    public MapBlockData[,,] Map { get => map; }
-    [NonSerialized]
-    private MapBlockData[,,] map;
+    public int[,,] Map { get => map; }
+    private int[,,] map;
 
-    public EntityData TransferGate
+    Dictionary<Vector3Int, EntityBase> entityDic = new Dictionary<Vector3Int, EntityBase>();
+
+    public MapData(int mapID)
     {
-        get => transferGate;
-        set 
-        {
-            transferGate = value;
-
-            if (transferGate.ID != 0)
-            {
-                NextMapID = ConfigMng.E.TransferGate[TransferGate.ID].NextMap;
-                NextSceneName = ConfigMng.E.TransferGate[TransferGate.ID].NextMapSceneName;
-            }
-            else
-            {
-                NextMapID = 100;
-                NextSceneName = "Home";
-            }
-        }
-    }
-    [NonSerialized]
-    private EntityData transferGate;
-
-    public MapData() { }
-    public MapData(int mapID, Vector3Int size)
-    {
-        this.mapID = mapID;
-
-        sizeX = size.x;
-        sizeY = size.y;
-        sizeZ = size.z;
-
-        map = new MapBlockData[sizeX, sizeY, sizeZ];
+        id = mapID;
+        map = new int[MapSize.x, MapSize.y, MapSize.z];
     }
 
-    public List<EntityData> Resources 
+    public bool IsNull(Vector3Int site)
     {
-        get
-        {
-            if (entityList == null)
-                entityList = new List<EntityData>();
-            
-            return entityList;
-        }
+        return map[site.x, site.y, site.z] == 0;
     }
-    [NonSerialized]
-    private List<EntityData> entityList;
-
-    public MapBlockData GetMap(Vector3Int pos)
+    public EntityBase GetEntity(Vector3Int site)
     {
-        return map[pos.x, pos.y, pos.z];
+        EntityBase entity = null;
+        entityDic.TryGetValue(site, out entity);
+        return entity;
     }
 
-    public void AddBlock(MapBlockData data)
+    public void Remove(Vector3Int pos)
     {
         try
         {
-            if (data.Pos.x > sizeX || data.Pos.y > sizeY || data.Pos.z > sizeZ 
-                || data.Pos.x < 0 || data.Pos.y < 0 || data.Pos.z < 0)
-            {
-                Logger.Error("add mapdata file." + data.Pos);
-                return;
-            }
-
-            map[data.Pos.x, data.Pos.y, data.Pos.z] = data.Copy(); ;
-        }
-        catch (Exception ex)
-        {
-            Logger.Error("Add blockData file." + data.Pos);
-            Logger.Error(ex.Message);
-            Logger.Error(ex.StackTrace);
-        }
-        
-    }
-    public void RemoveBlock(Vector3 pos)
-    {
-        try
-        {
-            if (pos.x > sizeX || pos.y > sizeY || pos.z > sizeZ)
+            if (pos.x > MapSize.x || pos.y > MapSize.y || pos.z > MapSize.z)
             {
                 Logger.Error("Remove mapdata file." + pos);
                 return;
             }
 
-            map[(int)pos.x, (int)pos.y, (int)pos.z] = null;
+            map[pos.x, pos.y, pos.z] = 0;
+            if (entityDic.ContainsKey(pos))
+            {
+                GameObject.Destroy(entityDic[pos].gameObject);
+                entityDic.Remove(pos);
+            }
+            else
+            {
+                Logger.Warning("Remove entity Failure");
+            }
         }
         catch (Exception ex)
         {
-            Logger.Error("Remove blockData file." + pos);
-            Logger.Error(ex.Message);
-            Logger.Error(ex.StackTrace);
+            Logger.Error(ex);
         }
     }
-
-    public void AddEntity(EntityData entity)
+    public void DeleteObj(Vector3Int pos)
     {
-        Resources.Add(entity);
+        if (entityDic.ContainsKey(pos))
+        {
+            GameObject.Destroy(entityDic[pos].gameObject);
+            entityDic[pos] = null;
+        }
+        else
+        {
+            Logger.Warning("Remove entity Failure");
+        }
     }
-    public void RemoveEntity(EntityData entity)
+    public EntityBase Add(int entityId, Vector3Int pos)
     {
-        Resources.Remove(entity);
+        try
+        {
+            if (entityId < 1)
+                return null;
+
+            if (entityDic.ContainsKey(pos))
+            {
+                return entityDic[pos];
+            }
+
+            var config = ConfigMng.E.Entity[entityId];
+            EntityBase entity = null;
+            switch ((EntityType)config.Type)
+            {
+                case EntityType.Obstacle:
+                    break;
+
+                case EntityType.Block:
+                case EntityType.Block2:
+                    entity = CommonFunction.Instantiate<EntityBlock>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
+                    break;
+
+                case EntityType.Resources:
+                    entity = CommonFunction.Instantiate<EntityResources>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
+                    break;
+
+                case EntityType.Craft:
+                case EntityType.Kamado:
+                case EntityType.Dor:
+                    entity = CommonFunction.Instantiate<EntityBuilding>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
+                    break;
+
+                case EntityType.TransferGate:
+                    entity = CommonFunction.Instantiate<EntityTransferGate>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
+                    break;
+                default:
+                    break;
+            }
+
+            entity.EntityID = entityId;
+            entity.Pos = pos;
+            entityDic[pos] = entity;
+            Map[pos.x, pos.y, pos.z] = entityId;
+
+            //for (int x = 0; x < config.ScaleX; x++)
+            //{
+            //    for (int z = 0; z < config.ScaleZ; z++)
+            //    {
+            //        for (int y = 0; y < config.ScaleY; y++)
+            //        {
+            //            if (x == 0 && y == 0 && z == 0)
+            //                continue;
+                        
+            //            map[pos.x + x, pos.y + y, pos.z + z] = -1;
+            //        }
+            //    }
+            //}
+
+            return entity;
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex);
+            return null;
+        }
+    }
+    public EntityBase Add(Vector3Int pos)
+    {
+        return Add(map[pos.x, pos.y, pos.z], pos);
+    }
+    public void ClearMapObj()
+    {
+        entityDic.Clear();
     }
 
-    public void MapDataToStringData()
+    public string ToStringData()
     {
         StringBuilder sb = new StringBuilder();
 
-        for (int x = 0; x < sizeX; x++)
+        for (int x = 0; x < MapSize.x; x++)
         {
-            for (int y = 0; y < sizeY; y++)
+            for (int y = 0; y < MapSize.y; y++)
             {
-                for (int z = 0; z < sizeZ; z++)
+                for (int z = 0; z < MapSize.z; z++)
                 {
-                    if (map[x, y, z] == null)
-
-                        sb.Append("n,");
-                    else
-                        sb.Append(map[x, y, z].ToStringData() + ",");
+                    sb.Append(map[x, y, z] + ",");
                 }
             }
         }
+        sb.Append(string.Format("{0}-{1}-{2}", MapSize.x, MapSize.y, MapSize.z));
 
-        strMap = sb.ToString();
+
+        var strMap = sb.ToString();
         Logger.Log("Map");
         Logger.Log(strMap);
+        return strMap;
     }
-    public void EntityDataToStringData()
+    public void ParseStringData(string strMap)
     {
-        StringBuilder sb = new StringBuilder();
-
-        if(TransferGate != null) sb.Append(TransferGate.ToStringData());
-
-        for (int i = 0; i < Resources.Count; i++)
-        {
-            sb.Append("," + Resources[i].ToStringData());
-        }
-
-        strEntity = sb.ToString();
-    }
-
-    public void ParseStringData()
-    {
-        map = new MapBlockData[sizeX, sizeY, sizeZ];
-
-        string[] blocks = strMap.Split(',');
+        string[] entitys = strMap.Split(',');
         string data;
         int index = 0;
 
-        for (int x = 0; x < sizeX; x++)
-        {
-            for (int y = 0; y < sizeY; y++)
-            {
-                for (int z = 0; z < sizeZ; z++)
-                {
-                    if (x == sizeX - 1 && y == sizeY - 1 && z == sizeZ - 1)
-                        break;
+        string[] sizeStr = entitys[entitys.Length - 1].Split('-');
+        Vector3Int mapSize = new Vector3Int(int.Parse(sizeStr[0]), int.Parse(sizeStr[1]), int.Parse(sizeStr[2]));
 
-                    data = blocks[index++];
-                    map[x,y,z] = data == "n" 
-                        ? null 
-                        : new MapBlockData(data, new Vector3Int(x,y,z));
+        //map = new EntityBase[mapSize.x, mapSize.y, mapSize.z];
+
+        for (int x = 0; x < mapSize.x; x++)
+        {
+            for (int y = 0; y < mapSize.y; y++)
+            {
+                for (int z = 0; z < mapSize.z; z++)
+                {
+                    data = entitys[index++];
+                    map[x, y, z] = int.Parse(data);
                 }
             }
         }
-
-        string[] entitys = strEntity.Split(',');
-        TransferGate = new EntityData(entitys[0]);
-        for (int i = 1; i < entitys.Length; i++)
-        {
-            Resources.Add(new EntityData(entitys[i]));
-        }
-    }
-
-    public void AddResources(EntityData resourceData)
-    {
-        Resources.Add(resourceData);
     }
 }

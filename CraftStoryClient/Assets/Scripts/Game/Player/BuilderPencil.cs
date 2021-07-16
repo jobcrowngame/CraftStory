@@ -42,6 +42,8 @@ public class BuilderPencil
         var startPos = startNotation.transform.position;
         var endPos = endNotation.transform.position;
 
+        var centPos = new Vector3((startPos.x + endPos.x) / 2, startPos.y, (startPos.z + endPos.z) / 2);
+
         int minX, maxX, minZ, maxZ;
         if (startPos.x >= endPos.x)
         {
@@ -70,25 +72,23 @@ public class BuilderPencil
 
         Logger.Log("s:{0}, n:{1}",startPos, endPos);
 
-        List<MapBlockData> blocks = new List<MapBlockData>();
+        List<EntityBase> entitys = new List<EntityBase>();
         for (int y = (int)startPos.y; y < DataMng.E.MapData.MapSize.y - startPos.y; y++)
         {
             for (int x = minX; x < maxX; x++)
             {
                 for (int z = minZ; z < maxZ; z++)
                 {
-                    if (DataMng.E.MapData.Map[x, y, z] == null)
+                    if (DataMng.E.MapData.Map[x, y, z] < 1)
                         continue;
 
-                    var block = DataMng.E.MapData.Map[x, y, z].Copy();
-                    block.Pos = new Vector3Int(x - minX - centerX, y - (int)startPos.y, z - minZ - centerZ);
-                    block.ClearBlock();
-                    blocks.Add(block);
+                    var entity = DataMng.E.MapData.GetEntity(new Vector3Int(x, y, z));
+                    if(entity != null) entitys.Add(entity);
                 }
             }
         }
 
-        var blueprintData = new BlueprintData(blocks, new Vector2Int(maxX - minX, maxZ - minZ));
+        var blueprintData = new BlueprintData(entitys, new Vector2Int(maxX - minX, maxZ - minZ), Vector3Int.CeilToInt(centPos));
 
         var ui = UICtl.E.OpenUI<BlueprintReNameUI>(UIType.BlueprintReName);
         ui.SetMapData(blueprintData.ToJosn());
@@ -110,31 +110,24 @@ public class BuilderPencil
     {
         Logger.Log("UserBlueprint");
 
-        if (selectBlueprintData == null)
-            selectBlueprintData = new BlueprintData(data);
+        selectBlueprintData = new BlueprintData(data);
 
         WorldMng.E.MapCtl.DeleteBuilderPencil();
         ClearSelectBlueprintDataBlock();
         buildPos = startPos;
         selectBlueprintData.IsDuplicate = false;
 
-        // チェックPos
-        foreach (var item in selectBlueprintData.BlockList)
+        if (!selectBlueprintData.CheckPos(startPos))
         {
-            var newPos = CommonFunction.Vector3Sum(item.Pos, buildPos);
-            if (MapCtl.IsOutRange(DataMng.E.MapData, newPos))
-            {
-                CommonFunction.ShowHintBar(8);
-                CancelUserBlueprint();
-                return;
-            }
+            CancelUserBlueprint();
+            return;
         }
 
         // 半透明ブロックを作る
-        WorldMng.E.MapCtl.CreateTransparentBlocks(selectBlueprintData, buildPos);
+        WorldMng.E.MapCtl.InstantiateTransparenEntitys(selectBlueprintData, buildPos);
 
         // コストブロックを設定
-        HomeLG.E.UI.AddBlueprintCostItems(selectBlueprintData.BlockList);
+        HomeLG.E.UI.AddBlueprintCostItems(selectBlueprintData);
 
         var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
         if (homeUI != null) homeUI.ShowBlueprintBtn();
@@ -157,22 +150,22 @@ public class BuilderPencil
         ClearSelectBlueprintDataBlock();
         selectBlueprintData.IsDuplicate = false;
 
-        for (int i = 0; i < selectBlueprintData.BlockList.Count; i++)
+        for (int i = 0; i < selectBlueprintData.blocks.Count; i++)
         {
-            var work = selectBlueprintData.BlockList[i];
-            work.Pos = new Vector3Int(work.Pos.z, work.Pos.y, work.Pos.x);
+            var work = selectBlueprintData.blocks[i];
+            work.SetPos(new Vector3Int(work.GetPos().z, work.GetPos().y, work.GetPos().x));
         }
 
-        for (int i = 0; i < selectBlueprintData.BlockList.Count; i++)
+        for (int i = 0; i < selectBlueprintData.blocks.Count; i++)
         {
-            var work = selectBlueprintData.BlockList[i];
-            work.Pos = new Vector3Int(work.Pos.x, work.Pos.y, -work.Pos.z);
+            var work = selectBlueprintData.blocks[i];
+            work.SetPos(new Vector3Int(work.GetPos().x, work.GetPos().y, -work.GetPos().z));
         }
 
         // チェックPos
-        foreach (var item in selectBlueprintData.BlockList)
+        foreach (var item in selectBlueprintData.blocks)
         {
-            var newPos = CommonFunction.Vector3Sum(item.Pos, buildPos);
+            var newPos = CommonFunction.Vector3Sum(item.GetPos(), buildPos);
             if (MapCtl.IsOutRange(DataMng.E.MapData, newPos))
             {
                 CommonFunction.ShowHintBar(8);
@@ -181,7 +174,7 @@ public class BuilderPencil
             }
         }
 
-        WorldMng.E.MapCtl.CreateTransparentBlocks(selectBlueprintData, buildPos);
+        WorldMng.E.MapCtl.InstantiateTransparenEntitys(selectBlueprintData, buildPos);
     }
     public void BuildBlueprint()
     {
@@ -191,15 +184,16 @@ public class BuilderPencil
         {
             Dictionary<int, int> consumableItems = new Dictionary<int, int>();
 
-            foreach (MapBlockData item in selectBlueprintData.BlockList)
+            foreach (var entity in selectBlueprintData.blocks)
             {
-                if (consumableItems.ContainsKey(item.ItemID))
+                int itemId = ConfigMng.E.Entity[entity.id].ItemID;
+                if (consumableItems.ContainsKey(itemId))
                 {
-                    consumableItems[item.ItemID]++;
+                    consumableItems[itemId]++;
                 }
                 else
                 {
-                    consumableItems[item.ItemID] = 1;
+                    consumableItems[itemId] = 1;
                 }
             }
 
@@ -211,7 +205,7 @@ public class BuilderPencil
             }
 
             // ブロックを作る
-            WorldMng.E.MapCtl.CreateBlocks(selectBlueprintData, buildPos);
+            WorldMng.E.MapCtl.InstantiateEntitys(selectBlueprintData, buildPos);
 
             // 設計図を消耗
             PlayerCtl.E.ConsumableSelectItem();
@@ -295,9 +289,9 @@ public class BuilderPencil
         if (selectBlueprintData == null)
             return;
         
-        foreach (var item in selectBlueprintData.BlockList)
-        {
-            item.ClearBlock();
-        }
+        //foreach (var item in selectBlueprintData.EntityList)
+        //{
+        //    item.ClearObj();
+        //}
     }
 }

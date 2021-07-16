@@ -1,7 +1,7 @@
 ﻿
 namespace JsonConfigData
 {
-    public class Mountain : Base
+    public class Mountain : ConfigBase
     {
         public int StartPosX { get; set; }
         public int StartPosY { get; set; }

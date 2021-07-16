@@ -1,7 +1,7 @@
 ﻿
 namespace JsonConfigData
 {
-    public class Craft : Base
+    public class Craft : ConfigBase
     {
         public int ItemID { get; set; }
         public int Type { get; set; }

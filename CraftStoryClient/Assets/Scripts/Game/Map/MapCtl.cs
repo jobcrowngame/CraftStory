@@ -7,12 +7,8 @@ public class MapCtl
 {
     private MapDataFactory mapFactory;
     private Transform mapCellParent;
-    private Transform resourceParent;
     private Transform builderPencilParent;
     private Transform effectParent;
-
-    private List<EntityResources> entityList;
-    private int entityID;
 
     public Transform CellParent { get => mapCellParent; }
     public Transform EffectParent { get => effectParent; }
@@ -20,9 +16,6 @@ public class MapCtl
     public MapCtl()
     {
         mapFactory = new MapDataFactory();
-        entityList = new List<EntityResources>();
-
-        entityID = 0;
     }
 
     public void CreateMap(int mapID)
@@ -36,103 +29,99 @@ public class MapCtl
             : mapFactory.CreateMapData(mapID);
 
         mapCellParent = new GameObject("Ground").transform;
-        resourceParent = new GameObject("Resources").transform;
         effectParent = new GameObject("Effects").transform;
 
         var startTime = DateTime.Now;
 
-        CreateBlocks(DataMng.E.MapData);
-        CreateResources(DataMng.E.MapData);
-        CreateTransferGate(DataMng.E.MapData);
+        InstantiateEntitys(DataMng.E.MapData);
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
         Logger.Log("map 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
     }
-    private void CreateBlocks(MapData mData)
+    private void InstantiateEntitys(MapData mData)
     {
-        HideBlocks(mData);
-
-        for (int y = 0; y < mData.MapSize.y; y++)
+        try
         {
-            for (int z = 0; z < mData.MapSize.z; z++)
+            for (int y = 0; y < mData.MapSize.y; y++)
             {
-                for (int x = 0; x < mData.MapSize.x; x++)
+                for (int z = 0; z < mData.MapSize.z; z++)
                 {
-                    if (mData.Map[x, y, z] != null)
+                    for (int x = 0; x < mData.MapSize.x; x++)
                     {
-                        if (mData.Map[x, y, z].NoInstantiate)
-                            continue;
-
-                        mData.AddBlock(mData.Map[x, y, z]);
-                        mData.Map[x, y, z].ActiveBlock();
+                        var site = new Vector3Int(x, y, z);
+                        if (CheckBlockIsSurface(mData, site))
+                        {
+                            DataMng.E.MapData.Add(mData.Map[x, y, z], site);
+                        }
                     }
                 }
             }
         }
-    }
-    private void CreateResources(MapData mData)
-    {
-        if (mData.Resources == null)
-            return;
-
-        for (int i = 0; i < mData.Resources.Count; i++)
+        catch (Exception ex)
         {
-            var resourceEntity = CommonFunction.Instantiate<EntityResources>(mData.Resources[i].Config.ResourcePath, resourceParent, mData.Resources[i].Pos);
-            if (resourceEntity != null)
-            {
-                resourceEntity.Init(mData.Resources[i]);
-                entityList.Add(resourceEntity);
-            }
-        }
-    }
-    private void CreateTransferGate(MapData mData)
-    {
-        if (mData.TransferGate == null || mData.TransferGate.ID == 0)
-            return;
-
-        var entity = CommonFunction.Instantiate<EntityTransferGate>(mData.TransferGate.TransferGateConfig.ResourcesPath, resourceParent, mData.TransferGate.Pos);
-        if (entity != null)
-        {
-            entity.Init(mData.TransferGate);
+            Logger.Error(ex);
         }
     }
 
-    public void OnQuit()
-    {
-
-    }
-
-    public void CreateTransparentBlocks(BlueprintData blueprint, Vector3Int startPos)
+    public void InstantiateTransparenEntitys(BlueprintData blueprint, Vector3Int startPos)
     {
         var shader = Shader.Find("SemiTransparent");
         builderPencilParent = new GameObject("BuilderPancil").transform;
         builderPencilParent.position = startPos;
 
-        foreach (var item in blueprint.BlockList)
+        foreach (var item in blueprint.blocks)
         {
-            var block = item.ActiveBlock(builderPencilParent);
-            block.transform.localPosition = item.Pos;
+            var entity = CommonFunction.Instantiate<EntityBase>(ConfigMng.E.Entity[item.id].Resources, builderPencilParent, item.GetPos());
+            entity.transform.localPosition = item.GetPos();
 
             if (shader != null)
             {
-                block.GetComponent<BoxCollider>().enabled = false;
+                entity.GetComponent<BoxCollider>().enabled = false;
 
-                var render = block.GetComponent<Renderer>();
-                render.material.shader = shader;
-
-                if (DataMng.E.MapData.GetMap(Vector3Int.CeilToInt(block.transform.position)) != null)
+                if (item.id == 5000 || item.id == 5001)
                 {
-                    render.material.color = new Color(1, 0, 0, 0.5f);
-                    blueprint.IsDuplicate = true;
+                    foreach (Transform cell in entity.transform)
+                    {
+                        var render = entity.GetComponent<Renderer>();
+                        if (render == null)
+                            continue;
+                        
+                        render.material.shader = shader;
+
+                        // 重複されるかをチェック
+                        if (DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(entity.transform.position)))
+                        {
+
+                            render.material.color = new Color(1, 1, 1, 0.5f);
+                        }
+                        else
+                        {
+                            render.material.color = new Color(1, 0, 0, 0.5f);
+                            blueprint.IsDuplicate = true;
+                        }
+                    }
                 }
                 else
                 {
-                    render.material.color = new Color(1, 1, 1, 0.5f);
+                    var render = entity.GetComponent<Renderer>();
+                    render.material.shader = shader;
+
+                    // 重複されるかをチェック
+                    if (DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(entity.transform.position)))
+                    {
+
+                        render.material.color = new Color(1, 1, 1, 0.5f);
+                    }
+                    else
+                    {
+                        render.material.color = new Color(1, 0, 0, 0.5f);
+                        blueprint.IsDuplicate = true;
+                    }
                 }
             }
         }
     }
-    public void CreateBlocks(BlueprintData blueprint, Vector3Int startPos)
+    public void InstantiateEntitys(BlueprintData blueprint, Vector3Int buildPos)
     {
         if (blueprint == null)
         {
@@ -140,15 +129,15 @@ public class MapCtl
             return;
         }
 
-        foreach (var item in blueprint.BlockList)
+        foreach (var item in blueprint.blocks)
         {
-            item.Pos = Vector3Int.CeilToInt(item.Block.transform.position);
-            item.ClearBlock();
-            CreateBlock(item);
+            var entity = DataMng.E.MapData.Add(item.id, CommonFunction.Vector3Sum(item.GetPos(), buildPos));
+            //CheckNextToEntitys(item.GetPos());
         }
     }
-    public MapBlock CreateBlock(Vector3Int pos, int blockId)
+    public EntityBase CreateEntity(int entityId, Vector3Int pos)
     {
+        // マップエリア以外ならエラーメッセージを出す。
         if (IsOutRange(DataMng.E.MapData, pos))
         {
             if (pos.y > DataMng.E.MapData.MapSize.y - 1)
@@ -158,109 +147,49 @@ public class MapCtl
             return null;
         }
 
-        MapBlockData bData = new MapBlockData(blockId, pos);
+        var entity = DataMng.E.MapData.Add(entityId, pos);
+
+        CheckNextToEntitys(pos);
+
         PlayerCtl.E.ConsumableSelectItem();
-        return CreateBlock(bData);
-    }
-    public MapBlock CreateBlock(MapBlockData data)
-    {
-        var block = data.ActiveBlock(WorldMng.E.MapCtl.CellParent);
-        DataMng.E.MapData.AddBlock(data);
-        CheckNextToBlocks(data);
-        return block;
+
+        return entity;
     }
 
-    public EntityResources CreateResources(Vector3Int pos, int resourcesId)
+    public void DeleteEntity(EntityBase entity)
     {
-        if (!ConfigMng.E.Resource.ContainsKey(resourcesId))
-            return null;
-
-        if (IsOutRange(DataMng.E.MapData, pos))
-        {
-            if (pos.y > DataMng.E.MapData.MapSize.y - 1)
-            {
-                CommonFunction.ShowHintBar(7);
-            }
-            return null;
-        }
-
-        var config = ConfigMng.E.Resource[resourcesId];
-        var entityData = new EntityData(config.ID, (ItemType)config.Type, pos);
-        
-        var resourceEntity = CommonFunction.Instantiate<EntityResources>(config.ResourcePath, resourceParent, pos);
-        if (resourceEntity != null)
-        {
-            resourceEntity.Init(entityData);
-            DataMng.E.MapData.AddResources(resourceEntity.Data);
-            PlayerCtl.E.ConsumableSelectItem();
-        }
-
-        return resourceEntity;
-    }
-
-    public void DeleteBlock(MapBlock block)
-    {
-        DataMng.E.MapData.RemoveBlock(block.data.Pos);
-        GameObject.Destroy(block.gameObject);
-        CheckNextToBlocks(block.data);
+        DataMng.E.MapData.Remove(entity.Pos);
+        CheckNextToEntitys(entity.Pos);
     }
     public void DeleteBuilderPencil()
     {
         if(builderPencilParent != null) GameObject.Destroy(builderPencilParent.gameObject);
     }
-    public void DeleteResource(EntityResources resource)
-    {
-        DataMng.E.MapData.RemoveEntity(resource.Data);
-        entityList.Remove(resource);
-        GameObject.Destroy(resource.gameObject);
-    }
 
-    private void CheckNextToBlocks(MapBlockData data)
+    /// <summary>
+    /// 隣のエンティティをゲット
+    /// </summary>
+    private void CheckNextToEntitys(Vector3Int pos)
     {
-        var list = GetNextToBlocks(data);
+        List<Vector3Int> entitys = new List<Vector3Int>();
 
-        for (int i = 0; i < list.Count; i++)
+        entitys.Add(new Vector3Int(pos.x - 1, pos.y, pos.z));
+        entitys.Add(new Vector3Int(pos.x + 1, pos.y, pos.z));
+        entitys.Add(new Vector3Int(pos.x, pos.y - 1, pos.z));
+        entitys.Add(new Vector3Int(pos.x, pos.y + 1, pos.z));
+        entitys.Add(new Vector3Int(pos.x, pos.y, pos.z - 1));
+        entitys.Add(new Vector3Int(pos.x, pos.y, pos.z + 1));
+
+        for (int i = 0; i < entitys.Count; i++)
         {
-            var isSurface = CheckBlockIsSurface(list[i]);
-            list[i].ActiveBlock(isSurface);
+            if (IsOutRange(DataMng.E.MapData, entitys[i]))
+                continue;
+
+            if (CheckBlockIsSurface(DataMng.E.MapData, entitys[i]))
+                DataMng.E.MapData.Add(entitys[i]);
+            else
+                DataMng.E.MapData.DeleteObj(entitys[i]);
         }
-    }
-    public bool CheckBlockIsSurface(MapBlockData data)
-    {
-        var isSurface = IsSurface(DataMng.E.MapData, new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(DataMng.E.MapData, new Vector3Int(data.Pos.x + 1, data.Pos.y, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(DataMng.E.MapData, new Vector3Int(data.Pos.x, data.Pos.y - 1, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(DataMng.E.MapData, new Vector3Int(data.Pos.x, data.Pos.y + 1, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(DataMng.E.MapData, new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z - 1));
-        if (!isSurface) isSurface = IsSurface(DataMng.E.MapData, new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z + 1));
-        return isSurface;
-    }
-    private List<MapBlockData> GetNextToBlocks(MapBlockData data)
-    {
-        MapBlockData bData;
-        List<MapBlockData> blockList = new List<MapBlockData>();
-
-        bData = GetNextToBlock(new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
-        if (bData != null) blockList.Add(bData);
-        bData = GetNextToBlock(new Vector3Int(data.Pos.x + 1, data.Pos.y, data.Pos.z));
-        if (bData != null) blockList.Add(bData);
-        bData = GetNextToBlock(new Vector3Int(data.Pos.x, data.Pos.y - 1, data.Pos.z));
-        if (bData != null) blockList.Add(bData);
-        bData = GetNextToBlock(new Vector3Int(data.Pos.x, data.Pos.y + 1, data.Pos.z));
-        if (bData != null) blockList.Add(bData);
-        bData = GetNextToBlock(new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z - 1));
-        if (bData != null) blockList.Add(bData);
-        bData = GetNextToBlock(new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z + 1));
-        if (bData != null) blockList.Add(bData);
-
-        return blockList;
-    }
-    private MapBlockData GetNextToBlock(Vector3Int pos)
-    {
-        if (IsOutRange(DataMng.E.MapData, pos))
-            return null;
-
-        return DataMng.E.MapData.GetMap(pos);
     }
 
     #region Static Function
@@ -282,50 +211,31 @@ public class MapCtl
         return pos;
     }
 
-    public static Vector3 GetGroundPos(MapData mapData, int posX, int posZ, float offsetY = 0)
+    public static Vector3Int GetGroundPos(MapData mapData, int posX, int posZ, float offsetY = 0)
     {
         if (posX < 0) posX = UnityEngine.Random.Range(0, mapData.Config.SizeX);
         if (posZ < 0) posZ = UnityEngine.Random.Range(0, mapData.Config.SizeZ);
 
-        MapBlockData block = null;
+        int posY = 0;
         for (int i = mapData.Config.SizeY - 1; i >= 0; i--)
         {
-            if (mapData.Map[posX, i, posZ] == null)
+            if (mapData.Map[posX, i, posZ] == 0)
                 continue;
 
-            block = mapData.Map[posX, i, posZ];
+            posY = (int)(i + 1 + offsetY - 0.5f);
             break;
         }
 
-        float posY = block.Pos.y + 1 + offsetY - 0.5f;
-
-        return new Vector3(posX, posY, posZ);
+        return new Vector3Int(posX, posY, posZ);
     }
-
-    public static void HideBlocks(MapData mapData)
+    private static bool CheckBlockIsSurface(MapData mapData, Vector3Int site)
     {
-        for (int x = 0; x < mapData.MapSize.x; x++)
-        {
-            for (int z = 0; z < mapData.MapSize.z; z++)
-            {
-                for (int y = 0; y < mapData.MapSize.y; y++)
-                {
-                    if (mapData.Map[x, y, z] == null)
-                        continue;
-
-                    mapData.Map[x, y, z].NoInstantiate = !CheckBlockIsSurface(mapData, mapData.Map[x, y, z]);
-                }
-            }
-        }
-    }
-    private static bool CheckBlockIsSurface(MapData mapData, MapBlockData data)
-    {
-        var isSurface = IsSurface(mapData, new Vector3Int(data.Pos.x - 1, data.Pos.y, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(data.Pos.x + 1, data.Pos.y, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(data.Pos.x, data.Pos.y - 1, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(data.Pos.x, data.Pos.y + 1, data.Pos.z));
-        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z - 1));
-        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(data.Pos.x, data.Pos.y, data.Pos.z + 1));
+        var isSurface = IsSurface(mapData, new Vector3Int(site.x - 1, site.y, site.z));
+        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(site.x + 1, site.y, site.z));
+        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(site.x, site.y - 1, site.z));
+        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(site.x, site.y + 1, site.z));
+        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(site.x, site.y, site.z - 1));
+        if (!isSurface) isSurface = IsSurface(mapData, new Vector3Int(site.x, site.y, site.z + 1));
         return isSurface;
     }
     /// <summary>
@@ -336,8 +246,12 @@ public class MapCtl
         if (IsOutRange(mapData, pos))
             return false;
 
-        return mapData.Map[pos.x, pos.y, pos.z] == null 
-            || mapData.Map[pos.x, pos.y, pos.z].Config.Type == 2;
+        return mapData.Map[pos.x, pos.y, pos.z] == 0 
+            || mapData.Map[pos.x, pos.y, pos.z] == (int)EntityType.Obstacle
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z]].Type == (int)EntityType.Craft
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z]].Type == (int)EntityType.Kamado
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z]].Type == (int)EntityType.Resources
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z]].Type == (int)EntityType.TransferGate;
     }
     /// <summary>
     /// マップの最大サイズ外

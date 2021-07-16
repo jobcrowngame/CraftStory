@@ -39,7 +39,7 @@ public class Main : MonoBehaviour
             {
                 if (Application.version == (string)rp["version"])
                 {
-                    LoginLg.E.Login();
+                    LoginLg.E.Login((int)rp["IsMaintenance"]);
                 }
                 else
                 {

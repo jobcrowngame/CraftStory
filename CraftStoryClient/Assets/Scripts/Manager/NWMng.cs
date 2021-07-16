@@ -125,6 +125,7 @@ public class NWMng : MonoBehaviour
     public void Login(Action<JsonData> rp, string id, string pw)
     {
         var data = new NWData();
+        data.Add("");
         data.Add(id);
         data.Add(pw);
 
@@ -358,6 +359,23 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetNewEmailCount));
     }
+    public void SaveHomeData(Action<JsonData> rp, string homedata)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.token);
+        data.Add(DataMng.E.UserData.Account);
+        data.Add(homedata);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.SaveHomeData));
+    }
+    public void LoadHomeData(Action<JsonData> rp)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.token);
+        data.Add(DataMng.E.UserData.Account);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.LoadHomeData));
+    }
 
 
 
@@ -388,6 +406,9 @@ public class NWMng : MonoBehaviour
         GetEmail,
         ReadEmail = 1020,
         GetNewEmailCount,
+
+        SaveHomeData = 6000,
+        LoadHomeData = 6001,
 
         Charge = 9000,
     }

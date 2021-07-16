@@ -117,20 +117,20 @@ public class HomeUI : UIBase
             itemBtns.Add(cell);
         }
     }
-    public void AddBlueprintCostItems(List<MapBlockData> blocks)
+    public void AddBlueprintCostItems(BlueprintData blueprint)
     {
         ClearCell(BlueprintCellGrid);
 
         Dictionary<int, int> costs = new Dictionary<int, int>();
-        foreach (var item in blocks)
+        foreach (var entity in blueprint.blocks)
         {
-            if (costs.ContainsKey(item.ItemID))
+            if (costs.ContainsKey(entity.id))
             {
-                costs[item.ItemID]++;
+                costs[entity.id]++;
             }
             else
             {
-                costs[item.ItemID] = 1;
+                costs[entity.id] = 1;
             }
         }
 
@@ -140,7 +140,7 @@ public class HomeUI : UIBase
             if (cell == null)
                 return;
 
-            cell.Init(key, costs[key]);
+            cell.Init(ConfigMng.E.Entity[key].ItemID, costs[key]);
         }
     }
 

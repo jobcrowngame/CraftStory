@@ -13,7 +13,7 @@ public class MapDataFactory
         var startTime = DateTime.Now;
 
         mapConfig = ConfigMng.E.Map[id];
-        mData = new MapData(id, new Vector3Int(mapConfig.SizeX, mapConfig.SizeY, mapConfig.SizeZ));
+        mData = new MapData(id);
 
         AddBaseBlocks();
         AddMountains();
@@ -28,7 +28,7 @@ public class MapDataFactory
     }
     private void AddBaseBlocks()
     {
-        int groundHeight = mapConfig.Block01Height + mapConfig.Block02Height + mapConfig.Block03Height;
+        int groundHeight = mapConfig.Entity01Height + mapConfig.Entity02Height + mapConfig.Entity03Height;
 
         for (int x = 0; x < mData.MapSize.x; x++)
         {
@@ -38,14 +38,14 @@ public class MapDataFactory
                 {
                     int blockId = 0;
 
-                    if (y < mapConfig.Block01Height)
-                        blockId = mapConfig.Block01;
-                    else if (y < mapConfig.Block02Height + mapConfig.Block01Height)
-                        blockId = mapConfig.Block02;
+                    if (y < mapConfig.Entity01Height)
+                        blockId = mapConfig.Entity01;
+                    else if (y < mapConfig.Entity02Height + mapConfig.Entity01Height)
+                        blockId = mapConfig.Entity02;
                     else
-                        blockId = mapConfig.Block03;
+                        blockId = mapConfig.Entity03;
 
-                    mData.Map[x, y, z] = new MapBlockData(blockId, new Vector3Int(x, y, z));
+                    mData.Map[x, y, z] = blockId;
                 }
             }
         }
@@ -59,12 +59,12 @@ public class MapDataFactory
 
         for (int i = 0; i < mountains.Length; i++)
         {
-            Mountain mountainConfig = null;
+            Mountain config = null;
 
             try
             {
-                mountainConfig = ConfigMng.E.Mountain[int.Parse(mountains[i])];
-                if (mountainConfig == null)
+                config = ConfigMng.E.Mountain[int.Parse(mountains[i])];
+                if (config == null)
                     continue;
             }
             catch (Exception ex)
@@ -74,49 +74,42 @@ public class MapDataFactory
                 continue;
             }
 
-            int startPosX = mountainConfig.StartPosX;
-            int startPosY = mountainConfig.StartPosY;
-            int startPosZ = mountainConfig.StartPosZ;
+            int startPosX = config.StartPosX;
+            int startPosY = config.StartPosY;
+            int startPosZ = config.StartPosZ;
 
             if (startPosX < 0) startPosX = UnityEngine.Random.Range(0, mapConfig.SizeX);
             if (startPosZ < 0) startPosZ = UnityEngine.Random.Range(0, mapConfig.SizeZ);
 
-            AddMountains(mData.Map[startPosX, startPosY, startPosZ], mountainConfig.Height, mountainConfig.Wide);
-        }
-    }
-    private void AddMountains(MapBlockData parent, int height, int offset = 0)
-    {
-        if (parent == null)
-        {
-            Logger.Error("bad parent ");
-            return;
-        }
-
-        for (int x = parent.Pos.x - (height - 1 + offset); x <= parent.Pos.x + (height - 1 + offset); x++)
-        {
-            for (int z = parent.Pos.z - (height - 1 + offset); z <= parent.Pos.z + (height - 1 + offset); z++)
+            int startEntityID = mData.Map[startPosX, startPosY, startPosZ];
+            if (startEntityID != 0)
             {
-                int abX = Mathf.Abs(x - parent.Pos.x);
-                int abZ = Mathf.Abs(z - parent.Pos.z);
-                int aby = height - abX - abZ + offset;
-
-                if (aby <= 0)
-                    continue;
-
-                int random = UnityEngine.Random.Range(-1, 1);
-
-                for (int i = 1; i <= aby; i++)
+                for (int x = startPosX - (config.Height - 1 + config.Wide); x <= startPosX + (config.Height - 1 + config.Wide); x++)
                 {
-                    int offsetY = i;
-                    if (offsetY > height)
-                        offsetY = height;
+                    for (int z = startPosZ - (config.Height - 1 + config.Wide); z <= startPosZ + (config.Height - 1 + config.Wide); z++)
+                    {
+                        int abX = Mathf.Abs(x - startPosX);
+                        int abZ = Mathf.Abs(z - startPosZ);
+                        int aby = config.Height - abX - abZ + config.Wide;
 
-                    Vector3Int newPos = new Vector3Int(x, offsetY + parent.Pos.y + random, z);
-                    if (MapCtl.IsOutRange(mData, newPos))
-                        continue;
+                        if (aby <= 0)
+                            continue;
 
-                    mData.Map[x, newPos.y, z] = mData.Map[x, parent.Pos.y, z].Copy();
-                    mData.Map[x, newPos.y, z].Pos = newPos;
+                        int random = UnityEngine.Random.Range(-1, 1);
+
+                        for (int j = 1; j <= aby; j++)
+                        {
+                            int offsetY = j;
+                            if (offsetY > config.Height)
+                                offsetY = config.Height;
+
+                            Vector3Int newPos = new Vector3Int(x, offsetY + startPosY + random, z);
+                            if (MapCtl.IsOutRange(mData, newPos))
+                                continue;
+
+                            mData.Map[newPos.x, newPos.y, newPos.z] = startEntityID;
+                        }
+                    }
                 }
             }
         }
@@ -146,12 +139,12 @@ public class MapDataFactory
 
             for (int j = 0; j < config.Count; j++)
             {
-                var pos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ, config.OffsetY);
+                Vector3 newPos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ, config.OffsetY);
 
-                pos = MapCtl.FixEntityPos(mData, pos, config.CreatePosOffset);
-                pos = MapCtl.GetGroundPos(mData, (int)pos.x, (int)pos.z, config.OffsetY);
+                newPos = MapCtl.FixEntityPos(mData, newPos, config.CreatePosOffset);
+                newPos = MapCtl.GetGroundPos(mData, (int)newPos.x, (int)newPos.z, config.OffsetY);
 
-                mData.AddResources(new EntityData(config.ID, (ItemType)config.Type, pos));
+                mData.Map[(int)newPos.x, (int)newPos.y, (int)newPos.z] = config.EntityID;
             }
         }
     }
@@ -176,15 +169,15 @@ public class MapDataFactory
             return;
         }
 
-        var pos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ);
-        if (config.PosX > 0) pos.x = config.PosX;
-        if (config.PosY > 0) pos.y = config.PosY;
-        if (config.PosZ > 0) pos.z = config.PosZ;
+        Vector3 newPos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ);
+        if (config.PosX > 0) newPos.x = config.PosX;
+        if (config.PosY > 0) newPos.y = config.PosY;
+        if (config.PosZ > 0) newPos.z = config.PosZ;
 
-        pos = MapCtl.FixEntityPos(mData, pos, config.CreatePosOffset);
-        pos = MapCtl.GetGroundPos(mData, (int)pos.x, (int)pos.z);
+        newPos = MapCtl.FixEntityPos(mData, newPos, config.CreatePosOffset);
+        newPos = MapCtl.GetGroundPos(mData, (int)newPos.x, (int)newPos.z);
 
-        mData.TransferGate = new EntityData(config.ID, ItemType.TransferGate, pos);
+        mData.Map[(int)newPos.x, (int)newPos.y + 1, (int)newPos.z] = config.EntityID;
     }
     private void AddBuildings()
     {
@@ -212,10 +205,10 @@ public class MapDataFactory
             var blueprintData = new BlueprintData(ConfigMng.E.Blueprint[config.Relation].Data);
             var pos = new Vector3Int(config.PosX, config.PosY, config.PosZ);
 
-            foreach (var item in blueprintData.BlockList)
+            foreach (var item in blueprintData.blocks)
             {
-                item.Pos = CommonFunction.Vector3Sum(item.Pos, pos);
-                mData.AddBlock(item);
+                item.SetPos(CommonFunction.Vector3Sum(item.GetPos(), pos));
+                mData.Map[item.GetPos().x, item.GetPos().y, item.GetPos().z] = item.id;
             }
         }
     }

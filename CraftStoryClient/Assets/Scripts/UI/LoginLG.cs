@@ -11,17 +11,24 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             Logger.Log("新しいアカウント作成成功しました。");
             Logger.Log("ID:\n{0}, \nPW:\n{1}", rp["acc"], rp["pw"]);
             DataMng.E.NewUser((string)rp["acc"], (string)rp["pw"]);
-            Login();
+            Login(0);
 
             PlayDescriptionLG.E.IsFirst = true;
         });
     }
 
-    public void Login()
+    public void Login(int IsMaintenance)
     {
         if (DataMng.E.UserData == null)
         {
-            UICtl.E.OpenUI<TermsUI>(UIType.Terms);
+            if (IsMaintenance == 1)
+            {
+                CommonFunction.ShowHintBox(PublicPar.Maintenance, () => { Logger.Warning("Quit"); Application.Quit(); });
+            }
+            else
+            {
+                UICtl.E.OpenUI<TermsUI>(UIType.Terms);
+            }
 
             return;
         }
@@ -50,6 +57,15 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             NWMng.E.GetNewEmailCount((rp) =>
             {
                 DataMng.E.RuntimeData.NewEmailCount = (int)rp["count"];
+            });
+
+            NWMng.E.LoadHomeData((rp) =>
+            {
+                if (!string.IsNullOrEmpty(rp.ToString()))
+                {
+                    DataMng.E.HomeData = new MapData(100);
+                    DataMng.E.HomeData.ParseStringData((string)rp["homedata"]);
+                }
             });
         }, id, pw);
     }

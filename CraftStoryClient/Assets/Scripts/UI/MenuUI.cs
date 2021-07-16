@@ -58,8 +58,7 @@ public class MenuUI : UIBase
         CloseBtn.onClick.AddListener(() => { Close(); });
         AdventureBtn.onClick.AddListener(() =>
         {
-            DataMng.E.MapData.TransferGate = new EntityData(1000, ItemType.TransferGate);
-            CommonFunction.GoToNextScene();
+            CommonFunction.GoToNextScene(1000);
             Close();
         });
 

@@ -7,12 +7,12 @@ namespace JsonConfigData
         public int SizeX { get; set; }
         public int SizeY { get; set; }
         public int SizeZ { get; set; }
-        public int Block01 { get; set; }
-        public int Block01Height { get; set; }
-        public int Block02 { get; set; }
-        public int Block02Height { get; set; }
-        public int Block03 { get; set; }
-        public int Block03Height { get; set; }
+        public int Entity01 { get; set; }
+        public int Entity01Height { get; set; }
+        public int Entity02 { get; set; }
+        public int Entity02Height { get; set; }
+        public int Entity03 { get; set; }
+        public int Entity03Height { get; set; }
         public string Mountains { get; set; }
         public string Resources { get; set; }
         public int TransferGateID { get; set; }

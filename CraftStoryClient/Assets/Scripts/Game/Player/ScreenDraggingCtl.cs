@@ -162,16 +162,10 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         if (clickingObj != null)
         {
-            var cell = clickingObj.GetComponent<MapBlock>();
+            var cell = clickingObj.GetComponent<EntityBase>();
             if (cell != null && DataMng.E.MapData.IsHome)
             {
                 cell.CancelClicking();
-            }
-
-            var recource = clickingObj.GetComponent<EntityResources>();
-            if (recource != null)
-            {
-                recource.CancelClicking();
             }
         }
     }

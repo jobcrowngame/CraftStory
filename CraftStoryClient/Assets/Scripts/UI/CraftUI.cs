@@ -17,7 +17,7 @@ public class CraftUI : UIBase
     CraftCostCell[] costCells;
 
 
-    private ItemType itemType;
+    private EntityType entityType;
 
     public override void Init()
     {
@@ -41,13 +41,13 @@ public class CraftUI : UIBase
         }
     }
 
-    public void SetType(ItemType type)
+    public void SetType(EntityType type)
     {
         ClearCell(craftItemParent);
 
         CraftLG.E.SelectCount = 1;
         CraftLG.E.SelectCraft = null;
-        itemType = type;
+        entityType = type;
 
         RefreshCost();
         RefreshCraftItemList();
@@ -61,7 +61,7 @@ public class CraftUI : UIBase
     {
         foreach (Craft item in ConfigMng.E.Craft.Values)
         {
-            if (item.Type == (int)itemType)
+            if (item.Type == (int)entityType)
             {
                 var cell = AddCell<CraftItemCell>("Prefabs/UI/IconItem", craftItemParent);
                 if (cell != null)

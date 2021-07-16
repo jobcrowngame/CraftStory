@@ -3,7 +3,10 @@ using UnityEngine;
 
 public class EntityTransferGate : EntityBase
 {
-    public TransferGate Config { get => ConfigMng.E.TransferGate[Data.ID]; }
+    public int TransferGateID { get => transferGateID; }
+    private int transferGateID;
+
+    public TransferGate Config { get => ConfigMng.E.TransferGate[transferGateID]; }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,7 +16,7 @@ public class EntityTransferGate : EntityBase
             NWMng.E.ClearAdventure((rp)=> 
             {
                 DataMng.GetItems(rp);
-                GiftBoxUI ui = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox) as GiftBoxUI;
+                GiftBoxUI ui = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox);
                 ui.AddBonus(AdventureCtl.E.BonusList);
             },AdventureCtl.E.BonusList);
         }

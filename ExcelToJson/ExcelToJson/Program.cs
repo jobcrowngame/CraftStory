@@ -55,6 +55,25 @@ namespace ExcelToJson
             return ds;
         }
 
+        private static int ToInt32(object item)
+        {
+            if (item == DBNull.Value)
+                return -1;
+            return Convert.ToInt32(item);
+        }
+        private static float ToFloat(object item)
+        {
+            if (item == DBNull.Value)
+                return -1;
+            return (float)Convert.ToDouble(item);
+        }
+        private static string ToString(object item)
+        {
+            if (item == DBNull.Value)
+                return "N";
+            return item.ToString();
+        }
+
         private static void ExcelToJson(string inFilePath, string outputPath, string fileName, Formatting indented)
         {
             var ds = ReadExcelData(inFilePath);
@@ -84,6 +103,7 @@ namespace ExcelToJson
                 case "Shop": list = Shop(tbl); break;
                 case "ErrorMsg": list = ErrorMsg(tbl); break;
                 case "Blueprint": list = Blueprint(tbl); break;
+                case "Entity": list = Entity(tbl); break;
                 default: Console.WriteLine("not find fileName function."); break;
             }
 
@@ -148,12 +168,12 @@ namespace ExcelToJson
                 data.SizeX =            ToInt32(tbl.Rows[i]["SizeX"]);
                 data.SizeY =            ToInt32(tbl.Rows[i]["SizeY"]);
                 data.SizeZ =            ToInt32(tbl.Rows[i]["SizeZ"]);
-                data.Block01 =          ToInt32(tbl.Rows[i]["Block01"]);
-                data.Block01Height =    ToInt32(tbl.Rows[i]["Block01Height"]);
-                data.Block02 =          ToInt32(tbl.Rows[i]["Block02"]);
-                data.Block02Height =    ToInt32(tbl.Rows[i]["Block02Height"]);
-                data.Block03 =          ToInt32(tbl.Rows[i]["Block03"]);
-                data.Block03Height =    ToInt32(tbl.Rows[i]["Block03Height"]);
+                data.Entity01 =          ToInt32(tbl.Rows[i]["Entity01"]);
+                data.Entity01Height =    ToInt32(tbl.Rows[i]["Entity01Height"]);
+                data.Entity02 =          ToInt32(tbl.Rows[i]["Entity02"]);
+                data.Entity02Height =    ToInt32(tbl.Rows[i]["Entity02Height"]);
+                data.Entity03 =          ToInt32(tbl.Rows[i]["Entity03"]);
+                data.Entity03Height =    ToInt32(tbl.Rows[i]["Entity03Height"]);
                 data.Mountains =        ToString(tbl.Rows[i]["Mountains"]);
                 data.Resources =         ToString(tbl.Rows[i]["Resources"]);
                 data.TransferGateID =   ToInt32(tbl.Rows[i]["TransferGateID"]);
@@ -192,18 +212,13 @@ namespace ExcelToJson
                 var data = new Resource();
 
                 data.ID = ToInt32(tbl.Rows[i]["ID"]);
-                data.ResourcePath = ToString(tbl.Rows[i]["ResourcePath"]);
-                data.Type = ToInt32(tbl.Rows[i]["Type"]);
+                data.EntityID = ToInt32(tbl.Rows[i]["EntityID"]);
                 data.PosX = ToInt32(tbl.Rows[i]["PosX"]);
                 data.PosZ = ToInt32(tbl.Rows[i]["PosZ"]);
                 data.Angle = ToInt32(tbl.Rows[i]["Angle"]);
                 data.OffsetY = ToFloat(tbl.Rows[i]["OffsetY"]);
                 data.CreatePosOffset =  ToInt32(tbl.Rows[i]["CreatePosOffset"]);
-                data.Scale = ToFloat(tbl.Rows[i]["Scale"]);
                 data.Count = ToInt32(tbl.Rows[i]["Count"]);
-                data.CanBreak = ToInt32(tbl.Rows[i]["CanBreak"]);
-                data.DestroyTime = ToFloat(tbl.Rows[i]["DestroyTime"]);
-                data.BonusID = ToInt32(tbl.Rows[i]["BonusID"]);
 
                 list.Add(data);
             }
@@ -217,7 +232,7 @@ namespace ExcelToJson
                 var data = new TransferGate();
 
                 data.ID = ToInt32(tbl.Rows[i]["ID"]);
-                data.ResourcesPath = ToString(tbl.Rows[i]["ResourcesPath"]);
+                data.EntityID = ToInt32(tbl.Rows[i]["EntityID"]);
                 data.NextMap = ToInt32(tbl.Rows[i]["NextMap"]);
                 data.NextMapSceneName = ToString(tbl.Rows[i]["NextMapSceneName"]);
                 data.PosX = ToInt32(tbl.Rows[i]["PosX"]);
@@ -339,24 +354,27 @@ namespace ExcelToJson
             }
             return list;
         }
+        private static object Entity(DataTable tbl)
+        {
+            List<Entity> list = new List<Entity>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Entity();
 
-        private static int ToInt32(object item)
-        {
-            if (item == DBNull.Value)
-                return -1;
-            return Convert.ToInt32(item);
+                data.ID = ToInt32(tbl.Rows[i]["ID"]);
+                data.ItemID = ToInt32(tbl.Rows[i]["ItemID"]);
+                data.Resources = ToString(tbl.Rows[i]["Resources"]);
+                data.Type = ToInt32(tbl.Rows[i]["Type"]);
+                data.DestroyTime = ToFloat(tbl.Rows[i]["DestroyTime"]);
+                data.ScaleX = ToInt32(tbl.Rows[i]["ScaleX"]);
+                data.ScaleZ = ToInt32(tbl.Rows[i]["ScaleZ"]);
+                data.ScaleY = ToInt32(tbl.Rows[i]["ScaleY"]);
+                data.BonusID = ToInt32(tbl.Rows[i]["BonusID"]);
+
+                list.Add(data);
+            }
+            return list;
         }
-        private static float ToFloat(object item)
-        {
-            if (item == DBNull.Value)
-                return -1;
-            return (float)Convert.ToDouble(item);
-        }
-        private static string ToString(object item)
-        {
-            if (item == DBNull.Value)
-                return "N";
-            return item.ToString();
-        }
+
     }
 }

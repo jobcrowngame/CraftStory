@@ -41,7 +41,7 @@ public class PlayerCtl : MonoBehaviour
         set => selectItem = value;
     }
     private ItemData selectItem;
-    private MapBlock clickingBlock;
+    private EntityBase clickingEntity;
     private EntityResources clickingResource;
 
     public CameraCtl CameraCtl
@@ -81,7 +81,7 @@ public class PlayerCtl : MonoBehaviour
         if (resource == null)
             return null;
 
-        var pos = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5);
+        Vector3 pos = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5);
         pos = MapCtl.FixEntityPos(DataMng.E.MapData, pos, DataMng.E.MapData.Config.CreatePosOffset);
         var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
         if (obj == null)
@@ -116,15 +116,16 @@ public class PlayerCtl : MonoBehaviour
         {
             if (obj != null)
             {
-                var entity = obj.GetComponent<EntityResources>();
+                var entity = obj.GetComponent<EntityBase>();
                 if (entity != null)
                 {
                     switch (entity.Type)
                     {
-                        case ItemType.Workbench: 
-                        case ItemType.Kamado:
-                            var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft) as CraftUI;
-                            ui.SetType((ItemType)entity.Data.Config.Type);
+
+                        case EntityType.Craft:
+                        case EntityType.Kamado:
+                            var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
+                            ui.SetType(entity.Type);
                             break;
                     }
                 }
@@ -137,8 +138,11 @@ public class PlayerCtl : MonoBehaviour
             switch ((ItemType)selectItem.Config().Type)
             {
                 case ItemType.Block:
+                case ItemType.Workbench:
+                case ItemType.Kamado:
+
                     Lock = true;
-                    CreateBlock(selectItem.Config().ReferenceID, obj, Vector3Int.CeilToInt(pos));
+                    InstantiateEntity(obj, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
                     PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
 
                     StartCoroutine(UnLock());
@@ -157,12 +161,6 @@ public class PlayerCtl : MonoBehaviour
                 case ItemType.Blueprint:
                     BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.relationData);
                     break;
-
-                case ItemType.Workbench:
-                case ItemType.Kamado:
-                    CreateResources(selectItem.Config().ReferenceID, obj, Vector3Int.CeilToInt(pos));
-                    PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
-                    break;
             }
         }
     }
@@ -171,14 +169,13 @@ public class PlayerCtl : MonoBehaviour
         if (collider == null)
             return;
 
-
-        var cell = collider.GetComponent<MapBlock>();
+        var cell = collider.GetComponent<EntityBase>();
         if (cell != null && DataMng.E.MapData.IsHome)
         {
-            if (clickingBlock == null || clickingBlock != cell)
+            if (clickingEntity == null || clickingEntity != cell)
             {
-                clickingBlock = cell;
-                clickingBlock.CancelClicking();
+                clickingEntity = cell;
+                clickingEntity.CancelClicking();
             }
             else
             {
@@ -187,34 +184,29 @@ public class PlayerCtl : MonoBehaviour
             }
         }
 
-        var recource = collider.GetComponent<EntityResources>();
-        if (recource != null)
+        cell = collider.GetComponent<EntityResources>();
+        if (cell != null)
         {
-            if (clickingResource == null || clickingResource != recource)
+            if (clickingEntity == null || clickingEntity != cell)
             {
-                clickingResource = recource;
-                clickingResource.CancelClicking();
+                clickingEntity = cell;
+                clickingEntity.CancelClicking();
             }
             else
             {
                 PlayerEntity.Behavior.Type = PlayerBehaviorType.Breack;
-                recource.OnClicking(time);
+                cell.OnClicking(time);
             }
         }
     }
 
-    private void CreateBlock(int blockID, GameObject collider, Vector3Int pos)
+    private void InstantiateEntity(GameObject collider, int entityId, Vector3Int pos)
     {
-        var cell = collider.GetComponent<MapBlock>();
+        var cell = collider.GetComponent<EntityBase>();
         if (cell == null)
             return;
 
-        WorldMng.E.MapCtl.CreateBlock(pos, blockID);
-        Logger.Log("Create block " + pos);
-    }
-    private void CreateResources(int resourcesId, GameObject collider, Vector3Int pos)
-    {
-        WorldMng.E.MapCtl.CreateResources(pos, resourcesId);
+        WorldMng.E.MapCtl.CreateEntity(entityId, pos);
         Logger.Log("Create block " + pos);
     }
 
