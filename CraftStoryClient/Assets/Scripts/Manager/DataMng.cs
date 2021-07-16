@@ -95,6 +95,7 @@ public class DataMng : Single<DataMng>
         {
             homeData = new MapData(100);
             HomeData.ParseStringDataOld(mData.strMap, mData.strEntity);
+            System.IO.File.Delete(PublicPar.SaveRootPath + MapDataName);
         }
 
         return true;
