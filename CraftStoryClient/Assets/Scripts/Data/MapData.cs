@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using JsonConfigData;
 
+[Serializable]
 public class MapData
 {
     private int id;
