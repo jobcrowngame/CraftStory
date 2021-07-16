@@ -76,7 +76,9 @@
     <Compile Include="Assets\Scripts\Test\TestCreateObj.cs" />
     <Compile Include="Assets\Scripts\Test\DragObj.cs" />
     <Compile Include="Assets\Scripts\UI\EmailUI.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Entity.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityResources.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
     <Compile Include="Assets\Scripts\Test\RunTest.cs" />
     <Compile Include="Assets\Scripts\UI\BagLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Item.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Assets\Scripts\Test\LookChange.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\EntityBuilding.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyButton.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerEntity.cs" />
     <Compile Include="Assets\Scripts\Game\Adventure\AdventureCtl.cs" />
@@ -189,15 +192,13 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Map.cs" />
     <Compile Include="Assets\Scripts\Manager\IAPMng.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingUI.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\EntityBlock.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Entity.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\EntityBuilding.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\EntityBlock.cs" />
+    <Compile Include="Assets\Scripts\Data\MapData2.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />

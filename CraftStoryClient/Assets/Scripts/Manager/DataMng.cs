@@ -90,8 +90,12 @@ public class DataMng : Single<DataMng>
     {
         uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + UserDataName);
 
-        string HomeDataStr = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + MapDataName);
-        if (HomeDataStr != null) HomeData.ParseStringData(HomeDataStr);
+        var mData = (MapData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + MapDataName);
+        if (mData != null)
+        {
+            homeData = new MapData(100);
+            HomeData.ParseStringDataOld(mData.strMap, mData.strEntity);
+        }
 
         return true;
     }

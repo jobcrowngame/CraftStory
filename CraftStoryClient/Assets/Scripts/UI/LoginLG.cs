@@ -59,14 +59,17 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 DataMng.E.RuntimeData.NewEmailCount = (int)rp["count"];
             });
 
-            NWMng.E.LoadHomeData((rp) =>
+            if (DataMng.E.HomeData == null)
             {
-                if (!string.IsNullOrEmpty(rp.ToString()))
+                NWMng.E.LoadHomeData((rp) =>
                 {
-                    DataMng.E.HomeData = new MapData(100);
-                    DataMng.E.HomeData.ParseStringData((string)rp["homedata"]);
-                }
-            });
+                    if (!string.IsNullOrEmpty(rp.ToString()))
+                    {
+                        DataMng.E.HomeData = new MapData(100);
+                        DataMng.E.HomeData.ParseStringData((string)rp["homedata"]);
+                    }
+                });
+            }
         }, id, pw);
     }
 }

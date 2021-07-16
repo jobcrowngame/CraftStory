@@ -18,6 +18,9 @@ public class MapData
     public int[,,] Map { get => map; }
     private int[,,] map;
 
+    public string strMap { get; set; }
+    public string strEntity { get; set; }
+
     Dictionary<Vector3Int, EntityBase> entityDic = new Dictionary<Vector3Int, EntityBase>();
 
     public MapData(int mapID)
@@ -195,6 +198,30 @@ public class MapData
                     map[x, y, z] = int.Parse(data);
                 }
             }
+        }
+    }
+    public void ParseStringDataOld(string mapData, string resourcesData)
+    {
+        string[] maps = mapData.Split(',');
+        string data;
+        int index = 0;
+
+        for (int x = 0; x < 100; x++)
+        {
+            for (int y = 0; y < 100; y++)
+            {
+                for (int z = 0; z < 100; z++)
+                {
+                    data = maps[index++];
+                    map[x, y, z] = int.Parse(data);
+                }
+            }
+        }
+
+        string[] resources;
+        if (!string.IsNullOrEmpty(resourcesData))
+        {
+            resources = resourcesData.Split(',');
         }
     }
 }
