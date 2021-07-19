@@ -87,6 +87,8 @@ public class BagUI : UIBase
         if (DataMng.E.Items == null)
             return;
 
+        DataMng.E.Items.Sort((a, b) => a.itemId - b.itemId);
+
         if (BagLG.E.Classification == BagLG.BagClassification.All)
         {
             foreach (var item in DataMng.E.Items)
