@@ -41,9 +41,9 @@ public class BagLG : UILogicBase<BagLG, BagUI>
     {
         None = -1,
         All = 0,
-        Block = 1,
-        Material = 2,
-        Blueprint = 3,
-        Orther = 4,
+        Block,
+        Orther,
+        Material,
+        Blueprint,
     }
 }
