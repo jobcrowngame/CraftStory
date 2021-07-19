@@ -79,7 +79,7 @@ public class BuilderPencil
             {
                 for (int z = minZ; z < maxZ; z++)
                 {
-                    if (DataMng.E.MapData.Map[x, y, z] < 1)
+                    if (DataMng.E.MapData.Map[x, y, z].entityID < 1)
                         continue;
 
                     var entity = DataMng.E.MapData.GetEntity(new Vector3Int(x, y, z));

@@ -15,8 +15,8 @@ public class MapData
     public Map Config { get => ConfigMng.E.Map[id]; }
     public bool IsHome { get => id == 100; }
 
-    public int[,,] Map { get => map; }
-    private int[,,] map;
+    public MapCellData[,,] Map { get => map; }
+    private MapCellData[,,] map;
 
     public string strMap { get; set; }
     public string strEntity { get; set; }
@@ -26,12 +26,12 @@ public class MapData
     public MapData(int mapID)
     {
         id = mapID;
-        map = new int[MapSize.x, MapSize.y, MapSize.z];
+        map = new MapCellData[MapSize.x, MapSize.y, MapSize.z];
     }
 
     public bool IsNull(Vector3Int site)
     {
-        return map[site.x, site.y, site.z] == 0;
+        return map[site.x, site.y, site.z].entityID == 0;
     }
     public EntityBase GetEntity(Vector3Int site)
     {
@@ -50,7 +50,7 @@ public class MapData
                 return;
             }
 
-            map[pos.x, pos.y, pos.z] = 0;
+            map[pos.x, pos.y, pos.z].entityID = 0;
             if (entityDic.ContainsKey(pos))
             {
                 GameObject.Destroy(entityDic[pos].gameObject);
@@ -78,11 +78,11 @@ public class MapData
             Logger.Warning("Remove entity Failure");
         }
     }
-    public EntityBase Add(int entityId, Vector3Int pos)
+    public EntityBase Add(MapCellData entityCell, Vector3Int pos, int rotation = 0)
     {
         try
         {
-            if (entityId < 1)
+            if (entityCell.entityID < 1)
                 return null;
 
             if (entityDic.ContainsKey(pos))
@@ -90,7 +90,7 @@ public class MapData
                 return entityDic[pos];
             }
 
-            var config = ConfigMng.E.Entity[entityId];
+            var config = ConfigMng.E.Entity[entityCell.entityID];
             EntityBase entity = null;
             switch ((EntityType)config.Type)
             {
@@ -106,9 +106,9 @@ public class MapData
                     entity = CommonFunction.Instantiate<EntityResources>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
                     break;
 
-                case EntityType.Craft:
+                case EntityType.Workbench:
                 case EntityType.Kamado:
-                case EntityType.Dor:
+                case EntityType.Door:
                     entity = CommonFunction.Instantiate<EntityBuilding>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
                     break;
 
@@ -119,10 +119,15 @@ public class MapData
                     break;
             }
 
-            entity.EntityID = entityId;
+            entity.EntityID = entityCell.entityID;
             entity.Pos = pos;
             entityDic[pos] = entity;
-            Map[pos.x, pos.y, pos.z] = entityId;
+            entity.transform.localRotation = Quaternion.Euler(0, rotation, 0);
+            Map[pos.x, pos.y, pos.z] = new MapCellData()
+            {
+                entityID = entityCell.entityID,
+                rotation = rotation
+            };
 
             //for (int x = 0; x < config.ScaleX; x++)
             //{
@@ -146,9 +151,9 @@ public class MapData
             return null;
         }
     }
-    public EntityBase Add(Vector3Int pos)
+    public EntityBase Add(Vector3Int pos, int rotation = 0)
     {
-        return Add(map[pos.x, pos.y, pos.z], pos);
+        return Add(map[pos.x, pos.y, pos.z], pos, rotation);
     }
     public void ClearMapObj()
     {
@@ -165,7 +170,18 @@ public class MapData
             {
                 for (int z = 0; z < MapSize.z; z++)
                 {
-                    sb.Append(map[x, y, z] + ",");
+                    int entityId = map[x, y, z].entityID;
+
+                    if ((EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Workbench
+                       || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Kamado
+                       || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Door)
+                    {
+                        sb.Append(entityId + "-" + map[x, y, z].rotation + ",");
+                    }
+                    else
+                    {
+                        sb.Append(entityId + ",");
+                    }
                 }
             }
         }
@@ -180,7 +196,7 @@ public class MapData
     public void ParseStringData(string strMap)
     {
         string[] entitys = strMap.Split(',');
-        string data;
+        string[] data;
         int index = 0;
 
         string[] sizeStr = entitys[entitys.Length - 1].Split('-');
@@ -194,8 +210,19 @@ public class MapData
             {
                 for (int z = 0; z < mapSize.z; z++)
                 {
-                    data = entitys[index++];
-                    map[x, y, z] = int.Parse(data);
+                    data = entitys[index++].Split('-');
+                    int entityId = int.Parse(data[0]);
+
+                    if ((EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Workbench
+                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Kamado
+                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Door)
+                    {
+                        map[x, y, z] = new MapCellData() { entityID = entityId, rotation = int.Parse(data[1]) };
+                    }
+                    else
+                    {
+                        map[x, y, z] = new MapCellData() { entityID = entityId };
+                    }
                 }
             }
         }
@@ -213,7 +240,8 @@ public class MapData
                 for (int z = 0; z < 100; z++)
                 {
                     data = maps[index++];
-                    map[x, y, z] = data == "n" ? 0 : int.Parse(data);
+                    int entityId = data == "n" ? 0 : int.Parse(data);
+                    map[x, y, z] = new MapCellData() { entityID = entityId };
                 }
             }
         }
@@ -223,5 +251,11 @@ public class MapData
         {
             resources = resourcesData.Split(',');
         }
+    }
+
+    public struct MapCellData
+    {
+        public int entityID;
+        public int rotation;
     }
 }

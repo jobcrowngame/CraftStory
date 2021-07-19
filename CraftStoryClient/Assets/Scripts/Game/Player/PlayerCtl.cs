@@ -116,16 +116,20 @@ public class PlayerCtl : MonoBehaviour
         {
             if (obj != null)
             {
-                var entity = obj.GetComponent<EntityBase>();
+                var entity = obj.GetComponent<EntityBuilding>();
                 if (entity != null)
                 {
                     switch (entity.Type)
                     {
 
-                        case EntityType.Craft:
+                        case EntityType.Workbench:
                         case EntityType.Kamado:
                             var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
                             ui.SetType(entity.Type);
+                            break;
+
+                        case EntityType.Door:
+                            entity.OnClickDoor();
                             break;
                     }
                 }
@@ -138,11 +142,19 @@ public class PlayerCtl : MonoBehaviour
             switch ((ItemType)selectItem.Config().Type)
             {
                 case ItemType.Block:
-                case ItemType.Workbench:
-                case ItemType.Kamado:
-
                     Lock = true;
                     InstantiateEntity(obj, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
+                    PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
+
+                    StartCoroutine(UnLock());
+                    break;
+
+                case ItemType.Workbench:
+                case ItemType.Kamado:
+                case ItemType.Door:
+                    Lock = true;
+                    var rotation = CommonFunction.GetCreateEntityRotation(pos);
+                    InstantiateEntity(obj, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), rotation);
                     PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
 
                     StartCoroutine(UnLock());
@@ -200,13 +212,13 @@ public class PlayerCtl : MonoBehaviour
         }
     }
 
-    private void InstantiateEntity(GameObject collider, int entityId, Vector3Int pos)
+    private void InstantiateEntity(GameObject collider, int entityId, Vector3Int pos, int rotation = 0)
     {
         var cell = collider.GetComponent<EntityBase>();
         if (cell == null)
             return;
 
-        WorldMng.E.MapCtl.CreateEntity(entityId, pos);
+        WorldMng.E.MapCtl.CreateEntity(entityId, pos, rotation);
         Logger.Log("Create block " + pos);
     }
 

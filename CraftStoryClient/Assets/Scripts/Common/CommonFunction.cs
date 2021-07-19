@@ -151,7 +151,42 @@ public class CommonFunction
         return en.GetString(Encoding.Default.GetBytes(msg));
     }
 
-   
+    public static int GetCreateEntityRotation(Vector3 createPos)
+    {
+        int rotation = 0;
+
+        var playerPos = PlayerCtl.E.PlayerEntity.transform.position;
+
+        var angle = Vector2ToAngle(new Vector2(createPos.x, createPos.z) - new Vector2(playerPos.x, playerPos.z)) + 180;
+
+        if (angle >= 223 && angle < 315)
+            rotation = 0;
+        else if (angle >= 135 && angle < 225)
+            rotation = 90;
+        else if (angle >= 45 && angle < 135)
+            rotation = 180;
+        else
+            rotation = 270;
+
+        return rotation;
+    }
+    /// <summary>
+    /// 角度から単位ベクトルを取得
+    /// </summary>
+    public static Vector2 AngleToVector2(float angle)
+    {
+        var radian = angle * (Mathf.PI / 180);
+        return new Vector2(Mathf.Cos(radian), Mathf.Sin(radian)).normalized;
+    }
+    /// <summary>
+    /// ベクトルから角度を取得
+    /// </summary>
+    public static float Vector2ToAngle(Vector2 vector)
+    {
+        return Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
+    }
+
+
 
     public static Dictionary<int, int> GetItemsByBonus(List<int> bonusIds)
     {

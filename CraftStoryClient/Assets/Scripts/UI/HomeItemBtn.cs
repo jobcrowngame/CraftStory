@@ -96,5 +96,6 @@ public enum ItemType
     Blueprint = 52,
     Workbench = 1000,
     Kamado = 1001,
+    Door = 2000,
     TransferGate = 9999,
 }

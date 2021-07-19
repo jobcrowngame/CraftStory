@@ -51,7 +51,7 @@ public class MapCtl
                         var site = new Vector3Int(x, y, z);
                         if (CheckBlockIsSurface(mData, site))
                         {
-                            DataMng.E.MapData.Add(mData.Map[x, y, z], site);
+                            DataMng.E.MapData.Add(mData.Map[x, y, z], site, mData.Map[x, y, z].rotation);
                         }
                     }
                 }
@@ -131,11 +131,12 @@ public class MapCtl
 
         foreach (var item in blueprint.blocks)
         {
-            var entity = DataMng.E.MapData.Add(item.id, CommonFunction.Vector3Sum(item.GetPos(), buildPos));
+            var entity = DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = item.id }
+                , CommonFunction.Vector3Sum(item.GetPos(), buildPos));
             //CheckNextToEntitys(item.GetPos());
         }
     }
-    public EntityBase CreateEntity(int entityId, Vector3Int pos)
+    public EntityBase CreateEntity(int entityId, Vector3Int pos, int rotation = 0)
     {
         // マップエリア以外ならエラーメッセージを出す。
         if (IsOutRange(DataMng.E.MapData, pos))
@@ -147,7 +148,7 @@ public class MapCtl
             return null;
         }
 
-        var entity = DataMng.E.MapData.Add(entityId, pos);
+        var entity = DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = entityId }, pos, rotation);
 
         CheckNextToEntitys(pos);
 
@@ -219,7 +220,7 @@ public class MapCtl
         int posY = 0;
         for (int i = mapData.Config.SizeY - 1; i >= 0; i--)
         {
-            if (mapData.Map[posX, i, posZ] == 0)
+            if (mapData.Map[posX, i, posZ].entityID == 0)
                 continue;
 
             posY = (int)(i + 1 + offsetY - 0.5f);
@@ -246,13 +247,14 @@ public class MapCtl
         if (IsOutRange(mapData, pos))
             return false;
 
-        return mapData.Map[pos.x, pos.y, pos.z] == 0 
-            || mapData.Map[pos.x, pos.y, pos.z] == (int)EntityType.Obstacle
-            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z]].Type == (int)EntityType.Block2
-            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z]].Type == (int)EntityType.Craft
-            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z]].Type == (int)EntityType.Kamado
-            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z]].Type == (int)EntityType.Resources
-            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z]].Type == (int)EntityType.TransferGate;
+        return mapData.Map[pos.x, pos.y, pos.z].entityID == 0 
+            || mapData.Map[pos.x, pos.y, pos.z].entityID == (int)EntityType.Obstacle
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Block2
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Workbench
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Kamado
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Resources
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Door
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.TransferGate;
     }
     /// <summary>
     /// マップの最大サイズ外

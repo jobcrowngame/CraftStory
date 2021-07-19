@@ -45,7 +45,7 @@ public class MapDataFactory
                     else
                         blockId = mapConfig.Entity03;
 
-                    mData.Map[x, y, z] = blockId;
+                    mData.Map[x, y, z] = new MapData.MapCellData() { entityID = blockId };
                 }
             }
         }
@@ -81,7 +81,7 @@ public class MapDataFactory
             if (startPosX < 0) startPosX = UnityEngine.Random.Range(0, mapConfig.SizeX);
             if (startPosZ < 0) startPosZ = UnityEngine.Random.Range(0, mapConfig.SizeZ);
 
-            int startEntityID = mData.Map[startPosX, startPosY, startPosZ];
+            int startEntityID = mData.Map[startPosX, startPosY, startPosZ].entityID;
             if (startEntityID != 0)
             {
                 for (int x = startPosX - (config.Height - 1 + config.Wide); x <= startPosX + (config.Height - 1 + config.Wide); x++)
@@ -107,7 +107,7 @@ public class MapDataFactory
                             if (MapCtl.IsOutRange(mData, newPos))
                                 continue;
 
-                            mData.Map[newPos.x, newPos.y, newPos.z] = startEntityID;
+                            mData.Map[newPos.x, newPos.y, newPos.z] = new MapData.MapCellData() { entityID = startEntityID };
                         }
                     }
                 }
@@ -144,7 +144,7 @@ public class MapDataFactory
                 newPos = MapCtl.FixEntityPos(mData, newPos, config.CreatePosOffset);
                 newPos = MapCtl.GetGroundPos(mData, (int)newPos.x, (int)newPos.z, config.OffsetY);
 
-                mData.Map[(int)newPos.x, (int)newPos.y, (int)newPos.z] = config.EntityID;
+                mData.Map[(int)newPos.x, (int)newPos.y, (int)newPos.z] = new MapData.MapCellData() { entityID = config.EntityID }; 
             }
         }
     }
@@ -177,7 +177,7 @@ public class MapDataFactory
         newPos = MapCtl.FixEntityPos(mData, newPos, config.CreatePosOffset);
         newPos = MapCtl.GetGroundPos(mData, (int)newPos.x, (int)newPos.z);
 
-        mData.Map[(int)newPos.x, (int)newPos.y + 1, (int)newPos.z] = config.EntityID;
+        mData.Map[(int)newPos.x, (int)newPos.y + 1, (int)newPos.z] = new MapData.MapCellData() { entityID = config.EntityID };
     }
     private void AddBuildings()
     {
@@ -208,7 +208,7 @@ public class MapDataFactory
             foreach (var item in blueprintData.blocks)
             {
                 item.SetPos(CommonFunction.Vector3Sum(item.GetPos(), pos));
-                mData.Map[item.GetPos().x, item.GetPos().y, item.GetPos().z] = item.id;
+                mData.Map[item.GetPos().x, item.GetPos().y, item.GetPos().z] = new MapData.MapCellData() { entityID = item.id }; 
             }
         }
     }

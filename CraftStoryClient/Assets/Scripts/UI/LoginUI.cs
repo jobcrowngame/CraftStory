@@ -40,7 +40,7 @@ public class LoginUI : UIBase
     public void LoginResponse()
     {
         Logger.Log("ログイン成功しました。");
-        Logger.Log("ようこそ、{0}様", DataMng.E.UserData.Account);
+        Logger.Log("ようこそ、{0}", DataMng.E.UserData.Account);
 
         Start.sprite = ReadResources<Sprite>("Textures/button_2d_003");
 

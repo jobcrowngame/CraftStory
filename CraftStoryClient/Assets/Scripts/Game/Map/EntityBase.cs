@@ -70,11 +70,12 @@ public class EntityBase : MonoBehaviour
 public enum EntityType
 {
     Obstacle = -1,
+    None = 0,
     Block = 1,
     Block2 = 2, // 半透明ブロック
     Resources = 100,
-    Craft = 1000,
+    Workbench = 1000,
     Kamado = 1001,
-    Dor = 2000,
+    Door = 2000,
     TransferGate = 9999
 }
