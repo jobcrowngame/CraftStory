@@ -29,20 +29,6 @@ public class BlueprintData
     bool isOld = false;
 
     public BlueprintData() { }
-    public BlueprintData(string json, bool isOld)
-    {
-        this.isOld = isOld;
-
-        var obj = JsonMapper.ToObject<BlueprintData>(json);
-        sizeX = obj.sizeX;
-        sizeZ = obj.sizeZ;
-        mblocks = obj.blocks;
-
-        foreach (var item in mblocks)
-        {
-            item.id -= 1000;
-        }
-    }
     public BlueprintData(string json)
     {
         var obj = JsonMapper.ToObject<BlueprintData>(json);
@@ -61,7 +47,8 @@ public class BlueprintData
                 id = entity.EntityID,
                 posX = entity.Pos.x - centerPos.x,
                 posY = entity.Pos.y - centerPos.y,
-                posZ = entity.Pos.z - centerPos.z
+                posZ = entity.Pos.z - centerPos.z,
+                angle = entity.Angle
             });
         }
     }
@@ -95,6 +82,7 @@ public class BlueprintData
         public int posX { get; set; }
         public int posY { get; set; }
         public int posZ { get; set; }
+        public int angle { get; set; }
 
         public Vector3Int GetPos()
         {

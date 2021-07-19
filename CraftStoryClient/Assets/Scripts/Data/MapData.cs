@@ -78,7 +78,7 @@ public class MapData
             Logger.Warning("Remove entity Failure");
         }
     }
-    public EntityBase Add(MapCellData entityCell, Vector3Int pos, int rotation = 0)
+    public EntityBase Add(MapCellData entityCell, Vector3Int pos)
     {
         try
         {
@@ -122,12 +122,9 @@ public class MapData
             entity.EntityID = entityCell.entityID;
             entity.Pos = pos;
             entityDic[pos] = entity;
-            entity.transform.localRotation = Quaternion.Euler(0, rotation, 0);
-            Map[pos.x, pos.y, pos.z] = new MapCellData()
-            {
-                entityID = entityCell.entityID,
-                rotation = rotation
-            };
+            entity.transform.localRotation = Quaternion.Euler(0, entityCell.angle, 0);
+            entity.Angle = entityCell.angle;
+            Map[pos.x, pos.y, pos.z] = entityCell;
 
             //for (int x = 0; x < config.ScaleX; x++)
             //{
@@ -151,9 +148,9 @@ public class MapData
             return null;
         }
     }
-    public EntityBase Add(Vector3Int pos, int rotation = 0)
+    public EntityBase Add(Vector3Int pos)
     {
-        return Add(map[pos.x, pos.y, pos.z], pos, rotation);
+        return Add(map[pos.x, pos.y, pos.z], pos);
     }
     public void ClearMapObj()
     {
@@ -176,7 +173,7 @@ public class MapData
                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Kamado
                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Door)
                     {
-                        sb.Append(entityId + "-" + map[x, y, z].rotation + ",");
+                        sb.Append(entityId + "-" + map[x, y, z].angle + ",");
                     }
                     else
                     {
@@ -217,7 +214,7 @@ public class MapData
                         || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Kamado
                         || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Door)
                     {
-                        map[x, y, z] = new MapCellData() { entityID = entityId, rotation = int.Parse(data[1]) };
+                        map[x, y, z] = new MapCellData() { entityID = entityId, angle = int.Parse(data[1]) };
                     }
                     else
                     {
@@ -256,6 +253,6 @@ public class MapData
     public struct MapCellData
     {
         public int entityID;
-        public int rotation;
+        public int angle;
     }
 }

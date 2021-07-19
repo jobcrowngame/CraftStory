@@ -5,6 +5,7 @@ public class EntityBase : MonoBehaviour
 {
     private int id;
     private Vector3Int pos;
+    private int angle;
     private float clickingTime;
 
     public int EntityID { get => id; set => id = value; }
@@ -12,6 +13,7 @@ public class EntityBase : MonoBehaviour
     public Vector3Int Pos { get => pos; set => pos = value; }
     public Vector3Int Scale { get => new Vector3Int(EConfig.ScaleX, EConfig.ScaleY, EConfig.ScaleZ); }
     public EntityType Type { get => (EntityType)EConfig.Type; }
+    public int Angle { get => angle; set => angle = value; }
 
     public GameObject obj { get; set; }
    

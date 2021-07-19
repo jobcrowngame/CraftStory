@@ -51,7 +51,7 @@ public class MapCtl
                         var site = new Vector3Int(x, y, z);
                         if (CheckBlockIsSurface(mData, site))
                         {
-                            DataMng.E.MapData.Add(mData.Map[x, y, z], site, mData.Map[x, y, z].rotation);
+                            DataMng.E.MapData.Add(mData.Map[x, y, z], site);
                         }
                     }
                 }
@@ -73,33 +73,37 @@ public class MapCtl
         {
             var entity = CommonFunction.Instantiate<EntityBase>(ConfigMng.E.Entity[item.id].Resources, builderPencilParent, item.GetPos());
             entity.transform.localPosition = item.GetPos();
+            entity.transform.localRotation = Quaternion.Euler(0, item.angle, 0);
+
+            entity.GetComponent<BoxCollider>().enabled = false;
+            var config = ConfigMng.E.Entity[item.id];
 
             if (shader != null)
             {
-                entity.GetComponent<BoxCollider>().enabled = false;
-
-                if (item.id == 5000 || item.id == 5001)
+                if ((EntityType)config.Type == EntityType.Workbench
+                    || (EntityType)config.Type == EntityType.Kamado
+                    || (EntityType)config.Type == EntityType.Door)
                 {
-                    foreach (Transform cell in entity.transform)
-                    {
-                        var render = entity.GetComponent<Renderer>();
-                        if (render == null)
-                            continue;
+                    //foreach (Transform cell in entity.transform)
+                    //{
+                    //    var render = entity.GetComponent<Renderer>();
+                    //    if (render == null)
+                    //        continue;
                         
-                        render.material.shader = shader;
+                    //    render.material.shader = shader;
 
-                        // 重複されるかをチェック
-                        if (DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(entity.transform.position)))
-                        {
+                    //    // 重複されるかをチェック
+                    //    if (DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(entity.transform.position)))
+                    //    {
 
-                            render.material.color = new Color(1, 1, 1, 0.5f);
-                        }
-                        else
-                        {
-                            render.material.color = new Color(1, 0, 0, 0.5f);
-                            blueprint.IsDuplicate = true;
-                        }
-                    }
+                    //        render.material.color = new Color(1, 1, 1, 0.5f);
+                    //    }
+                    //    else
+                    //    {
+                    //        render.material.color = new Color(1, 0, 0, 0.5f);
+                    //        blueprint.IsDuplicate = true;
+                    //    }
+                    //}
                 }
                 else
                 {
@@ -131,12 +135,12 @@ public class MapCtl
 
         foreach (var item in blueprint.blocks)
         {
-            var entity = DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = item.id }
+            var entity = DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = item.id, angle = item.angle }
                 , CommonFunction.Vector3Sum(item.GetPos(), buildPos));
             //CheckNextToEntitys(item.GetPos());
         }
     }
-    public EntityBase CreateEntity(int entityId, Vector3Int pos, int rotation = 0)
+    public EntityBase CreateEntity(int entityId, Vector3Int pos, int angle = 0)
     {
         // マップエリア以外ならエラーメッセージを出す。
         if (IsOutRange(DataMng.E.MapData, pos))
@@ -148,7 +152,7 @@ public class MapCtl
             return null;
         }
 
-        var entity = DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = entityId }, pos, rotation);
+        var entity = DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = entityId, angle = angle }, pos);
 
         CheckNextToEntitys(pos);
 
