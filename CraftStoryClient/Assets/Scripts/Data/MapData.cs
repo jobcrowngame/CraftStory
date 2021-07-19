@@ -71,7 +71,7 @@ public class MapData
         if (entityDic.ContainsKey(pos))
         {
             GameObject.Destroy(entityDic[pos].gameObject);
-            entityDic[pos] = null;
+            entityDic.Remove(pos);
         }
         else
         {

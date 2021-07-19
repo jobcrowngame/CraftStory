@@ -52,8 +52,6 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 }
             }
 
-            ui.LoginResponse();
-
             NWMng.E.GetNewEmailCount((rp) =>
             {
                 DataMng.E.RuntimeData.NewEmailCount = (int)rp["count"];
@@ -67,6 +65,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                     {
                         DataMng.E.HomeData = new MapData(100);
                         DataMng.E.HomeData.ParseStringData((string)rp["homedata"]);
+                        ui.LoginResponse();
                     }
                 });
             }
