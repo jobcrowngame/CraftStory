@@ -23,7 +23,11 @@ public class LoginUI : UIBase
         Ver.text = "Ver:1.0.0";
 
         BGBtn = FindChiled<Button>("BG");
-        BGBtn.onClick.AddListener(()=> { CommonFunction.GoToHome(); });
+        BGBtn.onClick.AddListener(()=> 
+        {
+            //CommonFunction.GoToHome(); 
+            CommonFunction.GoToNextScene(100);
+        });
         BGBtn.enabled = false;
 
         Terms01Btn = FindChiled<Button>("Terms01Btn");

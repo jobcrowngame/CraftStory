@@ -69,7 +69,8 @@ public class MenuUI : UIBase
         });
         HomeBtn.onClick.AddListener(() =>
         {
-            CommonFunction.GoToHome();
+            //CommonFunction.GoToHome();
+            CommonFunction.GoToNextScene(100);
             Close();
         });
         PlayDescriptionBtn.onClick.AddListener(() =>

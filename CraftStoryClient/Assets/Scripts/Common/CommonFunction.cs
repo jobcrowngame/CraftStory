@@ -124,19 +124,11 @@ public class CommonFunction
     public static void GoToNextScene(int TransferGateID)
     {
         UICtl.E.Clear();
+        if(DataMng.E.MapData != null) DataMng.E.MapData.ClearMapObj();
         PlayerCtl.E.SelectItem = null;
 
         NowLoadingLG.E.NextMapID = ConfigMng.E.TransferGate[TransferGateID].NextMap;
         NowLoadingLG.E.NextSceneName = ConfigMng.E.TransferGate[TransferGateID].NextMapSceneName;
-        SceneManager.LoadSceneAsync("NowLoading");
-    }
-    public static void GoToHome()
-    {
-        UICtl.E.Clear();
-
-        NowLoadingLG.E.NextMapID = 100;
-        NowLoadingLG.E.NextSceneName = "Home";
-        if (DataMng.E.HomeData != null) DataMng.E.HomeData.ClearMapObj();
         SceneManager.LoadSceneAsync("NowLoading");
     }
 
@@ -148,7 +140,6 @@ public class CommonFunction
     {
         return new Vector3Int(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
     }
-
     public static Vector3Int Vector3Minus(Vector3Int v1, Vector3Int v2)
     {
         return new Vector3Int(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
