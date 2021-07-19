@@ -255,6 +255,7 @@ namespace ExcelToJson
                 data.Name = ToString(tbl.Rows[i]["Name"]);
                 data.IconResourcesPath = ToString(tbl.Rows[i]["IconResourcesPath"]);
                 data.Type = ToInt32(tbl.Rows[i]["Type"]);
+                data.BagType = ToInt32(tbl.Rows[i]["BagType"]);
                 data.ReferenceID = ToInt32(tbl.Rows[i]["ReferenceID"]);
                 data.MaxCount = ToInt32(tbl.Rows[i]["MaxCount"]);
 

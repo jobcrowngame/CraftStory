@@ -5,7 +5,9 @@ using UnityEngine.UI;
 public class BagUI : UIBase
 {
     TitleUI title;
-    Transform itemGridRoot;
+    Transform btnsParent { get => FindChiled("Btns"); }
+    MyButton[] btns;
+    Transform itemGridRoot { get => FindChiled("Content"); }
     Dictionary<string, BagItemCell> cellDic;
     BagSelectItem[] selectItems;
 
@@ -28,7 +30,13 @@ public class BagUI : UIBase
         title.EnActiveCoin(1);
         title.EnActiveCoin(3);
 
-        itemGridRoot = FindChiled("Content");
+        btns = new MyButton[btnsParent.childCount];
+        for (int i = 0; i < btnsParent.childCount; i++)
+        {
+            btns[i] = btnsParent.GetChild(i).GetComponent<MyButton>();
+            btns[i].Index = i;
+            btns[i].AddClickListener((index)=> { BagLG.E.OnClickClassificationBtn(index);  });
+        }
 
         var SelectItemBar = FindChiled("SelectItemBar");
         if (SelectItemBar.childCount == 6)
@@ -41,6 +49,7 @@ public class BagUI : UIBase
         }
 
         title.RefreshCoins();
+        BagLG.E.Classification = BagLG.BagClassification.All;
     }
 
     public override void Open()
@@ -48,6 +57,8 @@ public class BagUI : UIBase
         base.Open();
 
         Logger.Log("Bag Open");
+
+        BagLG.E.Classification = BagLG.BagClassification.All;
 
         NWMng.E.GetItemList((rp) =>
         {
@@ -76,9 +87,22 @@ public class BagUI : UIBase
         if (DataMng.E.Items == null)
             return;
 
-        foreach (var item in DataMng.E.Items)
+        if (BagLG.E.Classification == BagLG.BagClassification.All)
         {
-            AddItem(item);
+            foreach (var item in DataMng.E.Items)
+            {
+                AddItem(item);
+            }
+        }
+        else
+        {
+            foreach (var item in DataMng.E.Items)
+            {
+                if ((BagLG.BagClassification)item.Config().BagType == BagLG.E.Classification)
+                {
+                    AddItem(item);
+                }
+            }
         }
     }
     private void AddItem(ItemData item)
@@ -102,5 +126,14 @@ public class BagUI : UIBase
         {
             item.Refresh();
         }
+    }
+    public void ChangeSelectBtn(int index)
+    {
+        foreach (var item in btns)
+        {
+            item.IsSelected(false);
+        }
+
+        btns[index].IsSelected(true);
     }
 }
