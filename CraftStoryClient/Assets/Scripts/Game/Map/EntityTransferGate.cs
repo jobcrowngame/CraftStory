@@ -13,12 +13,8 @@ public class EntityTransferGate : EntityBase
         var characterCtl = other.GetComponent<CharacterController>();
         if (characterCtl != null)
         {
-            NWMng.E.ClearAdventure((rp)=> 
-            {
-                DataMng.GetItems(rp);
-                GiftBoxUI ui = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox);
-                ui.AddBonus(AdventureCtl.E.BonusList);
-            },AdventureCtl.E.BonusList);
+            GiftBoxUI ui = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox);
+            ui.AddBonus(AdventureCtl.E.BonusList);
         }
     }
 }

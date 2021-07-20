@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class GiftBoxUI : UIBase
 {
-    Button OKBtn;
+    Button OKBtn { get => FindChiled<Button>("OKBtn"); }
+    Button AdvertisingBtn { get => FindChiled<Button>("AdvertisingBtn"); }
     Transform itemGridRoot;
 
     public override void Init()
@@ -19,13 +20,35 @@ public class GiftBoxUI : UIBase
 
     private void InitUI()
     {
-        OKBtn = FindChiled<Button>("OKBtn");
+        AdvertisingBtn.onClick.AddListener(() => 
+        {
+            GoogleMobileAdsMng.E.ShowReawrd(()=> 
+            {
+                foreach (var item in AdventureCtl.E.BonusList)
+                {
+                    AdventureCtl.E.BonusList.Add(item);
+                }
+
+                NWMng.E.ClearAdventure((rp) =>
+                {
+                    Close();
+                    DataMng.GetItems(rp);
+                    PlayerCtl.E.Lock = false;
+                    CommonFunction.GoToNextScene(DataMng.E.MapData.Config.TransferGateID);
+                    AdventureCtl.E.Clear();
+                }, AdventureCtl.E.BonusList);
+            });
+        });
         OKBtn.onClick.AddListener(() => 
         {
-            Close();
-            AdventureCtl.E.Clear();
-            PlayerCtl.E.Lock = false;
-            CommonFunction.GoToNextScene(DataMng.E.MapData.Config.TransferGateID);
+            NWMng.E.ClearAdventure((rp) =>
+            {
+                Close();
+                DataMng.GetItems(rp);
+                PlayerCtl.E.Lock = false;
+                CommonFunction.GoToNextScene(DataMng.E.MapData.Config.TransferGateID);
+                AdventureCtl.E.Clear();
+            }, AdventureCtl.E.BonusList);
         });
 
         itemGridRoot = FindChiled("Content");
