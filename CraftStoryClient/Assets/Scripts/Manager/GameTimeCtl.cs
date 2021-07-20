@@ -16,18 +16,20 @@ public class GameTimeCtl
             curTime = value;
 
             if (curTime > SettingMng.E.GameDaySeconds)
-            {
-                curTime = 1;
-            }
+                curTime = 0.01f;
 
-            RefreshLight();
+            if (Active)
+            {
+                RefreshLight();
+            }
         }
     }
-    private float curTime = 0;
+    private float curTime;
 
     public GameTimeCtl()
     {
-        CurTime = 300;
+        Active = false;
+        CurTime = 0;
     }
 
     public void Update(float time)
@@ -36,10 +38,7 @@ public class GameTimeCtl
     }
     private void RefreshLight()
     {
-        //if (Active)
-        {
-            float percent = curTime / SettingMng.E.GameDaySeconds;
-            DirectionalLight.transform.rotation = Quaternion.Euler(360 * percent, 0, 0);
-        }
+        float percent = curTime / SettingMng.E.GameDaySeconds;
+        DirectionalLight.transform.rotation = Quaternion.Euler(360 * percent, 0, 0);
     }
 }

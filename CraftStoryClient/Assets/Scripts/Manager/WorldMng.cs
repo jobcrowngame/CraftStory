@@ -44,5 +44,6 @@ public class WorldMng : MonoBehaviour
 
         CharacterCtl.CreateCharacter();
         AdventureCtl.E.Init();
+        WorldMng.E.GameTimeCtl.Active = true;
     }
 }
