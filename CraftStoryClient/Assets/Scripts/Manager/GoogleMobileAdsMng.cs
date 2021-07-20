@@ -11,8 +11,9 @@ public class GoogleMobileAdsMng : Single<GoogleMobileAdsMng>
     private Action callBack;
 
     // Use this for initialization
-    void Start()
+    public override void Init()
     {
+        Logger.Log("GoogleMobileAdsMng 初期化");
         //アプリ起動時に一度必ず実行（他のスクリプトで実行していたら不要）
         MobileAds.Initialize(initStatus => { });
         //広告を表示
