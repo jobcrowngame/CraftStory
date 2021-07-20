@@ -21,6 +21,7 @@ public class GameTimeCtl
             if (Active)
             {
                 RefreshLight();
+                RefreshSkyBox();
             }
         }
     }
@@ -29,7 +30,7 @@ public class GameTimeCtl
     public GameTimeCtl()
     {
         Active = false;
-        CurTime = 0;
+        CurTime = SettingMng.E.GameDaySeconds * 0.1f;
     }
 
     public void Update(float time)
@@ -40,5 +41,14 @@ public class GameTimeCtl
     {
         float percent = curTime / SettingMng.E.GameDaySeconds;
         DirectionalLight.transform.rotation = Quaternion.Euler(360 * percent, 0, 0);
+
+       
+    }
+
+    private void RefreshSkyBox()
+    {
+        float percent = curTime / SettingMng.E.GameDaySeconds;
+        float newV = (percent < 0.5f) ? 1 - Mathf.Abs(percent - 0.25f) * 4f : 0;
+        RenderSettings.skybox.SetFloat("_Exposure", newV);
     }
 }
