@@ -24,9 +24,10 @@ public class GiftBoxUI : UIBase
         {
             GoogleMobileAdsMng.E.ShowReawrd(()=> 
             {
-                foreach (var item in AdventureCtl.E.BonusList)
+                int count = AdventureCtl.E.BonusList.Count;
+                for (int i = 0; i < count; i++)
                 {
-                    AdventureCtl.E.BonusList.Add(item);
+                    AdventureCtl.E.BonusList.Add(AdventureCtl.E.BonusList[i]);
                 }
 
                 NWMng.E.ClearAdventure((rp) =>
