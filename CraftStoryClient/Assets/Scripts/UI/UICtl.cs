@@ -26,23 +26,15 @@ public class UICtl : Single<UICtl>
     {
          Logger.Log("èâä˙âª UICtl");
 
-        bool ret = false;
-
         glubalObjTran = glubalObj.transform;
         uiDic = new Dictionary<UIType, UIBase>();
 
-        ret = CreateGlobalEntity();
-
-        yield return ret;
-    }
-
-    private bool CreateGlobalEntity()
-    {
         //UserTest.E.Init();
         IAPMng.E.Init();
+        TimeZoneMng.E.Init();
         WorldMng.E.Init();
 
-        return true;
+        yield return true;
     }
 
     public T CreateGlobalObject<T>() where T : Component

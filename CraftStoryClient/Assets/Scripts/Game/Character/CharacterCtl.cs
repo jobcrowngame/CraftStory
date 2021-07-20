@@ -8,15 +8,4 @@ public class CharacterCtl
     {
         player = PlayerCtl.E.AddPlayerEntity();
     }
-
-    public void OnQuit()
-    {
-        if (player == null)
-            return;
-
-        Logger.Log("Save player pos " + player.transform.position);
-
-        //DataMng.E.PlayerData.Pos = player.transform.position;
-        //DataMng.E.PlayerData.EulerAngles = player.transform.rotation.eulerAngles;
-    }
 }

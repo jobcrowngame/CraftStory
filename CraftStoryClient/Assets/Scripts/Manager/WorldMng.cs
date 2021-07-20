@@ -14,32 +14,20 @@ public class WorldMng : MonoBehaviour
     }
     private static WorldMng entity;
 
-    public CharacterCtl CharacterCtl
+    public CharacterCtl CharacterCtl { get; set; }
+    public MapCtl MapCtl { get; set; }
+    public GameTimeCtl GameTimeCtl { get; set; }
+
+    private void Update()
     {
-        get
-        {
-            if (characterCtl == null)
-                characterCtl = new CharacterCtl();
-
-            return characterCtl;
-        }
+        if (GameTimeCtl != null) GameTimeCtl.Update(Time.deltaTime);
     }
-    private CharacterCtl characterCtl;
-
-    public MapCtl MapCtl
-    {
-        get
-        {
-            if (mapCtl == null)
-                mapCtl = new MapCtl();
-
-            return mapCtl;
-        }
-    }
-    private MapCtl mapCtl;
 
     public void Init()
     {
+        GameTimeCtl = new GameTimeCtl();
+        MapCtl = new MapCtl();
+        CharacterCtl = new CharacterCtl();
     }
 
     public void CreateGameObjects(bool isHome = true)
@@ -56,10 +44,5 @@ public class WorldMng : MonoBehaviour
 
         CharacterCtl.CreateCharacter();
         AdventureCtl.E.Init();
-    }
-
-    public void OnQuit()
-    {
-        if (CharacterCtl != null) CharacterCtl.OnQuit();
     }
 }

@@ -43,4 +43,8 @@ public class SettingMng : Single<SettingMng>
 
     public int MyShopCostLv2 { get => myShopCostLv2; }
     private int myShopCostLv2 = 500;    //マイショップレベルアップコスト2
+
+    // ゲーム内一日秒数
+    public int GameDaySeconds { get => mGameDaySeconds; }
+    private int mGameDaySeconds = 60 * 30;
 }
