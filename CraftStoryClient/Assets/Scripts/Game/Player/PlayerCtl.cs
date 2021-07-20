@@ -173,6 +173,14 @@ public class PlayerCtl : MonoBehaviour
                 case ItemType.Blueprint:
                     BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.relationData);
                     break;
+
+                case ItemType.Torch:
+                    Lock = true;
+                    InstantiateEntity(obj, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
+                    PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
+
+                    StartCoroutine(UnLock());
+                    break;
             }
         }
     }

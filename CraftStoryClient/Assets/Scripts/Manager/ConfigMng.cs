@@ -6,7 +6,6 @@ using LitJson;
 
 class ConfigMng : Single<ConfigMng>
 {
-    Dictionary<int, Block> blockConfig;
     Dictionary<int, Bonus> bonusConfig;
     Dictionary<int, Map> mapConfig;
     Dictionary<int, Mountain> mountainConfig;
@@ -20,7 +19,6 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, Blueprint> blueprintConfig;
     Dictionary<int, Entity> entityConfig;
 
-    public Dictionary<int, Block> Block { get => blockConfig; }
     public Dictionary<int, Bonus> Bonus { get => bonusConfig; }
     public Dictionary<int, Map> Map{ get => mapConfig; }
     public Dictionary<int, Mountain> Mountain { get => mountainConfig; }
@@ -36,7 +34,6 @@ class ConfigMng : Single<ConfigMng>
 
     public IEnumerator InitInitCoroutine()
     {
-        blockConfig = new Dictionary<int, Block>();
         bonusConfig = new Dictionary<int, Bonus>();
         mapConfig = new Dictionary<int, Map>();
         mountainConfig = new Dictionary<int, Mountain>();
@@ -50,7 +47,6 @@ class ConfigMng : Single<ConfigMng>
         blueprintConfig = new Dictionary<int, Blueprint>();
         entityConfig = new Dictionary<int, Entity>();
 
-        ReadConfig("Config/Block", blockConfig);
         ReadConfig("Config/Bonus", bonusConfig);
         ReadConfig("Config/Map", mapConfig);
         ReadConfig("Config/MapMountain", mountainConfig);

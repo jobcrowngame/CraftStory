@@ -46,5 +46,5 @@ public class SettingMng : Single<SettingMng>
 
     // ゲーム内一日秒数
     public int GameDaySeconds { get => mGameDaySeconds; }
-    private int mGameDaySeconds = 60 * 30;
+    private int mGameDaySeconds = 6 * 5;
 }

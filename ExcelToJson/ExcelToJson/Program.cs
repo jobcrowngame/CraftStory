@@ -91,7 +91,6 @@ namespace ExcelToJson
 
             switch (fileName)
             {
-                case "Block": list = Block(tbl); break;
                 case "Bonus": list = Bonus(tbl); break;
                 case "Map": list = Map(tbl); break;
                 case "MapMountain": list = MapMountain(tbl); break;
@@ -113,24 +112,6 @@ namespace ExcelToJson
             File.WriteAllText(outputPath + fileName + ".json", json);
         }
 
-        private static object Block(DataTable tbl)
-        {
-            List<Block> list = new List<Block>();
-            for (int i = 1; i < tbl.Rows.Count; i++)
-            {
-                var data = new Block();
-
-                data.ID =               ToInt32(tbl.Rows[i]["ID"]);
-                data.ItemID =               ToInt32(tbl.Rows[i]["ItemID"]);
-                data.Name =             ToString(tbl.Rows[i]["Name"]);
-                data.ResourcesName =    ToString(tbl.Rows[i]["ResourcesName"]);
-                data.Type =             ToInt32(tbl.Rows[i]["Type"]);
-                data.DestroyTime =      ToFloat(tbl.Rows[i]["DestroyTime"]);
-
-                list.Add(data);
-            }
-            return list;
-        }
         private static object Bonus(DataTable tbl)
         {
             List<Bonus> list = new List<Bonus>();

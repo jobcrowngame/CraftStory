@@ -115,6 +115,10 @@ public class MapData
                 case EntityType.TransferGate:
                     entity = CommonFunction.Instantiate<EntityTransferGate>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
                     break;
+
+                case EntityType.Torch:
+                    entity = CommonFunction.Instantiate<EntityTorch>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
+                    break;
                 default:
                     break;
             }

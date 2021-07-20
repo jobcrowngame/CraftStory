@@ -98,5 +98,6 @@ public enum ItemType
     Workbench = 1000,
     Kamado = 1001,
     Door = 2000,
+    Torch = 2100,
     TransferGate = 9999,
 }

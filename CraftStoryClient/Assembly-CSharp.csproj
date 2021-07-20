@@ -136,7 +136,6 @@
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemCell.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Block.cs" />
     <Compile Include="Assets\Scripts\UI\ShopMyShopItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemLG.cs" />
     <Compile Include="Assets\Scripts\Manager\EffectMng.cs" />
@@ -147,7 +146,6 @@
     <Compile Include="Assets\Scripts\UI\MyShopUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestAngle.cs" />
     <Compile Include="Assets\Scripts\Game\Player\ScreenDraggingCtl.cs" />
-    <Compile Include="Assets\Scripts\Data\MapData2.cs" />
     <Compile Include="Assets\Scripts\UI\UILogicBase.cs" />
     <Compile Include="Assets\Scripts\UI\BagSelectItem.cs" />
     <Compile Include="Assets\Scripts\UI\Common\HintBarUI.cs" />
@@ -200,6 +198,7 @@
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\EntityTorch.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shader\Simple.shader" />
