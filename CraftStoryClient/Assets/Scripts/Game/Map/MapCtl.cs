@@ -51,9 +51,6 @@ public class MapCtl
                         var site = new Vector3Int(x, y, z);
                         if (CheckBlockIsSurface(mData, site))
                         {
-                            if (y == 0)
-                                mData.Map[x, y, z] = new MapData.MapCellData() { entityID = 1999 };
-
                             DataMng.E.MapData.Add(mData.Map[x, y, z], site);
                         }
                     }

@@ -271,6 +271,14 @@ public class MapData
                 }
             }
         }
+
+        for (int x = 0; x < mapSize.x; x++)
+        {
+            for (int z = 0; z < mapSize.z; z++)
+            {
+                Map[x, 0, z] = new MapCellData() { entityID = 1999 };
+            }
+        }
     }
     public void ParseStringDataOld(string mapData, string resourcesData)
     {
@@ -295,6 +303,14 @@ public class MapData
         if (!string.IsNullOrEmpty(resourcesData))
         {
             resources = resourcesData.Split(',');
+        }
+
+        for (int x = 0; x < 100; x++)
+        {
+            for (int z = 0; z < 100; z++)
+            {
+                Map[x, 0, z] = new MapCellData() { entityID = 1999 };
+            }
         }
     }
 
