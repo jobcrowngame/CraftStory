@@ -49,5 +49,5 @@ public class SettingMng : Single<SettingMng>
     private int mGameDaySeconds = 6 * 5;
 
     public float MinAmbientIntensity { get => mMinAmbientIntensity; }
-    private float mMinAmbientIntensity = 0.3f;
+    private float mMinAmbientIntensity = 0.6f;
 }
