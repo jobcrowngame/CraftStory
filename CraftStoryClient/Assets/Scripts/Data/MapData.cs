@@ -50,7 +50,23 @@ public class MapData
                 return;
             }
 
-            map[pos.x, pos.y, pos.z].entityID = 0;
+            var entity = map[pos.x, pos.y, pos.z];
+            var config = ConfigMng.E.Entity[entity.entityID];
+            if ((EntityType)config.Type == EntityType.Obstacle)
+                return;
+
+            // 阻害を削除
+            for (int x = 0; x < config.ScaleX; x++)
+            {
+                for (int z = 0; z < config.ScaleZ; z++)
+                {
+                    for (int y = 0; y < config.ScaleY; y++)
+                    {
+                        map[pos.x + x, pos.y + y, pos.z + z].entityID = 0;
+                    }
+                }
+            }
+
             if (entityDic.ContainsKey(pos))
             {
                 GameObject.Destroy(entityDic[pos].gameObject);
@@ -139,6 +155,27 @@ public class MapData
             }
 
             var config = ConfigMng.E.Entity[entityCell.entityID];
+            if ((EntityType)config.Type == EntityType.Obstacle)
+                return null;
+
+            for (int x = 0; x < config.ScaleX; x++)
+            {
+                for (int z = 0; z < config.ScaleZ; z++)
+                {
+                    for (int y = 0; y < config.ScaleY; y++)
+                    {
+                        if (x == 0 && y == 0 && z == 0)
+                            continue;
+
+                        if (map[pos.x + x, pos.y + y, pos.z + z].entityID > 0)
+                        {
+                            CommonFunction.ShowHintBar(19);
+                            return null;
+                        }
+                    }
+                }
+            }
+
             var entity = InstantiateEntity(entityCell, WorldMng.E.MapCtl.CellParent, pos);
             if (entity != null)
             {

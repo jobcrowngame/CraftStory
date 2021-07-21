@@ -193,7 +193,13 @@ public class MapCtl
                 continue;
 
             if (CheckBlockIsSurface(DataMng.E.MapData, entitys[i]))
-                DataMng.E.MapData.Add(entitys[i]);
+            {
+                var entity = DataMng.E.MapData.GetEntity(entitys[i]);
+                if (entity == null)
+                {
+                    DataMng.E.MapData.Add(entitys[i]);
+                }
+            }
             else
                 DataMng.E.MapData.DeleteObj(entitys[i]);
         }
