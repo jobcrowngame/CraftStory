@@ -46,7 +46,7 @@ public class SettingMng : Single<SettingMng>
 
     // ゲーム内一日秒数
     public int GameDaySeconds { get => mGameDaySeconds; }
-    private int mGameDaySeconds = 6 * 5;
+    private int mGameDaySeconds = 60 * 10;
 
     public float MinAmbientIntensity { get => mMinAmbientIntensity; }
     private float mMinAmbientIntensity = 0.6f;
