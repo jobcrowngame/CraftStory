@@ -44,7 +44,7 @@ public class GameTimeCtl
     public GameTimeCtl()
     {
         Active = false;
-        CurTime = SettingMng.E.GameDaySeconds * 0.1f;
+        CurTime = SettingMng.E.GameDaySeconds * 0.2f;
     }
 
     public void Update(float time)
