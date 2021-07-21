@@ -16,6 +16,7 @@ public class BraveUI : UIBase
     private void Start()
     {
         WorldMng.E.CreateGameObjects(false);
+        WorldMng.E.GameTimeCtl.Active = false;
 
         Init();
     }

@@ -35,6 +35,8 @@ public class HomeUI : UIBase
     private void Start()
     {
         WorldMng.E.CreateGameObjects();
+        WorldMng.E.GameTimeCtl.Active = true;
+
         UICtl.E.AddUI(this, UIType.Home);
 
         if (PlayDescriptionLG.E.IsFirst)

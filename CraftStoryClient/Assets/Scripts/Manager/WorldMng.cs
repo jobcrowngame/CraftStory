@@ -45,6 +45,5 @@ public class WorldMng : MonoBehaviour
         CharacterCtl.CreateCharacter();
         AdventureCtl.E.Init();
         GoogleMobileAdsMng.E.Init();
-        WorldMng.E.GameTimeCtl.Active = true;
     }
 }

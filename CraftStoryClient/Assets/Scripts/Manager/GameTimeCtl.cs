@@ -6,7 +6,21 @@ public class GameTimeCtl
 {
     Light DirectionalLight { get => GameObject.Find("Directional Light").GetComponent<Light>(); }
 
-    public bool Active { get; set; }
+    public bool Active 
+    {
+        get => mActive;
+        set
+        {
+            mActive = value;
+
+            if (!mActive)
+            {
+                RenderSettings.skybox.SetFloat("_Exposure", 1);
+                RenderSettings.ambientIntensity = 1;
+            }
+        }
+    }
+    private bool mActive;
 
     private float CurTime
     {
