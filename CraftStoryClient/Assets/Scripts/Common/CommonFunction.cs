@@ -73,6 +73,21 @@ public class CommonFunction
         return retObj;
     }
 
+    public static void GetAllChiled(Transform parent, ref List<GameObject> list)
+    {
+        foreach (Transform item in parent)
+        {
+            if (item.childCount > 1)
+            {
+                GetAllChiled(item, ref list);
+            }
+            else
+            {
+                list.Add(item.gameObject);
+            }
+        }
+    }
+
     public static GameObject Instantiate(string path, Transform parent, Vector3 pos)
     {
         var resources = ResourcesMng.E.ReadResources(path);

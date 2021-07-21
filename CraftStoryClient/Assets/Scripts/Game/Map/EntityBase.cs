@@ -68,7 +68,6 @@ public class EntityBase : MonoBehaviour
 
 public enum EntityType
 {
-    Obstacle = -1,
     None = 0,
     Block = 1,
     Block2 = 2, // 半透明ブロック
@@ -77,5 +76,6 @@ public enum EntityType
     Kamado = 1001,
     Door = 2000,
     Torch = 2100,
-    TransferGate = 9999
+    TransferGate = 9999,
+    Obstacle = 10000,
 }

@@ -78,6 +78,54 @@ public class MapData
             Logger.Warning("Remove entity Failure");
         }
     }
+    public static EntityBase InstantiateEntity(MapCellData entityCell, Transform parent, Vector3Int pos)
+    {
+        if (entityCell.entityID < 1)
+            return null;
+
+        var config = ConfigMng.E.Entity[entityCell.entityID];
+        EntityBase entity = null;
+        switch ((EntityType)config.Type)
+        {
+            case EntityType.Obstacle:
+                break;
+
+            case EntityType.Block:
+            case EntityType.Block2:
+                entity = CommonFunction.Instantiate<EntityBlock>(config.Resources, parent, pos);
+                break;
+
+            case EntityType.Resources:
+                entity = CommonFunction.Instantiate<EntityResources>(config.Resources, parent, pos);
+                break;
+
+            case EntityType.Workbench:
+            case EntityType.Kamado:
+            case EntityType.Door:
+                entity = CommonFunction.Instantiate<EntityBuilding>(config.Resources, parent, pos);
+                var angle = CommonFunction.GetCreateEntityAngleByDirection((DirectionType)entityCell.direction);
+                entity.transform.localRotation = Quaternion.Euler(0, angle, 0);
+                break;
+
+            case EntityType.TransferGate:
+                entity = CommonFunction.Instantiate<EntityTransferGate>(config.Resources, parent, pos);
+                break;
+
+            case EntityType.Torch:
+                if ((DirectionType)entityCell.direction != DirectionType.down)
+                {
+                    entity = CommonFunction.Instantiate<EntityTorch>(config.Resources, parent, pos);
+                    entity.SetTouchType((DirectionType)entityCell.direction);
+                }
+                break;
+        }
+
+        entity.EntityID = entityCell.entityID;
+        entity.Pos = pos;
+        entity.DirectionType = (DirectionType)entityCell.direction;
+
+        return entity;
+    }
     public EntityBase Add(MapCellData entityCell, Vector3Int pos)
     {
         try
@@ -91,66 +139,26 @@ public class MapData
             }
 
             var config = ConfigMng.E.Entity[entityCell.entityID];
-            EntityBase entity = null;
-            switch ((EntityType)config.Type)
-            {
-                case EntityType.Obstacle:
-                    break;
-
-                case EntityType.Block:
-                case EntityType.Block2:
-                    entity = CommonFunction.Instantiate<EntityBlock>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
-                    break;
-
-                case EntityType.Resources:
-                    entity = CommonFunction.Instantiate<EntityResources>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
-                    break;
-
-                case EntityType.Workbench:
-                case EntityType.Kamado:
-                case EntityType.Door:
-                    entity = CommonFunction.Instantiate<EntityBuilding>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
-                    var angle = CommonFunction.GetCreateEntityAngleByDirection((DirectionType)entityCell.direction);
-                    entity.transform.localRotation = Quaternion.Euler(0, angle, 0);
-                    entity.DirectionType = (DirectionType)entityCell.direction;
-                    break;
-
-                case EntityType.TransferGate:
-                    entity = CommonFunction.Instantiate<EntityTransferGate>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
-                    break;
-
-                case EntityType.Torch:
-                    if ((DirectionType)entityCell.direction != DirectionType.down)
-                    {
-                        entity = CommonFunction.Instantiate<EntityTorch>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
-                        entity.SetTouchType((DirectionType)entityCell.direction);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
+            var entity = InstantiateEntity(entityCell, WorldMng.E.MapCtl.CellParent, pos);
             if (entity != null)
             {
-                entity.EntityID = entityCell.entityID;
-                entity.Pos = pos;
                 entityDic[pos] = entity;
                 Map[pos.x, pos.y, pos.z] = entityCell;
             }
 
-            //for (int x = 0; x < config.ScaleX; x++)
-            //{
-            //    for (int z = 0; z < config.ScaleZ; z++)
-            //    {
-            //        for (int y = 0; y < config.ScaleY; y++)
-            //        {
-            //            if (x == 0 && y == 0 && z == 0)
-            //                continue;
-                        
-            //            map[pos.x + x, pos.y + y, pos.z + z] = -1;
-            //        }
-            //    }
-            //}
+            for (int x = 0; x < config.ScaleX; x++)
+            {
+                for (int z = 0; z < config.ScaleZ; z++)
+                {
+                    for (int y = 0; y < config.ScaleY; y++)
+                    {
+                        if (x == 0 && y == 0 && z == 0)
+                            continue;
+
+                        map[pos.x + x, pos.y + y, pos.z + z] = new MapCellData() { entityID = 10000 };
+                    }
+                }
+            }
 
             return entity;
         }
@@ -179,6 +187,12 @@ public class MapData
             {
                 for (int z = 0; z < MapSize.z; z++)
                 {
+                    if (map[x, y, z].entityID == 10000)
+                    {
+                        sb.Append(0 + ",");
+                        continue;
+                    }
+
                     int entityId = map[x, y, z].entityID;
 
                     if ((EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Workbench

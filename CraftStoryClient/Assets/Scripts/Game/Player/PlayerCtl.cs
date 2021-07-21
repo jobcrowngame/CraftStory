@@ -229,8 +229,12 @@ public class PlayerCtl : MonoBehaviour
         if (cell.Type == EntityType.Door
             || cell.Type == EntityType.Workbench
             || cell.Type == EntityType.Kamado
-            || cell.Type == EntityType.Torch)
+            || cell.Type == EntityType.Torch
+            || cell.Type == EntityType.Obstacle)
+        {
+            CommonFunction.ShowHintBar(19);
             return;
+        }
 
         WorldMng.E.MapCtl.CreateEntity(entityId, pos, dType);
     }

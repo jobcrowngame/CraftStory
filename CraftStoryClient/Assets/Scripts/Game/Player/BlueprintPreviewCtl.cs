@@ -97,10 +97,8 @@ public class BlueprintPreviewCtl : MonoBehaviour
 
         foreach (var item in data.blocks)
         {
-            var config = ConfigMng.E.Entity[item.id];
-            var entity = CommonFunction.Instantiate<EntityBase>(config.Resources, Parent, Vector3Int.zero);
+            var entity = MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, Parent, Vector3Int.zero);
             entity.transform.localPosition = item.GetPos();
-            entity.transform.localRotation = Quaternion.Euler(0, item.direction, 0);
         }
     }
 }

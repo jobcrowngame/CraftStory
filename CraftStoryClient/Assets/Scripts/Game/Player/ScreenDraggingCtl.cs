@@ -156,7 +156,6 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         DirectionType dType = DirectionType.foward;
         CheckTouchPos(_cacheRaycastHit.collider.transform.position, createPos , out dType);
-        Debug.LogWarning(dType);
         PlayerCtl.E.OnClick(obj, createPos, dType);
     }
 

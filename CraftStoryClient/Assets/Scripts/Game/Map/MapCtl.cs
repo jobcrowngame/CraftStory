@@ -71,9 +71,8 @@ public class MapCtl
 
         foreach (var item in blueprint.blocks)
         {
-            var entity = CommonFunction.Instantiate<EntityBase>(ConfigMng.E.Entity[item.id].Resources, builderPencilParent, item.GetPos());
+            var entity = MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, builderPencilParent, item.GetPos());
             entity.transform.localPosition = item.GetPos();
-            entity.transform.localRotation = Quaternion.Euler(0, item.direction, 0);
 
             entity.GetComponent<BoxCollider>().enabled = false;
             var config = ConfigMng.E.Entity[item.id];
@@ -82,28 +81,31 @@ public class MapCtl
             {
                 if ((EntityType)config.Type == EntityType.Workbench
                     || (EntityType)config.Type == EntityType.Kamado
-                    || (EntityType)config.Type == EntityType.Door)
+                    || (EntityType)config.Type == EntityType.Door
+                    || (EntityType)config.Type == EntityType.Torch
+                    || (EntityType)config.Type == EntityType.Obstacle)
                 {
-                    //foreach (Transform cell in entity.transform)
-                    //{
-                    //    var render = entity.GetComponent<Renderer>();
-                    //    if (render == null)
-                    //        continue;
-                        
-                    //    render.material.shader = shader;
+                    List<GameObject> childs = new List<GameObject>();
+                    CommonFunction.GetAllChiled(entity.transform, ref childs);
+                    foreach (var cell in childs)
+                    {
+                        var render = cell.GetComponent<Renderer>();
+                        if (render == null)
+                            continue;
 
-                    //    // 重複されるかをチェック
-                    //    if (DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(entity.transform.position)))
-                    //    {
+                        render.material.shader = shader;
 
-                    //        render.material.color = new Color(1, 1, 1, 0.5f);
-                    //    }
-                    //    else
-                    //    {
-                    //        render.material.color = new Color(1, 0, 0, 0.5f);
-                    //        blueprint.IsDuplicate = true;
-                    //    }
-                    //}
+                        // 重複されるかをチェック
+                        if (DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(cell.transform.position)))
+                        {
+                            render.material.color = new Color(1, 1, 1, 0.5f);
+                        }
+                        else
+                        {
+                            render.material.color = new Color(1, 0, 0, 0.5f);
+                            blueprint.IsDuplicate = true;
+                        }
+                    }
                 }
                 else
                 {
