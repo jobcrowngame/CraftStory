@@ -42,15 +42,6 @@ public class MapCtl
     {
         try
         {
-            for (int i = 0; i < mData.MapSize.x; i++)
-            {
-                for (int j = 0; j < mData.MapSize.z; j++)
-                {
-                    var site = new Vector3Int(i, -1, j);
-                    DataMng.E.MapData.Add(new MapData.MapCellData() { entityID=1999 }, site);
-                }
-            }
-
             for (int y = 0; y < mData.MapSize.y; y++)
             {
                 for (int z = 0; z < mData.MapSize.z; z++)
@@ -60,7 +51,10 @@ public class MapCtl
                         var site = new Vector3Int(x, y, z);
                         if (CheckBlockIsSurface(mData, site))
                         {
-                            DataMng.E.MapData.Add(mData.Map[x, y, z], site);
+                            if (y == 0)
+                                DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = 1999 }, site);
+                            else
+                                DataMng.E.MapData.Add(mData.Map[x, y, z], site);
                         }
                     }
                 }

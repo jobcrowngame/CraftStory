@@ -46,7 +46,9 @@ public class MapDataFactory
                 {
                     int blockId = 0;
 
-                    if (y < mapConfig.Entity01Height)
+                    if (y == 0)
+                        blockId = 1999;
+                    else if (y < mapConfig.Entity01Height)
                         blockId = mapConfig.Entity01;
                     else if (y < mapConfig.Entity02Height + mapConfig.Entity01Height)
                         blockId = mapConfig.Entity02;
