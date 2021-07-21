@@ -52,9 +52,9 @@ public class MapCtl
                         if (CheckBlockIsSurface(mData, site))
                         {
                             if (y == 0)
-                                DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = 1999 }, site);
-                            else
-                                DataMng.E.MapData.Add(mData.Map[x, y, z], site);
+                                mData.Map[x, y, z] = new MapData.MapCellData() { entityID = 1999 };
+
+                            DataMng.E.MapData.Add(mData.Map[x, y, z], site);
                         }
                     }
                 }
