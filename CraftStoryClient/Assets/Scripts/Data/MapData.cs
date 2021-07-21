@@ -158,24 +158,6 @@ public class MapData
             if ((EntityType)config.Type == EntityType.Obstacle)
                 return null;
 
-            for (int x = 0; x < config.ScaleX; x++)
-            {
-                for (int z = 0; z < config.ScaleZ; z++)
-                {
-                    for (int y = 0; y < config.ScaleY; y++)
-                    {
-                        if (x == 0 && y == 0 && z == 0)
-                            continue;
-
-                        if (map[pos.x + x, pos.y + y, pos.z + z].entityID > 0)
-                        {
-                            CommonFunction.ShowHintBar(19);
-                            return null;
-                        }
-                    }
-                }
-            }
-
             var entity = InstantiateEntity(entityCell, WorldMng.E.MapCtl.CellParent, pos);
             if (entity != null)
             {
