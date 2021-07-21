@@ -347,10 +347,11 @@ namespace ExcelToJson
                 data.ItemID = ToInt32(tbl.Rows[i]["ItemID"]);
                 data.Resources = ToString(tbl.Rows[i]["Resources"]);
                 data.Type = ToInt32(tbl.Rows[i]["Type"]);
-                data.DestroyTime = ToFloat(tbl.Rows[i]["DestroyTime"]);
                 data.ScaleX = ToInt32(tbl.Rows[i]["ScaleX"]);
                 data.ScaleZ = ToInt32(tbl.Rows[i]["ScaleZ"]);
                 data.ScaleY = ToInt32(tbl.Rows[i]["ScaleY"]);
+                data.CanDestroy = ToInt32(tbl.Rows[i]["CanDestroy"]);
+                data.DestroyTime = ToFloat(tbl.Rows[i]["DestroyTime"]);
                 data.BonusID = ToInt32(tbl.Rows[i]["BonusID"]);
 
                 list.Add(data);

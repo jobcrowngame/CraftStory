@@ -108,6 +108,7 @@ public class MapData
 
             case EntityType.Block:
             case EntityType.Block2:
+            case EntityType.Block99:
                 entity = CommonFunction.Instantiate<EntityBlock>(config.Resources, parent, pos);
                 break;
 

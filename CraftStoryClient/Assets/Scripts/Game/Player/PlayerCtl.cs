@@ -189,33 +189,39 @@ public class PlayerCtl : MonoBehaviour
         if (collider == null)
             return;
 
-        var cell = collider.GetComponent<EntityBase>();
-        if (cell != null && DataMng.E.MapData.IsHome)
+        var resourcesCell = collider.GetComponent<EntityResources>();
+        if (resourcesCell != null)
         {
-            if (clickingEntity == null || clickingEntity != cell)
+            if (resourcesCell.EConfig.CanDestroy == 0)
+                return;
+
+            if (clickingEntity == null || clickingEntity != resourcesCell)
             {
-                clickingEntity = cell;
+                clickingEntity = resourcesCell;
                 clickingEntity.CancelClicking();
             }
             else
             {
                 PlayerEntity.Behavior.Type = PlayerBehaviorType.Breack;
-                cell.OnClicking(time);
+                resourcesCell.OnClicking(time);
             }
         }
 
-        cell = collider.GetComponent<EntityResources>();
-        if (cell != null)
+        var baseCell = collider.GetComponent<EntityBase>();
+        if (baseCell != null && DataMng.E.MapData.IsHome)
         {
-            if (clickingEntity == null || clickingEntity != cell)
+            if (baseCell.EConfig.CanDestroy == 0)
+                return;
+
+            if (clickingEntity == null || clickingEntity != baseCell)
             {
-                clickingEntity = cell;
+                clickingEntity = baseCell;
                 clickingEntity.CancelClicking();
             }
             else
             {
                 PlayerEntity.Behavior.Type = PlayerBehaviorType.Breack;
-                cell.OnClicking(time);
+                baseCell.OnClicking(time);
             }
         }
     }

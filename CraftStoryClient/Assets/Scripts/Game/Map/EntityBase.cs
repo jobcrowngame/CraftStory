@@ -71,6 +71,7 @@ public enum EntityType
     None = 0,
     Block = 1,
     Block2 = 2, // 半透明ブロック
+    Block99 = 99, // 壊れないブロック
     Resources = 100,
     Workbench = 1000,
     Kamado = 1001,
