@@ -100,7 +100,7 @@ public class BlueprintPreviewCtl : MonoBehaviour
             var config = ConfigMng.E.Entity[item.id];
             var entity = CommonFunction.Instantiate<EntityBase>(config.Resources, Parent, Vector3Int.zero);
             entity.transform.localPosition = item.GetPos();
-            entity.transform.localRotation = Quaternion.Euler(0, item.angle, 0);
+            entity.transform.localRotation = Quaternion.Euler(0, item.direction, 0);
         }
     }
 }

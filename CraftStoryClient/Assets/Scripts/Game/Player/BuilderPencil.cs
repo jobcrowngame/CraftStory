@@ -154,7 +154,7 @@ public class BuilderPencil
         {
             var work = selectBlueprintData.blocks[i];
             work.SetPos(new Vector3Int(work.GetPos().z, work.GetPos().y, work.GetPos().x));
-            work.angle += 90;
+            work.direction += 90;
         }
 
         for (int i = 0; i < selectBlueprintData.blocks.Count; i++)

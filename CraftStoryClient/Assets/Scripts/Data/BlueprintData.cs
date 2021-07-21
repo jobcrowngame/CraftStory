@@ -48,7 +48,7 @@ public class BlueprintData
                 posX = entity.Pos.x - centerPos.x,
                 posY = entity.Pos.y - centerPos.y,
                 posZ = entity.Pos.z - centerPos.z,
-                angle = entity.Angle
+                direction = (int)entity.DirectionType
             });
         }
     }
@@ -82,7 +82,7 @@ public class BlueprintData
         public int posX { get; set; }
         public int posY { get; set; }
         public int posZ { get; set; }
-        public int angle { get; set; }
+        public int direction { get; set; }
 
         public Vector3Int GetPos()
         {

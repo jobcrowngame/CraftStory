@@ -42,30 +42,6 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
                 OnClicking(eventData.position);
             }
         }
-
-        //if (Input.touchCount == 2)
-        //{
-        //    if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[1].phase == TouchPhase.Ended)
-        //    {
-        //        baseDistance = 0;
-        //    }
-        //    else
-        //    {
-        //        if (baseDistance == 0)
-        //        {
-        //            baseDistance = Vector2.Distance(Input.touches[0].position, Input.touches[1].position);
-        //        }
-        //        else
-        //        {
-        //            var newDistance = Vector2.Distance(Input.touches[0].position, Input.touches[1].position);
-        //            PlayerCtl.E.BlueprintPreviewCtl.ChangeCameraPos(newDistance - baseDistance);
-        //        }
-        //    }
-        //}
-        //else
-        //{
-            
-        //}
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -177,7 +153,11 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
             return;
 
         var createPos = _cacheRaycastHit.normal + _cacheRaycastHit.collider.transform.position;
-        PlayerCtl.E.OnClick(obj, createPos);
+
+        DirectionType dType = DirectionType.foward;
+        CheckTouchPos(_cacheRaycastHit.collider.transform.position, createPos , out dType);
+        Debug.LogWarning(dType);
+        PlayerCtl.E.OnClick(obj, createPos, dType);
     }
 
     /// <summary>
@@ -197,4 +177,39 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         return _cacheRaycastHit.collider.gameObject;
     }
+
+    private void CheckTouchPos(Vector3 p1, Vector3 p2, out DirectionType touchType)
+    {
+        touchType = DirectionType.back;
+
+        if (p1.y < p2.y)
+        {
+            touchType = DirectionType.up;
+        }
+        else if (p1.y > p2.y)
+        {
+            touchType = DirectionType.down;
+        }
+        else
+        {
+            if (p1.z == p2.z)
+            {
+                touchType = p1.x > p2.x ? DirectionType.left : DirectionType.right;
+            }
+            else
+            {
+                touchType = p1.z > p2.z ? DirectionType.back : DirectionType.foward;
+            }
+        }
+    }
+}
+
+public enum DirectionType
+{
+    up,
+    down,
+    foward,
+    back,
+    right,
+    left
 }

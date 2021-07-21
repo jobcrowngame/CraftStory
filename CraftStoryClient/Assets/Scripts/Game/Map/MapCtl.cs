@@ -73,7 +73,7 @@ public class MapCtl
         {
             var entity = CommonFunction.Instantiate<EntityBase>(ConfigMng.E.Entity[item.id].Resources, builderPencilParent, item.GetPos());
             entity.transform.localPosition = item.GetPos();
-            entity.transform.localRotation = Quaternion.Euler(0, item.angle, 0);
+            entity.transform.localRotation = Quaternion.Euler(0, item.direction, 0);
 
             entity.GetComponent<BoxCollider>().enabled = false;
             var config = ConfigMng.E.Entity[item.id];
@@ -135,12 +135,12 @@ public class MapCtl
 
         foreach (var item in blueprint.blocks)
         {
-            var entity = DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = item.id, angle = item.angle }
+            var entity = DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = item.id, direction = item.direction }
                 , CommonFunction.Vector3Sum(item.GetPos(), buildPos));
             //CheckNextToEntitys(item.GetPos());
         }
     }
-    public EntityBase CreateEntity(int entityId, Vector3Int pos, int angle = 0)
+    public EntityBase CreateEntity(int entityId, Vector3Int pos, DirectionType dType)
     {
         // マップエリア以外ならエラーメッセージを出す。
         if (IsOutRange(DataMng.E.MapData, pos))
@@ -152,7 +152,7 @@ public class MapCtl
             return null;
         }
 
-        var entity = DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = entityId, angle = angle }, pos);
+        var entity = DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = entityId, direction = (int)dType }, pos);
 
         CheckNextToEntitys(pos);
 

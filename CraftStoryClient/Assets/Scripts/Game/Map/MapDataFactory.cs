@@ -28,7 +28,15 @@ public class MapDataFactory
     }
     private void AddBaseBlocks()
     {
-        int groundHeight = mapConfig.Entity01Height + mapConfig.Entity02Height + mapConfig.Entity03Height;
+        int groundHeight = mapConfig.Entity01Height;
+        if (groundHeight < 1)
+        {
+            Logger.Error("bad map config " + mapConfig.ID);
+            return;
+        }
+
+        if (mapConfig.Entity02Height > 0) groundHeight += mapConfig.Entity02Height;
+        if (mapConfig.Entity03Height > 0) groundHeight += mapConfig.Entity03Height;
 
         for (int x = 0; x < mData.MapSize.x; x++)
         {

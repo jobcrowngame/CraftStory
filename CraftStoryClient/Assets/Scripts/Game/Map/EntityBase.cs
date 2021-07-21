@@ -5,7 +5,7 @@ public class EntityBase : MonoBehaviour
 {
     private int id;
     private Vector3Int pos;
-    private int angle;
+    private DirectionType directionType;
     private float clickingTime;
 
     public int EntityID { get => id; set => id = value; }
@@ -13,7 +13,7 @@ public class EntityBase : MonoBehaviour
     public Vector3Int Pos { get => pos; set => pos = value; }
     public Vector3Int Scale { get => new Vector3Int(EConfig.ScaleX, EConfig.ScaleY, EConfig.ScaleZ); }
     public EntityType Type { get => (EntityType)EConfig.Type; }
-    public int Angle { get => angle; set => angle = value; }
+    public DirectionType DirectionType { get => directionType; set => directionType = value; }
 
     public GameObject obj { get; set; }
    
@@ -61,12 +61,9 @@ public class EntityBase : MonoBehaviour
             EffectMng.E.RemoveDestroyEffect();
         }
     }
-    public virtual void CancelClicking()
-    {
-        clickingTime = 0;
-    }
-
+    public virtual void CancelClicking() { clickingTime = 0; }
     public virtual void ClickingEnd() { }
+    public virtual void SetTouchType(DirectionType tType) { }
 }
 
 public enum EntityType

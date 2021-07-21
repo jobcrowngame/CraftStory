@@ -110,7 +110,7 @@ public class PlayerCtl : MonoBehaviour
             ? ItemType.None
             : (ItemType)selectItem.Config().Type;
     }
-    public void OnClick(GameObject obj, Vector3 pos)
+    public void OnClick(GameObject obj, Vector3 pos, DirectionType dType)
     {
         if (selectItem == null)
         {
@@ -153,8 +153,8 @@ public class PlayerCtl : MonoBehaviour
                 case ItemType.Kamado:
                 case ItemType.Door:
                     Lock = true;
-                    var rotation = CommonFunction.GetCreateEntityRotation(pos);
-                    InstantiateEntity(obj, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), rotation);
+                    var objdType = CommonFunction.GetCreateEntityDirectionByAngle(pos);
+                    InstantiateEntity(obj, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), objdType);
                     PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
 
                     StartCoroutine(UnLock());
@@ -176,7 +176,7 @@ public class PlayerCtl : MonoBehaviour
 
                 case ItemType.Torch:
                     Lock = true;
-                    InstantiateEntity(obj, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
+                    InstantiateEntity(obj, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), dType);
                     PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
 
                     StartCoroutine(UnLock());
@@ -220,14 +220,19 @@ public class PlayerCtl : MonoBehaviour
         }
     }
 
-    private void InstantiateEntity(GameObject collider, int entityId, Vector3Int pos, int rotation = 0)
+    private void InstantiateEntity(GameObject collider, int entityId, Vector3Int pos, DirectionType dType = DirectionType.up)
     {
         var cell = collider.GetComponent<EntityBase>();
         if (cell == null)
             return;
 
-        WorldMng.E.MapCtl.CreateEntity(entityId, pos, rotation);
-        Logger.Log("Create block " + pos);
+        if (cell.Type == EntityType.Door
+            || cell.Type == EntityType.Workbench
+            || cell.Type == EntityType.Kamado
+            || cell.Type == EntityType.Torch)
+            return;
+
+        WorldMng.E.MapCtl.CreateEntity(entityId, pos, dType);
     }
 
     public void ConsumableSelectItem(int count = 1)

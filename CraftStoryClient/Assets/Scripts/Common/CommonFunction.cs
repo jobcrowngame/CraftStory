@@ -151,24 +151,35 @@ public class CommonFunction
         return en.GetString(Encoding.Default.GetBytes(msg));
     }
 
-    public static int GetCreateEntityRotation(Vector3 createPos)
+    public static DirectionType GetCreateEntityDirectionByAngle(Vector3 createPos)
     {
-        int rotation = 0;
-
         var playerPos = PlayerCtl.E.PlayerEntity.transform.position;
 
         var angle = Vector2ToAngle(new Vector2(createPos.x, createPos.z) - new Vector2(playerPos.x, playerPos.z)) + 180;
 
-        if (angle >= 223 && angle < 315)
-            rotation = 0;
-        else if (angle >= 135 && angle < 225)
-            rotation = 90;
-        else if (angle >= 45 && angle < 135)
-            rotation = 180;
-        else
-            rotation = 270;
+        DirectionType dType = DirectionType.down;
 
-        return rotation;
+        if (angle >= 223 && angle < 315)
+            dType = DirectionType.back;
+        else if (angle >= 135 && angle < 225)
+            dType = DirectionType.right;
+        else if (angle >= 45 && angle < 135)
+            dType = DirectionType.foward;
+        else
+            dType = DirectionType.left;
+
+        return dType;
+    }
+    public static int GetCreateEntityAngleByDirection(DirectionType dType)
+    {
+        int angle = 0;
+        switch (dType)
+        {
+            case DirectionType.foward: angle = 180; break;
+            case DirectionType.right: angle = 90; break;
+            case DirectionType.left: angle = 270; break;
+        }
+        return angle;
     }
     /// <summary>
     /// 角度から単位ベクトルを取得

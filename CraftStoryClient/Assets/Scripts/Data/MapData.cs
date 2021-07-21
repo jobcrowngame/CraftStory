@@ -110,6 +110,9 @@ public class MapData
                 case EntityType.Kamado:
                 case EntityType.Door:
                     entity = CommonFunction.Instantiate<EntityBuilding>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
+                    var angle = CommonFunction.GetCreateEntityAngleByDirection((DirectionType)entityCell.direction);
+                    entity.transform.localRotation = Quaternion.Euler(0, angle, 0);
+                    entity.DirectionType = (DirectionType)entityCell.direction;
                     break;
 
                 case EntityType.TransferGate:
@@ -117,18 +120,23 @@ public class MapData
                     break;
 
                 case EntityType.Torch:
-                    entity = CommonFunction.Instantiate<EntityTorch>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
+                    if ((DirectionType)entityCell.direction != DirectionType.down)
+                    {
+                        entity = CommonFunction.Instantiate<EntityTorch>(config.Resources, WorldMng.E.MapCtl.CellParent, pos);
+                        entity.SetTouchType((DirectionType)entityCell.direction);
+                    }
                     break;
                 default:
                     break;
             }
 
-            entity.EntityID = entityCell.entityID;
-            entity.Pos = pos;
-            entityDic[pos] = entity;
-            entity.transform.localRotation = Quaternion.Euler(0, entityCell.angle, 0);
-            entity.Angle = entityCell.angle;
-            Map[pos.x, pos.y, pos.z] = entityCell;
+            if (entity != null)
+            {
+                entity.EntityID = entityCell.entityID;
+                entity.Pos = pos;
+                entityDic[pos] = entity;
+                Map[pos.x, pos.y, pos.z] = entityCell;
+            }
 
             //for (int x = 0; x < config.ScaleX; x++)
             //{
@@ -175,9 +183,10 @@ public class MapData
 
                     if ((EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Workbench
                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Kamado
-                       || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Door)
+                       || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Door
+                       || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Torch)
                     {
-                        sb.Append(entityId + "-" + map[x, y, z].angle + ",");
+                        sb.Append(entityId + "-" + map[x, y, z].direction + ",");
                     }
                     else
                     {
@@ -216,9 +225,10 @@ public class MapData
 
                     if ((EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Workbench
                         || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Kamado
-                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Door)
+                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Door
+                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Torch)
                     {
-                        map[x, y, z] = new MapCellData() { entityID = entityId, angle = int.Parse(data[1]) };
+                        map[x, y, z] = new MapCellData() { entityID = entityId, direction = int.Parse(data[1]) };
                     }
                     else
                     {
@@ -257,6 +267,6 @@ public class MapData
     public struct MapCellData
     {
         public int entityID;
-        public int angle;
+        public int direction;
     }
 }
