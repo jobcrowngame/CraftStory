@@ -110,77 +110,89 @@ public class PlayerCtl : MonoBehaviour
             ? ItemType.None
             : (ItemType)selectItem.Config().Type;
     }
-    public void OnClick(GameObject obj, Vector3 pos, DirectionType dType)
+    public void OnClick(GameObject collider, Vector3 pos, DirectionType dType)
     {
-        if (selectItem == null)
+        if (DataMng.E.MapData.IsHome)
         {
-            if (obj != null)
+            if (selectItem == null)
             {
-                var entity = obj.GetComponent<EntityBuilding>();
-                if (entity != null)
+                if (collider != null)
                 {
-                    switch (entity.Type)
+                    var entity = collider.GetComponent<EntityBuilding>();
+                    if (entity != null)
                     {
+                        switch (entity.Type)
+                        {
 
-                        case EntityType.Workbench:
-                        case EntityType.Kamado:
-                            var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
-                            ui.SetType(entity.Type);
-                            break;
+                            case EntityType.Workbench:
+                            case EntityType.Kamado:
+                                var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
+                                ui.SetType(entity.Type);
+                                break;
 
-                        case EntityType.Door:
-                            entity.OnClickDoor();
-                            break;
+                            case EntityType.Door:
+                                entity.OnClickDoor();
+                                break;
+                        }
                     }
                 }
-            }
 
-            return;
+                return;
+            }
+            else
+            {
+                switch ((ItemType)selectItem.Config().Type)
+                {
+                    case ItemType.Block:
+                        Lock = true;
+                        InstantiateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
+                        PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
+
+                        StartCoroutine(UnLock());
+                        break;
+
+                    case ItemType.Workbench:
+                    case ItemType.Kamado:
+                    case ItemType.Door:
+                        Lock = true;
+                        var objdType = CommonFunction.GetCreateEntityDirectionByAngle(pos);
+                        InstantiateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), objdType);
+                        PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
+
+                        StartCoroutine(UnLock());
+                        break;
+
+                    case ItemType.BuilderPencil:
+                        var newPos = collider.transform.position;
+                        newPos.y += 1;
+
+                        if (builderPencil.IsStart)
+                            builderPencil.Start(newPos);
+                        else
+                            builderPencil.End(newPos);
+                        break;
+
+                    case ItemType.Blueprint:
+                        BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.relationData);
+                        break;
+
+                    case ItemType.Torch:
+                        Lock = true;
+                        InstantiateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), dType);
+                        PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
+
+                        StartCoroutine(UnLock());
+                        break;
+                }
+            }
         }
         else
         {
-            switch ((ItemType)selectItem.Config().Type)
+            var resourcesCell = collider.GetComponent<EntityResources>();
+            if (resourcesCell != null)
             {
-                case ItemType.Block:
-                    Lock = true;
-                    InstantiateEntity(obj, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
-                    PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
-
-                    StartCoroutine(UnLock());
-                    break;
-
-                case ItemType.Workbench:
-                case ItemType.Kamado:
-                case ItemType.Door:
-                    Lock = true;
-                    var objdType = CommonFunction.GetCreateEntityDirectionByAngle(pos);
-                    InstantiateEntity(obj, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), objdType);
-                    PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
-
-                    StartCoroutine(UnLock());
-                    break;
-
-                case ItemType.BuilderPencil:
-                    var newPos = obj.transform.position;
-                    newPos.y += 1;
-
-                    if (builderPencil.IsStart)
-                        builderPencil.Start(newPos);
-                    else
-                        builderPencil.End(newPos);
-                    break;
-
-                case ItemType.Blueprint:
-                    BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.relationData);
-                    break;
-
-                case ItemType.Torch:
-                    Lock = true;
-                    InstantiateEntity(obj, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), dType);
-                    PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
-
-                    StartCoroutine(UnLock());
-                    break;
+                AdventureCtl.E.AddBonus(resourcesCell.EConfig.BonusID);
+                WorldMng.E.MapCtl.DeleteEntity(resourcesCell);
             }
         }
     }
@@ -189,39 +201,24 @@ public class PlayerCtl : MonoBehaviour
         if (collider == null)
             return;
 
-        var resourcesCell = collider.GetComponent<EntityResources>();
-        if (resourcesCell != null)
+        if (DataMng.E.MapData.IsHome)
         {
-            if (resourcesCell.EConfig.CanDestroy == 0)
-                return;
+            var baseCell = collider.GetComponent<EntityBase>();
+            if (baseCell != null)
+            {
+                if (baseCell.EConfig.CanDestroy == 0)
+                    return;
 
-            if (clickingEntity == null || clickingEntity != resourcesCell)
-            {
-                clickingEntity = resourcesCell;
-                clickingEntity.CancelClicking();
-            }
-            else
-            {
-                PlayerEntity.Behavior.Type = PlayerBehaviorType.Breack;
-                resourcesCell.OnClicking(time);
-            }
-        }
-
-        var baseCell = collider.GetComponent<EntityBase>();
-        if (baseCell != null && DataMng.E.MapData.IsHome)
-        {
-            if (baseCell.EConfig.CanDestroy == 0)
-                return;
-
-            if (clickingEntity == null || clickingEntity != baseCell)
-            {
-                clickingEntity = baseCell;
-                clickingEntity.CancelClicking();
-            }
-            else
-            {
-                PlayerEntity.Behavior.Type = PlayerBehaviorType.Breack;
-                baseCell.OnClicking(time);
+                if (clickingEntity == null || clickingEntity != baseCell)
+                {
+                    clickingEntity = baseCell;
+                    clickingEntity.CancelClicking();
+                }
+                else
+                {
+                    PlayerEntity.Behavior.Type = PlayerBehaviorType.Breack;
+                    baseCell.OnClicking(time);
+                }
             }
         }
     }
