@@ -70,6 +70,8 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                     ui.LoginResponse();
                 });
             }
+
+            ui.LoginResponse();
         }, id, pw);
     }
 }
