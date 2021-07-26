@@ -10,6 +10,8 @@ public class NowLoadingLG : UILogicBase<NowLoadingLG, NowLoadingUI>
     public string NextSceneName { get; set; }
     public int NextMapID { get; set; }
 
+    public int BeforTransferGateID { get; set; }
+
     public IEnumerator LoadData()
     {
         // シーンの読み込みをする

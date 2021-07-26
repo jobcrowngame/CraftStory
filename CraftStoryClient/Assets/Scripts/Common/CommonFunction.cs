@@ -1,10 +1,7 @@
-﻿using JsonConfigData;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -139,12 +136,28 @@ public class CommonFunction
     public static void GoToNextScene(int TransferGateID)
     {
         UICtl.E.Clear();
-        if(DataMng.E.MapData != null) DataMng.E.MapData.ClearMapObj();
+        if (DataMng.E.MapData != null) DataMng.E.MapData.ClearMapObj();
         PlayerCtl.E.SelectItem = null;
 
-        NowLoadingLG.E.NextMapID = ConfigMng.E.TransferGate[TransferGateID].NextMap;
-        NowLoadingLG.E.NextSceneName = ConfigMng.E.TransferGate[TransferGateID].NextMapSceneName;
-        SceneManager.LoadSceneAsync("NowLoading");
+        var config = ConfigMng.E.TransferGate[TransferGateID];
+
+        var random = UnityEngine.Random.Range(0, 100f);
+        if (random < config.TreasureMapPercent)
+        {
+            NowLoadingLG.E.BeforTransferGateID = ConfigMng.E.Map[config.NextMap].TransferGateID;
+
+            config = ConfigMng.E.TransferGate[config.TreasureMap];
+
+            NowLoadingLG.E.NextMapID = config.NextMap;
+            NowLoadingLG.E.NextSceneName = config.NextMapSceneName;
+            SceneManager.LoadSceneAsync("NowLoading");
+        }
+        else
+        {
+            NowLoadingLG.E.NextMapID = config.NextMap;
+            NowLoadingLG.E.NextSceneName = config.NextMapSceneName;
+            SceneManager.LoadSceneAsync("NowLoading");
+        }
     }
 
     public static Vector3 Vector3Sum(Vector3 v1, Vector3 v2)

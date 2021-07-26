@@ -40,26 +40,19 @@ public class MapCtl
     }
     private void InstantiateEntitys(MapData mData)
     {
-        try
+        for (int y = 0; y < mData.MapSize.y; y++)
         {
-            for (int y = 0; y < mData.MapSize.y; y++)
+            for (int z = 0; z < mData.MapSize.z; z++)
             {
-                for (int z = 0; z < mData.MapSize.z; z++)
+                for (int x = 0; x < mData.MapSize.x; x++)
                 {
-                    for (int x = 0; x < mData.MapSize.x; x++)
+                    var site = new Vector3Int(x, y, z);
+                    if (CheckBlockIsSurface(mData, site))
                     {
-                        var site = new Vector3Int(x, y, z);
-                        if (CheckBlockIsSurface(mData, site))
-                        {
-                            DataMng.E.MapData.Add(mData.Map[x, y, z], site);
-                        }
+                        DataMng.E.MapData.Add(mData.Map[x, y, z], site);
                     }
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            Logger.Error(ex);
         }
     }
 

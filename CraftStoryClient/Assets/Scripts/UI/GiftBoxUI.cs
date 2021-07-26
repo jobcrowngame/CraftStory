@@ -34,9 +34,7 @@ public class GiftBoxUI : UIBase
                 {
                     Close();
                     DataMng.GetItems(rp);
-                    PlayerCtl.E.Lock = false;
-                    CommonFunction.GoToNextScene(DataMng.E.MapData.Config.TransferGateID);
-                    AdventureCtl.E.Clear();
+                    GoToNext();
                 }, AdventureCtl.E.BonusList);
             });
         });
@@ -46,9 +44,7 @@ public class GiftBoxUI : UIBase
             {
                 Close();
                 DataMng.GetItems(rp);
-                PlayerCtl.E.Lock = false;
-                CommonFunction.GoToNextScene(DataMng.E.MapData.Config.TransferGateID);
-                AdventureCtl.E.Clear();
+                GoToNext();
             }, AdventureCtl.E.BonusList);
         });
 
@@ -87,5 +83,23 @@ public class GiftBoxUI : UIBase
         {
             cell.Add(ConfigMng.E.Item[itemID], count);
         }
+    }
+
+    private void GoToNext()
+    {
+        PlayerCtl.E.Lock = false;
+        int nextTransferGateID = 0;
+
+        if (DataMng.E.MapData.Config.TransferGateID == 9999)
+        {
+            nextTransferGateID = NowLoadingLG.E.BeforTransferGateID;
+        }
+        else
+        {
+            nextTransferGateID = DataMng.E.MapData.Config.TransferGateID;
+        }
+
+        CommonFunction.GoToNextScene(nextTransferGateID);
+        AdventureCtl.E.Clear();
     }
 }

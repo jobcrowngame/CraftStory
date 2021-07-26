@@ -56,6 +56,7 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Manager\GoogleMobileAdsMng.cs" />
     <Compile Include="Assets\Scripts\Common\SaveLoadFile.cs" />
     <Compile Include="Assets\Scripts\Manager\DataMng.cs" />
     <Compile Include="Assets\Scripts\Test\TestRender.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Assets\Scripts\UI\EmailDetailsUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Blueprint.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerButton.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\RandomBonusPond.cs" />
     <Compile Include="Assets\Scripts\UI\BraveLG.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterEntity.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Bonus.cs" />
@@ -195,11 +197,12 @@
     <Compile Include="Assets\Scripts\Game\Map\EntityBlock.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\EntityTorch.cs" />
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\RandomBonus.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\EntityTorch.cs" />
-    <Compile Include="Assets\Scripts\Manager\GoogleMobileAdsMng.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\EntityTreasureBox.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
@@ -435,17 +438,17 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="LitJSON">
-      <HintPath>Assets\Plugins\Lib\LitJSON.dll</HintPath>
-    </Reference>
-    <Reference Include="GoogleMobileAds.Core">
-      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Core.dll</HintPath>
-    </Reference>
     <Reference Include="GoogleMobileAds">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.dll</HintPath>
     </Reference>
+    <Reference Include="LitJSON">
+      <HintPath>Assets\Plugins\Lib\LitJSON.dll</HintPath>
+    </Reference>
     <Reference Include="GoogleMobileAds.Unity">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleMobileAds.Core">
+      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Core.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMobileAds.Common">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Common.dll</HintPath>
@@ -873,13 +876,13 @@
       <Project>{815990B8-154B-3E8B-07EC-8B4C0A3CDCA8}</Project>
       <Name>SimpleInput.Runtime</Name>
     </ProjectReference>
-    <ProjectReference Include="SimpleInput.Editor.csproj">
-      <Project>{F6107704-C902-9D6D-57B8-7633D2D6595F}</Project>
-      <Name>SimpleInput.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="GoogleMobileAds.Editor.csproj">
       <Project>{D1D738CE-BD15-E0D6-D0A3-C2EECF09FAE8}</Project>
       <Name>GoogleMobileAds.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="SimpleInput.Editor.csproj">
+      <Project>{F6107704-C902-9D6D-57B8-7633D2D6595F}</Project>
+      <Name>SimpleInput.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

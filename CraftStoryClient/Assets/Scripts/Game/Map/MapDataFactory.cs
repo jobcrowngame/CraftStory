@@ -149,6 +149,10 @@ public class MapDataFactory
 
             for (int j = 0; j < config.Count; j++)
             {
+                var range = UnityEngine.Random.Range(0, 100);
+                if (range > config.Percent)
+                    continue;
+
                 Vector3 newPos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ, config.OffsetY);
 
                 newPos = MapCtl.FixEntityPos(mData, newPos, config.CreatePosOffset);

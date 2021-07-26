@@ -92,6 +92,8 @@ namespace ExcelToJson
             switch (fileName)
             {
                 case "Bonus": list = Bonus(tbl); break;
+                case "RandomBonus": list = RandomBonus(tbl); break;
+                case "RandomBonusPond": list = RandomBonusPond(tbl); break;
                 case "Map": list = Map(tbl); break;
                 case "MapMountain": list = MapMountain(tbl); break;
                 case "Resource": list = Resource(tbl); break;
@@ -132,6 +134,47 @@ namespace ExcelToJson
                 data.BonusCount5 = ToInt32(tbl.Rows[i]["BonusCount5"]);
                 data.Bonus6 = ToInt32(tbl.Rows[i]["Bonus6"]);
                 data.BonusCount6 = ToInt32(tbl.Rows[i]["BonusCount6"]);
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object RandomBonus(DataTable tbl)
+        {
+            List<RandomBonus> list = new List<RandomBonus>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new RandomBonus();
+
+                data.ID = ToInt32(tbl.Rows[i]["ID"]);
+                data.ItemID = ToInt32(tbl.Rows[i]["ItemID"]);
+                data.Pond01 = ToInt32(tbl.Rows[i]["Pond01"]);
+                data.Count01 = ToInt32(tbl.Rows[i]["Count01"]);
+                data.Pond02 = ToInt32(tbl.Rows[i]["Pond02"]);
+                data.Count02 = ToInt32(tbl.Rows[i]["Count02"]);
+                data.Pond03 = ToInt32(tbl.Rows[i]["Pond03"]);
+                data.Count03 = ToInt32(tbl.Rows[i]["Count03"]);
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object RandomBonusPond(DataTable tbl)
+        {
+            List<RandomBonusPond> list = new List<RandomBonusPond>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new RandomBonusPond();
+
+                data.ID = ToInt32(tbl.Rows[i]["ID"]);
+                data.BonusList01 = ToString(tbl.Rows[i]["BonusList01"]);
+                data.Percent01 = ToInt32(tbl.Rows[i]["Percent01"]);
+                data.BonusList02 = ToString(tbl.Rows[i]["BonusList02"]);
+                data.Percent02 = ToInt32(tbl.Rows[i]["Percent02"]);
+                data.BonusList03 = ToString(tbl.Rows[i]["BonusList03"]);
+                data.Percent03 = ToInt32(tbl.Rows[i]["Percent03"]);
+                data.BonusList04 = ToString(tbl.Rows[i]["BonusList04"]);
+                data.Percent04 = ToInt32(tbl.Rows[i]["Percent04"]);
 
                 list.Add(data);
             }
@@ -200,6 +243,7 @@ namespace ExcelToJson
                 data.OffsetY = ToFloat(tbl.Rows[i]["OffsetY"]);
                 data.CreatePosOffset =  ToInt32(tbl.Rows[i]["CreatePosOffset"]);
                 data.Count = ToInt32(tbl.Rows[i]["Count"]);
+                data.Percent = ToInt32(tbl.Rows[i]["Percent"]);
 
                 list.Add(data);
             }
@@ -220,6 +264,8 @@ namespace ExcelToJson
                 data.PosY = ToInt32(tbl.Rows[i]["PosY"]);
                 data.PosZ = ToInt32(tbl.Rows[i]["PosZ"]);
                 data.CreatePosOffset = ToInt32(tbl.Rows[i]["CreatePosOffset"]);
+                data.TreasureMap = ToInt32(tbl.Rows[i]["TreasureMap"]);
+                data.TreasureMapPercent = ToFloat(tbl.Rows[i]["TreasureMapPercent"]);
 
                 list.Add(data);
             }
@@ -358,6 +404,5 @@ namespace ExcelToJson
             }
             return list;
         }
-
     }
 }

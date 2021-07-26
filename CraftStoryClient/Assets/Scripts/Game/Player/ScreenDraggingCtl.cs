@@ -26,7 +26,6 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     private GameObject clickingObj;
 
     float clickingTime;
-    float baseDistance = 0;
 
     private void Update()
     {

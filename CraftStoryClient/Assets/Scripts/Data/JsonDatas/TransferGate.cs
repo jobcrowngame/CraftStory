@@ -10,5 +10,7 @@ namespace JsonConfigData
         public int PosY { get; set; }
         public int PosZ { get; set; }
         public int CreatePosOffset { get; set; }
+        public int TreasureMap { get; set; }
+        public float TreasureMapPercent { get; set; }
     }
 }

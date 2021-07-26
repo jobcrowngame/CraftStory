@@ -10,5 +10,6 @@ namespace JsonConfigData
         public float OffsetY { get; set; }
         public int CreatePosOffset { get; set; }
         public int Count { get; set; }
+        public int Percent { get; set; }
     }
 }

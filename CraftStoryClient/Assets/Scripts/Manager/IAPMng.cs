@@ -6,7 +6,7 @@ public class IAPMng : Single<IAPMng>, IStoreListener
     private IStoreController controller;
     private IExtensionProvider extensions;
 
-    public void Init()
+    public override void Init()
     {
         Logger.Log("初期化開始");
 

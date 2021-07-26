@@ -26,8 +26,6 @@ public class BlueprintData
     private bool isDuplicate;
     public bool IsDuplicate { get => isDuplicate; set => isDuplicate = value; }
 
-    bool isOld = false;
-
     public BlueprintData() { }
     public BlueprintData(string json)
     {
