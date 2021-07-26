@@ -29,6 +29,6 @@ public class TermsUI : UIBase
         });
 
         DisagreeBtn = FindChiled<Button>("DisagreeBtn");
-        DisagreeBtn.onClick.AddListener(() => { Application.Quit(); });
+        DisagreeBtn.onClick.AddListener(() => { CommonFunction.QuitGame(); });
     }
 }

@@ -45,6 +45,7 @@ public class EntityBase : MonoBehaviour
         obj = null;
     }
 
+    public virtual void OnClick() { }
     public virtual void OnClicking(float time)
     {
         if (clickingTime == 0)

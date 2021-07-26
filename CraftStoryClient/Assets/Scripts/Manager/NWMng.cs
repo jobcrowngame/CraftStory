@@ -32,7 +32,7 @@ public class NWMng : MonoBehaviour
     }
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.ProductionURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.DevelopURL))
         {
             yield return www.SendWebRequest();
 
@@ -359,6 +359,17 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetNewEmailCount));
     }
+    public void GetRandomBonus(Action<JsonData> rp, int randomBonusId)
+    {
+        var data = new NWData();
+        data.Add(DataMng.E.token);
+        data.Add(DataMng.E.UserData.Account);
+        data.Add(randomBonusId);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetRandomBonus));
+    }
+
+
     public void SaveHomeData(Action<JsonData> rp, string homedata)
     {
         if (DataMng.E.UserData == null)
@@ -409,6 +420,7 @@ public class NWMng : MonoBehaviour
         GetEmail,
         ReadEmail = 1020,
         GetNewEmailCount,
+        GetRandomBonus,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

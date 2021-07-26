@@ -118,22 +118,18 @@ public class PlayerCtl : MonoBehaviour
             {
                 if (collider != null)
                 {
-                    var entity = collider.GetComponent<EntityBuilding>();
-                    if (entity != null)
+                    var entity = collider.GetComponent<EntityBase>();
+                    switch (entity.Type)
                     {
-                        switch (entity.Type)
-                        {
+                        case EntityType.Workbench:
+                        case EntityType.Kamado:
+                            var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
+                            ui.SetType(entity.Type);
+                            break;
 
-                            case EntityType.Workbench:
-                            case EntityType.Kamado:
-                                var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
-                                ui.SetType(entity.Type);
-                                break;
-
-                            case EntityType.Door:
-                                entity.OnClickDoor();
-                                break;
-                        }
+                        case EntityType.Door:
+                            entity.OnClick();
+                            break;
                     }
                 }
 
@@ -188,12 +184,23 @@ public class PlayerCtl : MonoBehaviour
         }
         else
         {
-            var resourcesCell = collider.GetComponent<EntityResources>();
-            if (resourcesCell != null)
+            if (collider != null)
             {
-                AdventureCtl.E.AddBonus(resourcesCell.EConfig.BonusID);
-                WorldMng.E.MapCtl.DeleteEntity(resourcesCell);
+                var entity = collider.GetComponent<EntityBase>();
+                switch (entity.Type)
+                {
+                    case EntityType.Resources:
+                        AdventureCtl.E.AddBonus(entity.EConfig.BonusID);
+                        WorldMng.E.MapCtl.DeleteEntity(entity);
+                        break;
+
+                    case EntityType.TreasureBox:
+                        entity.OnClick();
+                        break;
+                }
             }
+
+               
         }
     }
     public void OnClicking(float time, GameObject collider)

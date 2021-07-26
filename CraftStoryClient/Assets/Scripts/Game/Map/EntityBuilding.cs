@@ -47,8 +47,10 @@ public class EntityBuilding : EntityBase
         }, EConfig.ItemID, 1);
     }
 
-    public void OnClickDoor()
+    public override void OnClick()
     {
+        base.OnClick();
+
         DoorIsClosed = !DoorIsClosed;
     }
 }
