@@ -125,7 +125,7 @@ public class NWMng : MonoBehaviour
     public void Login(Action<JsonData> rp, string id, string pw)
     {
         var data = new NWData();
-        data.Add("");
+        data.Add("N");
         data.Add(id);
         data.Add(pw);
 
