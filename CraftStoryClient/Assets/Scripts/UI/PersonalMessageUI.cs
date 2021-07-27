@@ -20,7 +20,7 @@ public class PersonalMessageUI : UIBase
         PersonalMessageLG.E.Init(this);
 
         title = FindChiled<TitleUI>("Title");
-        title.SetTitle("個人情報");
+        title.SetTitle("プロフィール");
         title.SetOnClose(() => { Close(); });
         title.EnActiveCoin(1);
         title.EnActiveCoin(2);
