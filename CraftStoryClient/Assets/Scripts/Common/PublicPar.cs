@@ -54,6 +54,8 @@ public class PublicPar
     public static string SaveRootPath =
 #if UNITY_IOS
         Application.persistentDataPath;
+#elif UNITY_ANDROID
+        Application.persistentDataPath;
 #elif UNITY_EDITOR
         Application.dataPath + "/SaveData";
 #endif
