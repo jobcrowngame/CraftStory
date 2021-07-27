@@ -20,7 +20,7 @@ public class LoginUI : UIBase
         Start = FindChiled<Image>("Start");
 
         Ver = FindChiled<Text>("Ver");
-        Ver.text = "Ver:1.0.0";
+        Ver.text = "Ver:" + Application.version;
 
         BGBtn = FindChiled<Button>("BG");
         BGBtn.onClick.AddListener(()=> 
