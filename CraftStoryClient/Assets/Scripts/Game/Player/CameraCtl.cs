@@ -94,6 +94,8 @@ public class CameraCtl : MonoBehaviour
             float v = Mathf.Sqrt(curV / maxV);
             v *= curMaxDistance;
             CameraPosZ = curMaxDistance - v;
+            if (CameraPosZ > 0) CameraPosZ = 0;
+
             curMaxDistance2 = CameraPosZ;
             RefreshCameraPos();
         }
