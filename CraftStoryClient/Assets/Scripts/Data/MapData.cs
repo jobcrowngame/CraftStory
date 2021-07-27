@@ -33,6 +33,8 @@ public class MapData
     }
     public MapData(string stringData)
     {
+        id = 100;
+         
         string[] entitys = stringData.Split(',');
         string[] data;
         int index = 0;
