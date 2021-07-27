@@ -190,6 +190,9 @@ public class PlayerCtl : MonoBehaviour
                 switch (entity.Type)
                 {
                     case EntityType.Resources:
+                        var effect = EffectMng.E.AddEffect<EffectBase>(pos, EffectType.ResourcesDestroy);
+                        //effect.Init();
+
                         AdventureCtl.E.AddBonus(entity.EConfig.BonusID);
                         WorldMng.E.MapCtl.DeleteEntity(entity);
                         break;

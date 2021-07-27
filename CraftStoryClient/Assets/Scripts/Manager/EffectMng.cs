@@ -16,7 +16,14 @@ public class EffectMng : Single<EffectMng>
         if (destroyEffect != null)
             RemoveDestroyEffect();
 
-        destroyEffect = CommonFunction.Instantiate("Prefabs/Effect/effect_001", WorldMng.E.MapCtl.EffectParent, pos);
+        destroyEffect = CommonFunction.Instantiate(GetEffectResourcesPath(EffectType.BlockDestroy), WorldMng.E.MapCtl.EffectParent, pos);
+    }
+    public T AddEffect<T>(Vector3 pos, EffectType eType) where T : Component
+    {
+        Logger.Log("Add Effect");
+
+        var effect = CommonFunction.Instantiate<T>(GetEffectResourcesPath(eType), WorldMng.E.MapCtl.EffectParent, pos);
+        return effect;
     }
     public void RemoveDestroyEffect()
     {
@@ -27,4 +34,19 @@ public class EffectMng : Single<EffectMng>
             destroyEffect = null;
         }
     }
+
+    private string GetEffectResourcesPath(EffectType eType)
+    {
+        switch (eType)
+        {
+            case EffectType.BlockDestroy: return "Prefabs/Effect/effect_001";
+            case EffectType.ResourcesDestroy: return "Prefabs/Effect/ResourcesDeleteEffect";
+            default: return "";
+        }
+    }
+}
+public enum EffectType
+{
+    BlockDestroy,
+    ResourcesDestroy,
 }
