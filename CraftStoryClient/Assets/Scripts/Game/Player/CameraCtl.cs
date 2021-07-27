@@ -89,7 +89,7 @@ public class CameraCtl : MonoBehaviour
         if (lookUpAngle > SettingMng.E.LookUpAngleMin && lookUpAngle < 360)
         {
             float curV = 360 - lookUpAngle;
-            float offset = curV > 360 - SettingMng.E.LookUpAngleMin - 10 ? 0 : 10;
+            float offset = curV > 360 - SettingMng.E.LookUpAngleMin ? 0 : 20;
             float maxV = 360 - SettingMng.E.LookUpAngleMin - offset;
             float v = Mathf.Sqrt(curV / maxV);
             v *= curMaxDistance;
