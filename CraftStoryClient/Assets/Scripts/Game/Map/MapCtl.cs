@@ -40,11 +40,11 @@ public class MapCtl
     }
     private void InstantiateEntitys(MapData mData)
     {
-        for (int y = 0; y < mData.MapSize.y; y++)
+        for (int y = 0; y < mData.GetMapSize().y; y++)
         {
-            for (int z = 0; z < mData.MapSize.z; z++)
+            for (int z = 0; z < mData.GetMapSize().z; z++)
             {
-                for (int x = 0; x < mData.MapSize.x; x++)
+                for (int x = 0; x < mData.GetMapSize().x; x++)
                 {
                     var site = new Vector3Int(x, y, z);
                     if (CheckBlockIsSurface(mData, site))
@@ -140,7 +140,7 @@ public class MapCtl
         // マップエリア以外ならエラーメッセージを出す。
         if (IsOutRange(DataMng.E.MapData, pos))
         {
-            if (pos.y > DataMng.E.MapData.MapSize.y - 1)
+            if (pos.y > DataMng.E.MapData.GetMapSize().y - 1)
             {
                 CommonFunction.ShowHintBar(7);
             }
@@ -227,25 +227,25 @@ public class MapCtl
         if (pos.x < offset)
             pos.x = offset;
 
-        if (pos.x > mData.MapSize.x - offset)
-            pos.x = mData.MapSize.x - offset;
+        if (pos.x > mData.GetMapSize().x - offset)
+            pos.x = mData.GetMapSize().x - offset;
 
         if (pos.z < offset)
             pos.z = offset;
 
-        if (pos.z > mData.MapSize.z - offset)
-            pos.z = mData.MapSize.z - offset;
+        if (pos.z > mData.GetMapSize().z - offset)
+            pos.z = mData.GetMapSize().z - offset;
 
         return pos;
     }
 
     public static Vector3Int GetGroundPos(MapData mapData, int posX, int posZ, float offsetY = 0)
     {
-        if (posX < 0) posX = UnityEngine.Random.Range(0, mapData.Config.SizeX);
-        if (posZ < 0) posZ = UnityEngine.Random.Range(0, mapData.Config.SizeZ);
+        if (posX < 0) posX = UnityEngine.Random.Range(0, mapData.SizeX);
+        if (posZ < 0) posZ = UnityEngine.Random.Range(0, mapData.SizeZ);
 
         int posY = 0;
-        for (int i = mapData.Config.SizeY - 1; i >= 0; i--)
+        for (int i = mapData.SizeY - 1; i >= 0; i--)
         {
             if (mapData.Map[posX, i, posZ].entityID == 0)
                 continue;
@@ -290,9 +290,9 @@ public class MapCtl
     /// </summary>
     public static bool IsOutRange(MapData mapData, Vector3Int pos)
     {
-        return pos.x < 0 || pos.x > mapData.MapSize.x - 1
-            || pos.y < 0 || pos.y > mapData.MapSize.y - 1
-            || pos.z < 0 || pos.z > mapData.MapSize.z - 1;
+        return pos.x < 0 || pos.x > mapData.GetMapSize().x - 1
+            || pos.y < 0 || pos.y > mapData.GetMapSize().y - 1
+            || pos.z < 0 || pos.z > mapData.GetMapSize().z - 1;
     }
 
     #endregion

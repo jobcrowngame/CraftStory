@@ -9,24 +9,73 @@ using JsonConfigData;
 public class MapData
 {
     private int id;
-
-    public Vector3Int MapSize { get => new Vector3Int(ConfigMng.E.Map[id].SizeX, ConfigMng.E.Map[id].SizeY, ConfigMng.E.Map[id].SizeZ); }
+    public int SizeX { get; set; }
+    public int SizeY { get; set; }
+    public int SizeZ { get; set; }
 
     public Map Config { get => ConfigMng.E.Map[id]; }
     public bool IsHome { get => id == 100; }
 
     public MapCellData[,,] Map { get => map; }
+    [NonSerialized]
     private MapCellData[,,] map;
 
-    public string strMap { get; set; }
-    public string strEntity { get; set; }
-
+    [NonSerialized]
     Dictionary<Vector3Int, EntityBase> entityDic = new Dictionary<Vector3Int, EntityBase>();
 
     public MapData(int mapID)
     {
         id = mapID;
-        map = new MapCellData[MapSize.x, MapSize.y, MapSize.z];
+        map = new MapCellData[Config.SizeX, Config.SizeY, Config.SizeZ];
+        SizeX = Config.SizeX;
+        SizeY = Config.SizeY;
+        SizeZ = Config.SizeZ;
+    }
+    public MapData(string stringData)
+    {
+        string[] entitys = stringData.Split(',');
+        string[] data;
+        int index = 0;
+
+        string[] sizeStr = entitys[entitys.Length - 1].Split('-');
+        Vector3Int mapSize = new Vector3Int(int.Parse(sizeStr[0]), int.Parse(sizeStr[1]), int.Parse(sizeStr[2]));
+        SizeX = mapSize.x;
+        SizeY = mapSize.y;
+        SizeZ = mapSize.z;
+
+        map = new MapCellData[mapSize.x, mapSize.y, mapSize.z];
+
+        for (int x = 0; x < mapSize.x; x++)
+        {
+            for (int y = 0; y < mapSize.y; y++)
+            {
+                for (int z = 0; z < mapSize.z; z++)
+                {
+                    data = entitys[index++].Split('-');
+                    int entityId = int.Parse(data[0]);
+
+                    if ((EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Workbench
+                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Kamado
+                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Door
+                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Torch)
+                    {
+                        map[x, y, z] = new MapCellData() { entityID = entityId, direction = int.Parse(data[1]) };
+                    }
+                    else
+                    {
+                        map[x, y, z] = new MapCellData() { entityID = entityId };
+                    }
+                }
+            }
+        }
+
+        for (int x = 0; x < mapSize.x; x++)
+        {
+            for (int z = 0; z < mapSize.z; z++)
+            {
+                Map[x, 0, z] = new MapCellData() { entityID = 1999 };
+            }
+        }
     }
 
     public bool IsNull(Vector3Int site)
@@ -39,12 +88,16 @@ public class MapData
         entityDic.TryGetValue(site, out entity);
         return entity;
     }
+    public Vector3Int GetMapSize()
+    {
+        return new Vector3Int(SizeX, SizeY, SizeZ);
+    }
 
     public void Remove(Vector3Int pos)
     {
         try
         {
-            if (pos.x > MapSize.x || pos.y > MapSize.y || pos.z > MapSize.z)
+            if (pos.x > SizeX || pos.y > SizeY || pos.z > SizeZ)
             {
                 Logger.Error("Remove mapdata file." + pos);
                 return;
@@ -208,11 +261,11 @@ public class MapData
     {
         StringBuilder sb = new StringBuilder();
 
-        for (int x = 0; x < MapSize.x; x++)
+        for (int x = 0; x < SizeX; x++)
         {
-            for (int y = 0; y < MapSize.y; y++)
+            for (int y = 0; y < SizeY; y++)
             {
-                for (int z = 0; z < MapSize.z; z++)
+                for (int z = 0; z < SizeZ; z++)
                 {
                     if (map[x, y, z].entityID == 10000)
                     {
@@ -236,7 +289,7 @@ public class MapData
                 }
             }
         }
-        sb.Append(string.Format("{0}-{1}-{2}", MapSize.x, MapSize.y, MapSize.z));
+        sb.Append(string.Format("{0}-{1}-{2}", SizeX, SizeY, SizeZ));
 
 
         var strMap = sb.ToString();
@@ -244,83 +297,41 @@ public class MapData
         Logger.Log(strMap);
         return strMap;
     }
-    public void ParseStringData(string strMap)
-    {
-        string[] entitys = strMap.Split(',');
-        string[] data;
-        int index = 0;
+    //public void ParseStringDataOld(string mapData, string resourcesData)
+    //{
+    //    string[] maps = mapData.Split(',');
+    //    string data;
+    //    int index = 0;
 
-        string[] sizeStr = entitys[entitys.Length - 1].Split('-');
-        Vector3Int mapSize = new Vector3Int(int.Parse(sizeStr[0]), int.Parse(sizeStr[1]), int.Parse(sizeStr[2]));
+    //    for (int x = 0; x < 100; x++)
+    //    {
+    //        for (int y = 0; y < 100; y++)
+    //        {
+    //            for (int z = 0; z < 100; z++)
+    //            {
+    //                data = maps[index++];
+    //                int entityId = data == "n" ? 0 : int.Parse(data);
+    //                map[x, y, z] = new MapCellData() { entityID = entityId };
+    //            }
+    //        }
+    //    }
 
-        //map = new EntityBase[mapSize.x, mapSize.y, mapSize.z];
+    //    string[] resources;
+    //    if (!string.IsNullOrEmpty(resourcesData))
+    //    {
+    //        resources = resourcesData.Split(',');
+    //    }
 
-        for (int x = 0; x < mapSize.x; x++)
-        {
-            for (int y = 0; y < mapSize.y; y++)
-            {
-                for (int z = 0; z < mapSize.z; z++)
-                {
-                    data = entitys[index++].Split('-');
-                    int entityId = int.Parse(data[0]);
+    //    for (int x = 0; x < 100; x++)
+    //    {
+    //        for (int z = 0; z < 100; z++)
+    //        {
+    //            Map[x, 0, z] = new MapCellData() { entityID = 1999 };
+    //        }
+    //    }
+    //}
 
-                    if ((EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Workbench
-                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Kamado
-                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Door
-                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Torch)
-                    {
-                        map[x, y, z] = new MapCellData() { entityID = entityId, direction = int.Parse(data[1]) };
-                    }
-                    else
-                    {
-                        map[x, y, z] = new MapCellData() { entityID = entityId };
-                    }
-                }
-            }
-        }
-
-        for (int x = 0; x < mapSize.x; x++)
-        {
-            for (int z = 0; z < mapSize.z; z++)
-            {
-                Map[x, 0, z] = new MapCellData() { entityID = 1999 };
-            }
-        }
-    }
-    public void ParseStringDataOld(string mapData, string resourcesData)
-    {
-        string[] maps = mapData.Split(',');
-        string data;
-        int index = 0;
-
-        for (int x = 0; x < 100; x++)
-        {
-            for (int y = 0; y < 100; y++)
-            {
-                for (int z = 0; z < 100; z++)
-                {
-                    data = maps[index++];
-                    int entityId = data == "n" ? 0 : int.Parse(data);
-                    map[x, y, z] = new MapCellData() { entityID = entityId };
-                }
-            }
-        }
-
-        string[] resources;
-        if (!string.IsNullOrEmpty(resourcesData))
-        {
-            resources = resourcesData.Split(',');
-        }
-
-        for (int x = 0; x < 100; x++)
-        {
-            for (int z = 0; z < 100; z++)
-            {
-                Map[x, 0, z] = new MapCellData() { entityID = 1999 };
-            }
-        }
-    }
-
+    [Serializable]
     public struct MapCellData
     {
         public int entityID;

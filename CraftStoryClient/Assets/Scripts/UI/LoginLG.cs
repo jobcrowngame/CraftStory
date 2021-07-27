@@ -52,28 +52,30 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 }
             }
 
+            // 新しいメールヒント
             NWMng.E.GetNewEmailCount((rp) =>
             {
                 DataMng.E.RuntimeData.NewEmailCount = (int)rp["count"];
             });
 
-            if (DataMng.E.HomeData == null)
+            // ローカルデータがある場合サーバーにセーブ
+            if (DataMng.E.HomeData != null)
+            {
+                NWMng.E.SaveHomeData(null, DataMng.E.HomeData.ToStringData());
+            }
+            // あるいは、サーバーからデータをもらう
+            else
             {
                 NWMng.E.LoadHomeData((rp) =>
                 {
                     if (!string.IsNullOrEmpty(rp.ToString()))
                     {
-                        DataMng.E.HomeData = new MapData(100);
-                        DataMng.E.HomeData.ParseStringData((string)rp["homedata"]);
+                        DataMng.E.HomeData = new MapData((string)rp["homedata"]);
                     }
-
-                    ui.LoginResponse();
                 });
             }
-            else
-            {
-                ui.LoginResponse();
-            }
+
+            ui.LoginResponse();
         }, id, pw);
     }
 }

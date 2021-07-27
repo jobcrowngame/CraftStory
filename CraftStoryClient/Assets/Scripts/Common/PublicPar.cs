@@ -58,5 +58,8 @@ public class PublicPar
         Application.dataPath + "/SaveData";
 #endif
 
+    public static string MapDataName = "/MapData.dat";
+    public static string UserDataName = "/UserData.dat";
+
     #endregion
 }

@@ -56,19 +56,15 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\Installer\LitJSON\JsonData.cs" />
-    <Compile Include="Assets\Editor\Installer\LitJSON\JsonWriter.cs" />
-    <Compile Include="Assets\Editor\Installer\LitJSON\JsonMockWrapper.cs" />
-    <Compile Include="Assets\Editor\Installer\LitJSON\JsonException.cs" />
-    <Compile Include="Assets\Editor\Installer\LitJSON\Netstandard15Polyfill.cs" />
-    <Compile Include="Assets\Editor\Installer\LitJSON\JsonReader.cs" />
-    <Compile Include="Assets\Editor\Installer\LitJSON\JsonMapper.cs" />
-    <Compile Include="Assets\Editor\Installer\WelcomeWindow.cs" />
-    <Compile Include="Assets\Editor\Installer\LitJSON\IJsonWrapper.cs" />
-    <Compile Include="Assets\Editor\Installer\LitJSON\ParserToken.cs" />
-    <Compile Include="Assets\Editor\Installer\LitJSON\Lexer.cs" />
+    <Compile Include="Assets\Editor\PostXcodeBuild.cs" />
   </ItemGroup>
   <ItemGroup>
+     <None Include="Assets\ExternalDependencyManager\Editor\Google.VersionHandlerImpl_v1.2.165.dll" />
+     <None Include="Assets\ExternalDependencyManager\Editor\Google.PackageManagerResolver_v1.2.165.dll" />
+     <None Include="Assets\ExternalDependencyManager\Editor\external-dependency-manager_version-1.2.165_manifest.txt" />
+     <None Include="Assets\ExternalDependencyManager\Editor\Google.JarResolver_v1.2.165.dll" />
+     <None Include="Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll" />
+     <None Include="Assets\ExternalDependencyManager\Editor\Google.IOSResolver_v1.2.165.dll" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -303,20 +299,35 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
-    <Reference Include="gs2_websocket-sharp">
-      <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_websocket-sharp.dll</HintPath>
+    <Reference Include="GoogleMobileAds">
+      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.dll</HintPath>
     </Reference>
-    <Reference Include="JsonConfigData">
-      <HintPath>Assets\Plugins\Lib\JsonConfigData.dll</HintPath>
+    <Reference Include="LitJSON">
+      <HintPath>Assets\Plugins\Lib\LitJSON.dll</HintPath>
     </Reference>
-    <Reference Include="gs2_Google.Protobuf">
-      <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_Google.Protobuf.dll</HintPath>
+    <Reference Include="Google.PackageManagerResolver_v1.2.165">
+      <HintPath>Assets\ExternalDependencyManager\Editor\Google.PackageManagerResolver_v1.2.165.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Assets\Plugins\Lib\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="GoogleMobileAds.Unity">
+      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="gs2_LitJSON">
-      <HintPath>Library\PackageCache\io.gs2.unity.sdk@2020.11.1\Plugins\gs2_LitJSON.dll</HintPath>
+    <Reference Include="Google.VersionHandler">
+      <HintPath>Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleMobileAds.Core">
+      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.JarResolver_v1.2.165">
+      <HintPath>Assets\ExternalDependencyManager\Editor\Google.JarResolver_v1.2.165.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.IOSResolver_v1.2.165">
+      <HintPath>Assets\ExternalDependencyManager\Editor\Google.IOSResolver_v1.2.165.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.VersionHandlerImpl_v1.2.165">
+      <HintPath>Assets\ExternalDependencyManager\Editor\Google.VersionHandlerImpl_v1.2.165.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleMobileAds.Common">
+      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Common.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
@@ -684,9 +695,6 @@
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Gs2.Weave.Inventory">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Inventory.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.Purchasing">
       <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.dll</HintPath>
     </Reference>
@@ -696,8 +704,8 @@
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Gs2.Weave.Login.Editor">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Login.Editor.dll</HintPath>
+    <Reference Include="Unity.Sysroot.Linux_x86_64">
+      <HintPath>Library\ScriptAssemblies\Unity.Sysroot.Linux_x86_64.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
@@ -720,44 +728,23 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Gs2.Weave.Credential">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Credential.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.EditorCoroutines.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Gs2.Weave.Core">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Core.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.Purchasing.SecurityCore">
       <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.SecurityCore.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Purchasing.Codeless">
       <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.Codeless.dll</HintPath>
     </Reference>
-    <Reference Include="Gs2.Weave.Credential.Editor">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Credential.Editor.dll</HintPath>
+    <Reference Include="Unity.Toolchain.Macos-x86_64-Linux-x86_64">
+      <HintPath>Library\ScriptAssemblies\Unity.Toolchain.Macos-x86_64-Linux-x86_64.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Gs2.Weave.Login">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Login.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.Purchasing.Stores">
       <HintPath>Library\ScriptAssemblies\UnityEngine.Purchasing.Stores.dll</HintPath>
     </Reference>
-    <Reference Include="Gs2.Weave.Inventory.Editor">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Inventory.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.Monetization">
       <HintPath>Library\ScriptAssemblies\UnityEngine.Monetization.dll</HintPath>
-    </Reference>
-    <Reference Include="Gs2.Weave.Core.Editor">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.Core.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Gs2.Weave.EditorExtension">
-      <HintPath>Library\ScriptAssemblies\Gs2.Weave.EditorExtension.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>Library\ScriptAssemblies\UnityEditor.Purchasing.dll</HintPath>
@@ -765,11 +752,8 @@
     <Reference Include="UnityEngine.Advertisements.Editor">
       <HintPath>Library\ScriptAssemblies\UnityEngine.Advertisements.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Gs2.Editor">
-      <HintPath>Library\ScriptAssemblies\Gs2.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Gs2">
-      <HintPath>Library\ScriptAssemblies\Gs2.dll</HintPath>
+    <Reference Include="Unity.SysrootPackage.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.SysrootPackage.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -780,6 +764,10 @@
     <ProjectReference Include="SimpleInput.Runtime.csproj">
       <Project>{815990B8-154B-3E8B-07EC-8B4C0A3CDCA8}</Project>
       <Name>SimpleInput.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="GoogleMobileAds.Editor.csproj">
+      <Project>{D1D738CE-BD15-E0D6-D0A3-C2EECF09FAE8}</Project>
+      <Name>GoogleMobileAds.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="SimpleInput.Editor.csproj">
       <Project>{F6107704-C902-9D6D-57B8-7633D2D6595F}</Project>

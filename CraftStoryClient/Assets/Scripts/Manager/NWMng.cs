@@ -52,18 +52,21 @@ public class NWMng : MonoBehaviour
             }
         }
     }
-    private IEnumerator HttpRequest(Action<JsonData> rp, NWData data, CMD cmd)
+    public IEnumerator HttpRequest(Action<JsonData> rp, NWData data, CMD cmd)
     {
         Logger.Log("Send:[CMD:{0}],[data]{1}", (int)cmd, data.ToString());
         string cryptData = string.IsNullOrEmpty(data.ToString())
             ? ""
             : CryptMng.E.EncryptString(data.ToString());
 
+        if (string.IsNullOrEmpty(URL))
+            yield return null;
+
         WWWForm wwwForm = new WWWForm();
         wwwForm.AddField("code", (int)cmd);
         wwwForm.AddField("data", cryptData, System.Text.Encoding.UTF8);
 
-        using (UnityWebRequest www = UnityWebRequest.Post(url, wwwForm))
+        using (UnityWebRequest www = UnityWebRequest.Post(URL, wwwForm))
         {
             yield return www.SendWebRequest();
 
@@ -71,36 +74,26 @@ public class NWMng : MonoBehaviour
                 Logger.Error(www.error);
             else
             {
-                try
+                if (string.IsNullOrEmpty(www.downloadHandler.text))
+                    rp("");
+                else
                 {
-                    if (string.IsNullOrEmpty(www.downloadHandler.text))
+                    var resultJson = CryptMng.E.DecryptString(www.downloadHandler.text);
+                    JsonData jd = JsonMapper.ToObject(resultJson);
+                    int errorCode = (int)jd["error"];
+
+                    if (errorCode > 0)
                     {
-                        rp("");
-                        //Logger.Error("Null result [{0}]:{1}", cmd, data.ToString());
+                        if (errorCode == 998)
+                            CommonFunction.ShowHintBox(PublicPar.Maintenance, () => { Logger.Warning("Quit"); Application.Quit(); });
+                        else
+                            CommonFunction.ShowHintBar(errorCode);
                     }
                     else
                     {
-                        var resultJson = CryptMng.E.DecryptString(www.downloadHandler.text);
-                        JsonData jd = JsonMapper.ToObject(resultJson);
-                        int errorCode = (int)jd["error"];
-
-                        if (errorCode > 0)
-                        {
-                            if (errorCode == 998)
-                                CommonFunction.ShowHintBox(PublicPar.Maintenance, () => { Logger.Warning("Quit"); Application.Quit(); });
-                            else
-                                CommonFunction.ShowHintBar(errorCode);
-                        }
-                        else
-                        {
-                            if (rp != null)
-                                rp(jd["result"]);
-                        }
+                        if (rp != null)
+                            rp(jd["result"]);
                     }
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error(ex.Message);
                 }
             }
         }

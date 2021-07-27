@@ -73,7 +73,7 @@ public class BuilderPencil
         Logger.Log("s:{0}, n:{1}",startPos, endPos);
 
         List<EntityBase> entitys = new List<EntityBase>();
-        for (int y = (int)startPos.y; y < DataMng.E.MapData.MapSize.y - startPos.y; y++)
+        for (int y = (int)startPos.y; y < DataMng.E.MapData.GetMapSize().y - startPos.y; y++)
         {
             for (int x = minX; x < maxX; x++)
             {

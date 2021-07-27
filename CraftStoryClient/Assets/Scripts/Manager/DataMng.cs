@@ -7,9 +7,6 @@ using UnityEngine;
 [Serializable]
 public class DataMng : Single<DataMng>
 {
-    const string MapDataName = "/MapData.dat";
-    const string UserDataName = "/UserData.dat";
-
     public string token { get; set; }
 
     public RuntimeData RuntimeData { get; set; }
@@ -80,23 +77,18 @@ public class DataMng : Single<DataMng>
         Logger.Log("Save Data");
 
         if (uData != null)
-            SaveLoadFile.E.Save(uData, PublicPar.SaveRootPath + UserDataName);
+            SaveLoadFile.E.Save(uData, PublicPar.SaveRootPath + PublicPar.UserDataName);
 
         if (HomeData != null)
-            NWMng.E.SaveHomeData(null, HomeData.ToStringData());
+            SaveLoadFile.E.Save(DataMng.E.HomeData.ToStringData(), PublicPar.SaveRootPath + PublicPar.MapDataName);
     }
 
     public bool Load()
     {
-        uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + UserDataName);
+        uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.UserDataName);
 
-        var mData = (MapData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + MapDataName);
-        if (mData != null)
-        {
-            homeData = new MapData(100);
-            HomeData.ParseStringDataOld(mData.strMap, mData.strEntity);
-            System.IO.File.Delete(PublicPar.SaveRootPath + MapDataName);
-        }
+        var mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.MapDataName);
+        if (!string.IsNullOrEmpty(mapData)) HomeData = new MapData(mapData);
 
         return true;
     }

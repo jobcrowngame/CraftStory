@@ -38,9 +38,9 @@ public class MapDataFactory
         if (mapConfig.Entity02Height > 0) groundHeight += mapConfig.Entity02Height;
         if (mapConfig.Entity03Height > 0) groundHeight += mapConfig.Entity03Height;
 
-        for (int x = 0; x < mData.MapSize.x; x++)
+        for (int x = 0; x < mData.GetMapSize().x; x++)
         {
-            for (int z = 0; z < mData.MapSize.z; z++)
+            for (int z = 0; z < mData.GetMapSize().z; z++)
             {
                 for (int y = 0; y < groundHeight; y++)
                 {

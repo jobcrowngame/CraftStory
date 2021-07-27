@@ -45,7 +45,7 @@ public class BraveUI : UIBase
         PlayerCtl.E.ScreenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
         PlayerCtl.E.CameraCtl = Camera.main.GetComponent<CameraCtl>();
 
-        SceneName.text = ConfigMng.E.Map[DataMng.E.MapData.Config.ID].Name;
+        SceneName.text = DataMng.E.MapData.Config.Name;
 
         StartCoroutine(FadeIn());
     }
