@@ -4,9 +4,16 @@ public class BraveLG : UILogicBase<BraveLG, BraveUI>
 {
     Stack<BraveCellItem> itemStack = new Stack<BraveCellItem>();
 
+    private bool isInited = false;
+
     public override void Init(BraveUI ui)
     {
         base.Init(ui);
+
+        if (isInited)
+            return;
+
+        isInited = true;
 
         TimeZoneMng.E.AddSecondTimer01Event(() => 
         {
