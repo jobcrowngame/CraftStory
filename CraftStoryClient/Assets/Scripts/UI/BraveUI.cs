@@ -10,6 +10,8 @@ public class BraveUI : UIBase
     MyButton PlussBtn { get => FindChiled<MyButton>("PlussBtn"); }
     MyButton MinusBtn { get => FindChiled<MyButton>("MinusBtn"); }
 
+    Transform ItemMsgParent { get => FindChiled("Content"); }
+
 
     private float fadeInTime = 0.05f;
 
@@ -61,5 +63,14 @@ public class BraveUI : UIBase
         }
 
         FadeinImg.gameObject.SetActive(false);
+    }
+
+    public void AddItem(BraveLG.BraveCellItem item)
+    {
+        var cell = AddCell<BraveCell>("Prefabs/UI/BraveCell", ItemMsgParent);
+        if (cell != null)
+        {
+            cell.Set(item);
+        }
     }
 }

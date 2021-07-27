@@ -32,7 +32,7 @@ public class TimeZoneMng : MonoBehaviour
         while (true)
         {
             SecondTimerEvent01.Invoke();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.2f);
         }
     }
 

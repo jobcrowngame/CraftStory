@@ -19,6 +19,7 @@ public class AdventureCtl : Single<AdventureCtl>
     public void AddBonus(int id)
     {
         bonusList.Add(id);
+        BraveLG.E.AddBonus(id);
     }
 
     public void Clear()

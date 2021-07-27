@@ -211,6 +211,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csAnimationSpin.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csShowAllEffect.cs" />
     <Compile Include="Assets\Scripts\Game\Effect\EffectBase.cs" />
+    <Compile Include="Assets\Scripts\UI\BraveCell.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
