@@ -95,60 +95,25 @@ public class MapData
         return new Vector3Int(SizeX, SizeY, SizeZ);
     }
 
-    public void Remove(Vector3Int pos)
+    public void IsSurface(Vector3Int pos, bool b = true)
     {
-        try
+        if (b)
         {
-            if (pos.x > SizeX || pos.y > SizeY || pos.z > SizeZ)
-            {
-                Logger.Error("Remove mapdata file." + pos);
-                return;
-            }
-
-            var entity = map[pos.x, pos.y, pos.z];
-            var config = ConfigMng.E.Entity[entity.entityID];
-            if ((EntityType)config.Type == EntityType.Obstacle)
+            if (entityDic.ContainsKey(pos))
                 return;
 
-            // 阻害を削除
-            for (int x = 0; x < config.ScaleX; x++)
-            {
-                for (int z = 0; z < config.ScaleZ; z++)
-                {
-                    for (int y = 0; y < config.ScaleY; y++)
-                    {
-                        map[pos.x + x, pos.y + y, pos.z + z].entityID = 0;
-                    }
-                }
-            }
-
+            InstantiateEntity(Map[pos.x, pos.y, pos.z], WorldMng.E.MapCtl.CellParent, pos);
+        }
+        else
+        {
             if (entityDic.ContainsKey(pos))
             {
                 GameObject.Destroy(entityDic[pos].gameObject);
                 entityDic.Remove(pos);
             }
-            else
-            {
-                Logger.Warning("Remove entity Failure");
-            }
-        }
-        catch (Exception ex)
-        {
-            Logger.Error(ex);
         }
     }
-    public void DeleteObj(Vector3Int pos)
-    {
-        if (entityDic.ContainsKey(pos))
-        {
-            GameObject.Destroy(entityDic[pos].gameObject);
-            entityDic.Remove(pos);
-        }
-        else
-        {
-            Logger.Warning("Remove entity Failure");
-        }
-    }
+    
     public static EntityBase InstantiateEntity(MapCellData entityCell, Transform parent, Vector3Int pos)
     {
         try
@@ -234,26 +199,54 @@ public class MapData
             Map[pos.x, pos.y, pos.z] = entityCell;
         }
 
-        for (int x = 0; x < config.ScaleX; x++)
+        var obstacleList = MapCtl.GetEntityPosListByDirection(entityCell.entityID, pos, (DirectionType)entityCell.direction);
+        foreach (var item in obstacleList)
         {
-            for (int z = 0; z < config.ScaleZ; z++)
-            {
-                for (int y = 0; y < config.ScaleY; y++)
-                {
-                    if (x == 0 && y == 0 && z == 0)
-                        continue;
-
-                    map[pos.x + x, pos.y + y, pos.z + z] = new MapCellData() { entityID = 10000 };
-                }
-            }
+            map[item.x, item.y, item.z] = new MapCellData() { entityID = 10000 };
         }
 
         return entity;
     }
-    public EntityBase Add(Vector3Int pos)
+    public void Remove(Vector3Int pos)
     {
-        return Add(map[pos.x, pos.y, pos.z], pos);
+        try
+        {
+            if (MapCtl.IsOutRange(this, pos))
+            {
+                Logger.Error("Remove mapdata file." + pos);
+                return;
+            }
+
+            var entity = map[pos.x, pos.y, pos.z];
+            var config = ConfigMng.E.Entity[entity.entityID];
+            if ((EntityType)config.Type == EntityType.Obstacle)
+                return;
+
+            map[pos.x, pos.y, pos.z].entityID = 0;
+
+            // 阻害を削除
+            var obstacleList = MapCtl.GetEntityPosListByDirection(entity.entityID, pos, (DirectionType)entity.direction);
+            foreach (var item in obstacleList)
+            {
+                map[item.x, item.y, item.z].entityID = 0;
+            }
+
+            if (entityDic.ContainsKey(pos))
+            {
+                GameObject.Destroy(entityDic[pos].gameObject);
+                entityDic.Remove(pos);
+            }
+            else
+            {
+                Logger.Warning("Remove entity Failure");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex);
+        }
     }
+
     public void ClearMapObj()
     {
         entityDic.Clear();

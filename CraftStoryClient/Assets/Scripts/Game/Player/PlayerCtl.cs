@@ -151,7 +151,7 @@ public class PlayerCtl : MonoBehaviour
                     case ItemType.Kamado:
                     case ItemType.Door:
                         Lock = true;
-                        var objdType = CommonFunction.GetCreateEntityDirectionByAngle(pos);
+                        var objdType = CommonFunction.GetCreateEntityDirection(pos);
                         InstantiateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), objdType);
                         PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
 
@@ -191,7 +191,7 @@ public class PlayerCtl : MonoBehaviour
                 {
                     case EntityType.Resources:
                         var effect = EffectMng.E.AddEffect<EffectBase>(pos, EffectType.ResourcesDestroy);
-                        //effect.Init();
+                        effect.Init();
 
                         AdventureCtl.E.AddBonus(entity.EConfig.BonusID);
                         WorldMng.E.MapCtl.DeleteEntity(entity);

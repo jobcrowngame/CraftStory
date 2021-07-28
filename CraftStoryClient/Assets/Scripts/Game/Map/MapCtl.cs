@@ -46,6 +46,9 @@ public class MapCtl
             {
                 for (int x = 0; x < mData.GetMapSize().x; x++)
                 {
+                    if (mData.Map[x, y, z].entityID == 0 || mData.Map[x, y, z].entityID == 10000)
+                        continue;
+
                     var site = new Vector3Int(x, y, z);
                     if (CheckBlockIsSurface(mData, site))
                     {
@@ -148,24 +151,14 @@ public class MapCtl
         }
 
         var config = ConfigMng.E.Entity[entityId];
-        if ((EntityType)config.Type == EntityType.Obstacle)
-            return null;
 
-        for (int x = 0; x < config.ScaleX; x++)
+        // 作成できるかのチェック
+        if (config.ScaleX > 1 || config.ScaleY > 1 || config.ScaleZ > 1)
         {
-            for (int z = 0; z < config.ScaleZ; z++)
+            if (!CheckCanCreate(DataMng.E.MapData, entityId, pos, dType))
             {
-                for (int y = 0; y < config.ScaleY; y++)
-                {
-                    if (x == 0 && y == 0 && z == 0)
-                        continue;
-
-                    if (DataMng.E.MapData.Map[pos.x + x, pos.y + y, pos.z + z].entityID > 0)
-                    {
-                        CommonFunction.ShowHintBar(19);
-                        return null;
-                    }
-                }
+                CommonFunction.ShowHintBar(19);
+                return null;
             }
         }
 
@@ -189,7 +182,7 @@ public class MapCtl
     }
 
     /// <summary>
-    /// 隣のエンティティをゲット
+    /// 隣のエンティティをチェック
     /// </summary>
     private void CheckNextToEntitys(Vector3Int pos)
     {
@@ -207,21 +200,94 @@ public class MapCtl
             if (IsOutRange(DataMng.E.MapData, entitys[i]))
                 continue;
 
-            if (CheckBlockIsSurface(DataMng.E.MapData, entitys[i]))
-            {
-                var entity = DataMng.E.MapData.GetEntity(entitys[i]);
-                if (entity == null)
-                {
-                    DataMng.E.MapData.Add(entitys[i]);
-                }
-            }
-            else
-                DataMng.E.MapData.DeleteObj(entitys[i]);
+            DataMng.E.MapData.IsSurface(entitys[i], CheckBlockIsSurface(DataMng.E.MapData, entitys[i]));
         }
     }
 
     #region Static Function
 
+    /// <summary>
+    /// 作成できるかのチェック
+    /// </summary>
+    public static bool CheckCanCreate(MapData mdata, int entityId, Vector3Int pos, DirectionType dType)
+    {
+        var list = GetEntityPosListByDirection(entityId, pos, dType);
+        foreach (var item in list)
+        {
+            // マップ外ならNG
+            if (IsOutRange(mdata, item))
+                return false;
+
+            // 作りたい範囲内に他のブロックがある場合、NG
+            if (mdata.Map[item.x, item.y, item.z].entityID > 0)
+                return false;
+        }
+
+        return true;
+    }
+    public static List<Vector3Int> GetEntityPosListByDirection(int entityId, Vector3Int pos, DirectionType dType)
+    {
+        var config = ConfigMng.E.Entity[entityId];
+        List<Vector3Int> posList = new List<Vector3Int>();
+        switch (dType)
+        {
+            case DirectionType.foward:
+                for (int x = 0; x > -config.ScaleX; x--)
+                {
+                    for (int z = 0; z < config.ScaleZ; z++)
+                    {
+                        for (int y = 0; y < config.ScaleY; y++)
+                        {
+                            if (x == 0 && y == 0 && z == 0) continue;
+                            posList.Add(new Vector3Int(pos.x + x, pos.y + y, pos.z + z));
+                        }
+                    }
+                }
+                break;
+            case DirectionType.back:
+                for (int x = 0; x < config.ScaleX; x++)
+                {
+                    for (int z = 0; z < config.ScaleZ; z++)
+                    {
+                        for (int y = 0; y < config.ScaleY; y++)
+                        {
+                            if (x == 0 && y == 0 && z == 0) continue;
+                            posList.Add(new Vector3Int(pos.x + x, pos.y + y, pos.z + z));
+                        }
+                    }
+                }
+                break;
+            case DirectionType.right:
+                for (int x = 0; x < config.ScaleZ; x++)
+                {
+                    for (int z = 0; z > -config.ScaleX; z--)
+                    {
+                        for (int y = 0; y < config.ScaleY; y++)
+                        {
+                            if (x == 0 && y == 0 && z == 0) continue;
+                            posList.Add(new Vector3Int(pos.x + x, pos.y + y, pos.z + z));
+                        }
+                    }
+                }
+                break;
+
+            case DirectionType.left:
+                for (int x = 0; x < config.ScaleZ; x++)
+                {
+                    for (int z = 0; z < config.ScaleX; z++)
+                    {
+                        for (int y = 0; y < config.ScaleY; y++)
+                        {
+                            if (x == 0 && y == 0 && z == 0) continue;
+                            posList.Add(new Vector3Int(pos.x + x, pos.y + y, pos.z + z));
+                        }
+                    }
+                }
+                break;
+        }
+
+        return posList;
+    }
     public static Vector3 FixEntityPos(MapData mData, Vector3 pos, int offset)
     {
         if (pos.x < offset)
@@ -238,7 +304,6 @@ public class MapCtl
 
         return pos;
     }
-
     public static Vector3Int GetGroundPos(MapData mapData, int posX, int posZ, float offsetY = 0)
     {
         if (posX < 0) posX = UnityEngine.Random.Range(0, mapData.SizeX);

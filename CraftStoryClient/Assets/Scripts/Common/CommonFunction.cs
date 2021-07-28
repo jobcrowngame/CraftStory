@@ -179,7 +179,7 @@ public class CommonFunction
         return en.GetString(Encoding.Default.GetBytes(msg));
     }
 
-    public static DirectionType GetCreateEntityDirectionByAngle(Vector3 createPos)
+    public static DirectionType GetCreateEntityDirection(Vector3 createPos)
     {
         var playerPos = PlayerCtl.E.PlayerEntity.transform.position;
 

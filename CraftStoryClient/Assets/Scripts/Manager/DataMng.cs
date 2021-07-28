@@ -1,8 +1,6 @@
-﻿using JsonConfigData;
-using LitJson;
+﻿using LitJson;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class DataMng : Single<DataMng>

@@ -8,16 +8,16 @@ public class EffectBase : MonoBehaviour
 
     private void Update()
     {
-        //if (active)
-        //{
-        //    deleteTime -= Time.deltaTime;
+        if (active)
+        {
+            deleteTime -= Time.deltaTime;
 
-        //    if (deleteTime < 0)
-        //    {
-        //        active = false;
-        //        //GameObject.Destroy(gameObject);
-        //    }
-        //}
+            if (deleteTime < 0)
+            {
+                active = false;
+                GameObject.Destroy(gameObject);
+            }
+        }
     }
 
     public void Init(float dTime = 1f)
