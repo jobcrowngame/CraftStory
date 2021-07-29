@@ -16,7 +16,7 @@ public class MyShopCell : UIBase
     Text UnLockBtnText { get => FindChiled<Text>("Text", UnLock.transform); }
     Button PreviewBtn { get => FindChiled<Button>("PreviewBtn"); }
 
-    MyShopItem item;
+    MyShopItem myShopItem;
     bool OpenTimer = true;
 
     private int Index 
@@ -25,7 +25,7 @@ public class MyShopCell : UIBase
         set
         {
             index = value;
-            item = new MyShopItem();
+            myShopItem = new MyShopItem();
 
             switch (value)
             {
@@ -44,19 +44,19 @@ public class MyShopCell : UIBase
                     break;
             }
 
-            item = DataMng.E.MyShop.myShopItem[value - 1];
-            if (item.itemId > 0)
+            myShopItem = DataMng.E.MyShop.myShopItem[value - 1];
+            if (myShopItem.itemId > 0)
             {
-                if ((DateTime.Now - item.created_at).Days >= 7)
+                if ((DateTime.Now - myShopItem.created_at).Days >= 7)
                 {
                     DataMng.E.MyShop.myShopItem[value - 1] = new MyShopItem();
-                    item = DataMng.E.MyShop.myShopItem[value - 1];
+                    myShopItem = DataMng.E.MyShop.myShopItem[value - 1];
                 }
 
-                item.created_at = item.created_at.AddDays(7);
+                myShopItem.created_at = myShopItem.created_at.AddDays(7);
 
-                NewNameText.text = item.newName;
-                Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[item.itemId].IconResourcesPath);
+                NewNameText.text = myShopItem.newName;
+                Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[myShopItem.itemId].IconResourcesPath);
 
                 RefreshTime();
                 PreviewBtn.gameObject.SetActive(true);
@@ -83,7 +83,7 @@ public class MyShopCell : UIBase
 
         LoadBtn.onClick.AddListener(() =>
         {
-            if (item.itemId > 0)
+            if (myShopItem.itemId > 0)
             {
                 string msg = @"クラフトシード「100個」を消費して
 アップロードを取り下げますか？";
@@ -98,20 +98,10 @@ public class MyShopCell : UIBase
                     {
                         NWMng.E.LoadBlueprint((rp) =>
                         {
-                            DataMng.E.MyShop.Clear();
-                            if (!string.IsNullOrEmpty(rp["myShopItems"].ToString()))
-                            {
-                                List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp["myShopItems"].ToJson());
-                                for (int i = 0; i < shopItems.Count; i++)
-                                {
-                                    DataMng.E.MyShop.myShopItem[i] = shopItems[i];
-                                }
-                            }
-
+                            DataMng.E.MyShop.myShopItem[Index - 1] = new MyShopItem();
                             DataMng.E.UserData.Coin1 -= 100;
-
                             MyShopLG.E.UI.RefreshUI();
-                        }, item.id, 0);
+                        }, myShopItem.site, 0);
                     }
                 }, () => { });
             }
@@ -119,15 +109,15 @@ public class MyShopCell : UIBase
         PreviewBtn.onClick.AddListener(() =>
         {
             var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
-            ui.SetData(item.data, MyShopLG.E.UI);
+            ui.SetData(myShopItem.data, MyShopLG.E.UI);
         });
         Icon.transform.GetComponent<Button>().onClick.AddListener(() => 
         {
             if (DataMng.E.MyShop.myShopLv < Index - 1)
             {
                 int cost = DataMng.E.MyShop.myShopLv == 0
-                ? SettingMng.E.MyShopCostLv1
-                : SettingMng.E.MyShopCostLv2;
+                    ? SettingMng.E.MyShopCostLv1
+                    : SettingMng.E.MyShopCostLv2;
 
                 string msg = string.Format(@"クラフトシード「{0}個」を消費することで、
 アップロード枠を開放することができます。
@@ -179,7 +169,7 @@ public class MyShopCell : UIBase
     {
         Index = index;
 
-        if (item.itemId > 0)
+        if (myShopItem.itemId > 0)
         {
             OpenTimer = true;
             StartCoroutine(RefreshTime());
@@ -189,24 +179,15 @@ public class MyShopCell : UIBase
     {
         while (OpenTimer)
         {
-            TimeSpan t = item.created_at - DateTime.Now;
+            TimeSpan t = myShopItem.created_at - DateTime.Now;
             if (t.TotalSeconds < 0)
             {
                 NWMng.E.LoadBlueprint((rp) =>
                 {
-                    DataMng.E.MyShop.Clear();
-                    if (!string.IsNullOrEmpty(rp["myShopItems"].ToString()))
-                    {
-                        List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp["myShopItems"].ToJson());
-                        for (int i = 0; i < shopItems.Count; i++)
-                        {
-                            DataMng.E.MyShop.myShopItem[i] = shopItems[i];
-                        }
-                    }
-
+                    DataMng.E.MyShop.myShopItem[Index - 1] = new MyShopItem();
                     MyShopLG.E.UI.RefreshUI();
                     OpenTimer = false;
-                }, item.id, 1);
+                }, myShopItem.site, 1);
             }
             else
             {

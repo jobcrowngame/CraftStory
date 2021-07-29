@@ -1,4 +1,5 @@
 ﻿using LitJson;
+using System;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -36,18 +37,14 @@ public class MyShopUploadUI : UIBase
 
             NWMng.E.UploadBlueprintToMyShop((rp) =>
             {
-                //DataMng.E.ConsumableItemByGUID((int)rp["itemGuid"]);
-
-                DataMng.E.MyShop.Clear();
-                if (!string.IsNullOrEmpty(rp["myShopItems"].ToString()))
+                DataMng.E.MyShop.myShopItem[Index - 1] = new MyShopItem()
                 {
-                    List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp["myShopItems"].ToJson());
-                    for (int i = 0; i < shopItems.Count; i++)
-                    {
-                        DataMng.E.MyShop.myShopItem[i] = shopItems[i];
-                    }
-                }
-
+                    itemId = itemData.itemId,
+                    site = Index,
+                    created_at = DateTime.Now,
+                    data = itemData.relationData,
+                    newName = itemData.newName
+                };
                 MyShopLG.E.UI.RefreshUI();
 
                 CommonFunction.ShowHintBar(16);

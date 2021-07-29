@@ -18,7 +18,6 @@ public class MyShopData
 
 public struct MyShopItem
 {
-    public int id { get; set; }
     public int itemId { get; set; }
     public int site { get; set; }
     public DateTime created_at { get; set; }
