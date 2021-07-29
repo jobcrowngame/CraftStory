@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class NoticeDetailUI : UIBase
@@ -22,7 +22,7 @@ public class NoticeDetailUI : UIBase
         NoticeDetailLG.E.Init(this);
         var uiinfo = (NoticeLG.NoticeData)data;
 
-        title.SetTitle("‚¨’m‚ç‚¹");
+        title.SetTitle("ãŠçŸ¥ã‚‰ã›");
         title.SetOnClose(() => { Close(); });
         title.EnActiveCoin(1);
         title.EnActiveCoin(2);
