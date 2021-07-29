@@ -101,7 +101,7 @@ public class NWMng : MonoBehaviour
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(www.downloadHandler.text);
+                        Logger.Error("[CMD:{0}]{1}", (int)cmd, www.downloadHandler.text);
                         Logger.Error(ex);
                     }
                     
@@ -326,12 +326,12 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.BuyMyShopItem));
     }
-    public void LoadBlueprint(Action<JsonData> rp, int guid, int isfree)
+    public void LoadBlueprint(Action<JsonData> rp, int site, int isfree)
     {
         var data = new NWData();
         data.Add("token", DataMng.E.token);
         data.Add("acc", DataMng.E.UserData.Account);
-        data.Add("guid", guid);
+        data.Add("site", site);
         data.Add("isfree", isfree);
 
         StartCoroutine(HttpRequest(rp, data, CMD.LoadBlueprint));
@@ -371,7 +371,31 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetRandomBonus));
     }
+    public void GetNoticeList(Action<JsonData> rp)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
 
+        StartCoroutine(HttpRequest(rp, data, CMD.GetNoticeList));
+    }
+    public void GetNotice(Action<JsonData> rp, int guid)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("guid", guid);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetNotice));
+    }
+    public void GetMyShopInfo(Action<JsonData> rp)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetMyShopInfo));
+    }
 
     public void SaveHomeData(Action<JsonData> rp, string homedata)
     {
@@ -424,6 +448,9 @@ public class NWMng : MonoBehaviour
         ReadEmail = 1020,
         GetNewEmailCount,
         GetRandomBonus,
+        GetNoticeList,
+        GetNotice,
+        GetMyShopInfo,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

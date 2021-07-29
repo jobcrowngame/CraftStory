@@ -163,6 +163,8 @@ public class UICtl : Single<UICtl>
             case UIType.MyShopUpload: return "Prefabs/UI/MyShopUpload";
             case UIType.Email: return "Prefabs/UI/Email";
             case UIType.EmailDetails: return "Prefabs/UI/EmailDetails";
+            case UIType.Notice: return "Prefabs/UI/Notice";
+            case UIType.NoticeDetail: return "Prefabs/UI/NoticeDetail";
             default: Logger.Error("not find UIType " + ui); return "";
         }
     }
@@ -198,4 +200,6 @@ public enum UIType
     MyShopUpload,
     Email,
     EmailDetails,
+    Notice,
+    NoticeDetail,
 }

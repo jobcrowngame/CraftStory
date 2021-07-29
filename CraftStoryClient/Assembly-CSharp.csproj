@@ -213,6 +213,11 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
     <Compile Include="Assets\Scripts\Test\TestJson.cs" />
+    <Compile Include="Assets\Scripts\UI\NoticeUI.cs" />
+    <Compile Include="Assets\Scripts\UI\NoticeLG.cs" />
+    <Compile Include="Assets\Scripts\UI\NoticeCell.cs" />
+    <Compile Include="Assets\Scripts\UI\NoticeDetailUI.cs" />
+    <Compile Include="Assets\Scripts\UI\NoticeDetailLG.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

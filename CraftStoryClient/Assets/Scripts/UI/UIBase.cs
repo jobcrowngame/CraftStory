@@ -7,6 +7,9 @@ public class UIBase : MonoBehaviour
     public virtual void Init()
     {
     }
+    public virtual void Init(object data)
+    {
+    }
     public virtual void Init<T>(T t) where T : class
     {
     }

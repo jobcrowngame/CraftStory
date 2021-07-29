@@ -42,15 +42,19 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             DataMng.E.MyShop.firstUseMyShop = (int)rp["firstUseMyShop"];
             DataMng.E.MyShop.myShopLv = (int)rp["myShopLv"];
 
-            DataMng.E.MyShop.Clear();
-            if (!string.IsNullOrEmpty(rp["myShopItems"].ToString()))
+            // MyShop
+            NWMng.E.GetMyShopInfo((rp) => 
             {
-                List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp["myShopItems"].ToJson());
-                for (int i = 0; i < shopItems.Count; i++)
+                DataMng.E.MyShop.Clear();
+                if (!string.IsNullOrEmpty(rp.ToString()))
                 {
-                    DataMng.E.MyShop.myShopItem[i] = shopItems[i];
+                    List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp.ToJson());
+                    for (int i = 0; i < shopItems.Count; i++)
+                    {
+                        DataMng.E.MyShop.myShopItem[i] = shopItems[i];
+                    }
                 }
-            }
+            });
 
             // V‚µ‚¢ƒ[ƒ‹ƒqƒ“ƒg
             NWMng.E.GetNewEmailCount((rp) =>
