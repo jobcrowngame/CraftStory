@@ -78,22 +78,33 @@ public class NWMng : MonoBehaviour
                     rp("");
                 else
                 {
-                    var resultJson = CryptMng.E.DecryptString(www.downloadHandler.text);
-                    JsonData jd = JsonMapper.ToObject(resultJson);
-                    int errorCode = (int)jd["error"];
+                    try
+                    {
+                        var resultJson = CryptMng.E.DecryptString(www.downloadHandler.text);
+                        JsonData jd = JsonMapper.ToObject(resultJson);
+                        Logger.Log("Result:[CMD:{0}],[data]{1}", (int)cmd, jd.ToJson());
 
-                    if (errorCode > 0)
-                    {
-                        if (errorCode == 998)
-                            CommonFunction.ShowHintBox(PublicPar.Maintenance, () => { Logger.Warning("Quit"); Application.Quit(); });
+                        int errorCode = (int)jd["error"];
+
+                        if (errorCode > 0)
+                        {
+                            if (errorCode == 998)
+                                CommonFunction.ShowHintBox(PublicPar.Maintenance, () => { Logger.Warning("Quit"); Application.Quit(); });
+                            else
+                                CommonFunction.ShowHintBar(errorCode);
+                        }
                         else
-                            CommonFunction.ShowHintBar(errorCode);
+                        {
+                            if (rp != null)
+                                rp(jd["result"]);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        if (rp != null)
-                            rp(jd["result"]);
+                        Logger.Error(www.downloadHandler.text);
+                        Logger.Error(ex);
                     }
+                    
                 }
             }
         }
@@ -118,137 +129,136 @@ public class NWMng : MonoBehaviour
     public void Login(Action<JsonData> rp, string id, string pw)
     {
         var data = new NWData();
-        data.Add("N");
-        data.Add(id);
-        data.Add(pw);
+        data.Add("acc", id);
+        data.Add("pw", pw);
 
         StartCoroutine(HttpRequest(rp, data, CMD.Login));
     }
     public void GetItemList(Action<JsonData> rp)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
 
         StartCoroutine(HttpRequest(rp, data, CMD.ItemList));
     }
     public void AddItem(Action<JsonData> rp, int itemId, int count)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(itemId);
-        data.Add(count);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("itemId", itemId);
+        data.Add("count", count);
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItem));
     }
     public void AddItemInData(Action<JsonData> rp, int itemId, int count, string newName, string rdata)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(itemId);
-        data.Add(count);
-        data.Add(newName);
-        data.Add(rdata);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("itemId",itemId);
+        data.Add("count", count);
+        data.Add("newName",newName);
+        data.Add("rdata",rdata);
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItemInData));
     }
     public void AddItems(Action<JsonData> rp, Dictionary<int, int> items)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
 
         List<NWItemData> list = new List<NWItemData>();
         foreach (var item in items)
         {
             list.Add(new NWItemData() { itemId = item.Key, count = item.Value });
         }
-        data.Add(JsonMapper.ToJson(list));
+        data.Add("items", JsonMapper.ToJson(list));
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItems));
     }
     public void RemoveItemByGuid(Action<JsonData> rp, int guid, int count)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(guid);
-        data.Add(count);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("guid", guid);
+        data.Add("count", count);
 
         StartCoroutine(HttpRequest(rp, data, CMD.RemoveItemByGuid));
     }
     public void RemoveItem(Action<JsonData> rp, int itemid, int count)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(itemid);
-        data.Add(count);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("itemId", itemid);
+        data.Add("count", count);
 
         StartCoroutine(HttpRequest(rp, data, CMD.RemoveItemByItemId));
     }
     public void EquitItem(Action<JsonData> rp, int guid, int site)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(guid);
-        data.Add(site);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("guid", guid);
+        data.Add("site", site);
 
         StartCoroutine(HttpRequest(rp, data, CMD.EquitItem));
     }
     public void Craft(Action<JsonData> rp, Craft craft, int count)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(craft.ID);
-        data.Add(count);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("creaftId",craft.ID);
+        data.Add("count", count);
 
         StartCoroutine(HttpRequest(rp, data, CMD.Craft));
     }
     public void Buy(Action<JsonData> rp, int shopId)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(shopId);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("shopId", shopId);
 
         StartCoroutine(HttpRequest(rp, data, CMD.Buy));
     }
     public void GetCoins(Action<JsonData> rp)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetCoins));
     }
     public void Charge(Action<JsonData> rp, string productId, string transactionID)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(productId);
-        data.Add(transactionID);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("productId", productId);
+        data.Add("transactionId", transactionID);
 
         StartCoroutine(HttpRequest(rp, data, CMD.Charge));
     }
     public void GetBonus(Action<JsonData> rp, int bonusId)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(bonusId);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("bonusId", bonusId);
         StartCoroutine(HttpRequest(rp, data, CMD.GetBonus));
     }
     public void ClearAdventure(Action<JsonData> rp, List<int> resources)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
 
         string msg = "";
         if (resources != null && resources.Count > 0)
@@ -263,101 +273,101 @@ public class NWMng : MonoBehaviour
         {
             msg = "-1";
         }
-        data.Add(msg);
+        data.Add("bonusList", msg);
 
         StartCoroutine(HttpRequest(rp, data, CMD.ClearAdventure));
     }
     public void LevelUpMyShop(Action<JsonData> rp)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
 
         StartCoroutine(HttpRequest(rp, data, CMD.LevelUpMyShop));
     }
     public void UploadBlueprintToMyShop(Action<JsonData> rp, int itemGuid, int site, int price)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(DataMng.E.UserData.NickName);
-        data.Add(itemGuid);
-        data.Add(site);
-        data.Add(price);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("nickName", DataMng.E.UserData.NickName);
+        data.Add("itemGuid", itemGuid);
+        data.Add("site", site);
+        data.Add("price", price);
 
         StartCoroutine(HttpRequest(rp, data, CMD.UploadBlueprintToMyShop));
     }
     public void UpdateNickName(Action<JsonData> rp, string nickName)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(nickName);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("nickName", nickName);
 
         StartCoroutine(HttpRequest(rp, data, CMD.UpdateNickName));
     }
     public void SearchMyShopItems(Action<JsonData> rp, int page, string nickName, int sortType)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(page);
-        data.Add(nickName);
-        data.Add(sortType);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("page", page);
+        data.Add("nickName", nickName);
+        data.Add("sortType", sortType);
 
         StartCoroutine(HttpRequest(rp, data, CMD.SearchMyShopItems));
     }
     public void BuyMyShopItem(Action<JsonData> rp, int guid)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(guid);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("guid", guid);
 
         StartCoroutine(HttpRequest(rp, data, CMD.BuyMyShopItem));
     }
     public void LoadBlueprint(Action<JsonData> rp, int guid, int isfree)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(guid);
-        data.Add(isfree);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("guid", guid);
+        data.Add("isfree", isfree);
 
         StartCoroutine(HttpRequest(rp, data, CMD.LoadBlueprint));
     }
     public void GetEmail(Action<JsonData> rp, int page)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(page);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("page", page);
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetEmail));
     }
     public void ReadEmail(Action<JsonData> rp, int guid)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(guid);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("guid", guid);
 
         StartCoroutine(HttpRequest(rp, data, CMD.ReadEmail));
     }
     public void GetNewEmailCount(Action<JsonData> rp)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetNewEmailCount));
     }
     public void GetRandomBonus(Action<JsonData> rp, int randomBonusId)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(randomBonusId);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("randomBonusId", randomBonusId);
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetRandomBonus));
     }
@@ -369,17 +379,17 @@ public class NWMng : MonoBehaviour
             return;
 
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
-        data.Add(homedata);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("homedata", homedata);
 
         StartCoroutine(HttpRequest(rp, data, CMD.SaveHomeData));
     }
     public void LoadHomeData(Action<JsonData> rp)
     {
         var data = new NWData();
-        data.Add(DataMng.E.token);
-        data.Add(DataMng.E.UserData.Account);
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
 
         StartCoroutine(HttpRequest(rp, data, CMD.LoadHomeData));
     }

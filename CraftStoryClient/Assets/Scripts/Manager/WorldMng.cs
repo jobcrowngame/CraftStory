@@ -18,11 +18,6 @@ public class WorldMng : MonoBehaviour
     public MapCtl MapCtl { get; set; }
     public GameTimeCtl GameTimeCtl { get; set; }
 
-    private void Update()
-    {
-        if (GameTimeCtl != null) GameTimeCtl.Update(Time.deltaTime);
-    }
-
     public void Init()
     {
         GameTimeCtl = new GameTimeCtl();

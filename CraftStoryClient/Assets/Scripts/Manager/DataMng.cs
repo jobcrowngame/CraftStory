@@ -165,6 +165,23 @@ public class DataMng : Single<DataMng>
             });
         }, itemID, count, newName, data);
     }
+    public void RemoveItemByGuid(int guid, int count)
+    {
+        for (int i = 0; i < E.Items.Count; i++)
+        {
+            if (E.Items[i].id == guid)
+            {
+                if (E.Items[i].count >= count)
+                {
+                    E.Items[i].count -= count;
+                }
+                else
+                {
+                    Logger.Error("Remve item fild " + guid);
+                }
+            }
+        }
+    }
     /// <summary>
     /// 消耗アイテム
     /// </summary>
@@ -178,11 +195,9 @@ public class DataMng : Single<DataMng>
         {
             NWMng.E.RemoveItemByGuid((rp) =>
             {
-                NWMng.E.GetItemList((rp2) =>
-                {
-                    GetItems(rp2);
-                    if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
-                });
+                RemoveItemByGuid(guid, count);
+                if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
+                if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
             }, guid, count);
         }
     }

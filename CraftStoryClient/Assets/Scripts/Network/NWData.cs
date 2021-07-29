@@ -3,28 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LitJson;
 
 public class NWData
 {
-    private string data;
+    JsonData jd;
 
-    public void Add(string msg, string split = "^")
-    {
-        if (!string.IsNullOrEmpty(data))
-            data += split;
-
-        data += msg;
-    }
-    public void Add(int msg, string split = "^")
-    {
-        Add(msg.ToString(), split);
-    }
+    public NWData() { jd = new JsonData(); }
 
     public override string ToString()
     {
-        if (string.IsNullOrEmpty(data))
+        if (string.IsNullOrEmpty(jd.ToString()))
             return "";
 
-        return data;
+        return jd.ToJson();
+    }
+
+    public void Add(string key, string value)
+    {
+        jd[key] = value;
+    }
+    public void Add(string key, int value) 
+    {
+        jd[key] = value;
+    }
+    public void Add(string key, float value)
+    {
+        jd[key] = value;
     }
 }

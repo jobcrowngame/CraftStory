@@ -45,18 +45,13 @@ public class GameTimeCtl
     {
         Active = false;
         CurTime = SettingMng.E.GameDaySeconds * 0.2f;
+        TimeZoneMng.E.AddSecondTimerEvent02(() => { CurTime += 1; });
     }
 
-    public void Update(float time)
-    {
-        CurTime += time;
-    }
     private void RefreshLight()
     {
         float percent = curTime / SettingMng.E.GameDaySeconds;
         DirectionalLight.transform.rotation = Quaternion.Euler(360 * percent, 0, 0);
-
-       
     }
 
     private void RefreshSkyBox()

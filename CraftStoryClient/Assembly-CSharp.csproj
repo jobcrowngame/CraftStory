@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Game\Map\EntityResources.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
     <Compile Include="Assets\Scripts\Test\RunTest.cs" />
+    <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csAnimationSpin.cs" />
     <Compile Include="Assets\Scripts\UI\BagLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Item.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerCtl.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Assets\Scripts\UI\CraftLG.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerAnimatorEvent.cs" />
     <Compile Include="Assets\Scripts\Manager\GameTimeCtl.cs" />
+    <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csParticleMove.cs" />
     <Compile Include="Assets\Scripts\Network\NWData.cs" />
     <Compile Include="Assets\Scripts\Test\LookChange.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
@@ -138,6 +140,7 @@
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemCell.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
+    <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csMouseOrbit.cs" />
     <Compile Include="Assets\Scripts\UI\ShopMyShopItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemLG.cs" />
     <Compile Include="Assets\Scripts\Manager\EffectMng.cs" />
@@ -154,6 +157,7 @@
     <Compile Include="Assets\Scripts\Game\Map\MapCtl.cs" />
     <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
     <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
+    <Compile Include="Assets\Scripts\UI\BraveCell.cs" />
     <Compile Include="Assets\Scripts\UI\PlayDescriptionLG.cs" />
     <Compile Include="Assets\Scripts\UI\UICtl.cs" />
     <Compile Include="Assets\Scripts\UI\LoginLG.cs" />
@@ -176,10 +180,12 @@
     <Compile Include="Assets\Scripts\Common\Single.cs" />
     <Compile Include="Assets\Scripts\UI\MenuUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ErrorMsg.cs" />
+    <Compile Include="Assets\Scripts\Game\Effect\EffectBase.cs" />
     <Compile Include="Assets\Scripts\Manager\SettingMng.cs" />
     <Compile Include="Assets\Scripts\UI\ShopItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\EmailLG.cs" />
     <Compile Include="Assets\Scripts\Data\MapData.cs" />
+    <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csShowAllEffect.cs" />
     <Compile Include="Assets\Scripts\UI\EmailDetailsUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Blueprint.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerButton.cs" />
@@ -194,6 +200,7 @@
     <Compile Include="Assets\Scripts\Main.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Map.cs" />
     <Compile Include="Assets\Scripts\Manager\IAPMng.cs" />
+    <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectEditor.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingUI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityBlock.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
@@ -202,16 +209,10 @@
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\RandomBonus.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectChanger.cs" />
-    <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectEditor.cs" />
-    <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csParticleMove.cs" />
-    <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csMouseOrbit.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
-    <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csAnimationSpin.cs" />
-    <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csShowAllEffect.cs" />
-    <Compile Include="Assets\Scripts\Game\Effect\EffectBase.cs" />
-    <Compile Include="Assets\Scripts\UI\BraveCell.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
+    <Compile Include="Assets\Scripts\Test\TestJson.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
@@ -438,20 +439,20 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="GoogleMobileAds">
-      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.dll</HintPath>
-    </Reference>
     <Reference Include="LitJSON">
       <HintPath>Assets\Plugins\Lib\LitJSON.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleMobileAds.Common">
+      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleMobileAds">
+      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMobileAds.Unity">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMobileAds.Core">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="GoogleMobileAds.Common">
-      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
