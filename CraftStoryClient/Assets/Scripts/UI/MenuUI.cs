@@ -33,6 +33,8 @@ public class MenuUI : UIBase
             PlayDescriptionBtn2.gameObject.SetActive(false);
             MessageBtn.gameObject.SetActive(false);
 
+            Notice.gameObject.SetActive(false);
+
             switch (value)
             {
                 case MenuUIType.Home:
@@ -45,6 +47,7 @@ public class MenuUI : UIBase
                     MyShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn2.gameObject.SetActive(true);
                     MessageBtn.gameObject.SetActive(true);
+                    Notice.gameObject.SetActive(true);
                     break;
 
                 case MenuUIType.Brave:
