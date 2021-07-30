@@ -174,6 +174,11 @@ public class DataMng : Single<DataMng>
                 if (E.Items[i].count >= count)
                 {
                     E.Items[i].count -= count;
+
+                    if (E.Items[i].count == 0)
+                    {
+                        E.Items.Remove(E.Items[i]);
+                    }
                 }
                 else
                 {
