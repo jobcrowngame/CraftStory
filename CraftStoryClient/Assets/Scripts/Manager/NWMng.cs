@@ -74,7 +74,7 @@ public class NWMng : MonoBehaviour
                 Logger.Error(www.error);
             else
             {
-                if (string.IsNullOrEmpty(www.downloadHandler.text))
+                if (string.IsNullOrEmpty(www.downloadHandler.text) && rp != null)
                     rp("");
                 else
                 {
@@ -419,6 +419,14 @@ public class NWMng : MonoBehaviour
     }
 
 
+    public void ShowClientLog(string msg)
+    {
+        var data = new NWData();
+        data.Add("msg", msg);
+
+        StartCoroutine(HttpRequest(null, data, CMD.ShowClientLog));
+    }
+
 
     public enum CMD
     {
@@ -456,6 +464,8 @@ public class NWMng : MonoBehaviour
         LoadHomeData = 6001,
 
         Charge = 9000,
+
+        ShowClientLog = 9999,
     }
 
     struct NWItemData

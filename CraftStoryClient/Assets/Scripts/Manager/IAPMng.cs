@@ -125,6 +125,8 @@ public class IAPMng : Single<IAPMng>, IStoreListener
             });
         }, productId, receiptId);
 
+        NWMng.E.ShowClientLog(receipt);
+
         return PurchaseProcessingResult.Pending;
     }
 
