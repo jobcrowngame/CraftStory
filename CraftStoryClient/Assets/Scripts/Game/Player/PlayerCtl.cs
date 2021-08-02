@@ -105,6 +105,11 @@ public class PlayerCtl : MonoBehaviour
         return playerEntity;
     }
 
+    public void Jump()
+    {
+        PlayerEntity.Jump();
+    }
+
     public void ChangeSelectItem(ItemData item)
     {
         builderPencil.CancelCreateBlueprint();

@@ -23,6 +23,7 @@ public class HomeUI : UIBase
     Button BlueprintCancelBtn;
     Button BuildBtn;
 
+    Button Jump { get => FindChiled<Button>("Jump"); }
     MyButton PlussBtn { get => FindChiled<MyButton>("PlussBtn"); }
     MyButton MinusBtn { get => FindChiled<MyButton>("MinusBtn"); }
 
@@ -87,6 +88,8 @@ public class HomeUI : UIBase
 
         PlussBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(1); });
         MinusBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(-1); });
+
+        Jump.onClick.AddListener(PlayerCtl.E.Jump);
 
         PlayerCtl.E.Joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
         PlayerCtl.E.ScreenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");

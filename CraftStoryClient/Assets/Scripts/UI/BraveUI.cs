@@ -7,6 +7,7 @@ public class BraveUI : UIBase
     Text SceneName;
     Image FadeinImg;
     Button MenuBtn;
+    Button Jump { get => FindChiled<Button>("Jump"); }
     MyButton PlussBtn { get => FindChiled<MyButton>("PlussBtn"); }
     MyButton MinusBtn { get => FindChiled<MyButton>("MinusBtn"); }
 
@@ -42,6 +43,7 @@ public class BraveUI : UIBase
 
         PlussBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(1); });
         MinusBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(-1); });
+        Jump.onClick.AddListener(PlayerCtl.E.Jump);
 
         PlayerCtl.E.Joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
         PlayerCtl.E.ScreenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
