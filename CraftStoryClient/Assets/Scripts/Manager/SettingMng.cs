@@ -50,4 +50,7 @@ public class SettingMng : Single<SettingMng>
 
     public float MinAmbientIntensity { get => mMinAmbientIntensity; }
     private float mMinAmbientIntensity = 0.6f;
+
+    public float MaxAmbientIntensity { get => mMaxAmbientIntensity; }
+    private float mMaxAmbientIntensity = 0.6f;
 }

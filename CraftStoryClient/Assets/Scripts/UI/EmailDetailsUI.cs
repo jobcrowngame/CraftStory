@@ -1,14 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class EmailDetailsUI : UIBase
 {
-    Text Title { get => FindChiled<Text>("TitleText"); }
+    RectTransform BG { get => FindChiled<RectTransform>("BG"); }
+    TitleUI Title { get => FindChiled<TitleUI>("Title"); }
     Text Message { get => FindChiled<Text>("Message"); }
     Text Time { get => FindChiled<Text>("Time"); }
     Button OKBtn { get => FindChiled<Button>("OKBtn"); }
+    Transform Parent { get => FindChiled("Content"); }
 
     public override void Init()
     {
@@ -24,9 +24,16 @@ public class EmailDetailsUI : UIBase
 
     public void Set(EmailCell cell)
     {
-        Title.text = cell.Data.title;
+        BG.sizeDelta = string.IsNullOrEmpty(cell.Data.related_data) ? new Vector2(500, 310) : new Vector2(500, 400);
+
+        Title.SetTitle("メッセージ");
+        Title.SetOnClose(() => { Close(); });
+        Title.EnActiveCoin(1);
+        Title.EnActiveCoin(2);
+        Title.EnActiveCoin(3);
+
         Message.text = cell.Data.message;
-        Time.text = cell.Data.created_at.ToString();
+        Time.text = cell.Data.created_at.ToString("yyyy/MM/dd");
 
         if (!cell.Data.IsAlreadyRead)
         {
@@ -36,6 +43,39 @@ public class EmailDetailsUI : UIBase
                 DataMng.E.RuntimeData.NewEmailCount--;
                 if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshRedPoint();
             }, cell.Data.id);
+        }
+
+        SetCell(cell);
+        if (cell.Data.IsInObject && !cell.Data.IsAlreadyRead)
+        {
+            NWMng.E.ReceiveEmailItem((rp) =>
+            {
+                NWMng.E.GetItemList((rp2) =>
+                {
+                    DataMng.GetItems(rp2);
+                    CommonFunction.ShowHintBar(20);
+                });
+            }, cell.Data.id);
+        }
+    }
+    private void SetCell(EmailCell cell)
+    {
+        ClearCell(Parent);
+
+        if (!cell.Data.IsInObject)
+            return;
+
+        string[] data = cell.Data.related_data.Split('^');
+        string[] itemIds = data[0].Split(',');
+        string[] itemCount = data[1].Split(',');
+
+        for (int i = 0; i < itemIds.Length; i++)
+        {
+            var cellItem = AddCell<EmailDetailsItem>("Prefabs/UI/EmailDetailsItem", Parent);
+            if (cellItem != null)
+            {
+                cellItem.Set(itemIds[i], itemCount[i]);
+            }
         }
     }
 }

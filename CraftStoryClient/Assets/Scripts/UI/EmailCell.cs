@@ -6,6 +6,7 @@ public class EmailCell : UIBase
     Text Title { get => FindChiled<Text>("Text"); }
     Text Time { get => FindChiled<Text>("Time"); }
     Button Btn { get => GetComponent<Button>(); }
+    Image inObj { get => FindChiled<Image>("Image"); }
 
     EmailRP data;
     public EmailRP Data { get => data; }
@@ -23,11 +24,13 @@ public class EmailCell : UIBase
     {
         this.data = data;
 
-        Title.text = "From: " + data.title;
-        Time.text = data.created_at.ToString();
+        Title.text = data.title;
+        Time.text = data.created_at.ToString("yyyy/MM/dd");
 
         if (data.IsAlreadyRead)
             Read();
+
+        inObj.gameObject.SetActive(data.IsInObject);
     }
 
     public void Read()

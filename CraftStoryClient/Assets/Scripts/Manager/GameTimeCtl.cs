@@ -43,26 +43,27 @@ public class GameTimeCtl
 
     public GameTimeCtl()
     {
-        Active = false;
         CurTime = SettingMng.E.GameDaySeconds * 0.2f;
         TimeZoneMng.E.AddSecondTimerEvent02(() => { CurTime += 1; });
+        Active = false;
     }
 
     private void RefreshLight()
     {
         float percent = curTime / SettingMng.E.GameDaySeconds;
-        DirectionalLight.transform.rotation = Quaternion.Euler(360 * percent, 0, 0);
+        DirectionalLight.transform.rotation = Quaternion.Euler(360 * percent, 30, 0);
     }
 
     private void RefreshSkyBox()
     {
         float percent = curTime / SettingMng.E.GameDaySeconds;
-        float newV = (percent < 0.5f) ? 1 - Mathf.Abs(percent - 0.25f) * 4f : 0;
+        float newV = (percent < 0.35f) ? 1 - Mathf.Abs(percent - 0.25f) * 4f : 0;
         RenderSettings.skybox.SetFloat("_Exposure", newV);
 
         float skyboxAmbientIntensity = newV;
         if (skyboxAmbientIntensity < SettingMng.E.MinAmbientIntensity)
             skyboxAmbientIntensity = SettingMng.E.MinAmbientIntensity;
+
         RenderSettings.ambientIntensity = skyboxAmbientIntensity;
     }
 }

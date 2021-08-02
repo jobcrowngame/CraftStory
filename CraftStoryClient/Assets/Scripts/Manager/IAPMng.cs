@@ -25,10 +25,10 @@ public class IAPMng : Single<IAPMng>, IStoreListener
             UnityPurchasing.Initialize(this, builder);
 
             string receipt = builder.Configure<IAppleConfiguration>().appReceipt;
-             Logger.Log(receipt);
+            Logger.Log(receipt);
 
             bool canMakePayments = builder.Configure<IAppleConfiguration>().canMakePayments;
-             Logger.Log(canMakePayments);
+            Logger.Log(canMakePayments);
         }
         catch (System.Exception ex)
         {
@@ -52,11 +52,13 @@ public class IAPMng : Single<IAPMng>, IStoreListener
         //    Logger.Log("[Title]" + product.metadata.localizedTitle);
         //}
 
-        extensions.GetExtension<IAppleExtensions>().RegisterPurchaseDeferredListener(product => {
+        extensions.GetExtension<IAppleExtensions>().RegisterPurchaseDeferredListener(product =>
+        {
             Logger.Log("RegisterPurchaseDeferredListener" + product.definition.id);
         });
 
-        extensions.GetExtension<IAppleExtensions>().RestoreTransactions(result => {
+        extensions.GetExtension<IAppleExtensions>().RestoreTransactions(result =>
+        {
             if (result)
             {
                 // なにかがリストアされたというわけではありません
@@ -70,20 +72,22 @@ public class IAPMng : Single<IAPMng>, IStoreListener
             }
         });
 
-        extensions.GetExtension<IAppleExtensions>().RefreshAppReceipt(receipt => {
+        extensions.GetExtension<IAppleExtensions>().RefreshAppReceipt(receipt =>
+        {
             // リクエストが成功したら、このハンドラーが呼び出されます
             // レシートは最新の App Store レシート
-             Logger.Log(receipt);
-             Logger.Log("successCallback");
+            Logger.Log(receipt);
+            Logger.Log("successCallback");
         },
-        () => {
+        () =>
+        {
             // リクエストが失敗したら、このハンドラーが呼び出されます。
             // 例えば、ネットワークが使用不可であったり、
             // ユーザーが誤ったパスワードを入力した場合など。
-             Logger.Log("RefreshAppReceipt Error");
+            Logger.Log("RefreshAppReceipt Error");
         });
 
-         Logger.Log("UnityPurchasing Init OK! 初期化完了");
+        Logger.Log("UnityPurchasing Init OK! 初期化完了");
     }
 
     /// <summary>
@@ -95,6 +99,7 @@ public class IAPMng : Single<IAPMng>, IStoreListener
     public void OnInitializeFailed(InitializationFailureReason error)
     {
         Logger.Error("UnityPurchasing Init Fail! 初期化失敗.\n" + error);
+            NWMng.E.ShowClientLog("UnityPurchasing Init Fail! 初期化失敗.\n" + error);
     }
 
     /// <summary>
@@ -104,17 +109,17 @@ public class IAPMng : Single<IAPMng>, IStoreListener
     /// </summary>
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
     {
-         Logger.Log("購入成功.");
+        Logger.Log("購入成功.");
         Product product = e.purchasedProduct;
 
-         Logger.Log(e.purchasedProduct.metadata.isoCurrencyCode);
-         Logger.Log("[ID]" + e.purchasedProduct.transactionID);
+        Logger.Log(e.purchasedProduct.metadata.isoCurrencyCode);
+        Logger.Log("[ID]" + e.purchasedProduct.transactionID);
 
         var productId = product.definition.storeSpecificId;
         var receiptId = e.purchasedProduct.transactionID;
         var receipt = product.receipt;
 
-        NWMng.E.Charge((rp) => 
+        NWMng.E.Charge((rp) =>
         {
             controller.ConfirmPendingPurchase(product);
 
@@ -135,12 +140,13 @@ public class IAPMng : Single<IAPMng>, IStoreListener
     /// </summary>
     public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
     {
-        Logger.Error("購入失敗.");
+        Logger.Warning("購入失敗.");
 
         if (p == PurchaseFailureReason.PurchasingUnavailable)
         {
             // デバイス設定で IAP が無効である場合があります。
             Logger.Error("PurchaseFailureReason.PurchasingUnavailable");
+            NWMng.E.ShowClientLog("PurchaseFailureReason.PurchasingUnavailable");
         }
     }
 

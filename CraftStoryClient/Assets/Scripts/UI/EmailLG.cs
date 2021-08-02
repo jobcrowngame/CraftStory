@@ -52,6 +52,10 @@ public class EmailRP
     public string message { get; set; }
     public DateTime created_at { get; set; }
     public int is_already_read { get; set; }
+    public string related_data { get; set; }
+    public int is_already_received { get; set; }
 
     public bool IsAlreadyRead { get => is_already_read == 1; }
+    public bool Is_already_received { get => is_already_received == 1; }
+    public bool IsInObject { get => !string.IsNullOrEmpty(related_data); }
 }

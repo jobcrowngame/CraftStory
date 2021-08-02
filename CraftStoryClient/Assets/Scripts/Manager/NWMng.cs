@@ -74,11 +74,14 @@ public class NWMng : MonoBehaviour
                 Logger.Error(www.error);
             else
             {
-                if (string.IsNullOrEmpty(www.downloadHandler.text) && rp != null)
-                    rp("");
-                else
+                try
                 {
-                    try
+                    if (string.IsNullOrEmpty(www.downloadHandler.text))
+                    {
+                        if (rp != null) 
+                            rp("");
+                    }
+                    else
                     {
                         var resultJson = CryptMng.E.DecryptString(www.downloadHandler.text);
                         JsonData jd = JsonMapper.ToObject(resultJson);
@@ -99,12 +102,11 @@ public class NWMng : MonoBehaviour
                                 rp(jd["result"]);
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        Logger.Error("[CMD:{0}]{1}", (int)cmd, www.downloadHandler.text);
-                        Logger.Error(ex);
-                    }
-                    
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error("[CMD:{0}]{1}", (int)cmd, www.downloadHandler.text);
+                    Logger.Error(ex);
                 }
             }
         }
@@ -396,6 +398,15 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetMyShopInfo));
     }
+    public void ReceiveEmailItem(Action<JsonData> rp, int emailGuid)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("guid", emailGuid);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.ReceiveEmailItem));
+    }
 
     public void SaveHomeData(Action<JsonData> rp, string homedata)
     {
@@ -459,6 +470,7 @@ public class NWMng : MonoBehaviour
         GetNoticeList,
         GetNotice,
         GetMyShopInfo,
+        ReceiveEmailItem,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,
