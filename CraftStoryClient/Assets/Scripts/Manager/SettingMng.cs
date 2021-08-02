@@ -30,13 +30,13 @@ public class SettingMng : Single<SettingMng>
     private int moveBoundaryOffset = 3;
 
     public float MoveSpeed { get => moveSpeed; }
-    private float moveSpeed = 4.5F;       //歩行速度
+    private float moveSpeed = 4F;       //歩行速度
 
     public float JumpSpeed { get => jumpSpeed; }
-    private float jumpSpeed = 8.0F;   //ジャンプ力
+    private float jumpSpeed = 8F;   //ジャンプ力
 
     public float Gravity { get => gravity; }
-    private float gravity = 400.0F;    //重力の大きさ
+    private float gravity = 20F;    //重力の大きさ
 
     public int MyShopCostLv1 { get => myShopCostLv1; }
     private int myShopCostLv1 = 100;    //マイショップレベルアップコスト1

@@ -72,7 +72,13 @@ public class PlayerCtl : MonoBehaviour
 
     private void Update()
     {
-        if(joystick != null) playerEntity.Move(joystick);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            PlayerEntity.Jump();
+        }
+
+        if (joystick != null && !Lock)
+            PlayerEntity.Move(joystick.xAxis.value, joystick.yAxis.value);
     }
 
     public PlayerEntity AddPlayerEntity()
