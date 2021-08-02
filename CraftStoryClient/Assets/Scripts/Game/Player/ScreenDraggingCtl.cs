@@ -46,21 +46,35 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public void OnBeginDrag(PointerEventData eventData)
     {
         //Logger.Log("OnBeginDrag");
-        if (isDoubleTouch)
-            return;
 
         isDrag = true;
         startPos = eventData.position;
     }
 
+    
     public void OnDrag(PointerEventData eventData)
     {
         //Logger.Log("OnDrag");
 
-        Debug.LogWarning(eventData.pointerId);
-        HomeLG.E.UI.ShowMsg(eventData.pointerId.ToString());
+        if (eventData.pointerId == 0)
+        {
+            touch1 = eventData.position;
+        }
+        if (eventData.pointerId == 1)
+        {
+            touch2 = eventData.position;
+        }
 
-        if (isDoubleTouch)
+        if (eventData.clickCount > 1)
+        {
+            var newDistance = Vector2.Distance(touch1, touch2);
+            var changeCameraV = curDistance - newDistance > 0 ? 1 : -1;
+            HomeLG.E.UI.ShowMsg(changeCameraV.ToString());
+            PlayerCtl.E.CameraCtl.ChangeCameraPos(changeCameraV);
+            curDistance = newDistance;
+        }
+
+        if (eventData.pointerId > 0)
             return;
 
         Vector2 pointerPos = eventData.position - startPos;
@@ -82,9 +96,6 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         //Logger.Log("OnEndDrag");
 
-        if (isDoubleTouch)
-            return;
-
         isDrag = false;
         isClick = false;
         IsClicking = false;
@@ -94,15 +105,26 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         offsetY = 0;
     }
 
+    Vector2 touch1;
+    Vector2 touch2;
+    float curDistance = 0;
+
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (isDoubleTouch)
-            return;
-
         //Logger.Log("OnPointerDown");
         //Logger.Log(eventData.position);
 
         this.eventData = eventData;
+
+        if (eventData.pointerId == 0)
+        {
+            touch1 = eventData.position;
+        }
+        if (eventData.pointerId == 1)
+        {
+            touch2 = eventData.position;
+            curDistance = Vector2.Distance(touch1, touch2);
+        }
 
         isClick = true;
     }
@@ -111,7 +133,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         //Logger.Log("OnPointerUp");
 
-        if (isDrag || isDoubleTouch)
+        if (isDrag)
             return;
 
         if (!IsClicking)
