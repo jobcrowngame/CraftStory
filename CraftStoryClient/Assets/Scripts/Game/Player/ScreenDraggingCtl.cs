@@ -57,6 +57,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         //Logger.Log("OnDrag");
 
+        Debug.LogWarning(eventData.pointerId);
+        HomeLG.E.UI.ShowMsg(eventData.pointerId.ToString());
+
         if (isDoubleTouch)
             return;
 

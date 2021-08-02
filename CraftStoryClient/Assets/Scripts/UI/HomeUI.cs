@@ -23,6 +23,8 @@ public class HomeUI : UIBase
     Button BlueprintCancelBtn;
     Button BuildBtn;
 
+    Text DebugMsg { get => FindChiled<Text>("DebugMsg"); }
+
     Button Jump { get => FindChiled<Button>("Jump"); }
     MyButton PlussBtn { get => FindChiled<MyButton>("PlussBtn"); }
     MyButton MinusBtn { get => FindChiled<MyButton>("MinusBtn"); }
@@ -195,6 +197,11 @@ public class HomeUI : UIBase
         {
             item.Refresh();
         }
+    }
+
+    public void ShowMsg(string msg)
+    {
+        DebugMsg.text = msg;
     }
 
     IEnumerator FadeIn()
