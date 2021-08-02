@@ -92,7 +92,7 @@ public class NWMng : MonoBehaviour
                         if (errorCode > 0)
                         {
                             if (errorCode == 998)
-                                CommonFunction.ShowHintBox(PublicPar.Maintenance, () => { Logger.Warning("Quit"); Application.Quit(); });
+                                CommonFunction.Maintenance();
                             else
                                 CommonFunction.ShowHintBar(errorCode);
                         }

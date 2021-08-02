@@ -22,13 +22,9 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
         if (DataMng.E.UserData == null)
         {
             if (IsMaintenance == 1)
-            {
-                CommonFunction.ShowHintBox(PublicPar.Maintenance, () => { Logger.Warning("Quit"); Application.Quit(); });
-            }
+                CommonFunction.Maintenance();
             else
-            {
                 UICtl.E.OpenUI<TermsUI>(UIType.Terms);
-            }
 
             return;
         }

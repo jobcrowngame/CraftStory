@@ -307,4 +307,24 @@ public class CommonFunction
             ? true
             : false;
     }
+
+    public static void Maintenance()
+    {
+        ShowHintBox(PublicPar.Maintenance, () => { QuitGame(); });
+    }
+    public static void VersionUp(string ver)
+    {
+        string msg = string.Format(@"アプリバージョンが古いです。
+最新のバージョンに更新してください。
+
+今のバージョン: v.{0}
+最新のバージョン: v.{1}",
+    Application.version, ver);
+
+        ShowHintBox(msg, () =>
+        {
+            Application.OpenURL(PublicPar.AppStoryURL);
+            QuitGame();
+        });
+    }
 }
