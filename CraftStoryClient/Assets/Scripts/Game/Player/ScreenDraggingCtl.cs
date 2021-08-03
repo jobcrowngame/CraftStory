@@ -49,6 +49,11 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         isDrag = true;
         startPos = eventData.position;
+
+        if (eventData.clickCount == 3)
+        {
+            UICtl.E.OpenUI<DebugUI>(UIType.Debug);
+        }
     }
 
     
@@ -69,7 +74,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         {
             var newDistance = Vector2.Distance(touch1, touch2);
             var changeCameraV = curDistance - newDistance > 0 ? 1 : -1;
-            HomeLG.E.UI.ShowMsg(changeCameraV.ToString());
+            DebugLG.E.Add(changeCameraV);
             PlayerCtl.E.CameraCtl.ChangeCameraPos(changeCameraV);
             curDistance = newDistance;
         }

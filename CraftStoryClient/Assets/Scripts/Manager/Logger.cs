@@ -16,18 +16,11 @@ public class Logger : Single<Logger>
     }
     public static void Log(Vector2 v2)
     {
-        if (level < LogLV.Warning)
-            Debug.LogFormat("[LOG]" + v2);
-    }
-    public static void Log(Vector2Int v2)
-    {
-        if (level < LogLV.Warning)
-            Debug.LogFormat("[LOG]" + v2);
+        Log("[LOG]" + v2);
     }
     public static void Log(object v2)
     {
-        if (level < LogLV.Warning)
-            Debug.LogFormat("[LOG]" + v2);
+        Log("[LOG]" + v2);
     }
     public static void Warning(string format, params object[] args)
     {
@@ -41,8 +34,7 @@ public class Logger : Single<Logger>
     }
     public static void Error(Exception e)
     {
-        if (level < LogLV.Off)
-            Debug.LogErrorFormat("[ERROR]" + e.Message);
+        Error("[ERROR]" + e.Message);
     }
 
     enum LogLV

@@ -165,6 +165,7 @@ public class UICtl : Single<UICtl>
             case UIType.EmailDetails: return "Prefabs/UI/EmailDetails";
             case UIType.Notice: return "Prefabs/UI/Notice";
             case UIType.NoticeDetail: return "Prefabs/UI/NoticeDetail";
+            case UIType.Debug: return "Prefabs/UI/Common/Debug";
             default: Logger.Error("not find UIType " + ui); return "";
         }
     }
@@ -202,4 +203,5 @@ public enum UIType
     EmailDetails,
     Notice,
     NoticeDetail,
+    Debug,
 }
