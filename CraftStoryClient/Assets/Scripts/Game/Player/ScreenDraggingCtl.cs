@@ -51,23 +51,21 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     
     public void OnDrag(PointerEventData eventData)
     {
-        //Logger.Log("OnDrag");
-
-        DebugLG.E.Add("pointerId: " + eventData.pointerId);
-
         if (eventData.pointerId == 0) touch1 = eventData.position;
         if (eventData.pointerId == 1) touch2 = eventData.position;
 
-        if (touch1 != Vector2.zero && touch2 != Vector2.zero)
+        DebugLG.E.Add("Click Count: " + eventData.clickCount);
+
+        if (touch1 != Vector2.zero && touch2 != Vector2.zero && eventData.clickCount > 1)
         {
             var newDistance = Vector2.Distance(touch1, touch2);
-            var changeCameraV = curDistance - newDistance > 0 ? 1 : -1;
-            DebugLG.E.Add(changeCameraV);
+            var changeCameraV = curDistance - newDistance > 0 ? -1 : 1;
             PlayerCtl.E.CameraCtl.ChangeCameraPos(changeCameraV);
             curDistance = newDistance;
         }
 
-        if (eventData.pointerId == 0 || eventData.pointerId == -1)
+        if (eventData.pointerId == 0 && eventData.clickCount == 1
+            || eventData.pointerId == -1 && eventData.clickCount == 1)
         {
             Vector2 pointerPos = eventData.position - startPos;
             if(PlayerCtl.E.CameraCtl != null) PlayerCtl.E.CameraCtl.CameraRotate(pointerPos.x, pointerPos.y);
@@ -81,8 +79,6 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //Logger.Log("OnEndDrag");
-
         isDrag = false;
         isClick = false;
         IsClicking = false;
@@ -95,13 +91,8 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        //Logger.Log("OnPointerDown");
-        //Logger.Log(eventData.position);
-
         this.eventData = eventData;
         isClick = true;
-
-
 
         if (eventData.pointerId == 0) touch1 = eventData.position;
         if (eventData.pointerId == 1) touch2 = eventData.position;

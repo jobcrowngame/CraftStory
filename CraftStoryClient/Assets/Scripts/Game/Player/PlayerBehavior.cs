@@ -8,8 +8,8 @@ public class PlayerBehavior
         get => behaviorType;
         set
         {
-            //if (behaviorType == value)
-                //return;
+            if (behaviorType == value)
+                return;
 
             if (behaviorType != value)
             {
@@ -18,33 +18,7 @@ public class PlayerBehavior
 
             behaviorType = value;
 
-            switch (behaviorType)
-            {
-                case PlayerBehaviorType.Waiting: 
-                    //PlayerCtl.E.PlayerEntity.ShowDestroyEffect(false);
-                    break;
-
-                case PlayerBehaviorType.Run:
-                    //PlayerCtl.E.PlayerEntity.ShowDestroyEffect(false);
-                    break;
-
-                case PlayerBehaviorType.Create:
-                    //PlayerCtl.E.PlayerEntity.ShowDestroyEffect(false);
-                    break;
-
-                case PlayerBehaviorType.Breack: 
-                    PlayerCtl.E.PlayerEntity.ShowDestroyEffect(true);
-                    break;
-
-                case PlayerBehaviorType.Jump:
-                    //PlayerCtl.E.PlayerEntity.ShowDestroyEffect(false);
-                    break;
-
-                case PlayerBehaviorType.None: break;
-
-                default: Logger.Error("Not find behavior type " + value); break;
-            }
-
+            PlayerCtl.E.PlayerEntity.ShowDestroyEffect(behaviorType == PlayerBehaviorType.Breack);
             PlayerCtl.E.PlayerEntity.EntityBehaviorChange((int)behaviorType - 1);
 
             // Breack以外ならDestroyEffectを削除する
