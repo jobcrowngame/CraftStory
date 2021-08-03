@@ -27,6 +27,7 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
             case ShopUiType.Blueprint: return "設計図";
             case ShopUiType.Blueprint2: return "設計図";
             case ShopUiType.Point: return "ポイント";
+            case ShopUiType.Subscription: return "サブスクリプション";
 
             default: Logger.Error("not find shop ui type " + ShopUIType); break;
         }
@@ -72,13 +73,18 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
             UI.RefreshBlueprint2(items);
         }, SelectPage, nickName, sortType);
     }
+    public void GetSubscriptions()
+    {
+        UI.RefreshSubscription();
+    }
 }
 
 public enum ShopUiType
 {
     Charge = 1,
-    Exchange = 2,
-    Blueprint = 3,
-    Point = 4,
+    Exchange,
+    Blueprint,
+    Point,
     Blueprint2,
+    Subscription,
 }

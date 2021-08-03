@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Purchasing;
+using UnityEngine.Purchasing.Security;
 
 public class IAPMng : Single<IAPMng>, IStoreListener
 {
-    private IStoreController controller;
-    private IExtensionProvider extensions;
+    private IStoreController m_Controller;
+    private IAppleExtensions m_AppleExtensions;
+    private ITransactionHistoryExtensions m_TransactionHistoryExtensions;
+    private IGooglePlayStoreExtensions m_GooglePlayStoreExtensions;
 
     public override void Init()
     {
@@ -21,6 +25,8 @@ public class IAPMng : Single<IAPMng>, IStoreListener
             builder.AddProduct("craftstory_limit_490", ProductType.Consumable);
             builder.AddProduct("craftstory_limit_1480", ProductType.Consumable);
             builder.AddProduct("craftstory_limit_4400", ProductType.Consumable);
+            builder.AddProduct("craftstory_subscription_980", ProductType.Subscription);
+            builder.AddProduct("craftstory_subscription_1950", ProductType.Subscription);
 
             UnityPurchasing.Initialize(this, builder);
 
@@ -37,22 +43,72 @@ public class IAPMng : Single<IAPMng>, IStoreListener
     }
 
     /// <summary>
-    /// Unity IAP が購入処理を行える場合に呼び出されます
+    /// This will be called when Unity IAP has finished initialising.
     /// </summary>
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
         Logger.Log("OnInitialized");
 
-        this.controller = controller;
-        this.extensions = extensions;
+        m_Controller = controller;
+        m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
+        m_TransactionHistoryExtensions = extensions.GetExtension<ITransactionHistoryExtensions>();
+        m_GooglePlayStoreExtensions = extensions.GetExtension<IGooglePlayStoreExtensions>();
 
-        //foreach (var product in controller.products.all)
-        //{
-        //    Logger.Log("[ProductId]" + product.definition.storeSpecificId);
-        //    Logger.Log("[Title]" + product.metadata.localizedTitle);
-        //}
 
-        extensions.GetExtension<IAppleExtensions>().RegisterPurchaseDeferredListener(product =>
+        // On Apple platforms we need to handle deferred purchases caused by Apple's Ask to Buy feature.
+        // On non-Apple platforms this will have no effect; OnDeferred will never be called.
+        m_AppleExtensions.RegisterPurchaseDeferredListener(OnDeferred);
+
+        Dictionary<string, string> introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
+        foreach (var item in m_Controller.products.all)
+        {
+            // this is the usage of SubscriptionManager class
+            if (item.receipt != null)
+            {
+                if (item.definition.type == ProductType.Subscription)
+                {
+                    if (checkIfProductIsAvailableForSubscriptionManager(item.receipt))
+                    {
+                        string intro_json = (introductory_info_dict == null 
+                            || !introductory_info_dict.ContainsKey(item.definition.storeSpecificId)) 
+                                ? null 
+                                : introductory_info_dict[item.definition.storeSpecificId];
+
+                        SubscriptionManager p = new SubscriptionManager(item, intro_json);
+                        SubscriptionInfo info = p.getSubscriptionInfo();
+                        Debug.Log("product id is: " + info.getProductId());
+                        Debug.Log("purchase date is: " + info.getPurchaseDate());
+                        Debug.Log("subscription next billing date is: " + info.getExpireDate());
+                        Debug.Log("is subscribed? " + info.isSubscribed().ToString());
+                        Debug.Log("is expired? " + info.isExpired().ToString());
+                        Debug.Log("is cancelled? " + info.isCancelled());
+                        Debug.Log("product is in free trial peroid? " + info.isFreeTrial());
+                        Debug.Log("product is auto renewing? " + info.isAutoRenewing());
+                        Debug.Log("subscription remaining valid time until next billing date is: " + info.getRemainingTime());
+                        Debug.Log("is this product in introductory price period? " + info.isIntroductoryPricePeriod());
+                        Debug.Log("the product introductory localized price is: " + info.getIntroductoryPrice());
+                        Debug.Log("the product introductory price period is: " + info.getIntroductoryPricePeriod());
+                        Debug.Log("the number of product introductory price period cycles is: " + info.getIntroductoryPricePeriodCycles());
+                    }
+                    else
+                    {
+                        Debug.Log("This product is not available for SubscriptionManager class, only products that are purchase by 1.19+ SDK can use this class.");
+                    }
+                }
+                else
+                {
+                    Debug.Log("the product is not a subscription product");
+                }
+            }
+            else
+            {
+                Debug.Log("the product should have a valid receipt");
+            }
+        }
+
+
+
+            extensions.GetExtension<IAppleExtensions>().RegisterPurchaseDeferredListener(product =>
         {
             Logger.Log("RegisterPurchaseDeferredListener" + product.definition.id);
         });
@@ -119,18 +175,79 @@ public class IAPMng : Single<IAPMng>, IStoreListener
         var receiptId = e.purchasedProduct.transactionID;
         var receipt = product.receipt;
 
-        NWMng.E.Charge((rp) =>
+        if (product.definition.type == ProductType.Consumable)
         {
-            controller.ConfirmPendingPurchase(product);
-
-            NWMng.E.GetCoins((rp) =>
+            NWMng.E.Charge((rp) =>
             {
-                DataMng.GetCoins(rp);
-                if (ShopLG.E.UI != null) ShopLG.E.UI.RefreshCoins();
-            });
-        }, productId, receiptId);
+                m_Controller.ConfirmPendingPurchase(product);
+
+                NWMng.E.GetCoins((rp) =>
+                {
+                    DataMng.GetCoins(rp);
+                    if (ShopLG.E.UI != null) ShopLG.E.UI.RefreshCoins();
+                });
+            }, productId, receiptId);
+        }
+        else if (product.definition.type == ProductType.Subscription)
+        {
+            Logger.Warning("buy Subscription ok!!!");
+        }
 
         NWMng.E.ShowClientLog(receipt);
+
+
+
+
+        Dictionary<string, string> introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
+        foreach (var item in m_Controller.products.all)
+        {
+            // this is the usage of SubscriptionManager class
+            if (item.receipt != null)
+            {
+                if (item.definition.type == ProductType.Subscription)
+                {
+                    if (checkIfProductIsAvailableForSubscriptionManager(item.receipt))
+                    {
+                        string intro_json = (introductory_info_dict == null
+                            || !introductory_info_dict.ContainsKey(item.definition.storeSpecificId))
+                                ? null
+                                : introductory_info_dict[item.definition.storeSpecificId];
+
+                        SubscriptionManager p = new SubscriptionManager(item, intro_json);
+                        SubscriptionInfo info = p.getSubscriptionInfo();
+                        Logger.Log("product id is: " + info.getProductId());
+                        Logger.Log("purchase date is: " + info.getPurchaseDate());
+                        Logger.Log("subscription next billing date is: " + info.getExpireDate());
+                        Logger.Log("is subscribed? " + info.isSubscribed().ToString());
+                        Logger.Log("is expired? " + info.isExpired().ToString());
+                        Logger.Log("is cancelled? " + info.isCancelled());
+                        Logger.Log("product is in free trial peroid? " + info.isFreeTrial());
+                        Logger.Log("product is auto renewing? " + info.isAutoRenewing());
+                        Logger.Log("subscription remaining valid time until next billing date is: " + info.getRemainingTime());
+                        Logger.Log("is this product in introductory price period? " + info.isIntroductoryPricePeriod());
+                        Logger.Log("the product introductory localized price is: " + info.getIntroductoryPrice());
+                        Logger.Log("the product introductory price period is: " + info.getIntroductoryPricePeriod());
+                        Logger.Log("the number of product introductory price period cycles is: " + info.getIntroductoryPricePeriodCycles());
+                    }
+                    else
+                    {
+                        Logger.Log("This product is not available for SubscriptionManager class, only products that are purchase by 1.19+ SDK can use this class.");
+                    }
+                }
+                else
+                {
+                    Logger.Log("the product is not a subscription product");
+                }
+            }
+            else
+            {
+                Logger.Log("the product should have a valid receipt");
+            }
+        }
+
+
+
+
 
         return PurchaseProcessingResult.Pending;
     }
@@ -155,6 +272,77 @@ public class IAPMng : Single<IAPMng>, IStoreListener
     public void OnPurchaseClicked(string productId)
     {
         Logger.Log("購入開始." + productId);
-        controller.InitiatePurchase(productId);
+        m_Controller.InitiatePurchase(productId);
+    }
+
+
+
+
+    /// <summary>
+    /// iOS Specific.
+    /// This is called as part of Apple's 'Ask to buy' functionality,
+    /// when a purchase is requested by a minor and referred to a parent
+    /// for approval.
+    ///
+    /// When the purchase is approved or rejected, the normal purchase events
+    /// will fire.
+    /// </summary>
+    /// <param name="item">Item.</param>
+    private void OnDeferred(Product item)
+    {
+        Debug.Log("Purchase deferred: " + item.definition.id);
+    }
+
+    private bool checkIfProductIsAvailableForSubscriptionManager(string receipt)
+    {
+        var receipt_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode(receipt);
+        if (!receipt_wrapper.ContainsKey("Store") || !receipt_wrapper.ContainsKey("Payload"))
+        {
+            Debug.Log("The product receipt does not contain enough information");
+            return false;
+        }
+        var store = (string)receipt_wrapper["Store"];
+        var payload = (string)receipt_wrapper["Payload"];
+
+        if (payload != null)
+        {
+            switch (store)
+            {
+                case GooglePlay.Name:
+                    {
+                        var payload_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode(payload);
+                        if (!payload_wrapper.ContainsKey("json"))
+                        {
+                            Debug.Log("The product receipt does not contain enough information, the 'json' field is missing");
+                            return false;
+                        }
+                        var original_json_payload_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode((string)payload_wrapper["json"]);
+                        if (original_json_payload_wrapper == null || !original_json_payload_wrapper.ContainsKey("developerPayload"))
+                        {
+                            Debug.Log("The product receipt does not contain enough information, the 'developerPayload' field is missing");
+                            return false;
+                        }
+                        var developerPayloadJSON = (string)original_json_payload_wrapper["developerPayload"];
+                        var developerPayload_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode(developerPayloadJSON);
+                        if (developerPayload_wrapper == null || !developerPayload_wrapper.ContainsKey("is_free_trial") || !developerPayload_wrapper.ContainsKey("has_introductory_price_trial"))
+                        {
+                            Debug.Log("The product receipt does not contain enough information, the product is not purchased using 1.19 or later");
+                            return false;
+                        }
+                        return true;
+                    }
+                case AppleAppStore.Name:
+                case AmazonApps.Name:
+                case MacAppStore.Name:
+                    {
+                        return true;
+                    }
+                default:
+                    {
+                        return false;
+                    }
+            }
+        }
+        return false;
     }
 }

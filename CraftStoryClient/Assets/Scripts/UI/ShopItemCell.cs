@@ -1,7 +1,6 @@
 using JsonConfigData;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Purchasing;
 
 public class ShopItemCell : UIBase
 {

@@ -14,6 +14,7 @@ public class ShopUI : UIBase
     Transform ChageWind { get => FindChiled("ChargeWind"); }
     Transform ItemsWind { get => FindChiled("ItemsWind"); }
     Transform itemGridRoot { get => FindChiled("Grid", ItemsWind.gameObject); }
+    Transform SubscriptionWind { get => FindChiled("SubscriptionWind"); }
 
     Transform Blueprint2Wind { get => FindChiled("Blueprint2Wind"); }
     Transform itemGridRoot2 { get => FindChiled("Grid", Blueprint2Wind.gameObject); }
@@ -72,14 +73,16 @@ public class ShopUI : UIBase
         btns = new Button[btnsParent.childCount];
         btns[0] = FindChiled<Button>("Button (1)");
         btns[0].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Charge; SelectBtnIndex = 0; });
-        btns[1] = FindChiled<Button>("Button (5)");
-        btns[1].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Point; SelectBtnIndex = 1; });
-        btns[2] = FindChiled<Button>("Button (2)");
-        btns[2].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Exchange; SelectBtnIndex = 2; });
-        btns[3] = FindChiled<Button>("Button (3)");
-        btns[3].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint; SelectBtnIndex = 3; });
-        btns[4] = FindChiled<Button>("Button (4)");
-        btns[4].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint2; SelectBtnIndex = 4; });
+        btns[1] = FindChiled<Button>("Button (6)");
+        btns[1].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Subscription; SelectBtnIndex = 1; });
+        btns[2] = FindChiled<Button>("Button (5)");
+        btns[2].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Point; SelectBtnIndex = 2; });
+        btns[3] = FindChiled<Button>("Button (2)");
+        btns[3].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Exchange; SelectBtnIndex = 3; });
+        btns[4] = FindChiled<Button>("Button (3)");
+        btns[4].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint; SelectBtnIndex = 4; });
+        btns[5] = FindChiled<Button>("Button (4)");
+        btns[5].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint2; SelectBtnIndex = 5; });
 
         ShopLG.E.ShopUIType = ShopUiType.Charge;
 
@@ -125,6 +128,8 @@ public class ShopUI : UIBase
 
             item.Open();
         }
+
+        ShopLG.E.GetSubscriptions();
     }
 
     public void SetTitle2(string msg)
@@ -143,6 +148,7 @@ public class ShopUI : UIBase
             || uiType == ShopUiType.Blueprint
             || uiType == ShopUiType.Point);
         Blueprint2Wind.gameObject.SetActive(uiType == ShopUiType.Blueprint2);
+        SubscriptionWind.gameObject.SetActive(uiType == ShopUiType.Subscription);
     }
 
     public void RefreshCoins()
@@ -157,6 +163,10 @@ public class ShopUI : UIBase
         if (type == ShopUiType.Blueprint2)
         {
             ShopLG.E.GetBlueprint2Items(InputField.text, Dropdown.value);
+        }
+        else if (type == ShopUiType.Subscription)
+        {
+
         }
         else
         {
@@ -176,6 +186,7 @@ public class ShopUI : UIBase
     public void RefreshBlueprint2(List<MyShopBlueprintData> items)
     {
         ClearCell(itemGridRoot2);
+
         if (items != null)
         {
             foreach (var item in items)
@@ -183,6 +194,20 @@ public class ShopUI : UIBase
                 var cell = AddCell<ShopMyShopItemCell>("Prefabs/UI/ShopMyShopItem", itemGridRoot2);
                 cell.Set(item);
                 myshopItems.Add(cell);
+            }
+        }
+    }
+    public void RefreshSubscription()
+    {
+        var parent = FindChiled("Grid", SubscriptionWind.gameObject);
+        ClearCell(parent);
+
+        for (int i = 0; i < 3; i++)
+        {
+            var cell = AddCell<ShopSubscriptionCell>("Prefabs/UI/ShopSubscriptionCell", parent);
+            if (cell != null)
+            {
+                cell.Set(i);
             }
         }
     }

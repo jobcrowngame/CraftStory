@@ -12,7 +12,10 @@ public class Logger : Single<Logger>
     public static void Log(string format, params object[] args)
     {
         if (level < LogLV.Warning)
+        {
             Debug.LogFormat("[LOG]" + format, args);
+            DebugLG.E.Add(string.Format("[LOG]" + format, args));
+        }
     }
     public static void Log(Vector2 v2)
     {
@@ -25,12 +28,18 @@ public class Logger : Single<Logger>
     public static void Warning(string format, params object[] args)
     {
         if (level < LogLV.Error)
+        {
             Debug.LogWarningFormat("[WARNING]" + format, args);
+            DebugLG.E.Add(string.Format("[WARNING]" + format, args));
+        }
     }
     public static void Error(string format, params object[] args)
     {
         if (level < LogLV.Off)
+        {
             Debug.LogErrorFormat("[ERROR]" + format, args);
+            DebugLG.E.Add(string.Format("[ERROR]" + format, args));
+        }
     }
     public static void Error(Exception e)
     {

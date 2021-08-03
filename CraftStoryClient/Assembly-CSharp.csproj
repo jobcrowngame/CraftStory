@@ -222,6 +222,12 @@
     <Compile Include="Assets\Scripts\UI\DebugUI.cs" />
     <Compile Include="Assets\Scripts\UI\DebugLG.cs" />
     <Compile Include="Assets\Scripts\UI\DebugCell.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopSubscriptionCell.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopSubscriptionItemCell.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsLG.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsUI.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsCell.cs" />
+    <Compile Include="Assets\Scripts\Test\IAPDemo.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

@@ -52,9 +52,6 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         if (eventData.pointerId == 1) touch2 = eventData.position;
         if (touch1 != Vector2.zero && touch2 != Vector2.zero)
             curDistance = Vector2.Distance(touch1, touch2);
-
-        DebugLG.E.Add("Click Count: " + eventData.clickCount);
-        DebugLG.E.Add(eventData.ToString());
     }
 
     
@@ -62,8 +59,6 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         if (eventData.pointerId == 0) touch1 = eventData.position;
         if (eventData.pointerId == 1) touch2 = eventData.position;
-
-        DebugLG.E.Add("Click Count: " + eventData.clickCount);
 
         if (touch1 != Vector2.zero && touch2 != Vector2.zero)
         {
