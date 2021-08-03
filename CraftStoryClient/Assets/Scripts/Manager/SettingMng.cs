@@ -33,7 +33,7 @@ public class SettingMng : Single<SettingMng>
     private float moveSpeed = 4F;       //歩行速度
 
     public float JumpSpeed { get => jumpSpeed; }
-    private float jumpSpeed = 8F;   //ジャンプ力
+    private float jumpSpeed = 7F;   //ジャンプ力
 
     public float Gravity { get => gravity; }
     private float gravity = 20F;    //重力の大きさ

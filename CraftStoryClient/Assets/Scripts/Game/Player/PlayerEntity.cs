@@ -28,16 +28,13 @@ public class PlayerEntity : CharacterEntity
         if (Behavior.Type == PlayerBehaviorType.Breack)
             return;
 
+        var angle1 = GetAngleFromV2(new Vector2(x, y).normalized);
+        var angle2 = PlayerCtl.E.CameraCtl.GetEulerAngleY;
+        var newVec = GetV2FromAngle(angle1 + angle2);
+
         //キャラクターの移動と回転
         if (controller.isGrounded && Behavior.Type != PlayerBehaviorType.Jump)
         {
-            var angle1 = GetAngleFromV2(new Vector2(x, y).normalized);
-            var angle2 = PlayerCtl.E.CameraCtl.GetEulerAngleY;
-            var newVec = GetV2FromAngle(angle1 + angle2);
-
-            if (x != 0 || y != 0)
-                Model.rotation = Quaternion.Euler(new Vector3(0, angle1 + angle2, 0));
-
             if (x != 0 || y != 0)
             {
                 moveDirection.x = newVec.x * SettingMng.E.MoveSpeed;
@@ -59,6 +56,9 @@ public class PlayerEntity : CharacterEntity
 
             moveDirection.y = 0;
         }
+
+        if (x != 0 || y != 0)
+            Model.rotation = Quaternion.Euler(new Vector3(0, angle1 + angle2, 0));
 
         moveDirection.y -= SettingMng.E.Gravity * Time.deltaTime;
 
