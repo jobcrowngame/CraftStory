@@ -3,23 +3,16 @@
 
 public class DebugLG : UILogicBase<DebugLG, DebugUI>
 {
-    string mMsg;
-
     public void Add(string msg)
     {
-        mMsg += msg;
+        if (UI != null) UI.Add(msg);
     }
     public void Add(int msg)
     {
-        mMsg += msg;
+        if (UI != null) UI.Add(msg.ToString());
     }
-
-
-    public void Refresh()
+    public void Clear()
     {
-        if (UI != null)
-        {
-            UI.Refresh(mMsg);
-        }
+        if (UI != null) UI.Clear();
     }
 }

@@ -221,6 +221,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
     <Compile Include="Assets\Scripts\UI\DebugUI.cs" />
     <Compile Include="Assets\Scripts\UI\DebugLG.cs" />
+    <Compile Include="Assets\Scripts\UI\DebugCell.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

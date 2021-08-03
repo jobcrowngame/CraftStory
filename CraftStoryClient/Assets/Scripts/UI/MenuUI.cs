@@ -17,6 +17,7 @@ public class MenuUI : UIBase
     Button PlayDescriptionBtn2 { get => FindChiled<Button>("PlayDescriptionBtn2"); }
     Button MessageBtn { get => FindChiled<Button>("MessageBtn"); }
     Button Notice { get => FindChiled<Button>("Notice"); }
+    Button Debug { get => FindChiled<Button>("Debug"); }
 
     MenuUIType menuType
     {
@@ -34,6 +35,7 @@ public class MenuUI : UIBase
             MessageBtn.gameObject.SetActive(false);
 
             Notice.gameObject.SetActive(false);
+            Debug.gameObject.SetActive(false);
 
             switch (value)
             {
@@ -48,6 +50,7 @@ public class MenuUI : UIBase
                     PlayDescriptionBtn2.gameObject.SetActive(true);
                     MessageBtn.gameObject.SetActive(true);
                     Notice.gameObject.SetActive(true);
+                    Debug.gameObject.SetActive(true);
                     break;
 
                 case MenuUIType.Brave:
@@ -143,6 +146,11 @@ public class MenuUI : UIBase
         Notice.onClick.AddListener(() => 
         {
             UICtl.E.OpenUI<NoticeUI>(UIType.Notice);
+            Close();
+        });
+        Debug.onClick.AddListener(() =>
+        {
+            UICtl.E.OpenUI<DebugUI>(UIType.Debug);
             Close();
         });
     }

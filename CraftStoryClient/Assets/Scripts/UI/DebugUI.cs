@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class DebugUI : UIBase
 {
-    Text Msg { get => FindChiled<Text>("Msg"); }
+    Transform Parent { get => FindChiled("Content"); }
     Button CloseBtn { get => FindChiled<Button>("CloseBtn"); }
+    Button ClearBtn { get => FindChiled<Button>("ClearBtn"); }
 
     public override void Init()
     {
@@ -17,10 +13,16 @@ public class DebugUI : UIBase
         DebugLG.E.Init(this);
 
         CloseBtn.onClick.AddListener(Close);
+        ClearBtn.onClick.AddListener(Clear);
     }
 
-    public void Refresh(string msg)
+    public void Add(string msg)
     {
-        Msg.text = msg;
+        var cell = AddCell<DebugCell>("Prefabs/UI/Common/DebugCell", Parent);
+        cell.Set(msg);
+    }
+    public void Clear()
+    {
+        ClearCell(Parent);
     }
 }
