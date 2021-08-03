@@ -59,61 +59,7 @@ public class IAPMng : Single<IAPMng>, IStoreListener
         // On non-Apple platforms this will have no effect; OnDeferred will never be called.
         m_AppleExtensions.RegisterPurchaseDeferredListener(OnDeferred);
 
-        Dictionary<string, string> introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
-
-        Logger.Warning("---------Start show IntroductoryPriceDictionary");
-        foreach (var item in introductory_info_dict.Keys)
-        {
-            Logger.Log("Key:{0}, Value:{1}", item, introductory_info_dict[item]);
-        }
-        Logger.Warning("---------End show IntroductoryPriceDictionary");
-
-        foreach (var item in m_Controller.products.all)
-        {
-            // this is the usage of SubscriptionManager class
-            if (item.receipt != null)
-            {
-                if (item.definition.type == ProductType.Subscription)
-                {
-                    if (checkIfProductIsAvailableForSubscriptionManager(item.receipt))
-                    {
-                        string intro_json = (introductory_info_dict == null
-                            || !introductory_info_dict.ContainsKey(item.definition.storeSpecificId))
-                                ? null
-                                : introductory_info_dict[item.definition.storeSpecificId];
-
-                        SubscriptionManager p = new SubscriptionManager(item, intro_json);
-                        SubscriptionInfo info = p.getSubscriptionInfo();
-                        Logger.Log("product id is: " + info.getProductId());
-                        Logger.Log("purchase date is: " + info.getPurchaseDate());
-                        Logger.Log("subscription next billing date is: " + info.getExpireDate());
-                        Logger.Log("is subscribed? " + info.isSubscribed().ToString());
-                        Logger.Log("is expired? " + info.isExpired().ToString());
-                        Logger.Log("is cancelled? " + info.isCancelled());
-                        Logger.Log("product is in free trial peroid? " + info.isFreeTrial());
-                        Logger.Log("product is auto renewing? " + info.isAutoRenewing());
-                        Logger.Log("subscription remaining valid time until next billing date is: " + info.getRemainingTime());
-                        Logger.Log("is this product in introductory price period? " + info.isIntroductoryPricePeriod());
-                        Logger.Log("the product introductory localized price is: " + info.getIntroductoryPrice());
-                        Logger.Log("the product introductory price period is: " + info.getIntroductoryPricePeriod());
-                        Logger.Log("the number of product introductory price period cycles is: " + info.getIntroductoryPricePeriodCycles());
-                    }
-                    else
-                    {
-                        Logger.Log("This product is not available for SubscriptionManager class, only products that are purchase by 1.19+ SDK can use this class.");
-                    }
-                }
-                else
-                {
-                    Logger.Log("the product is not a subscription product");
-                }
-            }
-            else
-            {
-                Logger.Log("the product should have a valid receipt");
-            }
-        }
-
+        ShowSubscription();
 
 
             extensions.GetExtension<IAppleExtensions>().RegisterPurchaseDeferredListener(product =>
@@ -204,61 +150,7 @@ public class IAPMng : Single<IAPMng>, IStoreListener
         NWMng.E.ShowClientLog(receipt);
 
 
-        Dictionary<string, string> introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
-        Logger.Warning("---------Start show IntroductoryPriceDictionary");
-        foreach (var item in introductory_info_dict.Keys)
-        {
-            Logger.Log("Key:{0}, Value:{1}", item, introductory_info_dict[item]);
-        }
-        Logger.Warning("---------End show IntroductoryPriceDictionary");
-
-        foreach (var item in m_Controller.products.all)
-        {
-            // this is the usage of SubscriptionManager class
-            if (item.receipt != null)
-            {
-                if (item.definition.type == ProductType.Subscription)
-                {
-                    if (checkIfProductIsAvailableForSubscriptionManager(item.receipt))
-                    {
-                        string intro_json = (introductory_info_dict == null
-                            || !introductory_info_dict.ContainsKey(item.definition.storeSpecificId))
-                                ? null
-                                : introductory_info_dict[item.definition.storeSpecificId];
-
-                        SubscriptionManager p = new SubscriptionManager(item, intro_json);
-                        SubscriptionInfo info = p.getSubscriptionInfo();
-                        Logger.Log("product id is: " + info.getProductId());
-                        Logger.Log("purchase date is: " + info.getPurchaseDate());
-                        Logger.Log("subscription next billing date is: " + info.getExpireDate());
-                        Logger.Log("is subscribed? " + info.isSubscribed().ToString());
-                        Logger.Log("is expired? " + info.isExpired().ToString());
-                        Logger.Log("is cancelled? " + info.isCancelled());
-                        Logger.Log("product is in free trial peroid? " + info.isFreeTrial());
-                        Logger.Log("product is auto renewing? " + info.isAutoRenewing());
-                        Logger.Log("subscription remaining valid time until next billing date is: " + info.getRemainingTime());
-                        Logger.Log("is this product in introductory price period? " + info.isIntroductoryPricePeriod());
-                        Logger.Log("the product introductory localized price is: " + info.getIntroductoryPrice());
-                        Logger.Log("the product introductory price period is: " + info.getIntroductoryPricePeriod());
-                        Logger.Log("the number of product introductory price period cycles is: " + info.getIntroductoryPricePeriodCycles());
-                    }
-                    else
-                    {
-                        Logger.Log("This product is not available for SubscriptionManager class, only products that are purchase by 1.19+ SDK can use this class.");
-                    }
-                }
-                else
-                {
-                    Logger.Log("the product is not a subscription product");
-                }
-            }
-            else
-            {
-                Logger.Log("the product should have a valid receipt");
-            }
-        }
-
-
+        ShowSubscription();
 
 
 
@@ -357,5 +249,62 @@ public class IAPMng : Single<IAPMng>, IStoreListener
             }
         }
         return false;
+    }
+
+    public void ShowSubscription()
+    {
+        Dictionary<string, string> introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
+        Logger.Warning("---------Start show IntroductoryPriceDictionary");
+        foreach (var item in introductory_info_dict.Keys)
+        {
+            Logger.Log("Key:{0}, Value:{1}", item, introductory_info_dict[item]);
+        }
+        Logger.Warning("---------End show IntroductoryPriceDictionary");
+
+        foreach (var item in m_Controller.products.all)
+        {
+            // this is the usage of SubscriptionManager class
+            if (item.receipt != null)
+            {
+                if (item.definition.type == ProductType.Subscription)
+                {
+                    if (checkIfProductIsAvailableForSubscriptionManager(item.receipt))
+                    {
+                        string intro_json = (introductory_info_dict == null
+                            || !introductory_info_dict.ContainsKey(item.definition.storeSpecificId))
+                                ? null
+                                : introductory_info_dict[item.definition.storeSpecificId];
+
+                        SubscriptionManager p = new SubscriptionManager(item, intro_json);
+                        SubscriptionInfo info = p.getSubscriptionInfo();
+                        Logger.Log("product id is: " + info.getProductId());
+                        Logger.Log("purchase date is: " + info.getPurchaseDate());
+                        Logger.Log("subscription next billing date is: " + info.getExpireDate());
+                        Logger.Log("is subscribed? " + info.isSubscribed().ToString());
+                        Logger.Log("is expired? " + info.isExpired().ToString());
+                        Logger.Log("is cancelled? " + info.isCancelled());
+                        Logger.Log("product is in free trial peroid? " + info.isFreeTrial());
+                        Logger.Log("product is auto renewing? " + info.isAutoRenewing());
+                        Logger.Log("subscription remaining valid time until next billing date is: " + info.getRemainingTime());
+                        Logger.Log("is this product in introductory price period? " + info.isIntroductoryPricePeriod());
+                        Logger.Log("the product introductory localized price is: " + info.getIntroductoryPrice());
+                        Logger.Log("the product introductory price period is: " + info.getIntroductoryPricePeriod());
+                        Logger.Log("the number of product introductory price period cycles is: " + info.getIntroductoryPricePeriodCycles());
+                    }
+                    else
+                    {
+                        Logger.Log("This product is not available for SubscriptionManager class, only products that are purchase by 1.19+ SDK can use this class.");
+                    }
+                }
+                else
+                {
+                    Logger.Log("the product is not a subscription product");
+                }
+            }
+            else
+            {
+                Logger.Log("the product should have a valid receipt");
+            }
+        }
     }
 }
