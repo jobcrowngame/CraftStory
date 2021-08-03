@@ -6,7 +6,7 @@ public class Logger : Single<Logger>
 #if UNITY_EDITOR
     private static LogLV level = LogLV.Log;
 #else
-    private static LogLV level = LogLV.Error;
+    private static LogLV level = LogLV.Log;
 #endif
 
     public static void Log(string format, params object[] args)

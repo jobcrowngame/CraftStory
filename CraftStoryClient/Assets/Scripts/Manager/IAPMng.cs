@@ -60,6 +60,14 @@ public class IAPMng : Single<IAPMng>, IStoreListener
         m_AppleExtensions.RegisterPurchaseDeferredListener(OnDeferred);
 
         Dictionary<string, string> introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
+
+        Logger.Warning("---------Start show IntroductoryPriceDictionary");
+        foreach (var item in introductory_info_dict.Keys)
+        {
+            Logger.Log("Key:{0}, Value:{1}", item, introductory_info_dict[item]);
+        }
+        Logger.Warning("---------End show IntroductoryPriceDictionary");
+
         foreach (var item in m_Controller.products.all)
         {
             // this is the usage of SubscriptionManager class
@@ -69,40 +77,40 @@ public class IAPMng : Single<IAPMng>, IStoreListener
                 {
                     if (checkIfProductIsAvailableForSubscriptionManager(item.receipt))
                     {
-                        string intro_json = (introductory_info_dict == null 
-                            || !introductory_info_dict.ContainsKey(item.definition.storeSpecificId)) 
-                                ? null 
+                        string intro_json = (introductory_info_dict == null
+                            || !introductory_info_dict.ContainsKey(item.definition.storeSpecificId))
+                                ? null
                                 : introductory_info_dict[item.definition.storeSpecificId];
 
                         SubscriptionManager p = new SubscriptionManager(item, intro_json);
                         SubscriptionInfo info = p.getSubscriptionInfo();
-                        Debug.Log("product id is: " + info.getProductId());
-                        Debug.Log("purchase date is: " + info.getPurchaseDate());
-                        Debug.Log("subscription next billing date is: " + info.getExpireDate());
-                        Debug.Log("is subscribed? " + info.isSubscribed().ToString());
-                        Debug.Log("is expired? " + info.isExpired().ToString());
-                        Debug.Log("is cancelled? " + info.isCancelled());
-                        Debug.Log("product is in free trial peroid? " + info.isFreeTrial());
-                        Debug.Log("product is auto renewing? " + info.isAutoRenewing());
-                        Debug.Log("subscription remaining valid time until next billing date is: " + info.getRemainingTime());
-                        Debug.Log("is this product in introductory price period? " + info.isIntroductoryPricePeriod());
-                        Debug.Log("the product introductory localized price is: " + info.getIntroductoryPrice());
-                        Debug.Log("the product introductory price period is: " + info.getIntroductoryPricePeriod());
-                        Debug.Log("the number of product introductory price period cycles is: " + info.getIntroductoryPricePeriodCycles());
+                        Logger.Log("product id is: " + info.getProductId());
+                        Logger.Log("purchase date is: " + info.getPurchaseDate());
+                        Logger.Log("subscription next billing date is: " + info.getExpireDate());
+                        Logger.Log("is subscribed? " + info.isSubscribed().ToString());
+                        Logger.Log("is expired? " + info.isExpired().ToString());
+                        Logger.Log("is cancelled? " + info.isCancelled());
+                        Logger.Log("product is in free trial peroid? " + info.isFreeTrial());
+                        Logger.Log("product is auto renewing? " + info.isAutoRenewing());
+                        Logger.Log("subscription remaining valid time until next billing date is: " + info.getRemainingTime());
+                        Logger.Log("is this product in introductory price period? " + info.isIntroductoryPricePeriod());
+                        Logger.Log("the product introductory localized price is: " + info.getIntroductoryPrice());
+                        Logger.Log("the product introductory price period is: " + info.getIntroductoryPricePeriod());
+                        Logger.Log("the number of product introductory price period cycles is: " + info.getIntroductoryPricePeriodCycles());
                     }
                     else
                     {
-                        Debug.Log("This product is not available for SubscriptionManager class, only products that are purchase by 1.19+ SDK can use this class.");
+                        Logger.Log("This product is not available for SubscriptionManager class, only products that are purchase by 1.19+ SDK can use this class.");
                     }
                 }
                 else
                 {
-                    Debug.Log("the product is not a subscription product");
+                    Logger.Log("the product is not a subscription product");
                 }
             }
             else
             {
-                Debug.Log("the product should have a valid receipt");
+                Logger.Log("the product should have a valid receipt");
             }
         }
 
@@ -196,9 +204,14 @@ public class IAPMng : Single<IAPMng>, IStoreListener
         NWMng.E.ShowClientLog(receipt);
 
 
-
-
         Dictionary<string, string> introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
+        Logger.Warning("---------Start show IntroductoryPriceDictionary");
+        foreach (var item in introductory_info_dict.Keys)
+        {
+            Logger.Log("Key:{0}, Value:{1}", item, introductory_info_dict[item]);
+        }
+        Logger.Warning("---------End show IntroductoryPriceDictionary");
+
         foreach (var item in m_Controller.products.all)
         {
             // this is the usage of SubscriptionManager class
@@ -290,7 +303,7 @@ public class IAPMng : Single<IAPMng>, IStoreListener
     /// <param name="item">Item.</param>
     private void OnDeferred(Product item)
     {
-        Debug.Log("Purchase deferred: " + item.definition.id);
+        Logger.Log("Purchase deferred: " + item.definition.id);
     }
 
     private bool checkIfProductIsAvailableForSubscriptionManager(string receipt)
@@ -298,7 +311,7 @@ public class IAPMng : Single<IAPMng>, IStoreListener
         var receipt_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode(receipt);
         if (!receipt_wrapper.ContainsKey("Store") || !receipt_wrapper.ContainsKey("Payload"))
         {
-            Debug.Log("The product receipt does not contain enough information");
+            Logger.Log("The product receipt does not contain enough information");
             return false;
         }
         var store = (string)receipt_wrapper["Store"];
@@ -313,20 +326,20 @@ public class IAPMng : Single<IAPMng>, IStoreListener
                         var payload_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode(payload);
                         if (!payload_wrapper.ContainsKey("json"))
                         {
-                            Debug.Log("The product receipt does not contain enough information, the 'json' field is missing");
+                            Logger.Log("The product receipt does not contain enough information, the 'json' field is missing");
                             return false;
                         }
                         var original_json_payload_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode((string)payload_wrapper["json"]);
                         if (original_json_payload_wrapper == null || !original_json_payload_wrapper.ContainsKey("developerPayload"))
                         {
-                            Debug.Log("The product receipt does not contain enough information, the 'developerPayload' field is missing");
+                            Logger.Log("The product receipt does not contain enough information, the 'developerPayload' field is missing");
                             return false;
                         }
                         var developerPayloadJSON = (string)original_json_payload_wrapper["developerPayload"];
                         var developerPayload_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode(developerPayloadJSON);
                         if (developerPayload_wrapper == null || !developerPayload_wrapper.ContainsKey("is_free_trial") || !developerPayload_wrapper.ContainsKey("has_introductory_price_trial"))
                         {
-                            Debug.Log("The product receipt does not contain enough information, the product is not purchased using 1.19 or later");
+                            Logger.Log("The product receipt does not contain enough information, the product is not purchased using 1.19 or later");
                             return false;
                         }
                         return true;
