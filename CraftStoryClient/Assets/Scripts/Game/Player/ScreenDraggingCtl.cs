@@ -46,6 +46,15 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         isDrag = true;
         startPos = eventData.position;
+
+
+        if (eventData.pointerId == 0) touch1 = eventData.position;
+        if (eventData.pointerId == 1) touch2 = eventData.position;
+        if (touch1 != Vector2.zero && touch2 != Vector2.zero)
+            curDistance = Vector2.Distance(touch1, touch2);
+
+        DebugLG.E.Add("Click Count: " + eventData.clickCount);
+        DebugLG.E.Add(eventData.ToString());
     }
 
     
@@ -56,19 +65,17 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         DebugLG.E.Add("Click Count: " + eventData.clickCount);
 
-        if (touch1 != Vector2.zero && touch2 != Vector2.zero && eventData.clickCount > 1)
+        if (touch1 != Vector2.zero && touch2 != Vector2.zero)
         {
             var newDistance = Vector2.Distance(touch1, touch2);
             var changeCameraV = curDistance - newDistance > 0 ? -1 : 1;
             PlayerCtl.E.CameraCtl.ChangeCameraPos(changeCameraV);
             curDistance = newDistance;
         }
-
-        if (eventData.pointerId == 0 && eventData.clickCount == 1
-            || eventData.pointerId == -1 && eventData.clickCount == 1)
+        else
         {
             Vector2 pointerPos = eventData.position - startPos;
-            if(PlayerCtl.E.CameraCtl != null) PlayerCtl.E.CameraCtl.CameraRotate(pointerPos.x, pointerPos.y);
+            if (PlayerCtl.E.CameraCtl != null) PlayerCtl.E.CameraCtl.CameraRotate(pointerPos.x, pointerPos.y);
             if (PlayerCtl.E.BlueprintPreviewCtl != null) PlayerCtl.E.BlueprintPreviewCtl.CameraRotate(pointerPos.x, pointerPos.y);
 
             startPos = eventData.position;
@@ -83,6 +90,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         isClick = false;
         IsClicking = false;
         clickingTime = 0;
+
+        if (eventData.pointerId == 0) touch1 = Vector2.zero;
+        if (eventData.pointerId == 1) touch2 = Vector2.zero;
     }
 
     Vector2 touch1;
@@ -93,24 +103,10 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         this.eventData = eventData;
         isClick = true;
-
-        if (eventData.pointerId == 0) touch1 = eventData.position;
-        if (eventData.pointerId == 1) touch2 = eventData.position;
-        if (touch1 != Vector2.zero && touch2 != Vector2.zero)
-            curDistance = Vector2.Distance(touch1, touch2);
-
-        DebugLG.E.Add("Click Count: " + eventData.clickCount);
-        DebugLG.E.Add(eventData.ToString());
-        if (eventData.clickCount == 3)
-        {
-            UICtl.E.OpenUI<DebugUI>(UIType.Debug);
-        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        //Logger.Log("OnPointerUp");
-
         if (isDrag)
             return;
 
