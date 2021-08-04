@@ -238,7 +238,7 @@ public class MapData
             }
             else
             {
-                Logger.Warning("Remove entity Failure");
+                Logger.Error("Remove entity Failure");
             }
         }
         catch (Exception ex)

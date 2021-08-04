@@ -29,10 +29,24 @@ public class BlueprintData
     public BlueprintData() { }
     public BlueprintData(string json)
     {
-        var obj = JsonMapper.ToObject<BlueprintData>(json);
-        sizeX = obj.sizeX;
-        sizeZ = obj.sizeZ;
-        mblocks = obj.blocks;
+        try
+        {
+            var obj = JsonMapper.ToObject<BlueprintData>(json);
+            sizeX = obj.sizeX;
+            sizeZ = obj.sizeZ;
+            mblocks = obj.blocks;
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex);
+            NWMng.E.ShowClientLog(ex.Message);
+            NWMng.E.ShowClientLog(ex.StackTrace);
+        }
+        finally
+        {
+            sizeX = 0;
+            sizeZ = 0;
+        }
     }
     public BlueprintData(List<EntityBase> entitys, Vector2Int size, Vector3Int centerPos)
     {
