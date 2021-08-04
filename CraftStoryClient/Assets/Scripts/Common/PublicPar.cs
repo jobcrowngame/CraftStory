@@ -65,5 +65,10 @@ public class PublicPar
 
     public static string AppStoryURL = "https://apps.apple.com/jp/app/id1571438709";
 
+    // 資金決済法に基づく表示
+    public static string UrlBtn1 = "https://www.craftstory.jp/funding/";
+    // 特定商取引法に基づく表示
+    public static string UrlBtn2 = "https://www.craftstory.jp/specified/";
+
     #endregion
 }

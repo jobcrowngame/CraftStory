@@ -11,6 +11,7 @@ public class ShopUI : UIBase
 
     Text Title2 { get => FindChiled<Text>("ItemsTitle"); }
 
+    Transform UrlBtns { get => FindChiled("UrlBtns"); }
     Transform ChageWind { get => FindChiled("ChargeWind"); }
     Transform ItemsWind { get => FindChiled("ItemsWind"); }
     Transform itemGridRoot { get => FindChiled("Grid", ItemsWind.gameObject); }
@@ -51,6 +52,11 @@ public class ShopUI : UIBase
         title = FindChiled<TitleUI>("Title");
         title.SetTitle("ショップ");
         title.SetOnClose(() => { Close(); });
+
+        var urlBtn01 = FindChiled<Button>("UrlBtn1", UrlBtns);
+        urlBtn01.onClick.AddListener(() => { Application.OpenURL(PublicPar.UrlBtn1); });
+        var urlBtn02 = FindChiled<Button>("UrlBtn2", UrlBtns);
+        urlBtn02.onClick.AddListener(() => { Application.OpenURL(PublicPar.UrlBtn2); });
 
         LeftBtn.onClick.AddListener(()=> { ShopLG.E.OnClickLeftBtn(InputField.text, Dropdown.value); });
         RightBtn.onClick.AddListener(()=> { ShopLG.E.OnClickRightBtn(InputField.text, Dropdown.value); });
@@ -149,6 +155,9 @@ public class ShopUI : UIBase
             || uiType == ShopUiType.Point);
         Blueprint2Wind.gameObject.SetActive(uiType == ShopUiType.Blueprint2);
         SubscriptionWind.gameObject.SetActive(uiType == ShopUiType.Subscription);
+
+        UrlBtns.gameObject.SetActive(uiType == ShopUiType.Charge
+            || uiType == ShopUiType.Subscription);
     }
 
     public void RefreshCoins()
