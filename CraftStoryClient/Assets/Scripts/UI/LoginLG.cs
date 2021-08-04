@@ -1,4 +1,5 @@
 using LitJson;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -53,10 +54,10 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             });
 
             // 新しいメールヒント
-            NWMng.E.GetNewEmailCount((rp) =>
-            {
-                DataMng.E.RuntimeData.NewEmailCount = (int)rp["count"];
-            });
+            NWMng.E.GetNewEmailCount();
+
+            // サブスクリプションの状態
+            NWMng.E.GetSubscriptionInfo();
 
             // ローカルデータがある場合サーバーにセーブ
             if (DataMng.E.HomeData != null)

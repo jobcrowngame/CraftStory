@@ -91,4 +91,16 @@ class ConfigMng : Single<ConfigMng>
             Logger.Error(ex);
         }
     }
+
+    public Shop GetShopByName(string name)
+    {
+        foreach (var key in Shop.Keys)
+        {
+            if (Shop[key].Name == name)
+            {
+                return Shop[key];
+            }
+        }
+        return null;
+    }
 }

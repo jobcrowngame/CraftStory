@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Security;
@@ -25,8 +26,9 @@ public class IAPMng : Single<IAPMng>, IStoreListener
             builder.AddProduct("craftstory_limit_490", ProductType.Consumable);
             builder.AddProduct("craftstory_limit_1480", ProductType.Consumable);
             builder.AddProduct("craftstory_limit_4400", ProductType.Consumable);
-            builder.AddProduct("craftstory_subscription_980", ProductType.Subscription);
-            builder.AddProduct("craftstory_subscription_1950", ProductType.Subscription);
+            builder.AddProduct("craftstory_subsc_980", ProductType.Subscription);
+            builder.AddProduct("craftstory_subsc_1960", ProductType.Subscription);
+            builder.AddProduct("craftstory_subsc_3060", ProductType.Subscription);
 
             UnityPurchasing.Initialize(this, builder);
 
@@ -59,10 +61,10 @@ public class IAPMng : Single<IAPMng>, IStoreListener
         // On non-Apple platforms this will have no effect; OnDeferred will never be called.
         m_AppleExtensions.RegisterPurchaseDeferredListener(OnDeferred);
 
-        ShowSubscription();
+        //ShowSubscription();
 
 
-            extensions.GetExtension<IAppleExtensions>().RegisterPurchaseDeferredListener(product =>
+        extensions.GetExtension<IAppleExtensions>().RegisterPurchaseDeferredListener(product =>
         {
             Logger.Log("RegisterPurchaseDeferredListener" + product.definition.id);
         });
@@ -144,13 +146,28 @@ public class IAPMng : Single<IAPMng>, IStoreListener
         }
         else if (product.definition.type == ProductType.Subscription)
         {
-            Logger.Warning("buy Subscription ok!!!");
+            var config = ConfigMng.E.GetShopByName(productId);
+            if (config != null)
+            {
+                NWMng.E.BuySubscription((rp) =>
+                {
+                    NWMng.E.GetSubscriptionInfo(() => 
+                    {
+                        if (ShopLG.E.UI != null) ShopLG.E.UI.RefreshSubscription();
+
+                        NWMng.E.GetNewEmailCount(()=> 
+                        {
+                            HomeLG.E.UI.RefreshRedPoint();
+                        });
+                    });
+                }, config.ID);
+            }
         }
 
         NWMng.E.ShowClientLog(receipt);
 
 
-        ShowSubscription();
+        //ShowSubscription();
 
 
 

@@ -105,6 +105,7 @@ namespace ExcelToJson
                 case "ErrorMsg": list = ErrorMsg(tbl); break;
                 case "Blueprint": list = Blueprint(tbl); break;
                 case "Entity": list = Entity(tbl); break;
+                case "Mail": list = Mail(tbl); break;
                 default: Console.WriteLine("not find fileName function."); break;
             }
 
@@ -399,6 +400,22 @@ namespace ExcelToJson
                 data.CanDestroy = ToInt32(tbl.Rows[i]["CanDestroy"]);
                 data.DestroyTime = ToFloat(tbl.Rows[i]["DestroyTime"]);
                 data.BonusID = ToInt32(tbl.Rows[i]["BonusID"]);
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Mail(DataTable tbl)
+        {
+            List<Mail> list = new List<Mail>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Mail() { 
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Title = ToString(tbl.Rows[i]["Title"]),
+                    Msg = ToString(tbl.Rows[i]["Msg"]),
+                    Data = ToString(tbl.Rows[i]["Data"])
+                };
 
                 list.Add(data);
             }

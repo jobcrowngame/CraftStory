@@ -27,7 +27,7 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
             case ShopUiType.Blueprint: return "設計図";
             case ShopUiType.Blueprint2: return "設計図";
             case ShopUiType.Point: return "ポイント";
-            case ShopUiType.Subscription: return "サブスクリプション";
+            case ShopUiType.Subscription: return "クラパス";
 
             default: Logger.Error("not find shop ui type " + ShopUIType); break;
         }

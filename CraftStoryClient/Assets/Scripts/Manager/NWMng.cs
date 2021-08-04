@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class NWMng : MonoBehaviour
+public partial class NWMng : MonoBehaviour
 {
     public static NWMng E
     {
@@ -54,7 +54,7 @@ public class NWMng : MonoBehaviour
     }
     public IEnumerator HttpRequest(Action<JsonData> rp, NWData data, CMD cmd)
     {
-        Logger.Log("Send:[CMD:{0}],[data]{1}", (int)cmd, data.ToString());
+        Logger.Log("[CMD:{0}---Send]\n{1}", (int)cmd, data.ToString());
         string cryptData = string.IsNullOrEmpty(data.ToString())
             ? ""
             : CryptMng.E.EncryptString(data.ToString());
@@ -85,7 +85,7 @@ public class NWMng : MonoBehaviour
                     {
                         var resultJson = CryptMng.E.DecryptString(www.downloadHandler.text);
                         JsonData jd = JsonMapper.ToObject(resultJson);
-                        Logger.Log("Result:[CMD:{0}],[data]{1}", (int)cmd, jd.ToJson());
+                        Logger.Log("[CMD:{0}---Result]\n{1}", (int)cmd, jd.ToJson());
 
                         int errorCode = (int)jd["error"];
 
@@ -356,7 +356,7 @@ public class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.ReadEmail));
     }
-    public void GetNewEmailCount(Action<JsonData> rp)
+    public void GetNewEmailCountRequest(Action<JsonData> rp)
     {
         var data = new NWData();
         data.Add("token", DataMng.E.token);
@@ -406,6 +406,23 @@ public class NWMng : MonoBehaviour
         data.Add("guid", emailGuid);
 
         StartCoroutine(HttpRequest(rp, data, CMD.ReceiveEmailItem));
+    }
+    public void BuySubscription(Action<JsonData> rp, int shopId)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("shopId", shopId);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.BuySubscription));
+    }
+    public void GetSubscriptionInfoRequest(Action<JsonData> rp)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetSubscriptionInfo));
     }
 
     public void SaveHomeData(Action<JsonData> rp, string homedata)
@@ -471,6 +488,8 @@ public class NWMng : MonoBehaviour
         GetNotice,
         GetMyShopInfo,
         ReceiveEmailItem,
+        BuySubscription,
+        GetSubscriptionInfo,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

@@ -7,4 +7,7 @@ using System.Threading.Tasks;
 public class RuntimeData
 {
     public int NewEmailCount { get; set; }
+    public int SubscriptionLv { get; set; }
+    public bool IsReceivedSubscription { get; set; }
+    public DateTime SubscriptionUpdateTime { get; set; }
 }

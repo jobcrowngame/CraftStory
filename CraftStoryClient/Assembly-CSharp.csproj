@@ -101,6 +101,7 @@
     <Compile Include="Assets\Scripts\UI\Common\TitleUI.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeDetailLG.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopUploadUI.cs" />
+    <Compile Include="Assets\Scripts\UI\DebugUI.cs" />
     <Compile Include="Assets\Scripts\Common\MiniJSON.cs" />
     <Compile Include="Assets\Scripts\UI\ShopLG.cs" />
     <Compile Include="Assets\Scripts\Splash\SplashController.cs" />
@@ -110,9 +111,11 @@
     <Compile Include="Assets\Scripts\UI\BagItemCell.cs" />
     <Compile Include="Assets\Scripts\Data\BlueprintData.cs" />
     <Compile Include="Assets\Scripts\UI\MenuLG.cs" />
+    <Compile Include="Assets\Scripts\UI\DebugLG.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopCell.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Building.cs" />
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopSubscriptionCell.cs" />
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeLG.cs" />
     <Compile Include="Assets\Scripts\UI\EmailCell.cs" />
@@ -136,6 +139,7 @@
     <Compile Include="Assets\Scripts\Game\Map\EntityBuilding.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyButton.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerEntity.cs" />
+    <Compile Include="Assets\Scripts\Test\IAPDemo.cs" />
     <Compile Include="Assets\Scripts\Game\Adventure\AdventureCtl.cs" />
     <Compile Include="Assets\Scripts\UI\ShopUI.cs" />
     <Compile Include="Assets\Scripts\Manager\NWMng.cs" />
@@ -144,6 +148,7 @@
     <Compile Include="Assets\Scripts\Test\Test2.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemCell.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopSubscriptionItemCell.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csMouseOrbit.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeCell.cs" />
@@ -168,13 +173,16 @@
     <Compile Include="Assets\Scripts\UI\UICtl.cs" />
     <Compile Include="Assets\Scripts\UI\LoginLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mountain.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsLG.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintPreviewUI.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
     <Compile Include="Assets\Scripts\Data\MyShopData.cs" />
     <Compile Include="Assets\Scripts\Data\EntityData.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeUI.cs" />
     <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
     <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
+    <Compile Include="Assets\Scripts\UI\DebugCell.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerController.cs" />
     <Compile Include="Assets\Scripts\UI\CraftItemCell.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion2.cs" />
@@ -219,15 +227,8 @@
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectChanger.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\UI\DebugUI.cs" />
-    <Compile Include="Assets\Scripts\UI\DebugLG.cs" />
-    <Compile Include="Assets\Scripts\UI\DebugCell.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopSubscriptionCell.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopSubscriptionItemCell.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsLG.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsUI.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsCell.cs" />
-    <Compile Include="Assets\Scripts\Test\IAPDemo.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Mail.cs" />
+    <Compile Include="Assets\Scripts\Manager\NWMng.Functions.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
