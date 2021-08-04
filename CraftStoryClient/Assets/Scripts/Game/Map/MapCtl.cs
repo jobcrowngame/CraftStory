@@ -336,6 +336,9 @@ public class MapCtl
     /// </summary>
     private static bool IsSurface(MapData mapData, Vector3Int pos)
     {
+        if (pos.y > mapData.GetMapSize().y - 1)
+            return true;
+
         if (IsOutRange(mapData, pos))
             return false;
 

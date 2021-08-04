@@ -102,7 +102,11 @@ public class MapData
             if (entityDic.ContainsKey(pos))
                 return;
 
-            InstantiateEntity(Map[pos.x, pos.y, pos.z], WorldMng.E.MapCtl.CellParent, pos);
+            var entity = InstantiateEntity(Map[pos.x, pos.y, pos.z], WorldMng.E.MapCtl.CellParent, pos);
+            if (entity != null)
+            {
+                entityDic[pos] = entity;
+            }
         }
         else
         {

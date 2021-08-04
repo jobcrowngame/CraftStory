@@ -152,7 +152,7 @@ public class PlayerCtl : MonoBehaviour
                 {
                     case ItemType.Block:
                         Lock = true;
-                        InstantiateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
+                        CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
                         PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
 
                         StartCoroutine(UnLock());
@@ -163,7 +163,7 @@ public class PlayerCtl : MonoBehaviour
                     case ItemType.Door:
                         Lock = true;
                         var objdType = CommonFunction.GetCreateEntityDirection(pos);
-                        InstantiateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), objdType);
+                        CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), objdType);
                         PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
 
                         StartCoroutine(UnLock());
@@ -185,7 +185,7 @@ public class PlayerCtl : MonoBehaviour
 
                     case ItemType.Torch:
                         Lock = true;
-                        InstantiateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), dType);
+                        CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), dType);
                         PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
 
                         StartCoroutine(UnLock());
@@ -244,7 +244,7 @@ public class PlayerCtl : MonoBehaviour
         }
     }
 
-    private void InstantiateEntity(GameObject collider, int entityId, Vector3Int pos, DirectionType dType = DirectionType.up)
+    private void CreateEntity(GameObject collider, int entityId, Vector3Int pos, DirectionType dType = DirectionType.up)
     {
         var cell = collider.GetComponent<EntityBase>();
         if (cell == null)
