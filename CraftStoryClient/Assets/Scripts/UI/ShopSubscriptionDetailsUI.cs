@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class ShopSubscriptionDetailsUI : UIBase
 {
     TitleUI Title { get => FindChiled<TitleUI>("Title"); }
+    Text Price { get => FindChiled<Text>("Price"); }
     Transform ItemParent { get => FindChiled("ItemGrid"); }
     Image Icon { get => FindChiled<Image>("Icon"); }
     Text Des { get => FindChiled<Text>("Des"); }
@@ -44,6 +45,7 @@ public class ShopSubscriptionDetailsUI : UIBase
         Title.EnActiveCoin(3);
 
         var config = ConfigMng.E.Shop[mData.shopId];
+        Price.text = config.BtnText;
         Icon.sprite = ReadResources<Sprite>(config.IconResources);
         Des.text = string.Format(des, config.Des2);
 

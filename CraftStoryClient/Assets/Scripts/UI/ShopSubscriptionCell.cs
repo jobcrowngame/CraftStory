@@ -32,6 +32,7 @@ public class ShopSubscriptionCell : UIBase
         Des.text = config.Des;
         AddItemCells(config.Bonus);
 
+        FindChiled("Text", BuyBtn.gameObject).GetComponent<Text>().text = config.BtnText;
         BuyBtn.onClick.AddListener(() =>
         {
             if (DataMng.E.RuntimeData.SubscriptionLv > 0)
