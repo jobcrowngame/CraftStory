@@ -50,7 +50,7 @@ public class MenuUI : UIBase
                     PlayDescriptionBtn2.gameObject.SetActive(true);
                     MessageBtn.gameObject.SetActive(true);
                     Notice.gameObject.SetActive(true);
-                    Debug.gameObject.SetActive(true);
+                    //Debug.gameObject.SetActive(true);
                     break;
 
                 case MenuUIType.Brave:
