@@ -154,6 +154,8 @@ public class IAPMng : Single<IAPMng>, IStoreListener
                                 HomeLG.E.UI.RefreshRedPoint();
                             });
                         });
+
+                        m_Controller.ConfirmPendingPurchase(product);
                     }, config.ID);
                 }
             }
@@ -161,13 +163,15 @@ public class IAPMng : Single<IAPMng>, IStoreListener
             {
                 NWMng.E.Charge((rp) =>
                 {
-                    m_Controller.ConfirmPendingPurchase(product);
-
                     NWMng.E.GetCoins((rp) =>
                     {
                         DataMng.GetCoins(rp);
                         if (ShopLG.E.UI != null) ShopLG.E.UI.RefreshCoins();
+
+                        
                     });
+
+                    m_Controller.ConfirmPendingPurchase(product);
                 }, productId, receiptId);
             }
            
