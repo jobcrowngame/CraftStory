@@ -9,7 +9,6 @@ public partial class NWMng
         GetSubscriptionInfoRequest((rp) =>
         {
             DataMng.E.RuntimeData.SubscriptionLv = (int)rp["subscriptionLv"];
-            DataMng.E.RuntimeData.IsReceivedSubscription = (int)rp["is_received_subscription"] == 1;
             if(!string.IsNullOrEmpty((string)rp["updateTime"])) DataMng.E.RuntimeData.SubscriptionUpdateTime = DateTime.Parse((string)rp["updateTime"]);
 
             if (callBack != null) callBack();

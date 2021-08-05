@@ -1,4 +1,4 @@
-using LitJson;
+ï»¿using LitJson;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +9,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
     {
         NWMng.E.CreateNewAccount((rp) =>
         {
-            Logger.Log("V‚µ‚¢ƒAƒJƒEƒ“ƒgì¬¬Œ÷‚µ‚Ü‚µ‚½B");
+            Logger.Log("æ–°ã—ã„ã‚¢ã‚«ã‚¦ãƒ³ãƒˆä½œæˆæˆåŠŸã—ã¾ã—ãŸã€‚");
             Logger.Log("ID:\n{0}, \nPW:\n{1}", rp["acc"], rp["pw"]);
             DataMng.E.NewUser((string)rp["acc"], (string)rp["pw"]);
             Login(0);
@@ -52,19 +52,15 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                     }
                 }
             });
-
-            // V‚µ‚¢ƒ[ƒ‹ƒqƒ“ƒg
-            NWMng.E.GetNewEmailCount();
-
-            // ƒTƒuƒXƒNƒŠƒvƒVƒ‡ƒ“‚Ìó‘Ô
+            // ã‚µãƒ–ã‚¹ã‚¯ãƒªãƒ—ã‚·ãƒ§ãƒ³ã®çŠ¶æ…‹
             NWMng.E.GetSubscriptionInfo();
 
-            // ƒ[ƒJƒ‹ƒf[ƒ^‚ª‚ ‚éê‡ƒT[ƒo[‚ÉƒZ[ƒu
+            // ãƒ­ãƒ¼ã‚«ãƒ«ãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚‹å ´åˆã‚µãƒ¼ãƒãƒ¼ã«ã‚»ãƒ¼ãƒ–
             if (DataMng.E.HomeData != null)
             {
                 NWMng.E.SaveHomeData(null, DataMng.E.HomeData.ToStringData());
             }
-            // ‚ ‚é‚¢‚ÍAƒT[ƒo[‚©‚çƒf[ƒ^‚ğ‚à‚ç‚¤
+            // ã‚ã‚‹ã„ã¯ã€ã‚µãƒ¼ãƒãƒ¼ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’ã‚‚ã‚‰ã†
             else
             {
                 NWMng.E.LoadHomeData((rp) =>
@@ -75,6 +71,9 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                     }
                 });
             }
+
+            // æ–°ã—ã„ãƒ¡ãƒ¼ãƒ«ãƒ’ãƒ³ãƒˆ
+            NWMng.E.GetNewEmailCount();
 
             ui.LoginResponse();
         }, id, pw);
