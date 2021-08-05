@@ -33,11 +33,15 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
         string id = DataMng.E.UserData.Account;
         string pw = DataMng.E.UserData.UserPW;
 
+
         NWMng.E.Login((rp) =>
         {
             DataMng.E.token = (string)rp["token"];
             DataMng.E.MyShop.firstUseMyShop = (int)rp["firstUseMyShop"];
             DataMng.E.MyShop.myShopLv = (int)rp["myShopLv"];
+
+            // IAPMngを初期化
+            IAPMng.E.Init();
 
             // MyShop
             NWMng.E.GetMyShopInfo((rp) => 
@@ -74,6 +78,8 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
 
             // 新しいメールヒント
             NWMng.E.GetNewEmailCount();
+
+            NoticeLG.E.IsFirst = true;
 
             ui.LoginResponse();
         }, id, pw);

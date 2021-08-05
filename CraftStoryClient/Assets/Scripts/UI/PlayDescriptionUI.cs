@@ -36,7 +36,6 @@ public class PlayDescriptionUI : UIBase
     {
         base.Init();
 
-        PlayDescriptionLG.E.IsFirst = false;
         PlayDescriptionLG.E.Init(this);
 
         RightBtn.onClick.AddListener(() => { Index++; });

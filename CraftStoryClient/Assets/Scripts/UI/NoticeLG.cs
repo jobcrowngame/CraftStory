@@ -4,6 +4,8 @@ using LitJson;
 
 public class NoticeLG : UILogicBase<NoticeLG, NoticeUI>
 {
+    public bool IsFirst { get; set; }
+
     public void GetNoticeList()
     {
         NWMng.E.GetNoticeList((rp) =>

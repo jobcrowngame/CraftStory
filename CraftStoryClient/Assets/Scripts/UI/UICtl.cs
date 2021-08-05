@@ -30,7 +30,6 @@ public class UICtl : Single<UICtl>
         uiDic = new Dictionary<UIType, UIBase>();
 
         //UserTest.E.Init();
-        IAPMng.E.Init();
         TimeZoneMng.E.Init();
         WorldMng.E.Init();
 

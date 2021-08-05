@@ -32,7 +32,7 @@ public partial class NWMng : MonoBehaviour
     }
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.DevelopURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.ProductionURL))
         {
             yield return www.SendWebRequest();
 
@@ -54,7 +54,7 @@ public partial class NWMng : MonoBehaviour
     }
     public IEnumerator HttpRequest(Action<JsonData> rp, NWData data, CMD cmd)
     {
-        Logger.Log("[CMD:{0}---Send]\n{1}", (int)cmd, data.ToString());
+        Logger.Log("[CMD:{0}{1}---Send]\n{2}",cmd, (int)cmd, data.ToString());
         string cryptData = string.IsNullOrEmpty(data.ToString())
             ? ""
             : CryptMng.E.EncryptString(data.ToString());
@@ -85,7 +85,7 @@ public partial class NWMng : MonoBehaviour
                     {
                         var resultJson = CryptMng.E.DecryptString(www.downloadHandler.text);
                         JsonData jd = JsonMapper.ToObject(resultJson);
-                        Logger.Log("[CMD:{0}---Result]\n{1}", (int)cmd, jd.ToJson());
+                        Logger.Log("[CMD:{0}{1}---Result]\n{2}",cmd, (int)cmd, jd.ToJson());
 
                         int errorCode = (int)jd["error"];
 
