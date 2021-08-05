@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\UI\BagUI.cs" />
     <Compile Include="Assets\Scripts\UI\PlayDescriptionUI.cs" />
     <Compile Include="Assets\Scripts\UI\HomeUI.cs" />
+    <Compile Include="Assets\Scripts\Manager\NWMng.Functions.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopLG.cs" />
     <Compile Include="Assets\Scripts\UI\EmailDetailsLG.cs" />
     <Compile Include="Assets\Scripts\Game\Player\BlueprintPreviewCtl.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeCell.cs" />
     <Compile Include="Assets\Scripts\Manager\TimeZoneMng.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Mail.cs" />
     <Compile Include="Assets\Scripts\Data\UserData.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestAngle.cs" />
@@ -227,8 +229,6 @@
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectChanger.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Mail.cs" />
-    <Compile Include="Assets\Scripts\Manager\NWMng.Functions.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
@@ -900,6 +900,14 @@
     <ProjectReference Include="SimpleInput.Editor.csproj">
       <Project>{F6107704-C902-9D6D-57B8-7633D2D6595F}</Project>
       <Name>SimpleInput.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="AppsFlyer.csproj">
+      <Project>{C54C5B16-0ED6-AEEC-4C31-AE8371F1A7B8}</Project>
+      <Name>AppsFlyer</Name>
+    </ProjectReference>
+    <ProjectReference Include="AppsFlyer.Editor.csproj">
+      <Project>{E4E72E7A-33B6-6920-68E9-1CBAA6F605B8}</Project>
+      <Name>AppsFlyer.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
