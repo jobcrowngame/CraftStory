@@ -59,19 +59,12 @@
     <Compile Include="Assets\Editor\PostXcodeBuild.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\ExternalDependencyManager\Editor\GoogleRegistries.xml" />
      <None Include="Assets\ExternalDependencyManager\Editor\Google.VersionHandlerImpl_v1.2.165.dll" />
      <None Include="Assets\ExternalDependencyManager\Editor\Google.PackageManagerResolver_v1.2.165.dll" />
      <None Include="Assets\ExternalDependencyManager\Editor\external-dependency-manager_version-1.2.165_manifest.txt" />
-     <None Include="Assets\ExternalDependencyManager\Editor\Google.VersionHandlerImpl_v1.2.144.dll" />
-     <None Include="Assets\ExternalDependencyManager\Editor\Google.IOSResolver_v1.2.144.dll" />
      <None Include="Assets\ExternalDependencyManager\Editor\Google.JarResolver_v1.2.165.dll" />
-     <None Include="Assets\ExternalDependencyManager\Editor\external-dependency-manager_v1.2.144.txt" />
-     <None Include="Assets\PlayServicesResolver\Editor\play-services-resolver_v1.2.137.0.txt" />
-     <None Include="Assets\ExternalDependencyManager\Editor\Google.UnityPackageManagerResolver_v1.2.144.dll" />
      <None Include="Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll" />
      <None Include="Assets\ExternalDependencyManager\Editor\Google.IOSResolver_v1.2.165.dll" />
-     <None Include="Assets\ExternalDependencyManager\Editor\Google.JarResolver_v1.2.144.dll" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
