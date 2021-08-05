@@ -40,16 +40,16 @@ public class HomeUI : UIBase
 
         UICtl.E.AddUI(this, UIType.Home);
 
-        if (PlayDescriptionLG.E.IsFirst)
-        {
-            UICtl.E.OpenUI<PlayDescriptionUI>(UIType.PlayDescription);
-            PlayDescriptionLG.E.IsFirst = false;
-        }
-
         if (NoticeLG.E.IsFirst)
         {
             UICtl.E.OpenUI<NoticeUI>(UIType.Notice);
             NoticeLG.E.IsFirst = false;
+        }
+
+        if (PlayDescriptionLG.E.IsFirst)
+        {
+            UICtl.E.OpenUI<PlayDescriptionUI>(UIType.PlayDescription);
+            PlayDescriptionLG.E.IsFirst = false;
         }
 
         Init();
