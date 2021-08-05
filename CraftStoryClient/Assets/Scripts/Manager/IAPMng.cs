@@ -26,9 +26,9 @@ public class IAPMng : Single<IAPMng>, IStoreListener
             builder.AddProduct("craftstory_limit_490", ProductType.Consumable);
             builder.AddProduct("craftstory_limit_1480", ProductType.Consumable);
             builder.AddProduct("craftstory_limit_4400", ProductType.Consumable);
-            builder.AddProduct("craftstory_subsc_980", ProductType.Subscription);
-            builder.AddProduct("craftstory_subsc_1960", ProductType.Subscription);
-            builder.AddProduct("craftstory_subsc_3060", ProductType.Subscription);
+            builder.AddProduct("craftstory_subsc_980", ProductType.Consumable);
+            builder.AddProduct("craftstory_subsc_1960", ProductType.Consumable);
+            builder.AddProduct("craftstory_subsc_3060", ProductType.Consumable);
 
             UnityPurchasing.Initialize(this, builder);
 
@@ -131,37 +131,50 @@ public class IAPMng : Single<IAPMng>, IStoreListener
         var receiptId = e.purchasedProduct.transactionID;
         var receipt = product.receipt;
 
+        NWMng.E.ShowClientLog(string.Format("購入成功:Acc = {0}, productId = {1}, ProductType = {2}", 
+            DataMng.E.UserData.Account, productId, product.definition.type));
+
         if (product.definition.type == ProductType.Consumable)
         {
-            NWMng.E.Charge((rp) =>
+            if (productId == "craftstory_subsc_980"
+                || productId == "craftstory_subsc_1960"
+                || productId == "craftstory_subsc_3060")
             {
-                m_Controller.ConfirmPendingPurchase(product);
-
-                NWMng.E.GetCoins((rp) =>
+                var config = ConfigMng.E.GetShopByName(productId);
+                if (config != null)
                 {
-                    DataMng.GetCoins(rp);
-                    if (ShopLG.E.UI != null) ShopLG.E.UI.RefreshCoins();
-                });
-            }, productId, receiptId);
+                    NWMng.E.BuySubscription((rp) =>
+                    {
+                        NWMng.E.GetSubscriptionInfo(() =>
+                        {
+                            if (ShopLG.E.UI != null) ShopLG.E.UI.RefreshSubscription();
+
+                            NWMng.E.GetNewEmailCount(() =>
+                            {
+                                HomeLG.E.UI.RefreshRedPoint();
+                            });
+                        });
+                    }, config.ID);
+                }
+            }
+            else
+            {
+                NWMng.E.Charge((rp) =>
+                {
+                    m_Controller.ConfirmPendingPurchase(product);
+
+                    NWMng.E.GetCoins((rp) =>
+                    {
+                        DataMng.GetCoins(rp);
+                        if (ShopLG.E.UI != null) ShopLG.E.UI.RefreshCoins();
+                    });
+                }, productId, receiptId);
+            }
+           
         }
         else if (product.definition.type == ProductType.Subscription)
         {
-            var config = ConfigMng.E.GetShopByName(productId);
-            if (config != null)
-            {
-                NWMng.E.BuySubscription((rp) =>
-                {
-                    NWMng.E.GetSubscriptionInfo(() => 
-                    {
-                        if (ShopLG.E.UI != null) ShopLG.E.UI.RefreshSubscription();
-
-                        NWMng.E.GetNewEmailCount(()=> 
-                        {
-                            HomeLG.E.UI.RefreshRedPoint();
-                        });
-                    });
-                }, config.ID);
-            }
+           
         }
 
         NWMng.E.ShowClientLog(receipt);
