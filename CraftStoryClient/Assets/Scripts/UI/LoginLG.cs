@@ -59,10 +59,16 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             // サブスクリプションの状態
             NWMng.E.GetSubscriptionInfo();
 
+            // 新しいメールヒント
+            NWMng.E.GetNewEmailCount();
+
+            NoticeLG.E.IsFirst = true;
+
             // ローカルデータがある場合サーバーにセーブ
             if (DataMng.E.HomeData != null)
             {
                 NWMng.E.SaveHomeData(null, DataMng.E.HomeData.ToStringData());
+                ui.LoginResponse();
             }
             // あるいは、サーバーからデータをもらう
             else
@@ -73,15 +79,10 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                     {
                         DataMng.E.HomeData = new MapData((string)rp["homedata"]);
                     }
+                    ui.LoginResponse();
                 });
             }
 
-            // 新しいメールヒント
-            NWMng.E.GetNewEmailCount();
-
-            NoticeLG.E.IsFirst = true;
-
-            ui.LoginResponse();
         }, id, pw);
     }
 }
