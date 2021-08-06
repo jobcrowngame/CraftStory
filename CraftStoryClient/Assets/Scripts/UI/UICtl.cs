@@ -7,6 +7,7 @@ public class UICtl : Single<UICtl>
 {
     private static Transform glubalObjTran;
     private UIBase curentOpenUI;
+    private UIBase Waiting;
 
     private Dictionary<UIType, UIBase> uiDic;
 
@@ -166,7 +167,28 @@ public class UICtl : Single<UICtl>
             case UIType.NoticeDetail: return "Prefabs/UI/NoticeDetail";
             case UIType.Debug: return "Prefabs/UI/Common/Debug";
             case UIType.ShopSubscriptionDetails: return "Prefabs/UI/ShopSubscriptionDetails";
+            case UIType.Waiting: return "Prefabs/UI/Common/Waiting";
+
             default: Logger.Error("not find UIType " + ui); return "";
+        }
+    }
+
+    public void ShowWaiting(bool b = true)
+    {
+        if (b)
+        {
+            if (Waiting == null)
+            {
+                Waiting = CommonFunction.InstantiateUI<WaitingUI>(GetUIResourcesPath(UIType.Waiting), uiRootTran);
+            }
+        }
+        else
+        {
+            if (Waiting != null)
+            {
+                GameObject.Destroy(Waiting.gameObject);
+                Waiting = null;
+            }
         }
     }
 }
@@ -205,4 +227,5 @@ public enum UIType
     NoticeDetail,
     Debug,
     ShopSubscriptionDetails,
+    Waiting,
 }

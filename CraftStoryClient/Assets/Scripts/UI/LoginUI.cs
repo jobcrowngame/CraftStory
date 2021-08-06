@@ -45,5 +45,7 @@ public class LoginUI : UIBase
         Start.sprite = ReadResources<Sprite>("Textures/button_2d_003");
 
         BGBtn.enabled = true;
+
+        UICtl.E.ShowWaiting(false);
     }
 }
