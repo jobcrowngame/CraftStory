@@ -204,6 +204,11 @@ public class HomeUI : UIBase
         }
     }
 
+    public Vector2 GetBagIconPos()
+    {
+        return BagBtn.transform.position;
+    }
+
     IEnumerator FadeIn()
     {
         //　Colorのアルファを0.1ずつ下げていく

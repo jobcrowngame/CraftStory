@@ -173,7 +173,7 @@ public class UICtl : Single<UICtl>
         }
     }
 
-    public void ShowWaiting(bool b = true)
+    public void LockUI(bool b = true)
     {
         if (b)
         {

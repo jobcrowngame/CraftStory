@@ -23,6 +23,8 @@ public class CraftLG : UILogicBase<CraftLG, CraftUI>
     }
     Craft selectCraft;
 
+    public CraftItemCell SelectCraftItemCell { get; set; }
+
 
     public void OnClickAdd()
     {

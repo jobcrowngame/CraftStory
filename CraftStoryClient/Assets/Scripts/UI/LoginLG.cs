@@ -31,7 +31,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
         string id = DataMng.E.UserData.Account;
         string pw = DataMng.E.UserData.UserPW;
 
-        UICtl.E.ShowWaiting();
+        UICtl.E.LockUI();
         NWMng.E.ShowClientLog("[Login]" + id);
 
         NWMng.E.Login((rp) =>

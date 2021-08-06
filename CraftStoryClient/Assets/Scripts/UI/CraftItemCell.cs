@@ -43,6 +43,7 @@ public class CraftItemCell : UIBase
         {
             SelectedCraftItem = this;
             CraftLG.E.SelectCraft = config;
+            CraftLG.E.SelectCraftItemCell = this;
             CraftLG.E.UI.RefreshCost(); 
         });
     }
@@ -50,5 +51,15 @@ public class CraftItemCell : UIBase
     private void IsSelected(bool b)
     {
         selected.gameObject.SetActive(b);
+    }
+
+    public void CloneIconToBag()
+    {
+        var clone = Instantiate(Icon.gameObject);
+        clone.transform.SetParent(UICtl.E.Root);
+        clone.transform.position = transform.position;
+        clone.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        var cell = clone.AddComponent<SimpleMove>();
+        if(cell != null) cell.Set(HomeLG.E.UI.GetBagIconPos());
     }
 }

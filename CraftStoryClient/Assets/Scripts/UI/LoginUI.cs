@@ -52,6 +52,6 @@ public class LoginUI : UIBase
 
         BGBtn.enabled = true;
 
-        UICtl.E.ShowWaiting(false);
+        UICtl.E.LockUI(false);
     }
 }

@@ -1,5 +1,5 @@
 using JsonConfigData;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -96,6 +96,9 @@ public class CraftUI : UIBase
                 });
             }, CraftLG.E.SelectCraft, CraftLG.E.SelectCount);
         }
+
+        UICtl.E.LockUI();
+        StartCoroutine(CloneIcon(CraftLG.E.SelectCount));
     }
 
     public void RefreshCost()
@@ -129,5 +132,18 @@ public class CraftUI : UIBase
         if (ret && config.Cost4 > 0) ret = DataMng.E.GetItemCountByItemID(config.Cost4) >= config.Cost4Count * count;
 
         return ret;
+    }
+
+    private IEnumerator CloneIcon(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (CraftLG.E.SelectCraftItemCell != null)
+            {
+                CraftLG.E.SelectCraftItemCell.CloneIconToBag();
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+        UICtl.E.LockUI(false);
     }
 }
