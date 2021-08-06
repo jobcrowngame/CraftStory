@@ -71,3 +71,18 @@ CraftStoryClient/Assets/Scenes/Test/
 CraftStoryClient/Assets/SD Unity-Chan Haon Custom/
 CraftStoryClient/Assets/unity-chan!/Unity-chan! Model/Art/Animations/FaceAnimation/MTH_I.anim
 CraftStoryClient/Assets/unity-chan!/
+CraftStoryClient/Assets/Resources/Config/Blueprint.json.meta
+CraftStoryClient/Assets/Resources/Config/Bonus.json.meta
+CraftStoryClient/Assets/Resources/Config/Building.json.meta
+CraftStoryClient/Assets/Resources/Config/Craft.json.meta
+CraftStoryClient/Assets/Resources/Config/Entity.json.meta
+CraftStoryClient/Assets/Resources/Config/ErrorMsg.json.meta
+CraftStoryClient/Assets/Resources/Config/Item.json.meta
+CraftStoryClient/Assets/Resources/Config/Mail.json.meta
+CraftStoryClient/Assets/Resources/Config/Map.json.meta
+CraftStoryClient/Assets/Resources/Config/MapMountain.json.meta
+CraftStoryClient/Assets/Resources/Config/RandomBonus.json.meta
+CraftStoryClient/Assets/Resources/Config/RandomBonusPond.json.meta
+CraftStoryClient/Assets/Resources/Config/Resource.json.meta
+CraftStoryClient/Assets/Resources/Config/Shop.json.meta
+CraftStoryClient/Assets/Resources/Config/TransferGate.json.meta
