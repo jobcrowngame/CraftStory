@@ -40,6 +40,7 @@ public class EffectMng : Single<EffectMng>
         switch (eType)
         {
             case EffectType.BlockDestroy: return "Prefabs/Effect/effect_001";
+            case EffectType.BlockDestroyEnd: return "Prefabs/Effect/BlockBreackEffect";
             case EffectType.ResourcesDestroy: return "Prefabs/Effect/ResourcesDeleteEffect";
             default: return "";
         }
@@ -48,5 +49,6 @@ public class EffectMng : Single<EffectMng>
 public enum EffectType
 {
     BlockDestroy,
+    BlockDestroyEnd,
     ResourcesDestroy,
 }
