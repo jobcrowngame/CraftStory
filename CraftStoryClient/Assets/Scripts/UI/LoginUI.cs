@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-using System.Text;
+using System;
+using System.Collections;
 
 public class LoginUI : UIBase
 {
@@ -10,6 +11,8 @@ public class LoginUI : UIBase
     Button BGBtn;
     Button Terms01Btn;
     Button Terms02Btn;
+
+    bool Lock = false;
 
     public override void Init()
     {
@@ -25,7 +28,10 @@ public class LoginUI : UIBase
         BGBtn = FindChiled<Button>("BG");
         BGBtn.onClick.AddListener(()=> 
         {
-            //CommonFunction.GoToHome(); 
+            if (Lock)
+                return;
+
+            Lock = true;
             CommonFunction.GoToNextScene(100);
         });
         BGBtn.enabled = false;

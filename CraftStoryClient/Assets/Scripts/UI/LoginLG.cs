@@ -1,7 +1,5 @@
 ﻿using LitJson;
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class LoginLg : UILogicBase<LoginLg, LoginUI>
 {
@@ -45,8 +43,8 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             // IAPMngを初期化
             IAPMng.E.Init();
 
-            // MyShop
-            NWMng.E.GetMyShopInfo((rp) => 
+            // マイショップデータ
+            NWMng.E.GetMyShopInfo((rp) =>
             {
                 DataMng.E.MyShop.Clear();
                 if (!string.IsNullOrEmpty(rp.ToString()))
@@ -58,6 +56,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                     }
                 }
             });
+
             // サブスクリプションの状態
             NWMng.E.GetSubscriptionInfo();
 
