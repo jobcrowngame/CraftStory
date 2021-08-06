@@ -1,4 +1,4 @@
-using System.IO;
+ï»¿using System.IO;
 using UnityEditor;
 using UnityEditor.Callbacks;
 #if UNITY_IOS
@@ -44,7 +44,7 @@ public class PostXcodeBuild
             var root = plist.root;
 
             // track description
-            root.SetString("NSUserTrackingUsageDescription", "–{ƒAƒvƒŠ‚ÍLŒø‰Ê‘ª’èE•ªÍ‚Ì‚½‚ß‚ÉIDFA(L¯•Êq)‚ğ—˜—p‚µ‚Ü‚·B");
+            root.SetString("NSUserTrackingUsageDescription", "æœ¬ã‚¢ãƒ—ãƒªã¯åºƒå‘ŠåŠ¹æœæ¸¬å®šãƒ»åˆ†æã®ãŸã‚ã«IDFA(åºƒå‘Šè­˜åˆ¥å­)ã‚’åˆ©ç”¨ã—ã¾ã™ã€‚");
             plist.WriteToFile(plistPath);
         }
 
