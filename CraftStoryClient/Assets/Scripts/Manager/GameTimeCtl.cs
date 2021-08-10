@@ -79,7 +79,6 @@ public class GameTimeCtl
         {
             newV = 0;
         }
-        Debug.LogWarning(newV);
 
         RenderSettings.skybox.SetFloat("_Exposure", newV);
         float skyboxAmbientIntensity = newV;
