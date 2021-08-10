@@ -135,6 +135,9 @@ public class CraftUI : UIBase
 
     private IEnumerator CloneIcon(int count)
     {
+        if (count > 10)
+            count = 10;
+
         for (int i = 0; i < count; i++)
         {
             if (CraftLG.E.SelectCraftItemCell != null)
