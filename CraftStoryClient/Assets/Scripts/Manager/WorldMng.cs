@@ -35,7 +35,7 @@ public class WorldMng : MonoBehaviour
             DataMng.E.SetGuideItems();
 
         // ホームマップの場合、設計図プレイビューコンソールObjectを追加
-        if (DataMng.E.RuntimeData.MapType == MapType.Guide)
+        if (DataMng.E.RuntimeData.MapType == MapType.Home)
             PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
 
         AdventureCtl.E.Init();

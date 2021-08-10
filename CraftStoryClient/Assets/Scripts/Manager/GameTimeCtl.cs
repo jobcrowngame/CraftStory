@@ -40,6 +40,11 @@ public class GameTimeCtl
                 RefreshLight(angle);
                 RefreshSkyBox(angle);
             }
+            else
+            {
+                RefreshLight(120);
+                RefreshSkyBox(120);
+            }
         }
     }
     private float curTime;
@@ -82,14 +87,5 @@ public class GameTimeCtl
             skyboxAmbientIntensity = SettingMng.E.MinAmbientIntensity;
 
         RenderSettings.ambientIntensity = skyboxAmbientIntensity;
-
-        //float newV = (percent < 0.5f) ? 1 - Mathf.Abs(percent - 0.25f) * 4 : 0;
-        //RenderSettings.skybox.SetFloat("_Exposure", newV);
-
-        //float skyboxAmbientIntensity = newV;
-        //if (skyboxAmbientIntensity < SettingMng.E.MinAmbientIntensity)
-        //    skyboxAmbientIntensity = SettingMng.E.MinAmbientIntensity;
-
-        //RenderSettings.ambientIntensity = skyboxAmbientIntensity;
     }
 }

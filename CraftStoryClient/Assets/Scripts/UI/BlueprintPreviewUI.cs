@@ -22,6 +22,8 @@ public class BlueprintPreviewUI : UIBase
     {
         base.Open();
         PlayerCtl.E.BlueprintPreviewCtl.Show();
+
+        WorldMng.E.GameTimeCtl.Active = false;
     }
     public override void Close()
     {
@@ -30,6 +32,8 @@ public class BlueprintPreviewUI : UIBase
 
         HomeLG.E.UI.Open();
         if (beforUI != null) beforUI.Open();
+
+        WorldMng.E.GameTimeCtl.Active = true;
     }
 
     public void SetData(int blueprintId, UIBase beforUI)
