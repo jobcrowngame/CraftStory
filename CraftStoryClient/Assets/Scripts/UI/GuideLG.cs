@@ -5,6 +5,7 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
 {
     private Guide config { get => ConfigMng.E.Guide[DataMng.E.RuntimeData.GuideId]; }
     private string[] guideSteps;
+    public bool end { get; set; }
 
     private string CurStep
     {
@@ -20,11 +21,15 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
     {
         base.Init(ui);
 
+        end = false;
         stepIndex = 0;
         guideSteps = config.StepList.Split(',');
     }
     public void Next()
     {
+        if (end)
+            return;
+
         if (DataMng.E.RuntimeData.MapType != MapType.Guide)
             return;
 

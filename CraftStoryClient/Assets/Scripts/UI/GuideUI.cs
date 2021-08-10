@@ -68,6 +68,7 @@ public class GuideUI : UIBase
     {
         ShowMask(false);
         Msg.gameObject.SetActive(false);
+        GuideLG.E.end = true;
     }
 
     public void NextStep(int stepId)
