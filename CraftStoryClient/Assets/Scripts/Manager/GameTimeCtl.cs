@@ -34,8 +34,11 @@ public class GameTimeCtl
 
             if (Active)
             {
-                RefreshLight();
-                RefreshSkyBox();
+                float percent = curTime / SettingMng.E.GameDaySeconds;
+                float angle = 360 * percent;
+
+                RefreshLight(angle);
+                RefreshSkyBox(angle);
             }
         }
     }
@@ -44,26 +47,49 @@ public class GameTimeCtl
     public GameTimeCtl()
     {
         CurTime = SettingMng.E.GameDaySeconds * 0.2f;
-        TimeZoneMng.E.AddSecondTimerEvent02(() => { CurTime += 1; });
+        TimeZoneMng.E.AddSecondTimerEvent02(() => { CurTime += 0.02f; });
         Active = false;
     }
 
-    private void RefreshLight()
+    private void RefreshLight(float angle)
     {
-        float percent = curTime / SettingMng.E.GameDaySeconds;
-        DirectionalLight.transform.rotation = Quaternion.Euler(360 * percent, 30, 0);
+        DirectionalLight.transform.rotation = Quaternion.Euler(angle, 30, 0);
     }
 
-    private void RefreshSkyBox()
+    private void RefreshSkyBox(float angle)
     {
-        float percent = curTime / SettingMng.E.GameDaySeconds;
-        float newV = (percent < 0.5f) ? 1 - Mathf.Abs(percent - 0.25f) * 4 : 0;
-        RenderSettings.skybox.SetFloat("_Exposure", newV);
+        float newV = 0;
+        if (angle < 180)
+        {
+            newV = 1;
+        }
+        else if (angle >= 180 && angle < 210)
+        {
+            newV = 1 - ((angle - 180) / 30);
+        }else if (angle >= 330 && angle < 360)
+        {
+            newV = 1 - ((360 - angle) / 30);
+        }
+        else
+        {
+            newV = 0;
+        }
+        Debug.LogWarning(newV);
 
+        RenderSettings.skybox.SetFloat("_Exposure", newV);
         float skyboxAmbientIntensity = newV;
         if (skyboxAmbientIntensity < SettingMng.E.MinAmbientIntensity)
             skyboxAmbientIntensity = SettingMng.E.MinAmbientIntensity;
 
         RenderSettings.ambientIntensity = skyboxAmbientIntensity;
+
+        //float newV = (percent < 0.5f) ? 1 - Mathf.Abs(percent - 0.25f) * 4 : 0;
+        //RenderSettings.skybox.SetFloat("_Exposure", newV);
+
+        //float skyboxAmbientIntensity = newV;
+        //if (skyboxAmbientIntensity < SettingMng.E.MinAmbientIntensity)
+        //    skyboxAmbientIntensity = SettingMng.E.MinAmbientIntensity;
+
+        //RenderSettings.ambientIntensity = skyboxAmbientIntensity;
     }
 }
