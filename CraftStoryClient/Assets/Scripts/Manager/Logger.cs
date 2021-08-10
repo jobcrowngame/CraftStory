@@ -6,7 +6,7 @@ public class Logger : Single<Logger>
 #if UNITY_EDITOR
     private static LogLV level = LogLV.Log;
 #else
-    private static LogLV level = LogLV.Log;
+    private static LogLV level = LogLV.Error;
 #endif
 
     public static void Log(string format, params object[] args)
@@ -37,8 +37,10 @@ public class Logger : Single<Logger>
     {
         if (level < LogLV.Off)
         {
-            Debug.LogErrorFormat("[ERROR]" + format, args);
-            DebugLG.E.Add(string.Format("[ERROR]" + format, args));
+            string msg = string.Format("[ERROR]" + format, args);
+            Debug.LogErrorFormat(msg);
+            DebugLG.E.Add(msg);
+            NWMng.E.ShowClientLog(msg);
         }
     }
     public static void Error(Exception e)

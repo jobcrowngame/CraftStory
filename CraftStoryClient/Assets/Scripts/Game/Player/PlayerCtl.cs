@@ -79,6 +79,12 @@ public class PlayerCtl : MonoBehaviour
 
         if (joystick != null && !Lock)
             PlayerEntity.Move(joystick.xAxis.value, joystick.yAxis.value);
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            DataMng.E.RuntimeData.GuideId = 1;
+            CommonFunction.GoToNextScene(101);
+        }
     }
 
     public PlayerEntity AddPlayerEntity()

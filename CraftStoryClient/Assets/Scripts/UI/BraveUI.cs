@@ -18,7 +18,7 @@ public class BraveUI : UIBase
 
     private void Start()
     {
-        WorldMng.E.CreateGameObjects(false);
+        WorldMng.E.CreateGameObjects();
         WorldMng.E.GameTimeCtl.Active = false;
 
         Init();
@@ -38,7 +38,7 @@ public class BraveUI : UIBase
         MenuBtn.onClick.AddListener(() => 
         { 
             var menu = UICtl.E.OpenUI<MenuUI>(UIType.Menu);
-            menu.Init(MenuUI.MenuUIType.Brave);
+            menu.Init();
         });
 
         PlussBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(1); });

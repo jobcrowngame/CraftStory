@@ -18,17 +18,19 @@ public class DataMng : Single<DataMng>
 
     public MapData MapData 
     {
-        get => mData;
-        set => mData = value;
+        get
+        {
+            switch (RuntimeData.MapType)
+            {
+                case MapType.Home: return mHomeData;
+                case MapType.Guide: return mGuideData;
+                default: return mBraveData;
+            }
+        }
     }
-    private MapData mData;
-
-    public MapData HomeData
-    {
-        get => homeData;
-        set => homeData = value;
-    }
-    private MapData homeData;
+    private MapData mHomeData;
+    private MapData mGuideData;
+    private MapData mBraveData;
 
     public MyShopData MyShop
     {
@@ -43,31 +45,16 @@ public class DataMng : Single<DataMng>
     private MyShopData myShop;
 
     public List<ItemData> Items { 
-        get
-        {
-            if (items == null)
-                items = new List<ItemData>();
-
-            return items;
-        }
-        set => items = value;
+        get => RuntimeData.MapType == MapType.Guide ? guideItems : items;
     }
-    private List<ItemData> items;
+    private List<ItemData> items = new List<ItemData>();
+    private List<ItemData> guideItems = new List<ItemData>();
 
     public override void Init()
     {
         base.Init();
 
         RuntimeData = new RuntimeData();
-    }
-
-    public void NewUser(string id, string pw)
-    {
-        uData = new UserData()
-        {
-            Account = id,
-            UserPW = pw
-        };
     }
 
     public void Save()
@@ -77,8 +64,8 @@ public class DataMng : Single<DataMng>
         if (uData != null)
             SaveLoadFile.E.Save(uData, PublicPar.SaveRootPath + PublicPar.UserDataName);
 
-        if (HomeData != null)
-            SaveLoadFile.E.Save(DataMng.E.HomeData.ToStringData(), PublicPar.SaveRootPath + PublicPar.MapDataName);
+        if (mHomeData != null)
+            SaveLoadFile.E.Save(mHomeData.ToStringData(), PublicPar.SaveRootPath + PublicPar.MapDataName);
     }
 
     public bool Load()
@@ -86,46 +73,110 @@ public class DataMng : Single<DataMng>
         uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.UserDataName);
 
         var mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.MapDataName);
-        if (!string.IsNullOrEmpty(mapData)) HomeData = new MapData(mapData);
+        if (!string.IsNullOrEmpty(mapData)) mHomeData = new MapData(mapData);
+
+        if (mHomeData == null) mHomeData = WorldMng.E.MapCtl.CreateMapData(100); ;
 
         return true;
     }
 
+    #region User
+    public void NewUser(string id, string pw)
+    {
+        uData = new UserData()
+        {
+            Account = id,
+            UserPW = pw
+        };
+    }
+    #endregion
+    #region Map
+
+    public void SetMapData(int mapId)
+    {
+        MapData mData = null;
+        MapType mType = MapType.Home;
+
+        if (mapId == 100)
+        {
+            mType = MapType.Home;
+            mData = mHomeData;
+        }
+        else if (mapId == 101)
+        {
+            mType = MapType.Guide;
+            mData = WorldMng.E.MapCtl.CreateMapData(mapId);
+        }
+        else
+        {
+            mType = MapType.Brave;
+            mData = WorldMng.E.MapCtl.CreateMapData(mapId);
+        }
+
+        RuntimeData.MapType = mType;
+        SetMapData(mData, mType);
+    }
+    public void SetMapData(MapData mData, MapType mType)
+    {
+        switch (mType)
+        {
+            case MapType.Home: mHomeData = mData; break;
+            case MapType.Guide: mGuideData = mData; break;
+            case MapType.Brave: mBraveData = mData; break;
+        }
+    }
+    public void GetMapData(int mapId)
+    {
+
+    }
+    public MapData GetHomeData()
+    {
+        return mHomeData;
+    }
+
+    #endregion
     #region Item
+
+    public void SetItems(List<ItemData> list)
+    {
+        items = list;
+    }
+    public void SetGuideItems()
+    {
+        var items = ConfigMng.E.Guide[RuntimeData.GuideId].ItemList.Split(',');
+        var counts = ConfigMng.E.Guide[RuntimeData.GuideId].ItemCount.Split(',');
+
+        guideItems.Clear();
+        for (int i = 0; i < items.Length; i++)
+        {
+            guideItems.Add(new ItemData(i + 1 ,int.Parse(items[i]), int.Parse(counts[i])));
+        }
+    }
 
     public ItemData GetItemByGuid(int guid)
     {
-        if (items == null)
-            return null;
-
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < Items.Count; i++)
         {
-            if (items[i].id == guid)
+            if (Items[i].id == guid)
             {
-                return items[i];
+                return Items[i];
             }
         }
         return null;
     }
     public ItemData GetItemByEquipedSite(int site)
     {
-        if (items == null)
-            return null;
-
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < Items.Count; i++)
         {
-            if (items[i].equipSite == site)
+            if (Items[i].equipSite == site)
             {
-                return items[i];
+                return Items[i];
             }
         }
         return null;
     }
     public int GetItemCountByItemID(int itemId)
     {
-        if (Items == null)
-            return 0;
-
         int count = 0;
 
         for (int i = 0; i < Items.Count; i++)
@@ -146,9 +197,8 @@ public class DataMng : Single<DataMng>
 
         NWMng.E.AddItems((rp) =>
         {
-            NWMng.E.GetItemList((rp2) =>
+            NWMng.E.GetItems(() =>
             {
-                GetItems(rp2);
                 if (action != null) action();
             });
         }, items);
@@ -158,9 +208,8 @@ public class DataMng : Single<DataMng>
 
         NWMng.E.AddItemInData((rp) =>
         {
-            NWMng.E.GetItemList((rp2) =>
+            NWMng.E.GetItems(() =>
             {
-                GetItems(rp2);
                 if (action != null) action();
             });
         }, itemID, count, newName, data);
@@ -213,10 +262,7 @@ public class DataMng : Single<DataMng>
         {
             NWMng.E.RemoveItem((rp) =>
             {
-                NWMng.E.GetItemList((rp2) =>
-                {
-                    GetItems(rp2);
-                });
+                NWMng.E.GetItems(null);
             }, itemID, count);
         }
         else
@@ -251,11 +297,11 @@ public class DataMng : Single<DataMng>
     {
         itemList = new List<ItemData>();
 
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < Items.Count; i++)
         {
-            if (items[i].itemId == itemID)
+            if (Items[i].itemId == itemID)
             {
-                itemList.Add(items[i]);
+                itemList.Add(Items[i]);
             }
         }
 
@@ -269,7 +315,10 @@ public class DataMng : Single<DataMng>
             if (string.IsNullOrEmpty(jsonData.ToString()))
                 E.Items.Clear();
             else
-                E.Items = JsonMapper.ToObject<List<ItemData>>(jsonData.ToJson());
+            {
+                var items = JsonMapper.ToObject<List<ItemData>>(jsonData.ToJson());
+                E.SetItems(items);
+            }
 
             if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
         }

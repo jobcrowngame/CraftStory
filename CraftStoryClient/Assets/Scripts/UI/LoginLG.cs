@@ -32,8 +32,6 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
         string pw = DataMng.E.UserData.UserPW;
 
         UICtl.E.LockUI();
-        NWMng.E.ShowClientLog("[Login]" + id);
-
         NWMng.E.Login((rp) =>
         {
             DataMng.E.token = (string)rp["token"];
@@ -66,9 +64,9 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             NoticeLG.E.IsFirst = true;
 
             // ローカルデータがある場合サーバーにセーブ
-            if (DataMng.E.HomeData != null)
+            if (DataMng.E.GetHomeData() != null)
             {
-                NWMng.E.SaveHomeData(null, DataMng.E.HomeData.ToStringData());
+                NWMng.E.SaveHomeData(null, DataMng.E.GetHomeData().ToStringData());
                 ui.LoginResponse();
             }
             // あるいは、サーバーからデータをもらう
@@ -78,7 +76,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 {
                     if (!string.IsNullOrEmpty(rp.ToString()))
                     {
-                        DataMng.E.HomeData = new MapData((string)rp["homedata"]);
+                        DataMng.E.SetMapData(new MapData((string)rp["homedata"]), MapType.Home);
                     }
                     ui.LoginResponse();
                 });

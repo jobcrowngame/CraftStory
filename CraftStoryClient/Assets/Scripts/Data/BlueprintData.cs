@@ -39,8 +39,6 @@ public class BlueprintData
         catch (Exception ex)
         {
             Logger.Error(ex);
-            NWMng.E.ShowClientLog(ex.Message);
-            NWMng.E.ShowClientLog(ex.StackTrace);
         }
         finally
         {

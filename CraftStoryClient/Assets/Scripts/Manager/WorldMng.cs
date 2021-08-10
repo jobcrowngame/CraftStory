@@ -25,19 +25,19 @@ public class WorldMng : MonoBehaviour
         CharacterCtl = new CharacterCtl();
     }
 
-    public void CreateGameObjects(bool isHome = true)
+    public void CreateGameObjects()
     {
-        if (isHome)
-        {
-            MapCtl.CreateMap(100);
-            PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
-        }
-        else
-        {
-            MapCtl.CreateMap(NowLoadingLG.E.NextMapID);
-        }
-
+        MapCtl.CreateMap();
         CharacterCtl.CreateCharacter();
+
+        // ガイドの場合、一時的のアイテムを追加
+        if (DataMng.E.RuntimeData.MapType == MapType.Guide)
+            DataMng.E.SetGuideItems();
+
+        // ホームマップの場合、設計図プレイビューコンソールObjectを追加
+        if (DataMng.E.RuntimeData.MapType == MapType.Guide)
+            PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
+
         AdventureCtl.E.Init();
         GoogleMobileAdsMng.E.Init();
     }

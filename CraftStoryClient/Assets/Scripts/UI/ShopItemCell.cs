@@ -52,10 +52,7 @@ public class ShopItemCell : UIBase
                 () => {
                     NWMng.E.Buy((rp) =>
                     {
-                        NWMng.E.GetItemList((rp2) =>
-                        {
-                            DataMng.GetItems(rp2);
-                        });
+                        NWMng.E.GetItems(null);
                         NWMng.E.GetCoins((rp3) =>
                         {
                             DataMng.GetCoins(rp3);

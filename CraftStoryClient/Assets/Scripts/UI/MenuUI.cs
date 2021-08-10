@@ -19,7 +19,7 @@ public class MenuUI : UIBase
     Button Notice { get => FindChiled<Button>("Notice"); }
     Button Debug { get => FindChiled<Button>("Debug"); }
 
-    MenuUIType menuType
+    MapType menuType
     {
         set
         {
@@ -39,7 +39,7 @@ public class MenuUI : UIBase
 
             switch (value)
             {
-                case MenuUIType.Home:
+                case MapType.Home:
                     AdventureBtn.gameObject.SetActive(true);
                     ShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn.gameObject.SetActive(true);
@@ -53,7 +53,8 @@ public class MenuUI : UIBase
                     //Debug.gameObject.SetActive(true);
                     break;
 
-                case MenuUIType.Brave:
+                case MapType.Brave:
+                case MapType.Guide:
                     HomeBtn.gameObject.SetActive(true);
                     break;
             }
@@ -155,12 +156,12 @@ public class MenuUI : UIBase
         });
     }
 
-    public void Init(MenuUIType uiType)
+    public override void Init()
     {
         base.Init();
         MenuLG.E.Init(this);
 
-        menuType = uiType;
+        menuType = DataMng.E.RuntimeData.MapType;
     }
     public override void Open()
     {
@@ -171,11 +172,5 @@ public class MenuUI : UIBase
     {
         var RedPoint = FindChiled("RedPoint", MessageBtn.gameObject);
         if(RedPoint != null) RedPoint.gameObject.SetActive(CommonFunction.NewMessage());
-    }
-
-    public enum MenuUIType
-    {
-        Home,
-        Brave,
     }
 }

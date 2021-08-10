@@ -88,9 +88,8 @@ public class CraftUI : UIBase
         {
             NWMng.E.Craft((rp) => 
             {
-                NWMng.E.GetItemList((rp2) =>
+                NWMng.E.GetItems(() =>
                 {
-                    DataMng.GetItems(rp2);
                     CommonFunction.ShowHintBar(6);
                     RefreshCost();
                 });

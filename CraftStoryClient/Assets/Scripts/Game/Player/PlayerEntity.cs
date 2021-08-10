@@ -67,7 +67,7 @@ public class PlayerEntity : CharacterEntity
 
         if (transform.position.y < -10)
         {
-            transform.position = MapCtl.GetGroundPos(DataMng.E.HomeData, DataMng.E.HomeData.Config.PlayerPosX, DataMng.E.HomeData.Config.PlayerPosZ, 5);
+            transform.position = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5);
         }
     }
     public void Jump()

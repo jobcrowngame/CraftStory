@@ -18,6 +18,8 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, ErrorMsg> errorMsgConfig;
     Dictionary<int, Blueprint> blueprintConfig;
     Dictionary<int, Entity> entityConfig;
+    Dictionary<int, Guide> guideConfig;
+    Dictionary<int, GuideStep> guideStepConfig;
 
     public Dictionary<int, Bonus> Bonus { get => bonusConfig; }
     public Dictionary<int, Map> Map{ get => mapConfig; }
@@ -31,6 +33,8 @@ class ConfigMng : Single<ConfigMng>
     public Dictionary<int, ErrorMsg> ErrorMsg { get => errorMsgConfig; }
     public Dictionary<int, Blueprint> Blueprint { get => blueprintConfig; }
     public Dictionary<int, Entity> Entity { get => entityConfig; }
+    public Dictionary<int, Guide> Guide { get => guideConfig; }
+    public Dictionary<int, GuideStep> GuideStep { get => guideStepConfig; }
 
     public IEnumerator InitInitCoroutine()
     {
@@ -46,6 +50,8 @@ class ConfigMng : Single<ConfigMng>
         errorMsgConfig = new Dictionary<int, ErrorMsg>();
         blueprintConfig = new Dictionary<int, Blueprint>();
         entityConfig = new Dictionary<int, Entity>();
+        guideConfig = new Dictionary<int, Guide>();
+        guideStepConfig = new Dictionary<int, GuideStep>();
 
         ReadConfig("Config/Bonus", bonusConfig);
         ReadConfig("Config/Map", mapConfig);
@@ -59,6 +65,8 @@ class ConfigMng : Single<ConfigMng>
         ReadConfig("Config/ErrorMsg", errorMsgConfig);
         ReadConfig("Config/Blueprint", blueprintConfig);
         ReadConfig("Config/Entity", entityConfig);
+        ReadConfig("Config/Guide", guideConfig);
+        ReadConfig("Config/GuideStep", guideStepConfig);
 
         yield return null;
     }

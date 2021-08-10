@@ -337,3 +337,11 @@ public class MapData
         public int direction;
     }
 }
+
+public enum MapType
+{
+    Home = 1,
+    Guide = 2,
+    Brave = 3,
+    Test = 99,
+}

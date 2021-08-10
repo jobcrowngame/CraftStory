@@ -106,6 +106,8 @@ namespace ExcelToJson
                 case "Blueprint": list = Blueprint(tbl); break;
                 case "Entity": list = Entity(tbl); break;
                 case "Mail": list = Mail(tbl); break;
+                case "Guide": list = Guide(tbl); break;
+                case "GuideStep": list = GuideStep(tbl); break;
                 default: Console.WriteLine("not find fileName function."); break;
             }
 
@@ -189,6 +191,7 @@ namespace ExcelToJson
                 var data = new Map();
 
                 data.ID =               ToInt32(tbl.Rows[i]["ID"]);
+                data.MapType =          ToInt32(tbl.Rows[i]["MapType"]);
                 data.Name =             ToString(tbl.Rows[i]["Name"]);
                 data.SizeX =            ToInt32(tbl.Rows[i]["SizeX"]);
                 data.SizeY =            ToInt32(tbl.Rows[i]["SizeY"]);
@@ -415,6 +418,44 @@ namespace ExcelToJson
                     Title = ToString(tbl.Rows[i]["Title"]),
                     Msg = ToString(tbl.Rows[i]["Msg"]),
                     Data = ToString(tbl.Rows[i]["Data"])
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Guide(DataTable tbl)
+        {
+            List<Guide> list = new List<Guide>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Guide()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    StepList = ToString(tbl.Rows[i]["StepList"]),
+                    ItemList = ToString(tbl.Rows[i]["ItemList"]),
+                    ItemCount = ToString(tbl.Rows[i]["ItemCount"])
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object GuideStep(DataTable tbl)
+        {
+            List<GuideStep> list = new List<GuideStep>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new GuideStep()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Des = ToString(tbl.Rows[i]["Des"]),
+                    CellName = ToString(tbl.Rows[i]["CellName"]),
+                    Message = ToString(tbl.Rows[i]["Message"]),
+                    MsgPosX = ToFloat(tbl.Rows[i]["MsgPosX"]),
+                    MsgPosY = ToFloat(tbl.Rows[i]["MsgPosY"]),
+                    MsgSizeX = ToFloat(tbl.Rows[i]["MsgSizeX"]),
+                    MsgSizeY = ToFloat(tbl.Rows[i]["MsgSizeY"]),
                 };
 
                 list.Add(data);

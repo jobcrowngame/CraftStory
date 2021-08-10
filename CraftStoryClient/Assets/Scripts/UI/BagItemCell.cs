@@ -24,7 +24,11 @@ public class BagItemCell : UIBase
         selected = FindChiled("Select");
 
         clickBtn = transform.GetComponent<Button>();
-        clickBtn.onClick.AddListener(() => { BagLG.E.SelectItem = this; });
+        clickBtn.onClick.AddListener(() => 
+        { 
+            BagLG.E.SelectItem = this;
+            GuideLG.E.Next();
+        });
 
         Lock.gameObject.SetActive(itemData.islocked == 1);
 

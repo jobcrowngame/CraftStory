@@ -32,7 +32,7 @@ public partial class NWMng : MonoBehaviour
     }
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.ProductionURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.DevelopURL))
         {
             yield return www.SendWebRequest();
 
@@ -54,6 +54,10 @@ public partial class NWMng : MonoBehaviour
     }
     public IEnumerator HttpRequest(Action<JsonData> rp, NWData data, CMD cmd)
     {
+        // ガイドの場合、サーバーとの通信はやめます。
+        if (DataMng.E.RuntimeData.MapType == MapType.Guide)
+            yield return null;
+
         Logger.Log("[CMD:{0}{1}---Send]\n{2}",cmd, (int)cmd, data.ToString());
         string cryptData = string.IsNullOrEmpty(data.ToString())
             ? ""
@@ -209,7 +213,18 @@ public partial class NWMng : MonoBehaviour
         data.Add("guid", guid);
         data.Add("site", site);
 
-        StartCoroutine(HttpRequest(rp, data, CMD.EquitItem));
+        if (DataMng.E.RuntimeData.MapType == MapType.Guide)
+        {
+            var item = DataMng.E.GetItemByGuid(guid);
+            if (item != null)
+                item.equipSite = site;
+            
+            if (rp != null) rp("");
+        }
+        else
+        {
+            StartCoroutine(HttpRequest(rp, data, CMD.EquitItem));
+        }
     }
     public void Craft(Action<JsonData> rp, Craft craft, int count)
     {

@@ -10,4 +10,7 @@ public class RuntimeData
     public int SubscriptionLv { get; set; }
     public bool IsReceivedSubscription { get; set; }
     public DateTime SubscriptionUpdateTime { get; set; }
+
+    public MapType MapType { get; set; }
+    public int GuideId { get; set; }
 }

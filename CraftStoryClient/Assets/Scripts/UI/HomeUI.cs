@@ -35,6 +35,7 @@ public class HomeUI : UIBase
 
     private void Start()
     {
+        DataMng.E.RuntimeData.MapType = MapType.Home;
         WorldMng.E.CreateGameObjects();
         WorldMng.E.GameTimeCtl.Active = true;
 
@@ -69,7 +70,7 @@ public class HomeUI : UIBase
         MenuBtn.onClick.AddListener(() => 
         {
             var menu = UICtl.E.OpenUI<MenuUI>(UIType.Menu); 
-            menu.Init(MenuUI.MenuUIType.Home);
+            menu.Init();
         });
 
         BagBtn = FindChiled<Button>("BagBtn");
@@ -102,10 +103,7 @@ public class HomeUI : UIBase
         PlayerCtl.E.ScreenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
         PlayerCtl.E.CameraCtl = Camera.main.GetComponent<CameraCtl>();
 
-        NWMng.E.GetItemList((rp) =>
-        {
-            DataMng.GetItems(rp);
-        });
+        NWMng.E.GetItems(null);
         NWMng.E.GetCoins((rp) =>
         {
             DataMng.GetCoins(rp);
@@ -125,6 +123,7 @@ public class HomeUI : UIBase
             if (cell == null)
                 return;
 
+            cell.name = i.ToString();
             cell.Index = i;
             itemBtns.Add(cell);
         }

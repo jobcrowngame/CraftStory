@@ -36,9 +36,8 @@ public class BagSelectItem : UIBase
         {
             NWMng.E.EquitItem((rp) =>
             {
-                NWMng.E.GetItemList((rp2) =>
+                NWMng.E.GetItems(() =>
                 {
-                    DataMng.GetItems(rp2);
                     if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
 
                     if (PlayerCtl.E.SelectItem != null &&
@@ -57,12 +56,11 @@ public class BagSelectItem : UIBase
             {
                 NWMng.E.EquitItem((rp2) =>
                 {
-                    NWMng.E.GetItemList((rp3) => 
+                    NWMng.E.GetItems(() =>
                     {
-                        DataMng.GetItems(rp3);
                         if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
 
-                        if (PlayerCtl.E.SelectItem != null && 
+                        if (PlayerCtl.E.SelectItem != null &&
                             Index + 1 == PlayerCtl.E.SelectItem.equipSite)
                         {
                             PlayerCtl.E.SelectItem = BagLG.E.SelectItem.ItemData;
@@ -73,5 +71,7 @@ public class BagSelectItem : UIBase
                 }, BagLG.E.SelectItem.ItemData.id, Index + 1);
             }, itemData.id, 0);
         }
+
+        GuideLG.E.Next();
     }
 }

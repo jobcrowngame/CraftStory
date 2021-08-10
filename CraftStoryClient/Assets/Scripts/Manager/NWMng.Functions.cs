@@ -4,6 +4,25 @@ using System;
 
 public partial class NWMng
 {
+    public void GetItems(Action callBack = null)
+    {
+        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
+        {
+            GetItemList((rp) =>
+            {
+                DataMng.GetItems(rp);
+
+                if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
+                if (callBack != null) callBack();
+            });
+        }
+        else
+        {
+            if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
+            if (callBack != null) callBack();
+        }
+    }
+
     public void GetSubscriptionInfo(Action callBack = null)
     {
         GetSubscriptionInfoRequest((rp) =>

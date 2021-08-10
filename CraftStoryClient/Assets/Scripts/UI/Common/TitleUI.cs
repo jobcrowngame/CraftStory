@@ -61,5 +61,7 @@ public class TitleUI : UIBase
     {
         if (action != null)
             action();
+
+        GuideLG.E.Next();
     }
 }

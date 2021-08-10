@@ -50,9 +50,8 @@ public class EmailDetailsUI : UIBase
         {
             NWMng.E.ReceiveEmailItem((rp) =>
             {
-                NWMng.E.GetItemList((rp2) =>
+                NWMng.E.GetItems(() =>
                 {
-                    DataMng.GetItems(rp2);
                     CommonFunction.ShowHintBar(20);
                 });
             }, cell.Data.id);

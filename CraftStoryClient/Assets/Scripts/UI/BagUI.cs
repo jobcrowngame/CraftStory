@@ -49,7 +49,6 @@ public class BagUI : UIBase
         }
 
         title.RefreshCoins();
-        BagLG.E.Classification = BagLG.BagClassification.All;
     }
 
     public override void Open()
@@ -60,12 +59,12 @@ public class BagUI : UIBase
 
         BagLG.E.Classification = BagLG.BagClassification.All;
 
-        NWMng.E.GetItemList((rp) =>
+        NWMng.E.GetItems(() =>
         {
-            DataMng.GetItems(rp);
-
             RefreshItems();
             RefreshSelectItemBtns();
+
+            GuideLG.E.Next();
         });
         NWMng.E.GetCoins((rp) =>
         {
@@ -114,6 +113,7 @@ public class BagUI : UIBase
         {
             cell.Init();
             cell.Add(item);
+            cell.name = cell.ItemData.id.ToString();
 
             if (!cellDic.ContainsKey(item.Config().Name))
             {

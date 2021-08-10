@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\UI\BlueprintReNameUI.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion1.cs" />
     <Compile Include="Assets\Scripts\Manager\ResourcesMng.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\WaitingUI.cs" />
     <Compile Include="Assets\Scripts\Game\Player\CameraCtl.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityTreasureBox.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\TransferGate.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Assets\Scripts\UI\NowLoadingLG.cs" />
     <Compile Include="Assets\Scripts\Test\TestToggle.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemUI.cs" />
+    <Compile Include="Assets\Scripts\Cor\AttObjC.cs" />
     <Compile Include="Assets\Scripts\UI\BraveUI.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestCreateObj.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Building.cs" />
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionCell.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\SimpleMove.cs" />
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeLG.cs" />
     <Compile Include="Assets\Scripts\UI\EmailCell.cs" />
@@ -206,6 +209,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Blueprint.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerButton.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\RandomBonusPond.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\WaitingLG.cs" />
     <Compile Include="Assets\Scripts\UI\BraveLG.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterEntity.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Bonus.cs" />
@@ -223,18 +227,16 @@
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityTorch.cs" />
+    <Compile Include="Assets\Scripts\Test\Test3.cs" />
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\RandomBonus.cs" />
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectChanger.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Cor\AttObjC.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
-    <Compile Include="Assets\Scripts\UI\Common\WaitingUI.cs" />
-    <Compile Include="Assets\Scripts\UI\Common\WaitingLG.cs" />
-    <Compile Include="Assets\Scripts\Test\Test3.cs" />
-    <Compile Include="Assets\Scripts\UI\Common\SimpleMove.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Guide.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\GuideStep.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

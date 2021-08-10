@@ -141,23 +141,21 @@ public class CommonFunction
 
         var config = ConfigMng.E.TransferGate[TransferGateID];
 
+        // 宝マップに入るかを判断
         var random = UnityEngine.Random.Range(0, 100f);
         if (random < config.TreasureMapPercent)
         {
             NowLoadingLG.E.BeforTransferGateID = ConfigMng.E.Map[config.NextMap].TransferGateID;
-
             config = ConfigMng.E.TransferGate[config.TreasureMap];
+        }
 
-            NowLoadingLG.E.NextMapID = config.NextMap;
-            NowLoadingLG.E.NextSceneName = config.NextMapSceneName;
-            SceneManager.LoadSceneAsync("NowLoading");
-        }
-        else
-        {
-            NowLoadingLG.E.NextMapID = config.NextMap;
-            NowLoadingLG.E.NextSceneName = config.NextMapSceneName;
-            SceneManager.LoadSceneAsync("NowLoading");
-        }
+        NowLoadingLG.E.NextMapID = config.NextMap;
+        NowLoadingLG.E.NextSceneName = config.NextMapSceneName;
+
+        DataMng.E.RuntimeData.MapType = (MapType)ConfigMng.E.Map[config.NextMap].MapType;
+
+        // Scene遷移
+        SceneManager.LoadSceneAsync("NowLoading");
     }
 
     public static Vector3 Vector3Sum(Vector3 v1, Vector3 v2)

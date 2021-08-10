@@ -37,9 +37,8 @@ public class BlueprintReNameUI : UIBase
         {
             NWMng.E.RemoveItem((rp)=> 
             {
-                NWMng.E.GetItemList((rp2) =>
+                NWMng.E.GetItems(() =>
                 {
-                    DataMng.GetItems(rp2);
                     PlayerCtl.E.SelectItem = null;
                     Close();
                 });

@@ -30,7 +30,7 @@ public class BagLG : UILogicBase<BagLG, BagUI>
             UI.ChangeSelectBtn((int)value);
         }
     }
-    private BagClassification classification = BagClassification.None;
+    private BagClassification classification = BagClassification.All;
 
     public void OnClickClassificationBtn(int index)
     {

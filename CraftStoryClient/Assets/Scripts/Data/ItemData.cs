@@ -12,6 +12,14 @@ public class ItemData
     public string relationData { get; set; }
     public int islocked { get; set; }
 
+    public ItemData() { }
+    public ItemData(int id, int itemId, int count)
+    {
+        this.id = id;
+        this.itemId = itemId;
+        this.count = count;
+    }
+
     public Item Config()
     {
         return ConfigMng.E.Item[itemId];

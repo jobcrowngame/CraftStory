@@ -18,15 +18,9 @@ public class MapCtl
         mapFactory = new MapDataFactory();
     }
 
-    public void CreateMap(int mapID)
+    public void CreateMap()
     {
-        // ホームデータがない場合デフォルトデータを作る
-        if (mapID == 100 && DataMng.E.HomeData == null)
-            DataMng.E.HomeData = mapFactory.CreateMapData(mapID);
-
-        DataMng.E.MapData = mapID == 100
-            ? DataMng.E.HomeData
-            : mapFactory.CreateMapData(mapID);
+        DataMng.E.SetMapData(NowLoadingLG.E.NextMapID);
 
         mapCellParent = new GameObject("Ground").transform;
         effectParent = new GameObject("Effects").transform;
@@ -202,6 +196,11 @@ public class MapCtl
 
             DataMng.E.MapData.IsSurface(entitys[i], CheckBlockIsSurface(DataMng.E.MapData, entitys[i]));
         }
+    }
+
+    public MapData CreateMapData(int mapId)
+    {
+        return mapFactory.CreateMapData(mapId);
     }
 
     #region Static Function

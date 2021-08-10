@@ -9,9 +9,8 @@ public class EntityTorch : EntityBase
 
         NWMng.E.AddItem((rp) =>
         {
-            NWMng.E.GetItemList((rp2) =>
+            NWMng.E.GetItems(() =>
             {
-                DataMng.GetItems(rp2);
                 WorldMng.E.MapCtl.DeleteEntity(this);
 
                 var effect = EffectMng.E.AddEffect<EffectBase>(transform.position, EffectType.BlockDestroyEnd);
