@@ -35,7 +35,6 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
         NWMng.E.Login((rp) =>
         {
             DataMng.E.token = (string)rp["token"];
-            DataMng.E.MyShop.firstUseMyShop = (int)rp["firstUseMyShop"];
             DataMng.E.MyShop.myShopLv = (int)rp["myShopLv"];
             DataMng.E.RuntimeData.GuideEnd = (int)rp["guide_end"];
 

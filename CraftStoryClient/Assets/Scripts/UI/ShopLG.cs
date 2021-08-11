@@ -77,6 +77,16 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
     {
         UI.RefreshSubscription();
     }
+
+    public int GetSubscriptionTypeByShopId(int shopId)
+    {
+        switch (shopId)
+        {
+            case 80: return 1;
+            case 81: return 2;
+            default: return 3;
+        }
+    }
 }
 
 public enum ShopUiType

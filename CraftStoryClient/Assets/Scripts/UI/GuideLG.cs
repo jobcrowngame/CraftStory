@@ -10,8 +10,6 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
     private int itemGuid = 1;
     private int createBlockCount = 0;
 
-    
-
     private string CurStep
     {
         set
@@ -29,8 +27,6 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         base.Init(ui);
 
         end = false;
-        stepIndex = 0;
-        itemGuid = 1;
         guideSteps = config.StepList.Split(',');
     }
     public void ReStart()
@@ -77,7 +73,7 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
     }
     public void AddGuideItem(int itemId, int count)
     {
-        DataMng.E.GuideItems.Add(new ItemData(itemGuid++, itemId, count));
+        AddGuideItem(new ItemData(itemId, count));
     }
     public void AddGuideItem(ItemData itemData)
     {

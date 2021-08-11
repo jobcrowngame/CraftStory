@@ -27,8 +27,15 @@ public partial class NWMng
     {
         GetSubscriptionInfoRequest((rp) =>
         {
-            DataMng.E.RuntimeData.SubscriptionLv = (int)rp["subscriptionLv"];
-            if(!string.IsNullOrEmpty((string)rp["updateTime"])) DataMng.E.RuntimeData.SubscriptionUpdateTime = DateTime.Parse((string)rp["updateTime"]);
+            DataMng.E.RuntimeData.SubscriptionLv01 = (int)rp["subscriptionLv01"];
+            DataMng.E.RuntimeData.SubscriptionLv02 = (int)rp["subscriptionLv02"];
+            DataMng.E.RuntimeData.SubscriptionLv03 = (int)rp["subscriptionLv03"];
+            if (!string.IsNullOrEmpty((string)rp["updateTime01"])) 
+                DataMng.E.RuntimeData.SubscriptionUpdateTime01 = DateTime.Parse((string)rp["updateTime01"]);
+            if (!string.IsNullOrEmpty((string)rp["updateTime02"]))
+                DataMng.E.RuntimeData.SubscriptionUpdateTime02 = DateTime.Parse((string)rp["updateTime02"]);
+            if (!string.IsNullOrEmpty((string)rp["updateTime03"]))
+                DataMng.E.RuntimeData.SubscriptionUpdateTime03 = DateTime.Parse((string)rp["updateTime03"]);
 
             if (callBack != null) callBack();
         });

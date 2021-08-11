@@ -156,7 +156,7 @@ public class IAPMng : Single<IAPMng>, IStoreListener
                         });
 
                         m_Controller.ConfirmPendingPurchase(product);
-                    }, config.ID);
+                    }, ShopLG.E.GetSubscriptionTypeByShopId(config.ID));
                 }
             }
             else

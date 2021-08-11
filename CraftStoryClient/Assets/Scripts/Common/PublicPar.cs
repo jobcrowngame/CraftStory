@@ -38,9 +38,7 @@ public class PublicPar
     #endregion
 
     public static string LocalURL = "http://localhost/UrlLocal.php";
-    public static string DevelopURL = "13.230.170.40/UrlDevelop.php";
-    public static string TestURL = "13.230.170.40/UrlTest.php";
-    public static string ReleaseURL = "13.230.170.40/UrlRelease.php";
+    public static string TestURL = "13.230.170.40/TestUrl.php";
     public static string ProductionURL = "craftstory.awscraftstoryserver.com/1_2_1.php";
 
     public static string Maintenance = @"ただいま、メンテナンスを実施中です。

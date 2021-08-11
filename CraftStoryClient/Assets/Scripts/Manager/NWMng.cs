@@ -422,12 +422,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.ReceiveEmailItem));
     }
-    public void BuySubscription(Action<JsonData> rp, int shopId)
+    public void BuySubscription(Action<JsonData> rp, int type)
     {
         var data = new NWData();
         data.Add("token", DataMng.E.token);
         data.Add("acc", DataMng.E.UserData.Account);
-        data.Add("shopId", shopId);
+        data.Add("type", type);
 
         StartCoroutine(HttpRequest(rp, data, CMD.BuySubscription));
     }

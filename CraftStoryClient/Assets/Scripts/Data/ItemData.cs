@@ -13,9 +13,8 @@ public class ItemData
     public int islocked { get; set; }
 
     public ItemData() { }
-    public ItemData(int id, int itemId, int count)
+    public ItemData(int itemId, int count)
     {
-        this.id = id;
         this.itemId = itemId;
         this.count = count;
     }

@@ -36,14 +36,7 @@ public class ShopSubscriptionCell : UIBase
         FindChiled("Text", BuyBtn.gameObject).GetComponent<Text>().text = config.BtnText;
         BuyBtn.onClick.AddListener(() =>
         {
-            if (DataMng.E.RuntimeData.SubscriptionLv > 0)
-            {
-                CommonFunction.ShowHintBox(hintMsg, () =>{ OpenSubscriptionDetailsUI(); }, () => { });
-            }
-            else
-            {
-                OpenSubscriptionDetailsUI();
-            }
+            OpenSubscriptionDetailsUI();
         });
 
         CheckActive();
@@ -74,12 +67,30 @@ public class ShopSubscriptionCell : UIBase
     private void CheckActive()
     {
         int shopId = GetShopId();
+        int subscriptionLv = 0;
+        DateTime SubscriptionUpdateTime = DateTime.Now;
 
-        if (DataMng.E.RuntimeData.SubscriptionLv == shopId)
+        switch (index)
+        {
+            case 0: 
+                subscriptionLv = DataMng.E.RuntimeData.SubscriptionLv01;
+                SubscriptionUpdateTime = DataMng.E.RuntimeData.SubscriptionUpdateTime01;
+                break;
+            case 1:
+                subscriptionLv = DataMng.E.RuntimeData.SubscriptionLv02;
+                SubscriptionUpdateTime = DataMng.E.RuntimeData.SubscriptionUpdateTime02;
+                break;
+            case 2: 
+                subscriptionLv = DataMng.E.RuntimeData.SubscriptionLv03;
+                SubscriptionUpdateTime = DataMng.E.RuntimeData.SubscriptionUpdateTime03;
+                break;
+        }
+
+        if (subscriptionLv == 1)
         {
             BuyBtn.gameObject.SetActive(false);
 
-            var day = 29 - (DateTime.Now - DataMng.E.RuntimeData.SubscriptionUpdateTime).Days;
+            var day = 29 - (DateTime.Now - SubscriptionUpdateTime).Days;
             Time.text = string.Format("利用中　残り{0}日", day);
         }
         else

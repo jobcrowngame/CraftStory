@@ -2,7 +2,6 @@
 
 public class MyShopData
 {
-    public int firstUseMyShop { get; set; }
     public int myShopLv { get; set; }
     public MyShopItem[] MyShopItem 
     {
