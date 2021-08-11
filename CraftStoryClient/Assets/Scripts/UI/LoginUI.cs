@@ -33,15 +33,16 @@ public class LoginUI : UIBase
 
             Lock = true;
 
-            if (DataMng.E.RuntimeData.GuideEnd == 1)
-            {
-                CommonFunction.GoToNextScene(100);
-            }
-            else
-            {
-                DataMng.E.RuntimeData.GuideId = 1;
-                CommonFunction.GoToNextScene(101);
-            }
+            CommonFunction.GoToNextScene(100);
+            //if (DataMng.E.RuntimeData.GuideEnd == 1)
+            //{
+            //    CommonFunction.GoToNextScene(100);
+            //}
+            //else
+            //{
+            //    DataMng.E.RuntimeData.GuideId = 1;
+            //    CommonFunction.GoToNextScene(101);
+            //}
         });
         BGBtn.enabled = false;
 
