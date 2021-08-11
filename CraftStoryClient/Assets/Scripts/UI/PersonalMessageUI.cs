@@ -70,6 +70,12 @@ public class PersonalMessageUI : UIBase
 
         InputField.onEndEdit.AddListener((r) => 
         {
+            if (InputField.text.Length < 1)
+            {
+                CommonFunction.ShowHintBar(10);
+                return;
+            }
+
             GuideLG.E.Next();
         });
     }

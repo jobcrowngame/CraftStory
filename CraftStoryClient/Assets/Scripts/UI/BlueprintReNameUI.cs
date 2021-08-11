@@ -20,6 +20,12 @@ public class BlueprintReNameUI : UIBase
         input = FindChiled<InputField>("InputField");
         input.onEndEdit.AddListener((r) =>
         {
+            if (string.IsNullOrEmpty(input.text))
+            {
+                CommonFunction.ShowHintBar(3);
+                return;
+            }
+
             GuideLG.E.Next();
         });
     }
