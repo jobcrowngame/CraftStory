@@ -39,12 +39,6 @@ public class PlayerEntity : CharacterEntity
             {
                 moveDirection.x = newVec.x * SettingMng.E.MoveSpeed;
                 moveDirection.z = newVec.y * SettingMng.E.MoveSpeed;
-
-                if (MoveBoundaryCheckPosX(moveDirection.x))
-                    moveDirection.x = 0;
-                if (MoveBoundaryCheckPosZ(moveDirection.z))
-                    moveDirection.z = 0;
-
                 Behavior.Type = PlayerBehaviorType.Run;
             }
             else
@@ -60,7 +54,14 @@ public class PlayerEntity : CharacterEntity
         if (x != 0 || y != 0)
             Model.rotation = Quaternion.Euler(new Vector3(0, angle1 + angle2, 0));
 
+        // 重力
         moveDirection.y -= SettingMng.E.Gravity * Time.deltaTime;
+
+        // マップ範囲外に出ないようにする
+        if (MoveBoundaryCheckPosX(moveDirection.x))
+            moveDirection.x = 0;
+        if (MoveBoundaryCheckPosZ(moveDirection.z))
+            moveDirection.z = 0;
 
         moveDirection = transform.TransformDirection(moveDirection);
         controller.Move(moveDirection * Time.deltaTime);
