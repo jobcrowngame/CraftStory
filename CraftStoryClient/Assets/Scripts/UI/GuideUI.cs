@@ -84,6 +84,8 @@ public class GuideUI : UIBase
         Msg.gameObject.SetActive(false);
         Hand.gameObject.SetActive(false);
         GuideLG.E.end = true;
+
+        NWMng.E.GuideEnd((rp)=> { DataMng.E.RuntimeData.GuideEnd = 1; });
     }
 
     public void NextStep(int stepId)

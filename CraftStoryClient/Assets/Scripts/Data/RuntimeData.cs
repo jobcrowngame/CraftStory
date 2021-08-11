@@ -8,6 +8,7 @@ public class RuntimeData
 {
     public int NewEmailCount { get; set; }
     public int SubscriptionLv { get; set; }
+    public int GuideEnd { get; set; }
     public bool IsReceivedSubscription { get; set; }
     public DateTime SubscriptionUpdateTime { get; set; }
 

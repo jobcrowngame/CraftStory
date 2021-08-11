@@ -92,10 +92,9 @@ public class MenuUI : UIBase
         });
         HomeBtn.onClick.AddListener(() =>
         {
+            GuideLG.E.Next();
             CommonFunction.GoToNextScene(100);
             Close();
-
-            GuideLG.E.Next();
         });
         PlayDescriptionBtn.onClick.AddListener(() =>
         {

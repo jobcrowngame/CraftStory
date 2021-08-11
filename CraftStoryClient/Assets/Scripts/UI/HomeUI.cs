@@ -41,7 +41,7 @@ public class HomeUI : UIBase
 
         UICtl.E.AddUI(this, UIType.Home);
 
-        if (NoticeLG.E.IsFirst)
+        if (DataMng.E.RuntimeData.MapType == MapType.Home && NoticeLG.E.IsFirst)
         {
             UICtl.E.OpenUI<NoticeUI>(UIType.Notice);
             NoticeLG.E.IsFirst = false;

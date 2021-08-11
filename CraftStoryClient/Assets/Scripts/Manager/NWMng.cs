@@ -32,7 +32,7 @@ public partial class NWMng : MonoBehaviour
     }
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.DevelopURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.TestURL))
         {
             yield return www.SendWebRequest();
 
@@ -439,6 +439,14 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetSubscriptionInfo));
     }
+    public void GuideEnd(Action<JsonData> rp)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GuideEnd));
+    }
 
     public void SaveHomeData(Action<JsonData> rp, string homedata)
     {
@@ -505,6 +513,7 @@ public partial class NWMng : MonoBehaviour
         ReceiveEmailItem,
         BuySubscription,
         GetSubscriptionInfo,
+        GuideEnd,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,
