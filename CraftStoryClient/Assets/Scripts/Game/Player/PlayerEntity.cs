@@ -28,6 +28,9 @@ public class PlayerEntity : CharacterEntity
         if (Behavior.Type == PlayerBehaviorType.Breack)
             return;
 
+        if (DataMng.E.MapData == null || PlayerCtl.E.CameraCtl == null)
+            return;
+
         var angle1 = GetAngleFromV2(new Vector2(x, y).normalized);
         var angle2 = PlayerCtl.E.CameraCtl.GetEulerAngleY;
         var newVec = GetV2FromAngle(angle1 + angle2);
@@ -97,30 +100,47 @@ public class PlayerEntity : CharacterEntity
     /// </summary>
     private bool MoveBoundaryCheckPosX(float posX)
     {
-        if (transform.position.x < SettingMng.E.MoveBoundaryOffset 
-            && transform.position.x + posX < transform.position.x)
+        try
+        {
+            if (transform.position.x < SettingMng.E.MoveBoundaryOffset
+                && transform.position.x + posX < transform.position.x)
                 return true;
 
-        if (transform.position.x > DataMng.E.MapData.Config.SizeX - SettingMng.E.MoveBoundaryOffset
-            && transform.position.x + posX > transform.position.x)
-            return true;
+            if (transform.position.x > DataMng.E.MapData.Config.SizeX - SettingMng.E.MoveBoundaryOffset
+                && transform.position.x + posX > transform.position.x)
+                return true;
 
-        return false;
+            return false;
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log(ex);
+            return false;
+        }
+        
     }
     /// <summary>
     /// 移動範囲境界判断　Y
     /// </summary>
     private bool MoveBoundaryCheckPosZ(float posZ)
     {
-        if (transform.position.z < SettingMng.E.MoveBoundaryOffset
-           && transform.position.z + posZ < transform.position.z)
-            return true;
+        try
+        {
+            if (transform.position.z < SettingMng.E.MoveBoundaryOffset
+                && transform.position.z + posZ < transform.position.z)
+                return true;
 
-        if (transform.position.z > DataMng.E.MapData.Config.SizeZ - SettingMng.E.MoveBoundaryOffset
-            && transform.position.z + posZ > transform.position.z)
-            return true;
+            if (transform.position.z > DataMng.E.MapData.Config.SizeZ - SettingMng.E.MoveBoundaryOffset
+                && transform.position.z + posZ > transform.position.z)
+                return true;
 
-        return false;
+            return false;
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log(ex);
+            return false;
+        }
     }
 
     public void IsModelActive(bool b)
