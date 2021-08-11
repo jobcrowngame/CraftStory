@@ -71,6 +71,8 @@ public class HomeUI : UIBase
         {
             var menu = UICtl.E.OpenUI<MenuUI>(UIType.Menu); 
             menu.Init();
+
+            GuideLG.E.Next();
         });
 
         BagBtn = FindChiled<Button>("BagBtn");
@@ -160,6 +162,7 @@ public class HomeUI : UIBase
         Logger.Log("BuilderBtn");
 
         PlayerCtl.E.BuilderPencil.CreateBlueprint();
+        GuideLG.E.Next();
     }
     private void CancelBuilderPencilCancelBtn()
     {

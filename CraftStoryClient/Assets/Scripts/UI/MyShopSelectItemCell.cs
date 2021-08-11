@@ -21,6 +21,8 @@ public class MyShopSelectItemCell : UIBase
         clickBtn.onClick.AddListener(() => 
         {
             MyShopSelectItemLG.E.SelectItem = this;
+
+            GuideLG.E.Next();
         });
 
         Refresh();

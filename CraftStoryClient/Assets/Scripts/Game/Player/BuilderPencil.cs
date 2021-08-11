@@ -23,6 +23,8 @@ public class BuilderPencil
 
         var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
         if (homeUI != null) homeUI.ShowBuilderPencilBtn();
+
+        GuideLG.E.Next();
     }
     public void End(Vector3 pos)
     {
@@ -35,6 +37,8 @@ public class BuilderPencil
         endNotation = CommonFunction.Instantiate("Prefabs/Game/Order/Notation", null, pos);
 
         ChangeNotationState();
+
+        GuideLG.E.Next();
     }
 
     public void CreateBlueprint()
@@ -131,16 +135,18 @@ public class BuilderPencil
 
         var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
         if (homeUI != null) homeUI.ShowBlueprintBtn();
+
+        GuideLG.E.Next();
     }
     public void CancelUserBlueprint()
     {
-        Logger.Log("CancelUserBlueprint");
-
         WorldMng.E.MapCtl.DeleteBuilderPencil();
         selectBlueprintData = null;
 
         var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
         if (homeUI != null) homeUI.ShowBlueprintBtn(false);
+
+        GuideLG.E.Next(21);
     }
     public void SpinBlueprint()
     {

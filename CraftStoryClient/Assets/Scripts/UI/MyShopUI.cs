@@ -15,7 +15,7 @@ public class MyShopUI : UIBase
 
         title = FindChiled<TitleUI>("Title");
         title.SetTitle("マイショップ");
-        title.SetOnClose(() => { Close(); });
+        title.SetOnClose(() => { Close(); GuideLG.E.Next(); });
         title.EnActiveCoin(2);
         title.EnActiveCoin(3);
 

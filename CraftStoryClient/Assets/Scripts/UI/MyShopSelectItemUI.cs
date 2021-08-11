@@ -30,6 +30,8 @@ public class MyShopSelectItemUI : UIBase
             }
             
             Close();
+
+            GuideLG.E.Next();
         });
         CancelBtn.onClick.AddListener(Close);
     }

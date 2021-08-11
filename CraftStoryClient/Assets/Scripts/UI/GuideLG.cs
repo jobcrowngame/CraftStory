@@ -7,6 +7,11 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
     private string[] guideSteps;
     public bool end { get; set; }
 
+    private int itemGuid = 1;
+    private int createBlockCount = 0;
+
+    
+
     private string CurStep
     {
         set
@@ -15,6 +20,8 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         }
     }
     private string mCurStep;
+
+    public int Step { get => stepIndex; }
     private int stepIndex = 0;
 
     public override void Init(GuideUI ui)
@@ -24,6 +31,17 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         end = false;
         stepIndex = 0;
         guideSteps = config.StepList.Split(',');
+    }
+    public void ReStart()
+    {
+        end = false;
+        stepIndex = 0;
+    }
+    public void Next(int step)
+    {
+        if (step != stepIndex)
+            return;
+        Next();
     }
     public void Next()
     {
@@ -35,5 +53,34 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
 
         CurStep = guideSteps[stepIndex];
         stepIndex++;
+        Logger.Warning("ガイドStep: " + stepIndex);
+    }
+    public void CreateBlock()
+    {
+        createBlockCount++;
+        if (createBlockCount == 3)
+        {
+            Next();
+        }
+    }
+    public void SetGuideItems()
+    {
+        var items = ConfigMng.E.Guide[DataMng.E.RuntimeData.GuideId].ItemList.Split(',');
+        var counts = ConfigMng.E.Guide[DataMng.E.RuntimeData.GuideId].ItemCount.Split(',');
+
+        DataMng.E.GuideItems.Clear();
+        for (int i = 0; i < items.Length; i++)
+        {
+            AddGuideItem(int.Parse(items[i]), int.Parse(counts[i]));
+        }
+    }
+    public void AddGuideItem(int itemId, int count)
+    {
+        DataMng.E.GuideItems.Add(new ItemData(itemGuid++, itemId, count));
+    }
+    public void AddGuideItem(ItemData itemData)
+    {
+        itemData.id = itemGuid++;
+        DataMng.E.GuideItems.Add(itemData);
     }
 }

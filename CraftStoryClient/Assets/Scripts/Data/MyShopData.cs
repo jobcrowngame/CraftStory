@@ -4,15 +4,33 @@ public class MyShopData
 {
     public int firstUseMyShop { get; set; }
     public int myShopLv { get; set; }
-    public MyShopItem[] myShopItem { get; set; }
+    public MyShopItem[] MyShopItem 
+    {
+        get
+        {
+            if (DataMng.E.RuntimeData.MapType == MapType.Guide)
+            {
+                return mGuideMyShopItem;
+            }
+            else
+            {
+                return mMyShopItem;
+            }
+        }
+        set => mMyShopItem = value;
+    }
+    private MyShopItem[] mMyShopItem;
+    private MyShopItem[] mGuideMyShopItem;
 
     public MyShopData()
     {
-        myShopItem = new MyShopItem[3];
+        MyShopItem = new MyShopItem[3];
+        mGuideMyShopItem = new MyShopItem[3];
     }
     public void Clear()
     {
-        myShopItem = new MyShopItem[3];
+        MyShopItem = new MyShopItem[3];
+        mGuideMyShopItem = new MyShopItem[3];
     }
 }
 

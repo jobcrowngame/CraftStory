@@ -35,9 +35,9 @@ public class MyShopUploadUI : UIBase
             if (itemData == null)
                 return;
 
-            NWMng.E.UploadBlueprintToMyShop((rp) =>
+            if (DataMng.E.RuntimeData.MapType == MapType.Guide)
             {
-                DataMng.E.MyShop.myShopItem[Index - 1] = new MyShopItem()
+                DataMng.E.MyShop.MyShopItem[Index - 1] = new MyShopItem()
                 {
                     itemId = itemData.itemId,
                     site = Index,
@@ -48,7 +48,26 @@ public class MyShopUploadUI : UIBase
                 MyShopLG.E.UI.RefreshUI();
 
                 CommonFunction.ShowHintBar(16);
-            }, itemData.id, Index, GetPrice());
+
+                GuideLG.E.Next();
+            }
+            else
+            {
+                NWMng.E.UploadBlueprintToMyShop((rp) =>
+                {
+                    DataMng.E.MyShop.MyShopItem[Index - 1] = new MyShopItem()
+                    {
+                        itemId = itemData.itemId,
+                        site = Index,
+                        created_at = DateTime.Now,
+                        data = itemData.relationData,
+                        newName = itemData.newName
+                    };
+                    MyShopLG.E.UI.RefreshUI();
+
+                    CommonFunction.ShowHintBar(16);
+                }, itemData.id, Index, GetPrice());
+            }
 
             Close();
         });

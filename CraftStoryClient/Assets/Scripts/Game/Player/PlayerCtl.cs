@@ -83,6 +83,7 @@ public class PlayerCtl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F1))
         {
             DataMng.E.RuntimeData.GuideId = 1;
+            GuideLG.E.ReStart();
             CommonFunction.GoToNextScene(101);
         }
     }
@@ -129,7 +130,8 @@ public class PlayerCtl : MonoBehaviour
     }
     public void OnClick(GameObject collider, Vector3 pos, DirectionType dType)
     {
-        if (DataMng.E.MapData.IsHome)
+        if (DataMng.E.RuntimeData.MapType == MapType.Home 
+            || DataMng.E.RuntimeData.MapType == MapType.Guide)
         {
             if (selectItem == null)
             {

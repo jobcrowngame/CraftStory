@@ -44,13 +44,13 @@ public class MyShopCell : UIBase
                     break;
             }
 
-            myShopItem = DataMng.E.MyShop.myShopItem[value - 1];
+            myShopItem = DataMng.E.MyShop.MyShopItem[value - 1];
             if (myShopItem.itemId > 0)
             {
                 if ((DateTime.Now - myShopItem.created_at).Days >= 7)
                 {
-                    DataMng.E.MyShop.myShopItem[value - 1] = new MyShopItem();
-                    myShopItem = DataMng.E.MyShop.myShopItem[value - 1];
+                    DataMng.E.MyShop.MyShopItem[value - 1] = new MyShopItem();
+                    myShopItem = DataMng.E.MyShop.MyShopItem[value - 1];
                 }
 
                 myShopItem.created_at = myShopItem.created_at.AddDays(7);
@@ -98,7 +98,7 @@ public class MyShopCell : UIBase
                     {
                         NWMng.E.LoadBlueprint((rp) =>
                         {
-                            DataMng.E.MyShop.myShopItem[Index - 1] = new MyShopItem();
+                            DataMng.E.MyShop.MyShopItem[Index - 1] = new MyShopItem();
                             DataMng.E.UserData.Coin1 -= 100;
                             MyShopLG.E.UI.RefreshUI();
                         }, myShopItem.site, 0);
@@ -142,7 +142,7 @@ public class MyShopCell : UIBase
             }
             else
             {
-                if (DataMng.E.MyShop.myShopItem[Index - 1].itemId == 0)
+                if (DataMng.E.MyShop.MyShopItem[Index - 1].itemId == 0)
                 {
                     MyShopSelectItemLG.E.Index = Index;
 
@@ -155,12 +155,15 @@ public class MyShopCell : UIBase
                     CommonFunction.ShowHintBox(null, msg, () =>
                     {
                         UICtl.E.OpenUI<MyShopSelectItemUI>(UIType.MyShopSelectItem);
+                        GuideLG.E.Next();
                     }, null, "button_2D_022");
                 }
                 else
                 {
                     CommonFunction.ShowHintBar(12);
                 }
+
+                GuideLG.E.Next();
             }
         });
     }
@@ -184,7 +187,7 @@ public class MyShopCell : UIBase
             {
                 NWMng.E.LoadBlueprint((rp) =>
                 {
-                    DataMng.E.MyShop.myShopItem[Index - 1] = new MyShopItem();
+                    DataMng.E.MyShop.MyShopItem[Index - 1] = new MyShopItem();
                     MyShopLG.E.UI.RefreshUI();
                     OpenTimer = false;
                 }, myShopItem.site, 1);

@@ -54,7 +54,20 @@ public class MenuUI : UIBase
                     break;
 
                 case MapType.Brave:
+                    HomeBtn.gameObject.SetActive(true);
+                    break;
+
                 case MapType.Guide:
+                    AdventureBtn.gameObject.SetActive(true);
+                    ShopBtn.gameObject.SetActive(true);
+                    PlayDescriptionBtn.gameObject.SetActive(true);
+                    PersonalMessageBtn.gameObject.SetActive(true);
+
+                    PointExchangeBtn.gameObject.SetActive(true);
+                    MyShopBtn.gameObject.SetActive(true);
+                    PlayDescriptionBtn2.gameObject.SetActive(true);
+                    MessageBtn.gameObject.SetActive(true);
+
                     HomeBtn.gameObject.SetActive(true);
                     break;
             }
@@ -74,12 +87,15 @@ public class MenuUI : UIBase
         {
             UICtl.E.OpenUI<ShopUI>(UIType.Shop);
             Close();
+
+            GuideLG.E.Next();
         });
         HomeBtn.onClick.AddListener(() =>
         {
-            //CommonFunction.GoToHome();
             CommonFunction.GoToNextScene(100);
             Close();
+
+            GuideLG.E.Next();
         });
         PlayDescriptionBtn.onClick.AddListener(() =>
         {
@@ -90,6 +106,8 @@ public class MenuUI : UIBase
         {
             UICtl.E.OpenUI<PersonalMessageUI>(UIType.PersonalMessage);
             Close();
+
+            GuideLG.E.Next();
         });
 
         PointExchangeBtn.onClick.AddListener(() =>
@@ -138,6 +156,8 @@ public class MenuUI : UIBase
 
             UICtl.E.OpenUI<MyShopUI>(UIType.MyShop);
             Close();
+
+            GuideLG.E.Next();
         });
         MessageBtn.onClick.AddListener(() =>
         {

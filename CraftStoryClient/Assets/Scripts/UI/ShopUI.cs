@@ -51,7 +51,7 @@ public class ShopUI : UIBase
 
         title = FindChiled<TitleUI>("Title");
         title.SetTitle("ショップ");
-        title.SetOnClose(() => { Close(); });
+        title.SetOnClose(() => { Close(); GuideLG.E.Next(); });
 
         var urlBtn01 = FindChiled<Button>("UrlBtn1", UrlBtns);
         urlBtn01.onClick.AddListener(() => { Application.OpenURL(PublicPar.UrlBtn1); });
@@ -88,7 +88,7 @@ public class ShopUI : UIBase
         btns[4] = FindChiled<Button>("Button (3)");
         btns[4].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint; SelectBtnIndex = 4; });
         btns[5] = FindChiled<Button>("Button (4)");
-        btns[5].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint2; SelectBtnIndex = 5; });
+        btns[5].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint2; SelectBtnIndex = 5; GuideLG.E.Next(); });
 
         ShopLG.E.ShopUIType = ShopUiType.Charge;
 

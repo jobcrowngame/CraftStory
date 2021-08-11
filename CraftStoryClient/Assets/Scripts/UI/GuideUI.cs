@@ -10,6 +10,7 @@ public class GuideUI : UIBase
     RectTransform mask3 { get => FindChiled<RectTransform>("Mask (3)"); }
     RectTransform mask4 { get => FindChiled<RectTransform>("Mask (4)"); }
     RectTransform Msg { get => FindChiled<RectTransform>("Image"); }
+    Transform Hand { get => FindChiled<Transform>("Hand"); }
     CanvasScaler canvas { get => transform.parent.GetComponent<CanvasScaler>(); }
 
     private void Start()
@@ -27,6 +28,13 @@ public class GuideUI : UIBase
 
     private void Select(GameObject selectedObj)
     {
+        if (selectedObj == null)
+        {
+            ShowMask(false);
+            Logger.Error("Not find selectedObj");
+            return;
+        }
+
         ShowMask();
 
         var selectRect = selectedObj.GetComponent<RectTransform>();
@@ -48,6 +56,8 @@ public class GuideUI : UIBase
         mask4.offsetMin = new Vector2(selectedObj.transform.position.x / offset - width / 2, 0);
         mask4.offsetMax = new Vector2(-(canvasX.x - selectedObj.transform.position.x / offset - width / 2), 
             -(canvasX.y - selectedObj.transform.position.y / offset + height / 2));
+
+        SetHand(new Vector2(selectedObj.transform.position.x + 60, selectedObj.transform.position.y + 20));
     }
     private void SetMessage(Vector2 pos, Vector2 size, string msg)
     {
@@ -56,6 +66,10 @@ public class GuideUI : UIBase
         FindChiled<Text>("Text", Msg.transform).text = msg;
 
         Msg.gameObject.SetActive(!string.IsNullOrEmpty(msg));
+    }
+    private void SetHand(Vector2 pos)
+    {
+        Hand.transform.position = pos;
     }
     private void ShowMask(bool b = true)
     {
@@ -68,6 +82,7 @@ public class GuideUI : UIBase
     {
         ShowMask(false);
         Msg.gameObject.SetActive(false);
+        Hand.gameObject.SetActive(false);
         GuideLG.E.end = true;
     }
 
@@ -87,10 +102,19 @@ public class GuideUI : UIBase
         yield return new WaitForSeconds(0.1f);
 
         var config = ConfigMng.E.GuideStep[stepId];
-        Select(CommonFunction.FindChiledByName(UICtl.E.Root, config.CellName));
+        if (config.CellName == "N")
+        {
+            Select(null);
+        }
+        else
+        {
+            Select(CommonFunction.FindChiledByName(UICtl.E.Root, config.CellName));
+        }
 
         Vector2 pos = new Vector2(config.MsgPosX, config.MsgPosY);
         Vector2 size = new Vector2(config.MsgSizeX, config.MsgSizeY);
         SetMessage(pos, size, config.Message);
+
+        Hand.gameObject.SetActive(config.HideHand != 1);
     }
 }

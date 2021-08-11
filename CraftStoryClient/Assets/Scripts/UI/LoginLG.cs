@@ -50,7 +50,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                     List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp.ToJson());
                     for (int i = 0; i < shopItems.Count; i++)
                     {
-                        DataMng.E.MyShop.myShopItem[i] = shopItems[i];
+                        DataMng.E.MyShop.MyShopItem[i] = shopItems[i];
                     }
                 }
             });

@@ -21,7 +21,7 @@ public class PersonalMessageUI : UIBase
 
         title = FindChiled<TitleUI>("Title");
         title.SetTitle("プロフィール");
-        title.SetOnClose(() => { Close(); });
+        title.SetOnClose(() => { Close(); GuideLG.E.Next(); });
         title.EnActiveCoin(1);
         title.EnActiveCoin(2);
         title.EnActiveCoin(3);
@@ -30,6 +30,8 @@ public class PersonalMessageUI : UIBase
         {
             Show.gameObject.SetActive(false);
             ChangeNickName.gameObject.SetActive(true);
+
+            GuideLG.E.Next();
         });
         OKBtn.onClick.AddListener(() =>
         {
@@ -39,7 +41,7 @@ public class PersonalMessageUI : UIBase
                 return;
             }
 
-            NWMng.E.UpdateNickName((rp) => 
+            if (DataMng.E.RuntimeData.MapType == MapType.Guide)
             {
                 DataMng.E.UserData.NickName = InputField.text;
                 NickNameText.text = DataMng.E.UserData.NickName;
@@ -48,7 +50,27 @@ public class PersonalMessageUI : UIBase
                 ChangeNickName.gameObject.SetActive(false);
 
                 CommonFunction.ShowHintBar(11);
-            }, InputField.text);
+
+                GuideLG.E.Next();
+            }
+            else
+            {
+                NWMng.E.UpdateNickName((rp) =>
+                {
+                    DataMng.E.UserData.NickName = InputField.text;
+                    NickNameText.text = DataMng.E.UserData.NickName;
+
+                    Show.gameObject.SetActive(true);
+                    ChangeNickName.gameObject.SetActive(false);
+
+                    CommonFunction.ShowHintBar(11);
+                }, InputField.text);
+            }
+        });
+
+        InputField.onEndEdit.AddListener((r) => 
+        {
+            GuideLG.E.Next();
         });
     }
     public override void Open()

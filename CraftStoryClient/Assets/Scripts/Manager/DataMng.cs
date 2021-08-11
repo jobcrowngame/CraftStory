@@ -49,6 +49,7 @@ public class DataMng : Single<DataMng>
     }
     private List<ItemData> items = new List<ItemData>();
     private List<ItemData> guideItems = new List<ItemData>();
+    public List<ItemData> GuideItems { get => guideItems; }
 
     public override void Init()
     {
@@ -141,17 +142,6 @@ public class DataMng : Single<DataMng>
     {
         items = list;
     }
-    public void SetGuideItems()
-    {
-        var items = ConfigMng.E.Guide[RuntimeData.GuideId].ItemList.Split(',');
-        var counts = ConfigMng.E.Guide[RuntimeData.GuideId].ItemCount.Split(',');
-
-        guideItems.Clear();
-        for (int i = 0; i < items.Length; i++)
-        {
-            guideItems.Add(new ItemData(i + 1 ,int.Parse(items[i]), int.Parse(counts[i])));
-        }
-    }
 
     public ItemData GetItemByGuid(int guid)
     {
@@ -205,14 +195,27 @@ public class DataMng : Single<DataMng>
     }
     public void AddItemInData(int itemID, int count, string newName, string data, Action action = null)
     {
-
-        NWMng.E.AddItemInData((rp) =>
+        if (RuntimeData.MapType == MapType.Guide)
         {
-            NWMng.E.GetItems(() =>
+            GuideLG.E.AddGuideItem(new ItemData()
             {
-                if (action != null) action();
+                itemId = itemID,
+                count = count,
+                newName = newName,
+                relationData = data
             });
-        }, itemID, count, newName, data);
+            if (action != null) action();
+        }
+        else
+        {
+            NWMng.E.AddItemInData((rp) =>
+            {
+                NWMng.E.GetItems(() =>
+                {
+                    if (action != null) action();
+                });
+            }, itemID, count, newName, data);
+        }
     }
     public void RemoveItemByGuid(int guid, int count)
     {
@@ -247,12 +250,23 @@ public class DataMng : Single<DataMng>
         }
         else
         {
-            NWMng.E.RemoveItemByGuid((rp) =>
+            if (RuntimeData.MapType == MapType.Guide)
             {
                 RemoveItemByGuid(guid, count);
                 if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
                 if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
-            }, guid, count);
+
+                GuideLG.E.CreateBlock();
+            }
+            else
+            {
+                NWMng.E.RemoveItemByGuid((rp) =>
+                {
+                    RemoveItemByGuid(guid, count);
+                    if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
+                    if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
+                }, guid, count);
+            }
         }
     }
     public bool ConsumableItem(int itemID, int count = 1)

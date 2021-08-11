@@ -32,7 +32,7 @@ public class WorldMng : MonoBehaviour
 
         // ガイドの場合、一時的のアイテムを追加
         if (DataMng.E.RuntimeData.MapType == MapType.Guide)
-            DataMng.E.SetGuideItems();
+            GuideLG.E.SetGuideItems();
 
         // ホームマップの場合、設計図プレイビューコンソールObjectを追加
         if (DataMng.E.RuntimeData.MapType == MapType.Home)

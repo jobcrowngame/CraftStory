@@ -58,6 +58,8 @@ public class HomeItemBtn : UIBase
             return;
 
         CurSelectBtn = this;
+
+        GuideLG.E.Next();
     }
     private void OnSelected(bool b = true)
     {

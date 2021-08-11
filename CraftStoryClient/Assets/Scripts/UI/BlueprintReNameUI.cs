@@ -18,6 +18,10 @@ public class BlueprintReNameUI : UIBase
         CancelBtn.onClick.AddListener(()=> { Close(); });
 
         input = FindChiled<InputField>("InputField");
+        input.onEndEdit.AddListener((r) =>
+        {
+            GuideLG.E.Next();
+        });
     }
 
     public void SetMapData(string msg)
@@ -35,14 +39,25 @@ public class BlueprintReNameUI : UIBase
 
         DataMng.E.AddItemInData(3002, 1, input.text, mapData, ()=> 
         {
-            NWMng.E.RemoveItem((rp)=> 
+            if (DataMng.E.RuntimeData.MapType == MapType.Guide)
             {
-                NWMng.E.GetItems(() =>
+                DataMng.E.RemoveItemByGuid(PlayerCtl.E.SelectItem.id, 1);
+                PlayerCtl.E.SelectItem = null;
+                Close();
+
+                GuideLG.E.Next();
+            }
+            else
+            {
+                NWMng.E.RemoveItem((rp) =>
                 {
-                    PlayerCtl.E.SelectItem = null;
-                    Close();
-                });
-            }, PlayerCtl.E.SelectItem.itemId, 1);
+                    NWMng.E.GetItems(() =>
+                    {
+                        PlayerCtl.E.SelectItem = null;
+                        Close();
+                    });
+                }, PlayerCtl.E.SelectItem.itemId, 1);
+            }
         });
     }
 }

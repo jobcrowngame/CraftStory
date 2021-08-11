@@ -37,7 +37,7 @@ public class Logger : Single<Logger>
     {
         if (level < LogLV.Off)
         {
-            string msg = string.Format("[ERROR]" + format, args);
+            string msg = string.Format("[ERROR][ACC:" + DataMng.E.UserData.Account + "]" + format, args);
             Debug.LogErrorFormat(msg);
             DebugLG.E.Add(msg);
             NWMng.E.ShowClientLog(msg);
