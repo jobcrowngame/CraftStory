@@ -33,8 +33,7 @@ public class ShopMyShopItemCell : UIBase
             string msg = string.Format(@"ポイントを「{0}」消費して、
 この設計図を購入しますか？", data.price);
 
-            CommonFunction.ShowHintBox(msg,
-                () => {
+            CommonFunction.ShowHintBox(msg,() => {
                     if (DataMng.E.UserData.Coin3 < data.price)
                     {
                         CommonFunction.ShowHintBar(15);
@@ -47,7 +46,7 @@ public class ShopMyShopItemCell : UIBase
                         ShopLG.E.UI.RefreshCoins();
 
                         CommonFunction.ShowHintBar(17);
-                    }, data.id);
+                    }, data.myshopid);
                 }, () => { });
         });
         PreviewBtn.onClick.AddListener(() => 

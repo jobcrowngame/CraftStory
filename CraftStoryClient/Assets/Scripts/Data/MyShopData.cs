@@ -44,7 +44,7 @@ public struct MyShopItem
 
 public struct MyShopBlueprintData
 {
-    public int id { get; set; }
+    public int myshopid { get; set; }
     public int itemId { get; set; }
     public string data { get; set; }
     public string nickName { get; set; }
