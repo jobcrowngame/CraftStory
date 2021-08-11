@@ -11,7 +11,7 @@ public class GuideUI : UIBase
     RectTransform mask4 { get => FindChiled<RectTransform>("Mask (4)"); }
     RectTransform Msg { get => FindChiled<RectTransform>("Image"); }
     Transform Hand { get => FindChiled<Transform>("Hand"); }
-    CanvasScaler canvas { get => transform.parent.GetComponent<CanvasScaler>(); }
+    RectTransform canvas { get => transform.parent.GetComponent<RectTransform>(); }
 
     private void Start()
     {
@@ -41,21 +41,21 @@ public class GuideUI : UIBase
         float offset = selectRect.lossyScale.x;
         float width = selectRect.rect.size.x;
         float height = selectRect.rect.size.y;
-        var canvasX = canvas.referenceResolution;
+        var canvasSize = canvas.sizeDelta;
 
         mask1.offsetMin = new Vector2(selectedObj.transform.position.x / offset + width / 2, 0);
         mask1.offsetMax = new Vector2(0, 0);
 
         mask2.offsetMin = new Vector2(0, 0);
-        mask2.offsetMax = new Vector2(-(canvasX.x - selectedObj.transform.position.x / offset + width / 2), 0);
+        mask2.offsetMax = new Vector2(-(canvasSize.x - selectedObj.transform.position.x / offset + width / 2), 0);
 
         mask3.offsetMin = new Vector2(selectedObj.transform.position.x / offset - width / 2,
             selectedObj.transform.position.y / offset + height / 2);
-        mask3.offsetMax = new Vector2(-(canvasX.x - selectedObj.transform.position.x / offset - width / 2), 0);
+        mask3.offsetMax = new Vector2(-(canvasSize.x - selectedObj.transform.position.x / offset - width / 2), 0);
 
         mask4.offsetMin = new Vector2(selectedObj.transform.position.x / offset - width / 2, 0);
-        mask4.offsetMax = new Vector2(-(canvasX.x - selectedObj.transform.position.x / offset - width / 2), 
-            -(canvasX.y - selectedObj.transform.position.y / offset + height / 2));
+        mask4.offsetMax = new Vector2(-(canvasSize.x - selectedObj.transform.position.x / offset - width / 2), 
+            -(canvasSize.y - selectedObj.transform.position.y / offset + height / 2));
 
         SetHand(new Vector2(selectedObj.transform.position.x + 60, selectedObj.transform.position.y + 20));
     }

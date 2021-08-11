@@ -53,7 +53,6 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
 
         CurStep = guideSteps[stepIndex];
         stepIndex++;
-        Logger.Warning("ガイドStep: " + stepIndex);
     }
     public void CreateBlock()
     {
