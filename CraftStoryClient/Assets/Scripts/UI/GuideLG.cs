@@ -30,12 +30,14 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
 
         end = false;
         stepIndex = 0;
+        itemGuid = 1;
         guideSteps = config.StepList.Split(',');
     }
     public void ReStart()
     {
         end = false;
         stepIndex = 0;
+        itemGuid = 1;
     }
     public void Next(int step)
     {
