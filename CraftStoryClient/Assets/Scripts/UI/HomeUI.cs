@@ -47,11 +47,11 @@ public class HomeUI : UIBase
             NoticeLG.E.IsFirst = false;
         }
 
-        if (DataMng.E.RuntimeData.MapType == MapType.Home && PlayDescriptionLG.E.IsFirst)
-        {
-            UICtl.E.OpenUI<PlayDescriptionUI>(UIType.PlayDescription);
-            PlayDescriptionLG.E.IsFirst = false;
-        }
+        //if (DataMng.E.RuntimeData.MapType == MapType.Home && PlayDescriptionLG.E.IsFirst)
+        //{
+        //    UICtl.E.OpenUI<PlayDescriptionUI>(UIType.PlayDescription);
+        //    PlayDescriptionLG.E.IsFirst = false;
+        //}
 
         Init();
 

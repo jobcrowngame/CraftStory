@@ -130,6 +130,9 @@ public class PlayerCtl : MonoBehaviour
     }
     public void OnClick(GameObject collider, Vector3 pos, DirectionType dType)
     {
+        if (DataMng.E.RuntimeData.IsPreviev)
+            return;
+
         if (DataMng.E.RuntimeData.MapType == MapType.Home 
             || DataMng.E.RuntimeData.MapType == MapType.Guide)
         {

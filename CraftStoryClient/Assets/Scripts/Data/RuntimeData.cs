@@ -19,4 +19,6 @@ public class RuntimeData
 
     public MapType MapType { get; set; }
     public int GuideId { get; set; }
+
+    public bool IsPreviev { get; set; }
 }
