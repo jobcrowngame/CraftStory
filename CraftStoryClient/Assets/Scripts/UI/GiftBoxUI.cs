@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class GiftBoxUI : UIBase
 {
+    Transform DoubleBonus { get => FindChiled("DoubleBonus"); }
     Button OKBtn { get => FindChiled<Button>("OKBtn"); }
     Button AdvertisingBtn { get => FindChiled<Button>("AdvertisingBtn"); }
     Transform itemGridRoot;
+    List<IconItemCell> cells;
 
     public override void Init()
     {
@@ -32,9 +34,7 @@ public class GiftBoxUI : UIBase
 
                 NWMng.E.ClearAdventure((rp) =>
                 {
-                    Close();
-                    DataMng.GetItems(rp);
-                    GoToNext();
+                    StartDoubleBonus();
                 }, AdventureCtl.E.BonusList);
             });
         });
@@ -56,6 +56,7 @@ public class GiftBoxUI : UIBase
         base.Open();
 
         PlayerCtl.E.Lock = true;
+        DoubleBonus.gameObject.SetActive(false);
     }
     public override void Close()
     {
@@ -67,6 +68,8 @@ public class GiftBoxUI : UIBase
     public void AddBonus(List<int> bonus)
     {
         Dictionary<int, int> items = CommonFunction.GetItemsByBonus(bonus);
+        cells = new List<IconItemCell>();
+        ClearCell(itemGridRoot);
 
         foreach (var item in items)
         {
@@ -82,6 +85,7 @@ public class GiftBoxUI : UIBase
         if (cell != null)
         {
             cell.Add(ConfigMng.E.Item[itemID], count);
+            cells.Add(cell);
         }
     }
 
@@ -101,5 +105,15 @@ public class GiftBoxUI : UIBase
 
         CommonFunction.GoToNextScene(nextTransferGateID);
         AdventureCtl.E.Clear();
+    }
+    private void StartDoubleBonus()
+    {
+        AdvertisingBtn.gameObject.SetActive(false);
+        DoubleBonus.gameObject.SetActive(true);
+
+        foreach (var item in cells)
+        {
+            item.StartDoubleAnim();
+        }
     }
 }
