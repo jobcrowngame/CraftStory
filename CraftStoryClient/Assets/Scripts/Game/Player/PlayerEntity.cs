@@ -145,6 +145,6 @@ public class PlayerEntity : CharacterEntity
 
     public void IsModelActive(bool b)
     {
-        controller.radius = b ? 0.45f : 0.01f;
+        controller.radius = b ? 0.40f : 0.01f;
     }
 }

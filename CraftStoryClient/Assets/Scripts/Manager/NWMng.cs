@@ -58,7 +58,7 @@ public partial class NWMng : MonoBehaviour
         if (DataMng.E.RuntimeData.MapType == MapType.Guide)
             yield return null;
 
-        Logger.Log("[CMD:{0}{1}---Send]\n{2}",cmd, (int)cmd, data.ToString());
+        Logger.Log("[CMD:{0}-{1}---Send]\n{2}",cmd, (int)cmd, data.ToString());
         string cryptData = string.IsNullOrEmpty(data.ToString())
             ? ""
             : CryptMng.E.EncryptString(data.ToString());
@@ -89,7 +89,7 @@ public partial class NWMng : MonoBehaviour
                     {
                         var resultJson = CryptMng.E.DecryptString(www.downloadHandler.text);
                         JsonData jd = JsonMapper.ToObject(resultJson);
-                        Logger.Log("[CMD:{0}{1}---Result]\n{2}",cmd, (int)cmd, jd.ToJson());
+                        Logger.Log("[CMD:{0}-{1}---Result]\n{2}",cmd, (int)cmd, jd.ToJson());
 
                         int errorCode = (int)jd["error"];
 
@@ -109,7 +109,7 @@ public partial class NWMng : MonoBehaviour
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("[CMD:{0}]{1}", (int)cmd, www.downloadHandler.text);
+                    Logger.Error("[CMD:{0}]-{1}", (int)cmd, www.downloadHandler.text);
                     Logger.Error(ex);
                 }
             }

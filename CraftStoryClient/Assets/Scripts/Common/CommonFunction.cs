@@ -9,7 +9,6 @@ public class CommonFunction
 {
     public static void QuitGame()
     {
-        Logger.Error("Quit app");
         Application.Quit();
     }
 
