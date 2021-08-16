@@ -129,6 +129,7 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
     public struct GacheBonusData
     {
         public int bonusId { get; set; }
+        public int rare { get; set; }
     }
 }
 

@@ -14,6 +14,9 @@ public class RouletteUI : UIBase
     float speed;
     bool start;
     bool end = false;
+    float maxSpeed = 1000;
+    float stopSpeed = 422;
+    float rotateSpeed = 250;
 
     public override void Init()
     {
@@ -34,6 +37,8 @@ public class RouletteUI : UIBase
         base.Open();
         StartBtn.enabled = true;
         Title.CloseBtnEnable(false);
+        start = false;
+        speed = 0;
         RouletteBG.transform.eulerAngles = Vector3.zero;
     }
 
@@ -45,17 +50,18 @@ public class RouletteUI : UIBase
 
             if (speed > 0)
             {
-                speed -= Time.deltaTime * 100;
+                speed -= Time.deltaTime * rotateSpeed;
             }
             else
             {
                 speed = 0;
             }
 
-            if (speed < 268 && !end)
+            if (speed < stopSpeed && !end)
             {
-                speed = 268;
+                speed = stopSpeed;
                 end = CheckIndex();
+                Logger.Warning("Stop");
             }
         }
     }
@@ -84,7 +90,7 @@ public class RouletteUI : UIBase
         StartBtn.enabled = false;
         Title.CloseBtnEnable(true);
 
-        speed = 1000;
+        speed = maxSpeed;
         start = true;
         end = false;
     }

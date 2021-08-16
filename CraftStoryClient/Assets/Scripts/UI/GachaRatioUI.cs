@@ -34,9 +34,9 @@ public class GachaRatioUI : UIBase
         var config = ConfigMng.E.Gacha[id];
         var pond = ConfigMng.E.RandomBonusPond[config.PondId];
 
-        SetCell(pond.BonusList01, pond.Percent01, 3);
+        SetCell(pond.BonusList01, pond.Percent01, 1);
         SetCell(pond.BonusList02, pond.Percent02, 2);
-        SetCell(pond.BonusList03, pond.Percent03, 1);
+        SetCell(pond.BonusList03, pond.Percent03, 3);
     }
     private void SetCell(string stringList, int percent, int rare)
     {

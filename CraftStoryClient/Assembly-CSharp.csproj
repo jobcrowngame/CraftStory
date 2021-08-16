@@ -249,6 +249,7 @@
     <Compile Include="Assets\Scripts\UI\GachaRatioUI.cs" />
     <Compile Include="Assets\Scripts\UI\GachaRatioLG.cs" />
     <Compile Include="Assets\Scripts\UI\GachaRatioCell.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaBonusCell.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
