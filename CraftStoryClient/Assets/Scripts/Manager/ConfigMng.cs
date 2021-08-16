@@ -20,7 +20,13 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, Entity> entityConfig;
     Dictionary<int, Guide> guideConfig;
     Dictionary<int, GuideStep> guideStepConfig;
+    Dictionary<int, Gacha> gachaConfig;
+    Dictionary<int, Roulette> rouletteConfig;
+    Dictionary<int, RouletteCell> rouletteCellConfig;
 
+    public Dictionary<int, RouletteCell> RouletteCell { get => rouletteCellConfig; }
+    public Dictionary<int, Roulette> Roulette { get => rouletteConfig; }
+    public Dictionary<int, Gacha> Gacha { get => gachaConfig; }
     public Dictionary<int, Bonus> Bonus { get => bonusConfig; }
     public Dictionary<int, Map> Map{ get => mapConfig; }
     public Dictionary<int, Mountain> Mountain { get => mountainConfig; }
@@ -52,7 +58,13 @@ class ConfigMng : Single<ConfigMng>
         entityConfig = new Dictionary<int, Entity>();
         guideConfig = new Dictionary<int, Guide>();
         guideStepConfig = new Dictionary<int, GuideStep>();
+        gachaConfig = new Dictionary<int, Gacha>();
+        rouletteConfig = new Dictionary<int, Roulette>();
+        rouletteCellConfig = new Dictionary<int, RouletteCell>();
 
+        ReadConfig("Config/RouletteCell", rouletteCellConfig);
+        ReadConfig("Config/Roulette", rouletteConfig);
+        ReadConfig("Config/Gacha", gachaConfig);
         ReadConfig("Config/Bonus", bonusConfig);
         ReadConfig("Config/Map", mapConfig);
         ReadConfig("Config/MapMountain", mountainConfig);

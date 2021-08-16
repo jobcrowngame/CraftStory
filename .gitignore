@@ -86,3 +86,6 @@ CraftStoryClient/Assets/Resources/Config/RandomBonusPond.json.meta
 CraftStoryClient/Assets/Resources/Config/Resource.json.meta
 CraftStoryClient/Assets/Resources/Config/Shop.json.meta
 CraftStoryClient/Assets/Resources/Config/TransferGate.json.meta
+CraftStoryClient/Assets/Resources/Config/Gacha.json.meta
+CraftStoryClient/Assets/Resources/Config/Roulette.json.meta
+CraftStoryClient/Assets/Resources/Config/RouletteCell.json.meta

@@ -168,6 +168,8 @@ public class UICtl : Single<UICtl>
             case UIType.Debug: return "Prefabs/UI/Common/Debug";
             case UIType.ShopSubscriptionDetails: return "Prefabs/UI/ShopSubscriptionDetails";
             case UIType.Waiting: return "Prefabs/UI/Common/Waiting";
+            case UIType.GachaBonus: return "Prefabs/UI/GachaBonus";
+            case UIType.Roulette: return "Prefabs/UI/Roulette";
 
             default: Logger.Error("not find UIType " + ui); return "";
         }
@@ -228,4 +230,6 @@ public enum UIType
     Debug,
     ShopSubscriptionDetails,
     Waiting,
+    GachaBonus,
+    Roulette,
 }

@@ -307,7 +307,7 @@ public partial class NWMng : MonoBehaviour
         var data = new NWData();
         data.Add("token", DataMng.E.token);
         data.Add("acc", DataMng.E.UserData.Account);
-        data.Add("nickName", DataMng.E.UserData.NickName);
+        data.Add("nickName", DataMng.E.RuntimeData.NickName);
         data.Add("itemGuid", itemGuid);
         data.Add("site", site);
         data.Add("price", price);
@@ -447,6 +447,15 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GuideEnd));
     }
+    public void Gacha10(Action<JsonData> rp, int gachaId)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("gachaId", gachaId);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.Gacha10));
+    }
 
     public void SaveHomeData(Action<JsonData> rp, string homedata)
     {
@@ -473,6 +482,7 @@ public partial class NWMng : MonoBehaviour
     public void ShowClientLog(string msg)
     {
         var data = new NWData();
+        data.Add("acc", DataMng.E.UserData.Account);
         data.Add("msg", msg);
 
         StartCoroutine(HttpRequest(null, data, CMD.ShowClientLog));
@@ -514,6 +524,7 @@ public partial class NWMng : MonoBehaviour
         BuySubscription,
         GetSubscriptionInfo,
         GuideEnd,
+        Gacha10 = 1030,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

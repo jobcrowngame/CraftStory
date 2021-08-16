@@ -42,9 +42,9 @@ public class TitleUI : UIBase
     }
     public void RefreshCoins()
     {
-        Coin1.text = DataMng.E.UserData.Coin1.ToString();
-        Coin2.text = DataMng.E.UserData.Coin2.ToString();
-        Coin3.text = DataMng.E.UserData.Coin3.ToString();
+        Coin1.text = DataMng.E.RuntimeData.Coin1.ToString();
+        Coin2.text = DataMng.E.RuntimeData.Coin2.ToString();
+        Coin3.text = DataMng.E.RuntimeData.Coin3.ToString();
     }
     public void SetOnClose(Action action)
     {
@@ -55,6 +55,10 @@ public class TitleUI : UIBase
         if (index == 1) Coin1.gameObject.SetActive(false);
         if (index == 2) Coin2.gameObject.SetActive(false);
         if (index == 3) Coin3.gameObject.SetActive(false);
+    }
+    public void CloseBtnEnable(bool b)
+    {
+        CloseBtn.enabled = b;
     }
 
     private void OnClose()

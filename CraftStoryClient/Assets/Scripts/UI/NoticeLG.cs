@@ -46,7 +46,7 @@ public class NoticeLG : UILogicBase<NoticeLG, NoticeUI>
 
     public enum CategoryType
     {
-        notice,
+        notice = 1,
         important,
         maintenance,
         notice2,

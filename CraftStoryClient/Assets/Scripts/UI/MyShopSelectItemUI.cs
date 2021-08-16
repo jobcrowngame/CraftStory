@@ -17,7 +17,7 @@ public class MyShopSelectItemUI : UIBase
 
         OKBtn.onClick.AddListener(()=> 
         {
-            if (string.IsNullOrEmpty(DataMng.E.UserData.NickName))
+            if (string.IsNullOrEmpty(DataMng.E.RuntimeData.NickName))
             {
                 CommonFunction.ShowHintBar(9);
                 return;

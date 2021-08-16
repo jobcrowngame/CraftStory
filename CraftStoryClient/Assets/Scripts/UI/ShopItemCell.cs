@@ -25,14 +25,15 @@ public class ShopItemCell : UIBase
         Icon.sprite = ReadResources<Sprite>(config.IconResources);
         Des.text = config.Des;
         BuyBtnText.text = config.BtnText;
+        ShopType shopType = (ShopType)config.Type;
 
-        if (config.Type != 1)
+        if (shopType != ShopType.Charge)
         {
             BtnCostIcon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[config.CostItemID].IconResourcesPath);
             BtnCostIcon.gameObject.SetActive(true);
         }
 
-        if (config.Type == 3)
+        if (shopType == ShopType.Blueprint || shopType == ShopType.Blueprint2)
         {
             PreviewBtn.gameObject.SetActive(true);
             PreviewBtn.onClick.AddListener(OnClickPreviewBtn);
@@ -41,12 +42,15 @@ public class ShopItemCell : UIBase
 
     private void OnClickBuyBtn()
     {
-        if (config.Type == 1)
+        ShopType type = (ShopType)config.Type;
+        if (type == ShopType.Charge)
         {
             //Logger.Log("OnClickBuyBtn " + config.Name);
             //NWMng.E.IAP.OnPurchaseClicked(config.Name);
         }
-        else if (config.Type == 2 || config.Type == 3 || config.Type == 4)
+        else if (type == ShopType.Point 
+            || type == ShopType.Exchange 
+            || type == ShopType.Blueprint)
         {
             CommonFunction.ShowHintBox(config.IconResources, config.Des2, 
                 () => {

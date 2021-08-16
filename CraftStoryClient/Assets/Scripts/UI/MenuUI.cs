@@ -111,7 +111,7 @@ public class MenuUI : UIBase
 
         PointExchangeBtn.onClick.AddListener(() =>
         {
-            if (DataMng.E.UserData.Coin3 < 1000)
+            if (DataMng.E.RuntimeData.Coin3 < 1000)
             {
                 CommonFunction.ShowHintBar(18);
                 return;
@@ -140,7 +140,7 @@ public class MenuUI : UIBase
         });
         MyShopBtn.onClick.AddListener(() =>
         {
-            if (string.IsNullOrEmpty(DataMng.E.UserData.NickName))
+            if (string.IsNullOrEmpty(DataMng.E.RuntimeData.NickName))
             {
                 string msg = @"マイショップを利用するには、
 ニックネームを登録する必要があります。";

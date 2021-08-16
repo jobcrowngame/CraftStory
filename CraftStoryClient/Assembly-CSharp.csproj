@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\UI\Common\WaitingUI.cs" />
     <Compile Include="Assets\Scripts\Game\Player\CameraCtl.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityTreasureBox.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaBonusUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\TransferGate.cs" />
     <Compile Include="Assets\Scripts\UI\Terms02UI.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryUI.cs" />
@@ -86,10 +87,12 @@
     <Compile Include="Assets\Scripts\Game\Map\EntityResources.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
     <Compile Include="Assets\Scripts\Test\RunTest.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Gacha.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csAnimationSpin.cs" />
     <Compile Include="Assets\Scripts\UI\BagLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Item.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeDetailUI.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\GuideStep.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerCtl.cs" />
     <Compile Include="Assets\Scripts\UI\Terms01UI.cs" />
     <Compile Include="Assets\Scripts\UI\BagUI.cs" />
@@ -194,6 +197,7 @@
     <Compile Include="Assets\Scripts\UI\BlueprintCell.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerBehavior.cs" />
     <Compile Include="Assets\Scripts\UI\HomeLG.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Guide.cs" />
     <Compile Include="Assets\Scripts\UI\TermsLG.cs" />
     <Compile Include="Assets\Scripts\UI\LoginUI.cs" />
     <Compile Include="Assets\Scripts\Common\Single.cs" />
@@ -231,12 +235,17 @@
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\RandomBonus.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaBonusLG.cs" />
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectChanger.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Guide.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\GuideStep.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Roulette.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\RouletteCell.cs" />
+    <Compile Include="Assets\Scripts\UI\RouletteItemCell.cs" />
+    <Compile Include="Assets\Scripts\UI\RouletteUI.cs" />
+    <Compile Include="Assets\Scripts\UI\RouletteLG.cs" />
+    <Compile Include="Assets\Scripts\Test\Test4.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

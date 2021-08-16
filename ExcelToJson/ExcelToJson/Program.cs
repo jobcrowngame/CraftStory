@@ -108,6 +108,11 @@ namespace ExcelToJson
                 case "Mail": list = Mail(tbl); break;
                 case "Guide": list = Guide(tbl); break;
                 case "GuideStep": list = GuideStep(tbl); break;
+                case "Gacha": list = Gacha(tbl); break;
+                case "Roulette": list = Roulette(tbl); break;
+                case "RouletteCell": list = RouletteCell(tbl); break;
+
+
                 default: Console.WriteLine("not find fileName function."); break;
             }
 
@@ -457,6 +462,56 @@ namespace ExcelToJson
                     MsgSizeX = ToFloat(tbl.Rows[i]["MsgSizeX"]),
                     MsgSizeY = ToFloat(tbl.Rows[i]["MsgSizeY"]),
                     HideHand = ToInt32(tbl.Rows[i]["HideHand"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Gacha(DataTable tbl)
+        {
+            List<Gacha> list = new List<Gacha>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Gacha()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    PondId = ToInt32(tbl.Rows[i]["PondId"]),
+                    Des = ToString(tbl.Rows[i]["Des"]),
+                    Cost = ToInt32(tbl.Rows[i]["Cost"]),
+                    CostCount = ToInt32(tbl.Rows[i]["CostCount"]),
+                    Roulette = ToInt32(tbl.Rows[i]["Roulette"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Roulette(DataTable tbl)
+        {
+            List<Roulette> list = new List<Roulette>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Roulette()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    CellList = ToString(tbl.Rows[i]["CellList"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object RouletteCell(DataTable tbl)
+        {
+            List<RouletteCell> list = new List<RouletteCell>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new RouletteCell()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Bonus = ToInt32(tbl.Rows[i]["Bonus"]),
+                    Percent = ToInt32(tbl.Rows[i]["Percent"]),
                 };
 
                 list.Add(data);

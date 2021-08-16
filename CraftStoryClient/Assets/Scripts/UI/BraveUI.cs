@@ -37,8 +37,7 @@ public class BraveUI : UIBase
         MenuBtn = FindChiled<Button>("MenuBtn");
         MenuBtn.onClick.AddListener(() => 
         { 
-            var menu = UICtl.E.OpenUI<MenuUI>(UIType.Menu);
-            menu.Init();
+            UICtl.E.OpenUI<MenuUI>(UIType.Menu);
         });
 
         PlussBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(1); });

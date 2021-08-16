@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class ShopUI : UIBase
 {
     TitleUI title;
-    Button[] btns;
+    MyButton[] btns;
     ShopItemCell[] chargeBtns;
     List<ShopMyShopItemCell> myshopItems = new List<ShopMyShopItemCell>();
 
@@ -16,6 +16,11 @@ public class ShopUI : UIBase
     Transform ItemsWind { get => FindChiled("ItemsWind"); }
     Transform itemGridRoot { get => FindChiled("Grid", ItemsWind.gameObject); }
     Transform SubscriptionWind { get => FindChiled("SubscriptionWind"); }
+
+    Transform Gacha { get => FindChiled("Gacha"); }
+    Button StartGachaBtn { get => FindChiled<Button>("StartGachaBtn", Gacha); }
+    Text GachaDes { get => FindChiled<Text>("GachaDes", Gacha); }
+
 
     Transform Blueprint2Wind { get => FindChiled("Blueprint2Wind"); }
     Transform itemGridRoot2 { get => FindChiled("Grid", Blueprint2Wind.gameObject); }
@@ -76,21 +81,30 @@ public class ShopUI : UIBase
         });
 
         var btnsParent = FindChiled("BtnGrid");
-        btns = new Button[btnsParent.childCount];
-        btns[0] = FindChiled<Button>("Button (1)");
-        btns[0].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Charge; SelectBtnIndex = 0; });
-        btns[1] = FindChiled<Button>("Button (6)");
-        btns[1].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Subscription; SelectBtnIndex = 1; });
-        btns[2] = FindChiled<Button>("Button (5)");
-        btns[2].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Point; SelectBtnIndex = 2; });
-        btns[3] = FindChiled<Button>("Button (2)");
-        btns[3].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Exchange; SelectBtnIndex = 3; });
-        btns[4] = FindChiled<Button>("Button (3)");
-        btns[4].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint; SelectBtnIndex = 4; });
-        btns[5] = FindChiled<Button>("Button (4)");
-        btns[5].onClick.AddListener(() => { ShopLG.E.ShopUIType = ShopUiType.Blueprint2; SelectBtnIndex = 5; GuideLG.E.Next(); });
+        btns = new MyButton[btnsParent.childCount];
+        for (int i = 0; i < btnsParent.childCount; i++)
+        {
+            var child = btnsParent.GetChild(i).GetComponent<MyButton>();
+            if (child != null)
+            {
+                child.Index = i;
+                child.AddClickListener((index) => 
+                {
+                    ShopLG.E.ShopUIType = (ShopType)index; 
+                    SelectBtnIndex = index;
 
-        ShopLG.E.ShopUIType = ShopUiType.Charge;
+                    // ガイド
+                    if (ShopLG.E.ShopUIType == ShopType.Blueprint2)
+                        GuideLG.E.Next();
+                });
+                btns[i] = child;
+            }
+        }
+
+        StartGachaBtn.onClick.AddListener(()=> { ShopLG.E.StartGacha(1); });
+        GachaDes.text = ConfigMng.E.Gacha[1].Des;
+
+        ShopLG.E.ShopUIType = ShopType.Charge;
 
         var chargeBtnParent = FindChiled("Grid", ChageWind.gameObject);
         chargeBtns = new ShopItemCell[chargeBtnParent.childCount];
@@ -104,9 +118,6 @@ public class ShopUI : UIBase
         chargeBtns[2].Init(ConfigMng.E.Shop[3]);
         chargeBtns[3].Init(ConfigMng.E.Shop[4]);
         chargeBtns[4].Init(ConfigMng.E.Shop[5]);
-        //chargeBtns[5].Init(ConfigMng.E.Shop[6]);
-        //chargeBtns[6].Init(ConfigMng.E.Shop[7]);
-        //chargeBtns[7].Init(ConfigMng.E.Shop[8]);
 
         SelectBtnIndex = 0;
     }
@@ -147,33 +158,34 @@ public class ShopUI : UIBase
         Page.text = v;
     }
 
-    public void ChangeUIType(ShopUiType uiType)
+    public void ChangeUIType(ShopType uiType)
     {
-        ChageWind.gameObject.SetActive(uiType == ShopUiType.Charge);
-        ItemsWind.gameObject.SetActive(uiType == ShopUiType.Exchange 
-            || uiType == ShopUiType.Blueprint
-            || uiType == ShopUiType.Point);
-        Blueprint2Wind.gameObject.SetActive(uiType == ShopUiType.Blueprint2);
-        SubscriptionWind.gameObject.SetActive(uiType == ShopUiType.Subscription);
+        ChageWind.gameObject.SetActive(uiType == ShopType.Charge);
+        ItemsWind.gameObject.SetActive(uiType == ShopType.Exchange 
+            || uiType == ShopType.Blueprint
+            || uiType == ShopType.Point);
+        Blueprint2Wind.gameObject.SetActive(uiType == ShopType.Blueprint2);
+        SubscriptionWind.gameObject.SetActive(uiType == ShopType.Subscription);
+        Gacha.gameObject.SetActive(uiType == ShopType.Gacha);
 
-        UrlBtns.gameObject.SetActive(uiType == ShopUiType.Charge
-            || uiType == ShopUiType.Subscription);
+        UrlBtns.gameObject.SetActive(uiType == ShopType.Charge
+           || uiType == ShopType.Subscription);
     }
 
     public void RefreshCoins()
     {
         title.RefreshCoins();
     }
-    public void RefreshItems(ShopUiType type)
+    public void RefreshItems(ShopType type)
     {
         ClearCell(itemGridRoot);
         ClearCell(itemGridRoot2);
 
-        if (type == ShopUiType.Blueprint2)
+        if (type == ShopType.Blueprint2)
         {
             ShopLG.E.GetBlueprint2Items(InputField.text, Dropdown.value);
         }
-        else if (type == ShopUiType.Subscription)
+        else if (type == ShopType.Subscription)
         {
 
         }
@@ -221,6 +233,7 @@ public class ShopUI : UIBase
         }
     }
 
+    // 課金のメソッド
     public void GrantCredits(string credits)
     {
         IAPMng.E.OnPurchaseClicked(credits);

@@ -305,6 +305,25 @@ public class DataMng : Single<DataMng>
 
         return itemCount >= count;
     }
+
+    public int GetCoinByID(int id)
+    {
+        switch (id)
+        {
+            case 9000: return RuntimeData.Coin1;
+            case 9001: return RuntimeData.Coin2;
+            default: return RuntimeData.Coin3;
+        }
+    }
+    public void ConsumableCoin(int id, int count)
+    {
+        switch (id)
+        {
+            case 9000: RuntimeData.Coin1 -= count; break;
+            case 9001: RuntimeData.Coin2 -= count; break;
+            default: RuntimeData.Coin3 -= count; break;
+        }
+    }
     
 
     private bool TryGetItems(int itemID, out List<ItemData> itemList)
@@ -346,9 +365,9 @@ public class DataMng : Single<DataMng>
         if (string.IsNullOrEmpty(jsonData.ToString()))
             return;
 
-        E.UserData.Coin1 = (int)jsonData["coin1"];
-        E.UserData.Coin2 = (int)jsonData["coin2"];
-        E.UserData.Coin3 = (int)jsonData["coin3"];
+        E.RuntimeData.Coin1 = (int)jsonData["coin1"];
+        E.RuntimeData.Coin2 = (int)jsonData["coin2"];
+        E.RuntimeData.Coin3 = (int)jsonData["coin3"];
     }
 
 #endregion

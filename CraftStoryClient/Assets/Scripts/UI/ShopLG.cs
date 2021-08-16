@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShopLG : UILogicBase<ShopLG, ShopUI>
 {
-    public ShopUiType ShopUIType
+    public ShopType ShopUIType
     {
         get => shopUIType;
         set
@@ -16,18 +16,19 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
             UI.RefreshItems(shopUIType);
         }
     }
-    private ShopUiType shopUIType;
+    private ShopType shopUIType;
 
     private string GetTitle2Text()
     {
         switch (ShopUIType)
         {
-            case ShopUiType.Charge: return "クラフトシード";
-            case ShopUiType.Exchange: return "交換";
-            case ShopUiType.Blueprint: return "設計図";
-            case ShopUiType.Blueprint2: return "設計図";
-            case ShopUiType.Point: return "ポイント";
-            case ShopUiType.Subscription: return "クラパス";
+            case ShopType.Charge: return "クラフトシード";
+            case ShopType.Gacha: return "ガチャ";
+            case ShopType.Exchange: return "交換";
+            case ShopType.Blueprint: return "設計図";
+            case ShopType.Blueprint2: return "設計図";
+            case ShopType.Point: return "ポイント";
+            case ShopType.Subscription: return "クラパス";
 
             default: Logger.Error("not find shop ui type " + ShopUIType); break;
         }
@@ -87,14 +88,57 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
             default: return 3;
         }
     }
+
+    public void StartGacha(int gachaId)
+    {
+        int costId = ConfigMng.E.Gacha[gachaId].Cost;
+        int costCount = ConfigMng.E.Gacha[gachaId].CostCount;
+        if (DataMng.E.GetCoinByID(costId) < costCount)
+        {
+            if (costId == 9000) CommonFunction.ShowHintBar(1010001);
+            if (costId == 9001) CommonFunction.ShowHintBar(1010002);
+            if (costId == 9002) CommonFunction.ShowHintBar(1017001);
+
+            return;
+        }
+
+        NWMng.E.Gacha10((rp) =>
+        {
+            if (string.IsNullOrEmpty(rp.ToString()))
+            {
+                Logger.Error("Bad gacha result");
+            }
+
+            var result = LitJson.JsonMapper.ToObject<GachaResponse>(rp.ToJson());
+            var ui = UICtl.E.OpenUI<GachaBonusUI>(UIType.GachaBonus);
+            if (ui != null)
+            {
+                ui.Set(result, gachaId);
+            }
+
+            DataMng.E.ConsumableCoin(costId, costCount);
+            UI.RefreshCoins();
+        }, gachaId);
+    }
+
+    public struct GachaResponse
+    {
+        public List<GacheBonusData> bonusList { get; set; }
+        public int index { get; set; }
+    }
+    public struct GacheBonusData
+    {
+        public int bonusId { get; set; }
+    }
 }
 
-public enum ShopUiType
+public enum ShopType
 {
-    Charge = 1,
+    Charge = 0,
+    Subscription,
+    Gacha,
+    Point,
     Exchange,
     Blueprint,
-    Point,
     Blueprint2,
-    Subscription,
 }

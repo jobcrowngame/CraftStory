@@ -43,8 +43,8 @@ public class PersonalMessageUI : UIBase
 
             if (DataMng.E.RuntimeData.MapType == MapType.Guide)
             {
-                DataMng.E.UserData.NickName = InputField.text;
-                NickNameText.text = DataMng.E.UserData.NickName;
+                DataMng.E.RuntimeData.NickName = InputField.text;
+                NickNameText.text = DataMng.E.RuntimeData.NickName;
 
                 Show.gameObject.SetActive(true);
                 ChangeNickName.gameObject.SetActive(false);
@@ -57,8 +57,8 @@ public class PersonalMessageUI : UIBase
             {
                 NWMng.E.UpdateNickName((rp) =>
                 {
-                    DataMng.E.UserData.NickName = InputField.text;
-                    NickNameText.text = DataMng.E.UserData.NickName;
+                    DataMng.E.RuntimeData.NickName = InputField.text;
+                    NickNameText.text = DataMng.E.RuntimeData.NickName;
 
                     Show.gameObject.SetActive(true);
                     ChangeNickName.gameObject.SetActive(false);
@@ -83,6 +83,6 @@ public class PersonalMessageUI : UIBase
     {
         base.Open();
         Account.text = DataMng.E.UserData.Account;
-        NickNameText.text = DataMng.E.UserData.NickName;
+        NickNameText.text = DataMng.E.RuntimeData.NickName;
     }
 }

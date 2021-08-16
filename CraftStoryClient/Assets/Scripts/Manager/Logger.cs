@@ -40,7 +40,11 @@ public class Logger : Single<Logger>
             string msg = string.Format("[ERROR][ACC:" + DataMng.E.UserData.Account + "]" + format, args);
             Debug.LogErrorFormat(msg);
             DebugLG.E.Add(msg);
-            NWMng.E.ShowClientLog(msg);
+
+#if UNITY_EDITOR
+#else
+    NWMng.E.ShowClientLog(msg);
+#endif
         }
     }
     public static void Error(Exception e)

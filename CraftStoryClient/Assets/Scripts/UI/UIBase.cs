@@ -4,12 +4,9 @@ public class UIBase : MonoBehaviour
 {
     public bool IsActive { get => gameObject.activeSelf; }
 
-    public virtual void Init()
-    {
-    }
-    public virtual void Init(object data)
-    {
-    }
+    public virtual void Init() { }
+    public virtual void Init(object data) { }
+    public virtual void Init(int data) { }
     public virtual void Init<T>(T t) where T : class
     {
     }

@@ -34,7 +34,7 @@ public class ShopMyShopItemCell : UIBase
 この設計図を購入しますか？", data.price);
 
             CommonFunction.ShowHintBox(msg,() => {
-                    if (DataMng.E.UserData.Coin3 < data.price)
+                    if (DataMng.E.RuntimeData.Coin3 < data.price)
                     {
                         CommonFunction.ShowHintBar(15);
                         return;
@@ -42,7 +42,7 @@ public class ShopMyShopItemCell : UIBase
 
                     NWMng.E.BuyMyShopItem((rp) =>
                     {
-                        DataMng.E.UserData.Coin3 -= data.price;
+                        DataMng.E.RuntimeData.Coin3 -= data.price;
                         ShopLG.E.UI.RefreshCoins();
 
                         CommonFunction.ShowHintBar(17);
