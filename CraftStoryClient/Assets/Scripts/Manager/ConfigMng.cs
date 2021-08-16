@@ -23,7 +23,9 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, Gacha> gachaConfig;
     Dictionary<int, Roulette> rouletteConfig;
     Dictionary<int, RouletteCell> rouletteCellConfig;
+    Dictionary<int, RandomBonusPond> randomBonusPondConfig;
 
+    public Dictionary<int, RandomBonusPond> RandomBonusPond { get => randomBonusPondConfig; }
     public Dictionary<int, RouletteCell> RouletteCell { get => rouletteCellConfig; }
     public Dictionary<int, Roulette> Roulette { get => rouletteConfig; }
     public Dictionary<int, Gacha> Gacha { get => gachaConfig; }
@@ -61,7 +63,9 @@ class ConfigMng : Single<ConfigMng>
         gachaConfig = new Dictionary<int, Gacha>();
         rouletteConfig = new Dictionary<int, Roulette>();
         rouletteCellConfig = new Dictionary<int, RouletteCell>();
+        randomBonusPondConfig = new Dictionary<int, RandomBonusPond>();
 
+        ReadConfig("Config/RandomBonusPond", randomBonusPondConfig);
         ReadConfig("Config/RouletteCell", rouletteCellConfig);
         ReadConfig("Config/Roulette", rouletteConfig);
         ReadConfig("Config/Gacha", gachaConfig);

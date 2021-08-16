@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\UI\NowLoadingLG.cs" />
     <Compile Include="Assets\Scripts\Test\TestToggle.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemUI.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Roulette.cs" />
     <Compile Include="Assets\Scripts\Cor\AttObjC.cs" />
     <Compile Include="Assets\Scripts\UI\BraveUI.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeUI.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Assets\Scripts\Test\RunTest.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Gacha.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csAnimationSpin.cs" />
+    <Compile Include="Assets\Scripts\UI\RouletteUI.cs" />
     <Compile Include="Assets\Scripts\UI\BagLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Item.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeDetailUI.cs" />
@@ -105,6 +107,7 @@
     <Compile Include="Assets\Scripts\Manager\ConfigMng.cs" />
     <Compile Include="Assets\Scripts\UI\HomeItemBtn.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Shop.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\RouletteCell.cs" />
     <Compile Include="Assets\Scripts\UI\Common\TitleUI.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeDetailLG.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopUploadUI.cs" />
@@ -159,6 +162,7 @@
     <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csMouseOrbit.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeCell.cs" />
+    <Compile Include="Assets\Scripts\UI\RouletteItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\ShopMyShopItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemLG.cs" />
     <Compile Include="Assets\Scripts\Manager\EffectMng.cs" />
@@ -185,6 +189,7 @@
     <Compile Include="Assets\Scripts\UI\BlueprintPreviewUI.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
+    <Compile Include="Assets\Scripts\UI\RouletteLG.cs" />
     <Compile Include="Assets\Scripts\Data\MyShopData.cs" />
     <Compile Include="Assets\Scripts\Data\EntityData.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeUI.cs" />
@@ -203,6 +208,7 @@
     <Compile Include="Assets\Scripts\Common\Single.cs" />
     <Compile Include="Assets\Scripts\UI\MenuUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ErrorMsg.cs" />
+    <Compile Include="Assets\Scripts\Test\Test4.cs" />
     <Compile Include="Assets\Scripts\Game\Effect\EffectBase.cs" />
     <Compile Include="Assets\Scripts\Manager\SettingMng.cs" />
     <Compile Include="Assets\Scripts\UI\ShopItemCell.cs" />
@@ -240,12 +246,9 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Roulette.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\RouletteCell.cs" />
-    <Compile Include="Assets\Scripts\UI\RouletteItemCell.cs" />
-    <Compile Include="Assets\Scripts\UI\RouletteUI.cs" />
-    <Compile Include="Assets\Scripts\UI\RouletteLG.cs" />
-    <Compile Include="Assets\Scripts\Test\Test4.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaRatioUI.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaRatioLG.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaRatioCell.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

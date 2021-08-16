@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class BagUI : UIBase
 {
-    TitleUI title;
+    TitleUI Title;
     Transform btnsParent { get => FindChiled("Btns"); }
     MyButton[] btns;
     Transform itemGridRoot { get => FindChiled("Content"); }
@@ -24,11 +24,11 @@ public class BagUI : UIBase
 
     private void InitUI()
     {
-        title = FindChiled<TitleUI>("Title");
-        title.SetTitle("もちもの");
-        title.SetOnClose(() => { Close(); GuideLG.E.Next(); });
-        title.EnActiveCoin(1);
-        title.EnActiveCoin(3);
+        Title = FindChiled<TitleUI>("Title");
+        Title.SetTitle("もちもの");
+        Title.SetOnClose(() => { Close(); GuideLG.E.Next(); });
+        Title.EnActiveCoin(1);
+        Title.EnActiveCoin(3);
 
         btns = new MyButton[btnsParent.childCount];
         for (int i = 0; i < btnsParent.childCount; i++)
@@ -48,7 +48,7 @@ public class BagUI : UIBase
             }
         }
 
-        title.RefreshCoins();
+        Title.RefreshCoins();
     }
 
     public override void Open()
@@ -69,7 +69,7 @@ public class BagUI : UIBase
         NWMng.E.GetCoins((rp) =>
         {
             DataMng.GetCoins(rp);
-            title.RefreshCoins();
+            Title.RefreshCoins();
         });
     }
     public override void Close()

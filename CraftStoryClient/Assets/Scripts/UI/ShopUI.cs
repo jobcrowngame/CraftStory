@@ -18,6 +18,7 @@ public class ShopUI : UIBase
     Transform SubscriptionWind { get => FindChiled("SubscriptionWind"); }
 
     Transform Gacha { get => FindChiled("Gacha"); }
+    Button RatioBtn { get => FindChiled<Button>("RatioBtn", Gacha); }
     Button StartGachaBtn { get => FindChiled<Button>("StartGachaBtn", Gacha); }
     Text GachaDes { get => FindChiled<Text>("GachaDes", Gacha); }
 
@@ -101,6 +102,11 @@ public class ShopUI : UIBase
             }
         }
 
+        RatioBtn.onClick.AddListener(() => 
+        {
+            var ui = UICtl.E.OpenUI<GachaRatioUI>(UIType.GachaRatio);
+            ui.Set(1);
+        });
         StartGachaBtn.onClick.AddListener(()=> { ShopLG.E.StartGacha(1); });
         GachaDes.text = ConfigMng.E.Gacha[1].Des;
 

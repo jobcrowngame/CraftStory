@@ -170,7 +170,8 @@ public class UICtl : Single<UICtl>
             case UIType.Waiting: return "Prefabs/UI/Common/Waiting";
             case UIType.GachaBonus: return "Prefabs/UI/GachaBonus";
             case UIType.Roulette: return "Prefabs/UI/Roulette";
-
+            case UIType.GachaRatio: return "Prefabs/UI/GachaRatio";
+                
             default: Logger.Error("not find UIType " + ui); return "";
         }
     }
@@ -232,4 +233,5 @@ public enum UIType
     Waiting,
     GachaBonus,
     Roulette,
+    GachaRatio,
 }
