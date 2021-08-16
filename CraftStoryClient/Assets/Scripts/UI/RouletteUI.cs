@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ public class RouletteUI : UIBase
         base.Init();
         RouletteLG.E.Init(this);
 
-        Title.SetTitle("ƒ‹[ƒŒƒbƒg");
+        Title.SetTitle("ãƒ«ãƒ¼ãƒ¬ãƒƒãƒˆ");
         Title.SetOnClose(() => { Close(); });
         Title.EnActiveCoin(1);
         Title.EnActiveCoin(2);
