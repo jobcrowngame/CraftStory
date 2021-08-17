@@ -132,6 +132,7 @@
     <Compile Include="Assets\Scripts\UI\EmailCell.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
     <Compile Include="Assets\Scripts\Manager\CryptMng.cs" />
+    <Compile Include="Assets\Scripts\Test\Monster\PlayerController2.cs" />
     <Compile Include="Assets\Scripts\Manager\Logger.cs" />
     <Compile Include="Assets\Scripts\Test\TestJson.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Resource.cs" />
@@ -246,14 +247,11 @@
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\RandomBonus.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusLG.cs" />
+    <Compile Include="Assets\Scripts\Test\Monster\DogController.cs" />
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectChanger.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Test\Monster\DogController.cs" />
-    <Compile Include="Assets\Scripts\Test\Monster\PlayerController2.cs" />
-    <Compile Include="Assets\Scripts\Game\Character\ActorParamsController.cs" />
-    <Compile Include="Assets\Scripts\Game\Character\Params.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
