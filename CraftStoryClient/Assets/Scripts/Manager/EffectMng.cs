@@ -25,11 +25,11 @@ public class EffectMng : Single<EffectMng>
         var effect = CommonFunction.Instantiate<T>(GetEffectResourcesPath(eType), WorldMng.E.MapCtl.EffectParent, pos);
         return effect;
     }
-    public T AddUIEffect<T>(Transform parent, EffectType eType) where T : Component
+    public T AddUIEffect<T>(Transform parent, Vector3 pos, EffectType eType) where T : Component
     {
         Logger.Log("Add Effect");
 
-        var effect = CommonFunction.Instantiate<T>(GetEffectResourcesPath(eType), parent, parent.position);
+        var effect = CommonFunction.Instantiate<T>(GetEffectResourcesPath(eType), parent, pos);
         return effect;
     }
     public void RemoveDestroyEffect()

@@ -66,7 +66,7 @@ public class GachaBonusUI : UIBase
             yield return new WaitForSeconds(0.5f);
             item.ShowItem();
 
-            var effect = EffectMng.E.AddUIEffect<EffectBase>(item.transform, EffectType.Gacha);
+            var effect = EffectMng.E.AddUIEffect<EffectBase>(transform, item.transform.position, EffectType.Gacha);
             effect.Init(0.5f);
         }
 
