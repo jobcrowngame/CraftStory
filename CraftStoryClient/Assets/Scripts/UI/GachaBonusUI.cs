@@ -65,6 +65,9 @@ public class GachaBonusUI : UIBase
             item.ShowAnim();
             yield return new WaitForSeconds(0.5f);
             item.ShowItem();
+
+            var effect = EffectMng.E.AddUIEffect<EffectBase>(item.transform, EffectType.Gacha);
+            effect.Init(0.5f);
         }
 
         OkBtn.gameObject.SetActive(true);

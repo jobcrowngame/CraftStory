@@ -25,6 +25,13 @@ public class EffectMng : Single<EffectMng>
         var effect = CommonFunction.Instantiate<T>(GetEffectResourcesPath(eType), WorldMng.E.MapCtl.EffectParent, pos);
         return effect;
     }
+    public T AddUIEffect<T>(Transform parent, EffectType eType) where T : Component
+    {
+        Logger.Log("Add Effect");
+
+        var effect = CommonFunction.Instantiate<T>(GetEffectResourcesPath(eType), parent, parent.position);
+        return effect;
+    }
     public void RemoveDestroyEffect()
     {
         if (destroyEffect != null)
@@ -42,6 +49,7 @@ public class EffectMng : Single<EffectMng>
             case EffectType.BlockDestroy: return "Prefabs/Effect/effect_001";
             case EffectType.BlockDestroyEnd: return "Prefabs/Effect/BlockBreackEffect";
             case EffectType.ResourcesDestroy: return "Prefabs/Effect/ResourcesDeleteEffect";
+            case EffectType.Gacha: return "Prefabs/Effect/TreasureBoxEffect";
             default: return "";
         }
     }
@@ -51,4 +59,5 @@ public enum EffectType
     BlockDestroy,
     BlockDestroyEnd,
     ResourcesDestroy,
+    Gacha,
 }

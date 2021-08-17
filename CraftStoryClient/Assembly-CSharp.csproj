@@ -148,12 +148,14 @@
     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityBuilding.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyButton.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaBonusCell.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerEntity.cs" />
     <Compile Include="Assets\Scripts\Test\IAPDemo.cs" />
     <Compile Include="Assets\Scripts\Game\Adventure\AdventureCtl.cs" />
     <Compile Include="Assets\Scripts\UI\ShopUI.cs" />
     <Compile Include="Assets\Scripts\Manager\NWMng.cs" />
     <Compile Include="Assets\Scripts\Game\Player\BuilderPencil.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaRatioLG.cs" />
     <Compile Include="Assets\Scripts\UI\PersonalMessageUI.cs" />
     <Compile Include="Assets\Scripts\Test\Test2.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
@@ -197,6 +199,7 @@
     <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
     <Compile Include="Assets\Scripts\UI\DebugCell.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaRatioUI.cs" />
     <Compile Include="Assets\Scripts\UI\CraftItemCell.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion2.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintCell.cs" />
@@ -212,6 +215,7 @@
     <Compile Include="Assets\Scripts\Game\Effect\EffectBase.cs" />
     <Compile Include="Assets\Scripts\Manager\SettingMng.cs" />
     <Compile Include="Assets\Scripts\UI\ShopItemCell.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaRatioCell.cs" />
     <Compile Include="Assets\Scripts\UI\EmailLG.cs" />
     <Compile Include="Assets\Scripts\Data\MapData.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csShowAllEffect.cs" />
@@ -246,10 +250,6 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\UI\GachaRatioUI.cs" />
-    <Compile Include="Assets\Scripts\UI\GachaRatioLG.cs" />
-    <Compile Include="Assets\Scripts\UI\GachaRatioCell.cs" />
-    <Compile Include="Assets\Scripts\UI\GachaBonusCell.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
@@ -260,6 +260,7 @@
      <None Include="Assets\GoogleMobileAds\link.xml" />
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll" />
      <None Include="Assets\Resources\Shader\SemiTransparent.shader" />
+     <None Include="Assets\Shaders\UIAdditive.shader" />
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Android.dll" />
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds_version-6.0.2_manifest.txt" />
      <None Include="Assets\Resources\Shader\Test01.shader" />
