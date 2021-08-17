@@ -45,16 +45,10 @@ public class MyShopCell : UIBase
             }
 
             myShopItem = DataMng.E.MyShop.MyShopItem[value - 1];
+            myShopItem.created_at = myShopItem.created_at.AddDays(7);
+
             if (myShopItem.itemId > 0 && !IsTimeOut())
             {
-                if ((DateTime.Now - myShopItem.created_at).Days >= 7)
-                {
-                    DataMng.E.MyShop.MyShopItem[value - 1] = new MyShopItem();
-                    myShopItem = DataMng.E.MyShop.MyShopItem[value - 1];
-                }
-
-                myShopItem.created_at = myShopItem.created_at.AddDays(7);
-
                 NewNameText.text = myShopItem.newName;
                 Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[myShopItem.itemId].IconResourcesPath);
 
@@ -181,6 +175,8 @@ public class MyShopCell : UIBase
     }
     private IEnumerator RefreshTime()
     {
+        yield return new WaitForSeconds(1);
+
         while (OpenTimer)
         {
             TimeSpan t = myShopItem.created_at - DateTime.Now;
