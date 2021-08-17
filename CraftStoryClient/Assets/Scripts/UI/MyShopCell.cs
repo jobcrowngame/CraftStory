@@ -101,6 +101,7 @@ public class MyShopCell : UIBase
                             DataMng.E.MyShop.MyShopItem[Index - 1] = new MyShopItem();
                             DataMng.E.RuntimeData.Coin1 -= 100;
                             MyShopLG.E.UI.RefreshUI();
+                            OpenTimer = false;
                         }, myShopItem.site, 0);
                     }
                 }, () => { });
