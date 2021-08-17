@@ -45,7 +45,7 @@ public class MyShopCell : UIBase
             }
 
             myShopItem = DataMng.E.MyShop.MyShopItem[value - 1];
-            if (myShopItem.itemId > 0)
+            if (myShopItem.itemId > 0 && !IsTimeOut())
             {
                 if ((DateTime.Now - myShopItem.created_at).Days >= 7)
                 {
@@ -183,7 +183,7 @@ public class MyShopCell : UIBase
         while (OpenTimer)
         {
             TimeSpan t = myShopItem.created_at - DateTime.Now;
-            if (t.TotalSeconds < 0)
+            if (IsTimeOut())
             {
                 NWMng.E.LoadBlueprint((rp) =>
                 {
@@ -200,5 +200,10 @@ public class MyShopCell : UIBase
 
             yield return new WaitForSeconds(1);
         }
+    }
+    private bool IsTimeOut()
+    {
+        TimeSpan t = myShopItem.created_at - DateTime.Now;
+        return t.TotalSeconds < 0;
     }
 }
