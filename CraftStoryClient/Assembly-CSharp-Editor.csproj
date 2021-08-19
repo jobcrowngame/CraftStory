@@ -332,6 +332,18 @@
     <Reference Include="GoogleMobileAds.Common">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Common.dll</HintPath>
     </Reference>
+    <Reference Include="AWSSDK.SimpleNotificationService">
+      <HintPath>Assets\AWSSDK\AWSSDK.SimpleNotificationService.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.SecurityToken">
+      <HintPath>Assets\AWSSDK\AWSSDK.SecurityToken.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.Core">
+      <HintPath>Assets\AWSSDK\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.CognitoIdentity">
+      <HintPath>Assets\AWSSDK\AWSSDK.CognitoIdentity.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
     </Reference>

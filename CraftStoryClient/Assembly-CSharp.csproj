@@ -252,18 +252,25 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
+    <Compile Include="Assets\Examples\SNSExample.cs" />
+    <Compile Include="Assets\Examples\GCM.cs" />
   </ItemGroup>
   <ItemGroup>
+     <None Include="Assets\AWSSDK\AWSSDK.Core.dll" />
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
+     <None Include="Assets\Examples\License.txt" />
+     <None Include="Assets\AWSSDK\AWSSDK.SecurityToken.dll" />
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.dll" />
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.iOS.dll" />
      <None Include="Assets\Resources\Shader\Simple.shader" />
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Core.dll" />
      <None Include="Assets\GoogleMobileAds\link.xml" />
+     <None Include="Assets\AWSSDK\AWSSDK.CognitoIdentity.dll" />
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll" />
      <None Include="Assets\Resources\Shader\SemiTransparent.shader" />
      <None Include="Assets\Shaders\UIAdditive.shader" />
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Android.dll" />
+     <None Include="Assets\AWSSDK\AWSSDK.SimpleNotificationService.dll" />
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds_version-6.0.2_manifest.txt" />
      <None Include="Assets\Resources\Shader\Test01.shader" />
     <Reference Include="UnityEngine">
@@ -493,6 +500,18 @@
     </Reference>
     <Reference Include="GoogleMobileAds.Common">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.SimpleNotificationService">
+      <HintPath>Assets\AWSSDK\AWSSDK.SimpleNotificationService.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.SecurityToken">
+      <HintPath>Assets\AWSSDK\AWSSDK.SecurityToken.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.Core">
+      <HintPath>Assets\AWSSDK\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.CognitoIdentity">
+      <HintPath>Assets\AWSSDK\AWSSDK.CognitoIdentity.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

@@ -9,6 +9,16 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
 
     private int itemGuid = 1;
     private int createBlockCount = 0;
+    private bool Lock 
+    {
+        get => mLock; 
+        set
+        {
+            mLock = value;
+            UI.ShowFullMask(mLock);
+        }
+    }
+    private bool mLock;
 
     private string CurStep
     {
@@ -35,6 +45,10 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         stepIndex = 0;
         itemGuid = 1;
     }
+    public void UnLock()
+    {
+        Lock = false;
+    }
     public void Next(int step)
     {
         if (step != stepIndex)
@@ -43,7 +57,7 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
     }
     public void Next()
     {
-        if (end)
+        if (end || Lock)
             return;
 
         if (DataMng.E.RuntimeData.MapType != MapType.Guide)
@@ -51,6 +65,7 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
 
         CurStep = guideSteps[stepIndex];
         stepIndex++;
+        Lock = true;
     }
     public void CreateBlock()
     {

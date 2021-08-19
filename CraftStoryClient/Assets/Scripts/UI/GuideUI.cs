@@ -12,6 +12,7 @@ public class GuideUI : UIBase
     RectTransform Msg { get => FindChiled<RectTransform>("Image"); }
     Transform Hand { get => FindChiled<Transform>("Hand"); }
     RectTransform canvas { get => transform.parent.GetComponent<RectTransform>(); }
+    Transform FullMask { get => FindChiled<Transform>("FullMask"); }
 
     private void Start()
     {
@@ -78,6 +79,10 @@ public class GuideUI : UIBase
         mask3.gameObject.SetActive(b);
         mask4.gameObject.SetActive(b);
     }
+    public void ShowFullMask(bool b)
+    {
+        FullMask.gameObject.SetActive(b);
+    }
     private void End()
     {
         ShowMask(false);
@@ -96,12 +101,13 @@ public class GuideUI : UIBase
             return;
         }
 
+        SetMessage(Vector3.zero, Vector3.one, "");
         StartCoroutine(StartNextStep(stepId));
     }
 
     IEnumerator StartNextStep(int stepId)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.08f);
 
         var config = ConfigMng.E.GuideStep[stepId];
         if (config.CellName == "N")
@@ -118,5 +124,7 @@ public class GuideUI : UIBase
         SetMessage(pos, size, config.Message);
 
         Hand.gameObject.SetActive(config.HideHand != 1);
+
+        GuideLG.E.UnLock();
     }
 }

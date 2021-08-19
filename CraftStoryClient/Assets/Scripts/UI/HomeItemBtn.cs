@@ -20,7 +20,11 @@ public class HomeItemBtn : UIBase
                 if (curSelectBtn != null) curSelectBtn.OnSelected(false);
 
                 curSelectBtn = value;
-                if (curSelectBtn != null) curSelectBtn.OnSelected();
+                if (curSelectBtn != null)
+                {
+                    curSelectBtn.OnSelected();
+                    GuideLG.E.Next();
+                }
             }
 
             PlayerCtl.E.ChangeSelectItem(curSelectBtn == null
@@ -58,8 +62,6 @@ public class HomeItemBtn : UIBase
             return;
 
         CurSelectBtn = this;
-
-        GuideLG.E.Next();
     }
     private void OnSelected(bool b = true)
     {
