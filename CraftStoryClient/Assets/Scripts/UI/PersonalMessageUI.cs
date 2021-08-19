@@ -41,7 +41,7 @@ public class PersonalMessageUI : UIBase
                 return;
             }
 
-            if (DataMng.E.RuntimeData.MapType == MapType.Guide)
+            NWMng.E.UpdateNickName((rp) =>
             {
                 DataMng.E.RuntimeData.NickName = InputField.text;
                 NickNameText.text = DataMng.E.RuntimeData.NickName;
@@ -50,22 +50,8 @@ public class PersonalMessageUI : UIBase
                 ChangeNickName.gameObject.SetActive(false);
 
                 CommonFunction.ShowHintBar(11);
-
                 GuideLG.E.Next();
-            }
-            else
-            {
-                NWMng.E.UpdateNickName((rp) =>
-                {
-                    DataMng.E.RuntimeData.NickName = InputField.text;
-                    NickNameText.text = DataMng.E.RuntimeData.NickName;
-
-                    Show.gameObject.SetActive(true);
-                    ChangeNickName.gameObject.SetActive(false);
-
-                    CommonFunction.ShowHintBar(11);
-                }, InputField.text);
-            }
+            }, InputField.text);
         });
 
         InputField.onEndEdit.AddListener((r) => 
