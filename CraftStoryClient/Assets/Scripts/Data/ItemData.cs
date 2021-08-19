@@ -30,4 +30,9 @@ public class ItemData
     }
 
     public bool IsLocked { get => islocked == 1; }
+
+    public struct DeleteItemData
+    {
+        public int guid { get; set; }
+    }
 }

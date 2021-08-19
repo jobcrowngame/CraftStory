@@ -242,7 +242,7 @@ public class DataMng : Single<DataMng>
     /// <summary>
     /// 消耗アイテム
     /// </summary>
-    public void ConsumableItemByGUID(int guid, int count = 1)
+    public void UseItem(int guid, int count = 1)
     {
         if (GetItemByGuid(guid).count < count)
         {
@@ -260,7 +260,7 @@ public class DataMng : Single<DataMng>
             }
             else
             {
-                NWMng.E.RemoveItemByGuid((rp) =>
+                NWMng.E.UseItem((rp) =>
                 {
                     RemoveItemByGuid(guid, count);
                     if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();

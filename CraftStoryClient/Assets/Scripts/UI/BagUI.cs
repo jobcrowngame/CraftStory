@@ -11,6 +11,8 @@ public class BagUI : UIBase
     Dictionary<string, BagItemCell> cellDic;
     BagSelectItem[] selectItems;
 
+    Button DeleteBtn { get => FindChiled<Button>("DeleteBtn"); }
+
     public override void Init()
     {
         base.Init();
@@ -48,7 +50,10 @@ public class BagUI : UIBase
             }
         }
 
-        Title.RefreshCoins();
+        DeleteBtn.onClick.AddListener(() => 
+        {
+            UICtl.E.OpenUI<DeleteItemUI>(UIType.DeleteItem);
+        });
     }
 
     public override void Open()

@@ -274,9 +274,9 @@ public class PlayerCtl : MonoBehaviour
         WorldMng.E.MapCtl.CreateEntity(entityId, pos, dType);
     }
 
-    public void ConsumableSelectItem(int count = 1)
+    public void UseItem(int count = 1)
     {
-        DataMng.E.ConsumableItemByGUID(selectItem.id, count);
+        DataMng.E.UseItem(selectItem.id, count);
     }
     public bool ConsumableItems(Dictionary<int, int> items)
     {

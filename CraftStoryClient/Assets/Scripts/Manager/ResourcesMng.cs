@@ -16,6 +16,9 @@ public class ResourcesMng : Single<ResourcesMng>
 
     public Object ReadResources(string path)
     {
+        if (string.IsNullOrEmpty(path))
+            return null;
+        
         Object gameObj = null;
         if (!resourcesDic.TryGetValue(path, out gameObj))
         {
@@ -34,6 +37,9 @@ public class ResourcesMng : Single<ResourcesMng>
 
     public T ReadResources<T>(string path) where T : Object
     {
+        if (string.IsNullOrEmpty(path))
+            return null;
+
         Object gameObj = null;
         if (!resourcesDic.TryGetValue(path, out gameObj))
         {

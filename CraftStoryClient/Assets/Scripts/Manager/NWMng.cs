@@ -185,7 +185,7 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItems));
     }
-    public void RemoveItemByGuid(Action<JsonData> rp, int guid, int count)
+    public void UseItem(Action<JsonData> rp, int guid, int count)
     {
         var data = new NWData();
         data.Add("token", DataMng.E.token);
@@ -193,7 +193,7 @@ public partial class NWMng : MonoBehaviour
         data.Add("guid", guid);
         data.Add("count", count);
 
-        StartCoroutine(HttpRequest(rp, data, CMD.RemoveItemByGuid));
+        StartCoroutine(HttpRequest(rp, data, CMD.UseItem));
     }
     public void RemoveItem(Action<JsonData> rp, int itemid, int count)
     {
@@ -456,6 +456,25 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.Gacha10));
     }
+    public void DeleteItem(Action<JsonData> rp, int guid)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("guid", guid);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.DeleteItem));
+    }
+    public void DeleteItems(Action<JsonData> rp, List<ItemData.DeleteItemData> items)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("items", JsonMapper.ToJson(items));
+
+        StartCoroutine(HttpRequest(rp, data, CMD.DeleteItems));
+    }
+
 
     public void SaveHomeData(Action<JsonData> rp, string homedata)
     {
@@ -496,7 +515,7 @@ public partial class NWMng : MonoBehaviour
         Login = 101,
 
         ItemList = 1001,
-        RemoveItemByGuid,
+        UseItem,
         RemoveItemByItemId,
         AddItem,
         AddItemInData,
@@ -525,6 +544,8 @@ public partial class NWMng : MonoBehaviour
         GetSubscriptionInfo,
         GuideEnd,
         Gacha10 = 1030,
+        DeleteItem,
+        DeleteItems,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

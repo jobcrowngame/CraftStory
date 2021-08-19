@@ -171,7 +171,8 @@ public class UICtl : Single<UICtl>
             case UIType.GachaBonus: return "Prefabs/UI/GachaBonus";
             case UIType.Roulette: return "Prefabs/UI/Roulette";
             case UIType.GachaRatio: return "Prefabs/UI/GachaRatio";
-                
+            case UIType.DeleteItem: return "Prefabs/UI/DeleteItem";
+
             default: Logger.Error("not find UIType " + ui); return "";
         }
     }
@@ -234,4 +235,5 @@ public enum UIType
     GachaBonus,
     Roulette,
     GachaRatio,
+    DeleteItem,
 }

@@ -160,7 +160,7 @@ public class MapCtl
 
         CheckNextToEntitys(pos);
 
-        PlayerCtl.E.ConsumableSelectItem();
+        PlayerCtl.E.UseItem();
 
         return entity;
     }
