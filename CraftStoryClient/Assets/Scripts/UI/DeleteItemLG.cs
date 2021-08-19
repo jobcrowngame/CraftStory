@@ -32,6 +32,7 @@ public class DeleteItemLG : UILogicBase<DeleteItemLG, DeleteItemUI>
 
                 if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
                 if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
+                if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
                 UI.Close();
             }, list);
         }
