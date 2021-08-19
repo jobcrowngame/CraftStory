@@ -294,6 +294,7 @@ namespace ExcelToJson
                 data.BagType = ToInt32(tbl.Rows[i]["BagType"]);
                 data.ReferenceID = ToInt32(tbl.Rows[i]["ReferenceID"]);
                 data.MaxCount = ToInt32(tbl.Rows[i]["MaxCount"]);
+                data.CanDelete = ToInt32(tbl.Rows[i]["CanDelete"]);
 
                 list.Add(data);
             }

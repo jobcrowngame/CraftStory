@@ -10,5 +10,6 @@ namespace JsonConfigData
         public int BagType { get; set; }
         public int ReferenceID { get; set; }
         public int MaxCount { get; set; }
+        public int CanDelete { get; set; }
     }
 }
