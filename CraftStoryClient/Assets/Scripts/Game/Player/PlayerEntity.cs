@@ -146,5 +146,6 @@ public class PlayerEntity : CharacterEntity
     public void IsModelActive(bool b)
     {
         controller.radius = b ? 0.40f : 0.01f;
+        controller.height = b ? 1.1f : 1f;
     }
 }
