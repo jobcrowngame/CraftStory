@@ -144,16 +144,11 @@ public class MapCtl
             return null;
         }
 
-        var config = ConfigMng.E.Entity[entityId];
-
         // 作成できるかのチェック
-        if (config.ScaleX > 1 || config.ScaleY > 1 || config.ScaleZ > 1)
+        if (!CheckCanCreate(DataMng.E.MapData, entityId, pos, dType))
         {
-            if (!CheckCanCreate(DataMng.E.MapData, entityId, pos, dType))
-            {
-                CommonFunction.ShowHintBar(19);
-                return null;
-            }
+            CommonFunction.ShowHintBar(19);
+            return null;
         }
 
         var entity = DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = entityId, direction = (int)dType }, pos);
@@ -210,16 +205,25 @@ public class MapCtl
     /// </summary>
     public static bool CheckCanCreate(MapData mdata, int entityId, Vector3Int pos, DirectionType dType)
     {
-        var list = GetEntityPosListByDirection(entityId, pos, dType);
-        foreach (var item in list)
-        {
-            // マップ外ならNG
-            if (IsOutRange(mdata, item))
-                return false;
+        // 被ってるかをチェック
+        if (mdata.Map[pos.x, pos.y, pos.z].entityID > 0)
+            return false;
 
-            // 作りたい範囲内に他のブロックがある場合、NG
-            if (mdata.Map[item.x, item.y, item.z].entityID > 0)
-                return false;
+        // 大きいエンティティの範囲チェック
+        var config = ConfigMng.E.Entity[entityId];
+        if (config.ScaleX > 1 || config.ScaleY > 1 || config.ScaleZ > 1)
+        {
+            var list = GetEntityPosListByDirection(entityId, pos, dType);
+            foreach (var item in list)
+            {
+                // マップ外ならNG
+                if (IsOutRange(mdata, item))
+                    return false;
+
+                // 作りたい範囲内に他のブロックがある場合、NG
+                if (mdata.Map[item.x, item.y, item.z].entityID > 0)
+                    return false;
+            }
         }
 
         return true;
