@@ -46,7 +46,7 @@ public class MenuUI : UIBase
                     ShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn.gameObject.SetActive(true);
                     PersonalMessageBtn.gameObject.SetActive(true);
-                    FriendBtn.gameObject.SetActive(true);
+                    //FriendBtn.gameObject.SetActive(true);
 
                     PointExchangeBtn.gameObject.SetActive(true);
                     MyShopBtn.gameObject.SetActive(true);
@@ -65,7 +65,7 @@ public class MenuUI : UIBase
                     ShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn.gameObject.SetActive(true);
                     PersonalMessageBtn.gameObject.SetActive(true);
-                    FriendBtn.gameObject.SetActive(true);
+                    //FriendBtn.gameObject.SetActive(true);
 
                     PointExchangeBtn.gameObject.SetActive(true);
                     MyShopBtn.gameObject.SetActive(true);
