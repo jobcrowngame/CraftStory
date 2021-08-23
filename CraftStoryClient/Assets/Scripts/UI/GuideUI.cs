@@ -58,7 +58,7 @@ public class GuideUI : UIBase
         mask4.offsetMax = new Vector2(-(canvasSize.x - selectedObj.transform.position.x / offset - width / 2), 
             -(canvasSize.y - selectedObj.transform.position.y / offset + height / 2));
 
-        SetHand(new Vector2(selectedObj.transform.position.x + 90, selectedObj.transform.position.y + 40));
+        SetHand(new Vector2(selectedObj.transform.position.x + 60, selectedObj.transform.position.y + 20));
     }
     private void SetMessage(Vector2 pos, Vector2 size, string msg)
     {
