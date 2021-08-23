@@ -1,5 +1,9 @@
 ﻿using System;
 
+/// <summary>
+/// 唯一のエンティティ親
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class Single<T> where T : class, new()
 {
     [NonSerialized]

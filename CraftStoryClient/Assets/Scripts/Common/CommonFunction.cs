@@ -7,21 +7,21 @@ using UnityEngine.SceneManagement;
 
 public class CommonFunction
 {
+    /// <summary>
+    /// ゲーム終了場合の共通メソッド
+    /// </summary>
     public static void QuitGame()
     {
         Application.Quit();
     }
 
-    public static T CreateGlobalObject<T>() where T : Component
-    {
-        var obj = new GameObject();
-        obj.transform.parent = Main.E.transform;
-        var entity = obj.AddComponent<T>();
-        obj.name = entity.ToString();
-
-        return entity;
-    }
-
+    /// <summary>
+    /// サブObjectを取得共通メソッド
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="parent">親のObject</param>
+    /// <param name="name">Object名</param>
+    /// <returns></returns>
     public static T FindChiledByName<T>(Transform parent, string name) where T : Component
     {
         var findObj = FindChiledByName(parent, name);
@@ -45,6 +45,13 @@ public class CommonFunction
             return FIndAllChiled(parent, name);
         }
     }
+
+    /// <summary>
+    /// 全子供Objectから検索
+    /// </summary>
+    /// <param name="parent">親のObject</param>
+    /// <param name="name">Object名</param>
+    /// <returns></returns>
     private static GameObject FIndAllChiled(Transform parent, string name)
     {
         GameObject retObj = null;
@@ -69,6 +76,11 @@ public class CommonFunction
         return retObj;
     }
 
+    /// <summary>
+    /// 全サブObjectを取得
+    /// </summary>
+    /// <param name="parent">親のObject</param>
+    /// <param name="list">サブリスト</param>
     public static void GetAllChiled(Transform parent, ref List<GameObject> list)
     {
         foreach (Transform item in parent)
@@ -84,6 +96,13 @@ public class CommonFunction
         }
     }
 
+    /// <summary>
+    /// GameObjectをインスタンス化
+    /// </summary>
+    /// <param name="path">ソースのパス</param>
+    /// <param name="parent">親のObject</param>
+    /// <param name="pos">インスタンス座標</param>
+    /// <returns></returns>
     public static GameObject Instantiate(string path, Transform parent, Vector3 pos)
     {
         var resources = ResourcesMng.E.ReadResources(path);
@@ -108,6 +127,14 @@ public class CommonFunction
 
         return componte;
     }
+
+    /// <summary>
+    /// UI  GameObjectをインスタンス化
+    /// </summary>
+    /// <typeparam name="T">UIスクリプト</typeparam>
+    /// <param name="resourcesPath">ソースのパス</param>
+    /// <param name="parent">親のObject</param>
+    /// <returns></returns>
     public static T InstantiateUI<T>(string resourcesPath, Transform parent) where T : UIBase
     {
         var resources = ResourcesMng.E.ReadResources(resourcesPath);
@@ -124,6 +151,11 @@ public class CommonFunction
 
         return cell;
     }
+
+    /// <summary>
+    /// 全サブObjectを削除
+    /// </summary>
+    /// <param name="parent">親のObject</param>
     public static void ClearCell(Transform parent)
     {
         foreach (Transform t in parent)
@@ -132,6 +164,10 @@ public class CommonFunction
         }
     }
 
+    /// <summary>
+    /// 次Sceneに遷移
+    /// </summary>
+    /// <param name="TransferGateID">転送門ID</param>
     public static void GoToNextScene(int TransferGateID)
     {
         UICtl.E.Clear();
@@ -157,25 +193,22 @@ public class CommonFunction
         SceneManager.LoadSceneAsync("NowLoading");
     }
 
-    public static Vector3 Vector3Sum(Vector3 v1, Vector3 v2)
-    {
-        return new Vector3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
-    }
+    /// <summary>
+    /// ベクターの計算
+    /// </summary>
+    /// <param name="v1"></param>
+    /// <param name="v2"></param>
+    /// <returns></returns>
     public static Vector3Int Vector3Sum(Vector3Int v1, Vector3Int v2)
     {
         return new Vector3Int(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
     }
-    public static Vector3Int Vector3Minus(Vector3Int v1, Vector3Int v2)
-    {
-        return new Vector3Int(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
-    }
 
-    public static string ToUTF8Bom(string msg)
-    {
-        var en = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true);
-        return en.GetString(Encoding.Default.GetBytes(msg));
-    }
-
+    /// <summary>
+    /// プレイヤーの座標とインスタンスエンティティの座標から向きを取得
+    /// </summary>
+    /// <param name="createPos">インスタンス座標</param>
+    /// <returns></returns>
     public static DirectionType GetCreateEntityDirection(Vector3 createPos)
     {
         var playerPos = PlayerCtl.E.PlayerEntity.transform.position;
@@ -195,6 +228,12 @@ public class CommonFunction
 
         return dType;
     }
+
+    /// <summary>
+    /// 向きからインスタンスエンティティの角度を取得
+    /// </summary>
+    /// <param name="dType">向き</param>
+    /// <returns></returns>
     public static int GetCreateEntityAngleByDirection(DirectionType dType)
     {
         int angle = 0;
@@ -222,8 +261,11 @@ public class CommonFunction
         return Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
     }
 
-
-
+    /// <summary>
+    /// ボーナスリストからアイテムリストを取得
+    /// </summary>
+    /// <param name="bonusIds">ボーナスリスト</param>
+    /// <returns></returns>
     public static Dictionary<int, int> GetItemsByBonus(List<int> bonusIds)
     {
         Dictionary<int, int> items = new Dictionary<int, int>();
@@ -262,6 +304,10 @@ public class CommonFunction
         }
     }
 
+    /// <summary>
+    /// コードによってメッセージを表しするヒントバー
+    /// </summary>
+    /// <param name="errCode">コード</param>
     public static void ShowHintBar(int errCode)
     {
         if (!ConfigMng.E.ErrorMsg.ContainsKey(errCode))
@@ -276,11 +322,22 @@ public class CommonFunction
             ui.SetMsg(ConfigMng.E.ErrorMsg[errCode].Message);
         }
     }
+
+    /// <summary>
+    /// ヒントボックス
+    /// 重要なメッセージを確認するメッセージボックス
+    /// </summary>
+    /// <param name="msg">メッセージ</param>
+    /// <param name="okAction">Okボタンをクリック場合のアクション</param>
+    /// <param name="cancelAction">Cancelボタンをクリック場合のアクション</param>
+    /// <param name="okBtn">他のボタン画像に交換する場合のテクスチャ名</param>
+    /// <param name="cancelBtn">他のボタン画像に交換する場合のテクスチャ名</param>
     public static void ShowHintBox(string msg, Action okAction, Action cancelAction = null, 
         string okBtn = "button_2D_007", string cancelBtn = "button_2D_006")
     {
         ShowHintBox(null, msg, okAction, cancelAction, okBtn, cancelBtn);
     }
+    // メッセージボックスにアイコンを追加
     public static void ShowHintBox(string iconPath, string msg, Action okAction, Action cancelAction = null, 
         string okBtn = "button_2D_007", string cancelBtn = "button_2D_006")
     {
@@ -292,6 +349,10 @@ public class CommonFunction
         }
     }
 
+    /// <summary>
+    /// びっくりマックを表しするかの判断
+    /// </summary>
+    /// <returns></returns>
     public static bool MenuRedPoint()
     {
         bool ret = false;
@@ -305,10 +366,18 @@ public class CommonFunction
             : false;
     }
 
+    /// <summary>
+    /// メンテナンス場合の動作
+    /// </summary>
     public static void Maintenance()
     {
         ShowHintBox(PublicPar.Maintenance, () => { QuitGame(); });
     }
+
+    /// <summary>
+    /// バージョンアップ場合の動作
+    /// </summary>
+    /// <param name="ver"></param>
     public static void VersionUp(string ver)
     {
         string msg = string.Format(@"アプリバージョンが古いです。
@@ -316,7 +385,7 @@ public class CommonFunction
 
 今のバージョン: v.{0}
 最新のバージョン: v.{1}",
-    Application.version, ver);
+        Application.version, ver);
 
         ShowHintBox(msg, () =>
         {

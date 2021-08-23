@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// 色々ファイル名、URLなどをまとめるクラス
+/// </summary>
 public class PublicPar
 {
 

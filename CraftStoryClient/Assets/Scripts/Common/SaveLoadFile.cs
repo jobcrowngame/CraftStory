@@ -1,16 +1,20 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System;
 
+/// <summary>
+/// ローカルのファイルセーブ、ロード
+/// </summary>
 public class SaveLoadFile : Single<SaveLoadFile>
 {
 
 	private FileStream fileStream;
 	private BinaryFormatter bf;
 
+	/// <summary>
+	/// ファイルのセーブ
+	/// </summary>
+	/// <param name="data"></param>
+	/// <param name="path"></param>
 	public void Save(object data, string path)
 	{
 		bf = new BinaryFormatter();
@@ -33,6 +37,11 @@ public class SaveLoadFile : Single<SaveLoadFile>
 		}
 	}
 
+	/// <summary>
+	/// ファイルのロード
+	/// </summary>
+	/// <param name="path"></param>
+	/// <returns></returns>
 	public object Load(string path)
 	{
 		if (!File.Exists(path))

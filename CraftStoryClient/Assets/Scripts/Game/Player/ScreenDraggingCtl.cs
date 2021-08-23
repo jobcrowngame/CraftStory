@@ -205,6 +205,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 }
 
+/// <summary>
+/// エンティティの向き
+/// </summary>
 public enum DirectionType
 {
     up,
