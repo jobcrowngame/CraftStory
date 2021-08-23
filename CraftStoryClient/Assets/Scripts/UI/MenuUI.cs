@@ -11,6 +11,7 @@ public class MenuUI : UIBase
     Button HomeBtn { get => FindChiled<Button>("HomeBtn"); }
     Button PlayDescriptionBtn { get => FindChiled<Button>("PlayDescriptionBtn"); }
     Button PersonalMessageBtn { get => FindChiled<Button>("PersonalMessageBtn"); }
+    Button FriendBtn { get => FindChiled<Button>("FriendBtn"); }
 
     Button PointExchangeBtn { get => FindChiled<Button>("PointExchangeBtn"); }
     Button MyShopBtn { get => FindChiled<Button>("MyShopBtn"); }
@@ -28,6 +29,7 @@ public class MenuUI : UIBase
             HomeBtn.gameObject.SetActive(false);
             PlayDescriptionBtn.gameObject.SetActive(false);
             PersonalMessageBtn.gameObject.SetActive(false);
+            FriendBtn.gameObject.SetActive(false);
 
             PointExchangeBtn.gameObject.SetActive(false);
             MyShopBtn.gameObject.SetActive(false);
@@ -44,6 +46,7 @@ public class MenuUI : UIBase
                     ShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn.gameObject.SetActive(true);
                     PersonalMessageBtn.gameObject.SetActive(true);
+                    FriendBtn.gameObject.SetActive(true);
 
                     PointExchangeBtn.gameObject.SetActive(true);
                     MyShopBtn.gameObject.SetActive(true);
@@ -62,6 +65,7 @@ public class MenuUI : UIBase
                     ShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn.gameObject.SetActive(true);
                     PersonalMessageBtn.gameObject.SetActive(true);
+                    FriendBtn.gameObject.SetActive(true);
 
                     PointExchangeBtn.gameObject.SetActive(true);
                     MyShopBtn.gameObject.SetActive(true);
@@ -107,6 +111,11 @@ public class MenuUI : UIBase
             Close();
 
             GuideLG.E.Next();
+        });
+        FriendBtn.onClick.AddListener(() =>
+        {
+            UICtl.E.OpenUI<FriendUI>(UIType.Friend);
+            Close();
         });
 
         PointExchangeBtn.onClick.AddListener(() =>

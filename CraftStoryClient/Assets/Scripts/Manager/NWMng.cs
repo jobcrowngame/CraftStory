@@ -474,6 +474,60 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.DeleteItems));
     }
+   
+    public void Follow(Action<JsonData> rp, int guid)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("guid", guid);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.Follow));
+    }
+    public void DeFollow(Action<JsonData> rp, int guid)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("guid", guid);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.DeFollow));
+    }
+    public void ReadFollow(Action<JsonData> rp)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.ReadFollow));
+    }
+    public void ReadFollower(Action<JsonData> rp)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.ReadFollower));
+    }
+    public void UpdateComment(Action<JsonData> rp, string msg)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("comment", msg);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.UpdateComment));
+    }
+    public void SearchFriend(Action<JsonData> rp, string userAcc)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("userAcc", userAcc);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.SearchFriend));
+    }
+
 
 
     public void SaveHomeData(Action<JsonData> rp, string homedata)
@@ -546,6 +600,12 @@ public partial class NWMng : MonoBehaviour
         Gacha10 = 1030,
         DeleteItem,
         DeleteItems,
+        Follow,
+        DeFollow,
+        ReadFollow,
+        ReadFollower,
+        UpdateComment,
+        SearchFriend,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

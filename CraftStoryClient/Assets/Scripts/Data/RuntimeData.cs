@@ -10,6 +10,7 @@ public class RuntimeData
     public int Coin2 { get; set; }
     public int Coin3 { get; set; }
     public string NickName { get; set; }
+    public string Comment { get; set; }
 
     public int NewEmailCount { get; set; }
     public int SubscriptionLv01 { get; set; }

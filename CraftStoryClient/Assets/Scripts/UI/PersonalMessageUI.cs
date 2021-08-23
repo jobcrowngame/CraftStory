@@ -14,6 +14,10 @@ public class PersonalMessageUI : UIBase
     InputField InputField { get=> FindChiled<InputField>("InputField", ChangeNickName); }
     Button OKBtn { get => FindChiled<Button>("OKBtn", ChangeNickName); }
 
+    Transform Comment { get => FindChiled("Comment"); }
+    InputField CommentInputField { get => FindChiled<InputField>("CommentInputField", Comment); }
+
+
     public override void Init()
     {
         base.Init();
@@ -64,11 +68,27 @@ public class PersonalMessageUI : UIBase
 
             GuideLG.E.Next();
         });
+
+        CommentInputField.onEndEdit.AddListener((text) => 
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                CommonFunction.ShowHintBar(22);
+                return;
+            }
+
+            NWMng.E.UpdateComment((rp) => 
+            {
+                CommonFunction.ShowHintBar(23);
+                DataMng.E.RuntimeData.Comment = text;
+            }, text);
+        });
     }
     public override void Open()
     {
         base.Open();
         Account.text = DataMng.E.UserData.Account;
         NickNameText.text = DataMng.E.RuntimeData.NickName;
+        CommentInputField.text = DataMng.E.RuntimeData.Comment;
     }
 }
