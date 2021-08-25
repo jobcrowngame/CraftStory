@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// カメラコンソール
+/// </summary>
 public class CameraCtl : MonoBehaviour
 {
     private float mX, mY;

@@ -4,6 +4,10 @@ using System;
 
 public partial class NWMng
 {
+    /// <summary>
+    /// アイテムリストをゲット
+    /// </summary>
+    /// <param name="callBack"></param>
     public void GetItems(Action callBack = null)
     {
         if (DataMng.E.RuntimeData.MapType != MapType.Guide)
@@ -23,6 +27,10 @@ public partial class NWMng
         }
     }
 
+    /// <summary>
+    /// サブスクリプション情報をゲット
+    /// </summary>
+    /// <param name="callBack"></param>
     public void GetSubscriptionInfo(Action callBack = null)
     {
         GetSubscriptionInfoRequest((rp) =>
@@ -41,6 +49,10 @@ public partial class NWMng
         });
     }
 
+    /// <summary>
+    /// 新しいメール数をゲット
+    /// </summary>
+    /// <param name="callBack"></param>
     public void GetNewEmailCount(Action callBack = null)
     {
         NWMng.E.GetNewEmailCountRequest((rp) =>

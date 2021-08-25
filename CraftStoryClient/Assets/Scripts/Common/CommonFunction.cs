@@ -209,22 +209,22 @@ public class CommonFunction
     /// </summary>
     /// <param name="createPos">インスタンス座標</param>
     /// <returns></returns>
-    public static DirectionType GetCreateEntityDirection(Vector3 createPos)
+    public static Direction GetCreateEntityDirection(Vector3 createPos)
     {
         var playerPos = PlayerCtl.E.PlayerEntity.transform.position;
 
         var angle = Vector2ToAngle(new Vector2(createPos.x, createPos.z) - new Vector2(playerPos.x, playerPos.z)) + 180;
 
-        DirectionType dType = DirectionType.down;
+        Direction dType = Direction.down;
 
         if (angle >= 223 && angle < 315)
-            dType = DirectionType.back;
+            dType = Direction.back;
         else if (angle >= 135 && angle < 225)
-            dType = DirectionType.right;
+            dType = Direction.right;
         else if (angle >= 45 && angle < 135)
-            dType = DirectionType.foward;
+            dType = Direction.foward;
         else
-            dType = DirectionType.left;
+            dType = Direction.left;
 
         return dType;
     }
@@ -234,14 +234,14 @@ public class CommonFunction
     /// </summary>
     /// <param name="dType">向き</param>
     /// <returns></returns>
-    public static int GetCreateEntityAngleByDirection(DirectionType dType)
+    public static int GetCreateEntityAngleByDirection(Direction dType)
     {
         int angle = 0;
         switch (dType)
         {
-            case DirectionType.foward: angle = 180; break;
-            case DirectionType.right: angle = 90; break;
-            case DirectionType.left: angle = 270; break;
+            case Direction.foward: angle = 180; break;
+            case Direction.right: angle = 90; break;
+            case Direction.left: angle = 270; break;
         }
         return angle;
     }

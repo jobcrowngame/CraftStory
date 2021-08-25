@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// ログマネージャー
+/// </summary>
 public class Logger : Single<Logger>
 {
 #if UNITY_EDITOR

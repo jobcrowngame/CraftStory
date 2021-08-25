@@ -4,6 +4,9 @@ using UnityEngine;
 using JsonConfigData;
 using LitJson;
 
+/// <summary>
+/// 設定ファイルマネージャー
+/// </summary>
 class ConfigMng : Single<ConfigMng>
 {
     Dictionary<int, Bonus> bonusConfig;

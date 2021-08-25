@@ -64,7 +64,7 @@ public class BlueprintData
                 posX = entity.Pos.x - centerPos.x,
                 posY = entity.Pos.y - centerPos.y,
                 posZ = entity.Pos.z - centerPos.z,
-                direction = (int)entity.DirectionType
+                direction = (int)entity.Direction
             });
         }
     }

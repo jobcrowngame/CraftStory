@@ -2,8 +2,12 @@
 
 using UnityEngine;
 
+/// <summary>
+/// 向きがある建物（ドア、作業台...)
+/// </summary>
 public class EntityBuilding : EntityBase
 {
+    // ドアの状態（閉じっている）
     private bool DoorIsClosed
     {
         get => doorIsClosed;
@@ -33,6 +37,9 @@ public class EntityBuilding : EntityBase
     }
     private bool doorIsClosed = true;
 
+    /// <summary>
+    /// 長い時間クリック終了場合のロジック
+    /// </summary>
     public override void ClickingEnd()
     {
         base.ClickingEnd();
@@ -49,10 +56,22 @@ public class EntityBuilding : EntityBase
         }, EConfig.ItemID, 1);
     }
 
+    /// <summary>
+    /// クリックした場合のロジック
+    /// </summary>
     public override void OnClick()
     {
         base.OnClick();
 
-        DoorIsClosed = !DoorIsClosed;
+
+        if (Type == EntityType.Door)
+        {
+            DoorIsClosed = !DoorIsClosed;
+        }
+        else if (Type == EntityType.Workbench || Type == EntityType.Kamado)
+        {
+            var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
+            ui.SetType(Type);
+        }
     }
 }

@@ -1,5 +1,4 @@
 ﻿
-using UnityEngine;
 using GoogleMobileAds.Api;
 using System;
 

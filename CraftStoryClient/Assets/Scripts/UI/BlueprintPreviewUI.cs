@@ -43,14 +43,14 @@ public class BlueprintPreviewUI : UIBase
         var config = ConfigMng.E.Blueprint[blueprintId];
         var data = new BlueprintData(config.Data);
 
-        PlayerCtl.E.BlueprintPreviewCtl.CreateBlock(data);
+        PlayerCtl.E.BlueprintPreviewCtl.CreateEntity(data);
 
         this.beforUI = beforUI;
     }
     public void SetData(string jsonData, UIBase beforUI)
     {
         var data = new BlueprintData(jsonData);
-        PlayerCtl.E.BlueprintPreviewCtl.CreateBlock(data);
+        PlayerCtl.E.BlueprintPreviewCtl.CreateEntity(data);
 
         this.beforUI = beforUI;
     }

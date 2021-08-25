@@ -4,16 +4,24 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
+/// <summary>
+/// 設計図ビルダーペンセル
+/// </summary>
 public class BuilderPencil
 {
-    GameObject startNotation;
-    GameObject endNotation;
+    GameObject startNotation; // 始点
+    GameObject endNotation; // 終点
 
-    BlueprintData selectBlueprintData;
-    Vector3Int buildPos;
+    BlueprintData selectBlueprintData; // 選択されたエンティティ
+    Vector3Int buildPos; // 作成座標
 
+    // 始点があるかのチェック
     public bool IsStart { get => startNotation == null; }
 
+    /// <summary>
+    /// 始点を設定
+    /// </summary>
+    /// <param name="pos"></param>
     public void Start(Vector3 pos)
     {
         if (startNotation != null)
@@ -26,6 +34,11 @@ public class BuilderPencil
 
         GuideLG.E.Next();
     }
+
+    /// <summary>
+    /// 終点を設定
+    /// </summary>
+    /// <param name="pos"></param>
     public void End(Vector3 pos)
     {
         if (pos.y != startNotation.transform.position.y)
@@ -41,11 +54,13 @@ public class BuilderPencil
         GuideLG.E.Next();
     }
 
+    /// <summary>
+    /// 設計図を生成
+    /// </summary>
     public void CreateBlueprint()
     {
         var startPos = startNotation.transform.position;
         var endPos = endNotation.transform.position;
-
         var centPos = new Vector3((startPos.x + endPos.x) / 2, startPos.y, (startPos.z + endPos.z) / 2);
 
         int minX, maxX, minZ, maxZ;
@@ -99,6 +114,10 @@ public class BuilderPencil
 
         CancelCreateBlueprint();
     }
+
+    /// <summary>
+    /// 選択したエンティティをキャンセル
+    /// </summary>
     public void CancelCreateBlueprint()
     {
         if (startNotation != null) DestroyNotation(startNotation);
@@ -108,6 +127,11 @@ public class BuilderPencil
         if (homeUI != null) homeUI.ShowBuilderPencilBtn(false);
     }
 
+    /// <summary>
+    /// 設計図を使用
+    /// </summary>
+    /// <param name="startPos"></param>
+    /// <param name="data"></param>
     public void UseBlueprint(Vector3Int startPos, string data)
     {
         Logger.Log("UserBlueprint");
@@ -136,6 +160,9 @@ public class BuilderPencil
 
         GuideLG.E.Next();
     }
+    /// <summary>
+    /// 使用した設計図をキャンセル
+    /// </summary>
     public void CancelUserBlueprint()
     {
         WorldMng.E.MapCtl.DeleteBuilderPencil();
@@ -146,6 +173,10 @@ public class BuilderPencil
 
         GuideLG.E.Next(21);
     }
+
+    /// <summary>
+    /// 設計図向きを変換
+    /// </summary>
     public void SpinBlueprint()
     {
         Logger.Log("SpinBlueprint");
@@ -181,6 +212,10 @@ public class BuilderPencil
 
         WorldMng.E.MapCtl.InstantiateTransparenEntitys(selectBlueprintData, buildPos);
     }
+
+    /// <summary>
+    /// 使用した設計図をインスタンス
+    /// </summary>
     public void BuildBlueprint()
     {
         Logger.Log("BuildBlueprint");
@@ -223,11 +258,19 @@ public class BuilderPencil
         }
     }
 
+    /// <summary>
+    /// 始点、終点を削除
+    /// </summary>
+    /// <param name="notation"></param>
     private void DestroyNotation(GameObject notation)
     {
         if (notation != null)
             GameObject.Destroy(notation);
     }
+
+    /// <summary>
+    /// 選択範囲によって始点、終点の長さを調整
+    /// </summary>
     private void ChangeNotationState()
     {
         var posX = endNotation.transform.position.x - startNotation.transform.position.x;
@@ -279,16 +322,32 @@ public class BuilderPencil
             ChangePosAndScaleZ(endBarZ, Mathf.Abs(posZ) / 2, Mathf.Abs(posZ));
         }
     }
+    /// <summary>
+    /// 始点、終点座標X、大きさを変換
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="posX"></param>
+    /// <param name="scale"></param>
     private void ChangePosAndScaleX(GameObject obj, float posX, float scale)
     {
         obj.transform.localScale = new Vector3(obj.transform.localScale.x, obj.transform.localScale.y, scale + 1);
         obj.transform.localPosition = new Vector3(posX, obj.transform.localPosition.y, obj.transform.localPosition.z);
     }
+    /// <summary>
+    /// 始点、終点座標Z、大きさを変換
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="posZ"></param>
+    /// <param name="scale"></param>
     private void ChangePosAndScaleZ(GameObject obj, float posZ, float scale)
     {
         obj.transform.localScale = new Vector3(obj.transform.localScale.x, obj.transform.localScale.y, scale + 1);
         obj.transform.localPosition = new Vector3(obj.transform.localPosition.x, obj.transform.localPosition.y, posZ);
     }
+
+    /// <summary>
+    /// 選択した設計図データを削除
+    /// </summary>
     private void ClearSelectBlueprintDataBlock()
     {
         if (selectBlueprintData == null)

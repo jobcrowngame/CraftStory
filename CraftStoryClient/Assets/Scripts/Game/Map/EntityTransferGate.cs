@@ -1,6 +1,9 @@
 ﻿using JsonConfigData;
 using UnityEngine;
 
+/// <summary>
+/// 転送門
+/// </summary>
 public class EntityTransferGate : EntityBase
 {
     public int TransferGateID { get => transferGateID; }

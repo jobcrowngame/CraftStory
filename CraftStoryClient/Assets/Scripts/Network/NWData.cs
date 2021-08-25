@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LitJson;
+﻿using LitJson;
 
+/// <summary>
+/// 通信データ
+/// </summary>
 public class NWData
 {
     JsonData jd;

@@ -170,7 +170,7 @@ public class MapData
                 case EntityType.Kamado:
                 case EntityType.Door:
                     entity = CommonFunction.Instantiate<EntityBuilding>(config.Resources, parent, pos);
-                    var angle = CommonFunction.GetCreateEntityAngleByDirection((DirectionType)entityCell.direction);
+                    var angle = CommonFunction.GetCreateEntityAngleByDirection((Direction)entityCell.direction);
                     entity.transform.localRotation = Quaternion.Euler(0, angle, 0);
                     break;
 
@@ -179,10 +179,10 @@ public class MapData
                     break;
 
                 case EntityType.Torch:
-                    if ((DirectionType)entityCell.direction != DirectionType.down)
+                    if ((Direction)entityCell.direction != Direction.down)
                     {
                         entity = CommonFunction.Instantiate<EntityTorch>(config.Resources, parent, pos);
-                        entity.SetTouchType((DirectionType)entityCell.direction);
+                        entity.SetDirection((Direction)entityCell.direction);
                     }
                     break;
 
@@ -195,7 +195,7 @@ public class MapData
             {
                 entity.EntityID = entityCell.entityID;
                 entity.Pos = pos;
-                entity.DirectionType = (DirectionType)entityCell.direction;
+                entity.Direction = (Direction)entityCell.direction;
             }
 
             return entity;
@@ -234,7 +234,7 @@ public class MapData
             Map[pos.x, pos.y, pos.z] = entityCell;
         }
 
-        var obstacleList = MapCtl.GetEntityPosListByDirection(entityCell.entityID, pos, (DirectionType)entityCell.direction);
+        var obstacleList = MapCtl.GetEntityPosListByDirection(entityCell.entityID, pos, (Direction)entityCell.direction);
         foreach (var item in obstacleList)
         {
             map[item.x, item.y, item.z] = new MapCellData() { entityID = 10000 };
@@ -264,7 +264,7 @@ public class MapData
             map[pos.x, pos.y, pos.z].entityID = 0;
 
             // 阻害を削除
-            var obstacleList = MapCtl.GetEntityPosListByDirection(entity.entityID, pos, (DirectionType)entity.direction);
+            var obstacleList = MapCtl.GetEntityPosListByDirection(entity.entityID, pos, (Direction)entity.direction);
             foreach (var item in obstacleList)
             {
                 map[item.x, item.y, item.z].entityID = 0;

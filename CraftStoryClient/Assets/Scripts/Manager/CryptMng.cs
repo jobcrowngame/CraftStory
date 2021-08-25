@@ -2,8 +2,10 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using UnityEngine;
 
+/// <summary>
+/// 暗号化マネージャー
+/// </summary>
 public class CryptMng : Single<CryptMng>
 {
     string Prmkey = "4h5f2h4d31h4f1gf";

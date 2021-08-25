@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// プレイヤー命令コンソール
+/// </summary>
 public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, 
     IPointerDownHandler, IPointerUpHandler
 {
 
-    private bool isDrag;
-    private bool isClick;
+    private bool isDrag; // スクロールしているのタグ
+    private bool isClick; // クリックしているのタグ
     private bool IsClicking
     {
         get => isClicking;
@@ -15,14 +18,14 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
             isClicking = value;
         }
     }
-    private bool isClicking;
+    private bool isClicking;// 長い時間クリックしているのタグ
 
-    Vector2 startPos;
-    PointerEventData eventData;
-    private RaycastHit _cacheRaycastHit;
-    private GameObject clickingObj;
+    Vector2 startPos; // スクロール始点
+    PointerEventData eventData; 
+    private RaycastHit _cacheRaycastHit; // レザー
+    private GameObject clickingObj; // クリックしたGameObject
 
-    float clickingTime;
+    float clickingTime; // 長い時間クリックした時間
 
     private void Update()
     {
@@ -40,6 +43,10 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         }
     }
 
+    /// <summary>
+    /// スクロール開始
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnBeginDrag(PointerEventData eventData)
     {
         //Logger.Log("OnBeginDrag");
@@ -54,7 +61,10 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
             curDistance = Vector2.Distance(touch1, touch2);
     }
 
-    
+    /// <summary>
+    /// スクロール中
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnDrag(PointerEventData eventData)
     {
         if (eventData.pointerId == 0) touch1 = eventData.position;
@@ -79,6 +89,10 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         }
     }
 
+    /// <summary>
+    /// スクロール終了
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnEndDrag(PointerEventData eventData)
     {
         isDrag = false;
@@ -90,16 +104,24 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         if (eventData.pointerId == 1) touch2 = Vector2.zero;
     }
 
-    Vector2 touch1;
-    Vector2 touch2;
-    float curDistance = 0;
+    Vector2 touch1; // トーチ点　１
+    Vector2 touch2; // トーチ点　２
+    float curDistance = 0; // トーチ点１，２間の距離
 
+    /// <summary>
+    /// トーチ開始
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerDown(PointerEventData eventData)
     {
         this.eventData = eventData;
         isClick = true;
     }
 
+    /// <summary>
+    /// トーチ終了
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerUp(PointerEventData eventData)
     {
         if (isDrag)
@@ -128,6 +150,10 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         }
     }
 
+    /// <summary>
+    /// 長い時間クリック場合ロジック
+    /// </summary>
+    /// <param name="pos"></param>
     public void OnClicking(Vector2 pos)
     {
         clickingObj = RayCastHits(pos);
@@ -136,6 +162,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         PlayerCtl.E.OnClicking(Time.deltaTime, clickingObj);
     }
+    /// <summary>
+    /// 長い時間クリックキャンセルロジック
+    /// </summary>
     public void CancelClicking()
     {
         if (clickingObj != null)
@@ -148,6 +177,10 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         }
     }
 
+    /// <summary>
+    /// クリック場合ロジック
+    /// </summary>
+    /// <param name="pos"></param>
     private void OnClick(Vector2 pos)
     {
         var obj = RayCastHits(pos);
@@ -156,7 +189,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         var createPos = _cacheRaycastHit.normal + _cacheRaycastHit.collider.transform.position;
 
-        DirectionType dType = DirectionType.foward;
+        Direction dType = Direction.foward;
         CheckTouchPos(_cacheRaycastHit.collider.transform.position, createPos , out dType);
         PlayerCtl.E.OnClick(obj, createPos, dType);
     }
@@ -179,27 +212,33 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         return _cacheRaycastHit.collider.gameObject;
     }
 
-    private void CheckTouchPos(Vector3 p1, Vector3 p2, out DirectionType touchType)
+    /// <summary>
+    /// トーチした向きを判断
+    /// </summary>
+    /// <param name="p1">トーチGameObject座標</param>
+    /// <param name="p2">インスタンス座標</param>
+    /// <param name="touchType"></param>
+    private void CheckTouchPos(Vector3 p1, Vector3 p2, out Direction touchType)
     {
-        touchType = DirectionType.back;
+        touchType = Direction.back;
 
         if (p1.y < p2.y)
         {
-            touchType = DirectionType.up;
+            touchType = Direction.up;
         }
         else if (p1.y > p2.y)
         {
-            touchType = DirectionType.down;
+            touchType = Direction.down;
         }
         else
         {
             if (p1.z == p2.z)
             {
-                touchType = p1.x > p2.x ? DirectionType.left : DirectionType.right;
+                touchType = p1.x > p2.x ? Direction.left : Direction.right;
             }
             else
             {
-                touchType = p1.z > p2.z ? DirectionType.back : DirectionType.foward;
+                touchType = p1.z > p2.z ? Direction.back : Direction.foward;
             }
         }
     }
@@ -208,7 +247,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 /// <summary>
 /// エンティティの向き
 /// </summary>
-public enum DirectionType
+public enum Direction
 {
     up,
     down,

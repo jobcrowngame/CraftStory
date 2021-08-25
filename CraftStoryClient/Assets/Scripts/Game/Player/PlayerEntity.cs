@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using SimpleInputNamespace;
 
+/// <summary>
+/// プレイヤーエンティティ
+/// </summary>
 public class PlayerEntity : CharacterEntity
 {
-    private CharacterController controller;
-
-    private Vector3 moveDirection = Vector3.zero;
-    private float x, y;
-
-    private PlayerBehaviorType beforBehaveior = PlayerBehaviorType.Waiting;
+    private CharacterController controller; // プレイヤーコンソール
+    private Vector3 moveDirection = Vector3.zero; // 移動する値
+    private PlayerBehaviorType beforBehaveior = PlayerBehaviorType.Waiting; // 前のプレイヤーの行動
 
     public override void Init()
     {
@@ -23,11 +23,18 @@ public class PlayerEntity : CharacterEntity
             Behavior.Type = beforBehaveior;
     }
 
+    /// <summary>
+    /// 移動
+    /// </summary>
+    /// <param name="x">偏差X</param>
+    /// <param name="y">偏差Y</param>
     public void Move(float x, float y)
     {
+        // 壊す場合、移動出来ない
         if (Behavior.Type == PlayerBehaviorType.Breack)
             return;
 
+        // マップデータ、カメラコンソールが初期化していない場合、移動できない
         if (DataMng.E.MapData == null || PlayerCtl.E.CameraCtl == null)
             return;
 
@@ -74,6 +81,10 @@ public class PlayerEntity : CharacterEntity
             transform.position = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5);
         }
     }
+
+    /// <summary>
+    /// ジャンプ
+    /// </summary>
     public void Jump()
     {
         if (Behavior.Type != PlayerBehaviorType.Jump)
@@ -85,11 +96,17 @@ public class PlayerEntity : CharacterEntity
         }
     }
 
+    /// <summary>
+    /// 角度から座標変換
+    /// </summary>
     private Vector2 GetV2FromAngle(float angle)
     {
         float radian = Mathf.PI * angle / 180.0f; // 度数法(度)から弧度法(ラジアン)に変換
         return new Vector2(Mathf.Sin(radian), Mathf.Cos(radian));
     }
+    /// <summary>
+    /// 座標から角度変換
+    /// </summary>
     private float GetAngleFromV2(Vector2 v)
     {
         return -Vector2.SignedAngle(new Vector2(0, 1), v);
@@ -143,6 +160,9 @@ public class PlayerEntity : CharacterEntity
         }
     }
 
+    /// <summary>
+    /// モジュールアクティブによって調整
+    /// </summary>
     public void IsModelActive(bool b)
     {
         controller.radius = b ? 0.40f : 0.01f;

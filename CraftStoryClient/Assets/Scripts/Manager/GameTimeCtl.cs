@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// ゲーム時間コンソール
+/// </summary>
 public class GameTimeCtl
 {
     Light DirectionalLight { get => GameObject.Find("Directional Light").GetComponent<Light>(); }

@@ -7,6 +7,9 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/// <summary>
+/// サーバーとの通信マネージャー
+/// </summary>
 public partial class NWMng : MonoBehaviour
 {
     public static NWMng E
@@ -22,14 +25,23 @@ public partial class NWMng : MonoBehaviour
     private static NWMng entity;
     
 
-
-    private string url;
+    private string url; // サーバーURL
     public string URL { get => url; set => url = value; }
 
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator InitCoroutine()
     {
         yield return null;
     }
+
+    /// <summary>
+    /// サーバーに通信（サーバーURLゲット）
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <returns></returns>
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
         using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.TestURL))
@@ -52,6 +64,13 @@ public partial class NWMng : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 普通の通信
+    /// </summary>
+    /// <param name="rp">Response</param>
+    /// <param name="data">送信データ</param>
+    /// <param name="cmd">CMD</param>
+    /// <returns></returns>
     public IEnumerator HttpRequest(Action<JsonData> rp, NWData data, CMD cmd)
     {
         // ガイドの場合、サーバーとの通信はやめます。
@@ -59,10 +78,13 @@ public partial class NWMng : MonoBehaviour
             yield return null;
 
         Logger.Log("[CMD:{0}-{1}---Send]\n{2}",cmd, (int)cmd, data.ToString());
+
+        // 暗号化
         string cryptData = string.IsNullOrEmpty(data.ToString())
             ? ""
             : CryptMng.E.EncryptString(data.ToString());
 
+        // URLがない場合、終了
         if (string.IsNullOrEmpty(URL))
             yield return null;
 
@@ -120,18 +142,32 @@ public partial class NWMng : MonoBehaviour
     {
         StartCoroutine(ConnectIE(rp));
     }
+
+    /// <summary>
+    /// バージョンゲット
+    /// </summary>
+    /// <param name="rp"></param>
     public void GetVersion(Action<JsonData> rp)
     {
         var data = new NWData();
 
         StartCoroutine(HttpRequest(rp, data, CMD.Version));
     }
+
+    /// <summary>
+    /// 新しいアカウント作成
+    /// </summary>
+    /// <param name="rp"></param>
     public void CreateNewAccount(Action<JsonData> rp)
     {
         var data = new NWData();
 
         StartCoroutine(HttpRequest(rp, data, CMD.CreateNewAccount));
     }
+
+    /// <summary>
+    /// ログイン
+    /// </summary>
     public void Login(Action<JsonData> rp, string id, string pw)
     {
         var data = new NWData();
@@ -140,6 +176,11 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.Login));
     }
+
+    /// <summary>
+    /// アイテムリストをゲット
+    /// </summary>
+    /// <param name="rp"></param>
     public void GetItemList(Action<JsonData> rp)
     {
         var data = new NWData();
@@ -148,6 +189,10 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.ItemList));
     }
+
+    /// <summary>
+    /// アイテムを手に入る
+    /// </summary>
     public void AddItem(Action<JsonData> rp, int itemId, int count)
     {
         var data = new NWData();
@@ -158,6 +203,10 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItem));
     }
+
+    /// <summary>
+    /// 設計図を手に入る
+    /// </summary>
     public void AddItemInData(Action<JsonData> rp, int itemId, int count, string newName, string rdata)
     {
         var data = new NWData();
@@ -170,6 +219,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItemInData));
     }
+
+    /// <summary>
+    /// 服すのアイテムを手に入る
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="items"></param>
     public void AddItems(Action<JsonData> rp, Dictionary<int, int> items)
     {
         var data = new NWData();
@@ -185,6 +240,13 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItems));
     }
+
+    /// <summary>
+    /// アイテムを消耗
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="guid"></param>
+    /// <param name="count"></param>
     public void UseItem(Action<JsonData> rp, int guid, int count)
     {
         var data = new NWData();
@@ -195,6 +257,13 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.UseItem));
     }
+
+    /// <summary>
+    /// アイテムを削除
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="itemid"></param>
+    /// <param name="count"></param>
     public void RemoveItem(Action<JsonData> rp, int itemid, int count)
     {
         var data = new NWData();
@@ -205,6 +274,13 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.RemoveItemByItemId));
     }
+
+    /// <summary>
+    /// アイテムを装備
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="guid"></param>
+    /// <param name="site"></param>
     public void EquitItem(Action<JsonData> rp, int guid, int site)
     {
         var data = new NWData();
@@ -226,6 +302,13 @@ public partial class NWMng : MonoBehaviour
             StartCoroutine(HttpRequest(rp, data, CMD.EquitItem));
         }
     }
+
+    /// <summary>
+    /// クラフト
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="craft"></param>
+    /// <param name="count"></param>
     public void Craft(Action<JsonData> rp, Craft craft, int count)
     {
         var data = new NWData();
@@ -237,6 +320,11 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.Craft));
     }
 
+    /// <summary>
+    /// ショップで買う
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="shopId"></param>
     public void Buy(Action<JsonData> rp, int shopId)
     {
         var data = new NWData();
@@ -246,6 +334,11 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.Buy));
     }
+
+    /// <summary>
+    /// 持っているコインをゲット
+    /// </summary>
+    /// <param name="rp"></param>
     public void GetCoins(Action<JsonData> rp)
     {
         var data = new NWData();
@@ -254,6 +347,13 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetCoins));
     }
+
+    /// <summary>
+    /// 課金
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="productId"></param>
+    /// <param name="transactionID"></param>
     public void Charge(Action<JsonData> rp, string productId, string transactionID)
     {
         var data = new NWData();
@@ -264,6 +364,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.Charge));
     }
+
+    /// <summary>
+    /// ボーナスをもらう
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="bonusId"></param>
     public void GetBonus(Action<JsonData> rp, int bonusId)
     {
         var data = new NWData();
@@ -272,6 +378,12 @@ public partial class NWMng : MonoBehaviour
         data.Add("bonusId", bonusId);
         StartCoroutine(HttpRequest(rp, data, CMD.GetBonus));
     }
+
+    /// <summary>
+    /// 冒険マップのボーナス計算
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="resources"></param>
     public void ClearAdventure(Action<JsonData> rp, List<int> resources)
     {
         var data = new NWData();
@@ -295,6 +407,11 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.ClearAdventure));
     }
+
+    /// <summary>
+    /// マイショップのレベルアップ
+    /// </summary>
+    /// <param name="rp"></param>
     public void LevelUpMyShop(Action<JsonData> rp)
     {
         var data = new NWData();
@@ -303,6 +420,14 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.LevelUpMyShop));
     }
+
+    /// <summary>
+    /// マイショップの設計図アップロード
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="itemGuid"></param>
+    /// <param name="site"></param>
+    /// <param name="price"></param>
     public void UploadBlueprintToMyShop(Action<JsonData> rp, int itemGuid, int site, int price)
     {
         var data = new NWData();
@@ -315,6 +440,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.UploadBlueprintToMyShop));
     }
+
+    /// <summary>
+    /// ニックネーム改修
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="nickName"></param>
     public void UpdateNickName(Action<JsonData> rp, string nickName)
     {
         var data = new NWData();
@@ -324,6 +455,14 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.UpdateNickName));
     }
+
+    /// <summary>
+    /// ショップの設計図を検索
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="page"></param>
+    /// <param name="nickName"></param>
+    /// <param name="sortType"></param>
     public void SearchMyShopItems(Action<JsonData> rp, int page, string nickName, int sortType)
     {
         var data = new NWData();
@@ -335,6 +474,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.SearchMyShopItems));
     }
+
+    /// <summary>
+    /// 設計図を買う
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="guid"></param>
     public void BuyMyShopItem(Action<JsonData> rp, int guid)
     {
         var data = new NWData();
@@ -344,6 +489,13 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.BuyMyShopItem));
     }
+
+    /// <summary>
+    /// マイショップの設計図をロード
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="site"></param>
+    /// <param name="isfree"></param>
     public void LoadBlueprint(Action<JsonData> rp, int site, int isfree)
     {
         var data = new NWData();
@@ -354,6 +506,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.LoadBlueprint));
     }
+
+    /// <summary>
+    /// メールをゲット
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="page"></param>
     public void GetEmail(Action<JsonData> rp, int page)
     {
         var data = new NWData();
@@ -364,6 +522,11 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.GetEmail));
     }
 
+    /// <summary>
+    /// メールを読む
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="guid"></param>
     public void ReadEmail(Action<JsonData> rp, int guid)
     {
         var data = new NWData();
@@ -373,6 +536,11 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.ReadEmail));
     }
+
+    /// <summary>
+    /// 新しいメール数をゲット
+    /// </summary>
+    /// <param name="rp"></param>
     public void GetNewEmailCountRequest(Action<JsonData> rp)
     {
         var data = new NWData();
@@ -381,6 +549,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetNewEmailCount));
     }
+
+    /// <summary>
+    /// ランダムボーナスをゲット
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="randomBonusId"></param>
     public void GetRandomBonus(Action<JsonData> rp, int randomBonusId)
     {
         var data = new NWData();
@@ -390,6 +564,11 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetRandomBonus));
     }
+
+    /// <summary>
+    /// お知らせリストをゲット
+    /// </summary>
+    /// <param name="rp"></param>
     public void GetNoticeList(Action<JsonData> rp)
     {
         var data = new NWData();
@@ -398,6 +577,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetNoticeList));
     }
+
+    /// <summary>
+    /// お知らせ詳細をゲット
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="guid"></param>
     public void GetNotice(Action<JsonData> rp, int guid)
     {
         var data = new NWData();
@@ -407,6 +592,11 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetNotice));
     }
+
+    /// <summary>
+    /// マイショップのデータをゲット
+    /// </summary>
+    /// <param name="rp"></param>
     public void GetMyShopInfo(Action<JsonData> rp)
     {
         var data = new NWData();
@@ -415,6 +605,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetMyShopInfo));
     }
+
+    /// <summary>
+    /// メール内のアイテムをもらう
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="emailGuid"></param>
     public void ReceiveEmailItem(Action<JsonData> rp, int emailGuid)
     {
         var data = new NWData();
@@ -424,6 +620,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.ReceiveEmailItem));
     }
+
+    /// <summary>
+    /// サブスクリプションを買う
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="type"></param>
     public void BuySubscription(Action<JsonData> rp, int type)
     {
         var data = new NWData();
@@ -433,6 +635,11 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.BuySubscription));
     }
+
+    /// <summary>
+    /// サブスクリプション情報をゲット
+    /// </summary>
+    /// <param name="rp"></param>
     public void GetSubscriptionInfoRequest(Action<JsonData> rp)
     {
         var data = new NWData();
@@ -441,6 +648,11 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetSubscriptionInfo));
     }
+
+    /// <summary>
+    /// チュートリアル完了
+    /// </summary>
+    /// <param name="rp"></param>
     public void GuideEnd(Action<JsonData> rp)
     {
         var data = new NWData();
@@ -450,6 +662,11 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.GuideEnd));
     }
 
+    /// <summary>
+    /// 10連ガチャ
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="gachaId"></param>
     public void Gacha10(Action<JsonData> rp, int gachaId)
     {
         var data = new NWData();
@@ -459,6 +676,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.Gacha10));
     }
+
+    /// <summary>
+    /// アイテムを削除
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="guid"></param>
     public void DeleteItem(Action<JsonData> rp, int guid)
     {
         var data = new NWData();
@@ -468,6 +691,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.DeleteItem));
     }
+
+    /// <summary>
+    /// 複数のアイテムを削除
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="items"></param>
     public void DeleteItems(Action<JsonData> rp, List<ItemData.DeleteItemData> items)
     {
         var data = new NWData();
@@ -477,6 +706,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.DeleteItems));
     }
+
+    /// <summary>
+    /// フォローする
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="guid"></param>
     public void Follow(Action<JsonData> rp, int guid)
     {
         var data = new NWData();
@@ -486,6 +721,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.Follow));
     }
+
+    /// <summary>
+    /// フォローを解除
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="guid"></param>
     public void DeFollow(Action<JsonData> rp, int guid)
     {
         var data = new NWData();
@@ -495,6 +736,11 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.DeFollow));
     }
+
+    /// <summary>
+    /// フォローリストをゲット
+    /// </summary>
+    /// <param name="rp"></param>
     public void ReadFollow(Action<JsonData> rp)
     {
         var data = new NWData();
@@ -503,6 +749,11 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.ReadFollow));
     }
+
+    /// <summary>
+    /// フォロワーリストををゲット
+    /// </summary>
+    /// <param name="rp"></param>
     public void ReadFollower(Action<JsonData> rp)
     {
         var data = new NWData();
@@ -511,6 +762,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.ReadFollower));
     }
+
+    /// <summary>
+    /// コメントを改修
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="msg"></param>
     public void UpdateComment(Action<JsonData> rp, string msg)
     {
         var data = new NWData();
@@ -520,6 +777,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.UpdateComment));
     }
+
+    /// <summary>
+    /// フレンドを検索
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="userAcc"></param>
     public void SearchFriend(Action<JsonData> rp, string userAcc)
     {
         var data = new NWData();
@@ -529,6 +792,12 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.SearchFriend));
     }
+
+    /// <summary>
+    /// 設計図詳細データをゲット
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="myshopId"></param>
     public void GetBlueprintPreviewData(Action<JsonData> rp, int myshopId)
     {
         var data = new NWData();
@@ -540,7 +809,11 @@ public partial class NWMng : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// ホームデータをサーバーにセーブ
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="homedata"></param>
     public void SaveHomeData(Action<JsonData> rp, string homedata)
     {
         if (DataMng.E.UserData == null)
@@ -553,6 +826,11 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.SaveHomeData));
     }
+
+    /// <summary>
+    /// ホームデータをサーバーからロード
+    /// </summary>
+    /// <param name="rp"></param>
     public void LoadHomeData(Action<JsonData> rp)
     {
         var data = new NWData();
@@ -562,7 +840,10 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.LoadHomeData));
     }
 
-
+    /// <summary>
+    /// クライアントメッセージをサーバーに送る
+    /// </summary>
+    /// <param name="msg"></param>
     public void ShowClientLog(string msg)
     {
         var data = new NWData();

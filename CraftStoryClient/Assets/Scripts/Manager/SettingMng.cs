@@ -1,40 +1,43 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// ゲーム内の設定
+/// </summary>
 public class SettingMng : Single<SettingMng>
 {
+    // カメラ角度制限　最大
     public float LookUpAngleMax { get => lookUpAngleMax; }
     private float lookUpAngleMax = 80f;
 
+    // カメラ角度制限　最小
     public float LookUpAngleMin { get => lookUpAngleMin; }
     private float lookUpAngleMin = 320f;
 
+    // カメラ距離制限　最大
     public float CameraDistanseMax { get => cameraDistanseMax; }
     private float cameraDistanseMax = -10f;
 
+    // キャラクターモジュール隠れる距離
     public float EnactiveCharacterModelDistanse { get => enactiveCharacterModelDistanse; }
     private float enactiveCharacterModelDistanse = -2f;
 
+    // カメラスピード
     public float CamRotSpeed { get => camRotSpeed; }
     private float camRotSpeed = 0.5f;    //視点の上下スピード
 
-    public float RotateSpeed { get => rotateSpeed; }
-    private float rotateSpeed = 3.0F;    //回転速度
-
-    public float CameraPullSpeed { get => cameraPullSpeed; }
-    private float cameraPullSpeed = 10f;
-
-    public float CameraPushSpeed { get => cameraPushSpeed; }
-    private float cameraPushSpeed = 50f;
-
+    // 移動範囲制限偏差
     public int MoveBoundaryOffset { get => moveBoundaryOffset; }
     private int moveBoundaryOffset = 3;
 
+    // 移動スピード
     public float MoveSpeed { get => moveSpeed; }
     private float moveSpeed = 4F;       //歩行速度
 
+    // ジャンプ力
     public float JumpSpeed { get => jumpSpeed; }
     private float jumpSpeed = 7F;   //ジャンプ力
 
+    // 重力
     public float Gravity { get => gravity; }
     private float gravity = 20F;    //重力の大きさ
 
@@ -48,9 +51,7 @@ public class SettingMng : Single<SettingMng>
     public int GameDaySeconds { get => mGameDaySeconds; }
     private int mGameDaySeconds = 60 * 10;
 
+    // Skybox　明るさ最小
     public float MinAmbientIntensity { get => mMinAmbientIntensity; }
     private float mMinAmbientIntensity = 0.6f;
-
-    public float MaxAmbientIntensity { get => mMaxAmbientIntensity; }
-    private float mMaxAmbientIntensity = 0.6f;
 }

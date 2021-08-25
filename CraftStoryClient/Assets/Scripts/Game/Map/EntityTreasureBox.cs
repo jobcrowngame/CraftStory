@@ -1,7 +1,9 @@
 ﻿using LitJson;
 using System.Collections.Generic;
-using UnityEngine;
 
+/// <summary>
+/// 宝ボックス
+/// </summary>
 public class EntityTreasureBox : EntityBase
 {
     public override void ClickingEnd()

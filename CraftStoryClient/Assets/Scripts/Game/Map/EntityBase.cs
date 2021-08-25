@@ -1,51 +1,27 @@
 ﻿using JsonConfigData;
 using UnityEngine;
 
+/// <summary>
+/// エンティティベース
+/// </summary>
 public class EntityBase : MonoBehaviour
 {
-    private int id;
-    private Vector3Int pos;
-    private DirectionType directionType;
-    private float clickingTime;
+    private int id; // エンティティID
+    private Vector3Int pos; // 座標
+    private Direction direction; // 向き
+    private float clickingTime; // タッチした時間
 
-    public int EntityID { get => id; set => id = value; }
-    public Entity EConfig { get => ConfigMng.E.Entity[id]; }
-    public Vector3Int Pos { get => pos; set => pos = value; }
-    public Vector3Int Scale { get => new Vector3Int(EConfig.ScaleX, EConfig.ScaleY, EConfig.ScaleZ); }
-    public EntityType Type { get => (EntityType)EConfig.Type; }
-    public DirectionType DirectionType { get => directionType; set => directionType = value; }
-
-    public GameObject obj { get; set; }
-   
-    public string ToStringData()
-    {
-        return string.Format("{0}^{1}^{2}^{3}", id, pos.x, pos.y, pos.z);
-    }
-    public virtual EntityBase Active(bool b, Transform parent = null)
-    {
-        if (b)
-        {
-            if (obj == null)
-            {
-                obj = CommonFunction.Instantiate(EConfig.Resources, WorldMng.E.MapCtl.CellParent, Pos);
-            }
-            else
-                obj.gameObject.SetActive(b);
-        }
-        else
-        {
-            if (obj != null)
-                obj.gameObject.SetActive(false);
-        }
-
-        return this;
-    }
-    public void ClearObj()
-    {
-        obj = null;
-    }
+    public int EntityID { get => id; set => id = value; } // エンティティID
+    public Entity EConfig { get => ConfigMng.E.Entity[id]; } // エンティティ設定ファイル
+    public Vector3Int Pos { get => pos; set => pos = value; } // 座標
+    public EntityType Type { get => (EntityType)EConfig.Type; } // エンティティタイプ
+    public Direction Direction { get => direction; set => direction = value; } // 向き
 
     public virtual void OnClick() { }
+    /// <summary>
+    /// 長い時間クリック
+    /// </summary>
+    /// <param name="time"></param>
     public virtual void OnClicking(float time)
     {
         if (clickingTime == 0)
@@ -62,9 +38,19 @@ public class EntityBase : MonoBehaviour
             EffectMng.E.RemoveDestroyEffect();
         }
     }
+    /// <summary>
+    /// 長い時間クリックキャンセル
+    /// </summary>
     public virtual void CancelClicking() { clickingTime = 0; }
+    /// <summary>
+    /// 長い時間クリック終了
+    /// </summary>
     public virtual void ClickingEnd() { }
-    public virtual void SetTouchType(DirectionType tType) { }
+    /// <summary>
+    /// タッチした向き
+    /// </summary>
+    /// <param name="tType"></param>
+    public virtual void SetDirection(Direction tType) { }
 }
 
 public enum EntityType

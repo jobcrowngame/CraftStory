@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using UnityEngine.Purchasing;
-using UnityEngine.Purchasing.Security;
 
+/// <summary>
+/// Unity　IAP　マネージャー
+/// </summary>
 public class IAPMng : Single<IAPMng>, IStoreListener
 {
     private IStoreController m_Controller;

@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// 世界マネージャー
+/// </summary>
 public class WorldMng : MonoBehaviour
 {
     public static WorldMng E

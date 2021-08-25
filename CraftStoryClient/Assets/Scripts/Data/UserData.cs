@@ -4,6 +4,6 @@ using System.Collections.Generic;
 [Serializable]
 public class UserData
 {
-    public string Account { get; set; }
-    public string UserPW { get; set; }
+    public string Account { get; set; } // アカウント
+    public string UserPW { get; set; } // パスワード
 }

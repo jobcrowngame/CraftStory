@@ -1,14 +1,16 @@
-﻿using JsonConfigData;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// マップコンソール
+/// </summary>
 public class MapCtl
 {
-    private MapDataFactory mapFactory;
-    private Transform mapCellParent;
-    private Transform builderPencilParent;
-    private Transform effectParent;
+    private MapDataFactory mapFactory; // マップ工場
+    private Transform mapCellParent; // ブロック親
+    private Transform builderPencilParent; // 建物親
+    private Transform effectParent; // エフェクト親
 
     public Transform CellParent { get => mapCellParent; }
     public Transform EffectParent { get => effectParent; }
@@ -18,6 +20,9 @@ public class MapCtl
         mapFactory = new MapDataFactory();
     }
 
+    /// <summary>
+    /// マップを生成
+    /// </summary>
     public void CreateMap()
     {
         DataMng.E.SetMapData(NowLoadingLG.E.NextMapID);
@@ -32,6 +37,11 @@ public class MapCtl
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
         Logger.Log("map 生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
     }
+
+    /// <summary>
+    /// エンティティをインスタンス
+    /// </summary>
+    /// <param name="mData"></param>
     private void InstantiateEntitys(MapData mData)
     {
         for (int y = 0; y < mData.GetMapSize().y; y++)
@@ -53,6 +63,11 @@ public class MapCtl
         }
     }
 
+    /// <summary>
+    /// 半透明エンティティをインスタンス
+    /// </summary>
+    /// <param name="blueprint"></param>
+    /// <param name="startPos"></param>
     public void InstantiateTransparenEntitys(BlueprintData blueprint, Vector3Int startPos)
     {
         var shader = Shader.Find("SemiTransparent");
@@ -117,6 +132,12 @@ public class MapCtl
             }
         }
     }
+
+    /// <summary>
+    /// エンティティをインスタンス
+    /// </summary>
+    /// <param name="blueprint"></param>
+    /// <param name="buildPos"></param>
     public void InstantiateEntitys(BlueprintData blueprint, Vector3Int buildPos)
     {
         if (blueprint == null)
@@ -132,7 +153,14 @@ public class MapCtl
             //CheckNextToEntitys(item.GetPos());
         }
     }
-    public EntityBase CreateEntity(int entityId, Vector3Int pos, DirectionType dType)
+    /// <summary>
+    /// エンティティを作成
+    /// </summary>
+    /// <param name="entityId">エンティティID</param>
+    /// <param name="pos">座標</param>
+    /// <param name="dType">向き</param>
+    /// <returns></returns>
+    public EntityBase CreateEntity(int entityId, Vector3Int pos, Direction dType)
     {
         // マップエリア以外ならエラーメッセージを出す。
         if (IsOutRange(DataMng.E.MapData, pos))
@@ -160,11 +188,18 @@ public class MapCtl
         return entity;
     }
 
+    /// <summary>
+    /// エンティティを削除
+    /// </summary>
+    /// <param name="entity"></param>
     public void DeleteEntity(EntityBase entity)
     {
         DataMng.E.MapData.Remove(entity.Pos);
         CheckNextToEntitys(entity.Pos);
     }
+    /// <summary>
+    /// 設計図エンティティを削除
+    /// </summary>
     public void DeleteBuilderPencil()
     {
         if(builderPencilParent != null) GameObject.Destroy(builderPencilParent.gameObject);
@@ -193,6 +228,11 @@ public class MapCtl
         }
     }
 
+    /// <summary>
+    /// マップIDによってマップを生成
+    /// </summary>
+    /// <param name="mapId"></param>
+    /// <returns></returns>
     public MapData CreateMapData(int mapId)
     {
         return mapFactory.CreateMapData(mapId);
@@ -203,7 +243,7 @@ public class MapCtl
     /// <summary>
     /// 作成できるかのチェック
     /// </summary>
-    public static bool CheckCanCreate(MapData mdata, int entityId, Vector3Int pos, DirectionType dType)
+    public static bool CheckCanCreate(MapData mdata, int entityId, Vector3Int pos, Direction dType)
     {
         // 被ってるかをチェック
         if (mdata.Map[pos.x, pos.y, pos.z].entityID > 0)
@@ -228,13 +268,22 @@ public class MapCtl
 
         return true;
     }
-    public static List<Vector3Int> GetEntityPosListByDirection(int entityId, Vector3Int pos, DirectionType dType)
+
+    /// <summary>
+    /// 大きさが１以上の場合
+    /// 向きによってエンティティリストをゲット
+    /// </summary>
+    /// <param name="entityId"></param>
+    /// <param name="pos"></param>
+    /// <param name="dType"></param>
+    /// <returns></returns>
+    public static List<Vector3Int> GetEntityPosListByDirection(int entityId, Vector3Int pos, Direction dType)
     {
         var config = ConfigMng.E.Entity[entityId];
         List<Vector3Int> posList = new List<Vector3Int>();
         switch (dType)
         {
-            case DirectionType.foward:
+            case Direction.foward:
                 for (int x = 0; x > -config.ScaleX; x--)
                 {
                     for (int z = 0; z < config.ScaleZ; z++)
@@ -247,7 +296,7 @@ public class MapCtl
                     }
                 }
                 break;
-            case DirectionType.back:
+            case Direction.back:
                 for (int x = 0; x < config.ScaleX; x++)
                 {
                     for (int z = 0; z < config.ScaleZ; z++)
@@ -260,7 +309,7 @@ public class MapCtl
                     }
                 }
                 break;
-            case DirectionType.right:
+            case Direction.right:
                 for (int x = 0; x < config.ScaleZ; x++)
                 {
                     for (int z = 0; z > -config.ScaleX; z--)
@@ -274,7 +323,7 @@ public class MapCtl
                 }
                 break;
 
-            case DirectionType.left:
+            case Direction.left:
                 for (int x = 0; x < config.ScaleZ; x++)
                 {
                     for (int z = 0; z < config.ScaleX; z++)
@@ -291,6 +340,14 @@ public class MapCtl
 
         return posList;
     }
+
+    /// <summary>
+    /// offsetによってエンティティ座標を修正
+    /// </summary>
+    /// <param name="mData"></param>
+    /// <param name="pos"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
     public static Vector3 FixEntityPos(MapData mData, Vector3 pos, int offset)
     {
         if (pos.x < offset)
@@ -307,6 +364,14 @@ public class MapCtl
 
         return pos;
     }
+    /// <summary>
+    /// 座標X、Zによって地面Yの座標をゲット
+    /// </summary>
+    /// <param name="mapData"></param>
+    /// <param name="posX"></param>
+    /// <param name="posZ"></param>
+    /// <param name="offsetY">偏位量</param>
+    /// <returns></returns>
     public static Vector3Int GetGroundPos(MapData mapData, int posX, int posZ, float offsetY = 0)
     {
         if (posX < 0) posX = UnityEngine.Random.Range(0, mapData.SizeX);
@@ -324,6 +389,12 @@ public class MapCtl
 
         return new Vector3Int(posX, posY, posZ);
     }
+    /// <summary>
+    /// ブロックが表面にあるかチェック
+    /// </summary>
+    /// <param name="mapData"></param>
+    /// <param name="site"></param>
+    /// <returns></returns>
     private static bool CheckBlockIsSurface(MapData mapData, Vector3Int site)
     {
         var isSurface = IsSurface(mapData, new Vector3Int(site.x - 1, site.y, site.z));

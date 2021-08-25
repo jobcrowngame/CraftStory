@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// データマネージャー
+/// </summary>
 [Serializable]
 public class DataMng : Single<DataMng>
 {

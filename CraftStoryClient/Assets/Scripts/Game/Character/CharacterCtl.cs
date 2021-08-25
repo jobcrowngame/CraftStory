@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// キャラクタコンソール
+/// </summary>
 public class CharacterCtl
 {
     private PlayerEntity player;

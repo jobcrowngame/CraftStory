@@ -2,11 +2,19 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// マップデータ生成する工場
+/// </summary>
 public class MapDataFactory
 {
     private MapData mData;
     private Map mapConfig;
 
+    /// <summary>
+    /// マップデータを生成
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public MapData CreateMapData(int id)
     {
         var startTime = DateTime.Now;
@@ -25,6 +33,9 @@ public class MapDataFactory
 
         return mData;
     }
+    /// <summary>
+    /// 基本ブロック生成
+    /// </summary>
     private void AddBaseBlocks()
     {
         int groundHeight = mapConfig.Entity01Height;
@@ -59,6 +70,10 @@ public class MapDataFactory
             }
         }
     }
+
+    /// <summary>
+    /// 山を生成
+    /// </summary>
     private void AddMountains()
     {
         if (mapConfig.Mountains == "N")
@@ -123,6 +138,10 @@ public class MapDataFactory
             }
         }
     }
+
+    /// <summary>
+    /// 資源を生成
+    /// </summary>
     private void AddResources()
     {
         var data = mapConfig.Resources.Split(',');
@@ -161,6 +180,9 @@ public class MapDataFactory
             }
         }
     }
+    /// <summary>
+    /// 転送門を生成
+    /// </summary>
     private void AddTransferGateConfig()
     {
         var transferGateID = mapConfig.TransferGateID;
@@ -192,6 +214,10 @@ public class MapDataFactory
 
         mData.Map[(int)newPos.x, (int)newPos.y + 1, (int)newPos.z] = new MapData.MapCellData() { entityID = config.EntityID };
     }
+
+    /// <summary>
+    /// 建物を生成
+    /// </summary>
     private void AddBuildings()
     {
         var data = mapConfig.Buildings.Split(',');

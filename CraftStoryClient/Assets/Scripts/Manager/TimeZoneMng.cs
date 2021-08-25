@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Timers;
+﻿using System.Collections;
 
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// 時計機能
+/// </summary>
 public class TimeZoneMng : MonoBehaviour
 {
     UnityEvent SecondTimerEvent01;

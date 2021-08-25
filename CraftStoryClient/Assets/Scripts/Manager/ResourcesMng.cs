@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+/// <summary>
+/// アセットマネージャー
+/// </summary>
 public class ResourcesMng : Single<ResourcesMng>
 {
     Dictionary<string, Object> resourcesDic;
@@ -14,6 +17,9 @@ public class ResourcesMng : Single<ResourcesMng>
         yield return null;
     }
 
+    /// <summary>
+    /// アセットをロード
+    /// </summary>
     public Object ReadResources(string path)
     {
         if (string.IsNullOrEmpty(path))
@@ -35,6 +41,9 @@ public class ResourcesMng : Single<ResourcesMng>
         return gameObj;
     }
 
+    /// <summary>
+    /// アセットをロード
+    /// </summary>
     public T ReadResources<T>(string path) where T : Object
     {
         if (string.IsNullOrEmpty(path))

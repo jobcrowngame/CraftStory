@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using JsonConfigData;
+﻿using System.Collections.Generic;
 using SimpleInputNamespace;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーのコンソール
+/// </summary>
 public class PlayerCtl : MonoBehaviour
 {
     public static PlayerCtl E
@@ -21,28 +22,27 @@ public class PlayerCtl : MonoBehaviour
     }
     private static PlayerCtl entity;
 
-    public bool Lock { get; set; }
+    public bool Lock { get; set; } // ロック
 
     public PlayerEntity PlayerEntity { get => playerEntity; }
-    private PlayerEntity playerEntity;
+    private PlayerEntity playerEntity; // プレイヤーエンティティ
 
     public Joystick Joystick { get => joystick; set => joystick = value; }
-    private Joystick joystick;
+    private Joystick joystick; // ジョイスティック
 
     public ScreenDraggingCtl ScreenDraggingCtl { get => screenDraggingCtl; set => screenDraggingCtl = value; }
-    private ScreenDraggingCtl screenDraggingCtl;
+    private ScreenDraggingCtl screenDraggingCtl; // 画面操作コンソール
 
     public BuilderPencil BuilderPencil { get => builderPencil; }
-    private BuilderPencil builderPencil;
+    private BuilderPencil builderPencil; // ビルダーペンセルコンソール
 
     public ItemData SelectItem 
     {
         get => selectItem; 
         set => selectItem = value;
     }
-    private ItemData selectItem;
-    private EntityBase clickingEntity;
-    private EntityResources clickingResource;
+    private ItemData selectItem; // 選択したアイテム
+    private EntityBase clickingEntity; // 長い時間クリックしてるエンティティ
 
     public CameraCtl CameraCtl
     {
@@ -53,7 +53,7 @@ public class PlayerCtl : MonoBehaviour
             cameraCtl.Init();
         }
     }
-    private CameraCtl cameraCtl;
+    private CameraCtl cameraCtl; // カメラコンソール
 
     public BlueprintPreviewCtl BlueprintPreviewCtl
     {
@@ -63,7 +63,7 @@ public class PlayerCtl : MonoBehaviour
             blueprintPreviewCtl = value;
         }
     }
-    private BlueprintPreviewCtl blueprintPreviewCtl;
+    private BlueprintPreviewCtl blueprintPreviewCtl; // 設計図プレイビューコンソール
 
     public void Init()
     {
@@ -88,6 +88,10 @@ public class PlayerCtl : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// プレイヤーエンティティをインスタンス
+    /// </summary>
+    /// <returns></returns>
     public PlayerEntity AddPlayerEntity()
     {
         var resource = Resources.Load("Prefabs/Game/Character/Player") as GameObject;
@@ -117,6 +121,10 @@ public class PlayerCtl : MonoBehaviour
         PlayerEntity.Jump();
     }
 
+    /// <summary>
+    /// 選択したアイテムを変換
+    /// </summary>
+    /// <param name="item"></param>
     public void ChangeSelectItem(ItemData item)
     {
         builderPencil.CancelCreateBlueprint();
@@ -128,11 +136,20 @@ public class PlayerCtl : MonoBehaviour
             ? ItemType.None
             : (ItemType)selectItem.Config().Type;
     }
-    public void OnClick(GameObject collider, Vector3 pos, DirectionType dType)
+
+    /// <summary>
+    /// クリックした場合のロジック
+    /// </summary>
+    /// <param name="collider">クリックしたGameObject</param>
+    /// <param name="pos">クリックした座標</param>
+    /// <param name="dType">クリックした向き</param>
+    public void OnClick(GameObject collider, Vector3 pos, Direction dType)
     {
+        // プレビューの場合、クリックを無視
         if (DataMng.E.RuntimeData.IsPreviev)
             return;
 
+        // ホーム、チュートリアルの場合
         if (DataMng.E.RuntimeData.MapType == MapType.Home 
             || DataMng.E.RuntimeData.MapType == MapType.Guide)
         {
@@ -141,18 +158,7 @@ public class PlayerCtl : MonoBehaviour
                 if (collider != null)
                 {
                     var entity = collider.GetComponent<EntityBase>();
-                    switch (entity.Type)
-                    {
-                        case EntityType.Workbench:
-                        case EntityType.Kamado:
-                            var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
-                            ui.SetType(entity.Type);
-                            break;
-
-                        case EntityType.Door:
-                            entity.OnClick();
-                            break;
-                    }
+                    entity.OnClick();
                 }
 
                 return;
@@ -204,6 +210,7 @@ public class PlayerCtl : MonoBehaviour
                 }
             }
         }
+        // 冒険の場合
         else
         {
             if (collider != null)
@@ -228,6 +235,12 @@ public class PlayerCtl : MonoBehaviour
                
         }
     }
+
+    /// <summary>
+    /// 長い時間クリックロジック
+    /// </summary>
+    /// <param name="time"></param>
+    /// <param name="collider"></param>
     public void OnClicking(float time, GameObject collider)
     {
         if (collider == null)
@@ -255,7 +268,14 @@ public class PlayerCtl : MonoBehaviour
         }
     }
 
-    private void CreateEntity(GameObject collider, int entityId, Vector3Int pos, DirectionType dType = DirectionType.up)
+    /// <summary>
+    /// エンティティをインスタンス
+    /// </summary>
+    /// <param name="collider">クリックしたGameObject</param>
+    /// <param name="entityId">インスタンスするエンティティID</param>
+    /// <param name="pos">インスタンス座標</param>
+    /// <param name="dType">向き</param>
+    private void CreateEntity(GameObject collider, int entityId, Vector3Int pos, Direction dType = Direction.up)
     {
         var cell = collider.GetComponent<EntityBase>();
         if (cell == null)
@@ -274,10 +294,20 @@ public class PlayerCtl : MonoBehaviour
         WorldMng.E.MapCtl.CreateEntity(entityId, pos, dType);
     }
 
+    /// <summary>
+    /// アイテムを使用
+    /// </summary>
+    /// <param name="count"></param>
     public void UseItem(int count = 1)
     {
         DataMng.E.UseItem(selectItem.id, count);
     }
+
+    /// <summary>
+    /// アイテムを消耗
+    /// </summary>
+    /// <param name="items"></param>
+    /// <returns></returns>
     public bool ConsumableItems(Dictionary<int, int> items)
     {
         bool ret = false;
@@ -301,6 +331,10 @@ public class PlayerCtl : MonoBehaviour
         return ret;
     }
 
+    /// <summary>
+    /// ロックを解除
+    /// </summary>
+    /// <returns></returns>
     private System.Collections.IEnumerator UnLock()
     {
         yield return new WaitForSeconds(0.1f);

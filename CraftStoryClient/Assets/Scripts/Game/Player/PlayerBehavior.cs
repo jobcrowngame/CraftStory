@@ -1,8 +1,14 @@
 ﻿
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーのコード
+/// </summary>
 public class PlayerBehavior
 {
+    /// <summary>
+    /// 行動変換
+    /// </summary>
     public PlayerBehaviorType Type
     {
         get => behaviorType;
@@ -30,6 +36,9 @@ public class PlayerBehavior
     }
     private PlayerBehaviorType behaviorType = PlayerBehaviorType.None;
 
+    /// <summary>
+    /// アイテムを選択した時の行動
+    /// </summary>
     public ItemType SelectItemType
     {
         get => selectItemType;
@@ -60,12 +69,15 @@ public class PlayerBehavior
     private ItemType selectItemType = ItemType.None;
 }
 
+/// <summary>
+/// 行動タイプ
+/// </summary>
 public enum PlayerBehaviorType
 {
     None,
-    Waiting,
-    Run,
-    Create,
-    Breack,
-    Jump,
+    Waiting, // 何もしない
+    Run, // 走る
+    Create, // 作る
+    Breack, // 壊す
+    Jump, // ジャンプ
 }
