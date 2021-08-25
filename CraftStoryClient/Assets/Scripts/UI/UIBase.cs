@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// UI ベース
+/// </summary>
 public class UIBase : MonoBehaviour
 {
-    public bool IsActive { get => gameObject.activeSelf; }
+    public bool IsActive { get => gameObject.activeSelf; } // アクティブ
 
     public virtual void Init() { }
     public virtual void Init(object data) { }
     public virtual void Init(int data) { }
-    public virtual void Init<T>(T t) where T : class
-    {
-    }
+    public virtual void Init<T>(T t) where T : class { }
 
     public virtual void Close()
     {
@@ -24,6 +25,13 @@ public class UIBase : MonoBehaviour
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// サブGameObjectのComponentを検索
+    /// </summary>
+    /// <typeparam name="T">Component</typeparam>
+    /// <param name="chiledName">サブGameObject名</param>
+    /// <param name="parent">親</param>
+    /// <returns></returns>
     protected T FindChiled<T>(string chiledName, Transform parent = null) where T : Component
     {
         if (parent == null)
@@ -55,6 +63,13 @@ public class UIBase : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// サブをインスタンス
+    /// </summary>
+    /// <typeparam name="T">Component</typeparam>
+    /// <param name="resourcesPath">アセットのパス</param>
+    /// <param name="parent">インスタンス親</param>
+    /// <returns></returns>
     protected T AddCell<T>(string resourcesPath, Transform parent) where T : UIBase
     {
         var resources = ResourcesMng.E.ReadResources(resourcesPath);
@@ -72,6 +87,10 @@ public class UIBase : MonoBehaviour
         return cell;
     }
 
+    /// <summary>
+    /// サブGameObjectを削除
+    /// </summary>
+    /// <param name="parent"></param>
     protected void ClearCell(Transform parent)
     {
         foreach (Transform t in parent)
@@ -80,6 +99,12 @@ public class UIBase : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// アセットをロード
+    /// </summary>
+    /// <typeparam name="T">アセットタイプ</typeparam>
+    /// <param name="resourcesPath">パス</param>
+    /// <returns></returns>
     protected T ReadResources<T>(string resourcesPath) where T : Object
     {
         return ResourcesMng.E.ReadResources<T>(resourcesPath);

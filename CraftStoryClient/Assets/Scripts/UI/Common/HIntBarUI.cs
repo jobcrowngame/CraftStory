@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// ヒントバーUI
+/// </summary>
 public class HintBarUI : UIBase
 {
     Text MsgText;
@@ -12,6 +15,10 @@ public class HintBarUI : UIBase
         anim = GetComponent<Animation>();
     }
 
+    /// <summary>
+    /// メッセージをセット
+    /// </summary>
+    /// <param name="msg"></param>
     public void SetMsg(string msg)
     {
         MsgText.text = msg;
@@ -21,5 +28,6 @@ public class HintBarUI : UIBase
     public void Over()
     {
         Close();
+        GameObject.Destroy(gameObject);
     }
 }

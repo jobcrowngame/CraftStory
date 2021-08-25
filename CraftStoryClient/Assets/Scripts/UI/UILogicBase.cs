@@ -1,6 +1,8 @@
-﻿using System;
-using UnityEngine;
-
+﻿/// <summary>
+/// UILogic ベース
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <typeparam name="K"></typeparam>
 public class UILogicBase<T, K> where T : class, new()
 {
     private static T entity;

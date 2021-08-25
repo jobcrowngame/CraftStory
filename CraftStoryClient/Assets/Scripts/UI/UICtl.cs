@@ -3,15 +3,18 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+/// <summary>
+/// UIコンソール
+/// </summary>
 public class UICtl : Single<UICtl>
 {
-    private static Transform glubalObjTran;
-    private UIBase curentOpenUI;
-    private UIBase Waiting;
+    private static Transform glubalObjParent; // グローバルGameObject親
+    private UIBase curentOpenUI; // オープンしてるUI
+    private UIBase Waiting; // 通信が遅い場合、待つUI
 
     private Dictionary<UIType, UIBase> uiDic;
 
-    private static Transform uiRootTran;
+    private static Transform uiRootTran; // UIインスタンス親
     public Transform Root
     {
         get
@@ -27,7 +30,7 @@ public class UICtl : Single<UICtl>
     {
          Logger.Log("初期化 UICtl");
 
-        glubalObjTran = glubalObj.transform;
+        glubalObjParent = glubalObj.transform;
         uiDic = new Dictionary<UIType, UIBase>();
 
         //UserTest.E.Init();
@@ -37,16 +40,26 @@ public class UICtl : Single<UICtl>
         yield return true;
     }
 
+    /// <summary>
+    /// グローバルGameObjectのインスタンス
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public T CreateGlobalObject<T>() where T : Component
     {
         var obj = new GameObject();
-        obj.transform.parent = glubalObjTran;
+        obj.transform.parent = glubalObjParent;
         var entity = obj.AddComponent<T>();
         obj.name = entity.ToString();
 
         return entity;
     }
 
+    /// <summary>
+    /// UITypeから指定UIをゲット
+    /// </summary>
+    /// <param name="uiType"></param>
+    /// <returns></returns>
     private UIBase GetUI(UIType uiType)
     {
         return uiDic[uiType];
@@ -62,6 +75,13 @@ public class UICtl : Single<UICtl>
         uiDic[uiType] = ui;
     }
 
+    /// <summary>
+    /// UIをオープン
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="uiType"></param>
+    /// <param name="closeType"></param>
+    /// <returns></returns>
     public T OpenUI<T>(UIType uiType, UIOpenType closeType = UIOpenType.None) where T : UIBase
     {
         switch (closeType)

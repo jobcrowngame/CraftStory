@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// ヒントボックス
+/// </summary>
 public class HintBoxUI : UIBase
 {
     Image Icon { get => FindChiled<Image>("Icon"); }
@@ -11,8 +14,8 @@ public class HintBoxUI : UIBase
     Button OkBtn { get => FindChiled<Button>("OKBtn"); }
     Button CancelBtn { get => FindChiled<Button>("CancelBtn"); }
 
-    Action okAction;
-    Action cancelAction;
+    Action okAction; // Okボタンイベント
+    Action cancelAction; // キャンセルボタンイベント
 
     private void Awake()
     {
