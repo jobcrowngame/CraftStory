@@ -56,7 +56,7 @@ public class ShopMyShopItemCell : UIBase
                 if (!string.IsNullOrEmpty(rp.ToString()))
                 {
                     var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
-                    ui.SetData(rp.ToJson(), ShopLG.E.UI);
+                    ui.SetData((string)rp["data"], ShopLG.E.UI);
                 }
             }, data.myshopid);
         });
