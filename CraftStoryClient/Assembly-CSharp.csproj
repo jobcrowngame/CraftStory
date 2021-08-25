@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\UI\BlueprintPreviewLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Craft.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingLG.cs" />
+    <Compile Include="Assets\Scripts\UI\FriendDescriptionLG.cs" />
     <Compile Include="Assets\Scripts\Test\TestToggle.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Roulette.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Assets\Scripts\UI\EmailDetailsLG.cs" />
     <Compile Include="Assets\Scripts\Game\Player\BlueprintPreviewCtl.cs" />
     <Compile Include="Assets\Scripts\Manager\ConfigMng.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\MyToggle.cs" />
     <Compile Include="Assets\Scripts\UI\HomeItemBtn.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Shop.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\RouletteCell.cs" />
@@ -149,6 +151,7 @@
     <Compile Include="Assets\Scripts\Network\NWData.cs" />
     <Compile Include="Assets\Scripts\Test\LookChange.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
+    <Compile Include="Assets\Scripts\UI\FriendSearchLG.cs" />
     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityBuilding.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyButton.cs" />
@@ -177,6 +180,7 @@
     <Compile Include="Assets\Scripts\Manager\TimeZoneMng.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mail.cs" />
     <Compile Include="Assets\Scripts\Data\UserData.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\ToggleBtns.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestAngle.cs" />
     <Compile Include="Assets\Scripts\Game\Player\ScreenDraggingCtl.cs" />
@@ -197,10 +201,8 @@
     <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
     <Compile Include="Assets\Scripts\UI\RouletteLG.cs" />
     <Compile Include="Assets\Scripts\Data\MyShopData.cs" />
-    <Compile Include="Assets\Scripts\Data\EntityData.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeUI.cs" />
     <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
-    <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
     <Compile Include="Assets\Scripts\UI\DebugCell.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerController.cs" />
     <Compile Include="Assets\Scripts\UI\GachaRatioUI.cs" />
@@ -213,6 +215,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Guide.cs" />
     <Compile Include="Assets\Scripts\UI\TermsLG.cs" />
     <Compile Include="Assets\Scripts\UI\DeleteItemLG.cs" />
+    <Compile Include="Assets\Scripts\UI\FriendSearchUI.cs" />
     <Compile Include="Assets\Scripts\UI\LoginUI.cs" />
     <Compile Include="Assets\Scripts\Common\Single.cs" />
     <Compile Include="Assets\Scripts\UI\MenuUI.cs" />
@@ -228,6 +231,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csShowAllEffect.cs" />
     <Compile Include="Assets\Scripts\UI\EmailDetailsUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Blueprint.cs" />
+    <Compile Include="Assets\Scripts\UI\FriendDescriptionUI.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerButton.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\RandomBonusPond.cs" />
     <Compile Include="Assets\Scripts\UI\Common\WaitingLG.cs" />
@@ -258,12 +262,6 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\UI\Common\MyToggle.cs" />
-    <Compile Include="Assets\Scripts\UI\Common\ToggleBtns.cs" />
-    <Compile Include="Assets\Scripts\UI\FriendSearchUI.cs" />
-    <Compile Include="Assets\Scripts\UI\FriendSearchLG.cs" />
-    <Compile Include="Assets\Scripts\UI\FriendDescriptionUI.cs" />
-    <Compile Include="Assets\Scripts\UI\FriendDescriptionLG.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

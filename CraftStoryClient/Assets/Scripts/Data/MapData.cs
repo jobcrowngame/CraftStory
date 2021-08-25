@@ -5,21 +5,25 @@ using UnityEngine;
 using System.Collections.Generic;
 using JsonConfigData;
 
+/// <summary>
+/// マップデータ
+/// </summary>
 [Serializable]
 public class MapData
 {
-    private int id;
-    public int SizeX { get; set; }
-    public int SizeY { get; set; }
-    public int SizeZ { get; set; }
+    private int id; // マップID
+    public int SizeX { get; set; } // サイズ
+    public int SizeY { get; set; } // サイズ
+    public int SizeZ { get; set; } // サイズ
 
-    public Map Config { get => ConfigMng.E.Map[id]; }
-    public bool IsHome { get => id == 100; }
+    public Map Config { get => ConfigMng.E.Map[id]; } // マップ設定ファイル
 
+    // マップエンティティ
     public MapCellData[,,] Map { get => map; }
     [NonSerialized]
     private MapCellData[,,] map;
 
+    // インスタンスされたエンティティ
     [NonSerialized]
     Dictionary<Vector3Int, EntityBase> entityDic = new Dictionary<Vector3Int, EntityBase>();
 
@@ -80,21 +84,29 @@ public class MapData
         }
     }
 
+    // 空のマップ判定
     public bool IsNull(Vector3Int site)
     {
         return map[site.x, site.y, site.z].entityID == 0;
     }
+    // インスタンスされたエンティティゲット
     public EntityBase GetEntity(Vector3Int site)
     {
         EntityBase entity = null;
         entityDic.TryGetValue(site, out entity);
         return entity;
     }
+    // マップサイズゲット
     public Vector3Int GetMapSize()
     {
         return new Vector3Int(SizeX, SizeY, SizeZ);
     }
 
+    /// <summary>
+    /// 表面である場合の処理
+    /// </summary>
+    /// <param name="pos">ブロックの座標</param>
+    /// <param name="b">表面の場合　true</param>
     public void IsSurface(Vector3Int pos, bool b = true)
     {
         if (b)
@@ -102,6 +114,7 @@ public class MapData
             if (entityDic.ContainsKey(pos))
                 return;
 
+            // 表面の場合、エンティティをインスタンス
             var entity = InstantiateEntity(Map[pos.x, pos.y, pos.z], WorldMng.E.MapCtl.CellParent, pos);
             if (entity != null)
             {
@@ -110,6 +123,7 @@ public class MapData
         }
         else
         {
+            // 裏の場合、エンティティのインスタンスを削除
             if (entityDic.ContainsKey(pos))
             {
                 GameObject.Destroy(entityDic[pos].gameObject);
@@ -118,13 +132,22 @@ public class MapData
         }
     }
     
+    /// <summary>
+    /// エンティティをインスタンス
+    /// </summary>
+    /// <param name="entityCell">エンティティデータ</param>
+    /// <param name="parent">親</param>
+    /// <param name="pos">座標</param>
+    /// <returns></returns>
     public static EntityBase InstantiateEntity(MapCellData entityCell, Transform parent, Vector3Int pos)
     {
         try
         {
+            // 実際のエンティティIDがない場合、Pass
             if (entityCell.entityID < 1)
                 return null;
 
+            // 設定ファイル
             var config = ConfigMng.E.Entity[entityCell.entityID];
             EntityBase entity = null;
             switch ((EntityType)config.Type)
@@ -142,6 +165,7 @@ public class MapData
                     entity = CommonFunction.Instantiate<EntityResources>(config.Resources, parent, pos);
                     break;
 
+                // 向きがあるエンティティ
                 case EntityType.Workbench:
                 case EntityType.Kamado:
                 case EntityType.Door:
@@ -182,6 +206,13 @@ public class MapData
             return null;
         }
     }
+
+    /// <summary>
+    /// エンティティ追加
+    /// </summary>
+    /// <param name="entityCell">エンティティデータ</param>
+    /// <param name="pos">座標</param>
+    /// <returns></returns>
     public EntityBase Add(MapCellData entityCell, Vector3Int pos)
     {
         if (entityCell.entityID < 1)
@@ -211,6 +242,10 @@ public class MapData
 
         return entity;
     }
+    /// <summary>
+    /// エンティティ削除
+    /// </summary>
+    /// <param name="pos">座標</param>
     public void Remove(Vector3Int pos)
     {
         try
@@ -250,12 +285,18 @@ public class MapData
             Logger.Error(ex);
         }
     }
-
+    /// <summary>
+    /// 全インスタンス削除
+    /// </summary>
     public void ClearMapObj()
     {
         entityDic.Clear();
     }
 
+    /// <summary>
+    /// String型に変換
+    /// </summary>
+    /// <returns></returns>
     public string ToStringData()
     {
         StringBuilder sb = new StringBuilder();
@@ -296,52 +337,22 @@ public class MapData
         Logger.Log(strMap);
         return strMap;
     }
-    //public void ParseStringDataOld(string mapData, string resourcesData)
-    //{
-    //    string[] maps = mapData.Split(',');
-    //    string data;
-    //    int index = 0;
-
-    //    for (int x = 0; x < 100; x++)
-    //    {
-    //        for (int y = 0; y < 100; y++)
-    //        {
-    //            for (int z = 0; z < 100; z++)
-    //            {
-    //                data = maps[index++];
-    //                int entityId = data == "n" ? 0 : int.Parse(data);
-    //                map[x, y, z] = new MapCellData() { entityID = entityId };
-    //            }
-    //        }
-    //    }
-
-    //    string[] resources;
-    //    if (!string.IsNullOrEmpty(resourcesData))
-    //    {
-    //        resources = resourcesData.Split(',');
-    //    }
-
-    //    for (int x = 0; x < 100; x++)
-    //    {
-    //        for (int z = 0; z < 100; z++)
-    //        {
-    //            Map[x, 0, z] = new MapCellData() { entityID = 1999 };
-    //        }
-    //    }
-    //}
 
     [Serializable]
     public struct MapCellData
     {
-        public int entityID;
-        public int direction;
+        public int entityID; // エンティティID
+        public int direction; // 向き
     }
 }
 
+/// <summary>
+/// マップタイプ
+/// </summary>
 public enum MapType
 {
-    Home = 1,
-    Guide = 2,
-    Brave = 3,
-    Test = 99,
+    Home = 1, // ホーム
+    Guide = 2, // チュートリアル
+    Brave = 3, // 冒険
+    Test = 99, // テスト
 }

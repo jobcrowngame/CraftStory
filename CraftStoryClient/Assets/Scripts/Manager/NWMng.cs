@@ -236,6 +236,7 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.Craft));
     }
+
     public void Buy(Action<JsonData> rp, int shopId)
     {
         var data = new NWData();
@@ -362,6 +363,7 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetEmail));
     }
+
     public void ReadEmail(Action<JsonData> rp, int guid)
     {
         var data = new NWData();
@@ -447,6 +449,7 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GuideEnd));
     }
+
     public void Gacha10(Action<JsonData> rp, int gachaId)
     {
         var data = new NWData();
@@ -474,7 +477,6 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.DeleteItems));
     }
-   
     public void Follow(Action<JsonData> rp, int guid)
     {
         var data = new NWData();
@@ -526,6 +528,15 @@ public partial class NWMng : MonoBehaviour
         data.Add("userAcc", userAcc);
 
         StartCoroutine(HttpRequest(rp, data, CMD.SearchFriend));
+    }
+    public void GetBlueprintPreviewData(Action<JsonData> rp, int myshopId)
+    {
+        var data = new NWData();
+        data.Add("token", DataMng.E.token);
+        data.Add("acc", DataMng.E.UserData.Account);
+        data.Add("myshopId", myshopId);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetBlueprintPreviewData));
     }
 
 
@@ -606,6 +617,7 @@ public partial class NWMng : MonoBehaviour
         ReadFollower,
         UpdateComment,
         SearchFriend,
+        GetBlueprintPreviewData,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

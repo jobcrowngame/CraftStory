@@ -3,12 +3,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 設計図データ
+/// </summary>
 [Serializable]
 public class BlueprintData
 {
+    // サイズ
     public int sizeX { get; set; }
     public int sizeZ { get; set; }
 
+    // ブロックリスト
     public List<BlueprintEntityData> blocks 
     { 
         get
@@ -22,6 +27,7 @@ public class BlueprintData
     }
     private List<BlueprintEntityData> mblocks;
 
+    // 重複されたエリアがあるかのタグ
     [NonSerialized]
     private bool isDuplicate;
     public bool IsDuplicate { get => isDuplicate; set => isDuplicate = value; }
@@ -86,6 +92,7 @@ public class BlueprintData
         return true;
     }
 
+    // 設計図ブロックデータ
     public class BlueprintEntityData
     {
         public int id { get; set; }
@@ -105,19 +112,4 @@ public class BlueprintData
             posZ = Pos.z;
         }
     }
-}
-
-public struct BlueprintDataOld
-{
-    public int sizeX;
-    public int sizeZ;
-    public List<BlueprintDataCellOld> blocks;
-}
-
-public struct BlueprintDataCellOld
-{
-    public int id;
-    public int posX;
-    public int posY;
-    public int posZ;
 }

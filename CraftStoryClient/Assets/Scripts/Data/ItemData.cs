@@ -1,16 +1,19 @@
 ﻿using JsonConfigData;
 using System;
 
+/// <summary>
+/// アイテムデータ
+/// </summary>
 [Serializable]
 public class ItemData
 {
-    public int id { get; set; }
-    public int itemId { get; set; }
-    public int count { get; set; }
-    public string newName { get; set; }
-    public int equipSite { get; set; }
-    public string relationData { get; set; }
-    public int islocked { get; set; }
+    public int id { get; set; } // GUID
+    public int itemId { get; set; } // アイテムＩＤ
+    public int count { get; set; } // 数
+    public string newName { get; set; } // 設計図などの新しい名
+    public int equipSite { get; set; } // 装備している箇所
+    public string relationData { get; set; } // 連れてるデータ（設計図など）
+    public int islocked { get; set; } // 販売出来ないようにロック
 
     public ItemData() { }
     public ItemData(int itemId, int count)

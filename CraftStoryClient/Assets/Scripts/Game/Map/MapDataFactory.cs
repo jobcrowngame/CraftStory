@@ -5,7 +5,6 @@ using UnityEngine;
 public class MapDataFactory
 {
     private MapData mData;
-    private PlayerData playerData;
     private Map mapConfig;
 
     public MapData CreateMapData(int id)

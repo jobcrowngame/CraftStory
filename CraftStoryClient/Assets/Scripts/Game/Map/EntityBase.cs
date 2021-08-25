@@ -69,11 +69,11 @@ public class EntityBase : MonoBehaviour
 
 public enum EntityType
 {
-    None = 0,
-    Block = 1,
+    None = 0,　// 空
+    Block = 1,// 一般ブロック
     Block2 = 2, // 半透明ブロック
     Block99 = 99, // 壊れないブロック
-    Resources = 100,
+    Resources = 100, // 
     TreasureBox = 110,
     Workbench = 1000,
     Kamado = 1001,

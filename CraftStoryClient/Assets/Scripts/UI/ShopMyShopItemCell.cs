@@ -51,8 +51,14 @@ public class ShopMyShopItemCell : UIBase
         });
         PreviewBtn.onClick.AddListener(() => 
         {
-            var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
-            ui.SetData(data.data, ShopLG.E.UI);
+            NWMng.E.GetBlueprintPreviewData((rp) => 
+            {
+                if (!string.IsNullOrEmpty(rp.ToString()))
+                {
+                    var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
+                    ui.SetData(rp.ToJson(), ShopLG.E.UI);
+                }
+            }, data.myshopid);
         });
 
         data.created_at = data.created_at.AddDays(7);

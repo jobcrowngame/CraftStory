@@ -233,7 +233,7 @@ public class PlayerCtl : MonoBehaviour
         if (collider == null)
             return;
 
-        if (DataMng.E.MapData.IsHome)
+        if (DataMng.E.RuntimeData.MapType == MapType.Home)
         {
             var baseCell = collider.GetComponent<EntityBase>();
             if (baseCell != null)
