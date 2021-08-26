@@ -54,4 +54,10 @@ public class SettingMng : Single<SettingMng>
     // Skybox　明るさ最小
     public float MinAmbientIntensity { get => mMinAmbientIntensity; }
     private float mMinAmbientIntensity = 0.6f;
+
+    /// <summary>
+    /// フレンド最大数
+    /// </summary>
+    public int MaxFriendCount { get => mMaxFriendCount; }
+    private int mMaxFriendCount = 100;
 }

@@ -1,29 +1,32 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 持ち物Window用、サブ
+/// </summary>
 public class BagItemCell : UIBase
 {
-    Text itemName;
-    Text itemCount;
-    Image Icon;
-    Button clickBtn;
-    Transform selected;
+    Text itemName { get => FindChiled<Text>("Name"); }
+    Text itemCount { get => FindChiled<Text>("Count"); }
+    Image Icon { get => FindChiled<Image>("Icon"); }
+    Button clickBtn { get => transform.GetComponent<Button>(); }
+    Transform selected { get => FindChiled("Select"); }
     Transform Lock { get => FindChiled("Lock"); }
 
-    private ItemData itemData;
+    /// <summary>
+    /// アイテムデータ
+    /// </summary>
     public ItemData ItemData { get => itemData; }
+    private ItemData itemData;
 
-    public void Add(ItemData itemData)
+    /// <summary>
+    /// データをセット
+    /// </summary>
+    /// <param name="itemData">アイテムデータ</param>
+    public void Set(ItemData itemData)
     {
         this.itemData = itemData;
 
-        itemName = FindChiled<Text>("Name");
-        itemCount = FindChiled<Text>("Count");
-        Icon = FindChiled<Image>("Icon");
-        selected = FindChiled("Select");
-
-        clickBtn = transform.GetComponent<Button>();
         clickBtn.onClick.AddListener(() => 
         { 
             BagLG.E.SelectItem = this;
@@ -32,11 +35,6 @@ public class BagItemCell : UIBase
 
         Lock.gameObject.SetActive(itemData.islocked == 1);
 
-        Refresh();
-    }
-
-    public void Refresh()
-    {
         if (itemData == null)
             return;
 
@@ -46,6 +44,11 @@ public class BagItemCell : UIBase
         Icon.sprite = ReadResources<Sprite>(itemData.Config().IconResourcesPath);
         itemCount.text = "x" + itemData.count;
     }
+
+    /// <summary>
+    /// 選択されると選択フラグをアクティブ
+    /// </summary>
+    /// <param name="b">アクティブ</param>
     public void IsSelected(bool b)
     {
         selected.gameObject.SetActive(b);

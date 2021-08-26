@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using LitJson;
 
+/// <summary>
+/// フレンドロジック
+/// </summary>
 public class FriendLG : UILogicBase<FriendLG, FriendUI>
 {
+    /// <summary>
+    /// Windowタイプ
+    /// </summary>
     public UIType Type 
     {
         get => mType;
@@ -15,6 +21,10 @@ public class FriendLG : UILogicBase<FriendLG, FriendUI>
         }
     }
     private UIType mType = UIType.None;
+
+    /// <summary>
+    /// ソートタイプ
+    /// </summary>
     public SortType Sort 
     {
         get => mSort;
@@ -32,19 +42,27 @@ public class FriendLG : UILogicBase<FriendLG, FriendUI>
         Sort = SortType.Asc;
         Type = UIType.Follow;
     }
+
+    /// <summary>
+    /// Windowを更新
+    /// </summary>
     public void Refresh()
     {
-        UI.ClearCell();
         if (mType == UIType.Follow)
         {
+            // フォロー
             ReadFollow();
         }
         else
         {
+            // フォロワー
             ReadFollower();
         }
     }
 
+    /// <summary>
+    /// フォローリストをゲット
+    /// </summary>
     public void ReadFollow()
     {
         NWMng.E.ReadFollow((rp) => 
@@ -56,6 +74,10 @@ public class FriendLG : UILogicBase<FriendLG, FriendUI>
             UI.RefreshCell(list);
         });
     }
+
+    /// <summary>
+    /// フォロワーリストをゲット
+    /// </summary>
     public void ReadFollower()
     {
         NWMng.E.ReadFollower((rp) =>
@@ -68,6 +90,9 @@ public class FriendLG : UILogicBase<FriendLG, FriendUI>
         });
     }
 
+    /// <summary>
+    /// 通信用構造体
+    /// </summary>
     public struct FriednCell
     {
         public int guid { get; set; }
@@ -76,15 +101,30 @@ public class FriendLG : UILogicBase<FriendLG, FriendUI>
         public DateTime loginTime { get; set; }
     }
 
+    /// <summary>
+    /// Windowタイプ
+    /// </summary>
     public enum UIType
     {
         None = -1,
+        /// <summary>
+        /// フォロー
+        /// </summary>
         Follow,
+
+        /// <summary>
+        /// フォロワー
+        /// </summary>
         Follower,
     }
+
+    /// <summary>
+    /// ソートタイプ
+    /// </summary>
     public enum SortType
     {
         None = -1,
+
         Asc = 1,
         Des = 2
     }

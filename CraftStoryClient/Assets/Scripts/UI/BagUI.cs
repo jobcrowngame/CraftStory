@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 持ち物
+/// </summary>
 public class BagUI : UIBase
 {
     TitleUI Title;
@@ -117,7 +120,7 @@ public class BagUI : UIBase
         if (cell != null)
         {
             cell.Init();
-            cell.Add(item);
+            cell.Set(item);
             cell.name = cell.ItemData.id.ToString();
 
             if (!cellDic.ContainsKey(item.Config().Name))

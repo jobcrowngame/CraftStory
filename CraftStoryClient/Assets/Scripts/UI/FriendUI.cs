@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// フレンド
+/// </summary>
 public class FriendUI : UIBase
 {
     TitleUI Title { get => FindChiled<TitleUI>("Title"); }
@@ -42,13 +45,13 @@ public class FriendUI : UIBase
         toggles.SetValue(0);
     }
 
-    public void ClearCell()
-    {
-        ClearCell(cellParent);
-    }
-
+    /// <summary>
+    /// サブを更新
+    /// </summary>
+    /// <param name="list">サブデータリスト</param>
     public void RefreshCell(List<FriendLG.FriednCell> list)
     {
+        // ソート
         if (FriendLG.E.Sort == FriendLG.SortType.Asc)
         {
             list.Sort(delegate (FriendLG.FriednCell x, FriendLG.FriednCell y) {
@@ -68,6 +71,10 @@ public class FriendUI : UIBase
             });
         }
 
+        // サブをクリア
+        ClearCell(cellParent);
+
+        // サブをインスタンス
         foreach (var item in list)
         {
             var cell = AddCell<FriednCell>("Prefabs/UI/FriendCell", cellParent);
@@ -76,5 +83,8 @@ public class FriendUI : UIBase
                 cell.Set(item);
             }
         }
+
+        // フレンド数更新
+        Count.text = list.Count + "/" + SettingMng.E.MaxFriendCount;
     }
 }
