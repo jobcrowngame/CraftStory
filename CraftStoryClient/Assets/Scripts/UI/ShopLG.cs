@@ -65,10 +65,10 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
     {
         NWMng.E.SearchMyShopItems((rp) =>
         {
-            List<MyShopBlueprintData> items = null;
+            List<MyShopItem> items = null;
             if (!string.IsNullOrEmpty(rp.ToString()))
             {
-                items = JsonMapper.ToObject<List<MyShopBlueprintData>>(rp.ToJson());
+                items = JsonMapper.ToObject<List<MyShopItem>>(rp.ToJson());
             }
             
             UI.RefreshBlueprint2(items);

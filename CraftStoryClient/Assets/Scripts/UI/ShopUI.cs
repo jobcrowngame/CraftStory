@@ -210,7 +210,7 @@ public class ShopUI : UIBase
             }
         }
     }
-    public void RefreshBlueprint2(List<MyShopBlueprintData> items)
+    public void RefreshBlueprint2(List<MyShopItem> items)
     {
         ClearCell(itemGridRoot2);
 

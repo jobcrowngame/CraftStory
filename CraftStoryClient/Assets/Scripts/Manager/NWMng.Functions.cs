@@ -1,6 +1,8 @@
 ﻿
 
+using LitJson;
 using System;
+using System.Collections.Generic;
 
 public partial class NWMng
 {
@@ -60,6 +62,24 @@ public partial class NWMng
             DataMng.E.RuntimeData.NewEmailCount = (int)rp["count"];
 
             if (callBack != null) callBack();
+        });
+    }
+
+    public void GetMyshopInfo(Action callBack = null)
+    {
+        NWMng.E.GetMyShopInfo((rp) =>
+        {
+            DataMng.E.MyShop.Clear();
+            if (!string.IsNullOrEmpty(rp.ToString()))
+            {
+                List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp.ToJson());
+                for (int i = 0; i < shopItems.Count; i++)
+                {
+                    DataMng.E.MyShop.MyShopItem[i] = shopItems[i];
+                }
+
+                if (callBack != null) callBack();
+            }
         });
     }
 }

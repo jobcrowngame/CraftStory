@@ -26,6 +26,9 @@ public class GameTimeCtl
     }
     private bool mActive;
 
+    /// <summary>
+    /// 今の時間
+    /// </summary>
     private float CurTime
     {
         get => curTime;
@@ -60,6 +63,10 @@ public class GameTimeCtl
         Active = false;
     }
 
+    /// <summary>
+    /// 角度によってLightを更新
+    /// </summary>
+    /// <param name="angle">太陽角度</param>
     private void RefreshLight(float angle)
     {
         DirectionalLight.transform.rotation = Quaternion.Euler(angle, 30, 0);
@@ -67,6 +74,10 @@ public class GameTimeCtl
         DirectionalLight.intensity = newV;
     }
 
+    /// <summary>
+    /// SkyBoxの明るさを角度によって更新
+    /// </summary>
+    /// <param name="angle"></param>
     private void RefreshSkyBox(float angle)
     {
         var newV = GetPercentByAngle(angle);
@@ -79,6 +90,11 @@ public class GameTimeCtl
         RenderSettings.ambientIntensity = skyboxAmbientIntensity;
     }
 
+    /// <summary>
+    /// 角度によって今の明るさパーセントをゲット
+    /// </summary>
+    /// <param name="angle"></param>
+    /// <returns></returns>
     private float GetPercentByAngle(float angle)
     {
         float newV = 0;

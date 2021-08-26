@@ -15,9 +15,9 @@ public class ShopMyShopItemCell : UIBase
     Text BuyBtnText { get => FindChiled<Text>("Text", BuyBtn.transform); }
     Image BtnCostIcon { get => FindChiled<Image>("Image", BuyBtn.transform); }
 
-    MyShopBlueprintData data;
+    MyShopItem data;
 
-    public void Set(MyShopBlueprintData data)
+    public void Set(MyShopItem data)
     {
         Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[data.itemId].IconResourcesPath);
         NickName.text = data.nickName;
@@ -28,30 +28,31 @@ public class ShopMyShopItemCell : UIBase
         PreviewBtn.gameObject.SetActive(true);
         BtnCostIcon.gameObject.SetActive(true);
 
-        BuyBtn.onClick.AddListener(() => 
+        BuyBtn.onClick.AddListener(() =>
         {
             string msg = string.Format(@"ポイントを「{0}」消費して、
 この設計図を購入しますか？", data.price);
 
-            CommonFunction.ShowHintBox(msg,() => {
-                    if (DataMng.E.RuntimeData.Coin3 < data.price)
-                    {
-                        CommonFunction.ShowHintBar(15);
-                        return;
-                    }
+            CommonFunction.ShowHintBox(msg, () =>
+            {
+                if (DataMng.E.RuntimeData.Coin3 < data.price)
+                {
+                    CommonFunction.ShowHintBar(15);
+                    return;
+                }
 
-                    NWMng.E.BuyMyShopItem((rp) =>
-                    {
-                        DataMng.E.RuntimeData.Coin3 -= data.price;
-                        ShopLG.E.UI.RefreshCoins();
+                NWMng.E.BuyMyShopItem((rp) =>
+                {
+                    DataMng.E.RuntimeData.Coin3 -= data.price;
+                    ShopLG.E.UI.RefreshCoins();
 
-                        CommonFunction.ShowHintBar(17);
-                    }, data.myshopid);
-                }, () => { });
+                    CommonFunction.ShowHintBar(17);
+                }, data.myshopid);
+            }, () => { });
         });
-        PreviewBtn.onClick.AddListener(() => 
+        PreviewBtn.onClick.AddListener(() =>
         {
-            NWMng.E.GetBlueprintPreviewData((rp) => 
+            NWMng.E.GetBlueprintPreviewData((rp) =>
             {
                 if (!string.IsNullOrEmpty(rp.ToString()))
                 {
@@ -74,7 +75,7 @@ public class ShopMyShopItemCell : UIBase
         StartCoroutine(RefreshTime(data));
     }
 
-    private IEnumerator RefreshTime(MyShopBlueprintData data)
+    private IEnumerator RefreshTime(MyShopItem data)
     {
         while (true)
         {

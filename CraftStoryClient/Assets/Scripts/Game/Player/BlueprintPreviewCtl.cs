@@ -131,8 +131,6 @@ public class BlueprintPreviewCtl : MonoBehaviour
     {
         CommonFunction.ClearCell(Parent);
 
-        Debug.Log(data.ToJosn());
-
         foreach (var item in data.blocks)
         {
             var entity = MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, Parent, Vector3Int.zero);

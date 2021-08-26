@@ -103,8 +103,14 @@ public class MyShopCell : UIBase
         });
         PreviewBtn.onClick.AddListener(() =>
         {
-            var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
-            ui.SetData(myShopItem.data, MyShopLG.E.UI);
+            NWMng.E.GetBlueprintPreviewData((rp) =>
+            {
+                if (!string.IsNullOrEmpty(rp.ToString()))
+                {
+                    var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
+                    ui.SetData((string)rp["data"], MyShopLG.E.UI);
+                }
+            }, myShopItem.myshopid);
         });
         Icon.transform.GetComponent<Button>().onClick.AddListener(() => 
         {

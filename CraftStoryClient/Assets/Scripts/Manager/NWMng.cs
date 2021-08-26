@@ -131,7 +131,7 @@ public partial class NWMng : MonoBehaviour
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("[CMD:{0}]-{1}:{2}", (int)cmd, www.downloadHandler.text, ex.Message + ex.TargetSite);
+                    Logger.Error("[CMD:{0}]-{1}:\n{2}", (int)cmd, www.downloadHandler.text, ex.Message + ex.TargetSite);
                 }
             }
         }
