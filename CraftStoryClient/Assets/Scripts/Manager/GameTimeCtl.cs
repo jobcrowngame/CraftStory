@@ -63,9 +63,23 @@ public class GameTimeCtl
     private void RefreshLight(float angle)
     {
         DirectionalLight.transform.rotation = Quaternion.Euler(angle, 30, 0);
+        var newV = GetPercentByAngle(angle);
+        DirectionalLight.intensity = newV;
     }
 
     private void RefreshSkyBox(float angle)
+    {
+        var newV = GetPercentByAngle(angle);
+
+        RenderSettings.skybox.SetFloat("_Exposure", newV);
+        float skyboxAmbientIntensity = newV;
+        if (skyboxAmbientIntensity < SettingMng.E.MinAmbientIntensity)
+            skyboxAmbientIntensity = SettingMng.E.MinAmbientIntensity;
+
+        RenderSettings.ambientIntensity = skyboxAmbientIntensity;
+    }
+
+    private float GetPercentByAngle(float angle)
     {
         float newV = 0;
         if (angle < 180)
@@ -75,7 +89,8 @@ public class GameTimeCtl
         else if (angle >= 180 && angle < 210)
         {
             newV = 1 - ((angle - 180) / 30);
-        }else if (angle >= 330 && angle < 360)
+        }
+        else if (angle >= 330 && angle < 360)
         {
             newV = 1 - ((360 - angle) / 30);
         }
@@ -84,11 +99,6 @@ public class GameTimeCtl
             newV = 0;
         }
 
-        RenderSettings.skybox.SetFloat("_Exposure", newV);
-        float skyboxAmbientIntensity = newV;
-        if (skyboxAmbientIntensity < SettingMng.E.MinAmbientIntensity)
-            skyboxAmbientIntensity = SettingMng.E.MinAmbientIntensity;
-
-        RenderSettings.ambientIntensity = skyboxAmbientIntensity;
+        return newV;
     }
 }
