@@ -1,9 +1,18 @@
-using System.Collections;
 using UnityEngine.UI;
 
+/// <summary>
+/// ボタングループのサブ
+/// </summary>
 public class MyToggle : Toggle
 {
+    /// <summary>
+    /// インデックス
+    /// </summary>
     public int Index { get; set; }
+
+    /// <summary>
+    /// ボタンサブ親
+    /// </summary>
     public ToggleBtns toggleBtns { get; set; }
 
     protected override void Awake()

@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// クラフト場合、簡単なUI移動アニメション
+/// </summary>
 public class SimpleMove : MonoBehaviour
 {
     Vector2 endPos;

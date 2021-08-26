@@ -167,8 +167,6 @@ public class BuilderPencil
         // 残ってる設計図エンティティを作成
         WorldMng.E.MapCtl.DeleteBuilderPencil();
 
-        // 
-        ClearSelectBlueprintDataBlock();
         buildPos = startPos;
         selectBlueprintData.IsDuplicate = false;
 
@@ -211,7 +209,6 @@ public class BuilderPencil
         Logger.Log("SpinBlueprint");
 
         WorldMng.E.MapCtl.DeleteBuilderPencil();
-        ClearSelectBlueprintDataBlock();
         selectBlueprintData.IsDuplicate = false;
 
         for (int i = 0; i < selectBlueprintData.blocks.Count; i++)
@@ -372,19 +369,5 @@ public class BuilderPencil
     {
         obj.transform.localScale = new Vector3(obj.transform.localScale.x, obj.transform.localScale.y, scale + 1);
         obj.transform.localPosition = new Vector3(obj.transform.localPosition.x, obj.transform.localPosition.y, posZ);
-    }
-
-    /// <summary>
-    /// 選択した設計図データを削除
-    /// </summary>
-    private void ClearSelectBlueprintDataBlock()
-    {
-        if (selectBlueprintData == null)
-            return;
-        
-        //foreach (var item in selectBlueprintData.EntityList)
-        //{
-        //    item.ClearObj();
-        //}
     }
 }

@@ -1,18 +1,28 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+/// <summary>
+/// ボタングループ
+/// </summary>
 public class ToggleBtns : UIBase
 {
-    ToggleGroup group;
+    /// <summary>
+    /// サブリスト
+    /// </summary>
     MyToggle[] cells;
 
+    /// <summary>
+    /// クリックイベント
+    /// </summary>
     UnityAction<int> callback;
 
+    /// <summary>
+    /// 初期化
+    /// </summary>
     public override void Init()
     {
         base.Init();
 
-        group = transform.GetComponent<ToggleGroup>();
         cells = new MyToggle[transform.childCount];
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -22,6 +32,10 @@ public class ToggleBtns : UIBase
         cells[0].isOn = true;
     }
 
+    /// <summary>
+    /// 選択が変更される場合のイベント
+    /// </summary>
+    /// <param name="index"></param>
     public void OnValueChange(int index)
     {
         if (callback != null)
@@ -30,9 +44,13 @@ public class ToggleBtns : UIBase
         }
     }
 
-    public void OnValueChangeAddListener(UnityAction<int> call)
+    /// <summary>
+    /// 選択が変更されるイベントの設定
+    /// </summary>
+    /// <param name="callback">イベント</param>
+    public void OnValueChangeAddListener(UnityAction<int> callback)
     {
-        callback = call;
+        this.callback = callback;
     }
 
     public void SetBtnText(int index, string msg)
