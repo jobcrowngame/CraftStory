@@ -32,6 +32,13 @@ public class NoticeUI : UIBase
         if (list == null || list.Count == 0)
             return;
 
+        list.Sort(delegate (NoticeLG.NoticeData x, NoticeLG.NoticeData y) {
+            if (x.activedate == null && y.activedate == null) return 0;
+            else if (x.activedate == null) return 1;
+            else if (y.activedate == null) return -1;
+            else return y.activedate.CompareTo(x.activedate);
+        });
+
         foreach (var item in list)
         {
             var cell = AddCell<NoticeCell>("Prefabs/UI/NoticeCell", parent);
