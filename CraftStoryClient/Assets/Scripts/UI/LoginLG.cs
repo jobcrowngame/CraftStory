@@ -10,10 +10,9 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
     {
         NWMng.E.CreateNewAccount((rp) =>
         {
-            DataMng.E.UserData.Account = (string)rp["acc"];
-            DataMng.E.UserData.UserPW = (string)rp["pw"];
+            DataMng.E.NewUser((string)rp["acc"], (string)rp["pw"]);
 
-            Logger.Log("新しいアカウント作成成功しました。\n{0}", DataMng.E.UserData.Account);
+            Logger.Log("新しいアカウント作成成功しました。\n{0}", (string)rp["acc"]);
 
             Login(0);
         });

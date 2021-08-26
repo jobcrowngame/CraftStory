@@ -14,7 +14,7 @@ public class NWData
         if (!string.IsNullOrEmpty(DataMng.E.token))
             Add("token", DataMng.E.token);
 
-        if (!string.IsNullOrEmpty(DataMng.E.UserData.Account))
+        if (DataMng.E.UserData != null && !string.IsNullOrEmpty(DataMng.E.UserData.Account))
             Add("acc", DataMng.E.UserData.Account);
     }
 

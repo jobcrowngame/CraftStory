@@ -67,6 +67,9 @@ public class DataMng : Single<DataMng>
         RuntimeData = new RuntimeData();
     }
 
+    /// <summary>
+    /// ローカルデータのセーブ
+    /// </summary>
     public void Save()
     {
         Logger.Log("Save Data");
@@ -78,6 +81,10 @@ public class DataMng : Single<DataMng>
             SaveLoadFile.E.Save(mHomeData.ToStringData(), PublicPar.SaveRootPath + PublicPar.MapDataName);
     }
 
+    /// <summary>
+    /// ローカルデータのロード
+    /// </summary>
+    /// <returns></returns>
     public bool Load()
     {
         uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.UserDataName);
@@ -90,8 +97,25 @@ public class DataMng : Single<DataMng>
         return true;
     }
 
+    #region User
+    /// <summary>
+    /// 新しいユーザーを追加
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="pw"></param>
+    public void NewUser(string id, string pw)
+    {
+        uData = new UserData();
+        uData.Account = id;
+        uData.UserPW = pw;
+    }
+    #endregion
     #region Map
 
+    /// <summary>
+    /// マップデータを設置
+    /// </summary>
+    /// <param name="mapId">マップID</param>
     public void SetMapData(int mapId)
     {
         MapData mData = null;
@@ -125,10 +149,11 @@ public class DataMng : Single<DataMng>
             case MapType.Brave: mBraveData = mData; break;
         }
     }
-    public void GetMapData(int mapId)
-    {
 
-    }
+    /// <summary>
+    /// ホームデータをゲット
+    /// </summary>
+    /// <returns></returns>
     public MapData GetHomeData()
     {
         return mHomeData;
@@ -137,11 +162,20 @@ public class DataMng : Single<DataMng>
     #endregion
     #region Item
 
+    /// <summary>
+    /// アイテムリストをセット
+    /// </summary>
+    /// <param name="list"></param>
     public void SetItems(List<ItemData> list)
     {
         items = list;
     }
 
+    /// <summary>
+    /// アイテムGUIDによってアイテムをゲット
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     public ItemData GetItemByGuid(int guid)
     {
         for (int i = 0; i < Items.Count; i++)
@@ -153,6 +187,12 @@ public class DataMng : Single<DataMng>
         }
         return null;
     }
+
+    /// <summary>
+    /// 装備した箇所によってアイテムをゲット
+    /// </summary>
+    /// <param name="site"></param>
+    /// <returns></returns>
     public ItemData GetItemByEquipedSite(int site)
     {
         for (int i = 0; i < Items.Count; i++)
@@ -164,6 +204,12 @@ public class DataMng : Single<DataMng>
         }
         return null;
     }
+
+    /// <summary>
+    /// アイテムIDによって数をゲット
+    /// </summary>
+    /// <param name="itemId"></param>
+    /// <returns></returns>
     public int GetItemCountByItemID(int itemId)
     {
         int count = 0;
@@ -179,19 +225,14 @@ public class DataMng : Single<DataMng>
         return count;
     }
 
-    public void AddItems(Dictionary<int,int> items, Action action = null)
-    {
-        if (items.Count <= 0)
-            return;
-
-        NWMng.E.AddItems((rp) =>
-        {
-            NWMng.E.GetItems(() =>
-            {
-                if (action != null) action();
-            });
-        }, items);
-    }
+    /// <summary>
+    /// 関連データがあるアイテムを追加（設計図）
+    /// </summary>
+    /// <param name="itemID">アイテムID</param>
+    /// <param name="count">数</param>
+    /// <param name="newName">新しいアイテム名</param>
+    /// <param name="data">関連データ</param>
+    /// <param name="action">成功した後のイベント</param>
     public void AddItemInData(int itemID, int count, string newName, string data, Action action = null)
     {
         if (RuntimeData.MapType == MapType.Guide)
