@@ -75,6 +75,9 @@ public class BuilderPencil
     /// </summary>
     public void CreateBlueprint()
     {
+        if (startNotation == null || endNotation == null)
+            return;
+
         var startPos = startNotation.transform.position;
         var endPos = endNotation.transform.position;
         var centPos = new Vector3((startPos.x + endPos.x) / 2, startPos.y, (startPos.z + endPos.z) / 2);
