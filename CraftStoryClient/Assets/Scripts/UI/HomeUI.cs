@@ -205,7 +205,6 @@ public class HomeUI : UIBase
         Logger.Log("BuilderBtn");
 
         PlayerCtl.E.BuilderPencil.CreateBlueprint();
-        GuideLG.E.Next();
     }
     private void CancelBuilderPencilCancelBtn()
     {

@@ -132,11 +132,14 @@ public class BuilderPencil
             // 設計図名を登録Windowを呼び出す
             var ui = UICtl.E.OpenUI<BlueprintReNameUI>(UIType.BlueprintReName);
             ui.SetMapData(blueprintData.ToJosn());
+
+            GuideLG.E.Next();
         }
         else
         {
             // 設計図内容が空の場合、エラーメッセージを出す
             CommonFunction.ShowHintBar(26);
+            GuideLG.E.GoTo(10);
         }
 
         CancelCreateBlueprint();

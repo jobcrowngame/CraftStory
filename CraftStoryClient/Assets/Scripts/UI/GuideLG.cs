@@ -44,6 +44,7 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         end = false;
         stepIndex = 0;
         itemGuid = 1;
+        createBlockCount = 0;
     }
     public void UnLock()
     {
@@ -66,6 +67,11 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         CurStep = guideSteps[stepIndex];
         stepIndex++;
         Lock = true;
+    }
+    public void GoTo(int index)
+    {
+        stepIndex = index - 1;
+        Next();
     }
     public void CreateBlock()
     {
