@@ -28,6 +28,9 @@ public class WorldMng : MonoBehaviour
         CharacterCtl = new CharacterCtl();
     }
 
+    /// <summary>
+    /// 世界の　GameObject　をインスタンス
+    /// </summary>
     public void CreateGameObjects()
     {
         MapCtl.CreateMap();

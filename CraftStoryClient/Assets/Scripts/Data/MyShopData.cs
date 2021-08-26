@@ -5,7 +5,10 @@
 /// </summary>
 public class MyShopData
 {
-    public int myShopLv { get; set; } // ショップレベル （設計図桁）
+    /// <summary>
+    /// ショップレベル （設計図桁）
+    /// </summary>
+    public int myShopLv { get; set; }
     public MyShopItem[] MyShopItem 
     {
         get

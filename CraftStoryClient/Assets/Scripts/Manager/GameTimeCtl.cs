@@ -7,6 +7,9 @@ public class GameTimeCtl
 {
     Light DirectionalLight { get => GameObject.Find("Directional Light").GetComponent<Light>(); }
 
+    /// <summary>
+    /// ゲーム時間変化をアクティブ
+    /// </summary>
     public bool Active 
     {
         get => mActive;

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,35 +5,95 @@ using UnityEngine.UI;
 
 public class HomeUI : UIBase
 {
-    Image FadeinImg;
+    #region 変数
 
-    Button MenuBtn;
-    Button BagBtn;
+    /// <summary>
+    /// Fadein のマスク
+    /// </summary>
+    Image FadeinImg { get => FindChiled<Image>("Fadein"); }
 
-    Transform btnsParent;
+    /// <summary>
+    /// メニューボタン
+    /// </summary>
+    Button MenuBtn { get => FindChiled<Button>("MenuBtn"); }
 
-    Transform BuilderPencil;
-    Button BuilderBtn;
-    Button BuilderPencilCancelBtn;
+    /// <summary>
+    /// 持ち物ボタン
+    /// </summary>
+    Button BagBtn { get => FindChiled<Button>("BagBtn"); }
 
-    Transform Blueprint;
-    Transform BlueprintCellGrid;
-    Button SpinBtn;
-    Button BlueprintCancelBtn;
-    Button BuildBtn;
+    /// <summary>
+    /// センタ用のアイテム欄
+    /// </summary>
+    Transform btnsParent { get => FindChiled("Grid"); }
 
+    /// <summary>
+    /// ビルダーペンセル
+    /// </summary>
+    Transform BuilderPencil { get => FindChiled("BuilderPencil"); }
+    /// <summary>
+    /// ビルダーボタン
+    /// </summary>
+    Button BuilderBtn { get => FindChiled<Button>("BuilderBtn", BuilderPencil); }
+    /// <summary>
+    /// キャンセルビルダーボタン
+    /// </summary>
+    Button BuilderPencilCancelBtn { get => FindChiled<Button>("BuilderPencilCancelBtn", BuilderPencil); }
+
+    /// <summary>
+    /// 設計図を使用する場合、コンソールWindow
+    /// </summary>
+    Transform Blueprint { get => FindChiled("Blueprint"); }
+    /// <summary>
+    /// 消耗するアイテムリストのサブ親
+    /// </summary>
+    Transform BlueprintCellGrid { get => FindChiled("Content", Blueprint.gameObject); }
+    /// <summary>
+    /// 回転ボタン
+    /// </summary>
+    Button SpinBtn { get => FindChiled<Button>("SpinBtn", Blueprint); }
+    /// <summary>
+    /// ビルダーキャンセルボタン
+    /// </summary>
+    Button BlueprintCancelBtn { get => FindChiled<Button>("BlueprintCancelBtn", Blueprint); }
+    /// <summary>
+    /// ビルダーボタン
+    /// </summary>
+    Button BuildBtn { get => FindChiled<Button>("BuildBtn", Blueprint); }
+
+    /// <summary>
+    /// ジャンプボタン
+    /// </summary>
     Button Jump { get => FindChiled<Button>("Jump"); }
+    /// <summary>
+    /// 画面操作用　+ボタン
+    /// </summary>
     MyButton PlussBtn { get => FindChiled<MyButton>("PlussBtn"); }
+    /// <summary>
+    /// 画面操作用　-ボタン
+    /// </summary>
     MyButton MinusBtn { get => FindChiled<MyButton>("MinusBtn"); }
 
+    /// <summary>
+    /// びっくりマック
+    /// </summary>
     Transform RedPoint { get => FindChiled("RedPoint"); }
 
+    /// <summary>
+    /// 選択用アイテム欄ボタンリスト
+    /// </summary>
     List<HomeItemBtn> itemBtns;
 
-    private float fadeInTime = 0.05f;
+    /// <summary>
+    /// Fadein　時間幅
+    /// </summary>
+    private float fadeInTimeStep = 0.05f;
+
+    #endregion
 
     private void Start()
     {
+        // 今のマップタイプを設定
         DataMng.E.RuntimeData.MapType = MapType.Home;
         WorldMng.E.CreateGameObjects();
         WorldMng.E.GameTimeCtl.Active = true;
@@ -47,12 +106,6 @@ public class HomeUI : UIBase
             NoticeLG.E.IsFirst = false;
         }
 
-        //if (DataMng.E.RuntimeData.MapType == MapType.Home && PlayDescriptionLG.E.IsFirst)
-        //{
-        //    UICtl.E.OpenUI<PlayDescriptionUI>(UIType.PlayDescription);
-        //    PlayDescriptionLG.E.IsFirst = false;
-        //}
-
         Init();
 
         RefreshItemBtns();
@@ -63,10 +116,8 @@ public class HomeUI : UIBase
         base.Init();
         HomeLG.E.Init(this);
 
-        FadeinImg = FindChiled<Image>("Fadein");
         FadeinImg.enabled = true;
 
-        MenuBtn = FindChiled<Button>("MenuBtn");
         MenuBtn.onClick.AddListener(() => 
         {
             var menu = UICtl.E.OpenUI<MenuUI>(UIType.Menu); 
@@ -74,26 +125,18 @@ public class HomeUI : UIBase
 
             GuideLG.E.Next();
         });
+        BagBtn.onClick.AddListener(() => 
+        { 
+            UICtl.E.OpenUI<BagUI>(UIType.Bag); 
+        });
 
-        BagBtn = FindChiled<Button>("BagBtn");
-        BagBtn.onClick.AddListener(() => { UICtl.E.OpenUI<BagUI>(UIType.Bag); });
-
-        btnsParent = FindChiled("Grid");
         AddItemBtns();
 
-        BuilderPencil = FindChiled("BuilderPencil");
-        BuilderBtn = FindChiled<Button>("BuilderBtn", BuilderPencil);
         BuilderBtn.onClick.AddListener(CreateBlueprint);
-        BuilderPencilCancelBtn = FindChiled<Button>("BuilderPencilCancelBtn", BuilderPencil);
         BuilderPencilCancelBtn.onClick.AddListener(CancelBuilderPencilCancelBtn);
 
-        Blueprint = FindChiled("Blueprint");
-        BlueprintCellGrid = FindChiled("Content", Blueprint.gameObject);
-        SpinBtn = FindChiled<Button>("SpinBtn", Blueprint);
         SpinBtn.onClick.AddListener(SpinBlueprint);
-        BlueprintCancelBtn = FindChiled<Button>("BlueprintCancelBtn", Blueprint);
         BlueprintCancelBtn.onClick.AddListener(CancelUserBlueprint);
-        BuildBtn = FindChiled<Button>("BuildBtn", Blueprint);
         BuildBtn.onClick.AddListener(BuildBlueprint);
 
         PlussBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(1); });
@@ -187,17 +230,29 @@ public class HomeUI : UIBase
         RedPoint.gameObject.SetActive(CommonFunction.MenuRedPoint());
     }
 
+    /// <summary>
+    /// ビルダーペンセルコンソールを表し
+    /// </summary>
+    /// <param name="b"></param>
     public void ShowBuilderPencilBtn(bool b = true)
     {
         if (BuilderPencil != null)
             BuilderPencil.gameObject.SetActive(b);
     }
+
+    /// <summary>
+    /// 設計図使用場合のコンソールWindowを表し
+    /// </summary>
+    /// <param name="b"></param>
     public void ShowBlueprintBtn(bool b = true)
     {
         if (Blueprint != null)
             Blueprint.gameObject.SetActive(b);
     }
 
+    /// <summary>
+    /// アイテム選択欄を更新
+    /// </summary>
     public void RefreshItemBtns()
     {
         foreach (var item in itemBtns)
@@ -218,7 +273,7 @@ public class HomeUI : UIBase
         {
             FadeinImg.color = new Color(0f, 0f, 0f, i);
             //　指定秒数待つ
-            yield return new WaitForSeconds(fadeInTime);
+            yield return new WaitForSeconds(fadeInTimeStep);
         }
 
         FadeinImg.gameObject.SetActive(false);

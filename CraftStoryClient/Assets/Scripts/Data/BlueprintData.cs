@@ -52,6 +52,13 @@ public class BlueprintData
             sizeZ = 0;
         }
     }
+
+    /// <summary>
+    /// 構築メソッド
+    /// </summary>
+    /// <param name="entitys">エンティティリスト</param>
+    /// <param name="size">設計図サイズ</param>
+    /// <param name="centerPos">センタ点座標</param>
     public BlueprintData(List<EntityBase> entitys, Vector2Int size, Vector3Int centerPos)
     {
         sizeX = size.x;

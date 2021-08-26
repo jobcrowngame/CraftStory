@@ -8,6 +8,9 @@ using System.Collections.Generic;
 [Serializable]
 public class DataMng : Single<DataMng>
 {
+    /// <summary>
+    /// サーバーとの通信用 token
+    /// </summary>
     public string token { get; set; }
 
     public RuntimeData RuntimeData { get; set; }
@@ -35,6 +38,9 @@ public class DataMng : Single<DataMng>
     private MapData mGuideData;
     private MapData mBraveData;
 
+    /// <summary>
+    /// マイショップデータ
+    /// </summary>
     public MyShopData MyShop
     {
         get
@@ -84,16 +90,6 @@ public class DataMng : Single<DataMng>
         return true;
     }
 
-    #region User
-    public void NewUser(string id, string pw)
-    {
-        uData = new UserData()
-        {
-            Account = id,
-            UserPW = pw
-        };
-    }
-    #endregion
     #region Map
 
     public void SetMapData(int mapId)

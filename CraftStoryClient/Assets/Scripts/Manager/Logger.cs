@@ -40,7 +40,7 @@ public class Logger : Single<Logger>
     {
         if (level < LogLV.Off)
         {
-            string msg = string.Format("[ERROR][ACC:" + DataMng.E.UserData.Account + "]" + format, args);
+            string msg = string.Format("[ERROR]" + format, args);
             Debug.LogErrorFormat(msg);
             DebugLG.E.Add(msg);
 
@@ -52,7 +52,7 @@ public class Logger : Single<Logger>
     }
     public static void Error(Exception e)
     {
-        Error("[ERROR]" + e.Message);
+        Error(e.Message + e.StackTrace);
     }
 
     enum LogLV

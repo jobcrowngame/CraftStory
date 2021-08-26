@@ -9,19 +9,35 @@ using UnityEngine;
 /// </summary>
 public class BuilderPencil
 {
-    GameObject startNotation; // 始点
-    GameObject endNotation; // 終点
+    /// <summary>
+    /// 始点標記GameObject
+    /// </summary>
+    GameObject startNotation;
 
-    BlueprintData selectBlueprintData; // 選択されたエンティティ
-    Vector3Int buildPos; // 作成座標
+    /// <summary>
+    /// 終点標記GameObject
+    /// </summary>
+    GameObject endNotation;
 
-    // 始点があるかのチェック
+    /// <summary>
+    /// 選択された設計図データ
+    /// </summary>
+    BlueprintData selectBlueprintData;
+
+    /// <summary>
+    /// 作成する座標
+    /// </summary>
+    Vector3Int buildPos;
+
+    /// <summary>
+    /// 始点があるかのチェック
+    /// </summary>
     public bool IsStart { get => startNotation == null; }
 
     /// <summary>
     /// 始点を設定
     /// </summary>
-    /// <param name="pos"></param>
+    /// <param name="pos">座標</param>
     public void Start(Vector3 pos)
     {
         if (startNotation != null)
@@ -38,7 +54,7 @@ public class BuilderPencil
     /// <summary>
     /// 終点を設定
     /// </summary>
-    /// <param name="pos"></param>
+    /// <param name="pos">座標</param>
     public void End(Vector3 pos)
     {
         if (pos.y != startNotation.transform.position.y)
@@ -55,7 +71,7 @@ public class BuilderPencil
     }
 
     /// <summary>
-    /// 設計図を生成
+    /// 設計図を作成
     /// </summary>
     public void CreateBlueprint()
     {
@@ -63,6 +79,7 @@ public class BuilderPencil
         var endPos = endNotation.transform.position;
         var centPos = new Vector3((startPos.x + endPos.x) / 2, startPos.y, (startPos.z + endPos.z) / 2);
 
+        // 始点、終点の座標によって設計図内容座標を決める
         int minX, maxX, minZ, maxZ;
         if (startPos.x >= endPos.x)
         {
@@ -86,11 +103,9 @@ public class BuilderPencil
             maxZ = (int)endPos.z + 1;
         }
 
-        int centerX = (maxX - minX) / 2;
-        int centerZ = (maxZ - minZ) / 2;
-
         Logger.Log("s:{0}, n:{1}",startPos, endPos);
 
+        // 含まれたEntityを検索
         List<EntityBase> entitys = new List<EntityBase>();
         for (int y = (int)startPos.y; y < DataMng.E.MapData.GetMapSize().y; y++)
         {
@@ -107,16 +122,25 @@ public class BuilderPencil
             }
         }
 
+        // 設計図データを生成
         var blueprintData = new BlueprintData(entitys, new Vector2Int(maxX - minX, maxZ - minZ), Vector3Int.CeilToInt(centPos));
-
-        var ui = UICtl.E.OpenUI<BlueprintReNameUI>(UIType.BlueprintReName);
-        ui.SetMapData(blueprintData.ToJosn());
+        if (blueprintData.blocks.Count > 0)
+        {
+            // 設計図名を登録Windowを呼び出す
+            var ui = UICtl.E.OpenUI<BlueprintReNameUI>(UIType.BlueprintReName);
+            ui.SetMapData(blueprintData.ToJosn());
+        }
+        else
+        {
+            // 設計図内容が空の場合、エラーメッセージを出す
+            CommonFunction.ShowHintBar(26);
+        }
 
         CancelCreateBlueprint();
     }
 
     /// <summary>
-    /// 選択したエンティティをキャンセル
+    /// 作成した設計図をキャンセル
     /// </summary>
     public void CancelCreateBlueprint()
     {
@@ -130,15 +154,17 @@ public class BuilderPencil
     /// <summary>
     /// 設計図を使用
     /// </summary>
-    /// <param name="startPos"></param>
-    /// <param name="data"></param>
+    /// <param name="startPos">作成点</param>
+    /// <param name="data">設計図内容</param>
     public void UseBlueprint(Vector3Int startPos, string data)
     {
-        Logger.Log("UserBlueprint");
-
+        // 設計図内容によって、設計図データを生成
         selectBlueprintData = new BlueprintData(data);
 
+        // 残ってる設計図エンティティを作成
         WorldMng.E.MapCtl.DeleteBuilderPencil();
+
+        // 
         ClearSelectBlueprintDataBlock();
         buildPos = startPos;
         selectBlueprintData.IsDuplicate = false;
@@ -259,9 +285,9 @@ public class BuilderPencil
     }
 
     /// <summary>
-    /// 始点、終点を削除
+    /// 標記を削除
     /// </summary>
-    /// <param name="notation"></param>
+    /// <param name="notation">標記</param>
     private void DestroyNotation(GameObject notation)
     {
         if (notation != null)

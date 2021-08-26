@@ -70,6 +70,12 @@ public class UICtl : Single<UICtl>
             return null;
         return uiDic[uiType] as T;
     }
+
+    /// <summary>
+    /// UIをUIコンソールクラスに追加
+    /// </summary>
+    /// <param name="ui">UI</param>
+    /// <param name="uiType">識別タイプ</param>
     public void AddUI(UIBase ui, UIType uiType)
     {
         uiDic[uiType] = ui;
@@ -200,6 +206,10 @@ public class UICtl : Single<UICtl>
         }
     }
 
+    /// <summary>
+    /// UI を操作出来ないようにロック
+    /// </summary>
+    /// <param name="b">true=ロック　false=アンロック</param>
     public void LockUI(bool b = true)
     {
         if (b)

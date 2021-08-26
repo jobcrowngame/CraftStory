@@ -7,7 +7,16 @@ public class NWData
 {
     JsonData jd;
 
-    public NWData() { jd = new JsonData(); }
+    public NWData() 
+    { 
+        jd = new JsonData();
+
+        if (!string.IsNullOrEmpty(DataMng.E.token))
+            Add("token", DataMng.E.token);
+
+        if (!string.IsNullOrEmpty(DataMng.E.UserData.Account))
+            Add("acc", DataMng.E.UserData.Account);
+    }
 
     public override string ToString()
     {

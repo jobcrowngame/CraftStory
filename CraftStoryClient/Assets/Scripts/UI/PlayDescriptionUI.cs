@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 遊び方
+/// </summary>
 public class PlayDescriptionUI : UIBase
 {
     Image img { get => FindChiled<Image>("Image"); }

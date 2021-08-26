@@ -3,19 +3,26 @@ using System.Collections.Generic;
 
 public class LoginLg : UILogicBase<LoginLg, LoginUI>
 {
+    /// <summary>
+    /// 新しいアカウントを作成
+    /// </summary>
     public void CreateNewAccount()
     {
         NWMng.E.CreateNewAccount((rp) =>
         {
-            Logger.Log("新しいアカウント作成成功しました。");
-            Logger.Log("ID:\n{0}, \nPW:\n{1}", rp["acc"], rp["pw"]);
-            DataMng.E.NewUser((string)rp["acc"], (string)rp["pw"]);
-            Login(0);
+            DataMng.E.UserData.Account = (string)rp["acc"];
+            DataMng.E.UserData.UserPW = (string)rp["pw"];
 
-            PlayDescriptionLG.E.IsFirst = true;
+            Logger.Log("新しいアカウント作成成功しました。\n{0}", DataMng.E.UserData.Account);
+
+            Login(0);
         });
     }
 
+    /// <summary>
+    /// ログイン
+    /// </summary>
+    /// <param name="IsMaintenance">メンテナンス 1=on 2=off</param>
     public void Login(int IsMaintenance)
     {
         if (DataMng.E.UserData == null)
@@ -28,9 +35,6 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             return;
         }
 
-        string id = DataMng.E.UserData.Account;
-        string pw = DataMng.E.UserData.UserPW;
-
         UICtl.E.LockUI();
         NWMng.E.Login((rp) =>
         {
@@ -38,7 +42,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             DataMng.E.MyShop.myShopLv = (int)rp["myShopLv"];
             DataMng.E.RuntimeData.GuideEnd = (int)rp["guide_end"];
             if(rp["nickname"] != null) DataMng.E.RuntimeData.NickName = (string)rp["nickname"];
-            //if (rp["comment"] != null) DataMng.E.RuntimeData.Comment = (string)rp["comment"];
+            if (rp["comment"] != null) DataMng.E.RuntimeData.Comment = (string)rp["comment"];
 
             // IAPMngを初期化
             IAPMng.E.Init();
@@ -84,6 +88,6 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 });
             }
 
-        }, id, pw);
+        }, DataMng.E.UserData.UserPW);
     }
 }
