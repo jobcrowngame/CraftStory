@@ -30,6 +30,7 @@ public class DataMng : Single<DataMng>
             {
                 case MapType.Home: return mHomeData;
                 case MapType.Guide: return mGuideData;
+                case MapType.FriendHome: return mFriendHomeData;
                 default: return mBraveData;
             }
         }
@@ -37,6 +38,7 @@ public class DataMng : Single<DataMng>
     private MapData mHomeData;
     private MapData mGuideData;
     private MapData mBraveData;
+    private MapData mFriendHomeData;
 
     /// <summary>
     /// マイショップデータ
@@ -131,6 +133,11 @@ public class DataMng : Single<DataMng>
             mType = MapType.Guide;
             mData = WorldMng.E.MapCtl.CreateMapData(mapId);
         }
+        else if (mapId == 102)
+        {
+            mType = MapType.FriendHome;
+            mData = mFriendHomeData;
+        }
         else
         {
             mType = MapType.Brave;
@@ -147,6 +154,7 @@ public class DataMng : Single<DataMng>
             case MapType.Home: mHomeData = mData; break;
             case MapType.Guide: mGuideData = mData; break;
             case MapType.Brave: mBraveData = mData; break;
+            case MapType.FriendHome: mFriendHomeData = mData; break;
         }
     }
 

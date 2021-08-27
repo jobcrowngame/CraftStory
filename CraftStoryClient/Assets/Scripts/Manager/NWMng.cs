@@ -131,7 +131,7 @@ public partial class NWMng : MonoBehaviour
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("[CMD:{0}]-{1}:\n{2}", (int)cmd, www.downloadHandler.text, ex.Message + ex.TargetSite);
+                    Logger.Error("[CMD:{0}]-{1}", (int)cmd, ex.Message + ex.TargetSite);
                 }
             }
         }
@@ -726,6 +726,19 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.GetBlueprintPreviewData));
     }
 
+    /// <summary>
+    /// フレンドホームデータをゲット
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="userGuid">ユーザーGUID</param>
+    public void GetFriendHomeData(Action<JsonData> rp, int userGuid)
+    {
+        var data = new NWData();
+        data.Add("userGuid", userGuid);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetFriendHomeData));
+    }
+
 
     /// <summary>
     /// ホームデータをサーバーにセーブ
@@ -812,6 +825,7 @@ public partial class NWMng : MonoBehaviour
         UpdateComment,
         SearchFriend,
         GetBlueprintPreviewData,
+        GetFriendHomeData = 1040,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

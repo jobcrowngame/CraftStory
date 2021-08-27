@@ -351,8 +351,28 @@ public class MapData
 /// </summary>
 public enum MapType
 {
-    Home = 1, // ホーム
-    Guide = 2, // チュートリアル
-    Brave = 3, // 冒険
-    Test = 99, // テスト
+    /// <summary>
+    /// ホーム
+    /// </summary>
+    Home = 1,
+
+    /// <summary>
+    /// チュートリアル
+    /// </summary>
+    /// 
+    Guide = 2,
+    /// <summary>
+    /// 冒険
+    /// </summary>
+    Brave = 3, 
+
+    /// <summary>
+    /// フレンドホーム
+    /// </summary>
+    FriendHome = 4,
+
+    /// <summary>
+    /// テスト
+    /// </summary>
+    Test = 99,
 }

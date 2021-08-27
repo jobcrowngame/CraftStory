@@ -87,9 +87,14 @@ public class PlayerCtl : MonoBehaviour
             CommonFunction.GoToNextScene(101);
         }
 
-        if (Input.GetKeyDown(KeyCode.F12))
+        if (Input.GetKeyDown(KeyCode.F2))
         {
             GuideLG.E.GoTo(40);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            CommonFunction.GotoFriendHome(45);
         }
     }
 

@@ -1,8 +1,8 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BraveUI : UIBase
+public class FriendHomeUI : UIBase
 {
     Text SceneName { get => FindChiled<Text>("SceneName"); }
     Image FadeinImg { get => FindChiled<Image>("Fadein"); }
@@ -10,8 +10,6 @@ public class BraveUI : UIBase
     Button Jump { get => FindChiled<Button>("Jump"); }
     MyButton PlussBtn { get => FindChiled<MyButton>("PlussBtn"); }
     MyButton MinusBtn { get => FindChiled<MyButton>("MinusBtn"); }
-    Transform ItemMsgParent { get => FindChiled("Content"); }
-
 
     private float fadeInTime = 0.05f;
 
@@ -27,10 +25,10 @@ public class BraveUI : UIBase
     {
         base.Init();
 
-        BraveLG.E.Init(this);
+        FriendHomeLG.E.Init(this);
 
-        MenuBtn.onClick.AddListener(() => 
-        { 
+        MenuBtn.onClick.AddListener(() =>
+        {
             UICtl.E.OpenUI<MenuUI>(UIType.Menu);
         });
 
@@ -49,23 +47,14 @@ public class BraveUI : UIBase
 
     IEnumerator FadeIn()
     {
-        //@Color‚ÌƒAƒ‹ƒtƒ@‚ğ0.1‚¸‚Â‰º‚°‚Ä‚¢‚­
+        //ã€€Colorã®ã‚¢ãƒ«ãƒ•ã‚¡ã‚’0.1ãšã¤ä¸‹ã’ã¦ã„ã
         for (var i = 1f; i > 0; i -= 0.1f)
         {
             FadeinImg.color = new Color(0f, 0f, 0f, i);
-            //@w’è•b”‘Ò‚Â
+            //ã€€æŒ‡å®šç§’æ•°å¾…ã¤
             yield return new WaitForSeconds(fadeInTime);
         }
 
         FadeinImg.gameObject.SetActive(false);
-    }
-
-    public void AddItem(BraveLG.BraveCellItem item)
-    {
-        var cell = AddCell<BraveCell>("Prefabs/UI/BraveCell", ItemMsgParent);
-        if (cell != null)
-        {
-            cell.Set(item);
-        }
     }
 }

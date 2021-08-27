@@ -57,6 +57,7 @@ public class MenuUI : UIBase
                     break;
 
                 case MapType.Brave:
+                case MapType.FriendHome:
                     HomeBtn.gameObject.SetActive(true);
                     break;
 

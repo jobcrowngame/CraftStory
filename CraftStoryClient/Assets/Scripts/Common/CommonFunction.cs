@@ -5,6 +5,8 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using LitJson;
+
 public class CommonFunction
 {
     /// <summary>
@@ -191,6 +193,24 @@ public class CommonFunction
 
         // Scene遷移
         SceneManager.LoadSceneAsync("NowLoading");
+    }
+
+    /// <summary>
+    /// フレンドホームに行く
+    /// </summary>
+    /// <param name="userGuid">ユーザーGUID</param>
+    public static void GotoFriendHome(int userGuid)
+    {
+        NWMng.E.GetFriendHomeData((rp) => 
+        {
+            if (string.IsNullOrEmpty(rp.ToString()))
+                return;
+
+            var homeData = (string)rp["homedata"];
+            DataMng.E.SetMapData(new MapData(homeData), MapType.FriendHome);
+
+            GoToNextScene(102);
+        }, userGuid);
     }
 
     /// <summary>
