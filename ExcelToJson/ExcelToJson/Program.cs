@@ -73,6 +73,12 @@ namespace ExcelToJson
                 return "N";
             return item.ToString();
         }
+        private static string ToDateTimeString(object item)
+        {
+            if (item == DBNull.Value)
+                return new DateTime(0).ToString("yyyy/MM/dd");
+            return ((DateTime)item).ToString("yyyy/MM/dd");
+        }
 
         private static void ExcelToJson(string inFilePath, string outputPath, string fileName, Formatting indented)
         {
@@ -111,6 +117,7 @@ namespace ExcelToJson
                 case "Gacha": list = Gacha(tbl); break;
                 case "Roulette": list = Roulette(tbl); break;
                 case "RouletteCell": list = RouletteCell(tbl); break;
+                case "LoginBonus": list = LoginBonus(tbl); break;
 
 
                 default: Console.WriteLine("not find fileName function."); break;
@@ -513,6 +520,24 @@ namespace ExcelToJson
                     ID = ToInt32(tbl.Rows[i]["ID"]),
                     Bonus = ToInt32(tbl.Rows[i]["Bonus"]),
                     Percent = ToInt32(tbl.Rows[i]["Percent"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object LoginBonus(DataTable tbl)
+        {
+            List<LoginBonus> list = new List<LoginBonus>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new LoginBonus()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    LoginBonusId = ToInt32(tbl.Rows[i]["LoginBonusId"]),
+                    Name = ToString(tbl.Rows[i]["Name"]),
+                    MailId = ToInt32(tbl.Rows[i]["MailId"]),
+                    Time = ToDateTimeString(tbl.Rows[i]["Time"]),
                 };
 
                 list.Add(data);

@@ -107,7 +107,7 @@ public class GuideUI : UIBase
 
     IEnumerator StartNextStep(int stepId)
     {
-        yield return new WaitForSeconds(0.08f);
+        yield return new WaitForSeconds(0.1f);
 
         var config = ConfigMng.E.GuideStep[stepId];
         if (config.CellName == "N")

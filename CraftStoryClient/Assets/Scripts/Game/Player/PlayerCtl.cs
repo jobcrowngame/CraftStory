@@ -86,6 +86,11 @@ public class PlayerCtl : MonoBehaviour
             GuideLG.E.ReStart();
             CommonFunction.GoToNextScene(101);
         }
+
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            GuideLG.E.GoTo(40);
+        }
     }
 
     /// <summary>
