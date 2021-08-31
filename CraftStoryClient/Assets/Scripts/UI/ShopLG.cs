@@ -11,6 +11,7 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
         {
             shopUIType = value;
 
+            UI.SelectBtnIndex = shopUIType;
             UI.ChangeUIType(shopUIType);
             UI.SetTitle2(GetTitle2Text());
             UI.RefreshItems(shopUIType);
@@ -87,38 +88,6 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
             case 81: return 2;
             default: return 3;
         }
-    }
-
-    public void StartGacha(int gachaId)
-    {
-        int costId = ConfigMng.E.Gacha[gachaId].Cost;
-        int costCount = ConfigMng.E.Gacha[gachaId].CostCount;
-        if (DataMng.E.GetCoinByID(costId) < costCount)
-        {
-            if (costId == 9000) CommonFunction.ShowHintBar(1010001);
-            if (costId == 9001) CommonFunction.ShowHintBar(1010002);
-            if (costId == 9002) CommonFunction.ShowHintBar(1017001);
-
-            return;
-        }
-
-        NWMng.E.Gacha10((rp) =>
-        {
-            if (string.IsNullOrEmpty(rp.ToString()))
-            {
-                Logger.Error("Bad gacha result");
-            }
-
-            var result = LitJson.JsonMapper.ToObject<GachaResponse>(rp.ToJson());
-            var ui = UICtl.E.OpenUI<GachaBonusUI>(UIType.GachaBonus);
-            if (ui != null)
-            {
-                ui.Set(result, gachaId);
-            }
-
-            DataMng.E.ConsumableCoin(costId, costCount);
-            UI.RefreshCoins();
-        }, gachaId);
     }
 
     public struct GachaResponse

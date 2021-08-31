@@ -74,10 +74,11 @@
     <Compile Include="Assets\Scripts\UI\GiftBoxLG.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintPreviewLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Craft.cs" />
-    <Compile Include="Assets\Scripts\UI\FriendDescriptionLG.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingLG.cs" />
+    <Compile Include="Assets\Scripts\UI\FriendDescriptionLG.cs" />
     <Compile Include="Assets\Scripts\Test\TestToggle.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemUI.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\MyScrollRect.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Roulette.cs" />
     <Compile Include="Assets\Scripts\Cor\AttObjC.cs" />
     <Compile Include="Assets\Scripts\UI\BraveUI.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Assets\Scripts\Test\DragObj.cs" />
     <Compile Include="Assets\Scripts\UI\EmailUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Entity.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaAddBonusUI.cs" />
     <Compile Include="Assets\Scripts\UI\GuideUI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityResources.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
@@ -96,9 +98,11 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csAnimationSpin.cs" />
     <Compile Include="Assets\Scripts\UI\RouletteUI.cs" />
     <Compile Include="Assets\Scripts\UI\BagLG.cs" />
+    <Compile Include="Assets\Scripts\UI\FriendHomeLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Item.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeDetailUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\GuideStep.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaAddBonusLG.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerCtl.cs" />
     <Compile Include="Assets\Scripts\UI\Terms01UI.cs" />
     <Compile Include="Assets\Scripts\UI\BagUI.cs" />
@@ -132,6 +136,7 @@
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionCell.cs" />
     <Compile Include="Assets\Scripts\UI\Common\SimpleMove.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\LoginBonus.cs" />
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeLG.cs" />
     <Compile Include="Assets\Scripts\UI\EmailCell.cs" />
@@ -162,6 +167,7 @@
     <Compile Include="Assets\Scripts\UI\ShopUI.cs" />
     <Compile Include="Assets\Scripts\Manager\NWMng.cs" />
     <Compile Include="Assets\Scripts\Game\Player\BuilderPencil.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaAddBonusCell.cs" />
     <Compile Include="Assets\Scripts\UI\GachaRatioLG.cs" />
     <Compile Include="Assets\Scripts\UI\PersonalMessageUI.cs" />
     <Compile Include="Assets\Scripts\Test\Test2.cs" />
@@ -201,6 +207,7 @@
     <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
     <Compile Include="Assets\Scripts\UI\RouletteLG.cs" />
     <Compile Include="Assets\Scripts\Data\MyShopData.cs" />
+    <Compile Include="Assets\Scripts\UI\FriendHomeUI.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeUI.cs" />
     <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
     <Compile Include="Assets\Scripts\UI\DebugCell.cs" />
@@ -244,6 +251,7 @@
     <Compile Include="Assets\Scripts\Game\Map\EntityTransferGate.cs" />
     <Compile Include="Assets\Scripts\Common\CommonFunction.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaVerificationUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Map.cs" />
     <Compile Include="Assets\Scripts\Manager\IAPMng.cs" />
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectEditor.cs" />
@@ -262,9 +270,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\LoginBonus.cs" />
-    <Compile Include="Assets\Scripts\UI\FriendHomeUI.cs" />
-    <Compile Include="Assets\Scripts\UI\FriendHomeLG.cs" />
+    <Compile Include="Assets\Scripts\UI\RouletteCell.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

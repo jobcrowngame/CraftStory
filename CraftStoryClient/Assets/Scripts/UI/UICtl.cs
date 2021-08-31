@@ -90,6 +90,10 @@ public class UICtl : Single<UICtl>
     /// <returns></returns>
     public T OpenUI<T>(UIType uiType, UIOpenType closeType = UIOpenType.None) where T : UIBase
     {
+        return OpenUI<T>(uiType, closeType, null);
+    }
+    public T OpenUI<T>(UIType uiType, UIOpenType closeType, object data) where T : UIBase
+    {
         switch (closeType)
         {
             case UIOpenType.AllClose:
@@ -132,7 +136,10 @@ public class UICtl : Single<UICtl>
             if (uiClass == null)
                 uiClass = obj.AddComponent<T>();
 
-            uiClass.Init();
+            if (data == null)
+                uiClass.Init();
+            else
+                uiClass.Init(data);
 
             uiDic[uiType] = uiClass;
 
@@ -142,7 +149,10 @@ public class UICtl : Single<UICtl>
             uiClass = uiDic[uiType];
         }
 
-        uiClass.Open();
+        if (data == null)
+            uiClass.Open();
+        else
+            uiClass.Open(data);
 
         curentOpenUI = uiClass;
 
@@ -201,6 +211,8 @@ public class UICtl : Single<UICtl>
             case UIType.Friend: return "Prefabs/UI/Friend";
             case UIType.FriendSearch: return "Prefabs/UI/FriendSearch";
             case UIType.FriendDescription: return "Prefabs/UI/FriendDescription";
+            case UIType.GachaVerification: return "Prefabs/UI/GachaVerification";
+            case UIType.GachaAddBonus: return "Prefabs/UI/GachaAddBonus";
 
             default: Logger.Error("not find UIType " + ui); return "";
         }
@@ -272,4 +284,6 @@ public enum UIType
     Friend,
     FriendSearch,
     FriendDescription,
+    GachaVerification,
+    GachaAddBonus,
 }

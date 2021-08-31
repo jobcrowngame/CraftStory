@@ -7,10 +7,6 @@ public class GachaRatioUI : UIBase
     Text Des { get => FindChiled<Text>("Des"); }
     Transform CellParent { get => FindChiled("Content"); }
 
-    string des = @"こちは説明01
-こちは説明02
-こちは説明03";
-
     public override void Init()
     {
         base.Init();
@@ -21,11 +17,12 @@ public class GachaRatioUI : UIBase
         Title.EnActiveCoin(1);
         Title.EnActiveCoin(2);
         Title.EnActiveCoin(3);
-
-        Des.text = des;
     }
     public void Set(int id)
     {
+        var config = ConfigMng.E.Gacha[id];
+        Des.text = config.Des;
+
         SetCell(id);
     }
 

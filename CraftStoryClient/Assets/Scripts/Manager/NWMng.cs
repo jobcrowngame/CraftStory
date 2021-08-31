@@ -739,6 +739,34 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.GetFriendHomeData));
     }
 
+    /// <summary>
+    /// ポイント交換
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="point">交換するポイント数</param>
+    /// <param name="email">メールアドレス</param>
+    public void ExchangePoints(Action<JsonData> rp, int point, string email)
+    {
+        var data = new NWData();
+        data.Add("point", point);
+        data.Add("email", email);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.ExchangePoints));
+    }
+
+    /// <summary>
+    /// ガチャ追加ボーナスもう一回もらう
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="gachaId"></param>
+    public void GachaAddBonusAgain(Action<JsonData> rp, int gachaId)
+    {
+        var data = new NWData();
+        data.Add("gachaId", gachaId);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GachaAddBonusAgain));
+    }
+
 
     /// <summary>
     /// ホームデータをサーバーにセーブ
@@ -826,6 +854,8 @@ public partial class NWMng : MonoBehaviour
         SearchFriend,
         GetBlueprintPreviewData,
         GetFriendHomeData = 1040,
+        ExchangePoints,
+        GachaAddBonusAgain,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

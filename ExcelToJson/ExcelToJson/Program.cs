@@ -485,6 +485,7 @@ namespace ExcelToJson
                 {
                     ID = ToInt32(tbl.Rows[i]["ID"]),
                     PondId = ToInt32(tbl.Rows[i]["PondId"]),
+                    Title = ToString(tbl.Rows[i]["Title"]),
                     Des = ToString(tbl.Rows[i]["Des"]),
                     Cost = ToInt32(tbl.Rows[i]["Cost"]),
                     CostCount = ToInt32(tbl.Rows[i]["CostCount"]),

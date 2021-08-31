@@ -21,6 +21,7 @@ public class ShopUI : UIBase
     Button RatioBtn { get => FindChiled<Button>("RatioBtn", Gacha); }
     Button StartGachaBtn { get => FindChiled<Button>("StartGachaBtn", Gacha); }
     Text GachaDes { get => FindChiled<Text>("GachaDes", Gacha); }
+    Text Cost { get => FindChiled<Text>("Cost", Gacha); }
 
 
     Transform Blueprint2Wind { get => FindChiled("Blueprint2Wind"); }
@@ -32,27 +33,21 @@ public class ShopUI : UIBase
     Button SearchBtn { get => FindChiled<Button>("SearchBtn", Blueprint2Wind); }
     Dropdown Dropdown { get => FindChiled<Dropdown>("Dropdown", Blueprint2Wind); }
 
-    private int SelectBtnIndex
+    public ShopType SelectBtnIndex
     {
-        get => selectBtnIndex;
         set
         {
-            selectBtnIndex = value;
-
             foreach (var btn in btns)
             {
                 btn.GetComponent<Image>().color = Color.gray;
             }
 
-            btns[selectBtnIndex].GetComponent<Image>().color = Color.white;
+            btns[(int)value].GetComponent<Image>().color = Color.white;
         }
     }
-    private int selectBtnIndex;
 
-    public override void Init()
+    public override void Init(object index)
     {
-        base.Init();
-
         ShopLG.E.Init(this);
 
         title = FindChiled<TitleUI>("Title");
@@ -92,7 +87,6 @@ public class ShopUI : UIBase
                 child.AddClickListener((index) => 
                 {
                     ShopLG.E.ShopUIType = (ShopType)index; 
-                    SelectBtnIndex = index;
 
                     // ガイド
                     if (ShopLG.E.ShopUIType == ShopType.Blueprint2)
@@ -107,10 +101,13 @@ public class ShopUI : UIBase
             var ui = UICtl.E.OpenUI<GachaRatioUI>(UIType.GachaRatio);
             ui.Set(1);
         });
-        StartGachaBtn.onClick.AddListener(()=> { ShopLG.E.StartGacha(1); });
-        GachaDes.text = ConfigMng.E.Gacha[1].Des;
+        StartGachaBtn.onClick.AddListener(()=> 
+        {
+            UICtl.E.OpenUI<GachaVerificationUI>(UIType.GachaVerification, UIOpenType.None, 1);
+        });
+        GachaDes.text = ConfigMng.E.Gacha[1].Title;
+        Cost.text = ConfigMng.E.Gacha[1].CostCount.ToString();
 
-        ShopLG.E.ShopUIType = ShopType.Charge;
 
         var chargeBtnParent = FindChiled("Grid", ChageWind.gameObject);
         chargeBtns = new ShopItemCell[chargeBtnParent.childCount];
@@ -124,16 +121,13 @@ public class ShopUI : UIBase
         chargeBtns[2].Init(ConfigMng.E.Shop[3]);
         chargeBtns[3].Init(ConfigMng.E.Shop[4]);
         chargeBtns[4].Init(ConfigMng.E.Shop[5]);
-
-        SelectBtnIndex = 0;
     }
 
-    public override void Open()
+    public override void Open(object data)
     {
-        base.Open();
+        base.Open(data);
+        ShopLG.E.ShopUIType = (ShopType)data; 
         RefreshCoins();
-
-        ShopLG.E.SelectPage = 1;
         InputField.text = "";
         //SelectBtnIndex = 0;
         //ShopLG.E.ShopUIType = ShopUiType.Charge;

@@ -3,7 +3,10 @@ using UnityEngine.UI;
 
 public class MenuUI : UIBase
 {
-    Button CloseBtn { get => FindChiled<Button>("CloseBtn"); }
+    TitleUI Title { get => FindChiled<TitleUI>("Title"); }
+    ScrollRect Banner { get => FindChiled<ScrollRect>("Banner"); }
+
+
     //Button CraftBtn;
     Button AdventureBtn { get => FindChiled<Button>("AdventureBtn"); }
 
@@ -81,7 +84,24 @@ public class MenuUI : UIBase
 
     public void Awake()
     {
-        CloseBtn.onClick.AddListener(() => { Close(); });
+        Title.SetTitle("メニュー");
+        Title.SetOnClose(() => { Close(); });
+        Title.EnActiveCoin(1);
+        Title.EnActiveCoin(2);
+        Title.EnActiveCoin(3);
+
+
+        for (int i = 0; i < Banner.content.childCount; i++)
+        {
+            var myBtn = Banner.content.GetChild(i).GetComponent<MyButton>();
+            if (myBtn == null)
+            {
+                myBtn = Banner.gameObject.AddComponent<MyButton>();
+            }
+            myBtn.Index = i;
+            myBtn.AddClickListener((index) => { OnClickBanner(index); });
+        }
+
         AdventureBtn.onClick.AddListener(() =>
         {
             CommonFunction.GoToNextScene(1000);
@@ -90,7 +110,7 @@ public class MenuUI : UIBase
 
         ShopBtn.onClick.AddListener(() =>
         {
-            UICtl.E.OpenUI<ShopUI>(UIType.Shop);
+            var ui = UICtl.E.OpenUI<ShopUI>(UIType.Shop, UIOpenType.None, 0);
             Close();
 
             GuideLG.E.Next();
@@ -201,5 +221,18 @@ public class MenuUI : UIBase
     {
         var RedPoint = FindChiled("RedPoint", MessageBtn.gameObject);
         if(RedPoint != null) RedPoint.gameObject.SetActive(CommonFunction.NewMessage());
+    }
+
+    private void OnClickBanner(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                var ui = UICtl.E.OpenUI<ShopUI>(UIType.Shop, UIOpenType.None, 2);
+                Close();
+                break;
+            default:
+                break;
+        }
     }
 }

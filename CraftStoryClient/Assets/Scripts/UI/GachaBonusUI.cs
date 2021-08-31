@@ -8,6 +8,8 @@ public class GachaBonusUI : UIBase
 {
     Transform Parent { get => FindChiled("Content"); }
     Button OkBtn { get => FindChiled<Button>("OkBtn"); }
+    Transform CardFlipping { get => FindChiled("CardFlippingBtn"); }
+    Button CardFlippingBtn { get => CardFlipping.GetComponent<Button>(); }
 
     private int gachaId;
     private int index;
@@ -20,16 +22,24 @@ public class GachaBonusUI : UIBase
 
         OkBtn.onClick.AddListener(()=> 
         {
-            var ui = UICtl.E.OpenUI<RouletteUI>(UIType.Roulette);
+            //var ui = UICtl.E.OpenUI<RouletteUI>(UIType.Roulette);
+            //ui.Set(index, gachaId);
+
+            ShowCardFlippingBtn();
+        });
+
+        CardFlippingBtn.onClick.AddListener(() => 
+        {
+            var ui = UICtl.E.OpenUI<GachaAddBonusUI>(UIType.GachaAddBonus);
             ui.Set(index, gachaId);
             Close();
-
-            Logger.Warning(index.ToString());
         });
     }
     public void Set(ShopLG.GachaResponse result, int gachaId)
     {
         OkBtn.gameObject.SetActive(false);
+        CardFlipping.gameObject.SetActive(false);
+
         ClearCell(Parent);
         cellList.Clear();
 
@@ -71,5 +81,10 @@ public class GachaBonusUI : UIBase
         }
 
         OkBtn.gameObject.SetActive(true);
+    }
+
+    private void ShowCardFlippingBtn()
+    {
+        CardFlipping.gameObject.SetActive(true);
     }
 }
