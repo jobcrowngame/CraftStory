@@ -20,9 +20,9 @@ public class RouletteUI : UIBase
 
     const float stopSpeed = 422;
 
-    public override void Init()
+    public override void Init(object gachaId)
     {
-        base.Init();
+        base.Init(gachaId);
         RouletteLG.E.Init(this);
 
         StartBtn.onClick.AddListener(StartRoulette);
@@ -41,9 +41,9 @@ public class RouletteUI : UIBase
         AddCells();
     }
 
-    public override void Open()
+    public override void Open(object gachaId)
     {
-        base.Open();
+        base.Open(gachaId);
         StartBtn.enabled = true;
         start = false;
         end = false;
@@ -53,7 +53,8 @@ public class RouletteUI : UIBase
         OverMask.gameObject.SetActive(false);
         AgainMask.gameObject.SetActive(false);
 
-        again = Random.Range(0, 100) > 10 ? false : true;
+        var config = ConfigMng.E.Gacha[(int)gachaId];
+        again = Random.Range(0, 1000) > config.AddBonusPercent ? false : true;
         index = Random.Range(1, 6) * 2;
 
         if (again)

@@ -8,5 +8,6 @@
         public int Cost { get;set;}
         public int CostCount { get;set; }
         public int Roulette { get; set; }
+        public int AddBonusPercent { get; set; }
     }
 }

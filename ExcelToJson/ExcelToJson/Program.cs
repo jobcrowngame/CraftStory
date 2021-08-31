@@ -490,6 +490,7 @@ namespace ExcelToJson
                     Cost = ToInt32(tbl.Rows[i]["Cost"]),
                     CostCount = ToInt32(tbl.Rows[i]["CostCount"]),
                     Roulette = ToInt32(tbl.Rows[i]["Roulette"]),
+                    AddBonusPercent = ToInt32(tbl.Rows[i]["AddBonusPercent"]),
                 };
 
                 list.Add(data);
