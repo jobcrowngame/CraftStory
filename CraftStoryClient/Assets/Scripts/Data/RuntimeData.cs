@@ -20,6 +20,11 @@ public class RuntimeData
     /// </summary>
     public string Comment { get; set; }
 
+    /// <summary>
+    /// メールアドレス
+    /// </summary>
+    public string Email { get; set; }
+
     public int NewEmailCount { get; set; } // 新しいメール数
     public int SubscriptionLv01 { get; set; } // サブスクリプション 1
     public int SubscriptionLv02 { get; set; } // サブスクリプション 2

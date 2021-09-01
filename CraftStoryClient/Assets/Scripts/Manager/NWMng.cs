@@ -100,38 +100,46 @@ public partial class NWMng : MonoBehaviour
                 Logger.Error(www.error);
             else
             {
-                try
+                if (string.IsNullOrEmpty(www.downloadHandler.text))
                 {
-                    // 暗号化の解析
-                    var resultJson = CryptMng.E.DecryptString(www.downloadHandler.text);
-
-                    // Json to Object
-                    JsonData jd = JsonMapper.ToObject(resultJson);
-
-                    // ログ
-                    Logger.Log("[CMD:{0}-{1}---Result]\n{2}", cmd, (int)cmd, jd.ToJson());
-
-                    // エラーコード
-                    int errorCode = (int)jd["error"];
-                    if (errorCode > 0)
-                    {
-                        // エラーコード　998　の場合はメンテナンスメッセージボックスを出す
-                        if (errorCode == 998)
-                            CommonFunction.Maintenance();
-                        // 他のエラーコードは設定ファイルのメッセージを出す
-                        else
-                            CommonFunction.ShowHintBar(errorCode);
-                    }
-                    else
-                    {
-                        // 通信成功後のCallBack
-                        if (rp != null)
-                            rp(jd["result"]);
-                    }
+                    Logger.Error("Null Response.[CMD: {0}]", cmd);
+                    yield return null;
                 }
-                catch (Exception ex)
+                else
                 {
-                    Logger.Error("[CMD:{0}]-{1}", (int)cmd, ex.Message + ex.TargetSite);
+                    try
+                    {
+                        // 暗号化の解析
+                        var resultJson = CryptMng.E.DecryptString(www.downloadHandler.text);
+
+                        // Json to Object
+                        JsonData jd = JsonMapper.ToObject(resultJson);
+
+                        // ログ
+                        Logger.Log("[CMD:{0}-{1}---Result]\n{2}", cmd, (int)cmd, jd.ToJson());
+
+                        // エラーコード
+                        int errorCode = (int)jd["error"];
+                        if (errorCode > 0)
+                        {
+                            // エラーコード　998　の場合はメンテナンスメッセージボックスを出す
+                            if (errorCode == 998)
+                                CommonFunction.Maintenance();
+                            // 他のエラーコードは設定ファイルのメッセージを出す
+                            else
+                                CommonFunction.ShowHintBar(errorCode);
+                        }
+                        else
+                        {
+                            // 通信成功後のCallBack
+                            if (rp != null)
+                                rp(jd["result"]);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error("[CMD:{0}]-{1}", (int)cmd, ex.Message + ex.TargetSite);
+                    }
                 }
             }
         }

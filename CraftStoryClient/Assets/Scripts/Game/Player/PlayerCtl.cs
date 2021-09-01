@@ -89,13 +89,18 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            GuideLG.E.GoTo(40);
+            NWMng.E.ExchangePoints((rp) => { }, 1000, "123@aaa.com");
         }
 
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            CommonFunction.GotoFriendHome(45);
-        }
+        //if (Input.GetKeyDown(KeyCode.F2))
+        //{
+        //    GuideLG.E.GoTo(40);
+        //}
+
+        //if (Input.GetKeyDown(KeyCode.F3))
+        //{
+        //    CommonFunction.GotoFriendHome(45);
+        //}
     }
 
     /// <summary>

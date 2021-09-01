@@ -141,21 +141,24 @@ public class MenuUI : UIBase
 
         PointExchangeBtn.onClick.AddListener(() =>
         {
-            if (DataMng.E.RuntimeData.Coin3 < 1000)
-            {
-                CommonFunction.ShowHintBar(18);
-                return;
-            }
+            UICtl.E.OpenUI<ExchangePointUI>(UIType.ExchangePoint);
+            Close();
 
-            string msg = @"ポイント交換ページへ遷移します。
+            //          if (DataMng.E.RuntimeData.Coin3 < 1000)
+            //          {
+            //              CommonFunction.ShowHintBar(18);
+            //              return;
+            //          }
 
-　　※1000ポイントから交換することが可能です。";
+            //          string msg = @"ポイント交換ページへ遷移します。
 
-            CommonFunction.ShowHintBox(msg, () =>
-            {
-                Application.OpenURL("https://www.craftstory.jp/exchangepoints/");
-                Close();
-            }, () => { });
+            //※1000ポイントから交換することが可能です。";
+
+            //          CommonFunction.ShowHintBox(msg, () =>
+            //          {
+            //              Application.OpenURL("https://www.craftstory.jp/exchangepoints/");
+            //              Close();
+            //          }, () => { });
         });
         PlayDescriptionBtn2.onClick.AddListener(() =>
         {

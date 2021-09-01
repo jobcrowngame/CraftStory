@@ -413,4 +413,31 @@ public class CommonFunction
             QuitGame();
         });
     }
+
+
+    /// <summary>
+    /// 指定された文字列がメールアドレスとして正しい形式か検証する
+    /// </summary>
+    /// <param name="address">検証する文字列</param>
+    /// <returns>正しい時はTrue。正しくない時はFalse。</returns>
+    public static bool IsValidMailAddress(string address)
+    {
+        if (string.IsNullOrEmpty(address))
+        {
+            return false;
+        }
+
+        try
+        {
+            System.Net.Mail.MailAddress a =
+                new System.Net.Mail.MailAddress(address);
+        }
+        catch (FormatException)
+        {
+            //FormatExceptionがスローされた時は、正しくない
+            return false;
+        }
+
+        return true;
+    }
 }

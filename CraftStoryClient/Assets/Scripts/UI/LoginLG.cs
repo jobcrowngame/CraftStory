@@ -42,6 +42,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             DataMng.E.RuntimeData.GuideEnd = (int)rp["guide_end"];
             if(rp["nickname"] != null) DataMng.E.RuntimeData.NickName = (string)rp["nickname"];
             if (rp["comment"] != null) DataMng.E.RuntimeData.Comment = (string)rp["comment"];
+            if (rp["email"] != null) DataMng.E.RuntimeData.Email = (string)rp["email"];
 
             // IAPMngを初期化
             IAPMng.E.Init();
