@@ -69,7 +69,7 @@ public class GachaBonusUI : UIBase
     }
     IEnumerator IEStartAnim2()
     {
-        yield return new WaitForSeconds(2.4f);
+        yield return new WaitForSeconds(3.4f);
 
         foreach (var item in cellList)
         {
