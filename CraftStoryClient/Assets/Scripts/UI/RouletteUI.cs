@@ -5,7 +5,7 @@ public class RouletteUI : UIBase
 {
     Image TitleIcon { get => FindChiled<Image>("TitleIcon"); }
     Image RouletteBG { get => FindChiled<Image>("RouletteBG"); }
-    Button StartBtn { get => FindChiled<Button>("StartBtn"); }
+    Button StartBtn { get => GetComponent<Button>(); }
     Transform Parent { get => FindChiled("CellParent"); }
     Button OverMask { get => FindChiled<Button>("OverMask"); }
     Button AgainMask { get => FindChiled<Button>("AgainMask"); }

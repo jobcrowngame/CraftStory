@@ -8,17 +8,20 @@ public class GachaBonusCell : UIBase
     Text Count { get => FindChiled<Text>("Count"); }
     Image Icon { get => FindChiled<Image>("Icon"); }
     Image TreasureBoxIcon { get => FindChiled<Image>("TreasureBoxIcon"); }
+    Image TreasureBoxIconOpen { get => FindChiled<Image>("TreasureBoxIconOpen"); }
+    Animation anim { get => GetComponent<Animation>(); }
 
     public void Add(Item item, int count, int rare)
     {
         Count.text = "x" + count;
         Icon.sprite = ReadResources<Sprite>(item.IconResourcesPath);
         TreasureBoxIcon.sprite = ReadResources<Sprite>("Textures/treasurebox" + rare);
+        TreasureBoxIconOpen.sprite = ReadResources<Sprite>("Textures/treasurebox_open" + rare);
     }
 
-    public void ShowAnim()
+    public void ShowAnim(string animName)
     {
-        GetComponent<Animator>().enabled = true;
+        anim.Play(animName);
     }
     public void ShowItem()
     {

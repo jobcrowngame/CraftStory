@@ -8,8 +8,7 @@ public class GachaBonusUI : UIBase
 {
     Transform Parent { get => FindChiled("Content"); }
     Button OkBtn { get => FindChiled<Button>("OkBtn"); }
-    Transform CardFlipping { get => FindChiled("CardFlippingBtn"); }
-    Button CardFlippingBtn { get => CardFlipping.GetComponent<Button>(); }
+   
 
     private int gachaId;
     private int index;
@@ -22,14 +21,6 @@ public class GachaBonusUI : UIBase
 
         OkBtn.onClick.AddListener(()=> 
         {
-            //var ui = UICtl.E.OpenUI<RouletteUI>(UIType.Roulette);
-            //ui.Set(index, gachaId);
-
-            ShowCardFlippingBtn();
-        });
-
-        CardFlippingBtn.onClick.AddListener(() => 
-        {
             var ui = UICtl.E.OpenUI<GachaAddBonusUI>(UIType.GachaAddBonus);
             ui.Set(index, gachaId);
             Close();
@@ -38,7 +29,6 @@ public class GachaBonusUI : UIBase
     public void Set(ShopLG.GachaResponse result, int gachaId)
     {
         OkBtn.gameObject.SetActive(false);
-        CardFlipping.gameObject.SetActive(false);
 
         ClearCell(Parent);
         cellList.Clear();
@@ -64,27 +54,35 @@ public class GachaBonusUI : UIBase
 
     private void StartAnim()
     {
-        StartCoroutine(StartAnimIE());
+        StartCoroutine(IEStartAnim1());
+        StartCoroutine(IEStartAnim2());
     }
-    IEnumerator StartAnimIE()
+    IEnumerator IEStartAnim1()
     {
         yield return new WaitForSeconds(0.2f);
 
         foreach (var item in cellList)
         {
-            item.ShowAnim();
-            yield return new WaitForSeconds(0.5f);
-            item.ShowItem();
+            item.ShowAnim("GachaBonusCell1");
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+    IEnumerator IEStartAnim2()
+    {
+        yield return new WaitForSeconds(2.4f);
+
+        foreach (var item in cellList)
+        {
+            item.ShowAnim("GachaBonusCell2");
+            yield return new WaitForSeconds(0.2f);
 
             var effect = EffectMng.E.AddUIEffect<EffectBase>(transform, item.transform.position, EffectType.Gacha);
             effect.Init(0.5f);
+
+            yield return new WaitForSeconds(0.3f);
+            item.ShowItem();
         }
 
         OkBtn.gameObject.SetActive(true);
-    }
-
-    private void ShowCardFlippingBtn()
-    {
-        CardFlipping.gameObject.SetActive(true);
     }
 }

@@ -273,6 +273,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
     <Compile Include="Assets\Scripts\UI\ExchangePointUI.cs" />
     <Compile Include="Assets\Scripts\UI\ExchangePointLG.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaVerificationLG.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

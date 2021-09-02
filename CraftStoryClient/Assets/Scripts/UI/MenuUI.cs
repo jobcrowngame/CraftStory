@@ -110,7 +110,7 @@ public class MenuUI : UIBase
 
         ShopBtn.onClick.AddListener(() =>
         {
-            var ui = UICtl.E.OpenUI<ShopUI>(UIType.Shop, UIOpenType.None, 0);
+            UICtl.E.OpenUI<ShopUI>(UIType.Shop, UIOpenType.None, 0);
             Close();
 
             GuideLG.E.Next();
