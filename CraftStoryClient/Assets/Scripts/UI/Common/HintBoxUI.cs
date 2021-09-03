@@ -7,6 +7,7 @@ using UnityEngine.UI;
 /// </summary>
 public class HintBoxUI : UIBase
 {
+    Transform Title { get => FindChiled("Title"); }
     Image Icon { get => FindChiled<Image>("Icon"); }
     Transform Msg1Parent { get => FindChiled("Msg1"); }
     Text Msg1 { get => FindChiled<Text>("Text"); }
@@ -47,6 +48,17 @@ public class HintBoxUI : UIBase
         }
 
         CancelBtn.gameObject.SetActive(cancelAction != null);
+    }
+    public void SetTitle(string msg)
+    {
+        if (string.IsNullOrEmpty(msg))
+        {
+            Title.gameObject.SetActive(false);
+            return;
+        }
+
+        Title.gameObject.SetActive(true);
+        Title.GetChild(0).GetComponent<Text>().text = msg;
     }
 
     private void OnClickOkBtn()

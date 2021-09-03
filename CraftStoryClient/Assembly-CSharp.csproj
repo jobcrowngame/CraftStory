@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Game\Player\CameraCtl.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityTreasureBox.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusUI.cs" />
+    <Compile Include="Assets\Scripts\UI\GachaVerificationLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\TransferGate.cs" />
     <Compile Include="Assets\Scripts\UI\Terms02UI.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryUI.cs" />
@@ -249,9 +250,11 @@
     <Compile Include="Assets\Scripts\UI\Common\HintBoxUI.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterCtl.cs" />
     <Compile Include="Assets\Scripts\UI\EmailDetailsItem.cs" />
+    <Compile Include="Assets\Scripts\UI\ExchangePointUI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityTransferGate.cs" />
     <Compile Include="Assets\Scripts\Common\CommonFunction.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
+    <Compile Include="Assets\Scripts\UI\ExchangePointLG.cs" />
     <Compile Include="Assets\Scripts\UI\GachaVerificationUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Map.cs" />
     <Compile Include="Assets\Scripts\Manager\IAPMng.cs" />
@@ -271,9 +274,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\UI\ExchangePointUI.cs" />
-    <Compile Include="Assets\Scripts\UI\ExchangePointLG.cs" />
-    <Compile Include="Assets\Scripts\UI\GachaVerificationLG.cs" />
+    <Compile Include="Assets\Scripts\Test\CreateUIMng.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

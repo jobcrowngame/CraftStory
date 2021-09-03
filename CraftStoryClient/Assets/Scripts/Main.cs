@@ -1,17 +1,13 @@
-﻿using System;
-using System.Text;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using System.Collections.Specialized;
 
+/// <summary>
+/// メインクラス
+/// </summary>
 public class Main : MonoBehaviour
 {
-    public static Main E;
-
     void Start()
     {
-        E = this;
-
         DontDestroyOnLoad(this);
 
         StartCoroutine(Init());

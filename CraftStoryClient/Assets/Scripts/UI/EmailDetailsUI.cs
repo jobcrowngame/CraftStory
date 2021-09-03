@@ -8,6 +8,7 @@ public class EmailDetailsUI : UIBase
     Text Message { get => FindChiled<Text>("Message"); }
     Text Time { get => FindChiled<Text>("Time"); }
     Button OKBtn { get => FindChiled<Button>("OKBtn"); }
+    Transform ItemScrollView { get => FindChiled("Item Scroll View"); }
     Transform Parent { get => FindChiled("Content"); }
 
     public override void Init()
@@ -62,8 +63,12 @@ public class EmailDetailsUI : UIBase
         ClearCell(Parent);
 
         if (!cell.Data.IsInObject)
+        {
+            ItemScrollView.gameObject.SetActive(false);
             return;
+        }
 
+        ItemScrollView.gameObject.SetActive(true);
         string[] data = cell.Data.related_data.Split('^');
         string[] itemIds = data[0].Split(',');
         string[] itemCount = data[1].Split(',');

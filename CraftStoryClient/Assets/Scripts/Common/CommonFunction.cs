@@ -361,10 +361,16 @@ public class CommonFunction
     public static void ShowHintBox(string iconPath, string msg, Action okAction, Action cancelAction = null, 
         string okBtn = "button_2D_007", string cancelBtn = "button_2D_006")
     {
+        ShowHintBox("", iconPath, msg, okAction, cancelAction, okBtn, cancelBtn);
+    }
+    public static void ShowHintBox(string title, string iconPath, string msg, Action okAction, Action cancelAction = null,
+        string okBtn = "button_2D_007", string cancelBtn = "button_2D_006")
+    {
         var ui = InstantiateUI<HintBoxUI>("Prefabs/UI/Common/HintBox", UICtl.E.Root);
         if (ui != null)
         {
             ui.Init(iconPath, msg, okAction, cancelAction);
+            ui.SetTitle(title);
             ui.SetBtnName(okBtn, cancelBtn);
         }
     }
