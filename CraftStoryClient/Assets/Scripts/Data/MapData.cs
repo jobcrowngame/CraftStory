@@ -189,6 +189,12 @@ public class MapData
                 case EntityType.TreasureBox:
                     entity = CommonFunction.Instantiate<EntityTreasureBox>(config.Resources, parent, pos);
                     break;
+
+                case EntityType.Flowoer:
+                    entity = CommonFunction.Instantiate<EntityFlowoer>(config.Resources, parent, pos);
+                    break;
+
+                default: Logger.Error("not find entityType "+ (EntityType)config.Type); break;
             }
 
             if (entity != null)

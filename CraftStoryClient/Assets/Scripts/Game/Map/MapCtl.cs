@@ -387,8 +387,37 @@ public class MapCtl
             break;
         }
 
+        //// 生成できない座標の場合、５回ループして新しいランダム座標を取得
+        //for (int k = 0; k < 5; k++)
+        //{
+        //    if (CheckCreatePos(newPos))
+        //        break;
+
+        //    newPos = MapCtl.GetGroundPos(mData, (int)newPos.x, (int)newPos.z, config.OffsetY);
+        //}
+
         return new Vector3Int(posX, posY, posZ);
     }
+    /// <summary>
+    /// 生成できるかのチェック
+    /// </summary>
+    /// <param name="pos">座標</param>
+    /// <returns></returns>
+    private bool CheckCreatePos(MapData mapData, Vector3 pos)
+    {
+        Vector3 downEntityPos = new Vector3(pos.x, pos.y - 1, pos.z);
+        var downEntity = mapData.Map[(int)downEntityPos.x, (int)downEntityPos.y, (int)downEntityPos.z];
+        var entityType = (EntityType)ConfigMng.E.Entity[downEntity.entityID].Type;
+        if (entityType == EntityType.Workbench
+            || entityType == EntityType.Kamado
+            || entityType == EntityType.Flowoer
+            )
+        {
+            return false;
+        }
+        return true;
+    }
+
     /// <summary>
     /// ブロックが表面にあるかチェック
     /// </summary>
@@ -425,6 +454,7 @@ public class MapCtl
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Door
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Torch
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.TreasureBox
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Flowoer
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.TransferGate;
     }
     /// <summary>

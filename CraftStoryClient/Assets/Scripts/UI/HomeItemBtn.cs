@@ -96,6 +96,7 @@ public enum ItemType
     None = 0,
     Block = 1,
     Material = 2,
+    Flowoer = 3,
     BuilderPencil = 50,
     NullBlueprint = 51,
     Blueprint = 52,

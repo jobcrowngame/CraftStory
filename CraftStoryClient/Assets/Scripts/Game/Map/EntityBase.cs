@@ -58,6 +58,7 @@ public enum EntityType
     None = 0,　// 空
     Block = 1,// 一般ブロック
     Block2 = 2, // 半透明ブロック
+    Flowoer = 3, // 花
     Block99 = 99, // 壊れないブロック
     Resources = 100, // 
     TreasureBox = 110,

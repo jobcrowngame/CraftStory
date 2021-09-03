@@ -89,13 +89,8 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            NWMng.E.ExchangePoints((rp) => { }, 1000, "123@aaa.com");
+            GuideLG.E.GoTo(40);
         }
-
-        //if (Input.GetKeyDown(KeyCode.F2))
-        //{
-        //    GuideLG.E.GoTo(40);
-        //}
 
         //if (Input.GetKeyDown(KeyCode.F3))
         //{
@@ -182,6 +177,7 @@ public class PlayerCtl : MonoBehaviour
             {
                 switch ((ItemType)selectItem.Config().Type)
                 {
+                    case ItemType.Flowoer:
                     case ItemType.Block:
                         Lock = true;
                         CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
@@ -222,6 +218,8 @@ public class PlayerCtl : MonoBehaviour
 
                         StartCoroutine(UnLock());
                         break;
+
+                    default: Logger.Error("Not find ItemType " + (ItemType)selectItem.Config().Type); break;
                 }
             }
         }
@@ -300,6 +298,7 @@ public class PlayerCtl : MonoBehaviour
             || cell.Type == EntityType.Workbench
             || cell.Type == EntityType.Kamado
             || cell.Type == EntityType.Torch
+            || cell.Type == EntityType.Flowoer
             || cell.Type == EntityType.Obstacle)
         {
             CommonFunction.ShowHintBar(19);
