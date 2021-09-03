@@ -753,10 +753,11 @@ public partial class NWMng : MonoBehaviour
     /// <param name="rp"></param>
     /// <param name="point">交換するポイント数</param>
     /// <param name="email">メールアドレス</param>
-    public void ExchangePoints(Action<JsonData> rp, int point, string email)
+    public void ExchangePoints(Action<JsonData> rp, int point, int money, string email)
     {
         var data = new NWData();
         data.Add("point", point);
+        data.Add("money", money);
         data.Add("email", email);
 
         StartCoroutine(HttpRequest(rp, data, CMD.ExchangePoints));
