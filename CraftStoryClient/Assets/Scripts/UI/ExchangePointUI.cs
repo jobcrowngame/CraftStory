@@ -9,7 +9,6 @@ public class ExchangePointUI : UIBase
     InputField PointInput { get => FindChiled<InputField>("PointInput"); }
     Text MyPointCount { get => FindChiled<Text>("MyPointCount"); }
     Text ExchangeCount { get => FindChiled<Text>("ExchangeCount"); }
-    Text PointInputCheck { get => FindChiled<Text>("PointInputCheck"); }
     Toggle Toggle { get => FindChiled<Toggle>("Toggle"); }
     Button LinkBtn1 { get => FindChiled<Button>("LinkBtn (1)"); }
     Button LinkBtn2 { get => FindChiled<Button>("LinkBtn (2)"); }
@@ -21,14 +20,18 @@ public class ExchangePointUI : UIBase
     const string exchangeOverText = @"ポイント交換申請を受付けました。
 
 ・受付No
-<color=red>{0}</color>
+{0}
 
-締切日後、５営業日以内に以下メールアドレス宛へAmazonギフト券をお送りいたします。
+締切日後、５営業日以内に以下メールアドレス宛へ
+Amazonギフト券をお送りいたします。
+
 ・メールアドレス
-<color=red>{1}</color>
+{1}
 
 毎月5日と20日が締め切り日です。
-※申請状況により、お送りする日にちが前後する場合がございます。何卒ご理解、ご了承の程お願いいたします。";
+※申請状況により、
+お送りする日にちが前後する場合がございます。
+何卒ご理解、ご了承の程お願いいたします。";
 
     public override void Init()
     {
@@ -65,7 +68,6 @@ public class ExchangePointUI : UIBase
         base.Open();
 
         MailInputCheck.gameObject.SetActive(false);
-        PointInputCheck.gameObject.SetActive(false);
         EnableSubmitBtn(false);
         Toggle.isOn = false;
 
@@ -76,8 +78,9 @@ public class ExchangePointUI : UIBase
             MailInput.text = DataMng.E.RuntimeData.Email;
         }
 
-        MyPointCount.text = string.Format("所持：{0}ポイント", DataMng.E.RuntimeData.Coin3);
-        SetPoint(DataMng.E.RuntimeData.Coin3);
+        string point = string.Format("所持：{0}ポイント", DataMng.E.RuntimeData.Coin3.ToString());
+        MyPointCount.text = point;
+        SetPoint(1000);
         OnPointInputValueChange();
     }
 
@@ -89,7 +92,6 @@ public class ExchangePointUI : UIBase
     {
         int result = 0;
         result += CheckMailAdd();
-        result += CheckPointInput();
         result += CheckAgreement();
 
         EnableSubmitBtn(result == 0);
@@ -118,6 +120,9 @@ public class ExchangePointUI : UIBase
             return;
         }
 
+        int point = int.Parse(PointInput.text);
+        int money = (int)(point * 0.3f);
+
         NWMng.E.ExchangePoints((rp)=> 
         {
             DataMng.E.RuntimeData.Coin3 -= int.Parse(PointInput.text);
@@ -126,7 +131,10 @@ public class ExchangePointUI : UIBase
             int guid = (int)rp["guid"];
             CommonFunction.ShowHintBox("ポイント交換申請の受付完了","",string.Format(exchangeOverText, guid, MailInput.text), 
                 () => { Close(); },null);
-        }, int.Parse(PointInput.text), MailInput.text);
+
+            DataMng.E.RuntimeData.NewEmailCount++;
+            HomeLG.E.UI.RefreshRedPoint();
+        }, point, money, MailInput.text);
     }
 
     /// <summary>
@@ -153,22 +161,6 @@ public class ExchangePointUI : UIBase
             MailInputCheck.text = "入力されたメールアドレスに間違いがあります。";
             return 1;
         }
-    }
-
-    /// <summary>
-    /// ポイント入力のチェック
-    /// </summary>
-    /// <returns></returns>
-    private int CheckPointInput()
-    {
-        if (string.IsNullOrEmpty(PointInput.text))
-        {
-            PointInputCheck.gameObject.SetActive(true);
-            PointInputCheck.text = "交換ポイントを入力してください。";
-            return 1;
-        }
-
-        return 0;
     }
 
     /// <summary>
@@ -218,11 +210,8 @@ public class ExchangePointUI : UIBase
             SetPoint(inputCount);
         }
 
-        if (CheckPointInput() == 0)
-        {
-            int exchangeCount = (int)(inputCount * 0.3f);
-            ExchangeCount.text = string.Format(exchangeText, exchangeCount);
-        }
+        int exchangeCount = (int)(inputCount * 0.3f);
+        ExchangeCount.text = string.Format(exchangeText, exchangeCount.ToString());
     }
 
     private void SetPoint(int count)
