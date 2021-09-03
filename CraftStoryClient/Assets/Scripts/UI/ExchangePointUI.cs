@@ -78,7 +78,7 @@ Amazonギフト券をお送りいたします。
             MailInput.text = DataMng.E.RuntimeData.Email;
         }
 
-        string point = string.Format("所持：{0}ポイント", DataMng.E.RuntimeData.Coin3.ToString());
+        string point = string.Format("所持：{0}ポイント", DataMng.E.RuntimeData.Coin3.ToString("#,0"));
         MyPointCount.text = point;
         SetPoint(1000);
         OnPointInputValueChange();
@@ -211,11 +211,11 @@ Amazonギフト券をお送りいたします。
         }
 
         int exchangeCount = (int)(inputCount * 0.3f);
-        ExchangeCount.text = string.Format(exchangeText, exchangeCount.ToString());
+        ExchangeCount.text = string.Format(exchangeText, exchangeCount.ToString("#,0"));
     }
 
     private void SetPoint(int count)
     {
-        PointInput.text = count.ToString();
+        PointInput.text = count.ToString("#,0");
     }
 }
