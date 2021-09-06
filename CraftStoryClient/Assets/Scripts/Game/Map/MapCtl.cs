@@ -376,6 +376,8 @@ public class MapCtl
     {
         if (posX < 0) posX = UnityEngine.Random.Range(0, mapData.SizeX);
         if (posZ < 0) posZ = UnityEngine.Random.Range(0, mapData.SizeZ);
+        Vector3Int newPos = Vector3Int.zero;
+
 
         int posY = 0;
         for (int i = mapData.SizeY - 1; i >= 0; i--)
@@ -387,23 +389,39 @@ public class MapCtl
             break;
         }
 
-        //// 生成できない座標の場合、５回ループして新しいランダム座標を取得
-        //for (int k = 0; k < 5; k++)
-        //{
-        //    if (CheckCreatePos(newPos))
-        //        break;
+        newPos = new Vector3Int(posX, posY, posZ);
+        if (!CheckCreatePos(mapData, newPos))
+        {
+            // 生成できない座標の場合、５回ループして新しいランダム座標を取得
+            for (int k = 0; k < 5; k++)
+            {
+                posX = UnityEngine.Random.Range(0, mapData.SizeX);
+                posZ = UnityEngine.Random.Range(0, mapData.SizeZ);
 
-        //    newPos = MapCtl.GetGroundPos(mData, (int)newPos.x, (int)newPos.z, config.OffsetY);
-        //}
+                posY = 0;
+                for (int i = mapData.SizeY - 1; i >= 0; i--)
+                {
+                    if (mapData.Map[posX, i, posZ].entityID == 0)
+                        continue;
 
-        return new Vector3Int(posX, posY, posZ);
+                    posY = (int)(i + 1 + offsetY - 0.5f);
+                    break;
+                }
+
+                newPos = new Vector3Int(posX, posY, posZ);
+                if (CheckCreatePos(mapData, newPos))
+                    break;
+            }
+        }
+
+        return newPos;
     }
     /// <summary>
     /// 生成できるかのチェック
     /// </summary>
     /// <param name="pos">座標</param>
     /// <returns></returns>
-    private bool CheckCreatePos(MapData mapData, Vector3 pos)
+    private static bool CheckCreatePos(MapData mapData, Vector3 pos)
     {
         Vector3 downEntityPos = new Vector3(pos.x, pos.y - 1, pos.z);
         var downEntity = mapData.Map[(int)downEntityPos.x, (int)downEntityPos.y, (int)downEntityPos.z];

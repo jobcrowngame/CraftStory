@@ -173,12 +173,8 @@ public class MapDataFactory
 
                 Vector3 newPos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ, config.OffsetY);
 
-               
-
                 newPos = MapCtl.FixEntityPos(mData, newPos, config.CreatePosOffset);
                 newPos = MapCtl.GetGroundPos(mData, (int)newPos.x, (int)newPos.z, config.OffsetY);
-
-                
 
                 mData.Map[(int)newPos.x, (int)newPos.y, (int)newPos.z] = new MapData.MapCellData() { entityID = config.EntityID }; 
             }
