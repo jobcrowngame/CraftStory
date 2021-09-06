@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 6636971275387403047}
   - component: {fileID: 8536428007415773832}
   m_Layer: 0
-  m_Name: BigFlower01
+  m_Name: BigFlower04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,11 +147,11 @@ PrefabInstance:
     - target: {fileID: 1130662779123538143, guid: df3834a34365eca4bb4dde1b2f22f9e8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e6714251e692cdb45a43a72e5c77baf4, type: 2}
+      objectReference: {fileID: 2100000, guid: 20c8da9795df2db45aa619daf15d99a1, type: 2}
     - target: {fileID: 1130662779123538143, guid: df3834a34365eca4bb4dde1b2f22f9e8, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: e6714251e692cdb45a43a72e5c77baf4, type: 2}
+      objectReference: {fileID: 2100000, guid: 20c8da9795df2db45aa619daf15d99a1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df3834a34365eca4bb4dde1b2f22f9e8, type: 3}
 --- !u!4 &6709169241971066268 stripped
