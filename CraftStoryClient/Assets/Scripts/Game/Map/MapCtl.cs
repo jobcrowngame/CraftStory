@@ -79,7 +79,23 @@ public class MapCtl
             var entity = MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, builderPencilParent, item.GetPos());
             entity.transform.localPosition = item.GetPos();
 
-            entity.GetComponent<BoxCollider>().enabled = false;
+            // 半透明場合、Collider を Enabled する
+            var collider = entity.GetComponent<BoxCollider>();
+            if (collider != null)
+            {
+                collider.enabled = false;
+            }
+            // サブも同じ
+            foreach (Transform cell in entity.transform)
+            {
+                var cellCollider = cell.GetComponent<BoxCollider>();
+                if (cellCollider != null)
+                {
+                    cellCollider.enabled = false;
+                }
+            }
+
+
             var config = ConfigMng.E.Entity[item.id];
 
             if (shader != null)
@@ -88,6 +104,9 @@ public class MapCtl
                     || (EntityType)config.Type == EntityType.Kamado
                     || (EntityType)config.Type == EntityType.Door
                     || (EntityType)config.Type == EntityType.Torch
+                    || (EntityType)config.Type == EntityType.Flower
+                    || (EntityType)config.Type == EntityType.BigFlower
+                    || (EntityType)config.Type == EntityType.Grass
                     || (EntityType)config.Type == EntityType.Obstacle)
                 {
                     List<GameObject> childs = new List<GameObject>();
@@ -115,18 +134,21 @@ public class MapCtl
                 else
                 {
                     var render = entity.GetComponent<Renderer>();
-                    render.material.shader = shader;
-
-                    // 重複されるかをチェック
-                    if (DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(entity.transform.position)))
+                    if (render != null)
                     {
+                        render.material.shader = shader;
 
-                        render.material.color = new Color(1, 1, 1, 0.5f);
-                    }
-                    else
-                    {
-                        render.material.color = new Color(1, 0, 0, 0.5f);
-                        blueprint.IsDuplicate = true;
+                        // 重複されるかをチェック
+                        if (DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(entity.transform.position)))
+                        {
+
+                            render.material.color = new Color(1, 1, 1, 0.5f);
+                        }
+                        else
+                        {
+                            render.material.color = new Color(1, 0, 0, 0.5f);
+                            blueprint.IsDuplicate = true;
+                        }
                     }
                 }
             }
@@ -376,8 +398,6 @@ public class MapCtl
     {
         if (posX < 0) posX = UnityEngine.Random.Range(0, mapData.SizeX);
         if (posZ < 0) posZ = UnityEngine.Random.Range(0, mapData.SizeZ);
-        Vector3Int newPos = Vector3Int.zero;
-
 
         int posY = 0;
         for (int i = mapData.SizeY - 1; i >= 0; i--)
@@ -385,11 +405,11 @@ public class MapCtl
             if (mapData.Map[posX, i, posZ].entityID == 0)
                 continue;
 
-            posY = (int)(i + 1 + offsetY - 0.5f);
+            posY = (int)(i + 1 + offsetY);
             break;
         }
 
-        newPos = new Vector3Int(posX, posY, posZ);
+        Vector3Int newPos = new Vector3Int(posX, posY, posZ);
         if (!CheckCreatePos(mapData, newPos))
         {
             // 生成できない座標の場合、５回ループして新しいランダム座標を取得
@@ -404,7 +424,7 @@ public class MapCtl
                     if (mapData.Map[posX, i, posZ].entityID == 0)
                         continue;
 
-                    posY = (int)(i + 1 + offsetY - 0.5f);
+                    posY = (int)(i + 1 + offsetY);
                     break;
                 }
 
@@ -425,15 +445,7 @@ public class MapCtl
     {
         Vector3 downEntityPos = new Vector3(pos.x, pos.y - 1, pos.z);
         var downEntity = mapData.Map[(int)downEntityPos.x, (int)downEntityPos.y, (int)downEntityPos.z];
-        var entityType = (EntityType)ConfigMng.E.Entity[downEntity.entityID].Type;
-        if (entityType == EntityType.Workbench
-            || entityType == EntityType.Kamado
-            || entityType == EntityType.Flowoer
-            )
-        {
-            return false;
-        }
-        return true;
+        return ConfigMng.E.Entity[downEntity.entityID].CanPut == 1;
     }
 
     /// <summary>
@@ -472,7 +484,9 @@ public class MapCtl
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Door
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Torch
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.TreasureBox
-            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Flowoer
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Flower
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.BigFlower
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Grass
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.TransferGate;
     }
     /// <summary>

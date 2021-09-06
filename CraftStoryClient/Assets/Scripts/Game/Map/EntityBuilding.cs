@@ -44,16 +44,7 @@ public class EntityBuilding : EntityBase
     {
         base.ClickingEnd();
 
-        NWMng.E.AddItem((rp) =>
-        {
-            NWMng.E.GetItems(() =>
-            {
-                WorldMng.E.MapCtl.DeleteEntity(this);
-
-                var effect = EffectMng.E.AddEffect<EffectBase>(transform.position, EffectType.BlockDestroyEnd);
-                effect.Init();
-            });
-        }, EConfig.ItemID, 1);
+        OnDestroyEntity();
     }
 
     /// <summary>

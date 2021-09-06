@@ -177,8 +177,8 @@ public class PlayerCtl : MonoBehaviour
             {
                 switch ((ItemType)selectItem.Config().Type)
                 {
-                    case ItemType.Flowoer:
                     case ItemType.Block:
+                    case ItemType.Grass:
                         Lock = true;
                         CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
                         PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
@@ -186,12 +186,14 @@ public class PlayerCtl : MonoBehaviour
                         StartCoroutine(UnLock());
                         break;
 
+                    case ItemType.Flower:
+                    case ItemType.BigFlower:
                     case ItemType.Workbench:
                     case ItemType.Kamado:
                     case ItemType.Door:
                         Lock = true;
-                        var objdType = CommonFunction.GetCreateEntityDirection(pos);
-                        CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), objdType);
+                        var direction = CommonFunction.GetCreateEntityDirection(pos);
+                        CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), direction);
                         PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
 
                         StartCoroutine(UnLock());
@@ -294,12 +296,7 @@ public class PlayerCtl : MonoBehaviour
         if (cell == null)
             return;
 
-        if (cell.Type == EntityType.Door
-            || cell.Type == EntityType.Workbench
-            || cell.Type == EntityType.Kamado
-            || cell.Type == EntityType.Torch
-            || cell.Type == EntityType.Flowoer
-            || cell.Type == EntityType.Obstacle)
+        if (cell.EConfig.CanPut == 0)
         {
             CommonFunction.ShowHintBar(19);
             return;

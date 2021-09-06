@@ -197,6 +197,23 @@ public class DataMng : Single<DataMng>
     }
 
     /// <summary>
+    /// アイテムIDによってアイテムをゲット
+    /// </summary>
+    /// <param name="itemId"></param>
+    /// <returns></returns>
+    public ItemData GetItemByItemId(int itemId)
+    {
+        for (int i = 0; i < Items.Count; i++)
+        {
+            if (Items[i].itemId == itemId)
+            {
+                return Items[i];
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
     /// 装備した箇所によってアイテムをゲット
     /// </summary>
     /// <param name="site"></param>
@@ -211,6 +228,31 @@ public class DataMng : Single<DataMng>
             }
         }
         return null;
+    }
+
+    /// <summary>
+    /// アイテム数追加
+    /// </summary>
+    /// <param name="itemId"></param>
+    /// <param name="count"></param>
+    public void AddItem(int itemId, int count)
+    {
+        var item = GetItemByItemId(itemId);
+        if (item == null)
+        {
+            item = new ItemData(itemId, count);
+        }
+        else
+        {
+            item.count += count;
+        }
+
+        if (item.count > 9999)
+        {
+            NWMng.E.GetItems(null);
+        }
+
+        if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
     }
 
     /// <summary>

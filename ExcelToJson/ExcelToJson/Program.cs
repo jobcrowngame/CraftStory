@@ -413,9 +413,11 @@ namespace ExcelToJson
                 data.ScaleX = ToInt32(tbl.Rows[i]["ScaleX"]);
                 data.ScaleZ = ToInt32(tbl.Rows[i]["ScaleZ"]);
                 data.ScaleY = ToInt32(tbl.Rows[i]["ScaleY"]);
-                data.CanDestroy = ToInt32(tbl.Rows[i]["CanDestroy"]);
                 data.DestroyTime = ToFloat(tbl.Rows[i]["DestroyTime"]);
                 data.BonusID = ToInt32(tbl.Rows[i]["BonusID"]);
+                data.CanDestroy = ToInt32(tbl.Rows[i]["CanDestroy"]);
+                data.HaveDirection = ToInt32(tbl.Rows[i]["HaveDirection"]);
+                data.CanPut = ToInt32(tbl.Rows[i]["CanPut"]);
 
                 list.Add(data);
             }

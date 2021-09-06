@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-/// <summary>
+﻿/// <summary>
 /// ブロック
 /// </summary>
 public class EntityBlock : EntityBase
@@ -12,18 +10,6 @@ public class EntityBlock : EntityBase
     {
         base.ClickingEnd();
 
-        // 壊したブロックを手に入る
-        NWMng.E.AddItem((rp) =>
-        {
-            NWMng.E.GetItems(() => 
-            {
-                // ブロックエンティティを削除
-                WorldMng.E.MapCtl.DeleteEntity(this);
-
-                // ブロック壊した場合のエフェクト追加
-                var effect = EffectMng.E.AddEffect<EffectBase>(transform.position, EffectType.BlockDestroyEnd);
-                effect.Init();
-            });
-        }, EConfig.ItemID, 1);
+        OnDestroyEntity();
     }
 }

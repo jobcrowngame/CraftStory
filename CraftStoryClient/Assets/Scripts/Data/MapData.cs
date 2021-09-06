@@ -60,10 +60,7 @@ public class MapData
                     data = entitys[index++].Split('-');
                     int entityId = int.Parse(data[0]);
 
-                    if ((EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Workbench
-                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Kamado
-                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Door
-                        || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Torch)
+                    if (ConfigMng.E.Entity[entityId].HaveDirection == 1)
                     {
                         map[x, y, z] = new MapCellData() { entityID = entityId, direction = int.Parse(data[1]) };
                     }
@@ -161,6 +158,10 @@ public class MapData
                     entity = CommonFunction.Instantiate<EntityBlock>(config.Resources, parent, pos);
                     break;
 
+                case EntityType.Grass:
+                    entity = CommonFunction.Instantiate<EntityGrass>(config.Resources, parent, pos);
+                    break;
+
                 case EntityType.Resources:
                     entity = CommonFunction.Instantiate<EntityResources>(config.Resources, parent, pos);
                     break;
@@ -170,8 +171,6 @@ public class MapData
                 case EntityType.Kamado:
                 case EntityType.Door:
                     entity = CommonFunction.Instantiate<EntityBuilding>(config.Resources, parent, pos);
-                    var angle = CommonFunction.GetCreateEntityAngleByDirection((Direction)entityCell.direction);
-                    entity.transform.localRotation = Quaternion.Euler(0, angle, 0);
                     break;
 
                 case EntityType.TransferGate:
@@ -190,7 +189,8 @@ public class MapData
                     entity = CommonFunction.Instantiate<EntityTreasureBox>(config.Resources, parent, pos);
                     break;
 
-                case EntityType.Flowoer:
+                case EntityType.Flower:
+                case EntityType.BigFlower:
                     entity = CommonFunction.Instantiate<EntityFlowoer>(config.Resources, parent, pos);
                     break;
 
@@ -202,6 +202,12 @@ public class MapData
                 entity.EntityID = entityCell.entityID;
                 entity.Pos = pos;
                 entity.Direction = (Direction)entityCell.direction;
+
+                if (entity.EConfig.HaveDirection == 1)
+                {
+                    var angle = CommonFunction.GetCreateEntityAngleByDirection((Direction)entityCell.direction);
+                    entity.transform.localRotation = Quaternion.Euler(0, angle, 0);
+                }
             }
 
             return entity;
@@ -283,7 +289,7 @@ public class MapData
             }
             else
             {
-                Logger.Error("Remove entity Failure");
+                Logger.Warning("Remove entity Failure");
             }
         }
         catch (Exception ex)
@@ -321,10 +327,7 @@ public class MapData
 
                     int entityId = map[x, y, z].entityID;
 
-                    if ((EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Workbench
-                       || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Kamado
-                       || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Door
-                       || (EntityType)ConfigMng.E.Entity[entityId].Type == EntityType.Torch)
+                    if (ConfigMng.E.Entity[entityId].HaveDirection == 1)
                     {
                         sb.Append(entityId + "-" + map[x, y, z].direction + ",");
                     }

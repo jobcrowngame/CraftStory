@@ -51,6 +51,24 @@ public class EntityBase : MonoBehaviour
     /// </summary>
     /// <param name="tType"></param>
     public virtual void SetDirection(Direction tType) { }
+
+    /// <summary>
+    /// エンティティを壊す場合のロジック
+    /// </summary>
+    public void OnDestroyEntity()
+    {
+        int itemId = EConfig.ItemID;
+        int count = 1;
+        // 壊したブロックを手に入る
+        NWMng.E.AddItem(null, itemId, count);
+        // ローカルのアイテム数変更
+        DataMng.E.AddItem(itemId, count);
+        // エンティティインスタンスを削除
+        WorldMng.E.MapCtl.DeleteEntity(this);
+        // 削除Effectを追加
+        var effect = EffectMng.E.AddEffect<EffectBase>(transform.position, EffectType.BlockDestroyEnd);
+        effect.Init();
+    }
 }
 
 public enum EntityType
@@ -58,7 +76,9 @@ public enum EntityType
     None = 0,　// 空
     Block = 1,// 一般ブロック
     Block2 = 2, // 半透明ブロック
-    Flowoer = 3, // 花
+    Flower = 3, // 花
+    BigFlower = 4, // 巨大花
+    Grass = 5, // 草
     Block99 = 99, // 壊れないブロック
     Resources = 100, // 
     TreasureBox = 110,
