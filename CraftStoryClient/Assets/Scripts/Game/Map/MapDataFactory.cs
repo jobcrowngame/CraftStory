@@ -176,7 +176,19 @@ public class MapDataFactory
                 newPos = MapCtl.FixEntityPos(mData, newPos, config.CreatePosOffset);
                 newPos = MapCtl.GetGroundPos(mData, (int)newPos.x, (int)newPos.z, config.OffsetY);
 
-                mData.Map[(int)newPos.x, (int)newPos.y, (int)newPos.z] = new MapData.MapCellData() { entityID = config.EntityID }; 
+
+                var entityConfig = ConfigMng.E.Entity[config.EntityID];
+                for (int x = 0; x < entityConfig.ScaleX; x++)
+                {
+                    for (int y = 0; y < entityConfig.ScaleY; y++)
+                    {
+                        for (int z = 0; z < entityConfig.ScaleZ; z++)
+                        {
+                            mData.Map[(int)newPos.x + x, (int)newPos.y + y, (int)newPos.z + z] = new MapData.MapCellData { entityID = 10000 };
+                        }
+                    }
+                }
+                mData.Map[(int)newPos.x, (int)newPos.y, (int)newPos.z] = new MapData.MapCellData() { entityID = config.EntityID };
             }
         }
     }

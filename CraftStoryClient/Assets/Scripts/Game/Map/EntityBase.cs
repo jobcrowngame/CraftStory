@@ -1,4 +1,5 @@
 ﻿using JsonConfigData;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -8,7 +9,7 @@ public class EntityBase : MonoBehaviour
 {
     private int id; // エンティティID
     private Vector3Int pos; // 座標
-    private Direction direction; // 向き
+    public Direction direction; // 向き
     private float clickingTime; // タッチした時間
 
     public int EntityID { get => id; set => id = value; } // エンティティID
@@ -16,6 +17,8 @@ public class EntityBase : MonoBehaviour
     public Vector3Int Pos { get => pos; set => pos = value; } // 座標
     public EntityType Type { get => (EntityType)EConfig.Type; } // エンティティタイプ
     public Direction Direction { get => direction; set => direction = value; } // 向き
+
+    public List<Vector3Int> ObstacleList = new List<Vector3Int>();
 
     public virtual void OnClick() { }
     /// <summary>

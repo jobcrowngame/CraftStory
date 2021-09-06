@@ -249,7 +249,16 @@ public class MapData
         var obstacleList = MapCtl.GetEntityPosListByDirection(entityCell.entityID, pos, (Direction)entityCell.direction);
         foreach (var item in obstacleList)
         {
+            Debug.Log(item);
+        }
+       
+        foreach (var item in obstacleList)
+        {
             map[item.x, item.y, item.z] = new MapCellData() { entityID = 10000 };
+
+#if UNITY_EDITOR
+            CommonFunction.Instantiate<EntityBlock>("Prefabs/Game/Block/WaterBlock", WorldMng.E.MapCtl.CellParent, item);
+#endif
         }
 
         return entity;
@@ -257,35 +266,33 @@ public class MapData
     /// <summary>
     /// エンティティ削除
     /// </summary>
-    /// <param name="pos">座標</param>
-    public void Remove(Vector3Int pos)
+    /// <param name="entity">エンティティ</param>
+    public void Remove(EntityBase entity)
     {
         try
         {
-            if (MapCtl.IsOutRange(this, pos))
+            if (MapCtl.IsOutRange(this, entity.Pos))
             {
-                Logger.Error("Remove mapdata file." + pos);
+                Logger.Error("Remove mapdata file." + entity.Pos);
                 return;
             }
 
-            var entity = map[pos.x, pos.y, pos.z];
-            var config = ConfigMng.E.Entity[entity.entityID];
-            if ((EntityType)config.Type == EntityType.Obstacle)
+            if ((EntityType)entity.EConfig.Type == EntityType.Obstacle)
                 return;
 
-            map[pos.x, pos.y, pos.z].entityID = 0;
+            map[entity.Pos.x, entity.Pos.y, entity.Pos.z].entityID = 0;
 
             // 阻害を削除
-            var obstacleList = MapCtl.GetEntityPosListByDirection(entity.entityID, pos, (Direction)entity.direction);
+            var obstacleList = MapCtl.GetEntityPosListByDirection(entity.EntityID, entity.Pos, entity.direction);
             foreach (var item in obstacleList)
             {
                 map[item.x, item.y, item.z].entityID = 0;
             }
 
-            if (entityDic.ContainsKey(pos))
+            if (entityDic.ContainsKey(entity.Pos))
             {
-                GameObject.Destroy(entityDic[pos].gameObject);
-                entityDic.Remove(pos);
+                GameObject.Destroy(entity.gameObject);
+                entityDic.Remove(entity.Pos);
             }
             else
             {
@@ -319,11 +326,11 @@ public class MapData
             {
                 for (int z = 0; z < SizeZ; z++)
                 {
-                    if (map[x, y, z].entityID == 10000)
-                    {
-                        sb.Append(0 + ",");
-                        continue;
-                    }
+                    //if (map[x, y, z].entityID == 10000)
+                    //{
+                    //    sb.Append(0 + ",");
+                    //    continue;
+                    //}
 
                     int entityId = map[x, y, z].entityID;
 

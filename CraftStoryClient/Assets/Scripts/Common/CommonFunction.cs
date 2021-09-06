@@ -259,7 +259,7 @@ public class CommonFunction
         int angle = 0;
         switch (dType)
         {
-            case Direction.foward: angle = 180; break;
+            case Direction.back: angle = 180; break;
             case Direction.right: angle = 90; break;
             case Direction.left: angle = 270; break;
         }

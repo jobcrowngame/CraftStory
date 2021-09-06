@@ -50,6 +50,14 @@ public class MapCtl
             {
                 for (int x = 0; x < mData.GetMapSize().x; x++)
                 {
+
+#if UNITY_EDITOR
+                    if (mData.Map[x, y, z].entityID == 10000)
+                    {
+                        CommonFunction.Instantiate<EntityBlock>("Prefabs/Game/Block/WaterBlock", WorldMng.E.MapCtl.CellParent, new Vector3(x,y,z));
+                    }
+#endif
+
                     if (mData.Map[x, y, z].entityID == 0 || mData.Map[x, y, z].entityID == 10000)
                         continue;
 
@@ -216,7 +224,7 @@ public class MapCtl
     /// <param name="entity"></param>
     public void DeleteEntity(EntityBase entity)
     {
-        DataMng.E.MapData.Remove(entity.Pos);
+        DataMng.E.MapData.Remove(entity);
         CheckNextToEntitys(entity.Pos);
     }
     /// <summary>
@@ -260,7 +268,7 @@ public class MapCtl
         return mapFactory.CreateMapData(mapId);
     }
 
-    #region Static Function
+#region Static Function
 
     /// <summary>
     /// 作成できるかのチェック
@@ -305,20 +313,9 @@ public class MapCtl
         List<Vector3Int> posList = new List<Vector3Int>();
         switch (dType)
         {
+            case Direction.up:
+            case Direction.down:
             case Direction.foward:
-                for (int x = 0; x > -config.ScaleX; x--)
-                {
-                    for (int z = 0; z < config.ScaleZ; z++)
-                    {
-                        for (int y = 0; y < config.ScaleY; y++)
-                        {
-                            if (x == 0 && y == 0 && z == 0) continue;
-                            posList.Add(new Vector3Int(pos.x + x, pos.y + y, pos.z + z));
-                        }
-                    }
-                }
-                break;
-            case Direction.back:
                 for (int x = 0; x < config.ScaleX; x++)
                 {
                     for (int z = 0; z < config.ScaleZ; z++)
@@ -331,6 +328,21 @@ public class MapCtl
                     }
                 }
                 break;
+
+            case Direction.back:
+                for (int x = 0; x > -config.ScaleX; x--)
+                {
+                    for (int z = 0; z > -config.ScaleZ; z--)
+                    {
+                        for (int y = 0; y < config.ScaleY; y++)
+                        {
+                            if (x == 0 && y == 0 && z == 0) continue;
+                            posList.Add(new Vector3Int(pos.x + x, pos.y + y, pos.z + z));
+                        }
+                    }
+                }
+                break;
+
             case Direction.right:
                 for (int x = 0; x < config.ScaleZ; x++)
                 {
@@ -346,7 +358,7 @@ public class MapCtl
                 break;
 
             case Direction.left:
-                for (int x = 0; x < config.ScaleZ; x++)
+                for (int x = 0; x > -config.ScaleZ; x--)
                 {
                     for (int z = 0; z < config.ScaleX; z++)
                     {
@@ -499,5 +511,5 @@ public class MapCtl
             || pos.z < 0 || pos.z > mapData.GetMapSize().z - 1;
     }
 
-    #endregion
+#endregion
 }
