@@ -257,7 +257,7 @@ public class MapData
             map[item.x, item.y, item.z] = new MapCellData() { entityID = 10000 };
 
 #if UNITY_EDITOR
-            CommonFunction.Instantiate<EntityBlock>("Prefabs/Game/Block/WaterBlock", WorldMng.E.MapCtl.CellParent, item);
+            //CommonFunction.Instantiate<EntityBlock>("Prefabs/Game/Block/WaterBlock", WorldMng.E.MapCtl.CellParent, item);
 #endif
         }
 

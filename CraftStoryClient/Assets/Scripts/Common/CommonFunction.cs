@@ -260,8 +260,8 @@ public class CommonFunction
         switch (dType)
         {
             case Direction.back: angle = 180; break;
-            case Direction.right: angle = 90; break;
-            case Direction.left: angle = 270; break;
+            case Direction.left: angle = 90; break;
+            case Direction.right: angle = 270; break;
         }
         return angle;
     }

@@ -52,10 +52,10 @@ public class MapCtl
                 {
 
 #if UNITY_EDITOR
-                    if (mData.Map[x, y, z].entityID == 10000)
-                    {
-                        CommonFunction.Instantiate<EntityBlock>("Prefabs/Game/Block/WaterBlock", WorldMng.E.MapCtl.CellParent, new Vector3(x,y,z));
-                    }
+                    //if (mData.Map[x, y, z].entityID == 10000)
+                    //{
+                    //    CommonFunction.Instantiate<EntityBlock>("Prefabs/Game/Block/WaterBlock", WorldMng.E.MapCtl.CellParent, new Vector3(x,y,z));
+                    //}
 #endif
 
                     if (mData.Map[x, y, z].entityID == 0 || mData.Map[x, y, z].entityID == 10000)
@@ -343,7 +343,7 @@ public class MapCtl
                 }
                 break;
 
-            case Direction.right:
+            case Direction.left:
                 for (int x = 0; x < config.ScaleZ; x++)
                 {
                     for (int z = 0; z > -config.ScaleX; z--)
@@ -357,7 +357,7 @@ public class MapCtl
                 }
                 break;
 
-            case Direction.left:
+            case Direction.right:
                 for (int x = 0; x > -config.ScaleZ; x--)
                 {
                     for (int z = 0; z < config.ScaleX; z++)
