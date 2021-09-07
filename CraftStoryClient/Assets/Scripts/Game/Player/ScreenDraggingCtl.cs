@@ -234,7 +234,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         {
             if (p1.z == p2.z)
             {
-                touchType = p1.x > p2.x ? Direction.right : Direction.left;
+                touchType = p1.x > p2.x ? Direction.left : Direction.right;
             }
             else
             {
