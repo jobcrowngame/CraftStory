@@ -22,10 +22,7 @@ public class EntityTorch : EntityBase
         switch (tType)
         {
             case Direction.up: CommonFunction.FindChiledByName(transform, "Center").gameObject.SetActive(true); break;
-            case Direction.foward: CommonFunction.FindChiledByName(transform, "Foword").gameObject.SetActive(true); break;
-            case Direction.back: CommonFunction.FindChiledByName(transform, "Back").gameObject.SetActive(true); break;
-            case Direction.right: CommonFunction.FindChiledByName(transform, "Right").gameObject.SetActive(true); break;
-            case Direction.left: CommonFunction.FindChiledByName(transform, "Left").gameObject.SetActive(true); break;
+            default: CommonFunction.FindChiledByName(transform, "Foword").gameObject.SetActive(true); break;
         }
     }
 }
