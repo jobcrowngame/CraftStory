@@ -80,7 +80,7 @@ public class BuilderPencil
 
         var startPos = startNotation.transform.position;
         var endPos = endNotation.transform.position;
-        var centPos = new Vector3((startPos.x + endPos.x) / 2, startPos.y, (startPos.z + endPos.z) / 2);
+        var centPos = new Vector3Int((int)(startPos.x + endPos.x) / 2, (int)startPos.y, (int)(startPos.z + endPos.z) / 2);
 
         // 始点、終点の座標によって設計図内容座標を決める
         int minX, maxX, minZ, maxZ;
@@ -109,24 +109,35 @@ public class BuilderPencil
         Logger.Log("s:{0}, n:{1}",startPos, endPos);
 
         // 含まれたEntityを検索
-        List<EntityBase> entitys = new List<EntityBase>();
+        List<BlueprintData.BlueprintEntityData> dataList = new List<BlueprintData.BlueprintEntityData>();
         for (int y = (int)startPos.y; y < DataMng.E.MapData.GetMapSize().y; y++)
         {
             for (int x = minX; x < maxX; x++)
             {
                 for (int z = minZ; z < maxZ; z++)
                 {
-                    if (DataMng.E.MapData.Map[x, y, z].entityID < 1)
+                    var cell = DataMng.E.MapData.Map[x, y, z];
+                    var config = ConfigMng.E.Entity[cell.entityID];
+
+                    // 空と除害は入れない
+                    if ((EntityType)config.Type == EntityType.None ||
+                        (EntityType)config.Type == EntityType.Obstacle)
                         continue;
 
-                    var entity = DataMng.E.MapData.GetEntity(new Vector3Int(x, y, z));
-                    if(entity != null) entitys.Add(entity);
+                    dataList.Add(new BlueprintData.BlueprintEntityData()
+                    {
+                        id = cell.entityID,
+                        posX = x - centPos.x,
+                        posY = y - centPos.y,
+                        posZ = z - centPos.z,
+                        direction = cell.direction
+                    });
                 }
             }
         }
 
         // 設計図データを生成
-        var blueprintData = new BlueprintData(entitys, new Vector2Int(maxX - minX, maxZ - minZ), Vector3Int.CeilToInt(centPos));
+        var blueprintData = new BlueprintData(dataList, new Vector2Int(maxX - minX, maxZ - minZ));
         if (blueprintData.blocks.Count > 0)
         {
             // 設計図名を登録Windowを呼び出す
@@ -218,7 +229,7 @@ public class BuilderPencil
         {
             var work = selectBlueprintData.blocks[i];
             work.SetPos(new Vector3Int(work.GetPos().z, work.GetPos().y, work.GetPos().x));
-            work.direction += 90;
+            work.direction = ChangeDirection(work.direction);
         }
 
         for (int i = 0; i < selectBlueprintData.blocks.Count; i++)
@@ -255,7 +266,12 @@ public class BuilderPencil
 
             foreach (var entity in selectBlueprintData.blocks)
             {
-                int itemId = ConfigMng.E.Entity[entity.id].ItemID;
+                var config = ConfigMng.E.Entity[entity.id];
+                // Obstacle は無視
+                if ((EntityType)config.Type == EntityType.Obstacle)
+                    continue;
+
+                int itemId = config.ItemID;
                 if (consumableItems.ContainsKey(itemId))
                 {
                     consumableItems[itemId]++;
@@ -283,7 +299,7 @@ public class BuilderPencil
         }
         else
         {
-            CommonFunction.ShowHintBar(8);
+            CommonFunction.ShowHintBar(28);
         }
     }
 
@@ -372,5 +388,22 @@ public class BuilderPencil
     {
         obj.transform.localScale = new Vector3(obj.transform.localScale.x, obj.transform.localScale.y, scale + 1);
         obj.transform.localPosition = new Vector3(obj.transform.localPosition.x, obj.transform.localPosition.y, posZ);
+    }
+
+    /// <summary>
+    /// 向きを変える（順時間）
+    /// </summary>
+    /// <param name="d">向き</param>
+    /// <returns></returns>
+    private int ChangeDirection(int d)
+    {
+        switch ((Direction)d)
+        {
+            case Direction.foward: return (int)Direction.right;
+            case Direction.back: return (int)Direction.left;
+            case Direction.right: return (int)Direction.back;
+            case Direction.left: return (int)Direction.foward;
+            default: return d;
+        }
     }
 }

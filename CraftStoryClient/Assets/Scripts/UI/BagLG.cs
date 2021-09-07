@@ -38,7 +38,7 @@ public class BagLG : UILogicBase<BagLG, BagUI>
             UI.ChangeSelectBtn((int)value);
         }
     }
-    private BagClassification classification = BagClassification.All;
+    private BagClassification classification = BagClassification.None;
 
     /// <summary>
     /// 分類が変更イベント

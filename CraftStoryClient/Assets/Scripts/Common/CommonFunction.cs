@@ -87,7 +87,7 @@ public class CommonFunction
     {
         foreach (Transform item in parent)
         {
-            if (item.childCount > 1)
+            if (item.childCount > 0)
             {
                 GetAllChiled(item, ref list);
             }
@@ -240,11 +240,11 @@ public class CommonFunction
         if (angle >= 223 && angle < 315)
             dType = Direction.back;
         else if (angle >= 135 && angle < 225)
-            dType = Direction.right;
+            dType = Direction.left;
         else if (angle >= 45 && angle < 135)
             dType = Direction.foward;
         else
-            dType = Direction.left;
+            dType = Direction.right;
 
         return dType;
     }
@@ -260,8 +260,8 @@ public class CommonFunction
         switch (dType)
         {
             case Direction.back: angle = 180; break;
-            case Direction.left: angle = 90; break;
-            case Direction.right: angle = 270; break;
+            case Direction.right: angle = 90; break;
+            case Direction.left: angle = 270; break;
         }
         return angle;
     }

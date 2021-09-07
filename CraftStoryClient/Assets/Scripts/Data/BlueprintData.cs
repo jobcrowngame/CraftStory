@@ -56,24 +56,13 @@ public class BlueprintData
     /// <summary>
     /// 構築メソッド
     /// </summary>
-    /// <param name="entitys">エンティティリスト</param>
+    /// <param name="dataList">データリスト</param>
     /// <param name="size">設計図サイズ</param>
-    /// <param name="centerPos">センタ点座標</param>
-    public BlueprintData(List<EntityBase> entitys, Vector2Int size, Vector3Int centerPos)
+    public BlueprintData(List<BlueprintEntityData> dataList, Vector2Int size)
     {
+        blocks = dataList;
         sizeX = size.x;
         sizeZ = size.y;
-        foreach (var entity in entitys)
-        {
-            blocks.Add(new BlueprintEntityData()
-            {
-                id = entity.EntityID,
-                posX = entity.Pos.x - centerPos.x,
-                posY = entity.Pos.y - centerPos.y,
-                posZ = entity.Pos.z - centerPos.z,
-                direction = (int)entity.Direction
-            });
-        }
     }
 
     public string ToJosn()

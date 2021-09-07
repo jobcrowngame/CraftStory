@@ -173,6 +173,11 @@ public class HomeUI : UIBase
             itemBtns.Add(cell);
         }
     }
+
+    /// <summary>
+    /// 設計図を使うに必要なブロックリスト
+    /// </summary>
+    /// <param name="blueprint">設計図</param>
     public void AddBlueprintCostItems(BlueprintData blueprint)
     {
         ClearCell(BlueprintCellGrid);
@@ -180,6 +185,10 @@ public class HomeUI : UIBase
         Dictionary<int, int> costs = new Dictionary<int, int>();
         foreach (var entity in blueprint.blocks)
         {
+            // Obstacleは無視
+            if ((EntityType)ConfigMng.E.Entity[entity.id].Type == EntityType.Obstacle)
+                continue;
+
             if (costs.ContainsKey(entity.id))
             {
                 costs[entity.id]++;

@@ -52,10 +52,10 @@ public class MapCtl
                 {
 
 #if UNITY_EDITOR
-                    //if (mData.Map[x, y, z].entityID == 10000)
-                    //{
-                    //    CommonFunction.Instantiate<EntityBlock>("Prefabs/Game/Block/WaterBlock", WorldMng.E.MapCtl.CellParent, new Vector3(x,y,z));
-                    //}
+                    if (mData.Map[x, y, z].entityID == 10000)
+                    {
+                        //CommonFunction.Instantiate<EntityBlock>("Prefabs/Game/Block/WaterBlock", WorldMng.E.MapCtl.CellParent, new Vector3(x, y, z));
+                    }
 #endif
 
                     if (mData.Map[x, y, z].entityID == 0 || mData.Map[x, y, z].entityID == 10000)
@@ -84,8 +84,19 @@ public class MapCtl
 
         foreach (var item in blueprint.blocks)
         {
+            // Obstacleなら処理しない
+            if ((EntityType)ConfigMng.E.Entity[item.id].Type == EntityType.Obstacle)
+                continue;
+
             var entity = MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, builderPencilParent, item.GetPos());
             entity.transform.localPosition = item.GetPos();
+
+            // 向きによって回転
+            if (entity.EConfig.HaveDirection == 1)
+            {
+                var angle = CommonFunction.GetCreateEntityAngleByDirection((Direction)item.direction);
+                entity.transform.localRotation = Quaternion.Euler(0, angle, 0);
+            }
 
             // 半透明場合、Collider を Enabled する
             var collider = entity.GetComponent<BoxCollider>();
@@ -103,60 +114,65 @@ public class MapCtl
                 }
             }
 
-
             var config = ConfigMng.E.Entity[item.id];
-
             if (shader != null)
             {
-                if ((EntityType)config.Type == EntityType.Workbench
-                    || (EntityType)config.Type == EntityType.Kamado
-                    || (EntityType)config.Type == EntityType.Door
-                    || (EntityType)config.Type == EntityType.Torch
-                    || (EntityType)config.Type == EntityType.Flower
-                    || (EntityType)config.Type == EntityType.BigFlower
-                    || (EntityType)config.Type == EntityType.Grass
-                    || (EntityType)config.Type == EntityType.Obstacle)
+                // 被ってるかのフラグ
+                bool IsDuplicate = false;
+                // エンティティのPos
+                var entityPos = Vector3Int.CeilToInt(entity.transform.position);
+
+                // エンティティ本体が被ってるかのチェック
+                IsDuplicate = !DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(entityPos));
+
+                // エンティティサイズが１以上の場合、関連Pos
+                var list = GetEntityPosListByDirection(item.id, entityPos, (Direction)item.direction);
+
+                // 関連Posが被ってるかのチェック
+                foreach (var pos in list)
                 {
-                    List<GameObject> childs = new List<GameObject>();
-                    CommonFunction.GetAllChiled(entity.transform, ref childs);
+                    IsDuplicate = !DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(pos));
+                    if (IsDuplicate)
+                    {
+                        // 設計図が被ってる
+                        blueprint.IsDuplicate = true;
+                        break;
+                    }
+                }
+
+                // 重複したらこの設計図重複してる状態にする
+                if (IsDuplicate)
+                {
+                    blueprint.IsDuplicate = true;
+                }
+
+                // サブObjectをゲット
+                List<GameObject> childs = new List<GameObject>();
+                CommonFunction.GetAllChiled(entity.transform, ref childs);
+
+                // サブObjectがない場合
+                if (childs.Count == 0)
+                {
+                    var render = entity.GetComponent<Renderer>();
+                    if (render != null)
+                    {
+                        // 半透明シェーダーに差し替え
+                        render.material.shader = shader;
+                        render.material.color = IsDuplicate ? new Color(1, 0, 0, 0.5f) : new Color(1, 1, 1, 0.5f);
+                    }
+                }
+                // サブObjectがある場合
+                else
+                {
                     foreach (var cell in childs)
                     {
                         var render = cell.GetComponent<Renderer>();
                         if (render == null)
                             continue;
 
+                        // 半透明シェーダーに差し替え
                         render.material.shader = shader;
-
-                        // 重複されるかをチェック
-                        if (DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(cell.transform.position)))
-                        {
-                            render.material.color = new Color(1, 1, 1, 0.5f);
-                        }
-                        else
-                        {
-                            render.material.color = new Color(1, 0, 0, 0.5f);
-                            blueprint.IsDuplicate = true;
-                        }
-                    }
-                }
-                else
-                {
-                    var render = entity.GetComponent<Renderer>();
-                    if (render != null)
-                    {
-                        render.material.shader = shader;
-
-                        // 重複されるかをチェック
-                        if (DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(entity.transform.position)))
-                        {
-
-                            render.material.color = new Color(1, 1, 1, 0.5f);
-                        }
-                        else
-                        {
-                            render.material.color = new Color(1, 0, 0, 0.5f);
-                            blueprint.IsDuplicate = true;
-                        }
+                        render.material.color = IsDuplicate ? new Color(1, 0, 0, 0.5f) : new Color(1, 1, 1, 0.5f);
                     }
                 }
             }
@@ -344,12 +360,13 @@ public class MapCtl
                 break;
 
             case Direction.left:
-                for (int x = 0; x < config.ScaleZ; x++)
+                for (int y = 0; y < config.ScaleY; y++)
                 {
-                    for (int z = 0; z > -config.ScaleX; z--)
+                    for (int x = 0; x > -config.ScaleZ; x--)
                     {
-                        for (int y = 0; y < config.ScaleY; y++)
+                        for (int z = 0; z < config.ScaleX; z++)
                         {
+
                             if (x == 0 && y == 0 && z == 0) continue;
                             posList.Add(new Vector3Int(pos.x + x, pos.y + y, pos.z + z));
                         }
@@ -358,11 +375,11 @@ public class MapCtl
                 break;
 
             case Direction.right:
-                for (int x = 0; x > -config.ScaleZ; x--)
+                for (int y = 0; y < config.ScaleY; y++)
                 {
-                    for (int z = 0; z < config.ScaleX; z++)
+                    for (int x = 0; x < config.ScaleZ; x++)
                     {
-                        for (int y = 0; y < config.ScaleY; y++)
+                        for (int z = 0; z > -config.ScaleX; z--)
                         {
                             if (x == 0 && y == 0 && z == 0) continue;
                             posList.Add(new Vector3Int(pos.x + x, pos.y + y, pos.z + z));
