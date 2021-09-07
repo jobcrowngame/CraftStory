@@ -10,7 +10,7 @@ public class HintBoxUI : UIBase
     Transform Title { get => FindChiled("Title"); }
     Image Icon { get => FindChiled<Image>("Icon"); }
     Transform Msg1Parent { get => FindChiled("Msg1"); }
-    Text Msg1 { get => FindChiled<Text>("Text"); }
+    Text Msg1 { get => FindChiled<Text>("Msg1Text"); }
     Text Msg2 { get => FindChiled<Text>("Msg2"); }
     Button OkBtn { get => FindChiled<Button>("OKBtn"); }
     Button CancelBtn { get => FindChiled<Button>("CancelBtn"); }
@@ -24,7 +24,7 @@ public class HintBoxUI : UIBase
         CancelBtn.onClick.AddListener(OnClickCancelBtn);
     }
 
-    public void Init(string iconPath, string msg, Action okAction, Action cancelAction)
+    public void Set(string iconPath, string msg, Action okAction, Action cancelAction)
     {
         this.okAction = okAction;
         this.cancelAction = cancelAction;
@@ -49,6 +49,7 @@ public class HintBoxUI : UIBase
 
         CancelBtn.gameObject.SetActive(cancelAction != null);
     }
+
     public void SetTitle(string msg)
     {
         if (string.IsNullOrEmpty(msg))

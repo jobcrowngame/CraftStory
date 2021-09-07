@@ -369,7 +369,7 @@ public class CommonFunction
         var ui = InstantiateUI<HintBoxUI>("Prefabs/UI/Common/HintBox", UICtl.E.Root);
         if (ui != null)
         {
-            ui.Init(iconPath, msg, okAction, cancelAction);
+            ui.Set(iconPath, msg, okAction, cancelAction);
             ui.SetTitle(title);
             ui.SetBtnName(okBtn, cancelBtn);
         }
