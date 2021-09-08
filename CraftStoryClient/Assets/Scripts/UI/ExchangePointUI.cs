@@ -145,7 +145,7 @@ Amazonギフト券をお送りいたします。
         int point = int.Parse(PointInput.text);
         int money = (int)(point * 0.3f);
 
-        CommonFunction.ShowHintBox(echangeStartTitle, "", string.Format(exchangeStartText, MailInput.text, point, money), ()=>
+        CommonFunction.ShowHintBox(echangeStartTitle, "", string.Format(exchangeStartText, MailInput.text, point.ToString("#,0"), money.ToString("#,0")), ()=>
         {
             NWMng.E.ExchangePoints((rp) =>
             {
