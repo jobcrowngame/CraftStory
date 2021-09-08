@@ -31,12 +31,19 @@ public class GachaRatioUI : UIBase
         var config = ConfigMng.E.Gacha[id];
         var pond = ConfigMng.E.RandomBonusPond[config.PondId];
 
-        SetCell(pond.BonusList01, pond.Percent01, 1);
-        SetCell(pond.BonusList02, pond.Percent02, 2);
-        SetCell(pond.BonusList03, pond.Percent03, 3);
+        SetCell(pond.BonusList07, pond.Percent07, pond.Level07);
+        SetCell(pond.BonusList06, pond.Percent06, pond.Level06);
+        SetCell(pond.BonusList05, pond.Percent05, pond.Level05);
+        SetCell(pond.BonusList04, pond.Percent04, pond.Level04);
+        SetCell(pond.BonusList03, pond.Percent03, pond.Level03);
+        SetCell(pond.BonusList02, pond.Percent02, pond.Level02);
+        SetCell(pond.BonusList01, pond.Percent01, pond.Level01);
     }
     private void SetCell(string stringList, int percent, int rare)
     {
+        if (stringList == "N")
+            return;
+
         var list = stringList.Split(',');
 
         for (int i = 0; i < list.Length; i++)

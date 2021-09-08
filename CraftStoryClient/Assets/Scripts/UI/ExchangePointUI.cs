@@ -140,7 +140,7 @@ Amazonギフト券をお送りいたします。
             return;
         }
 
-        Close();
+        //Close();
 
         int point = int.Parse(PointInput.text);
         int money = (int)(point * 0.3f);

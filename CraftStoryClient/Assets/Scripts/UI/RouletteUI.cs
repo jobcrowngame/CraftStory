@@ -18,7 +18,7 @@ public class RouletteUI : UIBase
     float maxSpeed = 1000;
     float rotateSpeed = 250;
 
-    const float stopSpeed = 422;
+    const float stopSpeed = 414;
 
     public override void Init(object gachaId)
     {

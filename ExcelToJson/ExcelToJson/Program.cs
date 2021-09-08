@@ -184,12 +184,25 @@ namespace ExcelToJson
                 data.ID = ToInt32(tbl.Rows[i]["ID"]);
                 data.BonusList01 = ToString(tbl.Rows[i]["BonusList01"]);
                 data.Percent01 = ToInt32(tbl.Rows[i]["Percent01"]);
+                data.Level01 = ToInt32(tbl.Rows[i]["Level01"]);
                 data.BonusList02 = ToString(tbl.Rows[i]["BonusList02"]);
                 data.Percent02 = ToInt32(tbl.Rows[i]["Percent02"]);
+                data.Level02 = ToInt32(tbl.Rows[i]["Level02"]);
                 data.BonusList03 = ToString(tbl.Rows[i]["BonusList03"]);
                 data.Percent03 = ToInt32(tbl.Rows[i]["Percent03"]);
+                data.Level03 = ToInt32(tbl.Rows[i]["Level03"]);
                 data.BonusList04 = ToString(tbl.Rows[i]["BonusList04"]);
                 data.Percent04 = ToInt32(tbl.Rows[i]["Percent04"]);
+                data.Level04 = ToInt32(tbl.Rows[i]["Level04"]);
+                data.BonusList05 = ToString(tbl.Rows[i]["BonusList05"]);
+                data.Percent05 = ToInt32(tbl.Rows[i]["Percent05"]);
+                data.Level05 = ToInt32(tbl.Rows[i]["Level05"]);
+                data.BonusList06 = ToString(tbl.Rows[i]["BonusList06"]);
+                data.Percent06 = ToInt32(tbl.Rows[i]["Percent06"]);
+                data.Level06 = ToInt32(tbl.Rows[i]["Level06"]);
+                data.BonusList07 = ToString(tbl.Rows[i]["BonusList07"]);
+                data.Percent07 = ToInt32(tbl.Rows[i]["Percent07"]);
+                data.Level07 = ToInt32(tbl.Rows[i]["Level07"]);
 
                 list.Add(data);
             }
@@ -418,6 +431,7 @@ namespace ExcelToJson
                 data.CanDestroy = ToInt32(tbl.Rows[i]["CanDestroy"]);
                 data.HaveDirection = ToInt32(tbl.Rows[i]["HaveDirection"]);
                 data.CanPut = ToInt32(tbl.Rows[i]["CanPut"]);
+                data.CanSuspension = ToInt32(tbl.Rows[i]["CanSuspension"]);
 
                 list.Add(data);
             }

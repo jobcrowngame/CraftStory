@@ -296,6 +296,7 @@ public class PlayerCtl : MonoBehaviour
         if (cell == null)
             return;
 
+        // ターゲットEntityに置くできるかのチェック
         if (cell.EConfig.CanPut == 0)
         {
             CommonFunction.ShowHintBar(19);
