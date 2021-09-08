@@ -17,6 +17,26 @@ public class ExchangePointUI : UIBase
     const string exchangeText = @"{0}円分のギフト券を
 お送りします
 ";
+
+    const string echangeStartTitle = "ポイント交換申請の内容確認";
+    const string exchangeStartText = @"締切日後、５営業日以内に以下メールアドレス宛へ
+Amazonギフト券をお送りいたします。
+
+・メールアドレス
+{0}
+
+・交換ポイント
+{1}
+
+・Amazonギフト券{2}円分をお送りします。
+
+毎月5日と20日が締め切り日です。
+※申請状況により、
+お送りする日にちが前後する場合がございます。
+何卒ご理解、ご了承の程お願いいたします。
+";
+
+    const string echangeOverTitle = "ポイント交換申請の受付完了";
     const string exchangeOverText = @"ポイント交換申請を受付けました。
 
 ・受付No
@@ -120,21 +140,27 @@ Amazonギフト券をお送りいたします。
             return;
         }
 
+        Close();
+
         int point = int.Parse(PointInput.text);
         int money = (int)(point * 0.3f);
 
-        NWMng.E.ExchangePoints((rp)=> 
+        CommonFunction.ShowHintBox(echangeStartTitle, "", string.Format(exchangeStartText, MailInput.text, point, money), ()=>
         {
-            DataMng.E.RuntimeData.Coin3 -= int.Parse(PointInput.text);
-            Close();
+            NWMng.E.ExchangePoints((rp) =>
+            {
+                DataMng.E.RuntimeData.Coin3 -= int.Parse(PointInput.text);
+                Close();
 
-            int guid = (int)rp["guid"];
-            CommonFunction.ShowHintBox("ポイント交換申請の受付完了","",string.Format(exchangeOverText, guid, MailInput.text), 
-                () => { Close(); },null);
+                int guid = (int)rp["guid"];
+                CommonFunction.ShowHintBox(echangeOverTitle, "", string.Format(exchangeOverText, guid, MailInput.text),
+                    () => { Close(); }, null);
 
-            DataMng.E.RuntimeData.NewEmailCount++;
-            HomeLG.E.UI.RefreshRedPoint();
-        }, point, money, MailInput.text);
+                DataMng.E.RuntimeData.NewEmailCount++;
+                HomeLG.E.UI.RefreshRedPoint();
+            }, point, money, MailInput.text);
+        }, 
+        ()=> { });
     }
 
     /// <summary>
