@@ -160,7 +160,7 @@ Amazonギフト券をお送りいたします。
                 HomeLG.E.UI.RefreshRedPoint();
             }, point, money, MailInput.text);
         }, 
-        ()=> { });
+        ()=> { UICtl.E.OpenUI<ExchangePointUI>(UIType.ExchangePoint); });
     }
 
     /// <summary>
