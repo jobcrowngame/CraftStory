@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class GachaVerificationUI : UIBase
@@ -18,15 +18,15 @@ public class GachaVerificationUI : UIBase
     Button ChageBtn { get => FindChiled<Button>("ChageBtn"); }
 
     int mGachaId;
-    string des = @"ƒNƒ‰ƒtƒgƒV[ƒh‚ð{0}ŒÂÁ”ï‚µ‚ÄA
-{1}‚ð10‰ñŽÀs‚µ‚Ü‚·B";
+    string des = @"ã‚¯ãƒ©ãƒ•ãƒˆã‚·ãƒ¼ãƒ‰ã‚’{0}å€‹æ¶ˆè²»ã—ã¦ã€
+{1}ã‚’10å›žå®Ÿè¡Œã—ã¾ã™ã€‚";
 
     public override void Init(object gachaId)
     {
         base.Init(gachaId);
         mGachaId = (int)gachaId;
 
-        Title.SetTitle("ƒKƒ`ƒƒ");
+        Title.SetTitle("ã‚¬ãƒãƒ£");
         Title.SetOnClose(() => { Close(); });
         Title.EnActiveCoin(1);
         Title.EnActiveCoin(2);
