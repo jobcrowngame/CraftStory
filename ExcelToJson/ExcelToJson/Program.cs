@@ -10,8 +10,12 @@ namespace ExcelToJson
 {
     internal class Program
     {
+        private static MyFileReder Reder;
+
         private static void Main(string[] args)
         {
+            Reder = new MyFileReder();
+
             string inFilePath = args[0];
             string outFilePath = args[1];
 
@@ -406,7 +410,7 @@ namespace ExcelToJson
                 var data = new Blueprint();
 
                 data.ID = ToInt32(tbl.Rows[i]["ID"]);
-                data.Data = ToString(tbl.Rows[i]["Data"]);
+                data.Data = Reder.Read(ToString(tbl.Rows[i]["Data"]));
 
                 list.Add(data);
             }

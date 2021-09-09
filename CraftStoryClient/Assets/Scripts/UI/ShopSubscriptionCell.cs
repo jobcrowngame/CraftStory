@@ -91,6 +91,9 @@ public class ShopSubscriptionCell : UIBase
             BuyBtn.gameObject.SetActive(false);
 
             var day = 29 - (DateTime.Now - SubscriptionUpdateTime).Days;
+            if (day < 0)
+                day = 0;
+            
             Time.text = string.Format("利用中　残り{0}日", day);
         }
         else
