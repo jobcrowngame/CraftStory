@@ -27,6 +27,8 @@ public class MenuUI : UIBase
     {
         set
         {
+            Banner.gameObject.SetActive(false);
+
             AdventureBtn.gameObject.SetActive(false);
             ShopBtn.gameObject.SetActive(false);
             HomeBtn.gameObject.SetActive(false);
@@ -45,6 +47,8 @@ public class MenuUI : UIBase
             switch (value)
             {
                 case MapType.Home:
+                    Banner.gameObject.SetActive(true);
+
                     AdventureBtn.gameObject.SetActive(true);
                     ShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn.gameObject.SetActive(true);

@@ -7,39 +7,31 @@ using UnityEngine.UI;
 /// </summary>
 public class TitleUI : UIBase
 {
-    Button CloseBtn;
-    Text Title;
+    Button CloseBtn { get => FindChiled<Button>("CloseBtn"); }
+    Text Title { get => FindChiled<Text>("TitleText"); }
 
-    Text Coin1;
-    Image Coin1Image;
-    Text Coin2;
-    Image Coin2Image;
-    Text Coin3;
-    Image Coin3Image;
+    Text Coin1 { get => FindChiled<Text>("Coin1"); }
+    Image Coin1Image { get => FindChiled<Image>("Image", Coin1.transform); }
+    Text Coin2 { get => FindChiled<Text>("Coin2"); }
+    Image Coin2Image { get => FindChiled<Image>("Image", Coin2.transform); }
+    Text Coin3 { get => FindChiled<Text>("Coin3"); }
+    Image Coin3Image { get => FindChiled<Image>("Image", Coin3.transform); }
 
     Action action;
 
     private void Awake()
     {
-        CloseBtn = FindChiled<Button>("CloseBtn");
         CloseBtn.onClick.AddListener(()=> 
         {
             if (action != null)
                 action();
         });
 
-        Title = FindChiled<Text>("TitleText");
-        Coin1 = FindChiled<Text>("Coin1");
         Coin1.text = "0";
-        Coin1Image = FindChiled<Image>("Image", Coin1.transform);
         Coin1Image.sprite = ReadResources<Sprite>(ConfigMng.E.Item[9000].IconResourcesPath);
-        Coin2 = FindChiled<Text>("Coin2");
         Coin2.text = "0";
-        Coin2Image = FindChiled<Image>("Image", Coin2.transform);
         Coin2Image.sprite = ReadResources<Sprite>(ConfigMng.E.Item[9001].IconResourcesPath);
-        Coin3 = FindChiled<Text>("Coin3");
         Coin3.text = "0";
-        Coin3Image = FindChiled<Image>("Image", Coin3.transform);
         Coin3Image.sprite = ReadResources<Sprite>(ConfigMng.E.Item[9002].IconResourcesPath);
     }
 
