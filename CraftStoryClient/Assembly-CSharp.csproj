@@ -182,7 +182,6 @@
     <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csMouseOrbit.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeCell.cs" />
-    <Compile Include="Assets\Scripts\UI\RouletteItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\ShopMyShopItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemLG.cs" />
     <Compile Include="Assets\Scripts\Manager\EffectMng.cs" />
@@ -274,10 +273,10 @@
     <Compile Include="Assets\Scripts\UI\GachaBonusLG.cs" />
     <Compile Include="Assets\Scripts\Test\Monster\DogController.cs" />
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectChanger.cs" />
+    <Compile Include="Assets\Scripts\Test\TestRotate.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Test\TestRotate.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

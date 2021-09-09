@@ -6,7 +6,6 @@ public class RouletteUI : UIBase
     Image TitleIcon { get => FindChiled<Image>("TitleIcon"); }
     Image RouletteBG { get => FindChiled<Image>("RouletteBG"); }
     Button StartBtn { get => GetComponent<Button>(); }
-    Transform Parent { get => FindChiled("CellParent"); }
     Button OverMask { get => FindChiled<Button>("OverMask"); }
     Button AgainMask { get => FindChiled<Button>("AgainMask"); }
 
@@ -36,8 +35,6 @@ public class RouletteUI : UIBase
             }, 1);
             Close();
         });
-
-        AddCells();
     }
 
     public override void Open(object gachaId)
@@ -54,7 +51,7 @@ public class RouletteUI : UIBase
         again = Random.Range(0, 1000) > config.AddBonusPercent ? false : true;
         index = Random.Range(1, 6) * 2;
 
-        if (again)
+        if (!again)
         {
             index--;
         }
@@ -104,25 +101,6 @@ public class RouletteUI : UIBase
             newSpeed = minSpeed;
         }
         return newSpeed;
-    }
-
-    private bool CheckIndex()
-    {
-        var angles = RouletteBG.transform.eulerAngles.z;
-        var min = 30 * (index - 1);
-        var max = 30 * index;
-        return angles >= min && angles < max;
-    }
-
-    private void AddCells()
-    {
-        ClearCell(Parent);
-
-        for (int i = 0; i < 12; i++)
-        {
-            var cell = AddCell<RouletteUICell>("Prefabs/UI/RouletteCell", Parent);
-            cell.Set(i, i % 2 == 0 ? 0 : 1, 30);
-        }
     }
     private void SetTitleIcon()
     {
