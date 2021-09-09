@@ -59,6 +59,12 @@ public class RouletteUI : UIBase
         SetTitleIcon();
     }
 
+    public override void Close()
+    {
+        base.Close();
+        NWMng.E.GetItems();
+    }
+
     private void Update()
     {
         if (start)
