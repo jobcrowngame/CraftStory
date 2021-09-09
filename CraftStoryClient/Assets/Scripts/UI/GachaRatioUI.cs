@@ -6,6 +6,9 @@ public class GachaRatioUI : UIBase
     TitleUI Title { get => FindChiled<TitleUI>("Title"); }
     Text Des { get => FindChiled<Text>("Des"); }
     Transform CellParent { get => FindChiled("Content"); }
+    Text Level1P { get => FindChiled<Text>("Level1P"); }
+    Text Level2P { get => FindChiled<Text>("Level2P"); }
+    Text Level3P { get => FindChiled<Text>("Level3P"); }
 
     public override void Init()
     {
@@ -21,9 +24,40 @@ public class GachaRatioUI : UIBase
     public void Set(int id)
     {
         var config = ConfigMng.E.Gacha[id];
-        Des.text = config.Des;
+        Des.text = config.Des == "N" ? "" : config.Des;
 
+        SetTitlePercent(id);
         SetCell(id);
+    }
+
+    private void SetTitlePercent(int id)
+    {
+        var config = ConfigMng.E.Gacha[id];
+        var pond = ConfigMng.E.RandomBonusPond[config.PondId];
+
+        int level1 = 0;
+        int level2 = 0;
+        int level3 = 0;
+        ChangePercent(pond.Percent01, pond.Level01, ref level1, ref level2, ref level3);
+        ChangePercent(pond.Percent02, pond.Level02, ref level1, ref level2, ref level3);
+        ChangePercent(pond.Percent03, pond.Level03, ref level1, ref level2, ref level3);
+        ChangePercent(pond.Percent04, pond.Level04, ref level1, ref level2, ref level3);
+        ChangePercent(pond.Percent05, pond.Level05, ref level1, ref level2, ref level3);
+        ChangePercent(pond.Percent06, pond.Level06, ref level1, ref level2, ref level3);
+        ChangePercent(pond.Percent07, pond.Level07, ref level1, ref level2, ref level3);
+
+        Level1P.text = level1 * 0.1f + "%";
+        Level2P.text = level2 * 0.1f + "%";
+        Level3P.text = level3 * 0.1f + "%";
+    }
+    private void ChangePercent(int percent, int rare, ref int level1, ref int level2, ref int level3)
+    {
+        switch (rare)
+        {
+            case 1: level1 += percent; break;
+            case 2: level2 += percent; break;
+            case 3: level3 += percent; break;
+        }
     }
 
     private void SetCell(int id)
