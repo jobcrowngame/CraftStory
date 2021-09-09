@@ -92,10 +92,10 @@ public class PlayerCtl : MonoBehaviour
             GuideLG.E.GoTo(40);
         }
 
-        //if (Input.GetKeyDown(KeyCode.F3))
-        //{
-        //    CommonFunction.GotoFriendHome(45);
-        //}
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            UICtl.E.OpenUI<RouletteUI>(UIType.Roulette, UIOpenType.None, 1);
+        }
     }
 
     /// <summary>
