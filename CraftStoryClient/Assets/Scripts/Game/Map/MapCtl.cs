@@ -295,8 +295,8 @@ public class MapCtl
         if (mdata.Map[pos.x, pos.y, pos.z].entityID > 0)
             return false;
 
-        // 大きいエンティティの範囲チェック
         var config = ConfigMng.E.Entity[entityId];
+        // 大きいエンティティの範囲チェック
         if (config.ScaleX > 1 || config.ScaleY > 1 || config.ScaleZ > 1)
         {
             var list = GetEntityPosListByDirection(entityId, pos, dType);
@@ -312,7 +312,18 @@ public class MapCtl
             }
         }
 
-        return true;
+        // サスペンションのチェック
+        var downEntityPos = new Vector3Int(pos.x, pos.y - 1, pos.z);
+        var downEntityId = DataMng.E.MapData.Map[downEntityPos.x, downEntityPos.y, downEntityPos.z].entityID;
+        if (downEntityId > 0)
+        {
+            var downEntityConfig = ConfigMng.E.Entity[downEntityId];
+            return downEntityConfig.CanPut == 1;
+        }
+        else
+        {
+            return config.CanSuspension == 1;
+        }
     }
 
     /// <summary>

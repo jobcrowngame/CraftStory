@@ -13,5 +13,6 @@
         public int CanDestroy { get; set; }
         public int HaveDirection { get; set; }
         public int CanPut { get; set; }
+        public int CanSuspension { get; set; }
     }
 }
