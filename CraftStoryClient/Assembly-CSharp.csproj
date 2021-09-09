@@ -156,7 +156,6 @@
     <Compile Include="Assets\Scripts\Game\Player\PlayerAnimatorEvent.cs" />
     <Compile Include="Assets\Scripts\Manager\GameTimeCtl.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csParticleMove.cs" />
-    <Compile Include="Assets\Scripts\UI\RouletteCell.cs" />
     <Compile Include="Assets\Scripts\Network\NWData.cs" />
     <Compile Include="Assets\Scripts\Test\LookChange.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
