@@ -105,7 +105,7 @@ public class ShopUI : UIBase
         {
             UICtl.E.OpenUI<GachaVerificationUI>(UIType.GachaVerification, UIOpenType.None, 1);
         });
-        GachaDes.text = ConfigMng.E.Gacha[1].Title;
+        GachaDes.text = ConfigMng.E.Gacha[1].Title == "N" ? "" : ConfigMng.E.Gacha[1].Title;
         Cost.text = ConfigMng.E.Gacha[1].CostCount.ToString();
 
 
