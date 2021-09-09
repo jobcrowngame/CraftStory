@@ -49,13 +49,13 @@ public class MenuUI : UIBase
                     ShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn.gameObject.SetActive(true);
                     PersonalMessageBtn.gameObject.SetActive(true);
+                    Notice.gameObject.SetActive(true);
                     //FriendBtn.gameObject.SetActive(true);
 
                     PointExchangeBtn.gameObject.SetActive(true);
                     MyShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn2.gameObject.SetActive(true);
                     MessageBtn.gameObject.SetActive(true);
-                    //Notice.gameObject.SetActive(true);
                     //Debug.gameObject.SetActive(true);
                     break;
 
