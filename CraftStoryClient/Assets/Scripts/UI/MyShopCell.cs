@@ -103,14 +103,12 @@ public class MyShopCell : UIBase
         });
         PreviewBtn.onClick.AddListener(() =>
         {
-            NWMng.E.GetBlueprintPreviewData((rp) =>
+            NWMng.E.OpenPreview(myShopItem.myshopid, (data)=> 
             {
-                if (!string.IsNullOrEmpty(rp.ToString()))
-                {
-                    var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
-                    ui.SetData((string)rp["data"], MyShopLG.E.UI);
-                }
-            }, myShopItem.myshopid);
+                var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
+                ui.SetData(data, MyShopLG.E.UI);
+            });
+
         });
         Icon.transform.GetComponent<Button>().onClick.AddListener(() => 
         {

@@ -57,7 +57,7 @@ public partial class NWMng
     /// <param name="callBack"></param>
     public void GetNewEmailCount(Action callBack = null)
     {
-        NWMng.E.GetNewEmailCountRequest((rp) =>
+        GetNewEmailCountRequest((rp) =>
         {
             DataMng.E.RuntimeData.NewEmailCount = (int)rp["count"];
 
@@ -65,9 +65,13 @@ public partial class NWMng
         });
     }
 
+    /// <summary>
+    /// マイショップデータをゲット
+    /// </summary>
+    /// <param name="callBack"></param>
     public void GetMyshopInfo(Action callBack = null)
     {
-        NWMng.E.GetMyShopInfo((rp) =>
+        GetMyShopInfo((rp) =>
         {
             DataMng.E.MyShop.Clear();
             if (!string.IsNullOrEmpty(rp.ToString()))
@@ -81,5 +85,35 @@ public partial class NWMng
                 if (callBack != null) callBack();
             }
         });
+    }
+
+    /// <summary>
+    /// 設計図プレビュー
+    /// </summary>
+    /// <param name="myshopId">myshop GUID</param>
+    public void OpenPreview(int myshopId, Action<string> callBack = null)
+    {
+        GetBlueprintPreviewData((rp) => 
+        {
+            if (!string.IsNullOrEmpty(rp.ToString()) && callBack != null)
+            {
+                callBack((string)rp["data"]); 
+            }
+        }, myshopId);
+    }
+
+    /// <summary>
+    /// アイテム関連データを読む
+    /// </summary>
+    /// <param name="itemGuid"></param>
+    /// <param name="iData"></param>
+    /// <param name="callBack"></param>
+    public void GetItemRelationData(int itemGuid, ItemData iData, Action callBack = null)
+    {
+        GetItemRelationData((rp) => 
+        {
+            iData.relationData = (string)rp;
+            if (callBack != null) callBack();
+        }, itemGuid);
     }
 }

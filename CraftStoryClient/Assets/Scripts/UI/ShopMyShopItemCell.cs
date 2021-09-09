@@ -52,14 +52,11 @@ public class ShopMyShopItemCell : UIBase
         });
         PreviewBtn.onClick.AddListener(() =>
         {
-            NWMng.E.GetBlueprintPreviewData((rp) =>
+            NWMng.E.OpenPreview(data.myshopid, (data) =>
             {
-                if (!string.IsNullOrEmpty(rp.ToString()))
-                {
-                    var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
-                    ui.SetData((string)rp["data"], ShopLG.E.UI);
-                }
-            }, data.myshopid);
+                var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
+                ui.SetData(data, ShopLG.E.UI);
+            });
         });
 
         data.created_at = data.created_at.AddDays(7);

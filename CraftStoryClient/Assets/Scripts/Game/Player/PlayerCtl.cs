@@ -210,7 +210,10 @@ public class PlayerCtl : MonoBehaviour
                         break;
 
                     case ItemType.Blueprint:
-                        BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.relationData);
+                        NWMng.E.GetItemRelationData(selectItem.id, selectItem, () => 
+                        {
+                            BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.relationData);
+                        });
                         break;
 
                     case ItemType.Torch:

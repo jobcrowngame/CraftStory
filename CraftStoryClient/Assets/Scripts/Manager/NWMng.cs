@@ -776,6 +776,21 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.GachaAddBonusAgain));
     }
 
+    /// <summary>
+    /// アイテム関連データをゲット
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="itemGuid">GUID</param>
+    public void GetItemRelationData(Action<JsonData> rp, int itemGuid)
+    {
+        var data = new NWData();
+        data.Add("itemGuid", itemGuid);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetItemRelationData));
+    }
+
+
+
 
     /// <summary>
     /// ホームデータをサーバーにセーブ
@@ -865,6 +880,7 @@ public partial class NWMng : MonoBehaviour
         GetFriendHomeData = 1040,
         ExchangePoints,
         GachaAddBonusAgain,
+        GetItemRelationData,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

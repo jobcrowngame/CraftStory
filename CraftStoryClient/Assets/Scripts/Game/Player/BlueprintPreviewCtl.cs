@@ -133,6 +133,9 @@ public class BlueprintPreviewCtl : MonoBehaviour
 
         foreach (var item in data.blocks)
         {
+            if (item.id == 10000)
+                continue;
+            
             var entity = MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, Parent, Vector3Int.zero);
             entity.transform.localPosition = item.GetPos();
         }
