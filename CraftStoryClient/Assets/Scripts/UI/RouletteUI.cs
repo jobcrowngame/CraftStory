@@ -10,15 +10,14 @@ public class RouletteUI : UIBase
     Button OverMask { get => FindChiled<Button>("OverMask"); }
     Button AgainMask { get => FindChiled<Button>("AgainMask"); }
 
-    int index;
-    float speed;
     bool again;
     bool start;
-    bool end = false;
-    float maxSpeed = 1000;
-    float rotateSpeed = 250;
-
-    const float stopSpeed = 414;
+    int index;
+    float speed;
+    float stopAngle;
+    const float minSpeed = 0.3f;
+    public float curAngle;
+    float targetAngle;
 
     public override void Init(object gachaId)
     {
@@ -46,8 +45,6 @@ public class RouletteUI : UIBase
         base.Open(gachaId);
         StartBtn.enabled = true;
         start = false;
-        end = false;
-        speed = 0;
         RouletteBG.transform.eulerAngles = Vector3.zero;
 
         OverMask.gameObject.SetActive(false);
@@ -69,11 +66,13 @@ public class RouletteUI : UIBase
     {
         if (start)
         {
-            RouletteBG.transform.Rotate(Vector3.back, speed * Time.deltaTime);
+            curAngle -= speed;
+            targetAngle += speed;
+            RouletteBG.transform.eulerAngles = new Vector3(0, 0, -targetAngle);
 
-            if (speed > 0)
+            if (curAngle > 0)
             {
-                speed -= Time.deltaTime * rotateSpeed;
+                speed = GetSpeed();
             }
             else
             {
@@ -83,22 +82,28 @@ public class RouletteUI : UIBase
                 OverMask.gameObject.SetActive(!again);
                 AgainMask.gameObject.SetActive(again);
             }
-
-            if (speed < stopSpeed && !end)
-            {
-                speed = stopSpeed;
-                end = CheckIndex();
-            }
         }
     }
 
     private void StartRoulette()
     {
         StartBtn.enabled = false;
-
-        speed = maxSpeed;
+        curAngle = 360 * 3 - index * 30;
+        targetAngle = 0;
+        Logger.Log("Index:{0}, StopAngle:{1}", index, curAngle);
         start = true;
-        end = false;
+        RouletteBG.transform.eulerAngles = Vector3.zero;
+
+        speed = GetSpeed();
+    }
+    private float GetSpeed()
+    {
+        float newSpeed = curAngle / 50;
+        if (newSpeed < minSpeed)
+        {
+            newSpeed = minSpeed;
+        }
+        return newSpeed;
     }
 
     private bool CheckIndex()
@@ -127,21 +132,21 @@ public class RouletteUI : UIBase
             string resources;
             if (rang < 5)
             {
-                resources = "Textures/shop_2d_005";
+                resources = "Textures/shop_2d_20";
             }else if (rang < 50)
             {
-                resources = "Textures/shop_2d_006";
+                resources = "Textures/shop_2d_21";
             }
             else
             {
-                resources = "Textures/shop_2d_007";
+                resources = "Textures/shop_2d_22";
             }
             TitleIcon.sprite = ReadResources<Sprite>(resources);
         }
         else
         {
             int rang = Random.Range(0, 100);
-            string resources = rang < 95 ? "Textures/shop_2d_005" : "Textures/shop_2d_006";
+            string resources = rang < 95 ? "Textures/shop_2d_20" : "Textures/shop_2d_21";
             TitleIcon.sprite = ReadResources<Sprite>(resources);
         }
     }
