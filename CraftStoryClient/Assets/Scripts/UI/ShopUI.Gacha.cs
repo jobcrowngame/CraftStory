@@ -26,6 +26,8 @@ public partial class ShopUI
         });
         GachaRightBtn.onClick.AddListener(OnClickGachaRightBtn);
         GachaLeftBtn.onClick.AddListener(OnClickGachaLeftBtn);
+
+        SetGachaIndex(0);
     }
 
     /// <summary>
