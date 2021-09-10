@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GachaRatioUI : UIBase
@@ -9,6 +10,8 @@ public class GachaRatioUI : UIBase
     Text Level1P { get => FindChiled<Text>("Level1P"); }
     Text Level2P { get => FindChiled<Text>("Level2P"); }
     Text Level3P { get => FindChiled<Text>("Level3P"); }
+
+    List<GachaRatioCell> cellList = new List<GachaRatioCell>();
 
     public override void Init()
     {
@@ -62,6 +65,13 @@ public class GachaRatioUI : UIBase
 
     private void SetCell(int id)
     {
+        // サブを削除
+        foreach (var item in cellList)
+        {
+            GameObject.Destroy(item.gameObject);
+        }
+        cellList.Clear();
+
         var config = ConfigMng.E.Gacha[id];
         var pond = ConfigMng.E.RandomBonusPond[config.PondId];
 
@@ -80,12 +90,14 @@ public class GachaRatioUI : UIBase
 
         var list = stringList.Split(',');
 
+        // サブを追加
         for (int i = 0; i < list.Length; i++)
         {
             var cell = AddCell<GachaRatioCell>("Prefabs/UI/GachaRatioCell", CellParent);
             if (cell != null)
             {
                 cell.Set(int.Parse(list[i]), percent / list.Length, rare);
+                cellList.Add(cell);
             }
         }
     }

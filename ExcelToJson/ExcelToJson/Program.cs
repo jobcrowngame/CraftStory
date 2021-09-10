@@ -504,6 +504,8 @@ namespace ExcelToJson
                 var data = new Gacha()
                 {
                     ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Image = ToString(tbl.Rows[i]["Image"]),
+                    BtnImage = ToString(tbl.Rows[i]["BtnImage"]),
                     PondId = ToInt32(tbl.Rows[i]["PondId"]),
                     Title = ToString(tbl.Rows[i]["Title"]),
                     Des = ToString(tbl.Rows[i]["Des"]),

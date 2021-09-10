@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using JsonConfigData;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GachaVerificationUI : UIBase
@@ -18,22 +19,19 @@ public class GachaVerificationUI : UIBase
     Button ChageBtn { get => FindChiled<Button>("ChageBtn"); }
 
     int mGachaId;
+    Gacha config;
     string des = @"クラフトシードを{0}個消費して、
 {1}を10回実行します。";
 
-    public override void Init(object gachaId)
+    public override void Init()
     {
-        base.Init(gachaId);
-        mGachaId = (int)gachaId;
+        base.Init();
 
         Title.SetTitle("ガチャ");
         Title.SetOnClose(() => { Close(); });
         Title.EnActiveCoin(1);
         Title.EnActiveCoin(2);
         Title.EnActiveCoin(3);
-
-        var config = ConfigMng.E.Gacha[mGachaId];
-        Des.text = string.Format(des, config.CostCount, config.Title);
 
         OkBtn.onClick.AddListener(() => 
         {
@@ -54,11 +52,13 @@ public class GachaVerificationUI : UIBase
         CancelBtn.onClick.AddListener(Close);
     }
 
-    public override void Open(object gachaId)
+    public void Set(int gachaId)
     {
-        base.Open(gachaId);
+        mGachaId = gachaId;
 
-        var config = ConfigMng.E.Gacha[mGachaId];
+        config = ConfigMng.E.Gacha[mGachaId];
+        Des.text = string.Format(des, config.CostCount, config.Title);
+
         GachaVerificationLG.UIType uiType = DataMng.E.RuntimeData.Coin1 >= config.CostCount
             ? GachaVerificationLG.UIType.Type1
             : GachaVerificationLG.UIType.Type2;
@@ -77,8 +77,8 @@ public class GachaVerificationUI : UIBase
 
     private void StartGacha(int gachaId)
     {
-        int costId = ConfigMng.E.Gacha[gachaId].Cost;
-        int costCount = ConfigMng.E.Gacha[gachaId].CostCount;
+        int costId = config.Cost;
+        int costCount = config.CostCount;
         if (DataMng.E.GetCoinByID(costId) < costCount)
         {
             if (costId == 9000) CommonFunction.ShowHintBar(1010001);

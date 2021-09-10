@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopUI : UIBase
+public partial class ShopUI : UIBase
 {
     TitleUI title;
     MyButton[] btns;
@@ -16,13 +16,7 @@ public class ShopUI : UIBase
     Transform ItemsWind { get => FindChiled("ItemsWind"); }
     Transform itemGridRoot { get => FindChiled("Grid", ItemsWind.gameObject); }
     Transform SubscriptionWind { get => FindChiled("SubscriptionWind"); }
-
     Transform Gacha { get => FindChiled("Gacha"); }
-    Button RatioBtn { get => FindChiled<Button>("RatioBtn", Gacha); }
-    Button StartGachaBtn { get => FindChiled<Button>("StartGachaBtn", Gacha); }
-    Text GachaDes { get => FindChiled<Text>("GachaDes", Gacha); }
-    Text Cost { get => FindChiled<Text>("Cost", Gacha); }
-
 
     Transform Blueprint2Wind { get => FindChiled("Blueprint2Wind"); }
     Transform itemGridRoot2 { get => FindChiled("Grid", Blueprint2Wind.gameObject); }
@@ -96,20 +90,9 @@ public class ShopUI : UIBase
             }
         }
 
-        RatioBtn.onClick.AddListener(() => 
-        {
-            var ui = UICtl.E.OpenUI<GachaRatioUI>(UIType.GachaRatio);
-            ui.Set(1);
-        });
-        StartGachaBtn.onClick.AddListener(()=> 
-        {
-            UICtl.E.OpenUI<GachaVerificationUI>(UIType.GachaVerification, UIOpenType.None, 1);
-        });
-        GachaDes.text = ConfigMng.E.Gacha[1].Title == "N" ? "" : ConfigMng.E.Gacha[1].Title;
-        Cost.text = ConfigMng.E.Gacha[1].CostCount.ToString();
+        InitGacha();
 
-
-        var chargeBtnParent = FindChiled("Grid", ChageWind.gameObject);
+         var chargeBtnParent = FindChiled("Grid", ChageWind.gameObject);
         chargeBtns = new ShopItemCell[chargeBtnParent.childCount];
         for (int i = 0; i < chargeBtnParent.childCount; i++)
         {

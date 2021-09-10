@@ -48,6 +48,34 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
     }
     int selectPage = 1;
 
+    /// <summary>
+    /// 選択したガチャインデックス
+    /// </summary>
+    public int SelectedGachaIndex 
+    {
+        get => mSelectedGachaIndex;
+        set
+        {
+            if (value < 0 || value >= GachaIds.Length)
+                return;
+
+            mSelectedGachaIndex = value;
+
+            UI.ShowGachaRightBtn(mSelectedGachaIndex != GachaIds.Length - 1);
+            UI.ShowGachaLeftBtn(mSelectedGachaIndex > 0);
+
+            mSelectedGachaId = GachaIds[mSelectedGachaIndex];
+        }
+    }
+    private int mSelectedGachaIndex = 0;
+
+    /// <summary>
+    /// 選択したガチャID
+    /// </summary>
+    public int SelectGachaId { get => mSelectedGachaId; }
+    private int mSelectedGachaId;
+    private int[] GachaIds = new int[2]{ 1,2};
+
     public void OnClickLeftBtn(string nickName, int sortType)
     {
         if (SelectPage > 1)

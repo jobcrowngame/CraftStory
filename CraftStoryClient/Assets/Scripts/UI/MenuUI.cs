@@ -222,14 +222,8 @@ public class MenuUI : UIBase
 
     private void OnClickBanner(int index)
     {
-        switch (index)
-        {
-            case 0:
-                var ui = UICtl.E.OpenUI<ShopUI>(UIType.Shop, UIOpenType.None, 2);
-                Close();
-                break;
-            default:
-                break;
-        }
+        var ui = UICtl.E.OpenUI<ShopUI>(UIType.Shop, UIOpenType.None, 2);
+        ui.SetGachaIndex(index);
+        Close();
     }
 }
