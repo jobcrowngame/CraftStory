@@ -74,7 +74,7 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
     /// </summary>
     public int SelectGachaId { get => mSelectedGachaId; }
     private int mSelectedGachaId;
-    private int[] GachaIds = new int[2]{ 1,2};
+    private int[] GachaIds = new int[1]{ 1};
 
     public void OnClickLeftBtn(string nickName, int sortType)
     {
