@@ -259,7 +259,7 @@ public class MapDataFactory
             foreach (var item in blueprintData.blocks)
             {
                 item.SetPos(CommonFunction.Vector3Sum(item.GetPos(), pos));
-                mData.Map[item.GetPos().x, item.GetPos().y, item.GetPos().z] = new MapData.MapCellData() { entityID = item.id }; 
+                mData.Map[item.GetPos().x, item.GetPos().y, item.GetPos().z] = new MapData.MapCellData() { entityID = item.id, direction=item.direction }; 
             }
         }
     }
