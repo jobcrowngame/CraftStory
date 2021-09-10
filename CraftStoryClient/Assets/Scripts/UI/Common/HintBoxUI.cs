@@ -7,6 +7,8 @@ using UnityEngine.UI;
 /// </summary>
 public class HintBoxUI : UIBase
 {
+    Transform Mask { get => FindChiled("Mask"); }
+
     Transform Title { get => FindChiled("Title"); }
     Image Icon { get => FindChiled<Image>("Icon"); }
     Transform Msg1Parent { get => FindChiled("Msg1"); }
@@ -22,6 +24,7 @@ public class HintBoxUI : UIBase
     {
         OkBtn.onClick.AddListener(OnClickOkBtn);
         CancelBtn.onClick.AddListener(OnClickCancelBtn);
+        ShowMask(false);
     }
 
     public void Set(string iconPath, string msg, Action okAction, Action cancelAction)
@@ -79,5 +82,10 @@ public class HintBoxUI : UIBase
     {
         OkBtn.GetComponent<Image>().sprite = ReadResources<Sprite>("Textures/" + btn1);
         CancelBtn.GetComponent<Image>().sprite = ReadResources<Sprite>("Textures/" + btn2);
+    }
+
+    public void ShowMask(bool b = true)
+    {
+        Mask.gameObject.SetActive(b);
     }
 }
