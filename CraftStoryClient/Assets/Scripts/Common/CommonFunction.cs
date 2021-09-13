@@ -416,7 +416,11 @@ public class CommonFunction
 
         ShowHintBox(msg, () =>
         {
-            Application.OpenURL(PublicPar.AppStoryURL);
+#if UNITY_IOS
+            Application.OpenURL(PublicPar.AppStoryURL_IOS);
+#elif UNITY_ANDROID
+            Application.OpenURL(PublicPar.AppStoryURL_Android);
+#endif
             QuitGame();
         });
     }

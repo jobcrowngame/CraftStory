@@ -64,7 +64,8 @@ public class PublicPar
     public static string MapDataName = "/MapData.dat";
     public static string UserDataName = "/UserData.dat";
 
-    public static string AppStoryURL = "https://apps.apple.com/jp/app/id1571438709";
+    public static string AppStoryURL_IOS = "https://apps.apple.com/jp/app/id1571438709";
+    public static string AppStoryURL_Android = "https://play.google.com/store/apps/details?id=com.jobcrown.craftstory";
 
     // 資金決済法に基づく表示
     public static string UrlBtn1 = "https://www.craftstory.jp/funding/";
