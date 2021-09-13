@@ -138,7 +138,7 @@ public class CameraCtl : MonoBehaviour
     }
     public void RefreshCameraPos()
     {
-        transform.localPosition = new Vector3(0, 0, CameraPosZ);
+        transform.localPosition = new Vector3(0, 0.8f, CameraPosZ);
     }
 
     private bool IsBlock()
