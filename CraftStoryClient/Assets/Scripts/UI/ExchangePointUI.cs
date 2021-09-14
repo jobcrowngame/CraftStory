@@ -60,9 +60,6 @@ Amazonギフト券をお送りいたします。
 
         Title.SetTitle("ポイント交換申請");
         Title.SetOnClose(() => { Close(); });
-        Title.EnActiveCoin(1);
-        Title.EnActiveCoin(2);
-        Title.EnActiveCoin(3);
 
         MailInput.onEndEdit.AddListener((msg)=> 
         {
@@ -93,10 +90,7 @@ Amazonギフト券をお送りいたします。
 
         //CheckAll();
 
-        if (!string.IsNullOrEmpty(DataMng.E.RuntimeData.Email))
-        {
-            MailInput.text = DataMng.E.RuntimeData.Email;
-        }
+        MailInput.text = string.IsNullOrEmpty(DataMng.E.RuntimeData.Email) ? "" : DataMng.E.RuntimeData.Email;
 
         string point = string.Format("所持：{0}ポイント", DataMng.E.RuntimeData.Coin3.ToString("#,0"));
         MyPointCount.text = point;
@@ -157,6 +151,7 @@ Amazonギフト券をお送りいたします。
                     () => { Close(); }, null);
 
                 DataMng.E.RuntimeData.NewEmailCount++;
+                DataMng.E.RuntimeData.Email = MailInput.text;
                 HomeLG.E.UI.RefreshRedPoint();
             }, point, money, MailInput.text);
         }, 
