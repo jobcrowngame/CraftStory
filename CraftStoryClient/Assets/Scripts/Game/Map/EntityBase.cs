@@ -87,6 +87,11 @@ public enum EntityType
     TreasureBox = 110,
     Workbench = 1000,
     Kamado = 1001,
+
+    /// <summary>
+    /// 掲示板
+    /// </summary>
+    Mission = 1002,
     Door = 2000,
     Torch = 2100,
     TransferGate = 9999,

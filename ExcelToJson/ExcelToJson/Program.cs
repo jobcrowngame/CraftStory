@@ -80,7 +80,7 @@ namespace ExcelToJson
         private static string ToDateTimeString(object item)
         {
             if (item == DBNull.Value)
-                return new DateTime(0).ToString("yyyy/MM/dd");
+                return "";
             return ((DateTime)item).ToString("yyyy/MM/dd");
         }
 
@@ -122,6 +122,8 @@ namespace ExcelToJson
                 case "Roulette": list = Roulette(tbl); break;
                 case "RouletteCell": list = RouletteCell(tbl); break;
                 case "LoginBonus": list = LoginBonus(tbl); break;
+                case "Mission": list = Mission(tbl); break;
+                    
 
 
                 default: Console.WriteLine("not find fileName function."); break;
@@ -342,6 +344,7 @@ namespace ExcelToJson
                 data.Cost3Count = ToInt32(tbl.Rows[i]["Cost3Count"]);
                 data.Cost4 = ToInt32(tbl.Rows[i]["Cost4"]);
                 data.Cost4Count = ToInt32(tbl.Rows[i]["Cost4Count"]);
+                data.Recommendation = ToInt32(tbl.Rows[i]["Recommendation"]);
 
                 list.Add(data);
             }
@@ -562,6 +565,29 @@ namespace ExcelToJson
                     Name = ToString(tbl.Rows[i]["Name"]),
                     MailId = ToInt32(tbl.Rows[i]["MailId"]),
                     Time = ToDateTimeString(tbl.Rows[i]["Time"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Mission(DataTable tbl)
+        {
+            List<Mission> list = new List<Mission>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Mission()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Type = ToInt32(tbl.Rows[i]["Type"]),
+                    Des = ToString(tbl.Rows[i]["Des"]),
+                    Bonus = ToInt32(tbl.Rows[i]["Bonus"]),
+                    EndNumber = ToInt32(tbl.Rows[i]["EndNumber"]),
+                    StartTime = ToDateTimeString(tbl.Rows[i]["StartTime"]),
+                    EndTime = ToDateTimeString(tbl.Rows[i]["EndTime"]),
+                    Chat1 = ToString(tbl.Rows[i]["Chat1"]),
+                    Chat2 = ToString(tbl.Rows[i]["Chat2"]),
+                    RojicType = ToInt32(tbl.Rows[i]["RojicType"]),
                 };
 
                 list.Add(data);

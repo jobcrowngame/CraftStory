@@ -27,7 +27,9 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, Roulette> rouletteConfig;
     Dictionary<int, RouletteCell> rouletteCellConfig;
     Dictionary<int, RandomBonusPond> randomBonusPondConfig;
+    Dictionary<int, Mission> MissionConfig;
 
+    public Dictionary<int, Mission> Mission { get => MissionConfig; }
     public Dictionary<int, RandomBonusPond> RandomBonusPond { get => randomBonusPondConfig; }
     public Dictionary<int, RouletteCell> RouletteCell { get => rouletteCellConfig; }
     public Dictionary<int, Roulette> Roulette { get => rouletteConfig; }
@@ -67,7 +69,9 @@ class ConfigMng : Single<ConfigMng>
         rouletteConfig = new Dictionary<int, Roulette>();
         rouletteCellConfig = new Dictionary<int, RouletteCell>();
         randomBonusPondConfig = new Dictionary<int, RandomBonusPond>();
+        MissionConfig = new Dictionary<int, Mission>();
 
+        ReadConfig("Config/Mission", MissionConfig);
         ReadConfig("Config/RandomBonusPond", randomBonusPondConfig);
         ReadConfig("Config/RouletteCell", rouletteCellConfig);
         ReadConfig("Config/Roulette", rouletteConfig);

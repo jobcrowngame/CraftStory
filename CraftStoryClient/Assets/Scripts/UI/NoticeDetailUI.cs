@@ -24,9 +24,6 @@ public class NoticeDetailUI : UIBase
 
         title.SetTitle("お知らせ");
         title.SetOnClose(() => { Close(); });
-        title.EnActiveCoin(1);
-        title.EnActiveCoin(2);
-        title.EnActiveCoin(3);
 
         Category.sprite = ReadResources<Sprite>(NoticeLG.E.GetCategoryPath((NoticeLG.CategoryType)uiinfo.category));
         Time.text = uiinfo.activedate.ToString("yyyy/MM/dd");

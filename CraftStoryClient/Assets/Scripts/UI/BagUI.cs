@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// </summary>
 public class BagUI : UIBase
 {
-    TitleUI Title;
+    TitleUI Title { get => FindChiled<TitleUI>("Title"); }
     Transform btnsParent { get => FindChiled("Btns"); }
     MyButton[] btns;
     Transform itemGridRoot { get => FindChiled("Content"); }
@@ -29,11 +29,9 @@ public class BagUI : UIBase
 
     private void InitUI()
     {
-        Title = FindChiled<TitleUI>("Title");
         Title.SetTitle("もちもの");
         Title.SetOnClose(() => { Close(); GuideLG.E.Next(); });
-        Title.EnActiveCoin(1);
-        Title.EnActiveCoin(3);
+        Title.ShowCoin(2);
 
         btns = new MyButton[btnsParent.childCount];
         for (int i = 0; i < btnsParent.childCount; i++)

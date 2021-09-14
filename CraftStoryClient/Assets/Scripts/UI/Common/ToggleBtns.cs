@@ -1,23 +1,23 @@
-using UnityEngine.Events;
+ï»¿using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
-/// ƒ{ƒ^ƒ“ƒOƒ‹[ƒv
+/// ãƒœã‚¿ãƒ³ã‚°ãƒ«ãƒ¼ãƒ—
 /// </summary>
 public class ToggleBtns : UIBase
 {
     /// <summary>
-    /// ƒTƒuƒŠƒXƒg
+    /// ã‚µãƒ–ãƒªã‚¹ãƒˆ
     /// </summary>
     MyToggle[] cells;
 
     /// <summary>
-    /// ƒNƒŠƒbƒNƒCƒxƒ“ƒg
+    /// ã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆ
     /// </summary>
     UnityAction<int> callback;
 
     /// <summary>
-    /// ‰Šú‰»
+    /// åˆæœŸåŒ–
     /// </summary>
     public override void Init()
     {
@@ -33,7 +33,7 @@ public class ToggleBtns : UIBase
     }
 
     /// <summary>
-    /// ‘I‘ğ‚ª•ÏX‚³‚ê‚éê‡‚ÌƒCƒxƒ“ƒg
+    /// é¸æŠãŒå¤‰æ›´ã•ã‚Œã‚‹å ´åˆã®ã‚¤ãƒ™ãƒ³ãƒˆ
     /// </summary>
     /// <param name="index"></param>
     public void OnValueChange(int index)
@@ -45,9 +45,9 @@ public class ToggleBtns : UIBase
     }
 
     /// <summary>
-    /// ‘I‘ğ‚ª•ÏX‚³‚ê‚éƒCƒxƒ“ƒg‚Ìİ’è
+    /// é¸æŠãŒå¤‰æ›´ã•ã‚Œã‚‹ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š
     /// </summary>
-    /// <param name="callback">ƒCƒxƒ“ƒg</param>
+    /// <param name="callback">ã‚¤ãƒ™ãƒ³ãƒˆ</param>
     public void OnValueChangeAddListener(UnityAction<int> callback)
     {
         this.callback = callback;

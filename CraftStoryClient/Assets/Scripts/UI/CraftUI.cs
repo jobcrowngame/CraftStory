@@ -1,5 +1,6 @@
 using JsonConfigData;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,27 +51,74 @@ public class CraftUI : UIBase
         entityType = type;
 
         RefreshCost();
-        RefreshCraftItemList();
+        RefreshCraftCellList();
     }
+
     public void SetSelectCountText(string text)
     {
         SelectCount.text = text;
     }
 
-    private void RefreshCraftItemList()
+    /// <summary>
+    /// クラフトサブのインスタンス
+    /// </summary>
+    private void RefreshCraftCellList()
     {
+        ClearCell(craftItemParent);
+
+        // おすすめリスト
+        List<Craft> Recommendation = new List<Craft>();
+
+        // 他のリスト
+        List<Craft> Order = new List<Craft>();
+
         foreach (Craft item in ConfigMng.E.Craft.Values)
         {
             if (item.Type == (int)entityType)
             {
-                var cell = AddCell<CraftItemCell>("Prefabs/UI/IconItem", craftItemParent);
-                if (cell != null)
+                // おすすめの場合
+                if (item.Recommendation == 1)
                 {
-                    cell.Init(item);
+                    Recommendation.Add(item);
                 }
+                else
+                {
+                    Order.Add(item);
+                }
+
+
             }
         }
+
+        // おすすめをインスタンス
+        foreach (var item in Recommendation)
+        {
+            AddCell(item);
+        }
+
+        // 他をインスタンス
+        foreach (var item in Order)
+        {
+            AddCell(item);
+        }
     }
+
+    /// <summary>
+    /// サブを追加
+    /// </summary>
+    /// <param name="config"></param>
+    private void AddCell(Craft config)
+    {
+        var cell = AddCell<CraftItemCell>("Prefabs/UI/IconItem", craftItemParent);
+        if (cell != null)
+        {
+            cell.Init(config);
+        }
+    }
+
+    /// <summary>
+    /// クラフト開始イベント
+    /// </summary>
     private void OnCraft()
     {
         if (CraftLG.E.SelectCraft == null)
@@ -88,6 +136,9 @@ public class CraftUI : UIBase
         {
             NWMng.E.Craft((rp) => 
             {
+                // クラフトミッション
+                NWMng.E.ClearMission(3, 1);
+
                 NWMng.E.GetItems(() =>
                 {
                     CommonFunction.ShowHintBar(6);
@@ -100,6 +151,9 @@ public class CraftUI : UIBase
         StartCoroutine(CloneIcon(CraftLG.E.SelectCount));
     }
 
+    /// <summary>
+    /// コストリストを更新
+    /// </summary>
     public void RefreshCost()
     {
         if (CraftLG.E.SelectCraft == null)
@@ -118,6 +172,12 @@ public class CraftUI : UIBase
         }
     }
 
+    /// <summary>
+    /// 作成できるかのチェック
+    /// </summary>
+    /// <param name="config">設定ファイル</param>
+    /// <param name="count">作成数</param>
+    /// <returns></returns>
     private bool CanCreate(Craft config, int count)
     {
         if (config == null)
@@ -133,6 +193,11 @@ public class CraftUI : UIBase
         return ret;
     }
 
+    /// <summary>
+    /// AnimationIconをコピー
+    /// </summary>
+    /// <param name="count"></param>
+    /// <returns></returns>
     private IEnumerator CloneIcon(int count)
     {
         if (count > 10)

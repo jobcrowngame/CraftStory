@@ -43,7 +43,7 @@ public partial class NWMng : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.ProductionURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.TestURL))
         {
             yield return www.SendWebRequest();
 
@@ -789,6 +789,45 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.GetItemRelationData));
     }
 
+    /// <summary>
+    /// ミッション情報をゲット
+    /// </summary>
+    public void GetMissionInfo(Action<JsonData> rp)
+    {
+        var data = new NWData();
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetMissionInfo));
+    }
+
+    /// <summary>
+    /// ミッションをクリア
+    /// </summary>
+    /// /// <param name="missionId">ミッションID</param>
+    /// <param name="missionType">ミッションタイプ</param>
+    public void ClearMission(Action<JsonData> rp, int missionId, int missionType)
+    {
+        var data = new NWData();
+        data.Add("missionId", missionId);
+        data.Add("missionType", missionType);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.ClearMission));
+    }
+
+    /// <summary>
+    /// ミッションボーナスをもらう
+    /// </summary>
+    /// <param name="missionId">ミッションID</param>
+    /// <param name="missionType">ミッションタイプ</param>
+    public void GetMissionBonus(Action<JsonData> rp, int missionId, int missionType)
+    {
+        var data = new NWData();
+        data.Add("missionId", missionId);
+        data.Add("missionType", missionType);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetMissionBonus));
+    }
+
+
 
 
 
@@ -881,6 +920,9 @@ public partial class NWMng : MonoBehaviour
         ExchangePoints,
         GachaAddBonusAgain,
         GetItemRelationData,
+        GetMissionInfo,
+        ClearMission,
+        GetMissionBonus,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

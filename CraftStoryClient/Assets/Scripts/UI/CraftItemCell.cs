@@ -20,6 +20,7 @@ public class CraftItemCell : UIBase
     Text itemName;
     Text itemCount;
     Image Icon;
+    Image RecommendationIcon;
     Button clickBtn;
     Transform selected;
 
@@ -28,9 +29,12 @@ public class CraftItemCell : UIBase
         itemName = FindChiled<Text>("Name");
         itemCount = FindChiled<Text>("Count");
         Icon = FindChiled<Image>("Icon");
+        RecommendationIcon = FindChiled<Image>("RecommendationIcon");
         selected = FindChiled("Select");
 
         clickBtn = transform.GetComponent<Button>();
+
+        RecommendationIcon.gameObject.SetActive(false);
     }
 
     public void Init(Craft config)
@@ -46,6 +50,11 @@ public class CraftItemCell : UIBase
             CraftLG.E.SelectCraftItemCell = this;
             CraftLG.E.UI.RefreshCost(); 
         });
+
+        if (config.Recommendation == 1)
+        {
+            RecommendationIcon.gameObject.SetActive(true);
+        }
     }
 
     private void IsSelected(bool b)

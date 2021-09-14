@@ -116,4 +116,14 @@ public partial class NWMng
             if (callBack != null) callBack();
         }, itemGuid);
     }
+
+    /// <summary>
+    /// ミッションクリア
+    /// </summary>
+    /// <param name="missionId">ミッションID</param>
+    /// <param name="missionType">ミッションタイプ</param>
+    public void ClearMission(int missionId, int missionType) 
+    {
+        ClearMission(null, missionId, missionType);
+    }
 }

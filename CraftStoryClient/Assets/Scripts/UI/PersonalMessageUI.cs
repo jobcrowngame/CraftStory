@@ -26,9 +26,6 @@ public class PersonalMessageUI : UIBase
         title = FindChiled<TitleUI>("Title");
         title.SetTitle("プロフィール");
         title.SetOnClose(() => { Close(); GuideLG.E.Next(); });
-        title.EnActiveCoin(1);
-        title.EnActiveCoin(2);
-        title.EnActiveCoin(3);
 
         ChangeBtn.onClick.AddListener(() => 
         {

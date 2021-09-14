@@ -21,9 +21,6 @@ public class FriendUI : UIBase
 
         Title.SetTitle("フレンド");
         Title.SetOnClose(Close);
-        Title.EnActiveCoin(1);
-        Title.EnActiveCoin(2);
-        Title.EnActiveCoin(3);
 
         toggles.Init();
         toggles.SetBtnText(0, "フォロー");

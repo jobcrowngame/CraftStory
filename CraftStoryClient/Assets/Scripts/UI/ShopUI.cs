@@ -47,6 +47,9 @@ public partial class ShopUI : UIBase
         title = FindChiled<TitleUI>("Title");
         title.SetTitle("ショップ");
         title.SetOnClose(() => { Close(); GuideLG.E.Next(); });
+        title.ShowCoin(1);
+        title.ShowCoin(2);
+        title.ShowCoin(3);
 
         var urlBtn01 = FindChiled<Button>("UrlBtn1", UrlBtns);
         urlBtn01.onClick.AddListener(() => { Application.OpenURL(PublicPar.UrlBtn1); });

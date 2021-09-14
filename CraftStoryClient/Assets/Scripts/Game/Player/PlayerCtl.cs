@@ -191,6 +191,7 @@ public class PlayerCtl : MonoBehaviour
                     case ItemType.Workbench:
                     case ItemType.Kamado:
                     case ItemType.Door:
+                    case ItemType.Mission:
                         Lock = true;
                         var direction = CommonFunction.GetCreateEntityDirection(pos);
                         CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), direction);
@@ -314,6 +315,9 @@ public class PlayerCtl : MonoBehaviour
         }
 
         WorldMng.E.MapCtl.CreateEntity(entityId, pos, dType);
+
+        // ブロックやオブジェクトを置くミッション
+        NWMng.E.ClearMission(4, 1);
     }
 
     /// <summary>

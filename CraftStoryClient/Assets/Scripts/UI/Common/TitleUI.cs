@@ -33,6 +33,10 @@ public class TitleUI : UIBase
         Coin2Image.sprite = ReadResources<Sprite>(ConfigMng.E.Item[9001].IconResourcesPath);
         Coin3.text = "0";
         Coin3Image.sprite = ReadResources<Sprite>(ConfigMng.E.Item[9002].IconResourcesPath);
+
+        Coin1.gameObject.SetActive(false);
+        Coin2.gameObject.SetActive(false);
+        Coin3.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -64,22 +68,13 @@ public class TitleUI : UIBase
     }
 
     /// <summary>
-    /// コインを隠れる
+    /// コインを表し
     /// </summary>
-    /// <param name="index"></param>
-    public void EnActiveCoin(int index)
+    /// <param name="index">コインインデックス</param>
+    public void ShowCoin(int index)
     {
-        if (index == 1) Coin1.gameObject.SetActive(false);
-        if (index == 2) Coin2.gameObject.SetActive(false);
-        if (index == 3) Coin3.gameObject.SetActive(false);
-    }
-
-    /// <summary>
-    /// Closeボタンのenabled設定
-    /// </summary>
-    /// <param name="b"></param>
-    public void CloseBtnEnable(bool b)
-    {
-        CloseBtn.enabled = b;
+        if (index == 1) Coin1.gameObject.SetActive(true);
+        if (index == 2) Coin2.gameObject.SetActive(true);
+        if (index == 3) Coin3.gameObject.SetActive(true);
     }
 }

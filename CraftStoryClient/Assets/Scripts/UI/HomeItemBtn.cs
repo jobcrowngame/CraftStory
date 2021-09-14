@@ -102,6 +102,11 @@ public enum ItemType
     BuilderPencil = 50,
     NullBlueprint = 51,
     Blueprint = 52,
+
+    /// <summary>
+    /// 掲示板
+    /// </summary>
+    Mission = 53,
     Workbench = 1000,
     Kamado = 1001,
     Door = 2000,

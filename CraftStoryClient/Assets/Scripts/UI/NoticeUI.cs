@@ -14,9 +14,6 @@ public class NoticeUI : UIBase
 
         title.SetTitle("お知らせ");
         title.SetOnClose(() => { Close(); });
-        title.EnActiveCoin(1);
-        title.EnActiveCoin(2);
-        title.EnActiveCoin(3);
     }
 
     public override void Open()

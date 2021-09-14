@@ -17,9 +17,6 @@ public class FriendSearchUI : UIBase
 
         Title.SetTitle("フレンド検索");
         Title.SetOnClose(Close);
-        Title.EnActiveCoin(1);
-        Title.EnActiveCoin(2);
-        Title.EnActiveCoin(3);
 
         UserId.text = "あなたのアカウント: " + DataMng.E.UserData.Account;
 

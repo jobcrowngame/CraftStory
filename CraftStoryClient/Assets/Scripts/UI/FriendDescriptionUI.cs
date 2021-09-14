@@ -17,9 +17,6 @@ public class FriendDescriptionUI : UIBase
 
         Title.SetTitle("ƒtƒŒƒ“ƒh");
         Title.SetOnClose(Close);
-        Title.EnActiveCoin(1);
-        Title.EnActiveCoin(2);
-        Title.EnActiveCoin(3);
 
         FollowBtn.onClick.AddListener(()=> 
         {

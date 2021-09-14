@@ -17,9 +17,6 @@ public class EmailUI : UIBase
 
         title.SetTitle("メッセージ");
         title.SetOnClose(() => { Close(); });
-        title.EnActiveCoin(1);
-        title.EnActiveCoin(2);
-        title.EnActiveCoin(3);
 
         LeftBtn.onClick.AddListener(EmailLG.E.OnClickLeftBtn);
         RightBtn.onClick.AddListener(EmailLG.E.OnClickRightBtn);

@@ -16,7 +16,7 @@ public class EntityTransferGate : EntityBase
         var characterCtl = other.GetComponent<CharacterController>();
         if (characterCtl != null)
         {
-            GiftBoxUI ui = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox);
+            var ui = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox);
             ui.AddBonus(AdventureCtl.E.BonusList);
         }
     }

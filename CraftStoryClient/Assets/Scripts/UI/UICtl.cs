@@ -214,6 +214,7 @@ public class UICtl : Single<UICtl>
             case UIType.GachaVerification: return "Prefabs/UI/GachaVerification";
             case UIType.GachaAddBonus: return "Prefabs/UI/GachaAddBonus";
             case UIType.ExchangePoint: return "Prefabs/UI/ExchangePoint";
+            case UIType.Mission: return "Prefabs/UI/Mission";
 
             default: Logger.Error("not find UIType " + ui); return "";
         }
@@ -288,4 +289,5 @@ public enum UIType
     GachaVerification,
     GachaAddBonus,
     ExchangePoint,
+    Mission,
 }

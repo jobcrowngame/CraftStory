@@ -453,7 +453,7 @@ public class MapCtl
         if (!CheckCreatePos(mapData, newPos))
         {
             // 生成できない座標の場合、５回ループして新しいランダム座標を取得
-            for (int k = 0; k < 5; k++)
+            for (int k = 0; k < 100; k++)
             {
                 posX = UnityEngine.Random.Range(0, mapData.SizeX);
                 posZ = UnityEngine.Random.Range(0, mapData.SizeZ);
@@ -484,6 +484,11 @@ public class MapCtl
     private static bool CheckCreatePos(MapData mapData, Vector3 pos)
     {
         Vector3 downEntityPos = new Vector3(pos.x, pos.y - 1, pos.z);
+        if (IsOutRange(mapData, Vector3Int.CeilToInt(downEntityPos))){
+            return false;
+        }
+
+        Debug.Log(downEntityPos);
         var downEntity = mapData.Map[(int)downEntityPos.x, (int)downEntityPos.y, (int)downEntityPos.z];
         return ConfigMng.E.Entity[downEntity.entityID].CanPut == 1;
     }

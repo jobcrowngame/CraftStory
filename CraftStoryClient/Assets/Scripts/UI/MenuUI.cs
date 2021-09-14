@@ -90,9 +90,6 @@ public class MenuUI : UIBase
     {
         Title.SetTitle("メニュー");
         Title.SetOnClose(() => { Close(); });
-        Title.EnActiveCoin(1);
-        Title.EnActiveCoin(2);
-        Title.EnActiveCoin(3);
 
 
         for (int i = 0; i < Banner.content.childCount; i++)
@@ -108,6 +105,9 @@ public class MenuUI : UIBase
 
         AdventureBtn.onClick.AddListener(() =>
         {
+            // 冒険入るのミッション
+            NWMng.E.ClearMission(2, 1);
+
             CommonFunction.GoToNextScene(1000);
             Close();
         });

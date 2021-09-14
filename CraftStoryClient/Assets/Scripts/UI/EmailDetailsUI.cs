@@ -28,10 +28,7 @@ public class EmailDetailsUI : UIBase
         BG.sizeDelta = string.IsNullOrEmpty(cell.Data.related_data) ? new Vector2(500, 310) : new Vector2(500, 400);
 
         Title.SetTitle("メッセージ");
-        Title.SetOnClose(() => { Close(); });
-        Title.EnActiveCoin(1);
-        Title.EnActiveCoin(2);
-        Title.EnActiveCoin(3);
+        Title.SetOnClose(Close);
 
         Message.text = cell.Data.message;
         Time.text = cell.Data.created_at.ToString("yyyy/MM/dd");

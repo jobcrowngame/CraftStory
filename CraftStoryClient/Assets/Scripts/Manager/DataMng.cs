@@ -91,10 +91,14 @@ public class DataMng : Single<DataMng>
     {
         uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.UserDataName);
 
+        //uData = new UserData();
+        //uData.Account = "r2YP56GDQxw9";
+        //uData.UserPW = "qR3NpqWxkIPP";
+
         var mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.MapDataName);
         if (!string.IsNullOrEmpty(mapData)) mHomeData = new MapData(mapData);
 
-        if (mHomeData == null) mHomeData = WorldMng.E.MapCtl.CreateMapData(100); ;
+        //if (mHomeData == null) mHomeData = WorldMng.E.MapCtl.CreateMapData(100); ;
 
         return true;
     }

@@ -29,9 +29,6 @@ public class GachaVerificationUI : UIBase
 
         Title.SetTitle("ガチャ");
         Title.SetOnClose(() => { Close(); });
-        Title.EnActiveCoin(1);
-        Title.EnActiveCoin(2);
-        Title.EnActiveCoin(3);
 
         OkBtn.onClick.AddListener(() => 
         {

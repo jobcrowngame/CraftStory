@@ -194,6 +194,10 @@ public class MapData
                     entity = CommonFunction.Instantiate<EntityFlowoer>(config.Resources, parent, pos);
                     break;
 
+                case EntityType.Mission:
+                    entity = CommonFunction.Instantiate<EntityMission>(config.Resources, parent, pos);
+                    break;
+
                 default: Logger.Error("not find entityType "+ (EntityType)config.Type); break;
             }
 

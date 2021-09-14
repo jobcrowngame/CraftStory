@@ -84,6 +84,11 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                     {
                         DataMng.E.SetMapData(new MapData((string)rp["homedata"]), MapType.Home);
                     }
+                    else
+                    {
+                        DataMng.E.SetMapData(WorldMng.E.MapCtl.CreateMapData(100), MapType.Home);
+                    }
+
                     ui.LoginResponse();
                 });
             }

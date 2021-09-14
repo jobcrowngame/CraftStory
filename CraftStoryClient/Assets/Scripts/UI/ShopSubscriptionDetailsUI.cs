@@ -40,9 +40,6 @@ public class ShopSubscriptionDetailsUI : UIBase
 
         Title.SetTitle("クラパス");
         Title.SetOnClose(() => { Close(); });
-        Title.EnActiveCoin(1);
-        Title.EnActiveCoin(2);
-        Title.EnActiveCoin(3);
 
         var config = ConfigMng.E.Shop[mData.shopId];
         Price.text = config.BtnText;

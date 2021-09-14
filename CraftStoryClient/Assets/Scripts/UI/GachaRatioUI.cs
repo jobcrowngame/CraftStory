@@ -20,9 +20,6 @@ public class GachaRatioUI : UIBase
 
         Title.SetTitle("ガチャ提供割合");
         Title.SetOnClose(() => { Close(); });
-        Title.EnActiveCoin(1);
-        Title.EnActiveCoin(2);
-        Title.EnActiveCoin(3);
     }
     public void Set(int id)
     {
