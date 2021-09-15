@@ -13,28 +13,30 @@ public class ExchangePointUI : UIBase
     Button LinkBtn1 { get => FindChiled<Button>("LinkBtn (1)"); }
     Button LinkBtn2 { get => FindChiled<Button>("LinkBtn (2)"); }
     Button SubmitBtn { get => FindChiled<Button>("SubmitBtn"); }
+    Button OkBtn { get => FindChiled<Button>("OkBtn"); }
+    Button CancelBtn { get => FindChiled<Button>("CancelBtn"); }
 
     const string exchangeText = @"{0}円分のギフト券を
 お送りします
 ";
 
-    const string echangeStartTitle = "ポイント交換申請の内容確認";
-    const string exchangeStartText = @"締切日後、５営業日以内に以下メールアドレス宛へ
-Amazonギフト券をお送りいたします。
+//    const string echangeStartTitle = "ポイント交換申請の内容確認";
+//    const string exchangeStartText = @"締切日後、５営業日以内に以下メールアドレス宛へ
+//Amazonギフト券をお送りいたします。
 
-・メールアドレス
-{0}
+//・メールアドレス
+//{0}
 
-・交換ポイント
-{1}
+//・交換ポイント
+//{1}
 
-・Amazonギフト券{2}円分をお送りします。
+//・Amazonギフト券{2}円分をお送りします。
 
-毎月5日と20日が締め切り日です。
-※申請状況により、
-お送りする日にちが前後する場合がございます。
-何卒ご理解、ご了承の程お願いいたします。
-";
+//毎月5日と20日が締め切り日です。
+//※申請状況により、
+//お送りする日にちが前後する場合がございます。
+//何卒ご理解、ご了承の程お願いいたします。
+//";
 
     const string echangeOverTitle = "ポイント交換申請の受付完了";
     const string exchangeOverText = @"ポイント交換申請を受付けました。
@@ -58,7 +60,6 @@ Amazonギフト券をお送りいたします。
         base.Init();
         ExchangePointLG.E.Init(this);
 
-        Title.SetTitle("ポイント交換申請");
         Title.SetOnClose(() => { Close(); });
 
         MailInput.onEndEdit.AddListener((msg)=> 
@@ -78,11 +79,16 @@ Amazonギフト券をお送りいたします。
         LinkBtn1.onClick.AddListener(() => { Application.OpenURL("https://www.craftstory.jp/termsofuse/"); });
         LinkBtn2.onClick.AddListener(() => { Application.OpenURL("https://www.craftstory.jp/privacypolicy/"); });
         SubmitBtn.onClick.AddListener(Submit);
+
+        OkBtn.onClick.AddListener(OnClickOk);
+        CancelBtn.onClick.AddListener(InputMode);
     }
 
     public override void Open()
     {
         base.Open();
+
+        InputMode();
 
         MailInputCheck.gameObject.SetActive(false);
         EnableSubmitBtn(false);
@@ -96,6 +102,35 @@ Amazonギフト券をお送りいたします。
         MyPointCount.text = point;
         SetPoint(1000);
         OnPointInputValueChange();
+    }
+
+    private void InputMode()
+    {
+        Title.SetTitle("ポイント交換申請");
+
+        MailInput.interactable = true;
+        MailInput.GetComponent<Image>().color = Color.white;
+
+        PointInput.interactable = true;
+        PointInput.GetComponent<Image>().color = Color.white;
+
+        SubmitBtn.gameObject.SetActive(true);
+        OkBtn.gameObject.SetActive(false);
+        CancelBtn.gameObject.SetActive(false);
+    }
+    private void CheckMode()
+    {
+        Title.SetTitle("ポイント交換確認");
+
+        MailInput.interactable = false;
+        MailInput.GetComponent<Image>().color = Color.grey;
+
+        PointInput.interactable = false;
+        PointInput.GetComponent<Image>().color = Color.grey;
+
+        SubmitBtn.gameObject.SetActive(false);
+        OkBtn.gameObject.SetActive(true);
+        CancelBtn.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -134,29 +169,26 @@ Amazonギフト券をお送りいたします。
             return;
         }
 
-        //Close();
-
+        CheckMode();
+    }
+    private void OnClickOk()
+    {
         int point = int.Parse(PointInput.text);
         int money = (int)(point * 0.3f);
 
-        var hintbox = CommonFunction.ShowHintBox(echangeStartTitle, "", string.Format(exchangeStartText, MailInput.text, point.ToString("#,0"), money.ToString("#,0")), ()=>
+        NWMng.E.ExchangePoints((rp) =>
         {
-            NWMng.E.ExchangePoints((rp) =>
-            {
-                DataMng.E.RuntimeData.Coin3 -= int.Parse(PointInput.text);
-                Close();
+            DataMng.E.RuntimeData.Coin3 -= int.Parse(PointInput.text);
+            Close();
 
-                int guid = (int)rp["guid"];
-                CommonFunction.ShowHintBox(echangeOverTitle, "", string.Format(exchangeOverText, guid, MailInput.text),
-                    () => { Close(); }, null);
+            int guid = (int)rp["guid"];
+            CommonFunction.ShowHintBox(echangeOverTitle, "", string.Format(exchangeOverText, guid, MailInput.text),
+                () => { Close(); }, null);
 
-                DataMng.E.RuntimeData.NewEmailCount++;
-                DataMng.E.RuntimeData.Email = MailInput.text;
-                HomeLG.E.UI.RefreshRedPoint();
-            }, point, money, MailInput.text);
-        }, 
-        ()=> { UICtl.E.OpenUI<ExchangePointUI>(UIType.ExchangePoint); });
-        hintbox.ShowMask();
+            DataMng.E.RuntimeData.NewEmailCount++;
+            DataMng.E.RuntimeData.Email = MailInput.text;
+            HomeLG.E.UI.RefreshRedPoint();
+        }, point, money, MailInput.text);
     }
 
     /// <summary>
