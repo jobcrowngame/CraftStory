@@ -1,4 +1,4 @@
-using JsonConfigData;
+ï»¿using JsonConfigData;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,23 +60,23 @@ public class CraftUI : UIBase
     }
 
     /// <summary>
-    /// ƒNƒ‰ƒtƒgƒTƒu‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
+    /// ã‚¯ãƒ©ãƒ•ãƒˆã‚µãƒ–ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
     /// </summary>
     private void RefreshCraftCellList()
     {
         ClearCell(craftItemParent);
 
-        // ‚¨‚·‚·‚ßƒŠƒXƒg
+        // ãŠã™ã™ã‚ãƒªã‚¹ãƒˆ
         List<Craft> Recommendation = new List<Craft>();
 
-        // ‘¼‚ÌƒŠƒXƒg
+        // ä»–ã®ãƒªã‚¹ãƒˆ
         List<Craft> Order = new List<Craft>();
 
         foreach (Craft item in ConfigMng.E.Craft.Values)
         {
             if (item.Type == (int)entityType)
             {
-                // ‚¨‚·‚·‚ß‚Ìê‡
+                // ãŠã™ã™ã‚ã®å ´åˆ
                 if (item.Recommendation == 1)
                 {
                     Recommendation.Add(item);
@@ -90,13 +90,13 @@ public class CraftUI : UIBase
             }
         }
 
-        // ‚¨‚·‚·‚ß‚ğƒCƒ“ƒXƒ^ƒ“ƒX
+        // ãŠã™ã™ã‚ã‚’ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
         foreach (var item in Recommendation)
         {
             AddCell(item);
         }
 
-        // ‘¼‚ğƒCƒ“ƒXƒ^ƒ“ƒX
+        // ä»–ã‚’ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
         foreach (var item in Order)
         {
             AddCell(item);
@@ -104,7 +104,7 @@ public class CraftUI : UIBase
     }
 
     /// <summary>
-    /// ƒTƒu‚ğ’Ç‰Á
+    /// ã‚µãƒ–ã‚’è¿½åŠ 
     /// </summary>
     /// <param name="config"></param>
     private void AddCell(Craft config)
@@ -117,7 +117,7 @@ public class CraftUI : UIBase
     }
 
     /// <summary>
-    /// ƒNƒ‰ƒtƒgŠJnƒCƒxƒ“ƒg
+    /// ã‚¯ãƒ©ãƒ•ãƒˆé–‹å§‹ã‚¤ãƒ™ãƒ³ãƒˆ
     /// </summary>
     private void OnCraft()
     {
@@ -136,8 +136,8 @@ public class CraftUI : UIBase
         {
             NWMng.E.Craft((rp) => 
             {
-                // ƒNƒ‰ƒtƒgƒ~ƒbƒVƒ‡ƒ“
-                NWMng.E.ClearMission(3, 1);
+                // ã‚¯ãƒ©ãƒ•ãƒˆãƒŸãƒƒã‚·ãƒ§ãƒ³
+                NWMng.E.ClearMission(3, 1, CraftLG.E.SelectCount);
 
                 NWMng.E.GetItems(() =>
                 {
@@ -152,7 +152,7 @@ public class CraftUI : UIBase
     }
 
     /// <summary>
-    /// ƒRƒXƒgƒŠƒXƒg‚ğXV
+    /// ã‚³ã‚¹ãƒˆãƒªã‚¹ãƒˆã‚’æ›´æ–°
     /// </summary>
     public void RefreshCost()
     {
@@ -173,10 +173,10 @@ public class CraftUI : UIBase
     }
 
     /// <summary>
-    /// ì¬‚Å‚«‚é‚©‚Ìƒ`ƒFƒbƒN
+    /// ä½œæˆã§ãã‚‹ã‹ã®ãƒã‚§ãƒƒã‚¯
     /// </summary>
-    /// <param name="config">İ’èƒtƒ@ƒCƒ‹</param>
-    /// <param name="count">ì¬”</param>
+    /// <param name="config">è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«</param>
+    /// <param name="count">ä½œæˆæ•°</param>
     /// <returns></returns>
     private bool CanCreate(Craft config, int count)
     {
@@ -194,7 +194,7 @@ public class CraftUI : UIBase
     }
 
     /// <summary>
-    /// AnimationIcon‚ğƒRƒs[
+    /// AnimationIconã‚’ã‚³ãƒ”ãƒ¼
     /// </summary>
     /// <param name="count"></param>
     /// <returns></returns>

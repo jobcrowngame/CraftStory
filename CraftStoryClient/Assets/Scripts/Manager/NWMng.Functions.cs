@@ -122,8 +122,8 @@ public partial class NWMng
     /// </summary>
     /// <param name="missionId">ミッションID</param>
     /// <param name="missionType">ミッションタイプ</param>
-    public void ClearMission(int missionId, int missionType) 
+    public void ClearMission(int missionId, int missionType, int count = 1) 
     {
-        ClearMission(null, missionId, missionType);
+        ClearMission(null, missionId, missionType, count);
     }
 }

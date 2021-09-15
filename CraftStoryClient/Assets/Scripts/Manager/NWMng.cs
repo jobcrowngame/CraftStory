@@ -804,11 +804,12 @@ public partial class NWMng : MonoBehaviour
     /// </summary>
     /// /// <param name="missionId">ミッションID</param>
     /// <param name="missionType">ミッションタイプ</param>
-    public void ClearMission(Action<JsonData> rp, int missionId, int missionType)
+    public void ClearMission(Action<JsonData> rp, int missionId, int missionType, int count = 1)
     {
         var data = new NWData();
         data.Add("missionId", missionId);
         data.Add("missionType", missionType);
+        data.Add("count", count);
 
         StartCoroutine(HttpRequest(rp, data, CMD.ClearMission));
     }
