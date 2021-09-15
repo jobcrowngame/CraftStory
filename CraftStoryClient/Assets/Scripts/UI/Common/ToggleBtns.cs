@@ -53,6 +53,11 @@ public class ToggleBtns : UIBase
         this.callback = callback;
     }
 
+    /// <summary>
+    /// ボタンテキスト
+    /// </summary>
+    /// <param name="index">インデックス</param>
+    /// <param name="msg">テキスト</param>
     public void SetBtnText(int index, string msg)
     {
         if (cells != null && cells.Length > index)
@@ -60,11 +65,28 @@ public class ToggleBtns : UIBase
             CommonFunction.FindChiledByName<Text>(cells[index].transform, "Text").text = msg;
         }
     }
+
+    /// <summary>
+    /// アクティブするインデックス
+    /// </summary>
+    /// <param name="index">インデックス</param>
     public void SetValue(int index)
     {
         if (cells.Length > index)
         {
             cells[index].isOn = true;
+        }
+    }
+
+    /// <summary>
+    /// インアクティブ
+    /// </summary>
+    /// <param name="index">インデックス</param>
+    public void Enable(int index)
+    {
+        if (cells.Length > index)
+        {
+            cells[index].Enable();
         }
     }
 }

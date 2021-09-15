@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -27,5 +28,14 @@ public class MyToggle : Toggle
                     toggleBtns.OnValueChange(Index);
             });
         }
+    }
+
+    /// <summary>
+    /// インアクティブ
+    /// </summary>
+    public void Enable()
+    {
+        interactable = false;
+        CommonFunction.FindChiledByName<Image>(transform, "Background").color = Color.grey;
     }
 }

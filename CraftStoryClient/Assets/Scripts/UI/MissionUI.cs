@@ -1,4 +1,4 @@
-using JsonConfigData;
+ï»¿using JsonConfigData;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,13 +14,11 @@ public class MissionUI : UIBase
 
         MissionLG.E.Init(this);
 
-        Title.SetTitle("ƒ~ƒbƒVƒ‡ƒ“");
+        Title.SetTitle("ãƒŸãƒƒã‚·ãƒ§ãƒ³");
         Title.SetOnClose(Close);
 
         ToggleBtns.Init();
-        //ToggleBtns.SetBtnText(0, "ƒfƒBƒŠ[");
-        //ToggleBtns.SetBtnText(1, "ƒƒCƒ“");
-        //ToggleBtns.SetBtnText(2, "ŠúŠÔŒÀ’è");
+        ToggleBtns.Enable(2);
         ToggleBtns.OnValueChangeAddListener((index) => 
         {
             MissionLG.E.UType = (MissionLG.UIType)index;
@@ -64,19 +62,19 @@ public class MissionUI : UIBase
             }
         }
 
-        // ’B¬‚µ‚½ƒ~ƒbƒVƒ‡ƒ“ƒTƒu‚ğ’Ç‰Á
+        // é”æˆã—ãŸãƒŸãƒƒã‚·ãƒ§ãƒ³ã‚µãƒ–ã‚’è¿½åŠ 
         foreach (var item in overList)
         {
             AddCell(item);
         }
 
-        // i‚ñ‚Å‚¢‚éƒ~ƒbƒVƒ‡ƒ“ƒTƒu‚ğ’Ç‰Á
+        // é€²ã‚“ã§ã„ã‚‹ãƒŸãƒƒã‚·ãƒ§ãƒ³ã‚µãƒ–ã‚’è¿½åŠ 
         foreach (var item in orderList)
         {
             AddCell(item);
         }
 
-        // Š®¬‚µ‚½ƒ~ƒbƒVƒ‡ƒ“ƒTƒu‚ğ’Ç‰Á
+        // å®Œæˆã—ãŸãƒŸãƒƒã‚·ãƒ§ãƒ³ã‚µãƒ–ã‚’è¿½åŠ 
         foreach (var item in endList)
         {
             AddCell(item);
@@ -92,7 +90,7 @@ public class MissionUI : UIBase
     }
 
     /// <summary>
-    /// ƒ~ƒbƒVƒ‡ƒ“‚Ìó‘Ô‚ğƒ`ƒFƒbƒN
+    /// ãƒŸãƒƒã‚·ãƒ§ãƒ³ã®çŠ¶æ…‹ã‚’ãƒã‚§ãƒƒã‚¯
     /// </summary>
     /// <param name="mission"></param>
     /// <param name="celldata"></param>
