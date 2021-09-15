@@ -20,8 +20,6 @@ public class EntityMission : EntityBase
     {
         base.OnClick();
 
-        Logger.Warning("Click BulletinBoard");
-
         UICtl.E.OpenUI<MissionUI>(UIType.Mission);
     }
 }

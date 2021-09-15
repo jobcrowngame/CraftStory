@@ -149,6 +149,7 @@
     <Compile Include="Assets\Scripts\Test\Monster\PlayerController2.cs" />
     <Compile Include="Assets\Scripts\Manager\Logger.cs" />
     <Compile Include="Assets\Scripts\Test\TestJson.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\EntityMission.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Resource.cs" />
     <Compile Include="Assets\Scripts\UI\PersonalMessageLG.cs" />
     <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Assets\Scripts\UI\ShopMyShopItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemLG.cs" />
     <Compile Include="Assets\Scripts\Manager\EffectMng.cs" />
+    <Compile Include="Assets\Scripts\UI\MissionLG.cs" />
     <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeCell.cs" />
     <Compile Include="Assets\Scripts\Manager\TimeZoneMng.cs" />
@@ -209,6 +211,7 @@
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsLG.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintPreviewUI.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsUI.cs" />
+    <Compile Include="Assets\Scripts\UI\MissionUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
     <Compile Include="Assets\Scripts\UI\RouletteLG.cs" />
     <Compile Include="Assets\Scripts\Data\MyShopData.cs" />
@@ -267,10 +270,12 @@
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityTorch.cs" />
+    <Compile Include="Assets\Scripts\UI\MissionCell.cs" />
     <Compile Include="Assets\Scripts\Test\Test3.cs" />
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\RandomBonus.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Mission.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusLG.cs" />
     <Compile Include="Assets\Scripts\Test\Monster\DogController.cs" />
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectChanger.cs" />
@@ -278,11 +283,8 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\EntityMission.cs" />
-    <Compile Include="Assets\Scripts\UI\MissionUI.cs" />
-    <Compile Include="Assets\Scripts\UI\MissionLG.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Mission.cs" />
-    <Compile Include="Assets\Scripts\UI\MissionCell.cs" />
+    <Compile Include="Assets\Scripts\UI\MissionChatUI.cs" />
+    <Compile Include="Assets\Scripts\UI\MissionChatLG.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
@@ -516,6 +518,9 @@
     <Reference Include="AWSSDK.S3">
       <HintPath>Assets\Plugins\Lib\AWSSDK.S3.dll</HintPath>
     </Reference>
+    <Reference Include="AWSSDK.Core">
+      <HintPath>Assets\Plugins\Lib\AWSSDK.Core.dll</HintPath>
+    </Reference>
     <Reference Include="GoogleMobileAds.Common">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Common.dll</HintPath>
     </Reference>
@@ -527,9 +532,6 @@
     </Reference>
     <Reference Include="GoogleMobileAds.Core">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="AWSSDK.Core">
-      <HintPath>Assets\Plugins\Lib\AWSSDK.Core.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

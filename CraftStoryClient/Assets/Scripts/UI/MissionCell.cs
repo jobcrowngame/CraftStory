@@ -56,7 +56,7 @@ public class MissionCell : UIBase
             // 達成するチュートリアルに遷移
             else
             {
-                Logger.Warning("go to Guide");
+                UICtl.E.OpenUI<MissionChatUI>(UIType.MissionChat, UIOpenType.None, data.mission.ID);
             }
         });
     }

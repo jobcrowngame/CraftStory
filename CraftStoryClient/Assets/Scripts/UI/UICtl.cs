@@ -215,7 +215,8 @@ public class UICtl : Single<UICtl>
             case UIType.GachaAddBonus: return "Prefabs/UI/GachaAddBonus";
             case UIType.ExchangePoint: return "Prefabs/UI/ExchangePoint";
             case UIType.Mission: return "Prefabs/UI/Mission";
-
+            case UIType.MissionChat: return "Prefabs/UI/MissionChat";
+                
             default: Logger.Error("not find UIType " + ui); return "";
         }
     }
@@ -290,4 +291,5 @@ public enum UIType
     GachaAddBonus,
     ExchangePoint,
     Mission,
+    MissionChat,
 }
