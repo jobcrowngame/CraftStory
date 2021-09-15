@@ -114,6 +114,9 @@ Amazonギフト券をお送りいたします。
         PointInput.interactable = true;
         PointInput.GetComponent<Image>().color = Color.white;
 
+        Toggle.interactable = true;
+        FindChiled<Image>("Background", Toggle.transform).color = Color.white;
+
         SubmitBtn.gameObject.SetActive(true);
         OkBtn.gameObject.SetActive(false);
         CancelBtn.gameObject.SetActive(false);
@@ -127,6 +130,9 @@ Amazonギフト券をお送りいたします。
 
         PointInput.interactable = false;
         PointInput.GetComponent<Image>().color = Color.grey;
+
+        Toggle.interactable = false;
+        FindChiled<Image>("Background", Toggle.transform).color = Color.gray;
 
         SubmitBtn.gameObject.SetActive(false);
         OkBtn.gameObject.SetActive(true);
