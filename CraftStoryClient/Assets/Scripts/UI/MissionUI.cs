@@ -5,7 +5,7 @@ using UnityEngine;
 public class MissionUI : UIBase
 {
     TitleUI Title { get => FindChiled<TitleUI>("Title"); }
-    ToggleBtns ToggleBtns { get => FindChiled<ToggleBtns>("ToggleBtns"); }
+    MyToggleGroupCtl ToggleBtns { get => FindChiled<MyToggleGroupCtl>("ToggleBtns"); }
     Transform Parent { get => FindChiled("Content"); }
 
     public override void Init()

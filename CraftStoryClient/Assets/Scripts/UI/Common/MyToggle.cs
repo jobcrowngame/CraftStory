@@ -6,6 +6,9 @@ using UnityEngine.UI;
 /// </summary>
 public class MyToggle : Toggle
 {
+    Image On { get => CommonFunction.FindChiledByName<Image>(transform, "Checkmark"); }
+    Image Off { get => CommonFunction.FindChiledByName<Image>(transform, "Background"); }
+
     /// <summary>
     /// インデックス
     /// </summary>
@@ -14,13 +17,13 @@ public class MyToggle : Toggle
     /// <summary>
     /// ボタンサブ親
     /// </summary>
-    public ToggleBtns toggleBtns { get; set; }
+    public MyToggleGroupCtl toggleBtns { get; set; }
 
     protected override void Awake()
     {
         if (group != null)
         {
-            toggleBtns = group.GetComponent<ToggleBtns>();
+            toggleBtns = group.GetComponent<MyToggleGroupCtl>();
 
             onValueChanged.AddListener((b) => 
             {
@@ -37,5 +40,16 @@ public class MyToggle : Toggle
     {
         interactable = false;
         CommonFunction.FindChiledByName<Image>(transform, "Background").color = Color.grey;
+    }
+
+    /// <summary>
+    /// ボタン画像設定
+    /// </summary>
+    /// <param name="on"></param>
+    /// <param name="off"></param>
+    public void SetToggleImage(string on, string off)
+    {
+        On.sprite = ResourcesMng.E.ReadResources<Sprite>(on);
+        Off.sprite = ResourcesMng.E.ReadResources<Sprite>(off);
     }
 }

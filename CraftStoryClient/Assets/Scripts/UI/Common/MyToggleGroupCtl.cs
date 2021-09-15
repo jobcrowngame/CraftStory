@@ -4,7 +4,7 @@ using UnityEngine.UI;
 /// <summary>
 /// ボタングループ
 /// </summary>
-public class ToggleBtns : UIBase
+public class MyToggleGroupCtl : UIBase
 {
     /// <summary>
     /// サブリスト
@@ -87,6 +87,19 @@ public class ToggleBtns : UIBase
         if (cells.Length > index)
         {
             cells[index].Enable();
+        }
+    }
+
+    /// <summary>
+    /// ボタン画像設定
+    /// </summary>
+    /// <param name="on"></param>
+    /// <param name="off"></param>
+    public void SetToggleImage(int index, string on, string off)
+    {
+        if (cells.Length > index)
+        {
+            cells[index].SetToggleImage(on, off);
         }
     }
 }

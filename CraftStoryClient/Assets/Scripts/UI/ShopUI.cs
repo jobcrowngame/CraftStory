@@ -9,7 +9,8 @@ public partial class ShopUI : UIBase
     ShopItemCell[] chargeBtns;
     List<ShopMyShopItemCell> myshopItems = new List<ShopMyShopItemCell>();
 
-    Text Title2 { get => FindChiled<Text>("ItemsTitle"); }
+    Transform SubTitle { get => FindChiled("SubTitle"); }
+    Text SubTitleText { get => FindChiled<Text>("SubTitleText"); }
 
     Transform UrlBtns { get => FindChiled("UrlBtns"); }
     Transform ChageWind { get => FindChiled("ChargeWind"); }
@@ -135,9 +136,9 @@ public partial class ShopUI : UIBase
         ShopLG.E.GetSubscriptions();
     }
 
-    public void SetTitle2(string msg)
+    public void SetSubTitleText(string msg)
     {
-        Title2.text = msg;
+        SubTitleText.text = msg;
     }
     public void SetPageText(string v)
     {
@@ -152,10 +153,13 @@ public partial class ShopUI : UIBase
             || uiType == ShopType.Point);
         Blueprint2Wind.gameObject.SetActive(uiType == ShopType.Blueprint2);
         SubscriptionWind.gameObject.SetActive(uiType == ShopType.Subscription);
-        Gacha.gameObject.SetActive(uiType == ShopType.Gacha);
 
         UrlBtns.gameObject.SetActive(uiType == ShopType.Charge
            || uiType == ShopType.Subscription);
+
+        // ガチャ
+        Gacha.gameObject.SetActive(uiType == ShopType.Gacha);
+        SubTitle.gameObject.SetActive(uiType != ShopType.Gacha);
     }
 
     public void RefreshCoins()

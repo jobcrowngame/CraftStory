@@ -509,6 +509,8 @@ namespace ExcelToJson
                     ID = ToInt32(tbl.Rows[i]["ID"]),
                     Image = ToString(tbl.Rows[i]["Image"]),
                     BtnImage = ToString(tbl.Rows[i]["BtnImage"]),
+                    ToggleImageON = ToString(tbl.Rows[i]["ToggleImageON"]),
+                    ToggleImageOFF = ToString(tbl.Rows[i]["ToggleImageOFF"]),
                     PondId = ToInt32(tbl.Rows[i]["PondId"]),
                     Title = ToString(tbl.Rows[i]["Title"]),
                     Des = ToString(tbl.Rows[i]["Des"]),

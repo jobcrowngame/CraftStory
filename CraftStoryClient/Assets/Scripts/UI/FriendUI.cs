@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class FriendUI : UIBase
 {
     TitleUI Title { get => FindChiled<TitleUI>("Title"); }
-    ToggleBtns toggles { get => FindChiled<ToggleBtns>("ToggleBtns"); }
+    MyToggleGroupCtl toggles { get => FindChiled<MyToggleGroupCtl>("ToggleBtns"); }
     Transform cellParent { get => FindChiled("Content"); }
     Button SortBtn { get => FindChiled<Button>("SortBtn"); }
     Button SearchBtn { get => FindChiled<Button>("SearchBtn"); }

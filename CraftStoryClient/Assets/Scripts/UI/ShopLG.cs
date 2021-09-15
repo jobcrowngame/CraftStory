@@ -13,7 +13,7 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
 
             UI.SelectBtnIndex = shopUIType;
             UI.ChangeUIType(shopUIType);
-            UI.SetTitle2(GetTitle2Text());
+            UI.SetSubTitleText(GetTitle2Text());
             UI.RefreshItems(shopUIType);
         }
     }
@@ -60,10 +60,6 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
                 return;
 
             mSelectedGachaIndex = value;
-
-            UI.ShowGachaRightBtn(mSelectedGachaIndex != GachaIds.Length - 1);
-            UI.ShowGachaLeftBtn(mSelectedGachaIndex > 0);
-
             mSelectedGachaId = GachaIds[mSelectedGachaIndex];
         }
     }
@@ -74,7 +70,7 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
     /// </summary>
     public int SelectGachaId { get => mSelectedGachaId; }
     private int mSelectedGachaId;
-    private int[] GachaIds = new int[1]{ 1};
+    private int[] GachaIds = new int[3]{ 1, 2, 3};
 
     public void OnClickLeftBtn(string nickName, int sortType)
     {
@@ -106,6 +102,10 @@ public class ShopLG : UILogicBase<ShopLG, ShopUI>
     public void GetSubscriptions()
     {
         UI.RefreshSubscription();
+    }
+    public int[] GetGachaArr()
+    {
+        return GachaIds;
     }
 
     public int GetSubscriptionTypeByShopId(int shopId)

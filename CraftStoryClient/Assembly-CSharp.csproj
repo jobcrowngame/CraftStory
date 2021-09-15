@@ -193,7 +193,7 @@
     <Compile Include="Assets\Scripts\Manager\TimeZoneMng.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mail.cs" />
     <Compile Include="Assets\Scripts\Data\UserData.cs" />
-    <Compile Include="Assets\Scripts\UI\Common\ToggleBtns.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\MyToggleGroupCtl.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestAngle.cs" />
     <Compile Include="Assets\Scripts\Game\Player\ScreenDraggingCtl.cs" />

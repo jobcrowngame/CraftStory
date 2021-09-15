@@ -1,19 +1,22 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public partial class ShopUI
 {
+    MyToggleGroupCtl ToggleBtns { get => FindChiled<MyToggleGroupCtl>("ToggleBtns", Gacha); }
     Button RatioBtn { get => FindChiled<Button>("RatioBtn", Gacha); }
     Button StartGachaBtn { get => FindChiled<Button>("StartGachaBtn", Gacha); }
     Text GachaDes { get => FindChiled<Text>("GachaDes", Gacha); }
     Text Cost { get => FindChiled<Text>("Cost", Gacha); }
     Image GachaIcon { get => FindChiled<Image>("GachaIcon"); }
-    Button GachaRightBtn { get => FindChiled<Button>("GachaRightBtn", Gacha); }
-    Button GachaLeftBtn { get => FindChiled<Button>("GachaLeftBtn", Gacha); }
 
     public void InitGacha()
     {
+        ToggleBtns.Init();
+        ToggleBtns.OnValueChangeAddListener((index) => 
+        {
+            SetGachaIndex(index);
+        });
         RatioBtn.onClick.AddListener(() =>
         {
             var ui = UICtl.E.OpenUI<GachaRatioUI>(UIType.GachaRatio);
@@ -24,9 +27,11 @@ public partial class ShopUI
             var ui = UICtl.E.OpenUI<GachaVerificationUI>(UIType.GachaVerification);
             ui.Set(ShopLG.E.SelectGachaId);
         });
-        GachaRightBtn.onClick.AddListener(OnClickGachaRightBtn);
-        GachaLeftBtn.onClick.AddListener(OnClickGachaLeftBtn);
 
+        for (int i = 0; i < ShopLG.E.GetGachaArr().Length; i++)
+        {
+            SetToggleImage(ShopLG.E.GetGachaArr()[i], i);
+        }
         SetGachaIndex(0);
     }
 
@@ -39,37 +44,7 @@ public partial class ShopUI
         ShopLG.E.SelectedGachaIndex = index;
         RefreshGachaUI();
     }
-    /// <summary>
-    /// 次のガチャ
-    /// </summary>
-    public void OnClickGachaRightBtn()
-    {
-        ShopLG.E.SelectedGachaIndex++;
-        RefreshGachaUI();
-    }
-    /// <summary>
-    /// 前のガチャ
-    /// </summary>
-    public void OnClickGachaLeftBtn()
-    {
-        ShopLG.E.SelectedGachaIndex--;
-        RefreshGachaUI();
-    }
-    /// <summary>
-    /// 次のガチャボタンアクティブ
-    /// </summary>
-    public void ShowGachaRightBtn(bool b = true)
-    {
-        GachaRightBtn.gameObject.SetActive(b);
-    }
-    /// <summary>
-    /// 前のガチャボタンアクティブ
-    /// </summary>
-    /// <param name="b"></param>
-    public void ShowGachaLeftBtn(bool b = true)
-    {
-        GachaLeftBtn.gameObject.SetActive(b);
-    }
+
     /// <summary>
     /// ガチャWindowを更新
     /// </summary>
@@ -81,5 +56,16 @@ public partial class ShopUI
         GachaIcon.sprite = ReadResources<Sprite>(config.Image);
         GachaDes.text = config.Title == "N" ? "" : config.Title;
         Cost.text = config.CostCount.ToString();
+    }
+
+    /// <summary>
+    /// ボタン画像差し替え
+    /// </summary>
+    /// <param name="gachaId">ガチャID</param>
+    /// <param name="index">インデックス</param>
+    private void SetToggleImage(int gachaId, int index)
+    {
+        var config = ConfigMng.E.Gacha[gachaId];
+        ToggleBtns.SetToggleImage(index, config.ToggleImageON, config.ToggleImageOFF);
     }
 }
