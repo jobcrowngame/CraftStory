@@ -159,7 +159,8 @@ public partial class ShopUI : UIBase
 
         // ガチャ
         Gacha.gameObject.SetActive(uiType == ShopType.Gacha);
-        SubTitle.gameObject.SetActive(uiType != ShopType.Gacha);
+        //SubTitle.gameObject.SetActive(uiType != ShopType.Gacha);
+        SubTitle.gameObject.SetActive(true);
     }
 
     public void RefreshCoins()

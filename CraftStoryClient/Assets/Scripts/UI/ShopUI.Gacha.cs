@@ -33,6 +33,8 @@ public partial class ShopUI
             SetToggleImage(ShopLG.E.GetGachaArr()[i], i);
         }
         SetGachaIndex(0);
+
+        ToggleBtns.gameObject.SetActive(false);
     }
 
     /// <summary>
