@@ -92,9 +92,9 @@ public class UICtl : Single<UICtl>
     {
         return OpenUI<T>(uiType, closeType, null);
     }
-    public T OpenUI<T>(UIType uiType, UIOpenType closeType, object data) where T : UIBase
+    public T OpenUI<T>(UIType uiType, UIOpenType openType, object data) where T : UIBase
     {
-        switch (closeType)
+        switch (openType)
         {
             case UIOpenType.AllClose:
                 foreach (var item in uiDic.Values)
@@ -171,6 +171,12 @@ public class UICtl : Single<UICtl>
     public void Clear()
     {
         uiDic.Clear();
+    }
+
+    public void DeleteUI(UIType uiType)
+    {
+        GameObject.Destroy(uiDic[uiType].gameObject);
+        uiDic.Remove(uiType);
     }
 
     private string GetUIResourcesPath(UIType ui)

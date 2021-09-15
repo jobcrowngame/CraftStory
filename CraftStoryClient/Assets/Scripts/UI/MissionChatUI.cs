@@ -40,6 +40,8 @@ public class MissionChatUI : UIBase
         base.Close();
 
         StopCoroutine(StartChat());
+
+        UICtl.E.DeleteUI(UIType.MissionChat);
     }
 
     private IEnumerator StartChat()

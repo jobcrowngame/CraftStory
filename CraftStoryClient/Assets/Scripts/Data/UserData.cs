@@ -13,4 +13,9 @@ public class UserData
     /// パスワード
     /// </summary>
     public string UserPW { get; set; }
+
+    /// <summary>
+    /// 最初の掲示板作り
+    /// </summary>
+    public int FirstCraftMission { get; set; }
 }

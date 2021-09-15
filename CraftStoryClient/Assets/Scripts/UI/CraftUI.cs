@@ -139,6 +139,12 @@ public class CraftUI : UIBase
                 // クラフトミッション
                 NWMng.E.ClearMission(3, 1, CraftLG.E.SelectCount);
 
+                if (CraftLG.E.SelectCraft.ItemID == 3003 && DataMng.E.UserData.FirstCraftMission == 0)
+                {
+                    DataMng.E.UserData.FirstCraftMission = 1;
+                    UICtl.E.OpenUI<MissionChatUI>(UIType.MissionChat, UIOpenType.None, 0);
+                }
+
                 NWMng.E.GetItems(() =>
                 {
                     CommonFunction.ShowHintBar(6);
