@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class ExchangePointUI : UIBase
 {
+    ScrollRect ScrollRect { get => FindChiled<ScrollRect>("Scroll View"); }
     TitleUI Title { get => FindChiled<TitleUI>("Title"); }
     InputField MailInput { get => FindChiled<InputField>("MailInput"); }
     Text MailInputCheck { get => FindChiled<Text>("MailInputCheck"); }
@@ -120,6 +121,8 @@ Amazonギフト券をお送りいたします。
         SubmitBtn.gameObject.SetActive(true);
         OkBtn.gameObject.SetActive(false);
         CancelBtn.gameObject.SetActive(false);
+
+        ScrollRect.verticalNormalizedPosition = 1;
     }
     private void CheckMode()
     {
@@ -137,6 +140,8 @@ Amazonギフト券をお送りいたします。
         SubmitBtn.gameObject.SetActive(false);
         OkBtn.gameObject.SetActive(true);
         CancelBtn.gameObject.SetActive(true);
+
+        ScrollRect.verticalNormalizedPosition = 1;
     }
 
     /// <summary>
