@@ -114,6 +114,8 @@ public class RouletteUI : UIBase
         {
             int rang = Random.Range(0, 100);
             string resources;
+            TitleIcon.transform.GetChild(0).gameObject.SetActive(false);
+
             if (rang < 5)
             {
                 resources = "Textures/shop_2d_20";
@@ -124,6 +126,7 @@ public class RouletteUI : UIBase
             else
             {
                 resources = "Textures/shop_2d_22";
+                TitleIcon.transform.GetChild(0).gameObject.SetActive(true);
             }
             TitleIcon.sprite = ReadResources<Sprite>(resources);
         }

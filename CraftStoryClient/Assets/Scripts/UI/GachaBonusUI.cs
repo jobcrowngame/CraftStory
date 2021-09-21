@@ -60,7 +60,7 @@ public class GachaBonusUI : UIBase
                 var random = Random.Range(0, 100);
 
                 cell.Init();
-                cell.Add(ConfigMng.E.Item[config.Bonus1], config.BonusCount1, item.rare, random < 100);
+                cell.Add(ConfigMng.E.Item[config.Bonus1], config.BonusCount1, item.rare, random < 10);
                 GachaBonusLG.E.AddCell(cell);
             }
         }
