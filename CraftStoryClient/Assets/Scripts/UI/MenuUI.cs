@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class MenuUI : UIBase
 {
     TitleUI Title { get => FindChiled<TitleUI>("Title"); }
-    ScrollRect Banner { get => FindChiled<ScrollRect>("Banner"); }
-
+    MyScrollRect Banner { get => FindChiled<MyScrollRect>("Banner"); }
+    Transform PointList { get => FindChiled("PointList"); }
 
     //Button CraftBtn;
     Button AdventureBtn { get => FindChiled<Button>("AdventureBtn"); }
@@ -28,6 +28,7 @@ public class MenuUI : UIBase
         set
         {
             Banner.gameObject.SetActive(false);
+            PointList.gameObject.SetActive(false);
 
             AdventureBtn.gameObject.SetActive(false);
             ShopBtn.gameObject.SetActive(false);
@@ -48,6 +49,7 @@ public class MenuUI : UIBase
             {
                 case MapType.Home:
                     Banner.gameObject.SetActive(true);
+                    PointList.gameObject.SetActive(true);
 
                     AdventureBtn.gameObject.SetActive(true);
                     ShopBtn.gameObject.SetActive(true);
@@ -91,7 +93,7 @@ public class MenuUI : UIBase
         Title.SetTitle("メニュー");
         Title.SetOnClose(() => { Close(); });
 
-
+        Banner.AddOnIndexChange((index) => { OnIndexChange(index); });
         for (int i = 0; i < Banner.content.childCount; i++)
         {
             var myBtn = Banner.content.GetChild(i).GetComponent<MyButton>();
@@ -208,6 +210,7 @@ public class MenuUI : UIBase
         MenuLG.E.Init(this);
 
         menuType = DataMng.E.RuntimeData.MapType;
+        OnIndexChange(0);
     }
     public override void Open()
     {
@@ -225,5 +228,15 @@ public class MenuUI : UIBase
         var ui = UICtl.E.OpenUI<ShopUI>(UIType.Shop, UIOpenType.None, 2);
         ui.SetGachaIndex(index);
         Close();
+    }
+    private void OnIndexChange(int index)
+    {
+        foreach (Transform item in PointList)
+        {
+            item.GetComponent<Image>().color = Color.white;
+        }
+
+        var cellPoint = PointList.GetChild(index);
+        cellPoint.GetComponent<Image>().color = Color.yellow;
     }
 }

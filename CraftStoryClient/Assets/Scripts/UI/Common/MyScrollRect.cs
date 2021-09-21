@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -39,6 +40,25 @@ public class MyScrollRect : ScrollRect
     /// 自動スクロール時間
     /// </summary>
     float ScrollTime = 0.5f;
+
+    /// <summary>
+    /// ターゲットインデックス
+    /// </summary>
+    private int CurIndex
+    {
+        get => mCurIndex;
+        set
+        {
+            mCurIndex = value;
+            if (IndexChangeEvent != null)
+            {
+                IndexChangeEvent(value);
+            }
+        }
+    }
+    int mCurIndex = 0;
+
+    Action<int> IndexChangeEvent;
 
     private void Update()
     {
@@ -105,8 +125,6 @@ public class MyScrollRect : ScrollRect
     /// </summary>
     private void CheckTargetPos()
     {
-        // ターゲットインデックス
-        int targetIndex = 0;
 
         // 毎インデックスのステップ
         float step = 1f / (Content.childCount - 1);
@@ -123,15 +141,24 @@ public class MyScrollRect : ScrollRect
         // 偏差がstep半分より小さい場合、前のページへ自動遷移
         if (nowOffset < step / 2)
         {
-            targetIndex = index;
+            CurIndex = index;
         }
         // 偏差がstep半分より大きい場合、後のページへ自動遷移
         else
         {
-            targetIndex = index + 1;
+            CurIndex = index + 1;
         }
 
-        targetHorizontalNormalizedPosition = targetIndex * step;
+        targetHorizontalNormalizedPosition = CurIndex * step;
         targetPosGeted = true;
+    }
+
+    /// <summary>
+    /// インデックス変化イベント
+    /// </summary>
+    /// <param name="indexChangeEvent"></param>
+    public void AddOnIndexChange(Action<int> indexChangeEvent)
+    {
+        IndexChangeEvent = indexChangeEvent;
     }
 }

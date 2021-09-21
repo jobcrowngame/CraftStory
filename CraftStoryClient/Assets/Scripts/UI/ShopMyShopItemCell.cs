@@ -65,13 +65,6 @@ public class ShopMyShopItemCell : UIBase
         StartCoroutine(RefreshTime(data));
     }
 
-    public override void Open()
-    {
-        base.Open();
-
-        StartCoroutine(RefreshTime(data));
-    }
-
     private IEnumerator RefreshTime(MyShopItem data)
     {
         while (true)

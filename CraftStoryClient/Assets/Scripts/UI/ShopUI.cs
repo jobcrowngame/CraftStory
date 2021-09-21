@@ -125,14 +125,6 @@ public partial class ShopUI : UIBase
             RefreshCoins();
         });
 
-        foreach (var item in myshopItems)
-        {
-            if (item == null)
-                continue;
-
-            item.Open();
-        }
-
         ShopLG.E.GetSubscriptions();
     }
 
@@ -159,8 +151,7 @@ public partial class ShopUI : UIBase
 
         // ガチャ
         Gacha.gameObject.SetActive(uiType == ShopType.Gacha);
-        //SubTitle.gameObject.SetActive(uiType != ShopType.Gacha);
-        SubTitle.gameObject.SetActive(true);
+        SubTitle.gameObject.SetActive(uiType != ShopType.Gacha);
     }
 
     public void RefreshCoins()

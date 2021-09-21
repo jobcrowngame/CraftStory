@@ -9,10 +9,8 @@ public class GachaBonusUI : UIBase
     Transform Parent { get => FindChiled("Content"); }
     Button OkBtn { get => FindChiled<Button>("OkBtn"); }
    
-
     private int gachaId;
     private int index;
-    List<GachaBonusCell> cellList = new List<GachaBonusCell>();
 
     public override void Init()
     {
@@ -26,12 +24,20 @@ public class GachaBonusUI : UIBase
             Close();
         });
     }
+
+    public override void Open()
+    {
+        base.Open();
+
+        GachaBonusLG.E.OnOpen();
+    }
+
     public void Set(ShopLG.GachaResponse result, int gachaId)
     {
         OkBtn.gameObject.SetActive(false);
 
         ClearCell(Parent);
-        cellList.Clear();
+        GachaBonusLG.E.cellList.Clear();
 
         foreach (var item in result.bonusList)
         {
@@ -40,49 +46,43 @@ public class GachaBonusUI : UIBase
             {
                 var config = ConfigMng.E.Bonus[item.bonusId];
 
+                // レベルアップするかの判断
+                var random = Random.Range(0, 100);
+
                 cell.Init();
-                cell.Add(ConfigMng.E.Item[config.Bonus1], config.BonusCount1, item.rare);
-                cellList.Add(cell);
+                cell.Add(ConfigMng.E.Item[config.Bonus1], config.BonusCount1, item.rare, random < 100);
+                GachaBonusLG.E.AddCell(cell);
             }
         }
 
         index = result.index;
         this.gachaId = gachaId;
 
-        StartAnim();
+        StartCoroutine(IEStartAnim1());
     }
 
-    private void StartAnim()
+    public void ShowOkBtn()
     {
-        StartCoroutine(IEStartAnim1());
-        StartCoroutine(IEStartAnim2());
+        OkBtn.gameObject.SetActive(true);
     }
+
+    /// <summary>
+    /// 宝ボックス落ちるアニメション
+    /// </summary>
     IEnumerator IEStartAnim1()
     {
         yield return new WaitForSeconds(0.2f);
 
-        foreach (var item in cellList)
+        foreach (var item in GachaBonusLG.E.cellList)
         {
             item.ShowAnim("GachaBonusCell1");
             yield return new WaitForSeconds(0.2f);
         }
-    }
-    IEnumerator IEStartAnim2()
-    {
-        yield return new WaitForSeconds(3.4f);
 
-        foreach (var item in cellList)
-        {
-            item.ShowAnim("GachaBonusCell2");
-            yield return new WaitForSeconds(0.2f);
+        // 全部終わった後、少し待ちます。
+        yield return new WaitForSeconds(0.8f);
 
-            var effect = EffectMng.E.AddUIEffect<EffectBase>(transform, item.transform.position, EffectType.Gacha);
-            effect.Init(0.5f);
-
-            yield return new WaitForSeconds(0.3f);
-            item.ShowItem();
-        }
-
-        OkBtn.gameObject.SetActive(true);
+        // 次のボックスをオープンします。
+        GachaBonusLG.E.OpenNext();
     }
 }
