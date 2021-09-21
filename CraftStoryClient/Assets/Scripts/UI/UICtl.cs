@@ -36,6 +36,7 @@ public class UICtl : Single<UICtl>
         //UserTest.E.Init();
         TimeZoneMng.E.Init();
         WorldMng.E.Init();
+        AudioMng.Init(glubalObjParent);
 
         yield return true;
     }

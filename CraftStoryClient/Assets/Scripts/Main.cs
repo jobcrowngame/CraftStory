@@ -24,7 +24,7 @@ public class Main : MonoBehaviour
         yield return NWMng.E.InitCoroutine();
 
         UICtl.E.OpenUI<LoginUI>(UIType.Login);
-
+        AudioMng.E.ShowBGM("bgm_01");
 
         NWMng.E.Connect((rp) =>
         {
