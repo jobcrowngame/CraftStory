@@ -95,6 +95,13 @@ public class GachaBonusCell : UIBase
         yield return new WaitForSeconds(0.3f);
         ShowItem();
 
-        GachaBonusLG.E.OpenNext();
+        if (rare == 3)
+        {
+            GachaBonusLG.E.UI.CutInImage();
+        }
+        else
+        {
+            GachaBonusLG.E.OpenNext();
+        }
     }
 }

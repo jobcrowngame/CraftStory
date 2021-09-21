@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 public class GachaBonusUI : UIBase
 {
+    Transform Video { get => FindChiled("Video"); }
     Transform Parent { get => FindChiled("Content"); }
+    Transform CutIn { get => FindChiled("CutIn"); }
     Button OkBtn { get => FindChiled<Button>("OkBtn"); }
    
     private int gachaId;
@@ -23,19 +25,27 @@ public class GachaBonusUI : UIBase
             ui.Set(index, gachaId);
             Close();
         });
+        CutIn.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            CutIn.gameObject.SetActive(false);
+            GachaBonusLG.E.OpenNext();
+        });
     }
 
     public override void Open()
     {
         base.Open();
 
+        Video.gameObject.SetActive(false);
+        Parent.gameObject.SetActive(false);
+        OkBtn.gameObject.SetActive(false);
+        CutIn.gameObject.SetActive(false);
+
         GachaBonusLG.E.OnOpen();
     }
 
     public void Set(ShopLG.GachaResponse result, int gachaId)
     {
-        OkBtn.gameObject.SetActive(false);
-
         ClearCell(Parent);
         GachaBonusLG.E.cellList.Clear();
 
@@ -67,10 +77,24 @@ public class GachaBonusUI : UIBase
     }
 
     /// <summary>
+    /// 金の宝ボックスの場合、カットイン
+    /// </summary>
+    public void CutInImage()
+    {
+        CutIn.gameObject.SetActive(true);
+    }
+
+    /// <summary>
     /// 宝ボックス落ちるアニメション
     /// </summary>
     IEnumerator IEStartAnim1()
     {
+        Video.gameObject.SetActive(true);
+        yield return new WaitForSeconds(5f);
+
+        Video.gameObject.SetActive(false);
+        Parent.gameObject.SetActive(true);
+
         yield return new WaitForSeconds(0.2f);
 
         foreach (var item in GachaBonusLG.E.cellList)
