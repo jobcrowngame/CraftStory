@@ -451,4 +451,14 @@ public class CommonFunction
 
         return true;
     }
+
+
+    /// <summary>
+    /// テクスチャからSpriteに変換
+    /// </summary>
+    /// <param name="texture">テクスチャ</param>
+    public static Sprite Texture2dToSprite(Texture2D texture)
+    {
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+    }
 }

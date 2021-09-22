@@ -294,6 +294,8 @@
     <Compile Include="Assets\Scripts\UI\ShopGachaUI.cs" />
     <Compile Include="Assets\Scripts\UI\ShopGachaLG.cs" />
     <Compile Include="Assets\Scripts\UI\ShopResourceUI.cs" />
+    <Compile Include="Assets\Scripts\Manager\AWSS3Mng.cs" />
+    <Compile Include="Assets\Scripts\UI\BlueprintReNameLG.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
