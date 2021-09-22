@@ -291,6 +291,8 @@
     <Compile Include="Assets\Scripts\UI\Common\Title2UI.cs" />
     <Compile Include="Assets\Scripts\UI\ShopChargeUI.cs" />
     <Compile Include="Assets\Scripts\UI\ShopChargeLG.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopGachaUI.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopGachaLG.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
