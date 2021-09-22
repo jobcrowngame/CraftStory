@@ -77,7 +77,9 @@ public class EntityFunctionalObject : EntityBase
                 break;
 
             case EntityType.ResourceShop:
+                UICtl.E.OpenUI<ShopResourceUI>(UIType.ShopResource);
                 break;
+
             case EntityType.BlueprintShop:
                 break;
             case EntityType.GiftShop:
