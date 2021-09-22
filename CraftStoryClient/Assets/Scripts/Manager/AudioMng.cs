@@ -33,6 +33,10 @@ public class AudioMng : MonoBehaviour
         BGM.clip = ReadAudioClip(clipName);
         BGM.Play();
     }
+    public void StopBGM()
+    {
+        BGM.Stop();
+    }
     /// <summary>
     /// SE をプレイ
     /// </summary>

@@ -24,7 +24,12 @@ public class RouletteUI : UIBase
         RouletteLG.E.Init(this);
 
         StartBtn.onClick.AddListener(StartRoulette);
-        OverMask.onClick.AddListener(Close);
+        OverMask.onClick.AddListener(()=> 
+        {
+            AudioMng.E.ShowSE("bgm_01");
+
+            Close();
+        });
         AgainMask.onClick.AddListener(()=> 
         {
             NWMng.E.GachaAddBonusAgain((rp) => 
@@ -84,6 +89,9 @@ public class RouletteUI : UIBase
 
                 OverMask.gameObject.SetActive(!again);
                 AgainMask.gameObject.SetActive(again);
+
+                string seName = again ? "" : "";
+                AudioMng.E.ShowSE(seName);
             }
         }
     }
@@ -98,6 +106,8 @@ public class RouletteUI : UIBase
         RouletteBG.transform.eulerAngles = Vector3.zero;
 
         speed = GetSpeed();
+
+        AudioMng.E.ShowSE("");
     }
     private float GetSpeed()
     {

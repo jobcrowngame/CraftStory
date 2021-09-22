@@ -24,6 +24,8 @@ public class GachaAddBonusCell : UIBase
             anim.Play();
             GachaAddBonusLG.E.CardFlipping();
 
+            AudioMng.E.ShowSE("");
+
             StartCoroutine(AnimOver());
         });
     }
