@@ -82,7 +82,9 @@ public class EntityFunctionalObject : EntityBase
 
             case EntityType.BlueprintShop:
                 break;
+
             case EntityType.GiftShop:
+                UICtl.E.OpenUI<ExchangePointUI>(UIType.ExchangePoint);
                 break;
 
             default: Logger.Error("not find entityType " + Type); break;
