@@ -162,7 +162,8 @@ public class PlayerCtl : MonoBehaviour
 
         // ホーム、チュートリアルの場合
         if (DataMng.E.RuntimeData.MapType == MapType.Home 
-            || DataMng.E.RuntimeData.MapType == MapType.Guide)
+            || DataMng.E.RuntimeData.MapType == MapType.Guide
+            || DataMng.E.RuntimeData.MapType == MapType.Market)
         {
             if (selectItem == null)
             {

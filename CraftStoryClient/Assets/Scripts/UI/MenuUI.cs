@@ -51,7 +51,7 @@ public class MenuUI : UIBase
                     Banner.gameObject.SetActive(true);
                     PointList.gameObject.SetActive(true);
 
-                    AdventureBtn.gameObject.SetActive(true);
+                    //AdventureBtn.gameObject.SetActive(true);
                     ShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn.gameObject.SetActive(true);
                     PersonalMessageBtn.gameObject.SetActive(true);
@@ -71,7 +71,7 @@ public class MenuUI : UIBase
                     break;
 
                 case MapType.Guide:
-                    AdventureBtn.gameObject.SetActive(true);
+                    //AdventureBtn.gameObject.SetActive(true);
                     ShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn.gameObject.SetActive(true);
                     PersonalMessageBtn.gameObject.SetActive(true);
@@ -82,6 +82,10 @@ public class MenuUI : UIBase
                     PlayDescriptionBtn2.gameObject.SetActive(true);
                     MessageBtn.gameObject.SetActive(true);
 
+                    HomeBtn.gameObject.SetActive(true);
+                    break;
+
+                case MapType.Market:
                     HomeBtn.gameObject.SetActive(true);
                     break;
             }

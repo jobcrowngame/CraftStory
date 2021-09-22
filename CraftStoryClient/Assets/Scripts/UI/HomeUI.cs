@@ -18,6 +18,11 @@ public class HomeUI : UIBase
     Button MenuBtn { get => FindChiled<Button>("MenuBtn"); }
 
     /// <summary>
+    /// マップボタン
+    /// </summary>
+    Button MapBtn { get => FindChiled<Button>("MapBtn"); }
+
+    /// <summary>
     /// 持ち物ボタン
     /// </summary>
     Button BagBtn { get => FindChiled<Button>("BagBtn"); }
@@ -124,6 +129,10 @@ public class HomeUI : UIBase
             menu.Init();
 
             GuideLG.E.Next();
+        });
+        MapBtn.onClick.AddListener(() =>
+        {
+            UICtl.E.OpenUI<MapUI>(UIType.Map);
         });
         BagBtn.onClick.AddListener(() => 
         { 

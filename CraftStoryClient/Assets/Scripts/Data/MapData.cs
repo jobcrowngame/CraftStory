@@ -86,13 +86,6 @@ public class MapData
     {
         return map[site.x, site.y, site.z].entityID == 0;
     }
-    // インスタンスされたエンティティゲット
-    public EntityBase GetEntity(Vector3Int site)
-    {
-        EntityBase entity = null;
-        entityDic.TryGetValue(site, out entity);
-        return entity;
-    }
     // マップサイズゲット
     public Vector3Int GetMapSize()
     {
@@ -166,13 +159,6 @@ public class MapData
                     entity = CommonFunction.Instantiate<EntityResources>(config.Resources, parent, pos);
                     break;
 
-                // 向きがあるエンティティ
-                case EntityType.Workbench:
-                case EntityType.Kamado:
-                case EntityType.Door:
-                    entity = CommonFunction.Instantiate<EntityBuilding>(config.Resources, parent, pos);
-                    break;
-
                 case EntityType.TransferGate:
                     entity = CommonFunction.Instantiate<EntityTransferGate>(config.Resources, parent, pos);
                     break;
@@ -194,8 +180,16 @@ public class MapData
                     entity = CommonFunction.Instantiate<EntityFlowoer>(config.Resources, parent, pos);
                     break;
 
+                case EntityType.Workbench:
+                case EntityType.Kamado:
+                case EntityType.Door:
                 case EntityType.Mission:
-                    entity = CommonFunction.Instantiate<EntityMission>(config.Resources, parent, pos);
+                case EntityType.ChargeShop:
+                case EntityType.GachaShop:
+                case EntityType.ResourceShop:
+                case EntityType.BlueprintShop:
+                case EntityType.GiftShop:
+                    entity = CommonFunction.Instantiate<EntityFunctionalObject>(config.Resources, parent, pos);
                     break;
 
                 default: Logger.Error("not find entityType "+ (EntityType)config.Type); break;
@@ -330,12 +324,6 @@ public class MapData
             {
                 for (int z = 0; z < SizeZ; z++)
                 {
-                    //if (map[x, y, z].entityID == 10000)
-                    //{
-                    //    sb.Append(0 + ",");
-                    //    continue;
-                    //}
-
                     int entityId = map[x, y, z].entityID;
 
                     if (ConfigMng.E.Entity[entityId].HaveDirection == 1)
@@ -390,6 +378,11 @@ public enum MapType
     /// フレンドホーム
     /// </summary>
     FriendHome = 4,
+
+    /// <summary>
+    /// 市場
+    /// </summary>
+    Market = 5,
 
     /// <summary>
     /// テスト

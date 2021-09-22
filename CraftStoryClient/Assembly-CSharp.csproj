@@ -144,12 +144,13 @@
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeLG.cs" />
     <Compile Include="Assets\Scripts\UI\EmailCell.cs" />
+    <Compile Include="Assets\Scripts\Manager\AudioMng.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
     <Compile Include="Assets\Scripts\Manager\CryptMng.cs" />
     <Compile Include="Assets\Scripts\Test\Monster\PlayerController2.cs" />
     <Compile Include="Assets\Scripts\Manager\Logger.cs" />
     <Compile Include="Assets\Scripts\Test\TestJson.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\EntityMission.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\EntityFunctionalObject.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Resource.cs" />
     <Compile Include="Assets\Scripts\UI\PersonalMessageLG.cs" />
     <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
@@ -163,7 +164,6 @@
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
     <Compile Include="Assets\Scripts\UI\FriendSearchLG.cs" />
     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\EntityBuilding.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyButton.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityGrass.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusCell.cs" />
@@ -285,7 +285,12 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Manager\AudioMng.cs" />
+    <Compile Include="Assets\Scripts\UI\MarketUI.cs" />
+    <Compile Include="Assets\Scripts\UI\MarketLG.cs" />
+    <Compile Include="Assets\Scripts\UI\MapUI.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\Title2UI.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopChargeUI.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopChargeLG.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

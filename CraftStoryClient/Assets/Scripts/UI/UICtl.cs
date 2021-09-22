@@ -223,7 +223,9 @@ public class UICtl : Single<UICtl>
             case UIType.ExchangePoint: return "Prefabs/UI/ExchangePoint";
             case UIType.Mission: return "Prefabs/UI/Mission";
             case UIType.MissionChat: return "Prefabs/UI/MissionChat";
-                
+            case UIType.Map: return "Prefabs/UI/Map";
+            case UIType.ShopCharge: return "Prefabs/UI/ShopCharge";
+
             default: Logger.Error("not find UIType " + ui); return "";
         }
     }
@@ -299,4 +301,6 @@ public enum UIType
     ExchangePoint,
     Mission,
     MissionChat,
+    Map,
+    ShopCharge,
 }

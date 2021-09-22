@@ -1,11 +1,9 @@
-﻿
-
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// 向きがある建物（ドア、作業台...)
+/// 機能Object
 /// </summary>
-public class EntityBuilding : EntityBase
+public class EntityFunctionalObject : EntityBase
 {
     // ドアの状態（閉じっている）
     private bool DoorIsClosed
@@ -20,7 +18,7 @@ public class EntityBuilding : EntityBase
             {
                 collider.isTrigger = !value;
             }
-               
+
             var openObj = CommonFunction.FindChiledByName(transform, "Open");
             if (openObj != null)
             {
@@ -48,21 +46,42 @@ public class EntityBuilding : EntityBase
     }
 
     /// <summary>
-    /// クリックした場合のロジック
+    /// クリックイベント
     /// </summary>
     public override void OnClick()
     {
         base.OnClick();
 
+        switch (Type)
+        {
+            case EntityType.Door:
+                DoorIsClosed = !DoorIsClosed;
+                break;
 
-        if (Type == EntityType.Door)
-        {
-            DoorIsClosed = !DoorIsClosed;
-        }
-        else if (Type == EntityType.Workbench || Type == EntityType.Kamado)
-        {
-            var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
-            ui.SetType(Type);
+            case EntityType.Workbench:
+            case EntityType.Kamado:
+                var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
+                ui.SetType(Type);
+                break;
+
+            case EntityType.Mission:
+                UICtl.E.OpenUI<MissionUI>(UIType.Mission);
+                break;
+
+            case EntityType.ChargeShop:
+                UICtl.E.OpenUI<ShopChargeUI>(UIType.ShopCharge);
+                break;
+
+            case EntityType.GachaShop:
+                break;
+            case EntityType.ResourceShop:
+                break;
+            case EntityType.BlueprintShop:
+                break;
+            case EntityType.GiftShop:
+                break;
+
+            default: Logger.Error("not find entityType " + Type); break;
         }
     }
 }

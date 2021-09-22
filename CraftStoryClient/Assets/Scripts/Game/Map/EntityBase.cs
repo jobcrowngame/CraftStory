@@ -92,6 +92,31 @@ public enum EntityType
     /// 掲示板
     /// </summary>
     Mission = 1002,
+
+    /// <summary>
+    /// 商店
+    /// </summary>
+    ChargeShop = 1003,
+
+    /// <summary>
+    /// ガチャ商店
+    /// </summary>
+    GachaShop = 1004,
+
+    /// <summary>
+    /// 資材商店
+    /// </summary>
+    ResourceShop = 1005,
+
+    /// <summary>
+    /// 設計図ショップ
+    /// </summary>
+    BlueprintShop = 1006,
+
+    /// <summary>
+    /// ギフトショップ
+    /// </summary>
+    GiftShop = 1007,
     Door = 2000,
     Torch = 2100,
     TransferGate = 9999,

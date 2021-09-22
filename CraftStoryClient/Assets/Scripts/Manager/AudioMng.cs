@@ -15,7 +15,7 @@ public class AudioMng : MonoBehaviour
 
     public static void Init(Transform parent)
     {
-        var prefab = Resources.Load("Prefabs/Game/AudoMng") as GameObject;
+        var prefab = Resources.Load("Prefabs/Game/Cor/AudoMng") as GameObject;
         var obj = GameObject.Instantiate(prefab, parent);
         entity = obj.GetComponent<AudioMng>();
         if (entity == null)
