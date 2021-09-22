@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class BlueprintPreviewUI : UIBase
 {
@@ -46,7 +47,10 @@ public class BlueprintPreviewUI : UIBase
         PhotographBtn.onClick.AddListener(()=> 
         { 
             IsPhotographing = true;
-            var data = PlayerCtl.E.BlueprintPreviewCtl.GetRenderCamera().targetTexture;
+            var texture = PlayerCtl.E.BlueprintPreviewCtl.GetRenderCamera().targetTexture;
+            BlueprintReNameLG.E.PhotographTexture = texture;
+
+            StartCoroutine(PhotographIE());
         });
     }
     public override void Open()
@@ -110,5 +114,11 @@ public class BlueprintPreviewUI : UIBase
         tex2d.ReadPixels(new Rect(0, 0, tex2d.width, tex2d.height), 0, 0);
         tex2d.Apply();
         return tex2d.EncodeToPNG();
+    }
+
+    IEnumerator PhotographIE()
+    {
+        yield return new WaitForSeconds(1);
+        Close();
     }
 }
