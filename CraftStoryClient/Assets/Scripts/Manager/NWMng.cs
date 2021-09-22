@@ -31,7 +31,7 @@ public partial class NWMng : MonoBehaviour
     /// 初期化
     /// </summary>
     /// <returns></returns>
-    public IEnumerator InitCoroutine()
+    public IEnumerator InitInitCoroutine()
     {
         yield return null;
     }
@@ -43,7 +43,7 @@ public partial class NWMng : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.LocalURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.TestURL))
         {
             yield return www.SendWebRequest();
 

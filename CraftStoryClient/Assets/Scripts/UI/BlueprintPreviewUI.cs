@@ -1,4 +1,5 @@
-﻿using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class BlueprintPreviewUI : UIBase
 {
@@ -20,10 +21,10 @@ public class BlueprintPreviewUI : UIBase
         {
             mIsPhotographing = value;
 
-            Bar.gameObject.SetActive(!IsPhotographing);
-            BlueprintPreviewPlussBtn.gameObject.SetActive(!IsPhotographing);
-            BlueprintPreviewMinusBtn.gameObject.SetActive(!IsPhotographing);
-            PhotographBtn.gameObject.SetActive(IsPhotographing);
+            Bar.gameObject.SetActive(!value);
+            BlueprintPreviewPlussBtn.gameObject.SetActive(!value);
+            BlueprintPreviewMinusBtn.gameObject.SetActive(!value);
+            PhotographBtn.gameObject.SetActive(value);
         }
     }
     private bool mIsPhotographing = false;
@@ -42,7 +43,11 @@ public class BlueprintPreviewUI : UIBase
         });
         BlueprintPreviewPlussBtn.AddClickingListener(()=> { PlayerCtl.E.BlueprintPreviewCtl.ChangeCameraPos(1); });
         BlueprintPreviewMinusBtn.AddClickingListener(()=> { PlayerCtl.E.BlueprintPreviewCtl.ChangeCameraPos(-1); });
-        PhotographBtn.onClick.AddListener(()=> { IsPhotographing = true; });
+        PhotographBtn.onClick.AddListener(()=> 
+        { 
+            IsPhotographing = true;
+            var data = PlayerCtl.E.BlueprintPreviewCtl.GetRenderCamera().targetTexture;
+        });
     }
     public override void Open()
     {
@@ -91,5 +96,19 @@ public class BlueprintPreviewUI : UIBase
     public void SetBarValue(float v)
     {
         Bar.value = v;
+    }
+
+    /// <summary>
+    /// スクリーンショット
+    /// </summary>
+    /// <returns></returns>
+    byte[] ScreenShotToData(Camera camera)
+    {
+        var texture = camera.targetTexture;
+        var tex2d = new Texture2D(texture.width, texture.height);
+        RenderTexture.active = texture;
+        tex2d.ReadPixels(new Rect(0, 0, tex2d.width, tex2d.height), 0, 0);
+        tex2d.Apply();
+        return tex2d.EncodeToPNG();
     }
 }

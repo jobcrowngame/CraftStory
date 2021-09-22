@@ -9,6 +9,7 @@ public class BlueprintPreviewCtl : MonoBehaviour
     Transform BlueprintCamera { get => CommonFunction.FindChiledByName(transform, "Camera").transform; } // プレビュー用カメラ
     Transform cameraRotateX { get => CommonFunction.FindChiledByName(transform, "X").transform; } // カメラ角度X
     Transform cameraRotateY { get => CommonFunction.FindChiledByName(transform, "Y").transform; } // カメラ角度Y
+    Camera renderCakera { get => CommonFunction.FindChiledByName<Camera>(transform, "RenderCamera"); } // カメラ
 
     /// <summary>
     /// カメラ座標Z
@@ -44,6 +45,15 @@ public class BlueprintPreviewCtl : MonoBehaviour
         cameraRotateY.transform.rotation = Quaternion.Euler(0, 0, 0);
         cameraRotateX.transform.rotation = Quaternion.Euler(30, 0, 0);
         BlueprintPreviewLG.E.UI.SetBarValue(Mathf.Abs((cameraPosZ - cameraPosMaxZ) / (cameraPosMaxZ - cameraPosMinZ)));
+    }
+
+    /// <summary>
+    /// レンダリングカメラをゲット
+    /// </summary>
+    /// <returns></returns>
+    public Camera GetRenderCamera()
+    {
+        return renderCakera;
     }
 
     /// <summary>
