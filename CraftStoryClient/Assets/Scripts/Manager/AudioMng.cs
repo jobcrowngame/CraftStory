@@ -32,6 +32,7 @@ public class AudioMng : MonoBehaviour
     {
         BGM.clip = ReadAudioClip(clipName);
         BGM.Play();
+        BGM.loop = true;
     }
     public void StopBGM()
     {
