@@ -65,7 +65,7 @@ public class GachaBonusCell : UIBase
             var effect = EffectMng.E.AddUIEffect<EffectBase>(transform, transform.position, EffectType.Gacha);
             effect.Init(0.5f);
 
-            AudioMng.E.ShowSE("");
+            AudioMng.E.ShowSE("jumpupSE");
 
             yield return new WaitForSeconds(0.5f);
 
@@ -94,7 +94,7 @@ public class GachaBonusCell : UIBase
         var effect = EffectMng.E.AddUIEffect<EffectBase>(transform, transform.position, EffectType.Gacha);
         effect.Init(0.5f);
 
-        AudioMng.E.ShowSE("");
+        AudioMng.E.ShowSE("TreasureOpenSE");
 
         yield return new WaitForSeconds(0.3f);
         ShowItem();

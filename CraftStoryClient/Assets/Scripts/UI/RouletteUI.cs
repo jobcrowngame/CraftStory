@@ -90,7 +90,7 @@ public class RouletteUI : UIBase
                 OverMask.gameObject.SetActive(!again);
                 AgainMask.gameObject.SetActive(again);
 
-                string seName = again ? "" : "";
+                string seName = again ? "HitSE" : "OffSE";
                 AudioMng.E.ShowSE(seName);
             }
         }
@@ -107,7 +107,7 @@ public class RouletteUI : UIBase
 
         speed = GetSpeed();
 
-        AudioMng.E.ShowSE("");
+        AudioMng.E.ShowSE("rouletteSE");
     }
     private float GetSpeed()
     {
