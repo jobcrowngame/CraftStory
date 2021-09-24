@@ -42,6 +42,7 @@ public partial class ShopUI
     public void SetGachaIndex(int index)
     {
         ShopLG.E.SelectedGachaIndex = index;
+        ToggleBtns.SetValue(index);
         RefreshGachaUI();
     }
 

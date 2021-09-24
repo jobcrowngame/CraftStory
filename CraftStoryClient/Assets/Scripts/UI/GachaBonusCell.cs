@@ -62,18 +62,18 @@ public class GachaBonusCell : UIBase
     {
         while (LvUpCount > 0)
         {
+            yield return new WaitForSeconds(1f);
+
             var effect = EffectMng.E.AddUIEffect<EffectBase>(transform, transform.position, EffectType.Gacha);
             effect.Init(0.5f);
 
             AudioMng.E.ShowSE("jumpupSE");
 
-            yield return new WaitForSeconds(0.5f);
-
             rare++;
             LvUpCount--;
             ImageChange(rare);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(2f);
         }
 
         StartOpenAnim();
