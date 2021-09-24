@@ -26,7 +26,7 @@ public class RouletteUI : UIBase
         StartBtn.onClick.AddListener(StartRoulette);
         OverMask.onClick.AddListener(()=> 
         {
-            AudioMng.E.ShowSE("bgm_01");
+            AudioMng.E.ShowBGM("bgm_01");
 
             Close();
         });

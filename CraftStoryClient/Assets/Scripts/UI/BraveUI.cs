@@ -21,6 +21,8 @@ public class BraveUI : UIBase
         WorldMng.E.GameTimeCtl.Active = false;
 
         Init();
+
+        AudioMng.E.ShowBGM("bgm_02");
     }
 
     public override void Init()
