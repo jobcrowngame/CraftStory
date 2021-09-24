@@ -332,17 +332,17 @@
     <Reference Include="Google.VersionHandlerImpl_v1.2.165">
       <HintPath>Assets\ExternalDependencyManager\Editor\Google.VersionHandlerImpl_v1.2.165.dll</HintPath>
     </Reference>
-    <Reference Include="AWSSDK.SecurityToken">
-      <HintPath>Assets\Plugins\AWSSDK\AWSSDK.SecurityToken.dll</HintPath>
-    </Reference>
     <Reference Include="AWSSDK.Core">
       <HintPath>Assets\Plugins\AWSSDK\AWSSDK.Core.dll</HintPath>
     </Reference>
-    <Reference Include="AWSSDK.CognitoIdentity">
-      <HintPath>Assets\Plugins\AWSSDK\AWSSDK.CognitoIdentity.dll</HintPath>
+    <Reference Include="AWSSDK.SecurityToken">
+      <HintPath>Assets\Plugins\AWSSDK\AWSSDK.SecurityToken.dll</HintPath>
     </Reference>
     <Reference Include="AWSSDK.S3">
       <HintPath>Assets\Plugins\AWSSDK\AWSSDK.S3.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.CognitoIdentity">
+      <HintPath>Assets\Plugins\AWSSDK\AWSSDK.CognitoIdentity.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>

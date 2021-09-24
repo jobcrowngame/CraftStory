@@ -8,7 +8,6 @@ public class BlueprintReNameLG : UILogicBase<BlueprintReNameLG, BlueprintReNameU
         set
         {
             mPhotographTexture = value;
-            UI.SetIcon(value);
             UIStep++;
         }
     }

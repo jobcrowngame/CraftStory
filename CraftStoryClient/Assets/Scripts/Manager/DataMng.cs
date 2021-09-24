@@ -295,7 +295,7 @@ public class DataMng : Single<DataMng>
     /// <param name="newName">新しいアイテム名</param>
     /// <param name="data">関連データ</param>
     /// <param name="action">成功した後のイベント</param>
-    public void AddItemInData(int itemID, int count, string newName, string data, Action action = null)
+    public void AddBlueprint(int itemID, int count, string newName, string data, Action action = null)
     {
         if (RuntimeData.MapType == MapType.Guide)
         {

@@ -43,7 +43,7 @@ public partial class NWMng : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.TestURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.LocalURL))
         {
             yield return www.SendWebRequest();
 
@@ -107,38 +107,31 @@ public partial class NWMng : MonoBehaviour
                 }
                 else
                 {
-                    try
+                    // 暗号化の解析
+                    var resultJson = CryptMng.E.DecryptString(www.downloadHandler.text);
+
+                    // Json to Object
+                    JsonData jd = JsonMapper.ToObject(resultJson);
+
+                    // ログ
+                    Logger.Log("[CMD:{0}-{1}---Result]\n{2}", cmd, (int)cmd, jd.ToJson());
+
+                    // エラーコード
+                    int errorCode = (int)jd["error"];
+                    if (errorCode > 0)
                     {
-                        // 暗号化の解析
-                        var resultJson = CryptMng.E.DecryptString(www.downloadHandler.text);
-
-                        // Json to Object
-                        JsonData jd = JsonMapper.ToObject(resultJson);
-
-                        // ログ
-                        Logger.Log("[CMD:{0}-{1}---Result]\n{2}", cmd, (int)cmd, jd.ToJson());
-
-                        // エラーコード
-                        int errorCode = (int)jd["error"];
-                        if (errorCode > 0)
-                        {
-                            // エラーコード　998　の場合はメンテナンスメッセージボックスを出す
-                            if (errorCode == 998)
-                                CommonFunction.Maintenance();
-                            // 他のエラーコードは設定ファイルのメッセージを出す
-                            else
-                                CommonFunction.ShowHintBar(errorCode);
-                        }
+                        // エラーコード　998　の場合はメンテナンスメッセージボックスを出す
+                        if (errorCode == 998)
+                            CommonFunction.Maintenance();
+                        // 他のエラーコードは設定ファイルのメッセージを出す
                         else
-                        {
-                            // 通信成功後のCallBack
-                            if (rp != null)
-                                rp(jd["result"]);
-                        }
+                            CommonFunction.ShowHintBar(errorCode);
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Logger.Error("[CMD:{0}]-{1}", (int)cmd, ex.Message + ex.TargetSite);
+                        // 通信成功後のCallBack
+                        if (rp != null)
+                            rp(jd["result"]);
                     }
                 }
             }

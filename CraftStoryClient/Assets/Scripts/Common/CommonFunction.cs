@@ -461,4 +461,14 @@ public class CommonFunction
     {
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
     }
+
+    /// <summary>
+    /// ファイル名をゲット
+    /// </summary>
+    /// <returns></returns>
+    public static string GetTextureName()
+    {
+        string fileName = DataMng.E.UserData.Account + "_" + DateTime.Now.ToString("yyyymmdd_hhMM");
+        return fileName;
+    }
 }

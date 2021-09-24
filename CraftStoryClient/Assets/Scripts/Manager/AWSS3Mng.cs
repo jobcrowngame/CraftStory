@@ -7,6 +7,7 @@ using Amazon.S3.Model;
 using UnityEngine;
 using UnityEngine.UI;
 
+using System;
 using System.Collections;
 using System.IO;
 
@@ -84,11 +85,10 @@ public class AWSS3Mng : MonoBehaviour
     /// <summary>
     /// 画像をアップロード
     /// </summary>
-    public void UploadTexture2D(Camera camera)
+    public void UploadTexture2D(Texture2D texture, string fileName)
     {
-        string fileName = "testTexture2d.png";
         //Texture2Dを作成
-        byte[] data = MakeScreenShot(camera);
+        byte[] data = texture.EncodeToPNG();
 
         MemoryStream stream = new MemoryStream(data.Length);
         stream.Write(data, 0, data.Length);
@@ -139,19 +139,5 @@ public class AWSS3Mng : MonoBehaviour
             Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
             img.sprite = sprite;
         });
-    }
-
-    /// <summary>
-    /// スクリーンショット
-    /// </summary>
-    /// <returns></returns>
-    byte[] MakeScreenShot(Camera camera)
-    {
-        var texture = camera.targetTexture;
-        var tex2d = new Texture2D(texture.width, texture.height);
-        RenderTexture.active = texture;
-        tex2d.ReadPixels(new Rect(0, 0, tex2d.width, tex2d.height), 0, 0);
-        tex2d.Apply();
-        return tex2d.EncodeToPNG();
     }
 }

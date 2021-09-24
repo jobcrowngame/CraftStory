@@ -36,6 +36,19 @@ public class BlueprintReNameUI : UIBase
         base.Open();
 
         BlueprintReNameLG.E.UIStep = 0;
+        if (BlueprintReNameLG.E.PhotographTexture != null)
+        {
+            SetIcon(BlueprintReNameLG.E.PhotographTexture);
+            BlueprintReNameLG.E.UIStep++;
+        }
+    }
+
+    public override void Close()
+    {
+        base.Close();
+
+        BlueprintReNameLG.E.PhotographTexture = null;
+        Icon.sprite = null;
     }
 
     /// <summary>
@@ -75,7 +88,15 @@ public class BlueprintReNameUI : UIBase
             return;
         }
 
-        DataMng.E.AddItemInData(3002, 1, input.text, mapData, () =>
+        if (BlueprintReNameLG.E.PhotographTexture == null)
+        {
+            return;
+        }
+
+        string fileName = CommonFunction.GetTextureName();
+        AWSS3Mng.E.UploadTexture2D(BlueprintReNameLG.E.PhotographTexture, fileName);
+
+        DataMng.E.AddBlueprint(3002, 1, input.text, mapData, () =>
         {
             if (DataMng.E.RuntimeData.MapType == MapType.Guide)
             {
