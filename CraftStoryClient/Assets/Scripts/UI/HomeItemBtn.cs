@@ -122,5 +122,10 @@ public enum ItemType
     /// </summary>
     NomoObject = 3000,
 
+    /// <summary>
+    /// 向きがある普通のObject
+    /// </summary>
+    HaveDirectionNomoObject = 3001,
+
     TransferGate = 9999,
 }

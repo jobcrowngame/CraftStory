@@ -195,6 +195,7 @@ public class PlayerCtl : MonoBehaviour
                     case ItemType.Kamado:
                     case ItemType.Door:
                     case ItemType.Mission:
+                    case ItemType.HaveDirectionNomoObject:
                         Lock = true;
                         var direction = CommonFunction.GetCreateEntityDirection(pos);
                         CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), direction);
