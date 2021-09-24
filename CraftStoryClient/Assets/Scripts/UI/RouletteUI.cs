@@ -120,11 +120,12 @@ public class RouletteUI : UIBase
     }
     private void SetTitleIcon()
     {
+        TitleIcon.transform.GetChild(0).gameObject.SetActive(false);
+
         if (again)
         {
             int rang = Random.Range(0, 100);
             string resources;
-            TitleIcon.transform.GetChild(0).gameObject.SetActive(false);
 
             if (rang < 5)
             {
