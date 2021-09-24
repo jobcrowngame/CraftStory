@@ -180,6 +180,8 @@ public class PlayerCtl : MonoBehaviour
                 {
                     case ItemType.Block:
                     case ItemType.Grass:
+                    case ItemType.Lanthanum:
+                    case ItemType.NomoObject:
                         Lock = true;
                         CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
                         PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;

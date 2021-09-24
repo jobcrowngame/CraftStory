@@ -198,6 +198,17 @@ public class MapData
                     entity = CommonFunction.Instantiate<EntityMission>(config.Resources, parent, pos);
                     break;
 
+                case EntityType.DefaltEntity:
+                case EntityType.DefaltSurfaceEntity:
+                    entity = CommonFunction.Instantiate<EntityDefalt>(config.Resources, parent, pos);
+                    break;
+
+                case EntityType.HaveDirectionEntity:
+                case EntityType.HaveDirectionSurfaceEntity:
+                    entity = CommonFunction.Instantiate<EntityHaveDirection>(config.Resources, parent, pos);
+                    break;
+
+
                 default: Logger.Error("not find entityType "+ (EntityType)config.Type); break;
             }
 
@@ -251,11 +262,6 @@ public class MapData
         }
 
         var obstacleList = MapCtl.GetEntityPosListByDirection(entityCell.entityID, pos, (Direction)entityCell.direction);
-        foreach (var item in obstacleList)
-        {
-            Debug.Log(item);
-        }
-       
         foreach (var item in obstacleList)
         {
             map[item.x, item.y, item.z] = new MapCellData() { entityID = 10000 };

@@ -93,7 +93,37 @@ public enum EntityType
     /// </summary>
     Mission = 1002,
     Door = 2000,
+
+    /// <summary>
+    /// 松明
+    /// </summary>
     Torch = 2100,
+
+    /// <summary>
+    /// ランタン
+    /// </summary>
+    Lanthanum = 2101,
+
+    /// <summary>
+    /// 普通のEntity
+    /// </summary>
+    DefaltEntity = 3000,
+
+    /// <summary>
+    /// 普通のEntity（表面と判断しない）
+    /// </summary>
+    DefaltSurfaceEntity = 3001,
+
+    /// <summary>
+    /// 向きがある普通のEntity
+    /// </summary>
+    HaveDirectionEntity = 3002,
+
+    /// <summary>
+    /// 向きがある普通のEntity（表面と判断しない）
+    /// </summary>
+    HaveDirectionSurfaceEntity = 3003,
+
     TransferGate = 9999,
     Obstacle = 10000,
 }

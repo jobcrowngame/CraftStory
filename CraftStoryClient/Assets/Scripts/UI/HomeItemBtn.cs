@@ -111,5 +111,16 @@ public enum ItemType
     Kamado = 1001,
     Door = 2000,
     Torch = 2100,
+
+    /// <summary>
+    /// ランタン
+    /// </summary>
+    Lanthanum = 2101,
+
+    /// <summary>
+    /// 普通のObject
+    /// </summary>
+    NomoObject = 3000,
+
     TransferGate = 9999,
 }

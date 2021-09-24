@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{C85E1AE6-1292-3581-E007-24E077556706}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -286,20 +287,22 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\EntityDefalt.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\EntityHaveDirection.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
-     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.dll" />
-     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.iOS.dll" />
-     <None Include="Assets\Resources\Shader\Simple.shader" />
-     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Core.dll" />
-     <None Include="Assets\GoogleMobileAds\link.xml" />
-     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll" />
-     <None Include="Assets\Resources\Shader\SemiTransparent.shader" />
-     <None Include="Assets\Shaders\UIAdditive.shader" />
-     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Android.dll" />
-     <None Include="Assets\GoogleMobileAds\GoogleMobileAds_version-6.0.2_manifest.txt" />
-     <None Include="Assets\Resources\Shader\Test01.shader" />
+    <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
+    <None Include="Assets\GoogleMobileAds\GoogleMobileAds.dll" />
+    <None Include="Assets\GoogleMobileAds\GoogleMobileAds.iOS.dll" />
+    <None Include="Assets\Resources\Shader\Simple.shader" />
+    <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Core.dll" />
+    <None Include="Assets\GoogleMobileAds\link.xml" />
+    <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll" />
+    <None Include="Assets\Resources\Shader\SemiTransparent.shader" />
+    <None Include="Assets\Shaders\UIAdditive.shader" />
+    <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Android.dll" />
+    <None Include="Assets\GoogleMobileAds\GoogleMobileAds_version-6.0.2_manifest.txt" />
+    <None Include="Assets\Resources\Shader\Test01.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
