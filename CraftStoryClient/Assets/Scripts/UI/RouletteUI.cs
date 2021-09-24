@@ -36,8 +36,8 @@ public class RouletteUI : UIBase
             {
                 int index = (int)rp["index"];
                 var ui = UICtl.E.OpenUI<GachaAddBonusUI>(UIType.GachaAddBonus);
-                ui.Set(index, ConfigMng.E.Gacha[(int)gachaId].Roulette);
-            }, 1);
+                ui.Set(index, (int)gachaId);
+            }, (int)gachaId);
             Close();
         });
     }
