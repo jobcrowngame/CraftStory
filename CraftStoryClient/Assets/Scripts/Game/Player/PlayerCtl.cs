@@ -91,11 +91,6 @@ public class PlayerCtl : MonoBehaviour
         {
             GuideLG.E.GoTo(40);
         }
-
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            UICtl.E.OpenUI<RouletteUI>(UIType.Roulette, UIOpenType.None, 1);
-        }
     }
 
     /// <summary>
@@ -181,6 +176,8 @@ public class PlayerCtl : MonoBehaviour
                 {
                     case ItemType.Block:
                     case ItemType.Grass:
+                    case ItemType.Lanthanum:
+                    case ItemType.NomoObject:
                         Lock = true;
                         CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
                         PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
@@ -194,6 +191,7 @@ public class PlayerCtl : MonoBehaviour
                     case ItemType.Kamado:
                     case ItemType.Door:
                     case ItemType.Mission:
+                    case ItemType.HaveDirectionNomoObject:
                         Lock = true;
                         var direction = CommonFunction.GetCreateEntityDirection(pos);
                         CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), direction);

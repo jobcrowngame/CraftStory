@@ -9,6 +9,7 @@ public class RouletteUI : UIBase
     Button OverMask { get => FindChiled<Button>("OverMask"); }
     Button AgainMask { get => FindChiled<Button>("AgainMask"); }
 
+    int gachaId;
     bool again;
     bool start;
     int index;
@@ -18,21 +19,26 @@ public class RouletteUI : UIBase
     public float curAngle;
     float targetAngle;
 
-    public override void Init(object gachaId)
+    public override void Init(object obj)
     {
-        base.Init(gachaId);
+        base.Init(obj);
         RouletteLG.E.Init(this);
 
         StartBtn.onClick.AddListener(StartRoulette);
-        OverMask.onClick.AddListener(Close);
+        OverMask.onClick.AddListener(()=> 
+        {
+            AudioMng.E.ShowBGM("bgm_01");
+
+            Close();
+        });
         AgainMask.onClick.AddListener(()=> 
         {
             NWMng.E.GachaAddBonusAgain((rp) => 
             {
                 int index = (int)rp["index"];
                 var ui = UICtl.E.OpenUI<GachaAddBonusUI>(UIType.GachaAddBonus);
-                ui.Set(index, 1);
-            }, 1);
+                ui.Set(index, gachaId);
+            }, gachaId);
             Close();
         });
     }
@@ -40,6 +46,7 @@ public class RouletteUI : UIBase
     public override void Open(object gachaId)
     {
         base.Open(gachaId);
+        this.gachaId = (int)gachaId;
         StartBtn.enabled = true;
         start = false;
         RouletteBG.transform.eulerAngles = Vector3.zero;
@@ -84,6 +91,9 @@ public class RouletteUI : UIBase
 
                 OverMask.gameObject.SetActive(!again);
                 AgainMask.gameObject.SetActive(again);
+
+                string seName = again ? "HitSE" : "OffSE";
+                AudioMng.E.ShowSE(seName);
             }
         }
     }
@@ -98,6 +108,8 @@ public class RouletteUI : UIBase
         RouletteBG.transform.eulerAngles = Vector3.zero;
 
         speed = GetSpeed();
+
+        AudioMng.E.ShowSE("rouletteSE");
     }
     private float GetSpeed()
     {
@@ -110,11 +122,12 @@ public class RouletteUI : UIBase
     }
     private void SetTitleIcon()
     {
+        TitleIcon.transform.GetChild(0).gameObject.SetActive(false);
+
         if (again)
         {
             int rang = Random.Range(0, 100);
             string resources;
-            TitleIcon.transform.GetChild(0).gameObject.SetActive(false);
 
             if (rang < 5)
             {

@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4808165963886974728}
   - component: {fileID: 780211707331936245}
-  - component: {fileID: 7937452877471683294}
+  - component: {fileID: 4379931117708381176}
   m_Layer: 5
   m_Name: HintBar
   m_TagString: Untagged
@@ -130,7 +130,7 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &7937452877471683294
+--- !u!114 &4379931117708381176
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

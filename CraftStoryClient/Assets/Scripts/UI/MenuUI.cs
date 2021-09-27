@@ -214,12 +214,14 @@ public class MenuUI : UIBase
         MenuLG.E.Init(this);
 
         menuType = DataMng.E.RuntimeData.MapType;
-        OnIndexChange(0);
     }
     public override void Open()
     {
         base.Open();
         RefreshRedPoint();
+
+        Banner.horizontalNormalizedPosition = 0;
+        OnIndexChange(0);
     }
     public void RefreshRedPoint()
     {

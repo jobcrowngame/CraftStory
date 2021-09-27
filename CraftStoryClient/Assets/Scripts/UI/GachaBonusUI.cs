@@ -42,6 +42,8 @@ public class GachaBonusUI : UIBase
         CutIn.gameObject.SetActive(false);
 
         GachaBonusLG.E.OnOpen();
+
+        AudioMng.E.ShowBGM("gachaBGM");
     }
 
     public void Set(ShopLG.GachaResponse result, int gachaId)

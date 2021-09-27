@@ -114,6 +114,8 @@ public class HomeUI : UIBase
         Init();
 
         RefreshItemBtns();
+
+        AudioMng.E.ShowBGM("bgm_01");
     }
 
     public override void Init()
