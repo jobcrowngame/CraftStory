@@ -137,7 +137,7 @@ public class AWSS3Mng : MonoBehaviour
             tex.Apply();
 
             Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
-            img.sprite = sprite;
+            if(img != null)img.sprite = sprite;
         });
     }
 }

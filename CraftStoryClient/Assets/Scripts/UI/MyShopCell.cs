@@ -94,7 +94,7 @@ public class MyShopCell : UIBase
                         {
                             DataMng.E.MyShop.MyShopItem[Index - 1] = new MyShopItem();
                             DataMng.E.RuntimeData.Coin1 -= 100;
-                            MyShopLG.E.UI.RefreshUI();
+                            ShopBlueprintLG.E.UI.RefreshMyShopWindow();
                             OpenTimer = false;
                         }, myShopItem.site, 0);
                     }
@@ -106,7 +106,7 @@ public class MyShopCell : UIBase
             NWMng.E.OpenPreview(myShopItem.myshopid, (data)=> 
             {
                 var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
-                ui.SetData(data, MyShopLG.E.UI);
+                ui.SetData(data, ShopBlueprintLG.E.UI);
             });
 
         });
@@ -134,7 +134,7 @@ public class MyShopCell : UIBase
                     }
                     else
                     {
-                        MyShopLG.E.UpdateMyShopLevel(cost);
+                        ShopBlueprintLG.E.UpdateMyShopLevel(cost);
                         CommonFunction.ShowHintBar(13);
                     }
                 }, () => { });
@@ -189,7 +189,7 @@ public class MyShopCell : UIBase
                 NWMng.E.LoadBlueprint((rp) =>
                 {
                     DataMng.E.MyShop.MyShopItem[Index - 1] = new MyShopItem();
-                    MyShopLG.E.UI.RefreshUI();
+                    ShopBlueprintLG.E.UI.RefreshMyShopWindow();
                     OpenTimer = false;
                 }, myShopItem.site, 1);
             }

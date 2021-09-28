@@ -13,6 +13,7 @@ public class ItemData
     public string newName { get; set; } // 設計図などの新しい名
     public int equipSite { get; set; } // 装備している箇所
     public string relationData { get; set; } // 連れてるデータ（設計図など）
+    public string textureName { get; set; } // 設計図のテクスチャ
     public int islocked { get; set; } // 販売出来ないようにロック
 
     public ItemData() { }

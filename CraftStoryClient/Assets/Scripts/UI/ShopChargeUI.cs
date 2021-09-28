@@ -17,9 +17,6 @@ public class ShopChargeUI : UIBase
 
     ShopItemCell[] chargeBtns;
 
-    string des = @"à–¾
-";
-
     public override void Init()
     {
         base.Init();
@@ -35,7 +32,7 @@ public class ShopChargeUI : UIBase
             ShopChargeLG.E.Type = (ShopChargeLG.UiType)index;
         });
 
-        Des.text = des;
+        Des.text = ConfigMng.E.MText[2].Text;
 
         UrlBtn1.onClick.AddListener(() => { Application.OpenURL(PublicPar.UrlBtn1); });
         UrlBtn2.onClick.AddListener(() => { Application.OpenURL(PublicPar.UrlBtn2); });

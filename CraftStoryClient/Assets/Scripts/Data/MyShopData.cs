@@ -44,12 +44,14 @@ public class MyShopData
 /// </summary>
 public struct MyShopItem
 {
+    public string targetAcc { get; set; }
     public int myshopid { get; set; }
     public int itemId { get; set; }
     public string nickName { get; set; }
     public string newName { get; set; }
+    public string icon { get; set; }
+    public int goodNum { get; set; }
     public int price { get; set; }
     public int site { get; set; }
-    public string data { get; set; }
     public DateTime created_at { get; set; }
 }

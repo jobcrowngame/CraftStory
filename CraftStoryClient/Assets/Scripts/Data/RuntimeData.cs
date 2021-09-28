@@ -45,4 +45,9 @@ public class RuntimeData
     public int GuideId { get; set; } // 進んでるチュートリアルID
 
     public bool IsPreviev { get; set; } // 今、プレビュー状態タグ
+
+    /// <summary>
+    /// マイショップいいねした数
+    /// </summary>
+    public int MyShopGoodNum { get; set; }
 }

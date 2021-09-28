@@ -96,7 +96,7 @@ public class BlueprintReNameUI : UIBase
         string fileName = CommonFunction.GetTextureName();
         AWSS3Mng.E.UploadTexture2D(BlueprintReNameLG.E.PhotographTexture, fileName);
 
-        DataMng.E.AddBlueprint(3002, 1, input.text, mapData, () =>
+        DataMng.E.AddBlueprint(3002, 1, input.text, mapData, fileName,() =>
         {
             if (DataMng.E.RuntimeData.MapType == MapType.Guide)
             {

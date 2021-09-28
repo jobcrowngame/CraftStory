@@ -123,7 +123,8 @@ namespace ExcelToJson
                 case "RouletteCell": list = RouletteCell(tbl); break;
                 case "LoginBonus": list = LoginBonus(tbl); break;
                 case "Mission": list = Mission(tbl); break;
-                    
+                case "MText": list = MText(tbl); break;
+
 
 
                 default: Console.WriteLine("not find fileName function."); break;
@@ -590,6 +591,21 @@ namespace ExcelToJson
                     Chat1 = ToString(tbl.Rows[i]["Chat1"]),
                     Chat2 = ToString(tbl.Rows[i]["Chat2"]),
                     RojicType = ToInt32(tbl.Rows[i]["RojicType"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object MText(DataTable tbl)
+        {
+            List<MText> list = new List<MText>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new MText()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Text = ToString(tbl.Rows[i]["Text"]),
                 };
 
                 list.Add(data);

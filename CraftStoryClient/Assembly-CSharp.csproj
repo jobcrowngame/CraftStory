@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\UI\ShopUI.Gacha.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusUI.cs" />
     <Compile Include="Assets\Scripts\UI\GachaVerificationLG.cs" />
+    <Compile Include="Assets\Scripts\UI\MarketLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\TransferGate.cs" />
     <Compile Include="Assets\Scripts\UI\Terms02UI.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryUI.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Assets\Scripts\Test\TestCreateObj.cs" />
     <Compile Include="Assets\Scripts\Test\DragObj.cs" />
     <Compile Include="Assets\Scripts\UI\EmailUI.cs" />
+    <Compile Include="Assets\Scripts\UI\MarketUI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityHaveDirection.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Entity.cs" />
     <Compile Include="Assets\Scripts\UI\GachaAddBonusUI.cs" />
@@ -117,8 +119,10 @@
     <Compile Include="Assets\Scripts\UI\MyShopLG.cs" />
     <Compile Include="Assets\Scripts\UI\EmailDetailsLG.cs" />
     <Compile Include="Assets\Scripts\Game\Player\BlueprintPreviewCtl.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopBlueprintUI.cs" />
     <Compile Include="Assets\Scripts\Manager\ConfigMng.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyToggle.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopGachaUI.cs" />
     <Compile Include="Assets\Scripts\UI\HomeItemBtn.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Shop.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\RouletteCell.cs" />
@@ -146,6 +150,7 @@
     <Compile Include="Assets\Scripts\UI\NoticeLG.cs" />
     <Compile Include="Assets\Scripts\UI\EmailCell.cs" />
     <Compile Include="Assets\Scripts\Manager\AudioMng.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\Title2UI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
     <Compile Include="Assets\Scripts\Manager\CryptMng.cs" />
     <Compile Include="Assets\Scripts\Test\Monster\PlayerController2.cs" />
@@ -166,6 +171,7 @@
     <Compile Include="Assets\Scripts\UI\FriendSearchLG.cs" />
     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyButton.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopBlueprintLG.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityGrass.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusCell.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerEntity.cs" />
@@ -182,16 +188,18 @@
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionItemCell.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopGachaLG.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csMouseOrbit.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeCell.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopMyShopItemCell.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopBlueprintDetailsCell.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemLG.cs" />
     <Compile Include="Assets\Scripts\Manager\EffectMng.cs" />
     <Compile Include="Assets\Scripts\UI\MissionLG.cs" />
     <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeCell.cs" />
     <Compile Include="Assets\Scripts\Manager\TimeZoneMng.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopChargeLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mail.cs" />
     <Compile Include="Assets\Scripts\Data\UserData.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyToggleGroupCtl.cs" />
@@ -200,10 +208,12 @@
     <Compile Include="Assets\Scripts\Game\Player\ScreenDraggingCtl.cs" />
     <Compile Include="Assets\Scripts\UI\UILogicBase.cs" />
     <Compile Include="Assets\Scripts\UI\BagSelectItem.cs" />
+    <Compile Include="Assets\Scripts\Manager\AWSS3Mng.cs" />
     <Compile Include="Assets\Scripts\UI\Common\HintBarUI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapCtl.cs" />
     <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
     <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
+    <Compile Include="Assets\Scripts\UI\MapUI.cs" />
     <Compile Include="Assets\Scripts\UI\BraveCell.cs" />
     <Compile Include="Assets\Scripts\UI\PlayDescriptionLG.cs" />
     <Compile Include="Assets\Scripts\UI\UICtl.cs" />
@@ -211,6 +221,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mountain.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsLG.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintPreviewUI.cs" />
+    <Compile Include="Assets\Scripts\UI\BlueprintReNameLG.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsUI.cs" />
     <Compile Include="Assets\Scripts\UI\MissionUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
@@ -218,6 +229,7 @@
     <Compile Include="Assets\Scripts\Data\MyShopData.cs" />
     <Compile Include="Assets\Scripts\UI\FriendHomeUI.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeUI.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopChargeUI.cs" />
     <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
     <Compile Include="Assets\Scripts\UI\DebugCell.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerController.cs" />
@@ -225,6 +237,7 @@
     <Compile Include="Assets\Scripts\UI\CraftItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\FriednCell.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion2.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\MText.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintCell.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerBehavior.cs" />
     <Compile Include="Assets\Scripts\UI\HomeLG.cs" />
@@ -232,6 +245,7 @@
     <Compile Include="Assets\Scripts\UI\TermsLG.cs" />
     <Compile Include="Assets\Scripts\UI\DeleteItemLG.cs" />
     <Compile Include="Assets\Scripts\UI\FriendSearchUI.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopResourceUI.cs" />
     <Compile Include="Assets\Scripts\UI\LoginUI.cs" />
     <Compile Include="Assets\Scripts\Common\Single.cs" />
     <Compile Include="Assets\Scripts\UI\MenuUI.cs" />
@@ -287,17 +301,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\UI\MapUI.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopResourceUI.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopGachaUI.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopGachaLG.cs" />
-    <Compile Include="Assets\Scripts\Manager\AWSS3Mng.cs" />
-    <Compile Include="Assets\Scripts\UI\MarketUI.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopChargeLG.cs" />
-    <Compile Include="Assets\Scripts\UI\BlueprintReNameLG.cs" />
-    <Compile Include="Assets\Scripts\UI\Common\Title2UI.cs" />
-    <Compile Include="Assets\Scripts\UI\MarketLG.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopChargeUI.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopBlueprintCell.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
@@ -526,8 +530,17 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
+    <Reference Include="AWSSDK.Core">
+      <HintPath>Assets\Plugins\AWSSDK\AWSSDK.Core.dll</HintPath>
+    </Reference>
     <Reference Include="LitJSON">
       <HintPath>Assets\Plugins\Lib\LitJSON.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.S3">
+      <HintPath>Assets\Plugins\AWSSDK\AWSSDK.S3.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.CognitoIdentity">
+      <HintPath>Assets\Plugins\AWSSDK\AWSSDK.CognitoIdentity.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMobileAds.Common">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Common.dll</HintPath>
@@ -538,20 +551,11 @@
     <Reference Include="GoogleMobileAds.Unity">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="GoogleMobileAds.Core">
-      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="AWSSDK.Core">
-      <HintPath>Assets\Plugins\AWSSDK\AWSSDK.Core.dll</HintPath>
-    </Reference>
     <Reference Include="AWSSDK.SecurityToken">
       <HintPath>Assets\Plugins\AWSSDK\AWSSDK.SecurityToken.dll</HintPath>
     </Reference>
-    <Reference Include="AWSSDK.S3">
-      <HintPath>Assets\Plugins\AWSSDK\AWSSDK.S3.dll</HintPath>
-    </Reference>
-    <Reference Include="AWSSDK.CognitoIdentity">
-      <HintPath>Assets\Plugins\AWSSDK\AWSSDK.CognitoIdentity.dll</HintPath>
+    <Reference Include="GoogleMobileAds.Core">
+      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Core.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

@@ -41,7 +41,8 @@ public class WorldMng : MonoBehaviour
             GuideLG.E.SetGuideItems();
 
         // ホームマップの場合、設計図プレイビューコンソールObjectを追加
-        if (DataMng.E.RuntimeData.MapType == MapType.Home)
+        if (DataMng.E.RuntimeData.MapType == MapType.Home ||
+                DataMng.E.RuntimeData.MapType == MapType.Market)
             PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
 
         AdventureCtl.E.Init();

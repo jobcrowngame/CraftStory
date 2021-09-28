@@ -7,7 +7,7 @@ public partial class ShopUI : UIBase
     TitleUI title;
     MyButton[] btns;
     ShopItemCell[] chargeBtns;
-    List<ShopMyShopItemCell> myshopItems = new List<ShopMyShopItemCell>();
+    List<ShopBlueprintDetailsCell> myshopItems = new List<ShopBlueprintDetailsCell>();
 
     Transform SubTitle { get => FindChiled("SubTitle"); }
     Text SubTitleText { get => FindChiled<Text>("SubTitleText"); }
@@ -194,7 +194,7 @@ public partial class ShopUI : UIBase
         {
             foreach (var item in items)
             {
-                var cell = AddCell<ShopMyShopItemCell>("Prefabs/UI/ShopMyShopItem", itemGridRoot2);
+                var cell = AddCell<ShopBlueprintDetailsCell>("Prefabs/UI/ShopMyShopItem", itemGridRoot2);
                 cell.Set(item);
                 myshopItems.Add(cell);
             }

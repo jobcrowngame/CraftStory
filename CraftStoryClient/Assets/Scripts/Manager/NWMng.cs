@@ -43,7 +43,7 @@ public partial class NWMng : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.ProductionURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.LocalURL))
         {
             yield return www.SendWebRequest();
 
@@ -202,13 +202,14 @@ public partial class NWMng : MonoBehaviour
     /// <summary>
     /// 設計図を手に入る
     /// </summary>
-    public void AddItemInData(Action<JsonData> rp, int itemId, int count, string newName, string rdata)
+    public void AddItemInData(Action<JsonData> rp, int itemId, int count, string newName, string rdata, string textureName)
     {
         var data = new NWData();
         data.Add("itemId",itemId);
         data.Add("count", count);
         data.Add("newName",newName);
         data.Add("rdata",rdata);
+        data.Add("textureName", textureName);
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddItemInData));
     }
@@ -821,6 +822,17 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.GetMissionBonus));
     }
 
+    /// <summary>
+    /// マイショップいいね
+    /// </summary>
+    public void MyShopGoodEvent(Action<JsonData> rp, string targetAcc)
+    {
+        var data = new NWData();
+        data.Add("targetAcc", targetAcc);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.MyShopGoodEvent));
+    }
+
 
 
 
@@ -917,6 +929,7 @@ public partial class NWMng : MonoBehaviour
         GetMissionInfo,
         ClearMission,
         GetMissionBonus,
+        MyShopGoodEvent,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

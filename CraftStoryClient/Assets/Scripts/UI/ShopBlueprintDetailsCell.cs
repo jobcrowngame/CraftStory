@@ -4,30 +4,52 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopMyShopItemCell : UIBase
+public class ShopBlueprintDetailsCell : UIBase
 {
-    Image Icon { get => FindChiled<Image>("Icon"); }
-    Text NickName { get => FindChiled<Text>("NickName"); }
-    Text ItemName { get => FindChiled<Text>("ItemName"); }
+    Image Icon { get => transform.GetComponent<Image>(); }
+    Text Title { get => FindChiled<Text>("Title"); }
+    Text UserName { get => FindChiled<Text>("UserName"); }
+    Text Price { get => FindChiled<Text>("Price"); }
     Text Time { get => FindChiled<Text>("Time"); }
+
+    Button GoodBtn { get => FindChiled<Button>("Button"); }
+    Text GoodNum { get => FindChiled<Text>("GoodNum"); }
     Button BuyBtn { get => FindChiled<Button>("BuyBtn"); }
-    Button PreviewBtn { get => FindChiled<Button>("PreviewBtn"); }
-    Text BuyBtnText { get => FindChiled<Text>("Text", BuyBtn.transform); }
-    Image BtnCostIcon { get => FindChiled<Image>("Image", BuyBtn.transform); }
+    Button PreviewBtn { get => transform.GetComponent<Button>(); }
 
     MyShopItem data;
 
+    public string TargetAcc { get => data.targetAcc; }
+
     public void Set(MyShopItem data)
     {
-        Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[data.itemId].IconResourcesPath);
-        NickName.text = data.nickName;
-        ItemName.text = data.newName;
-        BuyBtnText.text = data.price.ToString();
-        BtnCostIcon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[9002].IconResourcesPath);
+        if (data.itemId == 0)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
 
-        PreviewBtn.gameObject.SetActive(true);
-        BtnCostIcon.gameObject.SetActive(true);
+        AWSS3Mng.E.DownLoadTexture2D(Icon, data.icon);
 
+        Title.text = data.newName;
+        UserName.text = data.nickName;
+        Price.text = data.price.ToString();
+        GoodNum.text = data.goodNum.ToString();
+
+        GoodBtn.onClick.AddListener(() =>
+        {
+            if (DataMng.E.RuntimeData.MyShopGoodNum >= 3)
+            {
+                CommonFunction.ShowHintBar(1047001);
+                return;
+            }
+
+            NWMng.E.MyShopGoodEvent((rp) =>
+            {
+                ShopBlueprintLG.E.RefreshGoodNum(data.targetAcc);
+                DataMng.E.RuntimeData.MyShopGoodNum++;
+            }, data.targetAcc);
+        });
         BuyBtn.onClick.AddListener(() =>
         {
             string msg = string.Format(@"ポイントを「{0}」消費して、
@@ -64,6 +86,12 @@ public class ShopMyShopItemCell : UIBase
         this.data = data;
         StartCoroutine(RefreshTime(data));
     }
+    public void GoodNumberAdd()
+    {
+        data.goodNum++;
+        GoodNum.text = data.goodNum.ToString();
+    }
+
 
     private IEnumerator RefreshTime(MyShopItem data)
     {

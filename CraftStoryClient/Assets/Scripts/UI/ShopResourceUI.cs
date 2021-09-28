@@ -9,9 +9,6 @@ public class ShopResourceUI : UIBase
     Button BackBtn { get => FindChiled<Button>("BackBtn"); }
     Transform ItemsWind { get => FindChiled("ItemsWind"); }
 
-    string des = @"à–¾
-";
-
     public override void Init()
     {
         base.Init();
@@ -23,7 +20,7 @@ public class ShopResourceUI : UIBase
         ToggleBtns.Init();
         ToggleBtns.OnValueChangeAddListener((index) => { RefreshItemWindow(index); });
 
-        Des.text = des;
+        Des.text = ConfigMng.E.MText[3].Text;
 
         BackBtn.onClick.AddListener(Close);
     }

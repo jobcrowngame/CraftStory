@@ -9,26 +9,28 @@ using LitJson;
 /// </summary>
 class ConfigMng : Single<ConfigMng>
 {
-    Dictionary<int, Bonus> bonusConfig;
-    Dictionary<int, Map> mapConfig;
-    Dictionary<int, Mountain> mountainConfig;
-    Dictionary<int, Resource> resourceConfig;
-    Dictionary<int, TransferGate> transferGateConfig;
-    Dictionary<int, Item> itemConfig;
-    Dictionary<int, Craft> craftConfig;
-    Dictionary<int, Building> buildingConfig;
-    Dictionary<int, Shop> shopConfig;
-    Dictionary<int, ErrorMsg> errorMsgConfig;
-    Dictionary<int, Blueprint> blueprintConfig;
-    Dictionary<int, Entity> entityConfig;
-    Dictionary<int, Guide> guideConfig;
-    Dictionary<int, GuideStep> guideStepConfig;
-    Dictionary<int, Gacha> gachaConfig;
-    Dictionary<int, Roulette> rouletteConfig;
-    Dictionary<int, RouletteCell> rouletteCellConfig;
-    Dictionary<int, RandomBonusPond> randomBonusPondConfig;
-    Dictionary<int, Mission> MissionConfig;
+    Dictionary<int, Bonus> bonusConfig = new Dictionary<int, Bonus>();
+    Dictionary<int, Map> mapConfig = new Dictionary<int, Map>();
+    Dictionary<int, Mountain> mountainConfig = new Dictionary<int, Mountain>();
+    Dictionary<int, Resource> resourceConfig = new Dictionary<int, Resource>();
+    Dictionary<int, TransferGate> transferGateConfig = new Dictionary<int, TransferGate>();
+    Dictionary<int, Item> itemConfig = new Dictionary<int, Item>();
+    Dictionary<int, Craft> craftConfig = new Dictionary<int, Craft>();
+    Dictionary<int, Building> buildingConfig = new Dictionary<int, Building>();
+    Dictionary<int, Shop> shopConfig = new Dictionary<int, Shop>();
+    Dictionary<int, ErrorMsg> errorMsgConfig = new Dictionary<int, ErrorMsg>();
+    Dictionary<int, Blueprint> blueprintConfig = new Dictionary<int, Blueprint>();
+    Dictionary<int, Entity> entityConfig = new Dictionary<int, Entity>();
+    Dictionary<int, Guide> guideConfig = new Dictionary<int, Guide>();
+    Dictionary<int, GuideStep> guideStepConfig = new Dictionary<int, GuideStep>();
+    Dictionary<int, Gacha> gachaConfig = new Dictionary<int, Gacha>();
+    Dictionary<int, Roulette> rouletteConfig = new Dictionary<int, Roulette>();
+    Dictionary<int, RouletteCell> rouletteCellConfig = new Dictionary<int, RouletteCell>();
+    Dictionary<int, RandomBonusPond> randomBonusPondConfig = new Dictionary<int, RandomBonusPond>();
+    Dictionary<int, Mission> MissionConfig = new Dictionary<int, Mission>();
+    Dictionary<int, MText> MTextConfig = new Dictionary<int, MText>();
 
+    public Dictionary<int, MText> MText { get => MTextConfig; }
     public Dictionary<int, Mission> Mission { get => MissionConfig; }
     public Dictionary<int, RandomBonusPond> RandomBonusPond { get => randomBonusPondConfig; }
     public Dictionary<int, RouletteCell> RouletteCell { get => rouletteCellConfig; }
@@ -51,26 +53,7 @@ class ConfigMng : Single<ConfigMng>
 
     public IEnumerator InitInitCoroutine()
     {
-        bonusConfig = new Dictionary<int, Bonus>();
-        mapConfig = new Dictionary<int, Map>();
-        mountainConfig = new Dictionary<int, Mountain>();
-        resourceConfig = new Dictionary<int, Resource>();
-        transferGateConfig = new Dictionary<int, TransferGate>();
-        itemConfig = new Dictionary<int, Item>();
-        craftConfig = new Dictionary<int, Craft>();
-        buildingConfig = new Dictionary<int, Building>();
-        shopConfig = new Dictionary<int, Shop>();
-        errorMsgConfig = new Dictionary<int, ErrorMsg>();
-        blueprintConfig = new Dictionary<int, Blueprint>();
-        entityConfig = new Dictionary<int, Entity>();
-        guideConfig = new Dictionary<int, Guide>();
-        guideStepConfig = new Dictionary<int, GuideStep>();
-        gachaConfig = new Dictionary<int, Gacha>();
-        rouletteConfig = new Dictionary<int, Roulette>();
-        rouletteCellConfig = new Dictionary<int, RouletteCell>();
-        randomBonusPondConfig = new Dictionary<int, RandomBonusPond>();
-        MissionConfig = new Dictionary<int, Mission>();
-
+        ReadConfig("Config/MText", MTextConfig);
         ReadConfig("Config/Mission", MissionConfig);
         ReadConfig("Config/RandomBonusPond", randomBonusPondConfig);
         ReadConfig("Config/RouletteCell", rouletteCellConfig);

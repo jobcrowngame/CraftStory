@@ -227,7 +227,10 @@ public class UICtl : Single<UICtl>
             case UIType.ShopCharge: return "Prefabs/UI/ShopCharge";
             case UIType.ShopGacha: return "Prefabs/UI/ShopGacha";
             case UIType.ShopResource: return "Prefabs/UI/ShopResource";
+            case UIType.ShopBlueprint: return "Prefabs/UI/ShopBlueprint";
                 
+
+
             default: Logger.Error("not find UIType " + ui); return "";
         }
     }
@@ -307,4 +310,5 @@ public enum UIType
     ShopCharge,
     ShopGacha,
     ShopResource,
+    ShopBlueprint,
 }

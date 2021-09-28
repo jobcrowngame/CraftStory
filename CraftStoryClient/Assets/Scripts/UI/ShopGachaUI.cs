@@ -14,9 +14,6 @@ public class ShopGachaUI : UIBase
     Text Cost { get => FindChiled<Text>("Cost"); }
     Image GachaIcon { get => FindChiled<Image>("GachaIcon"); }
 
-    string des = @"à–¾
-";
-
     public override void Init()
     {
         base.Init();
@@ -38,7 +35,7 @@ public class ShopGachaUI : UIBase
             ShopGachaLG.E.GachaType = index;
         });
 
-        Des.text = des;
+        Des.text = ConfigMng.E.MText[1].Text;
         BackBtn.onClick.AddListener(Close);
 
         RatioBtn.onClick.AddListener(() =>
