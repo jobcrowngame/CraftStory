@@ -81,8 +81,17 @@ public class BlueprintPreviewUI : UIBase
         base.Close();
         PlayerCtl.E.BlueprintPreviewCtl.Show(false);
 
-        HomeLG.E.UI.Open();
-        if (beforUI != null) beforUI.Open();
+        if (HomeLG.E.UI != null)
+        {
+            HomeLG.E.UI.Open();
+            if(beforUI != null) beforUI.Open();
+        }
+
+        if (MarketLG.E.UI != null)
+        {
+            MarketLG.E.UI.Open();
+            if (beforUI != null) beforUI.Open();
+        }
 
         WorldMng.E.GameTimeCtl.Active = true;
         DataMng.E.RuntimeData.IsPreviev = false;

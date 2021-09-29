@@ -18,6 +18,8 @@ public class MarketUI : UIBase
         WorldMng.E.CreateGameObjects();
         WorldMng.E.GameTimeCtl.Active = false;
 
+        UICtl.E.AddUI(this, UIType.Market);
+
         Init();
     }
 

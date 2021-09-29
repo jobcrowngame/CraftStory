@@ -315,4 +315,5 @@ public enum UIType
     ShopBlueprint,
     ShopBlueprintDetails,
     Chat,
+    Market,
 }
