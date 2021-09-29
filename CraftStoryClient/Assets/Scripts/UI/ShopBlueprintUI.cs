@@ -50,7 +50,6 @@ public class ShopBlueprintUI : UIBase
             "“o˜^‚ªŒÃ‚¢‡",
             "w“ü‚ª‘½‚¢",
             "ƒ†[ƒU[‚¢‚¢‚Ë”‚ª‘½‚¢",
-            "ÅV",
         });
         Dropdown.value = 0;
         Dropdown.onValueChanged.AddListener((value) =>
@@ -134,7 +133,7 @@ public class ShopBlueprintUI : UIBase
         {
             if (item.Type == 5)
             {
-                var cell = AddCell<ShopItemCell>("Prefabs/UI/ShopBlueprintCell", BlueprintItemParent);
+                var cell = AddCell<ShopBlueprintMyShopItemCell>("Prefabs/UI/ShopBlueprintCell", BlueprintItemParent);
                 cell.Init(item);
             }
         }

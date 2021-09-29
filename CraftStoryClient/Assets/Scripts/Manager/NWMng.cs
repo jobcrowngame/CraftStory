@@ -43,7 +43,7 @@ public partial class NWMng : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.LocalURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.TestURL))
         {
             yield return www.SendWebRequest();
 
@@ -400,13 +400,15 @@ public partial class NWMng : MonoBehaviour
     /// <param name="itemGuid"></param>
     /// <param name="site"></param>
     /// <param name="price"></param>
-    public void UploadBlueprintToMyShop(Action<JsonData> rp, int itemGuid, int site, int price)
+    /// <param name="fileName">S3にアップロードするテクスチャ名</param>
+    public void UploadBlueprintToMyShop(Action<JsonData> rp, int itemGuid, int site, int price, string texture)
     {
         var data = new NWData();
         data.Add("nickName", DataMng.E.RuntimeData.NickName);
         data.Add("itemGuid", itemGuid);
         data.Add("site", site);
         data.Add("price", price);
+        data.Add("texture", texture);
 
         StartCoroutine(HttpRequest(rp, data, CMD.UploadBlueprintToMyShop));
     }
@@ -833,6 +835,19 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.MyShopGoodEvent));
     }
 
+    /// <summary>
+    /// アイテムGUIDによって設計図詳細データをゲット
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="myshopId"></param>
+    public void GetBlueprintPreviewDataByItemGuid(Action<JsonData> rp, int guid)
+    {
+        var data = new NWData();
+        data.Add("guid", guid);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetBlueprintPreviewDataByItemGuid));
+    }
+
 
 
 
@@ -930,6 +945,7 @@ public partial class NWMng : MonoBehaviour
         ClearMission,
         GetMissionBonus,
         MyShopGoodEvent,
+        GetBlueprintPreviewDataByItemGuid,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

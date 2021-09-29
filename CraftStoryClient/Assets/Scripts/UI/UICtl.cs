@@ -229,7 +229,8 @@ public class UICtl : Single<UICtl>
             case UIType.ShopResource: return "Prefabs/UI/ShopResource";
             case UIType.ShopBlueprint: return "Prefabs/UI/ShopBlueprint";
             case UIType.ShopBlueprintDetails: return "Prefabs/UI/ShopBlueprintDetails";
-                
+            case UIType.Chat: return "Prefabs/UI/Chat";
+
 
 
             default: Logger.Error("not find UIType " + ui); return "";
@@ -313,4 +314,5 @@ public enum UIType
     ShopResource,
     ShopBlueprint,
     ShopBlueprintDetails,
+    Chat,
 }

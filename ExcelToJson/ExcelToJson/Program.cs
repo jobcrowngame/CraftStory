@@ -124,6 +124,7 @@ namespace ExcelToJson
                 case "LoginBonus": list = LoginBonus(tbl); break;
                 case "Mission": list = Mission(tbl); break;
                 case "MText": list = MText(tbl); break;
+                case "Chat": list = Chat(tbl); break;
 
 
 
@@ -605,6 +606,23 @@ namespace ExcelToJson
                 var data = new MText()
                 {
                     ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Text = ToString(tbl.Rows[i]["Text"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Chat(DataTable tbl)
+        {
+            List<Chat> list = new List<Chat>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Chat()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    CharacterIcon = ToString(tbl.Rows[i]["CharacterIcon"]),
+                    NameIcon = ToString(tbl.Rows[i]["NameIcon"]),
                     Text = ToString(tbl.Rows[i]["Text"]),
                 };
 

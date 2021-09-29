@@ -55,7 +55,7 @@ public class TimeZoneMng : MonoBehaviour
     {
         while (true)
         {
-            SecondTimerEvent02.Invoke();
+            SecondTimerEvent03.Invoke();
             yield return new WaitForSeconds(1f);
         }
     }

@@ -69,23 +69,43 @@ public class EntityFunctionalObject : EntityBase
                 break;
 
             case EntityType.ChargeShop:
-                UICtl.E.OpenUI<ShopChargeUI>(UIType.ShopCharge);
+                var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 1);
+                chatUi.AddListenerOnClose(() =>
+                {
+                    UICtl.E.OpenUI<ShopChargeUI>(UIType.ShopCharge);
+                });
                 break;
 
             case EntityType.GachaShop:
-                UICtl.E.OpenUI<ShopGachaUI>(UIType.ShopGacha);
+                chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 2);
+                chatUi.AddListenerOnClose(() =>
+                {
+                    UICtl.E.OpenUI<ShopGachaUI>(UIType.ShopGacha);
+                });
                 break;
 
             case EntityType.ResourceShop:
-                UICtl.E.OpenUI<ShopResourceUI>(UIType.ShopResource);
+                chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 3);
+                chatUi.AddListenerOnClose(() =>
+                {
+                    UICtl.E.OpenUI<ShopResourceUI>(UIType.ShopResource);
+                });
                 break;
 
             case EntityType.BlueprintShop:
-                UICtl.E.OpenUI<ShopBlueprintUI>(UIType.ShopBlueprint);
+                chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 4);
+                chatUi.AddListenerOnClose(() =>
+                {
+                    UICtl.E.OpenUI<ShopBlueprintUI>(UIType.ShopBlueprint);
+                });
                 break;
 
             case EntityType.GiftShop:
-                UICtl.E.OpenUI<ExchangePointUI>(UIType.ExchangePoint);
+                chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 5);
+                chatUi.AddListenerOnClose(() =>
+                {
+                    UICtl.E.OpenUI<ExchangePointUI>(UIType.ExchangePoint);
+                });
                 break;
 
             default: Logger.Error("not find entityType " + Type); break;

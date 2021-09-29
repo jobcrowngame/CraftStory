@@ -207,8 +207,8 @@ public class MyShopCell : UIBase
             else
             {
                 Time.text = t.Days > 0 ?
-                    string.Format("{0}日", t.Days) :
-                    string.Format("{1}:{2}:{3}", t.Days, t.Hours, t.Minutes, t.Seconds);
+                    string.Format("残り時間: {0}日", t.Days) :
+                    string.Format("残り時間: {1}:{2}:{3}", t.Days, t.Hours, t.Minutes, t.Seconds);
             }
         }
     }

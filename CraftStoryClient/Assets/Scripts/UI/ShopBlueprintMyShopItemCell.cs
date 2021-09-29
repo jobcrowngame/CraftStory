@@ -1,8 +1,8 @@
-using JsonConfigData;
+﻿using JsonConfigData;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopItemCell : UIBase
+public class ShopBlueprintMyShopItemCell : UIBase
 {
     Transform Limited { get => FindChiled("Limited"); }
     Image Icon { get => FindChiled<Image>("Icon"); }
@@ -48,11 +48,11 @@ public class ShopItemCell : UIBase
             //Logger.Log("OnClickBuyBtn " + config.Name);
             //NWMng.E.IAP.OnPurchaseClicked(config.Name);
         }
-        else if (type == ShopType.Point 
-            || type == ShopType.Exchange 
+        else if (type == ShopType.Point
+            || type == ShopType.Exchange
             || type == ShopType.Blueprint)
         {
-            CommonFunction.ShowHintBox(config.IconResources, config.Des2, 
+            CommonFunction.ShowHintBox(config.IconResources, config.Des2,
                 () => {
                     NWMng.E.Buy((rp) =>
                     {
@@ -60,12 +60,12 @@ public class ShopItemCell : UIBase
                         NWMng.E.GetCoins((rp3) =>
                         {
                             DataMng.GetCoins(rp3);
-                            ShopLG.E.UI.RefreshCoins();
+                            ShopBlueprintLG.E.UI.RefreshCoin();
                         });
 
                         CommonFunction.ShowHintBar(5);
                     }, config.ID);
-                },()=> { });
+                }, () => { });
         }
     }
 

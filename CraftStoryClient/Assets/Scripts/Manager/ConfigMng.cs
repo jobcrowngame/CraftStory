@@ -29,7 +29,9 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, RandomBonusPond> randomBonusPondConfig = new Dictionary<int, RandomBonusPond>();
     Dictionary<int, Mission> MissionConfig = new Dictionary<int, Mission>();
     Dictionary<int, MText> MTextConfig = new Dictionary<int, MText>();
+    Dictionary<int, Chat> ChatConfig = new Dictionary<int, Chat>();
 
+    public Dictionary<int, Chat> Chat { get => ChatConfig; }
     public Dictionary<int, MText> MText { get => MTextConfig; }
     public Dictionary<int, Mission> Mission { get => MissionConfig; }
     public Dictionary<int, RandomBonusPond> RandomBonusPond { get => randomBonusPondConfig; }
@@ -53,6 +55,7 @@ class ConfigMng : Single<ConfigMng>
 
     public IEnumerator InitInitCoroutine()
     {
+        ReadConfig("Config/Chat", ChatConfig);
         ReadConfig("Config/MText", MTextConfig);
         ReadConfig("Config/Mission", MissionConfig);
         ReadConfig("Config/RandomBonusPond", randomBonusPondConfig);
