@@ -52,6 +52,12 @@ public class EntityFunctionalObject : EntityBase
     {
         base.OnClick();
 
+        if (!CheckDistance ())
+        {
+            CommonFunction.ShowHintBar(30);
+            return;
+        }
+
         switch (Type)
         {
             case EntityType.Door:
@@ -110,5 +116,10 @@ public class EntityFunctionalObject : EntityBase
 
             default: Logger.Error("not find entityType " + Type); break;
         }
+    }
+
+    private bool CheckDistance()
+    {
+        return CommonFunction.GetDistance(transform.position, PlayerCtl.E.PlayerEntity.transform.position) < 3;
     }
 }

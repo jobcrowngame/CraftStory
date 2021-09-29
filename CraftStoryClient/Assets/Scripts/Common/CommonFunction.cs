@@ -473,4 +473,16 @@ public class CommonFunction
             DateTime.Now.ToString("yyyyMMddhhmmss"));
         return fileName;
     }
+
+    /// <summary>
+    /// 距離をゲット
+    /// </summary>
+    /// <param name="p1"></param>
+    /// <param name="p2"></param>
+    /// <returns></returns>
+    public static float GetDistance(Vector3 p1, Vector3 p2)
+    {
+        return Mathf.Abs(Vector3.Distance(p1, p2));
+    }
+
 }
