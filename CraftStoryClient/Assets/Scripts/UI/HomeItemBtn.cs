@@ -87,6 +87,11 @@ public class HomeItemBtn : UIBase
             Count.text = itemData.Config().MaxCount == 1
                 ? ""
                 : "x" + itemData.count;
+
+            if (itemData != null && !string.IsNullOrEmpty(itemData.textureName))
+            {
+                AWSS3Mng.E.DownLoadTexture2D(Icon, itemData.textureName);
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ public class BraveLG : UILogicBase<BraveLG, BraveUI>
 
         isInited = true;
 
-        TimeZoneMng.E.AddSecondTimerEvent01(() => 
+        TimeZoneMng.E.AddTimerEvent01(() => 
         {
             if (itemStack.Count > 0)
             {

@@ -99,6 +99,7 @@
     <Compile Include="Assets\Scripts\UI\GuideUI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityResources.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopBlueprintCell.cs" />
     <Compile Include="Assets\Scripts\Test\CreateUIMng.cs" />
     <Compile Include="Assets\Scripts\Test\RunTest.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Gacha.cs" />
@@ -192,7 +193,7 @@
     <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csMouseOrbit.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeCell.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopBlueprintDetailsCell.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopBlueprintDetailsUI.cs" />
     <Compile Include="Assets\Scripts\UI\MyShopSelectItemLG.cs" />
     <Compile Include="Assets\Scripts\Manager\EffectMng.cs" />
     <Compile Include="Assets\Scripts\UI\MissionLG.cs" />
@@ -301,7 +302,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopBlueprintCell.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\MyText.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

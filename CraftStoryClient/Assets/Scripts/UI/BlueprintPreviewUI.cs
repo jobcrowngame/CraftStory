@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class BlueprintPreviewUI : UIBase
 {
@@ -12,7 +13,9 @@ public class BlueprintPreviewUI : UIBase
     Image PhotographImg { get => FindChiled<Image>("PhotographImg"); }
 
     UIBase beforUI;
-    private float fadeInTimeStep = 0.05f;
+    float fadeInTimeStep = 0.05f;
+    int renderTextureType = 1;
+    Action<Texture2D> onPhotographCallback;
 
     /// <summary>
     /// 撮影してるフラグ
@@ -33,9 +36,9 @@ public class BlueprintPreviewUI : UIBase
     }
     private bool mIsPhotographing = false;
 
-    public override void Init()
+    public override void Init(object data)
     {
-        base.Init();
+        base.Init(data);
         BlueprintPreviewLG.E.Init(this);
 
         BlueprintPreviewCloseBtn.onClick.AddListener(Close);
@@ -44,26 +47,34 @@ public class BlueprintPreviewUI : UIBase
         PhotographBtn.onClick.AddListener(()=> 
         { 
             IsPhotographing = true;
-            var renderTexture = PlayerCtl.E.BlueprintPreviewCtl.GetRenderCamera().targetTexture;
+            var renderTexture = PlayerCtl.E.BlueprintPreviewCtl.GetRenderTexture(renderTextureType);
             var texture = new Texture2D(renderTexture.width, renderTexture.height);
             RenderTexture.active = renderTexture;
             texture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
             texture.Apply();
-            BlueprintReNameLG.E.PhotographTexture = texture;
+
+            if (onPhotographCallback != null)
+            {
+                onPhotographCallback(texture);
+                onPhotographCallback = null;
+            }
 
             StartCoroutine(PhotographIE());
         });
     }
-    public override void Open()
+    public override void Open(object data)
     {
-        base.Open();
+        base.Open(data);
+        renderTextureType = (int)data;
+
         PlayerCtl.E.BlueprintPreviewCtl.Show();
 
         WorldMng.E.GameTimeCtl.Active = false;
         DataMng.E.RuntimeData.IsPreviev = true;
-        PhotographImg.gameObject.SetActive(false);
-
         IsPhotographing = false;
+
+        PhotographImg.gameObject.SetActive(false);
+        PhotographBtn.gameObject.SetActive(renderTextureType != 0);
     }
     public override void Close()
     {
@@ -94,28 +105,18 @@ public class BlueprintPreviewUI : UIBase
         this.beforUI = beforUI;
     }
 
-    public void ShowPhotographBtn()
+    /// <summary>
+    /// スクリーンショットする場合のイベント
+    /// </summary>
+    /// <param name="callback"></param>
+    public void AddListenerOnPhotographCallback(Action<Texture2D> callback)
     {
-        PhotographBtn.gameObject.SetActive(true);
+        onPhotographCallback = callback;
     }
 
     public void SetBarValue(float v)
     {
         Bar.value = v;
-    }
-
-    /// <summary>
-    /// スクリーンショット
-    /// </summary>
-    /// <returns></returns>
-    byte[] ScreenShotToData(Camera camera)
-    {
-        var texture = camera.targetTexture;
-        var tex2d = new Texture2D(texture.width, texture.height);
-        RenderTexture.active = texture;
-        tex2d.ReadPixels(new Rect(0, 0, tex2d.width, tex2d.height), 0, 0);
-        tex2d.Apply();
-        return tex2d.EncodeToPNG();
     }
 
     IEnumerator PhotographIE()
@@ -133,6 +134,7 @@ public class BlueprintPreviewUI : UIBase
         PhotographImg.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(0.5f);
+
         Close();
     }
 }

@@ -468,7 +468,9 @@ public class CommonFunction
     /// <returns></returns>
     public static string GetTextureName()
     {
-        string fileName = DataMng.E.UserData.Account + "_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".png";
+        string fileName = string.Format("Blueprint-{0}-{1}", 
+            DataMng.E.UserData.Account,
+            DateTime.Now.ToString("yyyyMMddhhmmss"));
         return fileName;
     }
 }

@@ -42,14 +42,31 @@ public class MyShopUploadUI : UIBase
             }
             else
             {
-                NWMng.E.UploadBlueprintToMyShop((rp) =>
+                if (MyShopSelectItemLG.E.SelectItem != null && MyShopSelectItemLG.E.SelectItem.ItemData != null)
                 {
-                    NWMng.E.GetMyshopInfo(() =>
+                    // 設計図データをゲットしてプレビューでスクリーンショットする
+                    NWMng.E.GetBlueprintPreviewDataByItemGuid((rp) =>
                     {
-                        MyShopLG.E.UI.RefreshUI();
-                        CommonFunction.ShowHintBar(16);
-                    });
-                }, itemData.id, Index, GetPrice());
+                        // スクリーンショットに遷移
+                        var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose, 2);
+                        ui.SetData((string)rp, ShopBlueprintLG.E.UI);
+                        ui.AddListenerOnPhotographCallback((texture) =>
+                        {
+                            string textureName = CommonFunction.GetTextureName();
+                            AWSS3Mng.E.UploadTexture2D(texture, textureName, ()=> 
+                            {
+                                NWMng.E.UploadBlueprintToMyShop((rp) =>
+                                {
+                                    NWMng.E.GetMyshopInfo(() =>
+                                    {
+                                        ShopBlueprintLG.E.UI.RefreshMyShopWindow();
+                                        CommonFunction.ShowHintBar(16);
+                                    });
+                                }, itemData.id, Index, GetPrice(), textureName);
+                            });
+                        });
+                    }, MyShopSelectItemLG.E.SelectItem.ItemData.id);
+                }
             }
 
             Close();

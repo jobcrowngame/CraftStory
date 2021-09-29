@@ -91,6 +91,11 @@ public class PlayerCtl : MonoBehaviour
         {
             GuideLG.E.GoTo(40);
         }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            UICtl.E.OpenUI<ShopBlueprintUI>(UIType.ShopBlueprint);
+        }
     }
 
     /// <summary>

@@ -27,6 +27,11 @@ public class BagSelectItem : UIBase
         Icon.sprite = itemData == null
             ? ReadResources<Sprite>("Textures/icon_noimg")
             : ReadResources<Sprite>(itemData.Config().IconResourcesPath);
+
+        if (itemData != null && !string.IsNullOrEmpty(itemData.textureName))
+        {
+            AWSS3Mng.E.DownLoadTexture2D(Icon, itemData.textureName);
+        }
     }
 
     /// <summary>

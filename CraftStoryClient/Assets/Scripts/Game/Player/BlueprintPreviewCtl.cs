@@ -9,7 +9,8 @@ public class BlueprintPreviewCtl : MonoBehaviour
     Transform BlueprintCamera { get => CommonFunction.FindChiledByName(transform, "Camera").transform; } // プレビュー用カメラ
     Transform cameraRotateX { get => CommonFunction.FindChiledByName(transform, "X").transform; } // カメラ角度X
     Transform cameraRotateY { get => CommonFunction.FindChiledByName(transform, "Y").transform; } // カメラ角度Y
-    Camera renderCakera { get => CommonFunction.FindChiledByName<Camera>(transform, "RenderCamera"); } // カメラ
+    Camera renderCakera1 { get => CommonFunction.FindChiledByName<Camera>(transform, "RenderCamera1"); } // カメラ
+    Camera renderCakera2 { get => CommonFunction.FindChiledByName<Camera>(transform, "RenderCamera2"); } // カメラ
 
     /// <summary>
     /// カメラ座標Z
@@ -50,10 +51,18 @@ public class BlueprintPreviewCtl : MonoBehaviour
     /// <summary>
     /// レンダリングカメラをゲット
     /// </summary>
+    /// <param name="type">1=64x64 2=360x166</param>
     /// <returns></returns>
-    public Camera GetRenderCamera()
+    public RenderTexture GetRenderTexture(int type)
     {
-        return renderCakera;
+        if (type == 1)
+        {
+            return renderCakera1.targetTexture;
+        }
+        else
+        {
+            return renderCakera2.targetTexture;
+        }
     }
 
     /// <summary>

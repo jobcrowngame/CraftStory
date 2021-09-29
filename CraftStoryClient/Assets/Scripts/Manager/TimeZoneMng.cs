@@ -10,6 +10,7 @@ public class TimeZoneMng : MonoBehaviour
 {
     UnityEvent SecondTimerEvent01;
     UnityEvent SecondTimerEvent02;
+    UnityEvent SecondTimerEvent03;
 
     public static TimeZoneMng E
     {
@@ -27,9 +28,11 @@ public class TimeZoneMng : MonoBehaviour
     {
         SecondTimerEvent01 = new UnityEvent();
         SecondTimerEvent02 = new UnityEvent();
+        SecondTimerEvent03 = new UnityEvent();
 
         StartCoroutine(SecondTimer01());
         StartCoroutine(SecondTimer02());
+        StartCoroutine(SecondTimer03());
     }
 
     private IEnumerator SecondTimer01()
@@ -48,13 +51,41 @@ public class TimeZoneMng : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
         }
     }
+    private IEnumerator SecondTimer03()
+    {
+        while (true)
+        {
+            SecondTimerEvent02.Invoke();
+            yield return new WaitForSeconds(1f);
+        }
+    }
 
-    public void AddSecondTimerEvent01(UnityAction ac)
+    /// <summary>
+    /// 毎0.2秒
+    /// </summary>
+    /// <param name="ac"></param>
+    public void AddTimerEvent01(UnityAction ac)
     {
         SecondTimerEvent01.AddListener(ac);
     }
-    public void AddSecondTimerEvent02(UnityAction ac)
+
+    /// <summary>
+    /// 毎0.02秒
+    /// </summary>
+    public void AddTimerEvent02(UnityAction ac)
     {
         SecondTimerEvent02.AddListener(ac);
+    }
+    /// <summary>
+    /// 毎秒
+    /// </summary>
+    public void AddTimerEvent03(UnityAction ac)
+    {
+        SecondTimerEvent03.AddListener(ac);
+    }
+
+    public void RemoveTimerEvent03(UnityAction ac)
+    {
+        SecondTimerEvent03.RemoveListener(ac);
     }
 }

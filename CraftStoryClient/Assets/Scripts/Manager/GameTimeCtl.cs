@@ -59,7 +59,7 @@ public class GameTimeCtl
     public GameTimeCtl()
     {
         CurTime = SettingMng.E.GameDaySeconds * 0.2f;
-        TimeZoneMng.E.AddSecondTimerEvent02(() => { CurTime += 0.02f; });
+        TimeZoneMng.E.AddTimerEvent02(() => { CurTime += 0.02f; });
         Active = false;
     }
 

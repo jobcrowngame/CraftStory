@@ -23,12 +23,8 @@ public class MyShopSelectItemUI : UIBase
                 return;
             }
 
-            if (MyShopSelectItemLG.E.SelectItem != null && MyShopSelectItemLG.E.SelectItem.ItemData != null)
-            {
-                var ui = UICtl.E.OpenUI<MyShopUploadUI>(UIType.MyShopUpload);
-                ui.SetItemData(MyShopSelectItemLG.E.SelectItem.ItemData, MyShopSelectItemLG.E.Index);
-            }
-            
+            var ui = UICtl.E.OpenUI<MyShopUploadUI>(UIType.MyShopUpload);
+            ui.SetItemData(MyShopSelectItemLG.E.SelectItem.ItemData, MyShopSelectItemLG.E.Index);
             Close();
 
             GuideLG.E.Next();
@@ -38,13 +34,14 @@ public class MyShopSelectItemUI : UIBase
     public override void Open()
     {
         base.Open();
+        ClearCell(itemGridRoot);
+
         RefreshItems();
+        //MyShopSelectItemLG.E.SelectItem = null;
     }
     public override void Close()
     {
         base.Close();
-        ClearCell(itemGridRoot);
-        MyShopSelectItemLG.E.SelectItem = null;
         MyShopSelectItemLG.E.Index = -1;
     }
 

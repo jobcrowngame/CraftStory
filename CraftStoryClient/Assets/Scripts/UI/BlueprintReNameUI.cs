@@ -10,6 +10,7 @@ public class BlueprintReNameUI : UIBase
     InputField input { get => FindChiled<InputField>("InputField"); }
 
     public string mapData { get; set; }
+    Texture2D texture;
 
     public override void Init()
     {
@@ -29,25 +30,14 @@ public class BlueprintReNameUI : UIBase
 
             GuideLG.E.Next();
         });
-    }
 
-    public override void Open()
-    {
-        base.Open();
-
-        BlueprintReNameLG.E.UIStep = 0;
-        if (BlueprintReNameLG.E.PhotographTexture != null)
-        {
-            SetIcon(BlueprintReNameLG.E.PhotographTexture);
-            BlueprintReNameLG.E.UIStep++;
-        }
+        PhotographMode();
     }
 
     public override void Close()
     {
         base.Close();
 
-        BlueprintReNameLG.E.PhotographTexture = null;
         Icon.sprite = null;
     }
 
@@ -60,26 +50,6 @@ public class BlueprintReNameUI : UIBase
         mapData = msg;
     }
 
-    /// <summary>
-    /// アイコンを設定
-    /// </summary>
-    /// <param name="texture"></param>
-    public void SetIcon(Texture2D texture)
-    {
-        Icon.sprite = CommonFunction.Texture2dToSprite(texture);
-    }
-
-    /// <summary>
-    /// UI　ステップが変更される場合、
-    /// </summary>
-    /// <param name="step"></param>
-    public void OnStepChange(int step)
-    {
-        OkBtn.gameObject.SetActive(BlueprintReNameLG.E.UIStep > 0);
-        CancelBtn.gameObject.SetActive(BlueprintReNameLG.E.UIStep > 0);
-        PhotographBtn.gameObject.SetActive(BlueprintReNameLG.E.UIStep == 0);
-    }
-
     public void OnClickOK()
     {
         if (string.IsNullOrEmpty(input.text))
@@ -88,15 +58,13 @@ public class BlueprintReNameUI : UIBase
             return;
         }
 
-        if (BlueprintReNameLG.E.PhotographTexture == null)
-        {
-            return;
-        }
-
         string fileName = CommonFunction.GetTextureName();
-        AWSS3Mng.E.UploadTexture2D(BlueprintReNameLG.E.PhotographTexture, fileName);
 
-        DataMng.E.AddBlueprint(3002, 1, input.text, mapData, fileName,() =>
+        // S3にテクスチャをアップロード
+        AWSS3Mng.E.UploadTexture2D(texture, fileName);
+
+        // 設計図アイテムを追加
+        DataMng.E.AddBlueprint(3002, 1, input.text, mapData, fileName, () =>
         {
             if (DataMng.E.RuntimeData.MapType == MapType.Guide)
             {
@@ -119,10 +87,30 @@ public class BlueprintReNameUI : UIBase
             }
         });
     }
+
+    /// <summary>
+    /// 撮影ボタンクリック
+    /// </summary>
     public void OnClickPhotographBtn()
     {
-        var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
+        var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose, 1);
         ui.SetData(mapData, BlueprintReNameLG.E.UI);
-        ui.ShowPhotographBtn();
+        ui.AddListenerOnPhotographCallback((texture) => 
+        {
+            this.texture = texture;
+            Icon.sprite = CommonFunction.Texture2dToSprite(texture);
+
+            PhotographMode(false);
+        });
+    }
+
+    /// <summary>
+    /// 撮影モードの場合
+    /// </summary>
+    private void PhotographMode(bool b = true)
+    {
+        OkBtn.gameObject.SetActive(!b);
+        CancelBtn.gameObject.SetActive(!b);
+        PhotographBtn.gameObject.SetActive(b);
     }
 }

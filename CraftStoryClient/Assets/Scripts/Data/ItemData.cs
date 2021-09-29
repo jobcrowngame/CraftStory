@@ -1,5 +1,6 @@
 ﻿using JsonConfigData;
 using System;
+using UnityEngine;
 
 /// <summary>
 /// アイテムデータ

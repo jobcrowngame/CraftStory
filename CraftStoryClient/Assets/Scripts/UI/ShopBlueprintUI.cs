@@ -67,6 +67,13 @@ public class ShopBlueprintUI : UIBase
         ShopBlueprintLG.E.Type = ShopBlueprintLG.UIType.Blueprint1;
     }
 
+    public override void Open()
+    {
+        base.Open();
+
+        Title.RefreshCoins();
+    }
+
     public void RefreshItemWindow(ShopBlueprintLG.UIType type)
     {
         MyshopBlueprint.gameObject.SetActive(type == ShopBlueprintLG.UIType.Blueprint1);
@@ -144,15 +151,27 @@ public class ShopBlueprintUI : UIBase
         }
     }
 
+    /// <summary>
+    /// いいね数更新
+    /// </summary>
+    /// <param name="targetAcc">設計図主人</param>
     public void RefreshGoodNum(string targetAcc)
     {
         for (int i = 0; i < MyshopBlueprintParent.childCount; i++)
         {
-            var cell = MyshopBlueprintParent.GetChild(i).GetComponent<ShopBlueprintDetailsCell>();
+            var cell = MyshopBlueprintParent.GetChild(i).GetComponent<ShopBlueprintCell>();
             if (cell != null && cell.TargetAcc == targetAcc)
             {
                 cell.GoodNumberAdd();
             }
         }
+    }
+
+    /// <summary>
+    /// コインを更新
+    /// </summary>
+    public void RefreshCoin()
+    {
+        Title.RefreshCoins();
     }
 }

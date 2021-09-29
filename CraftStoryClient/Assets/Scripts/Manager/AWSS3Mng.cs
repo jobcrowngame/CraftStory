@@ -85,7 +85,7 @@ public class AWSS3Mng : MonoBehaviour
     /// <summary>
     /// 画像をアップロード
     /// </summary>
-    public void UploadTexture2D(Texture2D texture, string fileName)
+    public void UploadTexture2D(Texture2D texture, string fileName, Action successCallback = null, Action failureCallback = null)
     {
         //Texture2Dを作成
         byte[] data = texture.EncodeToPNG();
@@ -106,11 +106,12 @@ public class AWSS3Mng : MonoBehaviour
         {
             if (responseObj.Exception == null)
             {
-                Debug.Log("成功");
+                if (successCallback != null) successCallback();
             }
             else
             {
-                Debug.Log("失敗");
+                if (failureCallback != null) failureCallback();
+                Logger.Error("S3 Upload Failure:"+responseObj.Exception.Message);
             }
         });
     }

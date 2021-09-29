@@ -51,8 +51,11 @@ public class MyShopCell : UIBase
             {
                 NewNameText.text = myShopItem.newName;
                 Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[myShopItem.itemId].IconResourcesPath);
+                if (!string.IsNullOrEmpty(myShopItem.icon))
+                {
+                    AWSS3Mng.E.DownLoadTexture2D(Icon, myShopItem.icon);
+                }
 
-                RefreshTime();
                 PreviewBtn.gameObject.SetActive(true);
                 LoadBtn.gameObject.SetActive(true);
                 Time.gameObject.SetActive(true);
@@ -105,7 +108,7 @@ public class MyShopCell : UIBase
         {
             NWMng.E.OpenPreview(myShopItem.myshopid, (data)=> 
             {
-                var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose);
+                var ui = UICtl.E.OpenUI<BlueprintPreviewUI>(UIType.BlueprintPreview, UIOpenType.AllClose, 0);
                 ui.SetData(data, ShopBlueprintLG.E.UI);
             });
 
@@ -167,21 +170,29 @@ public class MyShopCell : UIBase
         });
     }
 
+    public override void Destroy()
+    {
+        base.Destroy();
+
+        TimeZoneMng.E.RemoveTimerEvent03(Timer);
+    }
+
     public void Init(int index)
     {
         Index = index;
 
+
         if (myShopItem.itemId > 0)
         {
             OpenTimer = true;
-            StartCoroutine(RefreshTime());
         }
-    }
-    private IEnumerator RefreshTime()
-    {
-        yield return new WaitForSeconds(1);
 
-        while (OpenTimer)
+        TimeZoneMng.E.AddTimerEvent03(Timer);
+    }
+
+    private void Timer()
+    {
+        if (OpenTimer)
         {
             TimeSpan t = myShopItem.created_at - DateTime.Now;
             if (IsTimeOut())
@@ -195,13 +206,13 @@ public class MyShopCell : UIBase
             }
             else
             {
-                Time.text = string.Format("{0}日{1}:{2}:{3}", t.Days, t.Hours, t.Minutes, t.Seconds);
-
+                Time.text = t.Days > 0 ?
+                    string.Format("{0}日", t.Days) :
+                    string.Format("{1}:{2}:{3}", t.Days, t.Hours, t.Minutes, t.Seconds);
             }
-
-            yield return new WaitForSeconds(1);
         }
     }
+
     private bool IsTimeOut()
     {
         TimeSpan t = myShopItem.created_at - DateTime.Now;
