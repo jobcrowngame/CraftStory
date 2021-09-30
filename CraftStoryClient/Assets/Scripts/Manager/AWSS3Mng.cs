@@ -129,16 +129,29 @@ public class AWSS3Mng : MonoBehaviour
 
         Client.GetObjectAsync(request, (responseObject) =>
         {
-            MemoryStream stream = new MemoryStream();
-            responseObject.Response.ResponseStream.CopyTo(stream);
-            byte[] data = stream.ToArray();
+            try
+            {
+                if (responseObject == null || responseObject.Response == null)
+                {
+                    Logger.Warning("S3 responseObject.Response is null!!!");
+                    return;
+                }
 
-            Texture2D tex = new Texture2D(1, 1);
-            tex.LoadImage(data);
-            tex.Apply();
+                MemoryStream stream = new MemoryStream();
+                responseObject.Response.ResponseStream.CopyTo(stream);
+                byte[] data = stream.ToArray();
 
-            Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
-            if(img != null)img.sprite = sprite;
+                Texture2D tex = new Texture2D(1, 1);
+                tex.LoadImage(data);
+                tex.Apply();
+
+                Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
+                if (img != null) img.sprite = sprite;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+            }
         });
     }
 }
