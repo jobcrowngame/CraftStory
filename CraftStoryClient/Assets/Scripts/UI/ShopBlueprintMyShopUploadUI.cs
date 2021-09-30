@@ -1,9 +1,7 @@
-﻿using LitJson;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class MyShopUploadUI : UIBase
+public class ShopBlueprintMyShopUploadUI : UIBase
 {
     Button OKBtn { get => FindChiled<Button>("OKBtn"); }
     Button CancelBtn { get => FindChiled<Button>("CancelBtn"); }
@@ -15,7 +13,6 @@ public class MyShopUploadUI : UIBase
     public override void Init()
     {
         base.Init();
-        MyShopUploadLG.E.Init(this);
 
         Dropdown.options.Clear();
         Dropdown.AddOptions(new List<string>
@@ -42,7 +39,7 @@ public class MyShopUploadUI : UIBase
             }
             else
             {
-                if (MyShopSelectItemLG.E.SelectItem != null && MyShopSelectItemLG.E.SelectItem.ItemData != null)
+                if (ShopBlueprintMyShopSelectItemLG.E.SelectItem != null && ShopBlueprintMyShopSelectItemLG.E.SelectItem.ItemData != null)
                 {
                     // 設計図データをゲットしてプレビューでスクリーンショットする
                     NWMng.E.GetBlueprintPreviewDataByItemGuid((rp) =>
@@ -65,7 +62,7 @@ public class MyShopUploadUI : UIBase
                                 }, itemData.id, Index, GetPrice(), textureName);
                             });
                         });
-                    }, MyShopSelectItemLG.E.SelectItem.ItemData.id);
+                    }, ShopBlueprintMyShopSelectItemLG.E.SelectItem.ItemData.id);
                 }
             }
 

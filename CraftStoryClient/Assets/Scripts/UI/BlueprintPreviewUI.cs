@@ -87,9 +87,9 @@ public class BlueprintPreviewUI : UIBase
             if(beforUI != null) beforUI.Open();
         }
 
-        if (MarketLG.E.UI != null)
+        if (ShopMarketLG.E.UI != null)
         {
-            MarketLG.E.UI.Open();
+            ShopMarketLG.E.UI.Open();
             if (beforUI != null) beforUI.Open();
         }
 

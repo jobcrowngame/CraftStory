@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MyShopCell : UIBase
+public class ShopBlueprintMyShopCell : UIBase
 {
     Image Icon { get => FindChiled<Image>("Icon"); }
     Transform NewNameBG { get => FindChiled("NewNameBG"); }
@@ -146,7 +146,7 @@ public class MyShopCell : UIBase
             {
                 if (DataMng.E.MyShop.MyShopItem[Index - 1].itemId == 0)
                 {
-                    MyShopSelectItemLG.E.Index = Index;
+                    ShopBlueprintMyShopSelectItemLG.E.Index = Index;
 
                     string msg = string.Format(@"マイショップに設計図をアップロードすると
 7日間全ユーザーへ公開されます。
@@ -156,7 +156,7 @@ public class MyShopCell : UIBase
 
                     CommonFunction.ShowHintBox(null, msg, () =>
                     {
-                        UICtl.E.OpenUI<MyShopSelectItemUI>(UIType.MyShopSelectItem);
+                        UICtl.E.OpenUI<ShopBlueprintMyShopSelectItemUI>(UIType.ShopBlueprintMyShopSelectItem);
                         GuideLG.E.Next();
                     }, null, "button_2D_022");
                 }

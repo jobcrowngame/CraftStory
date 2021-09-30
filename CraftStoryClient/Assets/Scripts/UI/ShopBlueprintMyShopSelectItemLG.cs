@@ -1,8 +1,8 @@
 ﻿
 
-public class MyShopSelectItemLG : UILogicBase<MyShopSelectItemLG, MyShopSelectItemUI>
+public class ShopBlueprintMyShopSelectItemLG : UILogicBase<ShopBlueprintMyShopSelectItemLG, ShopBlueprintMyShopSelectItemUI>
 {
-    public MyShopSelectItemCell SelectItem
+    public ShopBlueprintMyShopUploadItemCell SelectItem
     {
         get => selectItem;
         set
@@ -16,7 +16,7 @@ public class MyShopSelectItemLG : UILogicBase<MyShopSelectItemLG, MyShopSelectIt
             if (selectItem != null) selectItem.IsSelected(true);
         }
     }
-    private MyShopSelectItemCell selectItem;
+    private ShopBlueprintMyShopUploadItemCell selectItem;
 
     public int Index { get; set; }
 }

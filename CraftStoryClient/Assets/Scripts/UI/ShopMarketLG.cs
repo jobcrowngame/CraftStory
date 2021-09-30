@@ -4,6 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class MarketLG : UILogicBase<MarketLG, MarketUI>
+public class ShopMarketLG : UILogicBase<ShopMarketLG, ShopMarketUI>
 {
 }

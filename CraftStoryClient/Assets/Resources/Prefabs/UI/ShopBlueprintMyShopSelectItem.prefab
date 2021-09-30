@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 3370171280399913907}
   - component: {fileID: 3457439162269394057}
   m_Layer: 5
-  m_Name: MyShopSelectItem
+  m_Name: ShopBlueprintMyShopSelectItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -43,7 +43,7 @@ public class GachaVerificationUI : UIBase
         });
         ChageBtn.onClick.AddListener(() => 
         {
-            UICtl.E.OpenUI<ShopUI>(UIType.Shop, UIOpenType.None, 0);
+            UICtl.E.OpenUI<ShopBlueprintUI>(UIType.ShopBlueprint, UIOpenType.None, 0);
             Close();
         });
         CancelBtn.onClick.AddListener(Close);

@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 4510670804535215409}
   - component: {fileID: 2701856504703457463}
   m_Layer: 5
-  m_Name: MyShopUpload
+  m_Name: ShopBlueprintMyShopUpload
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

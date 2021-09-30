@@ -22,7 +22,7 @@ public class ShopBlueprintUI : UIBase
     Transform BlueprintItemParent { get => FindChiled("Parent", BlueprintItem.gameObject); }
 
     Transform MyShop { get => FindChiled("MyShop"); }
-    MyShopCell[] myShopCells;
+    ShopBlueprintMyShopCell[] myShopCells;
 
     public override void Init()
     {
@@ -56,10 +56,10 @@ public class ShopBlueprintUI : UIBase
             ShopBlueprintLG.E.RefreshMyShopBlueprint(InputField.text, value);
         });
 
-        myShopCells = new MyShopCell[MyShop.childCount];
+        myShopCells = new ShopBlueprintMyShopCell[MyShop.childCount];
         for (int i = 0; i < MyShop.childCount; i++)
         {
-            myShopCells[i] = MyShop.GetChild(i).gameObject.AddComponent<MyShopCell>();
+            myShopCells[i] = MyShop.GetChild(i).gameObject.AddComponent<ShopBlueprintMyShopCell>();
         }
     }
 
@@ -118,7 +118,7 @@ public class ShopBlueprintUI : UIBase
 
         for (int i = 0; i < MyshopBlueprintParent.childCount; i++)
         {
-            var cell = MyshopBlueprintParent.GetChild(i).GetComponent<ShopBlueprintCell>();
+            var cell = MyshopBlueprintParent.GetChild(i).GetComponent<ShopBlueprintUserCell>();
             if (cell != null)
             {
                 if (items == null || i >= items.Count)
@@ -143,7 +143,7 @@ public class ShopBlueprintUI : UIBase
         {
             if (item.Type == 5)
             {
-                var cell = AddCell<ShopBlueprintMyShopItemCell>("Prefabs/UI/ShopBlueprintCell", BlueprintItemParent);
+                var cell = AddCell<ShopBlueprintSystemCell>("Prefabs/UI/ShopBlueprintSystemCell", BlueprintItemParent);
                 cell.Init(item);
             }
         }
@@ -168,7 +168,7 @@ public class ShopBlueprintUI : UIBase
     {
         for (int i = 0; i < MyshopBlueprintParent.childCount; i++)
         {
-            var cell = MyshopBlueprintParent.GetChild(i).GetComponent<ShopBlueprintCell>();
+            var cell = MyshopBlueprintParent.GetChild(i).GetComponent<ShopBlueprintUserCell>();
             if (cell != null && cell.TargetAcc == targetAcc)
             {
                 cell.GoodNumberAdd();

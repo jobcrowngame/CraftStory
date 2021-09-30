@@ -191,7 +191,6 @@ public class UICtl : Single<UICtl>
             case UIType.Bag: return "Prefabs/UI/Bag";
             case UIType.Lottery: return "Prefabs/UI/Lottery";
             case UIType.GiftBox: return "Prefabs/UI/GiftBox";
-            case UIType.Shop: return "Prefabs/UI/Shop";
             case UIType.Terms: return "Prefabs/UI/Terms";
             case UIType.Terms01: return "Prefabs/UI/Terms01";
             case UIType.Terms02: return "Prefabs/UI/Terms02";
@@ -201,9 +200,6 @@ public class UICtl : Single<UICtl>
             case UIType.PlayDescription: return "Prefabs/UI/PlayDescription";
             case UIType.PersonalMessage: return "Prefabs/UI/PersonalMessage";
             case UIType.BlueprintPreview: return "Prefabs/UI/BlueprintPreview";
-            case UIType.MyShop: return "Prefabs/UI/MyShop";
-            case UIType.MyShopSelectItem: return "Prefabs/UI/MyShopSelectItem";
-            case UIType.MyShopUpload: return "Prefabs/UI/MyShopUpload";
             case UIType.Email: return "Prefabs/UI/Email";
             case UIType.EmailDetails: return "Prefabs/UI/EmailDetails";
             case UIType.Notice: return "Prefabs/UI/Notice";
@@ -229,7 +225,10 @@ public class UICtl : Single<UICtl>
             case UIType.ShopResource: return "Prefabs/UI/ShopResource";
             case UIType.ShopBlueprint: return "Prefabs/UI/ShopBlueprint";
             case UIType.ShopBlueprintDetails: return "Prefabs/UI/ShopBlueprintDetails";
+            case UIType.ShopBlueprintMyShopSelectItem: return "Prefabs/UI/ShopBlueprintMyShopSelectItem";
+            case UIType.ShopBlueprintMyShopUpload: return "Prefabs/UI/ShopBlueprintMyShopUpload";
             case UIType.Chat: return "Prefabs/UI/Chat";
+            case UIType.Market: return "Prefabs/UI/Market";
 
 
 
@@ -276,7 +275,6 @@ public enum UIType
     Bag,
     Lottery,
     GiftBox,
-    Shop,
     Terms,
     Terms01,
     Terms02,
@@ -286,9 +284,7 @@ public enum UIType
     PlayDescription,
     PersonalMessage,
     BlueprintPreview,
-    MyShop,
-    MyShopSelectItem,
-    MyShopUpload,
+    
     Email,
     EmailDetails,
     Notice,
@@ -314,6 +310,8 @@ public enum UIType
     ShopResource,
     ShopBlueprint,
     ShopBlueprintDetails,
+    ShopBlueprintMyShopSelectItem,
+    ShopBlueprintMyShopUpload,
     Chat,
     Market,
 }

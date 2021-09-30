@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MyShopSelectItemCell : UIBase
+public class ShopBlueprintMyShopUploadItemCell : UIBase
 {
     Text itemName { get => FindChiled<Text>("Name"); }
     Text itemCount { get => FindChiled<Text>("Count"); }
@@ -20,7 +20,7 @@ public class MyShopSelectItemCell : UIBase
 
         clickBtn.onClick.AddListener(() => 
         {
-            MyShopSelectItemLG.E.SelectItem = this;
+            ShopBlueprintMyShopSelectItemLG.E.SelectItem = this;
 
             GuideLG.E.Next();
         });

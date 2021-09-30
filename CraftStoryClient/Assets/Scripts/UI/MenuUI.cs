@@ -9,15 +9,10 @@ public class MenuUI : UIBase
 
     //Button CraftBtn;
     Button AdventureBtn { get => FindChiled<Button>("AdventureBtn"); }
-
-    Button ShopBtn { get => FindChiled<Button>("ShopBtn"); }
-    Button HomeBtn { get => FindChiled<Button>("HomeBtn"); }
     Button PlayDescriptionBtn { get => FindChiled<Button>("PlayDescriptionBtn"); }
     Button PersonalMessageBtn { get => FindChiled<Button>("PersonalMessageBtn"); }
     Button FriendBtn { get => FindChiled<Button>("FriendBtn"); }
 
-    Button PointExchangeBtn { get => FindChiled<Button>("PointExchangeBtn"); }
-    Button MyShopBtn { get => FindChiled<Button>("MyShopBtn"); }
     Button PlayDescriptionBtn2 { get => FindChiled<Button>("PlayDescriptionBtn2"); }
     Button MessageBtn { get => FindChiled<Button>("MessageBtn"); }
     Button Notice { get => FindChiled<Button>("Notice"); }
@@ -31,14 +26,10 @@ public class MenuUI : UIBase
             PointList.gameObject.SetActive(false);
 
             AdventureBtn.gameObject.SetActive(false);
-            ShopBtn.gameObject.SetActive(false);
-            HomeBtn.gameObject.SetActive(false);
             PlayDescriptionBtn.gameObject.SetActive(false);
             PersonalMessageBtn.gameObject.SetActive(false);
             FriendBtn.gameObject.SetActive(false);
 
-            PointExchangeBtn.gameObject.SetActive(false);
-            MyShopBtn.gameObject.SetActive(false);
             PlayDescriptionBtn2.gameObject.SetActive(false);
             MessageBtn.gameObject.SetActive(false);
 
@@ -52,14 +43,11 @@ public class MenuUI : UIBase
                     PointList.gameObject.SetActive(true);
 
                     //AdventureBtn.gameObject.SetActive(true);
-                    ShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn.gameObject.SetActive(true);
                     PersonalMessageBtn.gameObject.SetActive(true);
                     Notice.gameObject.SetActive(true);
                     //FriendBtn.gameObject.SetActive(true);
 
-                    PointExchangeBtn.gameObject.SetActive(true);
-                    MyShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn2.gameObject.SetActive(true);
                     MessageBtn.gameObject.SetActive(true);
                     //Debug.gameObject.SetActive(true);
@@ -67,26 +55,20 @@ public class MenuUI : UIBase
 
                 case MapType.Brave:
                 case MapType.FriendHome:
-                    HomeBtn.gameObject.SetActive(true);
                     break;
 
                 case MapType.Guide:
                     //AdventureBtn.gameObject.SetActive(true);
-                    ShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn.gameObject.SetActive(true);
                     PersonalMessageBtn.gameObject.SetActive(true);
                     //FriendBtn.gameObject.SetActive(true);
 
-                    PointExchangeBtn.gameObject.SetActive(true);
-                    MyShopBtn.gameObject.SetActive(true);
                     PlayDescriptionBtn2.gameObject.SetActive(true);
                     MessageBtn.gameObject.SetActive(true);
 
-                    HomeBtn.gameObject.SetActive(true);
                     break;
 
                 case MapType.Market:
-                    HomeBtn.gameObject.SetActive(true);
                     break;
             }
         }
@@ -117,20 +99,6 @@ public class MenuUI : UIBase
             CommonFunction.GoToNextScene(1000);
             Close();
         });
-
-        ShopBtn.onClick.AddListener(() =>
-        {
-            UICtl.E.OpenUI<ShopUI>(UIType.Shop, UIOpenType.None, 0);
-            Close();
-
-            GuideLG.E.Next();
-        });
-        HomeBtn.onClick.AddListener(() =>
-        {
-            GuideLG.E.Next();
-            CommonFunction.GoToNextScene(100);
-            Close();
-        });
         PlayDescriptionBtn.onClick.AddListener(() =>
         {
             UICtl.E.OpenUI<PlayDescriptionUI>(UIType.PlayDescription);
@@ -148,18 +116,6 @@ public class MenuUI : UIBase
             UICtl.E.OpenUI<FriendUI>(UIType.Friend);
             Close();
         });
-
-        PointExchangeBtn.onClick.AddListener(() =>
-        {
-            if (DataMng.E.RuntimeData.Coin3 < 1000)
-            {
-                CommonFunction.ShowHintBar(18);
-                return;
-            }
-
-            UICtl.E.OpenUI<ExchangePointUI>(UIType.ExchangePoint);
-            Close();
-        });
         PlayDescriptionBtn2.onClick.AddListener(() =>
         {
             string msg = "詳しい遊び方を紹介している、" +
@@ -170,26 +126,6 @@ public class MenuUI : UIBase
                 Application.OpenURL("https://www.craftstory.jp/howtoplay/home/");
                 Close();
             }, () => { });
-        });
-        MyShopBtn.onClick.AddListener(() =>
-        {
-            if (string.IsNullOrEmpty(DataMng.E.RuntimeData.NickName))
-            {
-                string msg = @"マイショップを利用するには、
-ニックネームを登録する必要があります。";
-
-                CommonFunction.ShowHintBox(msg, ()=> 
-                {
-                    UICtl.E.OpenUI<PersonalMessageUI>(UIType.PersonalMessage);
-                    Close();
-                });
-                return;
-            }
-
-            UICtl.E.OpenUI<MyShopUI>(UIType.MyShop);
-            Close();
-
-            GuideLG.E.Next();
         });
         MessageBtn.onClick.AddListener(() =>
         {
@@ -231,9 +167,7 @@ public class MenuUI : UIBase
 
     private void OnClickBanner(int index)
     {
-        var ui = UICtl.E.OpenUI<ShopUI>(UIType.Shop, UIOpenType.None, 2);
-        ui.SetGachaIndex(index);
-        Close();
+        Logger.Warning("OnClickBanner");
     }
     private void OnIndexChange(int index)
     {

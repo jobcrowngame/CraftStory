@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopBlueprintMyShopItemCell : UIBase
+public class ShopBlueprintSystemCell : UIBase
 {
     Transform Limited { get => FindChiled("Limited"); }
     Image Icon { get => FindChiled<Image>("Icon"); }

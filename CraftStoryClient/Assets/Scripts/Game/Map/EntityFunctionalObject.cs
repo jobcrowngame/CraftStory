@@ -107,6 +107,12 @@ public class EntityFunctionalObject : EntityBase
                 break;
 
             case EntityType.GiftShop:
+                if (DataMng.E.RuntimeData.Coin3 < 1000)
+                {
+                    CommonFunction.ShowHintBar(18);
+                    break;
+                }
+
                 chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 5);
                 chatUi.AddListenerOnClose(() =>
                 {

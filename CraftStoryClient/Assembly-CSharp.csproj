@@ -68,10 +68,11 @@
     <Compile Include="Assets\Scripts\UI\Common\WaitingUI.cs" />
     <Compile Include="Assets\Scripts\Game\Player\CameraCtl.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityTreasureBox.cs" />
+    <Compile Include="Assets\Scripts\UI\ChatUI.cs" />
     <Compile Include="Assets\Scripts\UI\ShopUI.Gacha.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusUI.cs" />
     <Compile Include="Assets\Scripts\UI\GachaVerificationLG.cs" />
-    <Compile Include="Assets\Scripts\UI\MarketLG.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopMarketLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\TransferGate.cs" />
     <Compile Include="Assets\Scripts\UI\Terms02UI.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryUI.cs" />
@@ -81,7 +82,7 @@
     <Compile Include="Assets\Scripts\UI\NowLoadingLG.cs" />
     <Compile Include="Assets\Scripts\UI\FriendDescriptionLG.cs" />
     <Compile Include="Assets\Scripts\Test\TestToggle.cs" />
-    <Compile Include="Assets\Scripts\UI\MyShopSelectItemUI.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopBlueprintMyShopSelectItemUI.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyScrollRect.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Roulette.cs" />
     <Compile Include="Assets\Scripts\Cor\AttObjC.cs" />
@@ -92,14 +93,15 @@
     <Compile Include="Assets\Scripts\Test\TestCreateObj.cs" />
     <Compile Include="Assets\Scripts\Test\DragObj.cs" />
     <Compile Include="Assets\Scripts\UI\EmailUI.cs" />
-    <Compile Include="Assets\Scripts\UI\MarketUI.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopMarketUI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityHaveDirection.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Entity.cs" />
     <Compile Include="Assets\Scripts\UI\GachaAddBonusUI.cs" />
     <Compile Include="Assets\Scripts\UI\GuideUI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityResources.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopBlueprintCell.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopBlueprintUserCell.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\MyText.cs" />
     <Compile Include="Assets\Scripts\Test\CreateUIMng.cs" />
     <Compile Include="Assets\Scripts\Test\RunTest.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Gacha.cs" />
@@ -117,7 +119,6 @@
     <Compile Include="Assets\Scripts\UI\PlayDescriptionUI.cs" />
     <Compile Include="Assets\Scripts\UI\HomeUI.cs" />
     <Compile Include="Assets\Scripts\Manager\NWMng.Functions.cs" />
-    <Compile Include="Assets\Scripts\UI\MyShopLG.cs" />
     <Compile Include="Assets\Scripts\UI\EmailDetailsLG.cs" />
     <Compile Include="Assets\Scripts\Game\Player\BlueprintPreviewCtl.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintUI.cs" />
@@ -129,19 +130,18 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\RouletteCell.cs" />
     <Compile Include="Assets\Scripts\UI\Common\TitleUI.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeDetailLG.cs" />
-    <Compile Include="Assets\Scripts\UI\MyShopUploadUI.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopBlueprintMyShopUploadUI.cs" />
     <Compile Include="Assets\Scripts\UI\DebugUI.cs" />
     <Compile Include="Assets\Scripts\Common\MiniJSON.cs" />
     <Compile Include="Assets\Scripts\UI\ShopLG.cs" />
     <Compile Include="Assets\Scripts\Splash\SplashController.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeLG.cs" />
-    <Compile Include="Assets\Scripts\UI\MyShopUploadLG.cs" />
     <Compile Include="Assets\Scripts\Test\TestTriger.cs" />
     <Compile Include="Assets\Scripts\UI\BagItemCell.cs" />
     <Compile Include="Assets\Scripts\Data\BlueprintData.cs" />
     <Compile Include="Assets\Scripts\UI\MenuLG.cs" />
     <Compile Include="Assets\Scripts\UI\DebugLG.cs" />
-    <Compile Include="Assets\Scripts\UI\MyShopCell.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopBlueprintMyShopCell.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Building.cs" />
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionCell.cs" />
@@ -187,14 +187,14 @@
     <Compile Include="Assets\Scripts\Test\Test2.cs" />
     <Compile Include="Assets\Scripts\UI\GachaRatioLG.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
-    <Compile Include="Assets\Scripts\UI\MyShopSelectItemCell.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopBlueprintMyShopUploadItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\ShopGachaLG.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityBase.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csMouseOrbit.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeCell.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintDetailsUI.cs" />
-    <Compile Include="Assets\Scripts\UI\MyShopSelectItemLG.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopBlueprintMyShopSelectItemLG.cs" />
     <Compile Include="Assets\Scripts\Manager\EffectMng.cs" />
     <Compile Include="Assets\Scripts\UI\MissionLG.cs" />
     <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
@@ -204,7 +204,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mail.cs" />
     <Compile Include="Assets\Scripts\Data\UserData.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyToggleGroupCtl.cs" />
-    <Compile Include="Assets\Scripts\UI\MyShopUI.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopBlueprintSystemCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestAngle.cs" />
     <Compile Include="Assets\Scripts\Game\Player\ScreenDraggingCtl.cs" />
     <Compile Include="Assets\Scripts\UI\UILogicBase.cs" />
@@ -232,6 +232,7 @@
     <Compile Include="Assets\Scripts\UI\ChargeUI.cs" />
     <Compile Include="Assets\Scripts\UI\ShopChargeUI.cs" />
     <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Chat.cs" />
     <Compile Include="Assets\Scripts\UI\DebugCell.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerController.cs" />
     <Compile Include="Assets\Scripts\UI\GachaRatioUI.cs" />
@@ -302,10 +303,6 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\UI\Common\MyText.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopBlueprintMyShopItemCell.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Chat.cs" />
-    <Compile Include="Assets\Scripts\UI\ChatUI.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

@@ -792,7 +792,7 @@ GameObject:
   - component: {fileID: 6112785305788655963}
   - component: {fileID: 2350137369303223921}
   m_Layer: 5
-  m_Name: ShopBlueprintCell
+  m_Name: ShopBlueprintSystemCell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

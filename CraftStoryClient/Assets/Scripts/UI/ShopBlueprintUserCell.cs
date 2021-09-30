@@ -1,6 +1,6 @@
 ﻿using UnityEngine.UI;
 
-public class ShopBlueprintCell : UIBase
+public class ShopBlueprintUserCell : UIBase
 {
     Image Icon { get => transform.GetComponent<Image>(); }
     Button GoodBtn { get => FindChiled<Button>("Button"); }

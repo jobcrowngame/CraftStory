@@ -1,10 +1,7 @@
-using LitJson;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MyShopSelectItemUI : UIBase
+public class ShopBlueprintMyShopSelectItemUI : UIBase
 {
     Transform itemGridRoot { get => FindChiled("Content"); }
     Button OKBtn { get => FindChiled<Button>("OKBtn"); }
@@ -13,9 +10,9 @@ public class MyShopSelectItemUI : UIBase
     public override void Init()
     {
         base.Init();
-        MyShopSelectItemLG.E.Init(this);
+        ShopBlueprintMyShopSelectItemLG.E.Init(this);
 
-        OKBtn.onClick.AddListener(()=> 
+        OKBtn.onClick.AddListener((UnityEngine.Events.UnityAction)(()=> 
         {
             if (string.IsNullOrEmpty(DataMng.E.RuntimeData.NickName))
             {
@@ -23,12 +20,12 @@ public class MyShopSelectItemUI : UIBase
                 return;
             }
 
-            var ui = UICtl.E.OpenUI<MyShopUploadUI>(UIType.MyShopUpload);
-            ui.SetItemData(MyShopSelectItemLG.E.SelectItem.ItemData, MyShopSelectItemLG.E.Index);
+            var ui = UICtl.E.OpenUI<ShopBlueprintMyShopUploadUI>((UIType)UIType.ShopBlueprintMyShopUpload);
+            ui.SetItemData(ShopBlueprintMyShopSelectItemLG.E.SelectItem.ItemData, ShopBlueprintMyShopSelectItemLG.E.Index);
             Close();
 
             GuideLG.E.Next();
-        });
+        }));
         CancelBtn.onClick.AddListener(Close);
     }
     public override void Open()
@@ -42,7 +39,7 @@ public class MyShopSelectItemUI : UIBase
     public override void Close()
     {
         base.Close();
-        MyShopSelectItemLG.E.Index = -1;
+        ShopBlueprintMyShopSelectItemLG.E.Index = -1;
     }
 
     public void RefreshItems()
@@ -62,7 +59,7 @@ public class MyShopSelectItemUI : UIBase
     }
     private void AddItem(ItemData item)
     {
-        var cell = AddCell<MyShopSelectItemCell>("Prefabs/UI/IconItem", itemGridRoot);
+        var cell = AddCell<ShopBlueprintMyShopUploadItemCell>("Prefabs/UI/IconItem", itemGridRoot);
         if (cell != null)
         {
             cell.Init(item);

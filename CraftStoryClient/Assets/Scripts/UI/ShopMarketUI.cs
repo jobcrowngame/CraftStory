@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MarketUI : UIBase
+public class ShopMarketUI : UIBase
 {
     Title2UI Title { get => FindChiled<Title2UI>("Title2"); }
     Image FadeinImg { get => FindChiled<Image>("Fadein"); }
@@ -32,7 +32,7 @@ public class MarketUI : UIBase
     {
         base.Init();
 
-        MarketLG.E.Init(this);
+        ShopMarketLG.E.Init(this);
 
         Title.Init();
         Title.ShowCoin(1);
