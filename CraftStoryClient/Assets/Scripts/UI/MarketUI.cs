@@ -6,6 +6,11 @@ public class MarketUI : UIBase
 {
     Title2UI Title { get => FindChiled<Title2UI>("Title2"); }
     Image FadeinImg { get => FindChiled<Image>("Fadein"); }
+
+    /// <summary>
+    /// マップボタン
+    /// </summary>
+    Button MapBtn { get => FindChiled<Button>("MapBtn"); }
     Button MenuBtn { get => FindChiled<Button>("MenuBtn"); }
     Button Jump { get => FindChiled<Button>("Jump"); }
     MyButton PlussBtn { get => FindChiled<MyButton>("PlussBtn"); }
@@ -30,11 +35,14 @@ public class MarketUI : UIBase
         MarketLG.E.Init(this);
 
         Title.Init();
-        Title.RefreshCoins();
         Title.ShowCoin(1);
         Title.ShowCoin(2);
         Title.ShowCoin(3);
 
+        MapBtn.onClick.AddListener(() =>
+        {
+            UICtl.E.OpenUI<MapUI>(UIType.Map);
+        });
         MenuBtn.onClick.AddListener(() =>
         {
             UICtl.E.OpenUI<MenuUI>(UIType.Menu);
@@ -49,6 +57,13 @@ public class MarketUI : UIBase
         PlayerCtl.E.CameraCtl = Camera.main.GetComponent<CameraCtl>();
 
         StartCoroutine(FadeIn());
+    }
+
+    public override void Open()
+    {
+        base.Open();
+
+        Title.RefreshCoins();
     }
 
     IEnumerator FadeIn()

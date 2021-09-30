@@ -51,7 +51,6 @@ public class ShopBlueprintUI : UIBase
             "購入が多い",
             "ユーザーいいね数が多い",
         });
-        Dropdown.value = 0;
         Dropdown.onValueChanged.AddListener((value) =>
         {
             ShopBlueprintLG.E.RefreshMyShopBlueprint(InputField.text, value);
@@ -62,13 +61,16 @@ public class ShopBlueprintUI : UIBase
         {
             myShopCells[i] = MyShop.GetChild(i).gameObject.AddComponent<MyShopCell>();
         }
-
-        ShopBlueprintLG.E.Type = ShopBlueprintLG.UIType.Blueprint1;
     }
 
     public override void Open()
     {
         base.Open();
+
+        // 開く場合、最新の順でソート
+        Dropdown.value = 2;
+        ShopBlueprintLG.E.Type = ShopBlueprintLG.UIType.Blueprint1;
+        ToggleBtns.SetValue(0);
 
         Title.RefreshCoins();
     }
@@ -81,7 +83,7 @@ public class ShopBlueprintUI : UIBase
 
         if (type == ShopBlueprintLG.UIType.Blueprint1)
         {
-            ShopBlueprintLG.E.RefreshMyShopBlueprint();
+            ShopBlueprintLG.E.RefreshMyShopBlueprint(InputField.text, Dropdown.value);
         }
         else if (type == ShopBlueprintLG.UIType.Blueprint2)
         {
@@ -106,6 +108,14 @@ public class ShopBlueprintUI : UIBase
     /// </summary>
     public void RefreshBlueprint1(List<MyShopItem> items)
     {
+        // 数が7件未満の場合、右矢印ボタンをenactive
+        RightBtn.enabled = (items == null || items.Count < 7) ? false : true;
+        RightBtn.image.color = (items == null || items.Count < 7) ? Color.gray : Color.white;
+
+        // ページが１の場合、左矢印ボタンをenactive
+        LeftBtn.enabled = ShopBlueprintLG.E.SelectMyShopPage == 1 ? false : true;
+        LeftBtn.image.color = ShopBlueprintLG.E.SelectMyShopPage == 1 ? Color.gray : Color.white;
+
         for (int i = 0; i < MyshopBlueprintParent.childCount; i++)
         {
             var cell = MyshopBlueprintParent.GetChild(i).GetComponent<ShopBlueprintCell>();

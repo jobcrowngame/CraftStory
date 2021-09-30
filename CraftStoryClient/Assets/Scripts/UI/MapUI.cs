@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MapUI : UIBase
@@ -33,5 +34,22 @@ public class MapUI : UIBase
             if (DataMng.E.RuntimeData.MapType != MapType.Brave)
                 CommonFunction.GoToNextScene(1000);
         });
+    }
+
+    public override void Open()
+    {
+        base.Open();
+
+        EnActiveBtn(HomeBtn, DataMng.E.RuntimeData.MapType == MapType.Home);
+        EnActiveBtn(MarketBtn, DataMng.E.RuntimeData.MapType == MapType.Market);
+        EnActiveBtn(BraveBtn, DataMng.E.RuntimeData.MapType == MapType.Brave);
+    }
+
+    private void EnActiveBtn(Button btn, bool b = true)
+    {
+        btn.GetComponent<Image>().color = b ?
+            Color.gray :
+            Color.white;
+        btn.enabled = !b;
     }
 }

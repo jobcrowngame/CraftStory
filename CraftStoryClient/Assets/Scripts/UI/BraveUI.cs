@@ -7,6 +7,10 @@ public class BraveUI : UIBase
     Text SceneName { get => FindChiled<Text>("SceneName"); }
     Image FadeinImg { get => FindChiled<Image>("Fadein"); }
     Button MenuBtn { get => FindChiled<Button>("MenuBtn"); }
+    /// <summary>
+    /// マップボタン
+    /// </summary>
+    Button MapBtn { get => FindChiled<Button>("MapBtn"); }
     Button Jump { get => FindChiled<Button>("Jump"); }
     MyButton PlussBtn { get => FindChiled<MyButton>("PlussBtn"); }
     MyButton MinusBtn { get => FindChiled<MyButton>("MinusBtn"); }
@@ -31,6 +35,10 @@ public class BraveUI : UIBase
 
         BraveLG.E.Init(this);
 
+        MapBtn.onClick.AddListener(() =>
+        {
+            UICtl.E.OpenUI<MapUI>(UIType.Map);
+        });
         MenuBtn.onClick.AddListener(() => 
         { 
             UICtl.E.OpenUI<MenuUI>(UIType.Menu);
