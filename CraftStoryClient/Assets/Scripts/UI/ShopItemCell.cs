@@ -61,7 +61,6 @@ public class ShopItemCell : UIBase
                         {
                             DataMng.GetCoins(rp3);
                             ShopChargeLG.E.UI.RefreshCoins();
-                            ShopMarketLG.E.UI.RefreshCoins();
                         });
 
                         CommonFunction.ShowHintBar(5);
