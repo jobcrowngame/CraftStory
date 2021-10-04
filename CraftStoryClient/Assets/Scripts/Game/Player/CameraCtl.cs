@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,11 +26,11 @@ public class CameraCtl : MonoBehaviour
         }
     }
     private float cameraPosZ = -10;
-    private float cameraPosMinZ = SettingMng.E.CameraDistanseMax;
+    private float cameraPosMinZ = SettingMng.CameraDistanseMax;
     private float cameraPosMaxZ = 0;
 
-    private float curMaxDistance = SettingMng.E.CameraDistanseMax;
-    private float curMaxDistance2 = SettingMng.E.CameraDistanseMax;
+    private float curMaxDistance = SettingMng.CameraDistanseMax;
+    private float curMaxDistance2 = SettingMng.CameraDistanseMax;
 
     public float GetEulerAngleY { get => cameraRotateY.transform.localEulerAngles.y; }
 
@@ -38,6 +39,7 @@ public class CameraCtl : MonoBehaviour
     float offsetAngle;
     float movedAngle;
     float offsetZ;
+    Action cameraMoveOverCallback;
 
     float moveSpeed = 5;
 
@@ -57,8 +59,8 @@ public class CameraCtl : MonoBehaviour
     {
         if (PlayerCtl.E.PlayerEntity != null)
         {
-            PlayerCtl.E.PlayerEntity.IsActive = transform.localPosition.z < SettingMng.E.EnactiveCharacterModelDistanse;
-            PlayerCtl.E.PlayerEntity.IsModelActive(transform.localPosition.z < SettingMng.E.EnactiveCharacterModelDistanse);
+            PlayerCtl.E.PlayerEntity.IsActive = transform.localPosition.z < SettingMng.EnactiveCharacterModelDistanse;
+            PlayerCtl.E.PlayerEntity.IsModelActive(transform.localPosition.z < SettingMng.EnactiveCharacterModelDistanse);
         }
 
         if (AutoCameraMove)
@@ -84,19 +86,19 @@ public class CameraCtl : MonoBehaviour
 
     public void CameraRotate(float mx, float my)
     {
-        mX = mx * SettingMng.E.CamRotSpeed;
-        mY = my * SettingMng.E.CamRotSpeed;
+        mX = mx * SettingMng.CamRotSpeed;
+        mY = my * SettingMng.CamRotSpeed;
 
         lookUpAngle = cameraRotateX.transform.localRotation.eulerAngles.x - mx;
 
-        if (lookUpAngle > SettingMng.E.LookUpAngleMax && lookUpAngle < SettingMng.E.LookUpAngleMin)
+        if (lookUpAngle > SettingMng.LookUpAngleMax && lookUpAngle < SettingMng.LookUpAngleMin)
             return;
 
-        if (lookUpAngle > SettingMng.E.LookUpAngleMin && lookUpAngle < 360)
+        if (lookUpAngle > SettingMng.LookUpAngleMin && lookUpAngle < 360)
         {
             float curV = 360 - lookUpAngle;
-            float offset = curV > 360 - SettingMng.E.LookUpAngleMin ? 0 : 20;
-            float maxV = 360 - SettingMng.E.LookUpAngleMin - offset;
+            float offset = curV > 360 - SettingMng.LookUpAngleMin ? 0 : 20;
+            float maxV = 360 - SettingMng.LookUpAngleMin - offset;
             float v = Mathf.Sqrt(curV / maxV);
             v *= curMaxDistance;
             CameraPosZ = curMaxDistance - v;
@@ -107,7 +109,7 @@ public class CameraCtl : MonoBehaviour
         }
         else
         {
-            curMaxDistance2 = SettingMng.E.CameraDistanseMax;
+            curMaxDistance2 = SettingMng.CameraDistanseMax;
         }
 
         cameraRotateX.transform.Rotate(new Vector3(-mX, 0, 0));
@@ -182,8 +184,9 @@ public class CameraCtl : MonoBehaviour
     /// カメラがゆっくり回転
     /// </summary>
     /// <param name="direction">ターゲット向き</param>
-    public void CameraslowlyRotateToTarget(Vector2 direction)
+    public void CameraslowlyRotateToTarget(Vector2 direction, Action callback)
     {
+        cameraMoveOverCallback = callback;
         movedAngle = 0;
         PlayerCtl.E.Lock = true;
         AutoCameraMove = true;
@@ -227,6 +230,11 @@ public class CameraCtl : MonoBehaviour
         {
             AutoCameraMove = false;
             PlayerCtl.E.Lock = false;
+
+            if (cameraMoveOverCallback != null)
+            {
+                cameraMoveOverCallback();
+            }
         }
     }
 }

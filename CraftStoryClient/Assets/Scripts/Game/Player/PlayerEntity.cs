@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using SimpleInputNamespace;
+using System;
 
 /// <summary>
 /// プレイヤーエンティティ
@@ -21,6 +22,11 @@ public class PlayerEntity : CharacterEntity
     {
         if (Behavior.Type == PlayerBehaviorType.Jump && controller.isGrounded)
             Behavior.Type = beforBehaveior;
+
+        if (moveing)
+        {
+            PlayerMove();
+        }
     }
 
     /// <summary>
@@ -47,8 +53,8 @@ public class PlayerEntity : CharacterEntity
         {
             if (x != 0 || y != 0)
             {
-                moveDirection.x = newVec.x * SettingMng.E.MoveSpeed;
-                moveDirection.z = newVec.y * SettingMng.E.MoveSpeed;
+                moveDirection.x = newVec.x * SettingMng.MoveSpeed;
+                moveDirection.z = newVec.y * SettingMng.MoveSpeed;
                 Behavior.Type = PlayerBehaviorType.Run;
             }
             else
@@ -65,7 +71,7 @@ public class PlayerEntity : CharacterEntity
             Model.rotation = Quaternion.Euler(new Vector3(0, angle1 + angle2, 0));
 
         // 重力
-        moveDirection.y -= SettingMng.E.Gravity * Time.deltaTime;
+        moveDirection.y -= SettingMng.Gravity * Time.deltaTime;
 
         // マップ範囲外に出ないようにする
         if (MoveBoundaryCheckPosX(moveDirection.x))
@@ -91,7 +97,7 @@ public class PlayerEntity : CharacterEntity
         {
             beforBehaveior = Behavior.Type;
 
-            moveDirection.y = SettingMng.E.JumpSpeed;
+            moveDirection.y = SettingMng.JumpSpeed;
             Behavior.Type = PlayerBehaviorType.Jump;
         }
     }
@@ -119,11 +125,11 @@ public class PlayerEntity : CharacterEntity
     {
         try
         {
-            if (transform.position.x < SettingMng.E.MoveBoundaryOffset
+            if (transform.position.x < SettingMng.MoveBoundaryOffset
                 && transform.position.x + posX < transform.position.x)
                 return true;
 
-            if (transform.position.x > DataMng.E.MapData.Config.SizeX - SettingMng.E.MoveBoundaryOffset
+            if (transform.position.x > DataMng.E.MapData.Config.SizeX - SettingMng.MoveBoundaryOffset
                 && transform.position.x + posX > transform.position.x)
                 return true;
 
@@ -143,11 +149,11 @@ public class PlayerEntity : CharacterEntity
     {
         try
         {
-            if (transform.position.z < SettingMng.E.MoveBoundaryOffset
+            if (transform.position.z < SettingMng.MoveBoundaryOffset
                 && transform.position.z + posZ < transform.position.z)
                 return true;
 
-            if (transform.position.z > DataMng.E.MapData.Config.SizeZ - SettingMng.E.MoveBoundaryOffset
+            if (transform.position.z > DataMng.E.MapData.Config.SizeZ - SettingMng.MoveBoundaryOffset
                 && transform.position.z + posZ > transform.position.z)
                 return true;
 
@@ -167,5 +173,45 @@ public class PlayerEntity : CharacterEntity
     {
         controller.radius = b ? 0.40f : 0.01f;
         controller.height = b ? 1.1f : 1f;
+    }
+
+
+    Vector3 targetPos;
+    bool moveing;
+    float offsetDistance;
+    Action moveCallback;
+
+    /// <summary>
+    /// 移動する
+    /// </summary>
+    /// <param name="pos">目標座標</param>
+    /// <param name="callback">目標まで到着後のアクション</param>
+    public void PlayerMoveTo(Vector3 pos, float offset, Action callback)
+    {
+        targetPos = pos;
+        offsetDistance = offset;
+        moveCallback = callback;
+        moveing = true;
+
+        var dir = (targetPos - transform.position).normalized;
+
+        Debug.LogWarningFormat("Dir:{0}", dir);
+    }
+    public void PlayerMove()
+    {
+        if (Vector3.Distance(transform.position, targetPos) > offsetDistance)
+        {
+            var dir = (targetPos - transform.position).normalized;
+            Move(dir.x, dir.z);
+        }
+        else
+        {
+            if (moveCallback != null)
+            {
+                moveCallback();
+            }
+
+            moveing = false;
+        }
     }
 }

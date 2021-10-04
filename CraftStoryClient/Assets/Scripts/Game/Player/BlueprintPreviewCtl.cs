@@ -104,12 +104,12 @@ public class BlueprintPreviewCtl : MonoBehaviour
         if (!isActive)
             return;
 
-        mX = mx * SettingMng.E.CamRotSpeed;
-        mY = my * SettingMng.E.CamRotSpeed;
+        mX = mx * SettingMng.CamRotSpeed;
+        mY = my * SettingMng.CamRotSpeed;
 
         lookUpAngle = cameraRotateX.transform.localRotation.eulerAngles.x - mx;
 
-        if (lookUpAngle > SettingMng.E.LookUpAngleMax && lookUpAngle < SettingMng.E.LookUpAngleMin)
+        if (lookUpAngle > SettingMng.LookUpAngleMax && lookUpAngle < SettingMng.LookUpAngleMin)
             return;
 
         cameraRotateX.transform.Rotate(new Vector3(-mX, 0, 0));

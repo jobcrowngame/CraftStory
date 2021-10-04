@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using SimpleInputNamespace;
 using UnityEngine;
@@ -366,9 +367,19 @@ public class PlayerCtl : MonoBehaviour
     /// <summary>
     /// NPC と話す
     /// </summary>
-    public void TalkToNPC(Transform target)
+    public void TalkToNPC(Transform target, Action callback)
     {
-        ChangePlayerDirection(target.position);
+        if (NPCTTalkDistanceChect(target))
+        {
+            ChangePlayerDirection(target.position, callback);
+        }
+        else
+        {
+            playerEntity.PlayerMoveTo(target.position, SettingMng.NPCTTalkDistance, () =>
+            {
+                ChangePlayerDirection(target.position, callback);
+            });
+        }
     }
 
     /// <summary>
@@ -385,13 +396,23 @@ public class PlayerCtl : MonoBehaviour
     /// クリックしたおぶぜっく
     /// </summary>
     /// <param name="targetPos"></param>
-    private void ChangePlayerDirection(Vector3 targetPos)
+    private void ChangePlayerDirection(Vector3 targetPos, Action callback)
     {
         var target = new Vector2(targetPos.x, targetPos.z);
         var player = new Vector2(PlayerEntity.transform.position.x, PlayerEntity.transform.position.z);
         var dir = new Vector2(target.x- player.x, target.y - player.y).normalized;
 
         playerEntity.Rotation(dir);
-        cameraCtl.CameraslowlyRotateToTarget(dir);
+        cameraCtl.CameraslowlyRotateToTarget(dir, callback);
+    }
+
+    /// <summary>
+    /// NPC話す距離をチェック
+    /// </summary>
+    /// <returns></returns>
+    public bool NPCTTalkDistanceChect(Transform target)
+    {
+        var distance = CommonFunction.GetDistance(target.position, PlayerEntity.transform.position);
+        return distance < SettingMng.NPCTTalkDistance;
     }
 }

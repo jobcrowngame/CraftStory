@@ -36,12 +36,12 @@ public class GameTimeCtl
         {
             curTime = value;
 
-            if (curTime > SettingMng.E.GameDaySeconds)
+            if (curTime > SettingMng.GameDaySeconds)
                 curTime = 0.01f;
 
             if (Active)
             {
-                float percent = curTime / SettingMng.E.GameDaySeconds;
+                float percent = curTime / SettingMng.GameDaySeconds;
                 float angle = 360 * percent;
 
                 RefreshLight(angle);
@@ -58,7 +58,7 @@ public class GameTimeCtl
 
     public GameTimeCtl()
     {
-        CurTime = SettingMng.E.GameDaySeconds * 0.2f;
+        CurTime = SettingMng.GameDaySeconds * 0.2f;
         TimeZoneMng.E.AddTimerEvent02(() => { CurTime += 0.02f; });
         Active = false;
     }
@@ -84,8 +84,8 @@ public class GameTimeCtl
 
         RenderSettings.skybox.SetFloat("_Exposure", newV);
         float skyboxAmbientIntensity = newV;
-        if (skyboxAmbientIntensity < SettingMng.E.MinAmbientIntensity)
-            skyboxAmbientIntensity = SettingMng.E.MinAmbientIntensity;
+        if (skyboxAmbientIntensity < SettingMng.MinAmbientIntensity)
+            skyboxAmbientIntensity = SettingMng.MinAmbientIntensity;
 
         RenderSettings.ambientIntensity = skyboxAmbientIntensity;
     }

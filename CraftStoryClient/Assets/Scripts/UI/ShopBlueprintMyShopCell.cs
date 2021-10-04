@@ -35,12 +35,12 @@ public class ShopBlueprintMyShopCell : UIBase
 
                 case 2:
                     UnLock.gameObject.SetActive(DataMng.E.MyShop.myShopLv < 1);
-                    UnLockBtnText.text = SettingMng.E.MyShopCostLv1 + "個";
+                    UnLockBtnText.text = SettingMng.MyShopCostLv1 + "個";
                     break;
 
                 case 3:
                     UnLock.gameObject.SetActive(DataMng.E.MyShop.myShopLv < 2);
-                    UnLockBtnText.text = SettingMng.E.MyShopCostLv2 + "個";
+                    UnLockBtnText.text = SettingMng.MyShopCostLv2 + "個";
                     break;
             }
 
@@ -118,8 +118,8 @@ public class ShopBlueprintMyShopCell : UIBase
             if (DataMng.E.MyShop.myShopLv < Index - 1)
             {
                 int cost = DataMng.E.MyShop.myShopLv == 0
-                    ? SettingMng.E.MyShopCostLv1
-                    : SettingMng.E.MyShopCostLv2;
+                    ? SettingMng.MyShopCostLv1
+                    : SettingMng.MyShopCostLv2;
 
                 string msg = string.Format(@"クラフトシード「{0}個」を消費することで、
 アップロード枠を開放することができます。

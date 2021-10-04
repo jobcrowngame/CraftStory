@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// キャラクタエンティティ
@@ -44,6 +45,19 @@ public class CharacterEntity : MonoBehaviour
         }
     }
     private PlayerBehavior playerBehavior;
+
+    Vector3 targetPos;
+    bool move;
+    float offsetDistance;
+    Action moveCallback;
+
+    private void Update()
+    {
+        if (move)
+        {
+            Move();
+        }
+    }
 
     public virtual void Init()
     {
@@ -91,14 +105,33 @@ public class CharacterEntity : MonoBehaviour
         Model.rotation = Quaternion.Euler(new Vector3(0, -angle + 90, 0));
     }
 
-
-
-
     /// <summary>
-    /// 座標から角度変換
+    /// 移動する
     /// </summary>
-    private float GetAngleFromV2(Vector2 v)
+    /// <param name="pos">目標座標</param>
+    /// <param name="callback">目標まで到着後のアクション</param>
+    public void MoveTo(Vector3 pos, float offset, Action callback)
     {
-        return -Vector2.SignedAngle(new Vector2(0, 1), v);
+        targetPos = pos;
+        offsetDistance = offset;
+        moveCallback = callback;
+        move = true;
+    }
+    public void  Move()
+    {
+        if (Vector3.Distance(transform.position, targetPos) > offsetDistance)
+        {
+            //自分の位置、ターゲット、速度
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, 1 * Time.deltaTime);
+        }
+        else
+        {
+            if (moveCallback != null)
+            {
+                moveCallback();
+            }
+
+            move = false;
+        }
     }
 }

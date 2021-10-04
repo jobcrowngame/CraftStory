@@ -82,6 +82,6 @@ public class FriendUI : UIBase
         }
 
         // フレンド数更新
-        Count.text = list.Count + "/" + SettingMng.E.MaxFriendCount;
+        Count.text = list.Count + "/" + SettingMng.MaxFriendCount;
     }
 }

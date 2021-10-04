@@ -62,10 +62,11 @@ public class EntityFunctionalObject : EntityBase
 
             case EntityType.Workbench:
             case EntityType.Kamado:
-                //var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
-                //ui.SetType(Type);
-
-                PlayerCtl.E.TalkToNPC(transform);
+                PlayerCtl.E.TalkToNPC(transform,()=> 
+                {
+                    var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
+                    ui.SetType(Type);
+                });
                 break;
 
             case EntityType.Mission:
@@ -74,7 +75,7 @@ public class EntityFunctionalObject : EntityBase
 
             case EntityType.ChargeShop:
                 // 距離判定
-                if (!CheckDistance())
+                if (!PlayerCtl.E.NPCTTalkDistanceChect(transform))
                 {
                     CommonFunction.ShowHintBar(30);
                     break;
@@ -89,7 +90,7 @@ public class EntityFunctionalObject : EntityBase
 
             case EntityType.GachaShop:
                 // 距離判定
-                if (!CheckDistance())
+                if (!PlayerCtl.E.NPCTTalkDistanceChect(transform))
                 {
                     CommonFunction.ShowHintBar(30);
                     break;
@@ -104,7 +105,7 @@ public class EntityFunctionalObject : EntityBase
 
             case EntityType.ResourceShop:
                 // 距離判定
-                if (!CheckDistance())
+                if (!PlayerCtl.E.NPCTTalkDistanceChect(transform))
                 {
                     CommonFunction.ShowHintBar(30);
                     break;
@@ -119,7 +120,7 @@ public class EntityFunctionalObject : EntityBase
 
             case EntityType.BlueprintShop:
                 // 距離判定
-                if (!CheckDistance())
+                if (!PlayerCtl.E.NPCTTalkDistanceChect(transform))
                 {
                     CommonFunction.ShowHintBar(30);
                     break;
@@ -134,7 +135,7 @@ public class EntityFunctionalObject : EntityBase
 
             case EntityType.GiftShop:
                 // 距離判定
-                if (!CheckDistance())
+                if (!PlayerCtl.E.NPCTTalkDistanceChect(transform))
                 {
                     CommonFunction.ShowHintBar(30);
                     break;
@@ -155,10 +156,5 @@ public class EntityFunctionalObject : EntityBase
 
             default: Logger.Error("not find entityType " + Type); break;
         }
-    }
-
-    private bool CheckDistance()
-    {
-        return CommonFunction.GetDistance(transform.position, PlayerCtl.E.PlayerEntity.transform.position) < 3;
     }
 }
