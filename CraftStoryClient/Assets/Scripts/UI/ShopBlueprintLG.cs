@@ -39,12 +39,15 @@ public class ShopBlueprintLG : UILogicBase<ShopBlueprintLG, ShopBlueprintUI>
         NWMng.E.SearchMyShopItems((rp) =>
         {
             List<MyShopItem> items = null;
+            int maxCount = 0;
+
             if (!string.IsNullOrEmpty(rp.ToString()))
             {
-                items = JsonMapper.ToObject<List<MyShopItem>>(rp.ToJson());
+                items = JsonMapper.ToObject<List<MyShopItem>>(rp["items"].ToJson());
+                maxCount = (int)rp["maxCount"];
             }
 
-            UI.RefreshBlueprint1(items);
+            UI.RefreshBlueprint1(items, maxCount);
         }, SelectMyShopPage, nickName, sortType);
     }
 

@@ -24,6 +24,8 @@ public class ShopBlueprintUI : UIBase
     Transform MyShop { get => FindChiled("MyShop"); }
     ShopBlueprintMyShopCell[] myShopCells;
 
+    private int maxCount;
+
     public override void Init()
     {
         base.Init();
@@ -107,11 +109,18 @@ public class ShopBlueprintUI : UIBase
     /// <summary>
     /// ユーザーの設計図
     /// </summary>
-    public void RefreshBlueprint1(List<MyShopItem> items)
+    public void RefreshBlueprint1(List<MyShopItem> items, int maxCount)
     {
+        this.maxCount = maxCount;
+
         // 数が7件未満の場合、右矢印ボタンをenactive
-        RightBtn.enabled = (items == null || items.Count < 7) ? false : true;
-        RightBtn.image.color = (items == null || items.Count < 7) ? Color.gray : Color.white;
+        RightBtn.enabled = (items != null && 
+            (ShopBlueprintLG.E.SelectMyShopPage - 1) * 7 + items.Count < maxCount) ? 
+            true : false;
+
+        RightBtn.image.color = (items != null &&
+            (ShopBlueprintLG.E.SelectMyShopPage - 1) * 7 + items.Count < maxCount) ?
+             Color.white : Color.gray;
 
         // ページが１の場合、左矢印ボタンをenactive
         LeftBtn.enabled = ShopBlueprintLG.E.SelectMyShopPage == 1 ? false : true;
