@@ -271,7 +271,7 @@ public class CommonFunction
     public static Vector2 AngleToVector2(float angle)
     {
         var radian = angle * (Mathf.PI / 180);
-        return new Vector2(Mathf.Cos(radian), Mathf.Sin(radian)).normalized;
+        return new Vector2(Mathf.Sin(radian), Mathf.Cos(radian)).normalized;
     }
     /// <summary>
     /// ベクトルから角度を取得

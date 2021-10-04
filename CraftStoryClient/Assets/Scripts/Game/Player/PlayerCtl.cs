@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using SimpleInputNamespace;
 using UnityEngine;
 
@@ -363,12 +364,34 @@ public class PlayerCtl : MonoBehaviour
     }
 
     /// <summary>
+    /// NPC と話す
+    /// </summary>
+    public void TalkToNPC(Transform target)
+    {
+        ChangePlayerDirection(target.position);
+    }
+
+    /// <summary>
     /// ロックを解除
     /// </summary>
     /// <returns></returns>
-    private System.Collections.IEnumerator UnLock()
+    private IEnumerator UnLock()
     {
         yield return new WaitForSeconds(0.1f);
-        PlayerCtl.E.Lock = false;
+        Lock = false;
+    }
+
+    /// <summary>
+    /// クリックしたおぶぜっく
+    /// </summary>
+    /// <param name="targetPos"></param>
+    private void ChangePlayerDirection(Vector3 targetPos)
+    {
+        var target = new Vector2(targetPos.x, targetPos.z);
+        var player = new Vector2(PlayerEntity.transform.position.x, PlayerEntity.transform.position.z);
+        var dir = new Vector2(target.x- player.x, target.y - player.y).normalized;
+
+        playerEntity.Rotation(dir);
+        cameraCtl.CameraslowlyRotateToTarget(dir);
     }
 }

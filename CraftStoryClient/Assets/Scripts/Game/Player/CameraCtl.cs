@@ -33,6 +33,14 @@ public class CameraCtl : MonoBehaviour
 
     public float GetEulerAngleY { get => cameraRotateY.transform.localEulerAngles.y; }
 
+    bool AutoCameraMove = false;
+    bool isRightMove;
+    float offsetAngle;
+    float movedAngle;
+    float offsetZ;
+
+    float moveSpeed = 5;
+
     public void Init()
     {
         cameraRotateX = CommonFunction.FindChiledByName(PlayerCtl.E.PlayerEntity.transform, "X").transform;
@@ -47,21 +55,16 @@ public class CameraCtl : MonoBehaviour
 
     void Update()
     {
-        //if (IsBlock())
-        //{
-        //    CameraPull(false);
-        //}
-
-        //if (Time.time - triggerExitTime > 3 && transform.localPosition.z > SettingMng.E.CameraDistanseMax)
-        //    CameraPull(true);
-
         if (PlayerCtl.E.PlayerEntity != null)
         {
             PlayerCtl.E.PlayerEntity.IsActive = transform.localPosition.z < SettingMng.E.EnactiveCharacterModelDistanse;
             PlayerCtl.E.PlayerEntity.IsModelActive(transform.localPosition.z < SettingMng.E.EnactiveCharacterModelDistanse);
         }
 
-        
+        if (AutoCameraMove)
+        {
+            StartCameraMove();
+        }
     }
 
     public void OnTriggerStay(Collider other)
@@ -84,7 +87,7 @@ public class CameraCtl : MonoBehaviour
         mX = mx * SettingMng.E.CamRotSpeed;
         mY = my * SettingMng.E.CamRotSpeed;
 
-        lookUpAngle = cameraRotateX.transform.localRotation.eulerAngles.x - mY;
+        lookUpAngle = cameraRotateX.transform.localRotation.eulerAngles.x - mx;
 
         if (lookUpAngle > SettingMng.E.LookUpAngleMax && lookUpAngle < SettingMng.E.LookUpAngleMin)
             return;
@@ -107,8 +110,8 @@ public class CameraCtl : MonoBehaviour
             curMaxDistance2 = SettingMng.E.CameraDistanseMax;
         }
 
-        cameraRotateX.transform.Rotate(new Vector3(-mY, 0, 0));
-        cameraRotateY.transform.Rotate(new Vector3(0, mX, 0));
+        cameraRotateX.transform.Rotate(new Vector3(-mX, 0, 0));
+        cameraRotateY.transform.Rotate(new Vector3(0, mY, 0));
     }
 
     public void ChangeCameraPos(float v)
@@ -173,5 +176,57 @@ public class CameraCtl : MonoBehaviour
             return null;
 
         return _cacheRaycastHit.collider.gameObject;
+    }
+
+    /// <summary>
+    /// カメラがゆっくり回転
+    /// </summary>
+    /// <param name="direction">ターゲット向き</param>
+    public void CameraslowlyRotateToTarget(Vector2 direction)
+    {
+        movedAngle = 0;
+        PlayerCtl.E.Lock = true;
+        AutoCameraMove = true;
+
+        // カメラ向き
+        Vector2 cameraDir = CommonFunction.AngleToVector2(GetEulerAngleY);
+
+        // 回転する角度
+        offsetAngle = Vector2.Angle(direction, cameraDir);
+
+        // 回転向きを計算
+        var newAngle = GetEulerAngleY + 90;
+        Vector2 newDir = CommonFunction.AngleToVector2(newAngle);
+        var newDot = Vector2.Dot(direction, newDir);
+
+        offsetZ = CameraPosZ + 4;
+
+        isRightMove = newDot < 0;
+    }
+
+    /// <summary>
+    /// カメラの
+    /// </summary>
+    private void StartCameraMove()
+    {
+        // カメラYの変化
+        var step = offsetAngle * Time.deltaTime * moveSpeed;
+        if (step < 0.1f)
+        {
+            step = 0.1f;
+        }
+        movedAngle += step;
+        cameraRotateY.transform.Rotate(new Vector3(0, isRightMove ? -step : step, 0));
+
+        // カメラZの変化
+        step = offsetZ * Time.deltaTime * moveSpeed;
+        CameraPosZ += -step;
+        RefreshCameraPos();
+
+        if (movedAngle > offsetAngle)
+        {
+            AutoCameraMove = false;
+            PlayerCtl.E.Lock = false;
+        }
     }
 }

@@ -80,4 +80,25 @@ public class CharacterEntity : MonoBehaviour
             deleteEffect.gameObject.SetActive(b);
         }
     }
+
+    /// <summary>
+    /// 角度によって回転
+    /// </summary>
+    /// <param name="angle"></param>
+    public void Rotation(Vector2 direction)
+    {
+        var angle = CommonFunction.Vector2ToAngle(direction);
+        Model.rotation = Quaternion.Euler(new Vector3(0, -angle + 90, 0));
+    }
+
+
+
+
+    /// <summary>
+    /// 座標から角度変換
+    /// </summary>
+    private float GetAngleFromV2(Vector2 v)
+    {
+        return -Vector2.SignedAngle(new Vector2(0, 1), v);
+    }
 }

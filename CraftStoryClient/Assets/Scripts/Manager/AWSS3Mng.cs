@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.IO;
+using Amazon.Runtime.Internal;
 
 public class AWSS3Mng : MonoBehaviour
 {
@@ -26,7 +27,6 @@ public class AWSS3Mng : MonoBehaviour
     private static AWSS3Mng entity;
 
     private string IdentityPoolId = "ap-northeast-1:073ecf65-6c35-42df-8607-5a304f7a9006";
-    private string objectName = "test.TXT";
     private string S3BucketName = "j-de";
 
     private RegionEndpoint _CognitoIdentityRegion
@@ -71,13 +71,20 @@ public class AWSS3Mng : MonoBehaviour
     /// <returns></returns>
     public IEnumerator InitInitCoroutine()
     {
-        UnityInitializer.AttachToGameObject(gameObject);
+        try
+        {
+            UnityInitializer.AttachToGameObject(gameObject);
 
-        AWSConfigs.HttpClient = AWSConfigs.HttpClientOption.UnityWebRequest;
-        AWSConfigs.LoggingConfig.LogTo = LoggingOptions.UnityLogger;
-        AWSConfigs.LoggingConfig.LogResponses = ResponseLoggingOption.Always;
-        AWSConfigs.LoggingConfig.LogMetrics = true;
-        AWSConfigs.CorrectForClockSkew = true;
+            AWSConfigs.HttpClient = AWSConfigs.HttpClientOption.UnityWebRequest;
+            AWSConfigs.LoggingConfig.LogTo = LoggingOptions.UnityLogger;
+            AWSConfigs.LoggingConfig.LogResponses = ResponseLoggingOption.Always;
+            AWSConfigs.LoggingConfig.LogMetrics = true;
+            AWSConfigs.CorrectForClockSkew = true;
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex);
+        }
 
         yield return null;
     }
@@ -102,18 +109,33 @@ public class AWSS3Mng : MonoBehaviour
             CannedACL = S3CannedACL.Private
         };
 
-        Client.PutObjectAsync(request, (responseObj) =>
+        try
         {
-            if (responseObj.Exception == null)
+            Client.PutObjectAsync(request, (responseObj) =>
             {
-                if (successCallback != null) successCallback();
-            }
-            else
-            {
-                if (failureCallback != null) failureCallback();
-                Logger.Error("S3 Upload Failure:"+responseObj.Exception.Message);
-            }
-        });
+                if (responseObj.Exception == null)
+                {
+                    if (successCallback != null) successCallback();
+                }
+                else
+                {
+                    if (failureCallback != null) failureCallback();
+                    Logger.Error("S3 Upload Failure:" + responseObj.Exception.Message);
+                }
+            });
+        }
+        catch (HttpErrorResponseException ex)
+        {
+            Logger.Error("HttpErrorResponseException:" + ex);
+        }
+        catch (AmazonS3Exception ex)
+        {
+            Logger.Error("AmazonS3Exception:" + ex);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex);
+        }
     }
 
     /// <summary>
@@ -127,9 +149,9 @@ public class AWSS3Mng : MonoBehaviour
             Key = fileName,
         };
 
-        Client.GetObjectAsync(request, (responseObject) =>
+        try
         {
-            try
+            Client.GetObjectAsync(request, (responseObject) =>
             {
                 if (responseObject == null || responseObject.Response == null)
                 {
@@ -137,21 +159,36 @@ public class AWSS3Mng : MonoBehaviour
                     return;
                 }
 
-                MemoryStream stream = new MemoryStream();
-                responseObject.Response.ResponseStream.CopyTo(stream);
-                byte[] data = stream.ToArray();
+                if (responseObject.Exception == null)
+                {
+                    MemoryStream stream = new MemoryStream();
+                    responseObject.Response.ResponseStream.CopyTo(stream);
+                    byte[] data = stream.ToArray();
 
-                Texture2D tex = new Texture2D(1, 1);
-                tex.LoadImage(data);
-                tex.Apply();
+                    Texture2D tex = new Texture2D(1, 1);
+                    tex.LoadImage(data);
+                    tex.Apply();
 
-                Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
-                if (img != null) img.sprite = sprite;
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex);
-            }
-        });
+                    Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
+                    if (img != null) img.sprite = sprite;
+                }
+                else
+                {
+                    Logger.Error("S3 DownLoad Object Failure:" + responseObject.Exception.Message);
+                }
+            });
+        }
+        catch (HttpErrorResponseException ex)
+        {
+            Logger.Error("HttpErrorResponseException:" + ex);
+        }
+        catch (AmazonS3Exception ex)
+        {
+            Logger.Error("AmazonS3Exception:" + ex);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex);
+        }
     }
 }
