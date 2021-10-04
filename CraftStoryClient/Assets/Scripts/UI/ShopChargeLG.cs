@@ -42,3 +42,15 @@ public class ShopChargeLG : UILogicBase<ShopChargeLG, ShopChargeUI>
         ExchangePoint,
     }
 }
+
+
+public enum ShopType
+{
+    Charge = 0,
+    Subscription,
+    Gacha,
+    Point,
+    Exchange,
+    Blueprint,
+    Blueprint2,
+}

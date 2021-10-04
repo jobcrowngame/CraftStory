@@ -77,4 +77,10 @@ public class ShopGachaUI : UIBase
             ToggleBtns1.SetToggleImage(i, ConfigMng.E.Gacha[gachaId].ToggleImageON, ConfigMng.E.Gacha[gachaId].ToggleImageOFF);
         }
     }
+
+    public void RefreshCoins()
+    {
+        Title.RefreshCoins();
+        ShopMarketLG.E.UI.RefreshCoins();
+    }
 }

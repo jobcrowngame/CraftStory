@@ -12,6 +12,7 @@ public class ShopResourceUI : UIBase
     public override void Init()
     {
         base.Init();
+        ShopResourceLG.E.Init(this);
 
         Title.Init();
         Title.ShowCoin(1);
@@ -47,5 +48,10 @@ public class ShopResourceUI : UIBase
                 cell.Init(item);
             }
         }
+    }
+
+    public void RefreshCoins()
+    {
+        Title.RefreshCoins();
     }
 }

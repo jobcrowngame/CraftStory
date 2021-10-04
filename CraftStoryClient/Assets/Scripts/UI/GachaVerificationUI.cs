@@ -92,7 +92,7 @@ public class GachaVerificationUI : UIBase
                 Logger.Error("Bad gacha result");
             }
 
-            var result = LitJson.JsonMapper.ToObject<ShopLG.GachaResponse>(rp.ToJson());
+            var result = LitJson.JsonMapper.ToObject<ShopGachaLG.GachaResponse>(rp.ToJson());
             var ui = UICtl.E.OpenUI<GachaBonusUI>(UIType.GachaBonus);
             if (ui != null)
             {
@@ -100,7 +100,7 @@ public class GachaVerificationUI : UIBase
             }
 
             DataMng.E.ConsumableCoin(costId, costCount);
-            ShopLG.E.UI.RefreshCoins();
+            ShopGachaLG.E.UI.RefreshCoins();
         }, gachaId);
     }
 }

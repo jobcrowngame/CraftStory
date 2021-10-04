@@ -42,6 +42,7 @@ public class ShopBlueprintDetailsUI : UIBase
                     CommonFunction.ShowHintBar(17);
 
                     ShopBlueprintLG.E.UI.RefreshCoin();
+                    ShopMarketLG.E.UI.RefreshCoins();
                 }, data.myshopid);
             }, () => { });
         });

@@ -69,7 +69,6 @@
     <Compile Include="Assets\Scripts\Game\Player\CameraCtl.cs" />
     <Compile Include="Assets\Scripts\Game\Map\EntityTreasureBox.cs" />
     <Compile Include="Assets\Scripts\UI\ChatUI.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopUI.Gacha.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusUI.cs" />
     <Compile Include="Assets\Scripts\UI\GachaVerificationLG.cs" />
     <Compile Include="Assets\Scripts\UI\ShopMarketLG.cs" />
@@ -133,7 +132,6 @@
     <Compile Include="Assets\Scripts\UI\ShopBlueprintMyShopUploadUI.cs" />
     <Compile Include="Assets\Scripts\UI\DebugUI.cs" />
     <Compile Include="Assets\Scripts\Common\MiniJSON.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopLG.cs" />
     <Compile Include="Assets\Scripts\Splash\SplashController.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeLG.cs" />
     <Compile Include="Assets\Scripts\Test\TestTriger.cs" />
@@ -178,7 +176,6 @@
     <Compile Include="Assets\Scripts\Game\Player\PlayerEntity.cs" />
     <Compile Include="Assets\Scripts\Test\IAPDemo.cs" />
     <Compile Include="Assets\Scripts\Game\Adventure\AdventureCtl.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopUI.cs" />
     <Compile Include="Assets\Scripts\Manager\NWMng.cs" />
     <Compile Include="Assets\Scripts\Game\Player\BuilderPencil.cs" />
     <Compile Include="Assets\Scripts\UI\GachaAddBonusCell.cs" />
@@ -303,6 +300,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
+    <Compile Include="Assets\Scripts\UI\ShopResourceLG.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

@@ -1,4 +1,6 @@
-﻿public class ShopGachaLG : UILogicBase<ShopGachaLG, ShopGachaUI>
+﻿using System.Collections.Generic;
+
+public class ShopGachaLG : UILogicBase<ShopGachaLG, ShopGachaUI>
 {
     public int Index
     {
@@ -35,4 +37,14 @@
         { 1, 2, 3 }
     };
 
+    public struct GachaResponse
+    {
+        public List<GacheBonusData> bonusList { get; set; }
+        public int index { get; set; }
+    }
+    public struct GacheBonusData
+    {
+        public int bonusId { get; set; }
+        public int rare { get; set; }
+    }
 }

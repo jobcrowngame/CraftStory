@@ -484,5 +484,4 @@ public class CommonFunction
     {
         return Mathf.Abs(Vector3.Distance(p1, p2));
     }
-
 }

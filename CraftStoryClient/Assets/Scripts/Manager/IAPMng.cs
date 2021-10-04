@@ -151,7 +151,7 @@ public class IAPMng : Single<IAPMng>, IStoreListener
 
                             NWMng.E.GetNewEmailCount(() =>
                             {
-                                HomeLG.E.UI.RefreshRedPoint();
+                                if(HomeLG.E.UI != null) HomeLG.E.UI.RefreshRedPoint();
                             });
                         });
 

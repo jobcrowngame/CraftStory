@@ -46,7 +46,7 @@ public class GachaBonusUI : UIBase
         AudioMng.E.ShowBGM("gachaBGM");
     }
 
-    public void Set(ShopLG.GachaResponse result, int gachaId)
+    public void Set(ShopGachaLG.GachaResponse result, int gachaId)
     {
         ClearCell(Parent);
         GachaBonusLG.E.cellList.Clear();

@@ -124,7 +124,7 @@ public class ShopChargeUI : UIBase
 
     public void RefreshSubscription()
     {
-        var parent = FindChiled("Grid", SubscriptionWind.gameObject);
+        var parent = FindChiled("Parent", SubscriptionWind.gameObject);
         ClearCell(parent);
 
         for (int i = 0; i < 3; i++)
