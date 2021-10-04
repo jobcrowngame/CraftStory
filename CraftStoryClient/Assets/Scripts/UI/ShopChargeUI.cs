@@ -115,4 +115,31 @@ public class ShopChargeUI : UIBase
             }
         }
     }
+
+    public void RefreshCoins()
+    {
+        Title.RefreshCoins();
+        ShopMarketLG.E.UI.RefreshCoins();
+    }
+
+    public void RefreshSubscription()
+    {
+        var parent = FindChiled("Grid", SubscriptionWind.gameObject);
+        ClearCell(parent);
+
+        for (int i = 0; i < 3; i++)
+        {
+            var cell = AddCell<ShopSubscriptionCell>("Prefabs/UI/ShopSubscriptionCell", parent);
+            if (cell != null)
+            {
+                cell.Set(i);
+            }
+        }
+    }
+
+    // â€ã‡ÇÃÉÅÉ\ÉbÉh
+    public void GrantCredits(string credits)
+    {
+        IAPMng.E.OnPurchaseClicked(credits);
+    }
 }

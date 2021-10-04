@@ -52,11 +52,7 @@ public class EntityFunctionalObject : EntityBase
     {
         base.OnClick();
 
-        if (!CheckDistance ())
-        {
-            CommonFunction.ShowHintBar(30);
-            return;
-        }
+        
 
         switch (Type)
         {
@@ -66,8 +62,10 @@ public class EntityFunctionalObject : EntityBase
 
             case EntityType.Workbench:
             case EntityType.Kamado:
-                var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
-                ui.SetType(Type);
+                //var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
+                //ui.SetType(Type);
+
+                PlayerCtl.E.TalkToNPC(transform);
                 break;
 
             case EntityType.Mission:
@@ -75,6 +73,13 @@ public class EntityFunctionalObject : EntityBase
                 break;
 
             case EntityType.ChargeShop:
+                // 距離判定
+                if (!CheckDistance())
+                {
+                    CommonFunction.ShowHintBar(30);
+                    break;
+                }
+
                 var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 1);
                 chatUi.AddListenerOnClose(() =>
                 {
@@ -83,6 +88,13 @@ public class EntityFunctionalObject : EntityBase
                 break;
 
             case EntityType.GachaShop:
+                // 距離判定
+                if (!CheckDistance())
+                {
+                    CommonFunction.ShowHintBar(30);
+                    break;
+                }
+
                 chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 2);
                 chatUi.AddListenerOnClose(() =>
                 {
@@ -91,6 +103,13 @@ public class EntityFunctionalObject : EntityBase
                 break;
 
             case EntityType.ResourceShop:
+                // 距離判定
+                if (!CheckDistance())
+                {
+                    CommonFunction.ShowHintBar(30);
+                    break;
+                }
+
                 chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 3);
                 chatUi.AddListenerOnClose(() =>
                 {
@@ -99,6 +118,13 @@ public class EntityFunctionalObject : EntityBase
                 break;
 
             case EntityType.BlueprintShop:
+                // 距離判定
+                if (!CheckDistance())
+                {
+                    CommonFunction.ShowHintBar(30);
+                    break;
+                }
+
                 chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 4);
                 chatUi.AddListenerOnClose(() =>
                 {
@@ -107,6 +133,13 @@ public class EntityFunctionalObject : EntityBase
                 break;
 
             case EntityType.GiftShop:
+                // 距離判定
+                if (!CheckDistance())
+                {
+                    CommonFunction.ShowHintBar(30);
+                    break;
+                }
+
                 if (DataMng.E.RuntimeData.Coin3 < 1000)
                 {
                     CommonFunction.ShowHintBar(18);

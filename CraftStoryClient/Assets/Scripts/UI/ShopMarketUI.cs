@@ -26,6 +26,7 @@ public class ShopMarketUI : UIBase
         UICtl.E.AddUI(this, UIType.Market);
 
         Init();
+        Open();
     }
 
     public override void Init()
@@ -63,6 +64,11 @@ public class ShopMarketUI : UIBase
     {
         base.Open();
 
+        Title.RefreshCoins();
+    }
+
+    public void RefreshCoins()
+    {
         Title.RefreshCoins();
     }
 

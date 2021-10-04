@@ -147,7 +147,7 @@ public class IAPMng : Single<IAPMng>, IStoreListener
                     {
                         NWMng.E.GetSubscriptionInfo(() =>
                         {
-                            if (ShopLG.E.UI != null) ShopLG.E.UI.RefreshSubscription();
+                            if (ShopChargeLG.E.UI != null) ShopChargeLG.E.UI.RefreshSubscription();
 
                             NWMng.E.GetNewEmailCount(() =>
                             {
@@ -156,7 +156,7 @@ public class IAPMng : Single<IAPMng>, IStoreListener
                         });
 
                         m_Controller.ConfirmPendingPurchase(product);
-                    }, ShopLG.E.GetSubscriptionTypeByShopId(config.ID));
+                    }, ShopChargeLG.E.GetSubscriptionTypeByShopId(config.ID));
                 }
             }
             else
@@ -166,7 +166,7 @@ public class IAPMng : Single<IAPMng>, IStoreListener
                     NWMng.E.GetCoins((rp) =>
                     {
                         DataMng.GetCoins(rp);
-                        if (ShopLG.E.UI != null) ShopLG.E.UI.RefreshCoins();
+                        if (ShopChargeLG.E.UI != null) ShopChargeLG.E.UI.RefreshCoins();
 
                         
                     });

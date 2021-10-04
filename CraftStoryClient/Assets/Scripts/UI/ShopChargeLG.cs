@@ -13,6 +13,16 @@ public class ShopChargeLG : UILogicBase<ShopChargeLG, ShopChargeUI>
     }
     private UiType mType;
 
+    public int GetSubscriptionTypeByShopId(int shopId)
+    {
+        switch (shopId)
+        {
+            case 80: return 1;
+            case 81: return 2;
+            default: return 3;
+        }
+    }
+
 
     public enum UiType
     {

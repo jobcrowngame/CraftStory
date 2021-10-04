@@ -61,6 +61,8 @@ public class ShopBlueprintUI : UIBase
         {
             myShopCells[i] = MyShop.GetChild(i).gameObject.AddComponent<ShopBlueprintMyShopCell>();
         }
+
+        Dropdown.value = 2;
     }
 
     public override void Open()
@@ -68,9 +70,8 @@ public class ShopBlueprintUI : UIBase
         base.Open();
 
         // 開く場合、最新の順でソート
-        Dropdown.value = 2;
-        ShopBlueprintLG.E.Type = ShopBlueprintLG.UIType.Blueprint1;
-        ToggleBtns.SetValue(0);
+        //ShopBlueprintLG.E.Type = ShopBlueprintLG.UIType.Blueprint1;
+        //ToggleBtns.SetValue(0);
 
         Title.RefreshCoins();
     }

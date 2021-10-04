@@ -488,7 +488,6 @@ public class MapCtl
             return false;
         }
 
-        Debug.Log(downEntityPos);
         var downEntity = mapData.Map[(int)downEntityPos.x, (int)downEntityPos.y, (int)downEntityPos.z];
         return ConfigMng.E.Entity[downEntity.entityID].CanPut == 1;
     }
