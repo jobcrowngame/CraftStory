@@ -37,6 +37,10 @@ public class RuntimeData
     /// チュートリアル完了のフラグ 0 = false 1 = true
     /// </summary>
     public int GuideEnd { get; set; }
+    /// <summary>
+    /// 市場のチュートリアル完了のフラグ 0 = false 1 = true
+    /// </summary>
+    public int GuideEnd2 { get; set; }
 
     /// <summary>
     /// 今のマップタイプ

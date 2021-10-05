@@ -91,7 +91,7 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            GuideLG.E.GoTo(40);
+            GuideLG.E.GoTo(26);
         }
 
         if (Input.GetKeyDown(KeyCode.F3))

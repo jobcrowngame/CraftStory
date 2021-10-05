@@ -85,6 +85,11 @@ public class HomeUI : UIBase
     Transform RedPoint { get => FindChiled("RedPoint"); }
 
     /// <summary>
+    /// スプリットAnimation
+    /// </summary>
+    Transform SpriteAnim { get => FindChiled("SpriteAnim"); }
+
+    /// <summary>
     /// 選択用アイテム欄ボタンリスト
     /// </summary>
     List<HomeItemBtn> itemBtns;
@@ -98,8 +103,6 @@ public class HomeUI : UIBase
 
     private void Start()
     {
-        // 今のマップタイプを設定
-        DataMng.E.RuntimeData.MapType = MapType.Home;
         WorldMng.E.CreateGameObjects();
         WorldMng.E.GameTimeCtl.Active = true;
 
@@ -135,6 +138,7 @@ public class HomeUI : UIBase
         MapBtn.onClick.AddListener(() =>
         {
             UICtl.E.OpenUI<MapUI>(UIType.Map);
+            GuideLG.E.Next();
         });
         BagBtn.onClick.AddListener(() => 
         { 
@@ -167,6 +171,7 @@ public class HomeUI : UIBase
 
         StartCoroutine(FadeIn());
         RefreshRedPoint();
+        ShowSpriteAnimation();
     }
 
     private void AddItemBtns()
@@ -278,6 +283,14 @@ public class HomeUI : UIBase
         {
             item.Refresh();
         }
+    }
+
+    /// <summary>
+    /// マップのぴーちゃんのAnim
+    /// </summary>
+    public void ShowSpriteAnimation()
+    {
+        SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.GuideEnd2 == 0);
     }
 
     public Vector2 GetBagIconPos()

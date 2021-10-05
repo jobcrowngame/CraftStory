@@ -45,7 +45,8 @@ public class BlueprintPreviewUI : UIBase
         BlueprintPreviewPlussBtn.AddClickingListener(()=> { PlayerCtl.E.BlueprintPreviewCtl.ChangeCameraPos(1); });
         BlueprintPreviewMinusBtn.AddClickingListener(()=> { PlayerCtl.E.BlueprintPreviewCtl.ChangeCameraPos(-1); });
         PhotographBtn.onClick.AddListener(()=> 
-        { 
+        {
+            // 撮影状態になる
             IsPhotographing = true;
             var renderTexture = PlayerCtl.E.BlueprintPreviewCtl.GetRenderTexture(renderTextureType);
             var texture = new Texture2D(renderTexture.width, renderTexture.height);
@@ -90,6 +91,12 @@ public class BlueprintPreviewUI : UIBase
         if (ShopMarketLG.E.UI != null)
         {
             ShopMarketLG.E.UI.Open();
+            if (beforUI != null) beforUI.Open();
+        }
+
+        if (GuideLG.E.UI != null)
+        {
+            GuideLG.E.UI.Open();
             if (beforUI != null) beforUI.Open();
         }
 
@@ -145,5 +152,8 @@ public class BlueprintPreviewUI : UIBase
         yield return new WaitForSeconds(0.5f);
 
         Close();
+
+        // チュートリアル
+        GuideLG.E.Next();
     }
 }

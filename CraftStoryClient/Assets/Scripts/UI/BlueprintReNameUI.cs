@@ -60,9 +60,6 @@ public class BlueprintReNameUI : UIBase
 
         string fileName = CommonFunction.GetTextureName();
 
-        // S3にテクスチャをアップロード
-        AWSS3Mng.E.UploadTexture2D(texture, fileName);
-
         // 設計図アイテムを追加
         DataMng.E.AddBlueprint(3002, 1, input.text, mapData, fileName, () =>
         {
@@ -76,6 +73,9 @@ public class BlueprintReNameUI : UIBase
             }
             else
             {
+                // S3にテクスチャをアップロード
+                AWSS3Mng.E.UploadTexture2D(texture, fileName);
+
                 NWMng.E.RemoveItem((rp) =>
                 {
                     NWMng.E.GetItems(() =>
@@ -102,6 +102,8 @@ public class BlueprintReNameUI : UIBase
 
             PhotographMode(false);
         });
+
+        GuideLG.E.Next();
     }
 
     /// <summary>

@@ -192,10 +192,6 @@ public class PlayerEntity : CharacterEntity
         offsetDistance = offset;
         moveCallback = callback;
         moveing = true;
-
-        var dir = (targetPos - transform.position).normalized;
-
-        Debug.LogWarningFormat("Dir:{0}", dir);
     }
     public void PlayerMove()
     {

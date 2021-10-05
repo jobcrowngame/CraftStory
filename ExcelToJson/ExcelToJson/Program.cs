@@ -495,6 +495,8 @@ namespace ExcelToJson
                     MsgSizeX = ToFloat(tbl.Rows[i]["MsgSizeX"]),
                     MsgSizeY = ToFloat(tbl.Rows[i]["MsgSizeY"]),
                     HideHand = ToInt32(tbl.Rows[i]["HideHand"]),
+                    NextMask = ToInt32(tbl.Rows[i]["NextMask"]),
+                    AutoMove = ToInt32(tbl.Rows[i]["AutoMove"]),
                 };
 
                 list.Add(data);

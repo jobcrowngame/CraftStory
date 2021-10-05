@@ -14,6 +14,9 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         get => mLock; 
         set
         {
+            if (DataMng.E.RuntimeData.MapType != MapType.Guide)
+                return;
+
             mLock = value;
             UI.ShowFullMask(mLock);
         }
@@ -73,6 +76,12 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         stepIndex = index - 1;
         Next();
     }
+
+    
+
+    /// <summary>
+    /// チュートリアル中作成したブロック数を記録
+    /// </summary>
     public void CreateBlock()
     {
         createBlockCount++;
@@ -89,7 +98,14 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         DataMng.E.GuideItems.Clear();
         for (int i = 0; i < items.Length; i++)
         {
-            AddGuideItem(int.Parse(items[i]), int.Parse(counts[i]));
+            if (int.Parse(items[i]) == 3002)
+            {
+                AddBlueprint();
+            }
+            else
+            {
+                AddGuideItem(int.Parse(items[i]), int.Parse(counts[i]));
+            }
         }
     }
     public void AddGuideItem(int itemId, int count)
@@ -100,5 +116,17 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
     {
         itemData.id = itemGuid++;
         DataMng.E.GuideItems.Add(itemData);
+    }
+    private void AddBlueprint()
+    {
+        var config = ConfigMng.E.Blueprint[1];
+        AddGuideItem(new ItemData()
+        {
+            itemId = 3002,
+            count = 1,
+            newName = "ハウス",
+            relationData = config.Data,
+            equipSite = 1,
+        });
     }
 }

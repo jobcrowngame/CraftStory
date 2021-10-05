@@ -36,9 +36,17 @@ public class ShopBlueprintUI : UIBase
         Title.ShowCoin(3);
 
         ToggleBtns.Init();
-        ToggleBtns.OnValueChangeAddListener((index) => { ShopBlueprintLG.E.Type = (ShopBlueprintLG.UIType)index; });
+        ToggleBtns.OnValueChangeAddListener((index) => 
+        { 
+            ShopBlueprintLG.E.Type = (ShopBlueprintLG.UIType)index;
+            GuideLG.E.Next();
+        });
         Des.text = ConfigMng.E.MText[3].Text;
-        BackBtn.onClick.AddListener(Close);
+        BackBtn.onClick.AddListener(()=> 
+        {
+            Close();
+            GuideLG.E.Next();
+        });
 
         LeftBtn.onClick.AddListener(() => { ShopBlueprintLG.E.OnClickLeftBtn(InputField.text, Dropdown.value); });
         RightBtn.onClick.AddListener(() => { ShopBlueprintLG.E.OnClickRightBtn(InputField.text, Dropdown.value); });
@@ -76,6 +84,8 @@ public class ShopBlueprintUI : UIBase
         //ToggleBtns.SetValue(0);
 
         Title.RefreshCoins();
+
+        GuideLG.E.Next();
     }
 
     public void RefreshItemWindow(ShopBlueprintLG.UIType type)

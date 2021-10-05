@@ -3,16 +3,20 @@ using UnityEngine.UI;
 
 using System.Collections;
 
+/// <summary>
+/// チュートリアル
+/// </summary>
 public class GuideUI : UIBase
 {
     RectTransform mask1 { get => FindChiled<RectTransform>("Mask (1)"); }
     RectTransform mask2 { get => FindChiled<RectTransform>("Mask (2)"); }
     RectTransform mask3 { get => FindChiled<RectTransform>("Mask (3)"); }
     RectTransform mask4 { get => FindChiled<RectTransform>("Mask (4)"); }
-    RectTransform Msg { get => FindChiled<RectTransform>("Image"); }
+    RectTransform Chat { get => FindChiled<RectTransform>("Chat"); }
     Transform Hand { get => FindChiled<Transform>("Hand"); }
     RectTransform canvas { get => transform.parent.GetComponent<RectTransform>(); }
     Transform FullMask { get => FindChiled<Transform>("FullMask"); }
+    Button NextMask { get => FindChiled<Button>("NextMask"); }
 
     private void Start()
     {
@@ -23,16 +27,24 @@ public class GuideUI : UIBase
         base.Init();
         GuideLG.E.Init(this);
 
+        NextMask.onClick.AddListener(() =>
+        {
+            GuideLG.E.Next();
+        });
+
         ShowMask(false);
         GuideLG.E.Next();
     }
 
+    /// <summary>
+    /// オブジェクト選択
+    /// </summary>
+    /// <param name="selectedObj"></param>
     private void Select(GameObject selectedObj)
     {
         if (selectedObj == null)
         {
             ShowMask(false);
-            Logger.Error("Not find selectedObj");
             return;
         }
 
@@ -58,15 +70,17 @@ public class GuideUI : UIBase
         mask4.offsetMax = new Vector2(-(canvasSize.x - selectedObj.transform.position.x / offset - width / 2), 
             -(canvasSize.y - selectedObj.transform.position.y / offset + height / 2));
 
-        SetHand(new Vector2(selectedObj.transform.position.x + 60, selectedObj.transform.position.y + 20));
+        SetHand(new Vector2(selectedObj.transform.position.x, selectedObj.transform.position.y));
     }
     private void SetMessage(Vector2 pos, Vector2 size, string msg)
     {
-        Msg.transform.localPosition = pos;
-        Msg.sizeDelta = size;
-        FindChiled<Text>("Text", Msg.transform).text = msg;
+        Chat.gameObject.SetActive(true);
 
-        Msg.gameObject.SetActive(!string.IsNullOrEmpty(msg));
+        Chat.transform.localPosition = pos;
+        Chat.sizeDelta = size;
+        FindChiled<Text>("Text", Chat.transform).text = msg;
+
+        Chat.gameObject.SetActive(!string.IsNullOrEmpty(msg));
     }
     private void SetHand(Vector2 pos)
     {
@@ -86,11 +100,28 @@ public class GuideUI : UIBase
     private void End()
     {
         ShowMask(false);
-        Msg.gameObject.SetActive(false);
+        Chat.gameObject.SetActive(false);
         Hand.gameObject.SetActive(false);
         GuideLG.E.end = true;
 
-        NWMng.E.GuideEnd((rp)=> { DataMng.E.RuntimeData.GuideEnd = 1; });
+        NWMng.E.GuideEnd((rp)=> 
+        {
+            if (DataMng.E.RuntimeData.GuideId == 1)
+            {
+                DataMng.E.RuntimeData.GuideEnd = 1;
+            }else if (DataMng.E.RuntimeData.GuideId == 2)
+            {
+                DataMng.E.RuntimeData.GuideEnd2 = 1;
+            }
+        }, DataMng.E.RuntimeData.GuideId);
+    }
+
+    /// <summary>
+    /// 喋るWindowを閉じる
+    /// </summary>
+    public void CloseChatWindow()
+    {
+        Chat.gameObject.SetActive(false);
     }
 
     public void NextStep(int stepId)
@@ -116,15 +147,46 @@ public class GuideUI : UIBase
         }
         else
         {
-            Select(CommonFunction.FindChiledByName(UICtl.E.Root, config.CellName));
+            // 自動移動がある場合
+            if (config.AutoMove == 1)
+            {
+                var targetObj = GameObject.Find(config.CellName);
+                if (targetObj != null)
+                {
+                    var entity = targetObj.GetComponent<EntityFunctionalObject>();
+                    if (entity != null)
+                    {
+                        entity.OnClick();
+                    }
+                }
+                else
+                {
+                    Logger.Error("targetObj が見つけません。{0}", config.CellName);
+                }
+            }
+            // WindowのObjectを選択場合
+            else
+            {
+                Select(CommonFunction.FindChiledByName(UICtl.E.Root, config.CellName));
+            }
         }
 
+        // メッセージを設定
         Vector2 pos = new Vector2(config.MsgPosX, config.MsgPosY);
         Vector2 size = new Vector2(config.MsgSizeX, config.MsgSizeY);
         SetMessage(pos, size, config.Message);
 
+        // 手オブジェクト表し
         Hand.gameObject.SetActive(config.HideHand != 1);
 
-        GuideLG.E.UnLock();
+        // 次会話に遷移
+        NextMask.gameObject.SetActive(config.NextMask == 1);
+
+        // 自動移動する場合はずっとロックされています。
+        if (config.AutoMove != 1)
+        {
+            // 画面ロック解除
+            GuideLG.E.UnLock();
+        }
     }
 }

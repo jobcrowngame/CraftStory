@@ -134,7 +134,7 @@ public class DataMng : Single<DataMng>
             mType = MapType.Home;
             mData = mHomeData;
         }
-        else if (mapId == 101)
+        else if (mapId == 101 || mapId == 104)
         {
             mType = MapType.Guide;
             mData = WorldMng.E.MapCtl.CreateMapData(mapId);

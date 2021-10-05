@@ -212,7 +212,7 @@ public class BuilderPencil
         var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
         if (homeUI != null) homeUI.ShowBlueprintBtn(false);
 
-        GuideLG.E.Next(21);
+        GuideLG.E.Next();
     }
 
     /// <summary>

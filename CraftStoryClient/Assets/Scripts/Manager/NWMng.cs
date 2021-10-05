@@ -597,9 +597,10 @@ public partial class NWMng : MonoBehaviour
     /// チュートリアル完了
     /// </summary>
     /// <param name="rp"></param>
-    public void GuideEnd(Action<JsonData> rp)
+    public void GuideEnd(Action<JsonData> rp, int guidId)
     {
         var data = new NWData();
+        data.Add("guidId", guidId);
 
         StartCoroutine(HttpRequest(rp, data, CMD.GuideEnd));
     }

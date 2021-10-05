@@ -52,8 +52,6 @@ public class EntityFunctionalObject : EntityBase
     {
         base.OnClick();
 
-        
-
         switch (Type)
         {
             case EntityType.Door:
@@ -62,11 +60,8 @@ public class EntityFunctionalObject : EntityBase
 
             case EntityType.Workbench:
             case EntityType.Kamado:
-                PlayerCtl.E.TalkToNPC(transform,()=> 
-                {
-                    var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
-                    ui.SetType(Type);
-                });
+                var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
+                ui.SetType(Type);
                 break;
 
             case EntityType.Mission:
@@ -74,83 +69,66 @@ public class EntityFunctionalObject : EntityBase
                 break;
 
             case EntityType.ChargeShop:
-                // 距離判定
-                if (!PlayerCtl.E.NPCTTalkDistanceChect(transform))
+                PlayerCtl.E.TalkToNPC(transform, () =>
                 {
-                    CommonFunction.ShowHintBar(30);
-                    break;
-                }
-
-                var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 1);
-                chatUi.AddListenerOnClose(() =>
-                {
-                    UICtl.E.OpenUI<ShopChargeUI>(UIType.ShopCharge);
+                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 1);
+                    chatUi.AddListenerOnClose(() =>
+                    {
+                        UICtl.E.OpenUI<ShopChargeUI>(UIType.ShopCharge);
+                    });
                 });
                 break;
 
             case EntityType.GachaShop:
-                // 距離判定
-                if (!PlayerCtl.E.NPCTTalkDistanceChect(transform))
+                PlayerCtl.E.TalkToNPC(transform, () =>
                 {
-                    CommonFunction.ShowHintBar(30);
-                    break;
-                }
-
-                chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 2);
-                chatUi.AddListenerOnClose(() =>
-                {
-                    UICtl.E.OpenUI<ShopGachaUI>(UIType.ShopGacha);
+                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 2);
+                    chatUi.AddListenerOnClose(() =>
+                    {
+                        UICtl.E.OpenUI<ShopGachaUI>(UIType.ShopGacha);
+                    });
                 });
                 break;
 
             case EntityType.ResourceShop:
-                // 距離判定
-                if (!PlayerCtl.E.NPCTTalkDistanceChect(transform))
+                PlayerCtl.E.TalkToNPC(transform, () =>
                 {
-                    CommonFunction.ShowHintBar(30);
-                    break;
-                }
-
-                chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 3);
-                chatUi.AddListenerOnClose(() =>
-                {
-                    UICtl.E.OpenUI<ShopResourceUI>(UIType.ShopResource);
+                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 3);
+                    chatUi.AddListenerOnClose(() =>
+                    {
+                        UICtl.E.OpenUI<ShopResourceUI>(UIType.ShopResource);
+                    });
                 });
                 break;
 
             case EntityType.BlueprintShop:
-                // 距離判定
-                if (!PlayerCtl.E.NPCTTalkDistanceChect(transform))
+                PlayerCtl.E.TalkToNPC(transform, () =>
                 {
-                    CommonFunction.ShowHintBar(30);
-                    break;
-                }
+                    GuideLG.E.UnLock();
+                    if(GuideLG.E.UI != null) GuideLG.E.UI.CloseChatWindow();
 
-                chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 4);
-                chatUi.AddListenerOnClose(() =>
-                {
-                    UICtl.E.OpenUI<ShopBlueprintUI>(UIType.ShopBlueprint);
+                    var chatUi  = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 4);
+                    chatUi.AddListenerOnClose(() =>
+                    {
+                        UICtl.E.OpenUI<ShopBlueprintUI>(UIType.ShopBlueprint);
+                    });
                 });
                 break;
 
             case EntityType.GiftShop:
-                // 距離判定
-                if (!PlayerCtl.E.NPCTTalkDistanceChect(transform))
+                PlayerCtl.E.TalkToNPC(transform, () =>
                 {
-                    CommonFunction.ShowHintBar(30);
-                    break;
-                }
+                    if (DataMng.E.RuntimeData.Coin3 < 1000)
+                    {
+                        CommonFunction.ShowHintBar(18);
+                        return;
+                    }
 
-                if (DataMng.E.RuntimeData.Coin3 < 1000)
-                {
-                    CommonFunction.ShowHintBar(18);
-                    break;
-                }
-
-                chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 5);
-                chatUi.AddListenerOnClose(() =>
-                {
-                    UICtl.E.OpenUI<ExchangePointUI>(UIType.ExchangePoint);
+                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 5);
+                    chatUi.AddListenerOnClose(() =>
+                    {
+                        UICtl.E.OpenUI<ExchangePointUI>(UIType.ExchangePoint);
+                    });
                 });
                 break;
 

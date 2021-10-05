@@ -11,5 +11,7 @@ namespace JsonConfigData
         public float MsgSizeX { get; set; }
         public float MsgSizeY { get; set; }
         public int HideHand { get; set; }
+        public int NextMask { get; set; }
+        public int AutoMove { get; set; }
     }
 }

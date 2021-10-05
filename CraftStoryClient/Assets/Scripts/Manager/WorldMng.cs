@@ -40,10 +40,8 @@ public class WorldMng : MonoBehaviour
         if (DataMng.E.RuntimeData.MapType == MapType.Guide)
             GuideLG.E.SetGuideItems();
 
-        // ホームマップの場合、設計図プレイビューコンソールObjectを追加
-        if (DataMng.E.RuntimeData.MapType == MapType.Home ||
-                DataMng.E.RuntimeData.MapType == MapType.Market)
-            PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
+        // 設計図プレイビューコンソールObjectを追加
+        PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
 
         AdventureCtl.E.Init();
         GoogleMobileAdsMng.E.Init();
