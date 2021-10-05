@@ -290,7 +290,7 @@ public class HomeUI : UIBase
     /// </summary>
     public void ShowSpriteAnimation()
     {
-        SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.GuideEnd2 == 0);
+        SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd2 == 0);
     }
 
     public Vector2 GetBagIconPos()

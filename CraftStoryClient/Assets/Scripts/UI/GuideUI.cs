@@ -26,6 +26,7 @@ public class GuideUI : UIBase
     {
         base.Init();
         GuideLG.E.Init(this);
+        GuideLG.E.Clear();
 
         NextMask.onClick.AddListener(() =>
         {
@@ -183,7 +184,7 @@ public class GuideUI : UIBase
         NextMask.gameObject.SetActive(config.NextMask == 1);
 
         // 自動移動する場合はずっとロックされています。
-        if (config.AutoMove != 1)
+        if (config.AutoMove < 1)
         {
             // 画面ロック解除
             GuideLG.E.UnLock();

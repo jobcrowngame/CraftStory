@@ -5,6 +5,10 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
 {
     private Guide config { get => ConfigMng.E.Guide[DataMng.E.RuntimeData.GuideId]; }
     private string[] guideSteps;
+
+    /// <summary>
+    /// チュートリアルが完了してるかのフラグ
+    /// </summary>
     public bool end { get; set; }
 
     private int itemGuid = 1;
@@ -77,7 +81,17 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         Next();
     }
 
-    
+    /// <summary>
+    /// クリアする
+    /// </summary>
+    public void Clear()
+    {
+        end = false;
+        Lock = false;
+        stepIndex = 0;
+        createBlockCount = 0;
+    }
+
 
     /// <summary>
     /// チュートリアル中作成したブロック数を記録
