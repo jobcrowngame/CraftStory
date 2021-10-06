@@ -221,8 +221,8 @@ public class MapDataFactory
         if (config.PosY > 0) newPos.y = config.PosY;
         if (config.PosZ > 0) newPos.z = config.PosZ;
 
-        newPos = MapCtl.FixEntityPos(mData, newPos, config.CreatePosOffset);
         newPos = MapCtl.GetGroundPos(mData, (int)newPos.x, (int)newPos.z);
+        newPos = MapCtl.FixEntityPos(mData, newPos, config.CreatePosOffset);
 
         mData.Map[(int)newPos.x, (int)newPos.y, (int)newPos.z] = new MapData.MapCellData() { entityID = config.EntityID };
     }
