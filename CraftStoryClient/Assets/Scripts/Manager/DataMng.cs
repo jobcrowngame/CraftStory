@@ -97,8 +97,15 @@ public class DataMng : Single<DataMng>
         //uData.Account = "r2YP56GDQxw9";
         //uData.UserPW = "qR3NpqWxkIPP";
 
-        var mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.MapDataName);
-        if (!string.IsNullOrEmpty(mapData)) mHomeData = new MapData(mapData);
+        try
+        {
+            var mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.MapDataName);
+            if (!string.IsNullOrEmpty(mapData)) mHomeData = new MapData(mapData);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error("Load local map fail!! \n" + ex.Message);
+        }
 
         //if (mHomeData == null) mHomeData = WorldMng.E.MapCtl.CreateMapData(100); ;
 
