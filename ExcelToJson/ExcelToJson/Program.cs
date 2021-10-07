@@ -125,6 +125,7 @@ namespace ExcelToJson
                 case "Mission": list = Mission(tbl); break;
                 case "MText": list = MText(tbl); break;
                 case "Chat": list = Chat(tbl); break;
+                case "MapArea": list = MapArea(tbl); break;
 
 
 
@@ -626,6 +627,25 @@ namespace ExcelToJson
                     CharacterIcon = ToString(tbl.Rows[i]["CharacterIcon"]),
                     NameIcon = ToString(tbl.Rows[i]["NameIcon"]),
                     Text = ToString(tbl.Rows[i]["Text"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object MapArea(DataTable tbl)
+        {
+            List<MapArea> list = new List<MapArea>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new MapArea()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    MapId = ToInt32(tbl.Rows[i]["MapId"]),
+                    Forward = ToInt32(tbl.Rows[i]["Forward"]),
+                    Back = ToInt32(tbl.Rows[i]["Back"]),
+                    Right = ToInt32(tbl.Rows[i]["Right"]),
+                    Left = ToInt32(tbl.Rows[i]["Left"]),
                 };
 
                 list.Add(data);

@@ -30,7 +30,9 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, Mission> MissionConfig = new Dictionary<int, Mission>();
     Dictionary<int, MText> MTextConfig = new Dictionary<int, MText>();
     Dictionary<int, Chat> ChatConfig = new Dictionary<int, Chat>();
+    Dictionary<int, MapArea> MapAreaConfig = new Dictionary<int, MapArea>();
 
+    public Dictionary<int, MapArea> MapArea { get => MapAreaConfig; }
     public Dictionary<int, Chat> Chat { get => ChatConfig; }
     public Dictionary<int, MText> MText { get => MTextConfig; }
     public Dictionary<int, Mission> Mission { get => MissionConfig; }
@@ -76,6 +78,7 @@ class ConfigMng : Single<ConfigMng>
         ReadConfig("Config/Entity", entityConfig);
         ReadConfig("Config/Guide", guideConfig);
         ReadConfig("Config/GuideStep", guideStepConfig);
+        ReadConfig("Config/MapArea", MapAreaConfig);
 
         yield return null;
     }

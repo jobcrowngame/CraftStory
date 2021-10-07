@@ -96,7 +96,12 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            UICtl.E.OpenUI<ShopBlueprintUI>(UIType.ShopBlueprint);
+            var area = new MapAreaData(4);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            var area = new MapAreaData(1);
         }
     }
 

@@ -41,15 +41,37 @@ public class NoticeLG : UILogicBase<NoticeLG, NoticeUI>
         public int newflag { get; set; }
         public DateTime activedate { get; set; }
         public string title { get; set; }
+        public string titleIcon { get; set; }
+        public string detailIcon { get; set; }
+        public string url { get; set; }
         public string text { get; set; }
     }
 
     public enum CategoryType
     {
+        /// <summary>
+        /// お知らせ
+        /// </summary>
         notice = 1,
+
+        /// <summary>
+        /// 重要
+        /// </summary>
         important,
+
+        /// <summary>
+        /// メンテナンス
+        /// </summary>
         maintenance,
+
+        /// <summary>
+        /// 予告
+        /// </summary>
         notice2,
+
+        /// <summary>
+        /// イベント
+        /// </summary>
         gameEvent,
     }
 }

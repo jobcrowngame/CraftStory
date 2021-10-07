@@ -29,6 +29,7 @@ public class NoticeUI : UIBase
         if (list == null || list.Count == 0)
             return;
 
+        // 最新時間によるソート
         list.Sort(delegate (NoticeLG.NoticeData x, NoticeLG.NoticeData y) {
             if (x.activedate == null && y.activedate == null) return 0;
             else if (x.activedate == null) return 1;
