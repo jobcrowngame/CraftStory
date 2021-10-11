@@ -5,6 +5,7 @@ using UnityEngine;
 public class NoticeCell : UIBase
 {
     Button OnClick { get => gameObject.GetComponent<Button>(); }
+    Image Icon { get => FindChiled<Image>("Icon"); }
     Image Category { get => FindChiled<Image>("Category"); }
     Text Time { get => FindChiled<Text>("Time"); }
     Image New { get => FindChiled<Image>("New"); }
@@ -12,23 +13,29 @@ public class NoticeCell : UIBase
 
     NoticeLG.NoticeData cellData;
 
-    public void Set(NoticeLG.NoticeData data)
+    public void Set(NoticeLG.NoticeData data, bool clickable = true)
     {
         cellData = data;
 
-        OnClick.onClick.AddListener(() => 
+        if (clickable)
         {
-            NWMng.E.GetNotice((rp) => 
+            OnClick.onClick.AddListener(() =>
             {
-                cellData.text = (string)rp["text"];
+                NWMng.E.GetNotice((rp) =>
+                {
+                    cellData.text = (string)rp["text"];
 
-                var ui = UICtl.E.OpenUI<NoticeDetailUI>(UIType.NoticeDetail, UIOpenType.BeforeClose);
-                ui.Init(cellData);
-            }, cellData.id);
-        });
+                    var ui = UICtl.E.OpenUI<NoticeDetailUI>(UIType.NoticeDetail, UIOpenType.BeforeClose);
+                    ui.Init(cellData);
 
+                }, cellData.id);
+            });
+        }
+        if (!string.IsNullOrEmpty(data.titleIcon))
+        {
+            AWSS3Mng.E.DownLoadTexture2D(Icon, data.titleIcon);
+        }
         Category.sprite = ReadResources<Sprite>(NoticeLG.E.GetCategoryPath((NoticeLG.CategoryType)data.category));
-        New.sprite = ReadResources<Sprite>("Textures/icon_noimg");
         New.gameObject.SetActive(data.newflag == 1 ? true : false);
         Time.text = data.activedate.ToString("yyyy/MM/dd");
         Title.text = data.title;

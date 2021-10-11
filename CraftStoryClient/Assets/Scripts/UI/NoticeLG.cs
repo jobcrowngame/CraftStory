@@ -5,6 +5,7 @@ using LitJson;
 public class NoticeLG : UILogicBase<NoticeLG, NoticeUI>
 {
     public bool IsFirst { get; set; }
+    public List<NoticeLG.NoticeData> NoticeList { get; private set; }
 
     public void GetNoticeList()
     {
@@ -12,12 +13,12 @@ public class NoticeLG : UILogicBase<NoticeLG, NoticeUI>
         {
             if (string.IsNullOrEmpty(rp.ToString()))
             {
-                UI.SetCell(null);
                 return;
             }
 
-            var list = JsonMapper.ToObject<List<NoticeData>>(rp.ToJson());
-            ui.SetCell(list);
+            NoticeList = JsonMapper.ToObject<List<NoticeData>>(rp.ToJson());
+            UI.ToggleBtns.SetValue(0);
+            UI.SetCell(0);
         });
     }
 
@@ -25,11 +26,9 @@ public class NoticeLG : UILogicBase<NoticeLG, NoticeUI>
     {
         switch (type)
         {
-            case CategoryType.notice: return "Textures/icon_noimg";
-            case CategoryType.important: return "Textures/icon_noimg";
-            case CategoryType.maintenance: return "Textures/icon_noimg";
-            case CategoryType.notice2: return "Textures/icon_noimg";
-            case CategoryType.gameEvent: return "Textures/icon_noimg";
+            case CategoryType.notice: return "Textures/icon_notice_cell_notice";
+            case CategoryType.important: return "Textures/icon_notice_cell_important";
+            case CategoryType.gameEvent: return "Textures/icon_notice_cell_event";
             default: return "";
         }
     }
@@ -58,16 +57,6 @@ public class NoticeLG : UILogicBase<NoticeLG, NoticeUI>
         /// 重要
         /// </summary>
         important,
-
-        /// <summary>
-        /// メンテナンス
-        /// </summary>
-        maintenance,
-
-        /// <summary>
-        /// 予告
-        /// </summary>
-        notice2,
 
         /// <summary>
         /// イベント

@@ -141,7 +141,7 @@ public class AWSS3Mng : MonoBehaviour
     /// <summary>
     /// 画像をダウンロード
     /// </summary>
-    public void DownLoadTexture2D(Image img, string fileName)
+    public void DownLoadTexture2D(Image img, string fileName, Action successCallback = null, Action failureCallback = null)
     {
         GetObjectRequest request = new GetObjectRequest
         {
@@ -155,7 +155,7 @@ public class AWSS3Mng : MonoBehaviour
             {
                 if (responseObject == null || responseObject.Response == null)
                 {
-                    Logger.Warning("S3 responseObject.Response is null!!!");
+                    if (failureCallback != null) failureCallback();
                     return;
                 }
 
@@ -171,9 +171,11 @@ public class AWSS3Mng : MonoBehaviour
 
                     Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
                     if (img != null) img.sprite = sprite;
+                    if (successCallback != null) successCallback();
                 }
                 else
                 {
+                    if (failureCallback != null) failureCallback();
                     Logger.Error("S3 DownLoad Object Failure:" + responseObject.Exception.Message);
                 }
             });
