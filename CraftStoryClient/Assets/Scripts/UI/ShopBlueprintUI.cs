@@ -71,8 +71,6 @@ public class ShopBlueprintUI : UIBase
         {
             myShopCells[i] = MyShop.GetChild(i).gameObject.AddComponent<ShopBlueprintMyShopCell>();
         }
-
-        Dropdown.value = 2;
     }
 
     public override void Open()
@@ -86,6 +84,8 @@ public class ShopBlueprintUI : UIBase
         Title.RefreshCoins();
 
         GuideLG.E.Next();
+
+        Dropdown.value = 2;
     }
 
     public void RefreshItemWindow(ShopBlueprintLG.UIType type)
