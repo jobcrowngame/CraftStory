@@ -30,8 +30,6 @@ public class BlueprintReNameUI : UIBase
 
             GuideLG.E.Next();
         });
-
-        PhotographMode();
     }
 
     public override void Close()
@@ -39,6 +37,7 @@ public class BlueprintReNameUI : UIBase
         base.Close();
 
         Icon.sprite = null;
+        PhotographMode();
     }
 
     /// <summary>
