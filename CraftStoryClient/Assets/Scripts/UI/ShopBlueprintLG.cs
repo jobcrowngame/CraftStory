@@ -85,6 +85,9 @@ public class ShopBlueprintLG : UILogicBase<ShopBlueprintLG, ShopBlueprintUI>
             DataMng.E.RuntimeData.Coin1 = (int)rp["coin1"];
 
             UI.RefreshMyShopWindow();
+
+            UI.RefreshCoin();
+            ShopMarketLG.E.UI.RefreshCoins();
         });
     }
 
