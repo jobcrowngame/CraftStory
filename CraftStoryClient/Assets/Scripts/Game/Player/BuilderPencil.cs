@@ -150,7 +150,7 @@ public class BuilderPencil
         {
             // 設計図内容が空の場合、エラーメッセージを出す
             CommonFunction.ShowHintBar(26);
-            GuideLG.E.GoTo(12);
+            GuideLG.E.GoTo(13);
         }
 
         CancelCreateBlueprint();
