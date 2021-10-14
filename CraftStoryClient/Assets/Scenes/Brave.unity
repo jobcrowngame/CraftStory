@@ -328,6 +328,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brave
       objectReference: {fileID: 0}
+    - target: {fileID: 6279051345370967700, guid: df98efc52762f2644969d89a8ac7e9ad, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8412280965270625544, guid: df98efc52762f2644969d89a8ac7e9ad, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0

@@ -120,7 +120,7 @@ public class EntityFunctionalObject : EntityBase
                 {
                     if (DataMng.E.RuntimeData.Coin3 < 1000)
                     {
-                        CommonFunction.ShowHintBar(18);
+                        UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 6);
                         return;
                     }
 

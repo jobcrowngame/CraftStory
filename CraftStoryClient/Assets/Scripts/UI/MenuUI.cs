@@ -69,6 +69,18 @@ public class MenuUI : UIBase
                     break;
 
                 case MapType.Market:
+                    Banner.gameObject.SetActive(true);
+                    PointList.gameObject.SetActive(true);
+
+                    //AdventureBtn.gameObject.SetActive(true);
+                    PlayDescriptionBtn.gameObject.SetActive(true);
+                    PersonalMessageBtn.gameObject.SetActive(true);
+                    Notice.gameObject.SetActive(true);
+                    //FriendBtn.gameObject.SetActive(true);
+
+                    PlayDescriptionBtn2.gameObject.SetActive(true);
+                    MessageBtn.gameObject.SetActive(true);
+                    //Debug.gameObject.SetActive(true);
                     break;
             }
         }

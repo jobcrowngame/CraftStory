@@ -24,6 +24,7 @@ public class ShopResourceUI : UIBase
         Des.text = ConfigMng.E.MText[3].Text;
 
         BackBtn.onClick.AddListener(Close);
+        RefreshItemWindow(0);
     }
 
     public override void Open()
@@ -31,7 +32,6 @@ public class ShopResourceUI : UIBase
         base.Open();
 
         Title.RefreshCoins();
-        RefreshItemWindow(0);
     }
 
     private void RefreshItemWindow(int index)

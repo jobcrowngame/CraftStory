@@ -37,13 +37,14 @@ public class ShopChargeUI : UIBase
         UrlBtn1.onClick.AddListener(() => { Application.OpenURL(PublicPar.UrlBtn1); });
         UrlBtn2.onClick.AddListener(() => { Application.OpenURL(PublicPar.UrlBtn2); });
         BackBtn.onClick.AddListener(Close);
+
+        ShopChargeLG.E.Type = ShopChargeLG.UiType.Charge;
     }
 
     public override void Open()
     {
         base.Open();
 
-        ShopChargeLG.E.Type = ShopChargeLG.UiType.Charge;
         Title.RefreshCoins();
     }
 

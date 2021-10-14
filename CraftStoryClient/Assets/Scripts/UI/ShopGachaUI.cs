@@ -48,6 +48,9 @@ public class ShopGachaUI : UIBase
             var ui = UICtl.E.OpenUI<GachaVerificationUI>(UIType.GachaVerification);
             ui.Set(ShopGachaLG.E.SelectGachaId);
         });
+
+        ToggleBtns1.SetValue(0);
+        ShopGachaLG.E.Index = 0;
     }
 
     public override void Open()
@@ -55,8 +58,6 @@ public class ShopGachaUI : UIBase
         base.Open();
 
         Title.RefreshCoins();
-        ToggleBtns1.SetValue(0);
-        ShopGachaLG.E.Index = 0;
     }
 
     /// <summary>

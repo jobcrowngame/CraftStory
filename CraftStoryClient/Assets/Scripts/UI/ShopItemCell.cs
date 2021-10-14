@@ -50,7 +50,8 @@ public class ShopItemCell : UIBase
         }
         else if (type == ShopType.Point 
             || type == ShopType.Exchange 
-            || type == ShopType.Blueprint)
+            || type == ShopType.Blueprint
+            || type == ShopType.CraftResource)
         {
             CommonFunction.ShowHintBox(config.IconResources, config.Des2, 
                 () => {

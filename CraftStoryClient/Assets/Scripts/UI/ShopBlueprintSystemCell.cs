@@ -61,6 +61,7 @@ public class ShopBlueprintSystemCell : UIBase
                         {
                             DataMng.GetCoins(rp3);
                             ShopBlueprintLG.E.UI.RefreshCoin();
+                            ShopMarketLG.E.UI.RefreshCoins();
                         });
 
                         CommonFunction.ShowHintBar(5);

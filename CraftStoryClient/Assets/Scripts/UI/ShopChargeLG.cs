@@ -53,4 +53,5 @@ public enum ShopType
     Exchange,
     Blueprint,
     Blueprint2,
+    CraftResource,
 }
