@@ -134,7 +134,8 @@ public class MenuUI : UIBase
         });
         Notice.onClick.AddListener(() => 
         {
-            UICtl.E.OpenUI<NoticeUI>(UIType.Notice);
+            NoticeUI ui = UICtl.E.OpenUI<NoticeUI>(UIType.Notice);
+            ui.MoveToTop();
             Close();
         });
         Debug.onClick.AddListener(() =>

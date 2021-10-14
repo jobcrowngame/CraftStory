@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NoticeUI : UIBase
 {
     TitleUI title { get => FindChiled<TitleUI>("Title"); }
     Transform parent { get => FindChiled("Content"); }
     public MyToggleGroupCtl ToggleBtns { get => FindChiled<MyToggleGroupCtl>("ToggleBtns"); }
+    ScrollRect ScrollRect { get => FindChiled<ScrollRect>("Scroll View"); }
 
     public override void Init()
     {
@@ -27,6 +29,11 @@ public class NoticeUI : UIBase
     {
         base.Open();
         NoticeLG.E.GetNoticeList();
+    }
+
+    public void MoveToTop()
+    {
+        ScrollRect.verticalNormalizedPosition = 1;
     }
 
     public void SetCell(int index)

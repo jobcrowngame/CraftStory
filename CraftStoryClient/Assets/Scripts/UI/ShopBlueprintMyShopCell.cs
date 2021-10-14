@@ -31,16 +31,19 @@ public class ShopBlueprintMyShopCell : UIBase
             {
                 case 1:
                     UnLock.gameObject.SetActive(false);
+                    Icon.sprite = ReadResources<Sprite>("Textures/shop_2d_075");
                     break;
 
                 case 2:
                     UnLock.gameObject.SetActive(DataMng.E.MyShop.myShopLv < 1);
                     UnLockBtnText.text = SettingMng.MyShopCostLv1 + "個";
+                    Icon.sprite = ReadResources<Sprite>(DataMng.E.MyShop.myShopLv < 1 ? "Textures/shop_2d_076" : "Textures/shop_2d_075");
                     break;
 
                 case 3:
                     UnLock.gameObject.SetActive(DataMng.E.MyShop.myShopLv < 2);
                     UnLockBtnText.text = SettingMng.MyShopCostLv2 + "個";
+                    Icon.sprite = ReadResources<Sprite>(DataMng.E.MyShop.myShopLv < 2 ? "Textures/shop_2d_076" : "Textures/shop_2d_075");
                     break;
             }
 
@@ -63,8 +66,6 @@ public class ShopBlueprintMyShopCell : UIBase
             }
             else
             {
-                Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Item[0].IconResourcesPath); ;
-
                 PreviewBtn.gameObject.SetActive(false);
                 LoadBtn.gameObject.SetActive(false);
                 Time.gameObject.SetActive(false);

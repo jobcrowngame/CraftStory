@@ -26,9 +26,9 @@ public class NoticeLG : UILogicBase<NoticeLG, NoticeUI>
     {
         switch (type)
         {
-            case CategoryType.notice: return "Textures/icon_notice_cell_notice";
-            case CategoryType.important: return "Textures/icon_notice_cell_important";
-            case CategoryType.gameEvent: return "Textures/icon_notice_cell_event";
+            case CategoryType.notice: return "Textures/infomation_2d_015";
+            case CategoryType.important: return "Textures/infomation_2d_007";
+            case CategoryType.gameEvent: return "Textures/infomation_2d_008";
             default: return "";
         }
     }

@@ -31,13 +31,10 @@ public class NoticeCell : UIBase
                 }, cellData.id);
             });
         }
+        Icon.sprite = ReadResources<Sprite>("Textures/infomation_2d_005");
         if (!string.IsNullOrEmpty(data.titleIcon))
         {
             AWSS3Mng.E.DownLoadTexture2D(Icon, data.titleIcon);
-        }
-        else
-        {
-            Icon.sprite = null;
         }
         Category.sprite = ReadResources<Sprite>(NoticeLG.E.GetCategoryPath((NoticeLG.CategoryType)data.category));
         New.gameObject.SetActive(data.newflag == 1 ? true : false);

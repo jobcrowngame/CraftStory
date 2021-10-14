@@ -316,6 +316,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2107602792210648622, guid: df98efc52762f2644969d89a8ac7e9ad, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2107602792210648622, guid: df98efc52762f2644969d89a8ac7e9ad, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -53
+      objectReference: {fileID: 0}
     - target: {fileID: 3122127749952090987, guid: df98efc52762f2644969d89a8ac7e9ad, type: 3}
       propertyPath: m_Name
       value: Brave
