@@ -20,6 +20,11 @@ public class ShopBlueprintMyShopSelectItemUI : UIBase
                 return;
             }
 
+            if (ShopBlueprintMyShopSelectItemLG.E.SelectItem == null)
+            {
+                Close();
+                return;
+            }
             var ui = UICtl.E.OpenUI<ShopBlueprintMyShopUploadUI>((UIType)UIType.ShopBlueprintMyShopUpload);
             ui.SetItemData(ShopBlueprintMyShopSelectItemLG.E.SelectItem.ItemData, ShopBlueprintMyShopSelectItemLG.E.Index);
             Close();
