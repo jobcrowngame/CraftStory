@@ -1,4 +1,5 @@
-﻿using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopBlueprintUserCell : UIBase
 {
@@ -47,7 +48,13 @@ public class ShopBlueprintUserCell : UIBase
             gameObject.SetActive(true);
         }
 
-        if (!string.IsNullOrEmpty(data.icon)) AWSS3Mng.E.DownLoadTexture2D(Icon, data.icon);
+        if (!string.IsNullOrEmpty(data.icon))
+        { 
+            AWSS3Mng.E.DownLoadTexture2D(Icon, data.icon, null, () => 
+            {
+                Icon.sprite = ReadResources<Sprite>("Textures/shop_2d_077");
+            }); 
+        }
         GoodNum.text = data.goodNum.ToString();
     }
 

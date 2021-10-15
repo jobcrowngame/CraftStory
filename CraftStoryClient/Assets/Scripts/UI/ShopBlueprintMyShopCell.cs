@@ -100,6 +100,8 @@ public class ShopBlueprintMyShopCell : UIBase
                             DataMng.E.RuntimeData.Coin1 -= 100;
                             ShopBlueprintLG.E.UI.RefreshMyShopWindow();
                             OpenTimer = false;
+                            ShopBlueprintLG.E.UI.RefreshCoin();
+                            ShopMarketLG.E.UI.RefreshCoins();
                         }, myShopItem.site, 0);
                     }
                 }, () => { });
