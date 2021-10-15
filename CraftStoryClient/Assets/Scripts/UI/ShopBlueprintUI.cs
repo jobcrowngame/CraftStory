@@ -41,7 +41,7 @@ public class ShopBlueprintUI : UIBase
             ShopBlueprintLG.E.Type = (ShopBlueprintLG.UIType)index;
             GuideLG.E.Next();
         });
-        Des.text = ConfigMng.E.MText[3].Text;
+        Des.text = ConfigMng.E.MText[4].Text;
         BackBtn.onClick.AddListener(()=> 
         {
             Close();
