@@ -52,6 +52,11 @@ public class EmailDetailsUI : UIBase
                 {
                     CommonFunction.ShowHintBar(20);
                 });
+                NWMng.E.GetCoins((rp) =>
+                {
+                    DataMng.GetCoins(rp);
+                    if (ShopMarketLG.E.UI != null) ShopMarketLG.E.UI.RefreshCoins();
+                });
             }, cell.Data.id);
         }
     }
