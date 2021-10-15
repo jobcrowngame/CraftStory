@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,12 +54,12 @@ public class ShopBlueprintUI : UIBase
         Dropdown.options.Clear();
         Dropdown.AddOptions(new List<string>
         {
-            "ƒ|ƒCƒ“ƒg‚ª‚‚¢‡",
-            "ƒ|ƒCƒ“ƒg‚ªˆÀ‚¢‡",
-            "“o˜^‚ªV‚µ‚¢‡",
-            "“o˜^‚ªŒÃ‚¢‡",
-            "w“ü‚ª‘½‚¢",
-            "ƒ†[ƒU[‚¢‚¢‚Ë”‚ª‘½‚¢",
+            "ãƒã‚¤ãƒ³ãƒˆãŒé«˜ã„é †",
+            "ãƒã‚¤ãƒ³ãƒˆãŒå®‰ã„é †",
+            "ç™»éŒ²ãŒæ–°ã—ã„é †",
+            "ç™»éŒ²ãŒå¤ã„é †",
+            "è³¼å…¥ãŒå¤šã„",
+            "ãƒ¦ãƒ¼ã‚¶ãƒ¼ã„ã„ã­æ•°ãŒå¤šã„",
         });
         Dropdown.onValueChanged.AddListener((value) =>
         {
@@ -77,7 +77,7 @@ public class ShopBlueprintUI : UIBase
     {
         base.Open();
 
-        // ŠJ‚­ê‡AÅV‚Ì‡‚Åƒ\[ƒg
+        // é–‹ãå ´åˆã€æœ€æ–°ã®é †ã§ã‚½ãƒ¼ãƒˆ
         //ShopBlueprintLG.E.Type = ShopBlueprintLG.UIType.Blueprint1;
         //ToggleBtns.SetValue(0);
 
@@ -109,21 +109,21 @@ public class ShopBlueprintUI : UIBase
     }
 
     /// <summary>
-    /// ƒy[ƒW”‚ğXV
+    /// ãƒšãƒ¼ã‚¸æ•°ã‚’æ›´æ–°
     /// </summary>
-    /// <param name="page">ƒy[ƒW</param>
+    /// <param name="page">ãƒšãƒ¼ã‚¸</param>
     public void SetMyShopPageText(int page)
     {
         Page.text = page.ToString();
     }
     /// <summary>
-    /// ƒ†[ƒU[‚ÌİŒv}
+    /// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®è¨­è¨ˆå›³
     /// </summary>
     public void RefreshBlueprint1(List<MyShopItem> items, int maxCount)
     {
         this.maxCount = maxCount;
 
-        // ”‚ª7Œ–¢–‚Ìê‡A‰E–îˆóƒ{ƒ^ƒ“‚ğenactive
+        // æ•°ãŒ7ä»¶æœªæº€ã®å ´åˆã€å³çŸ¢å°ãƒœã‚¿ãƒ³ã‚’enactive
         RightBtn.enabled = (items != null && 
             (ShopBlueprintLG.E.SelectMyShopPage - 1) * 7 + items.Count < maxCount) ? 
             true : false;
@@ -132,7 +132,7 @@ public class ShopBlueprintUI : UIBase
             (ShopBlueprintLG.E.SelectMyShopPage - 1) * 7 + items.Count < maxCount) ?
              Color.white : Color.gray;
 
-        // ƒy[ƒW‚ª‚P‚Ìê‡A¶–îˆóƒ{ƒ^ƒ“‚ğenactive
+        // ãƒšãƒ¼ã‚¸ãŒï¼‘ã®å ´åˆã€å·¦çŸ¢å°ãƒœã‚¿ãƒ³ã‚’enactive
         LeftBtn.enabled = ShopBlueprintLG.E.SelectMyShopPage == 1 ? false : true;
         LeftBtn.image.color = ShopBlueprintLG.E.SelectMyShopPage == 1 ? Color.gray : Color.white;
 
@@ -153,7 +153,7 @@ public class ShopBlueprintUI : UIBase
         }
     }
     /// <summary>
-    /// Šù‘¶‚ÌİŒv}
+    /// æ—¢å­˜ã®è¨­è¨ˆå›³
     /// </summary>
     private void RefreshBlueprint2()
     {
@@ -170,7 +170,7 @@ public class ShopBlueprintUI : UIBase
     }
     
     /// <summary>
-    /// ƒ}ƒCƒVƒ‡ƒbƒvXV
+    /// ãƒã‚¤ã‚·ãƒ§ãƒƒãƒ—æ›´æ–°
     /// </summary>
     public void RefreshMyShopWindow()
     {
@@ -181,9 +181,9 @@ public class ShopBlueprintUI : UIBase
     }
 
     /// <summary>
-    /// ‚¢‚¢‚Ë”XV
+    /// ã„ã„ã­æ•°æ›´æ–°
     /// </summary>
-    /// <param name="targetAcc">İŒv}ål</param>
+    /// <param name="targetAcc">è¨­è¨ˆå›³ä¸»äºº</param>
     public void RefreshGoodNum(string targetAcc)
     {
         for (int i = 0; i < MyshopBlueprintParent.childCount; i++)
@@ -197,7 +197,7 @@ public class ShopBlueprintUI : UIBase
     }
 
     /// <summary>
-    /// ƒRƒCƒ“‚ğXV
+    /// ã‚³ã‚¤ãƒ³ã‚’æ›´æ–°
     /// </summary>
     public void RefreshCoin()
     {

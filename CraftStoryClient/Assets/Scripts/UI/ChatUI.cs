@@ -44,6 +44,8 @@ public class ChatUI : UIBase
     {
         base.Close();
 
+        callback = null;
+
         StopCoroutine(StartChat());
     }
 
