@@ -8,6 +8,11 @@ public class HomeUI : UIBase
     #region 変数
 
     /// <summary>
+    /// 入たマップ名
+    /// </summary>
+    MyText SceneName { get => FindChiled<MyText>("SceneName"); }
+
+    /// <summary>
     /// Fadein のマスク
     /// </summary>
     Image FadeinImg { get => FindChiled<Image>("Fadein"); }
@@ -21,6 +26,11 @@ public class HomeUI : UIBase
     /// マップボタン
     /// </summary>
     Button MapBtn { get => FindChiled<Button>("MapBtn"); }
+
+    /// <summary>
+    /// アイテム欄
+    /// </summary>
+    Transform Items { get => FindChiled("Items"); }
 
     /// <summary>
     /// 持ち物ボタン
@@ -44,6 +54,11 @@ public class HomeUI : UIBase
     /// キャンセルビルダーボタン
     /// </summary>
     Button BuilderPencilCancelBtn { get => FindChiled<Button>("BuilderPencilCancelBtn", BuilderPencil); }
+
+    /// <summary>
+    /// 手に入るアイテム親
+    /// </summary>
+    Transform ItemDropParent { get => FindChiled("ItemDropParent"); }
 
     /// <summary>
     /// 設計図を使用する場合、コンソールWindow
@@ -90,6 +105,20 @@ public class HomeUI : UIBase
     Transform SpriteAnim { get => FindChiled("SpriteAnim"); }
 
     /// <summary>
+    /// HPバー
+    /// </summary>
+    HPUICtl hpBar { get => FindChiled<HPUICtl>("HP"); }
+
+    /// <summary>
+    /// コインバー
+    /// </summary>
+    Title2UI Title { get => FindChiled<Title2UI>("Title2"); }
+
+
+    Transform Battle { get => FindChiled("Battle"); }
+    SkillCell[] skills;
+
+    /// <summary>
     /// 選択用アイテム欄ボタンリスト
     /// </summary>
     List<HomeItemBtn> itemBtns;
@@ -100,26 +129,6 @@ public class HomeUI : UIBase
     private float fadeInTimeStep = 0.05f;
 
     #endregion
-
-    private void Start()
-    {
-        WorldMng.E.CreateGameObjects();
-        WorldMng.E.GameTimeCtl.Active = true;
-
-        UICtl.E.AddUI(this, UIType.Home);
-
-        if (DataMng.E.RuntimeData.MapType == MapType.Home && NoticeLG.E.IsFirst)
-        {
-            UICtl.E.OpenUI<NoticeUI>(UIType.Notice);
-            NoticeLG.E.IsFirst = false;
-        }
-
-        Init();
-
-        RefreshItemBtns();
-
-        AudioMng.E.ShowBGM("bgm_01");
-    }
 
     public override void Init()
     {
@@ -149,14 +158,11 @@ public class HomeUI : UIBase
 
         BuilderBtn.onClick.AddListener(CreateBlueprint);
         BuilderPencilCancelBtn.onClick.AddListener(CancelBuilderPencilCancelBtn);
-
         SpinBtn.onClick.AddListener(SpinBlueprint);
         BlueprintCancelBtn.onClick.AddListener(CancelUserBlueprint);
         BuildBtn.onClick.AddListener(BuildBlueprint);
-
         PlussBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(1); });
         MinusBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(-1); });
-
         Jump.onClick.AddListener(PlayerCtl.E.Jump);
 
         PlayerCtl.E.Joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
@@ -169,9 +175,59 @@ public class HomeUI : UIBase
             DataMng.GetCoins(rp);
         });
 
+        SceneName.text = DataMng.E.MapData.Config.Name;
+
+        hpBar.Init(PlayerCtl.E.Character.Parameter.MaxHP);
+        PlayerCtl.E.Character.UIHpBar = hpBar;
+
+        skills = new SkillCell[Battle.GetChild(0).childCount];
+        for (int i = 0; i < Battle.GetChild(0).childCount; i++)
+        {
+            skills[i] = Battle.GetChild(0).GetChild(i).GetComponent<SkillCell>();
+            SetSkill(skills[i], i);
+        }
+
+        Title.Init();
+        Title.ShowCoin(1);
+        Title.ShowCoin(2);
+        Title.ShowCoin(3);
+
         StartCoroutine(FadeIn());
         RefreshRedPoint();
         ShowSpriteAnimation();
+        RefreshItemBtns();
+
+        RefreshUiByMapType();
+    }
+
+    public override void Open()
+    {
+        base.Open();
+
+        Title.RefreshCoins();
+    }
+
+    /// <summary>
+    /// コインを更新
+    /// </summary>
+    public void RefreshCoins()
+    {
+        Title.RefreshCoins();
+    }
+
+    /// <summary>
+    /// マップによってUI更新
+    /// </summary>
+    private void RefreshUiByMapType()
+    {
+        SceneName.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave);
+        ItemDropParent.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave);
+        Battle.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave);
+        
+        Items.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home
+            || DataMng.E.RuntimeData.MapType == MapType.Guide);
+
+        Title.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Market);
     }
 
     private void AddItemBtns()
@@ -286,6 +342,19 @@ public class HomeUI : UIBase
     }
 
     /// <summary>
+    /// アイテムを手に入る演出
+    /// </summary>
+    /// <param name="item"></param>
+    public void AddItem(HomeLG.BraveCellItem item)
+    {
+        var cell = AddCell<HomeGetItemCell>("Prefabs/UI/BraveCell", ItemDropParent);
+        if (cell != null)
+        {
+            cell.Set(item);
+        }
+    }
+
+    /// <summary>
     /// マップのぴーちゃんのAnim
     /// </summary>
     public void ShowSpriteAnimation()
@@ -309,5 +378,27 @@ public class HomeUI : UIBase
         }
 
         FadeinImg.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// スキルを設定
+    /// </summary>
+    /// <param name="skill"></param>
+    /// <param name="index"></param>
+    public void SetSkill(SkillCell skill, int index)
+    {
+        if (PlayerCtl.E.Character.SkillList.Count <= index)
+            return;
+
+        skills[index].Set(PlayerCtl.E.Character.SkillList[index]);
+    }
+
+    /// <summary>
+    /// ロックオン
+    /// </summary>
+    /// <param name="target">目標</param>
+    public void LockUnTarget(Transform target)
+    {
+        Camera.main.transform.LookAt(target);
     }
 }

@@ -87,7 +87,7 @@ public class ShopBlueprintLG : UILogicBase<ShopBlueprintLG, ShopBlueprintUI>
             UI.RefreshMyShopWindow();
 
             UI.RefreshCoin();
-            ShopMarketLG.E.UI.RefreshCoins();
+            HomeLG.E.UI.RefreshCoins();
         });
     }
 

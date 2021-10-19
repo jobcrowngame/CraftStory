@@ -45,8 +45,8 @@ public class CameraCtl : MonoBehaviour
 
     public void Init()
     {
-        cameraRotateX = CommonFunction.FindChiledByName(PlayerCtl.E.PlayerEntity.transform, "X").transform;
-        cameraRotateY = CommonFunction.FindChiledByName(PlayerCtl.E.PlayerEntity.transform, "Y").transform;
+        cameraRotateX = CommonFunction.FindChiledByName(PlayerCtl.E.Character.transform, "X").transform;
+        cameraRotateY = CommonFunction.FindChiledByName(PlayerCtl.E.Character.transform, "Y").transform;
 
         transform.SetParent(cameraRotateX);
         transform.localPosition = new Vector3(0, 0, cameraPosZ);
@@ -57,10 +57,10 @@ public class CameraCtl : MonoBehaviour
 
     void Update()
     {
-        if (PlayerCtl.E.PlayerEntity != null)
+        if (PlayerCtl.E.Character != null)
         {
-            PlayerCtl.E.PlayerEntity.IsActive = transform.localPosition.z < SettingMng.EnactiveCharacterModelDistanse;
-            PlayerCtl.E.PlayerEntity.IsModelActive(transform.localPosition.z < SettingMng.EnactiveCharacterModelDistanse);
+            PlayerCtl.E.Character.ShowModel = transform.localPosition.z < SettingMng.EnactiveCharacterModelDistanse;
+            PlayerCtl.E.Character.IsModelActive(transform.localPosition.z < SettingMng.EnactiveCharacterModelDistanse);
         }
 
         if (AutoCameraMove)

@@ -51,6 +51,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         //Logger.Log("OnBeginDrag");
 
+        if (PlayerCtl.E.Lock)
+            return;
+
         isDrag = true;
         startPos = eventData.position;
 
@@ -67,6 +70,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     /// <param name="eventData"></param>
     public void OnDrag(PointerEventData eventData)
     {
+        if (PlayerCtl.E.Lock)
+            return;
+
         if (eventData.pointerId == 0) touch1 = eventData.position;
         if (eventData.pointerId == 1) touch2 = eventData.position;
 
@@ -85,7 +91,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
             startPos = eventData.position;
 
-            PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.Waiting;
+            PlayerCtl.E.Character.Behavior = BehaviorType.Waiting;
         }
     }
 
@@ -95,6 +101,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     /// <param name="eventData"></param>
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (PlayerCtl.E.Lock)
+            return;
+
         isDrag = false;
         isClick = false;
         IsClicking = false;
@@ -114,6 +123,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     /// <param name="eventData"></param>
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (PlayerCtl.E.Lock)
+            return;
+
         this.eventData = eventData;
         isClick = true;
     }
@@ -124,6 +136,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     /// <param name="eventData"></param>
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (PlayerCtl.E.Lock)
+            return;
+
         if (isDrag)
             return;
 
@@ -132,7 +147,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         if (IsClicking)
         {
-            PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.Waiting;
+            PlayerCtl.E.Character.Behavior = BehaviorType.Waiting;
             CancelClicking();
         }
 
@@ -156,6 +171,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     /// <param name="pos"></param>
     public void OnClicking(Vector2 pos)
     {
+        if (PlayerCtl.E.Lock)
+            return;
+
         clickingObj = RayCastHits(pos);
         if (clickingObj == null)
             return;
@@ -167,6 +185,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     /// </summary>
     public void CancelClicking()
     {
+        if (PlayerCtl.E.Lock)
+            return;
+
         if (clickingObj != null)
         {
             var cell = clickingObj.GetComponent<EntityBase>();
@@ -183,6 +204,9 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     /// <param name="pos"></param>
     private void OnClick(Vector2 pos)
     {
+        if (PlayerCtl.E.Lock)
+            return;
+
         var obj = RayCastHits(pos);
         if (obj == null)
             return;

@@ -101,7 +101,7 @@ public class ShopBlueprintMyShopCell : UIBase
                             ShopBlueprintLG.E.UI.RefreshMyShopWindow();
                             OpenTimer = false;
                             ShopBlueprintLG.E.UI.RefreshCoin();
-                            ShopMarketLG.E.UI.RefreshCoins();
+                            HomeLG.E.UI.RefreshCoins();
                         }, myShopItem.site, 0);
                     }
                 }, () => { });

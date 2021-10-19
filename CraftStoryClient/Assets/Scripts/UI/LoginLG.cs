@@ -95,6 +95,8 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 });
             }
 
+            NWMng.E.GetItems();
+
         }, DataMng.E.UserData.UserPW);
     }
 }

@@ -126,11 +126,19 @@ namespace ExcelToJson
                 case "MText": list = MText(tbl); break;
                 case "Chat": list = Chat(tbl); break;
                 case "MapArea": list = MapArea(tbl); break;
+                case "Character": list = Character(tbl); break;
+                case "CharacterGenerated": list = CharacterGenerated(tbl); break;
+                case "Impact": list = Impact(tbl); break;
+                case "Skill": list = Skill(tbl); break;
+                case "Equipment": list = Equipment(tbl); break;
 
 
 
                 default: Console.WriteLine("not find fileName function."); break;
             }
+
+            if (list == null)
+                return;
 
             var json = LitJson.JsonMapper.ToJson(list);
 
@@ -240,6 +248,7 @@ namespace ExcelToJson
                 data.Resources =         ToString(tbl.Rows[i]["Resources"]);
                 data.TransferGateID =   ToInt32(tbl.Rows[i]["TransferGateID"]);
                 data.Buildings =        ToString(tbl.Rows[i]["Buildings"]);
+                data.CharacterGenerated = ToString(tbl.Rows[i]["CharacterGenerated"]);
                 data.PlayerPosX =       ToInt32(tbl.Rows[i]["PlayerPosX"]);
                 data.PlayerPosZ =       ToInt32(tbl.Rows[i]["PlayerPosZ"]);
                 data.CreatePosOffset =  ToInt32(tbl.Rows[i]["CreatePosOffset"]);
@@ -646,6 +655,113 @@ namespace ExcelToJson
                     Back = ToInt32(tbl.Rows[i]["Back"]),
                     Right = ToInt32(tbl.Rows[i]["Right"]),
                     Left = ToInt32(tbl.Rows[i]["Left"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Character(DataTable tbl)
+        {
+            List<Character> list = new List<Character>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Character()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Name = ToString(tbl.Rows[i]["Name"]),
+                    Prefab = ToString(tbl.Rows[i]["Prefab"]),
+                    Type = ToInt32(tbl.Rows[i]["Type"]),
+                    Race = ToInt32(tbl.Rows[i]["Race"]),
+                    Level = ToInt32(tbl.Rows[i]["Level"]),
+                    HP = ToInt32(tbl.Rows[i]["HP"]),
+                    Damage = ToInt32(tbl.Rows[i]["Damage"]),
+                    Defense = ToInt32(tbl.Rows[i]["Defense"]),
+                    LvUpExp = ToInt32(tbl.Rows[i]["LvUpExp"]),
+                    Skills = ToString(tbl.Rows[i]["Skills"]),
+                    PondId = ToInt32(tbl.Rows[i]["PondId"]),
+                    SecurityRange = ToInt32(tbl.Rows[i]["SecurityRange"]),
+                    CallForHelpRange = ToInt32(tbl.Rows[i]["CallForHelpRange"]),
+                    DazeTime = ToFloat(tbl.Rows[i]["DazeTime"]),
+                    MoveSpeed = ToFloat(tbl.Rows[i]["MoveSpeed"]),
+
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object CharacterGenerated(DataTable tbl)
+        {
+            List<CharacterGenerated> list = new List<CharacterGenerated>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new CharacterGenerated()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    CharacterId = ToInt32(tbl.Rows[i]["CharacterId"]),
+                    PosX = ToInt32(tbl.Rows[i]["PosX"]),
+                    PosZ = ToInt32(tbl.Rows[i]["PosZ"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Impact(DataTable tbl)
+        {
+            List<Impact> list = new List<Impact>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Impact()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Type = ToInt32(tbl.Rows[i]["Type"]),
+                    Target = ToInt32(tbl.Rows[i]["Target"]),
+                    PercentDamage = ToInt32(tbl.Rows[i]["PercentDamage"]),
+                    FixtDamage = ToInt32(tbl.Rows[i]["FixtDamage"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Skill(DataTable tbl)
+        {
+            List<Skill> list = new List<Skill>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Skill()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Icon = ToString(tbl.Rows[i]["Icon"]),
+                    Type = ToInt32(tbl.Rows[i]["Type"]),
+                    Impact = ToString(tbl.Rows[i]["Impact"]),
+                    Animation = ToInt32(tbl.Rows[i]["Animation"]),
+                    CD = ToFloat(tbl.Rows[i]["CD"]),
+                    Distance = ToFloat(tbl.Rows[i]["Distance"]),
+                    RangeAngle = ToInt32(tbl.Rows[i]["RangeAngle"]),
+                    ReadyTime = ToFloat(tbl.Rows[i]["ReadyTime"]),
+                    ProcessTime = ToFloat(tbl.Rows[i]["ProcessTime"]),
+                    TargetFreezeTime = ToFloat(tbl.Rows[i]["TargetFreezeTime"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Equipment(DataTable tbl)
+        {
+            List<Equipment> list = new List<Equipment>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Equipment()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    HP = ToInt32(tbl.Rows[i]["HP"]),
+                    Damage = ToInt32(tbl.Rows[i]["Damage"]),
+                    Defnse = ToInt32(tbl.Rows[i]["Defnse"]),
+                    Skill = ToString(tbl.Rows[i]["Skill"]),
                 };
 
                 list.Add(data);
