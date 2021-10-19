@@ -15,6 +15,10 @@ public class ShopMarketUI : UIBase
     Button Jump { get => FindChiled<Button>("Jump"); }
     MyButton PlussBtn { get => FindChiled<MyButton>("PlussBtn"); }
     MyButton MinusBtn { get => FindChiled<MyButton>("MinusBtn"); }
+    /// <summary>
+    /// ‚Ñ‚Á‚­‚èƒ}ƒbƒN
+    /// </summary>
+    Transform RedPoint { get => FindChiled("RedPoint"); }
 
     private float fadeInTime = 0.05f;
 
@@ -70,6 +74,11 @@ public class ShopMarketUI : UIBase
     public void RefreshCoins()
     {
         Title.RefreshCoins();
+    }
+
+    public void RefreshRedPoint()
+    {
+        RedPoint.gameObject.SetActive(CommonFunction.MenuRedPoint());
     }
 
     IEnumerator FadeIn()
