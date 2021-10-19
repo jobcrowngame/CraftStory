@@ -142,8 +142,8 @@ public class CharacterMonster : CharacterBase
         Rotation(direction);
 
         // 移動遷移量設定
-        moveDirection.x = direction.x * Parameter.MoveSpeed;
-        moveDirection.z = direction.y * Parameter.MoveSpeed;
+        moveDirection.x = direction.x * Parameter.MoveSpeed * Time.deltaTime;
+        moveDirection.z = direction.y * Parameter.MoveSpeed * Time.deltaTime;
     }
 
     /// <summary>

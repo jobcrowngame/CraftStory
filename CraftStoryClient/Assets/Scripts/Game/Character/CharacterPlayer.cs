@@ -47,15 +47,6 @@ public partial class CharacterPlayer : CharacterBase
         deleteEffect = CommonFunction.FindChiledByName(transform, "DeleteEffect").transform;
 
         Behavior = BehaviorType.Waiting;
-
-        foreach (var item in DataMng.E.Items)
-        {
-            if (CommonFunction.IsEquipment(item.itemId) && item.equipSite > 0)
-            {
-                var itemConfig = ConfigMng.E.Item[item.itemId];
-                Parameter.Equipment.AddEquiptment(itemConfig.ReferenceID);
-            }
-        }
     }
 
     public override void OnBehaviorChange(BehaviorType behavior)
@@ -81,6 +72,26 @@ public partial class CharacterPlayer : CharacterBase
         if (moveing)
         {
             PlayerMove();
+        }
+    }
+
+    /// <summary>
+    /// 装備をEquip
+    /// </summary>
+    public void EquipEquipments()
+    {
+        foreach (var item in DataMng.E.Items)
+        {
+            if (CommonFunction.IsEquipment(item.itemId) && item.equipSite > 0)
+            {
+                var itemConfig = ConfigMng.E.Item[item.itemId];
+
+                // 装備パラメータ追加
+                Parameter.Equipment.AddEquiptment(itemConfig.ReferenceID);
+
+                // スキル追加
+                AddSkills(ConfigMng.E.Equipment[itemConfig.ReferenceID].Skill);
+            }
         }
     }
 
@@ -115,8 +126,8 @@ public partial class CharacterPlayer : CharacterBase
         {
             if (x != 0 || y != 0)
             {
-                moveDirection.x = newVec.x * SettingMng.MoveSpeed;
-                moveDirection.z = newVec.y * SettingMng.MoveSpeed;
+                moveDirection.x = newVec.x * SettingMng.MoveSpeed * Time.deltaTime;
+                moveDirection.z = newVec.y * SettingMng.MoveSpeed * Time.deltaTime;
             }
             else
             {
@@ -130,7 +141,7 @@ public partial class CharacterPlayer : CharacterBase
         if (x != 0 || y != 0)
             Model.rotation = Quaternion.Euler(new Vector3(0, angle1 + angle2, 0));
 
-        moveDirection = transform.TransformDirection(moveDirection);
+        //moveDirection = transform.TransformDirection(moveDirection);
 
         if (transform.position.y < -10)
         {
@@ -212,5 +223,14 @@ public partial class CharacterPlayer : CharacterBase
             moveing = false;
             PlayerCtl.E.Lock = false;
         }
+    }
+
+    /// <summary>
+    /// 武器を装備しているかのチェック
+    /// </summary>
+    /// <returns></returns>
+    public bool IsEquipedEquipment()
+    {
+        return SkillList.Count > 0;
     }
 }

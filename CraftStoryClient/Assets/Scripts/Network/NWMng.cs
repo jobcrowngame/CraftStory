@@ -43,7 +43,7 @@ public partial class NWMng : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.ProductionURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.LocalURL))
         {
             yield return www.SendWebRequest();
 
@@ -180,7 +180,7 @@ public partial class NWMng : MonoBehaviour
     /// アイテムリストをゲット
     /// </summary>
     /// <param name="rp"></param>
-    public void GetItemList(Action<JsonData> rp)
+    private void GetItemList(Action<JsonData> rp)
     {
         var data = new NWData();
 

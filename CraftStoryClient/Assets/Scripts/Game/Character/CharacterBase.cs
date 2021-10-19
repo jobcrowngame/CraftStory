@@ -104,7 +104,7 @@ public class CharacterBase : MonoBehaviour
         }
         else
         {
-            moveDirection.y -= SettingMng.Gravity;
+            moveDirection.y -= SettingMng.Gravity * Time.deltaTime;
         }
 
         // マップ範囲外に出ないようにする
@@ -114,7 +114,7 @@ public class CharacterBase : MonoBehaviour
             moveDirection.z = 0;
 
         // 移動
-        Controller.Move(moveDirection * Time.deltaTime);
+        Controller.Move(moveDirection);
 
         // ジャンプ状態で地面に落ちるとジャンプ前の行動になる
         if (Behavior == BehaviorType.Jump && Controller.isGrounded)

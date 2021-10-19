@@ -169,12 +169,6 @@ public class HomeUI : UIBase
         PlayerCtl.E.ScreenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
         PlayerCtl.E.CameraCtl = Camera.main.GetComponent<CameraCtl>();
 
-        NWMng.E.GetItems(null);
-        NWMng.E.GetCoins((rp) =>
-        {
-            DataMng.GetCoins(rp);
-        });
-
         SceneName.text = DataMng.E.MapData.Config.Name;
 
         hpBar.Init(PlayerCtl.E.Character.Parameter.MaxHP);
@@ -184,7 +178,6 @@ public class HomeUI : UIBase
         for (int i = 0; i < Battle.GetChild(0).childCount; i++)
         {
             skills[i] = Battle.GetChild(0).GetChild(i).GetComponent<SkillCell>();
-            SetSkill(skills[i], i);
         }
 
         Title.Init();
@@ -205,6 +198,12 @@ public class HomeUI : UIBase
         base.Open();
 
         Title.RefreshCoins();
+
+        // 装備をEquip
+        PlayerCtl.E.Character.EquipEquipments();
+
+        // スキルを設置
+        SetSkills();
     }
 
     /// <summary>
@@ -381,16 +380,37 @@ public class HomeUI : UIBase
     }
 
     /// <summary>
+    /// スキル設定
+    /// </summary>
+    private void SetSkills()
+    {
+        for (int i = 0; i < Battle.GetChild(0).childCount; i++)
+        {
+            if (PlayerCtl.E.Character.SkillList.Count > i)
+            {
+                SetSkill(skills[i], i);
+            }
+            else
+            {
+                SetSkill(null, i);
+            }
+        }
+    }
+    /// <summary>
     /// スキルを設定
     /// </summary>
     /// <param name="skill"></param>
     /// <param name="index"></param>
-    public void SetSkill(SkillCell skill, int index)
+    private void SetSkill(SkillCell skill, int index)
     {
-        if (PlayerCtl.E.Character.SkillList.Count <= index)
-            return;
-
-        skills[index].Set(PlayerCtl.E.Character.SkillList[index]);
+        if (skill == null)
+        {
+            skills[index].Set(null);
+        }
+        else
+        {
+            skills[index].Set(PlayerCtl.E.Character.SkillList[index]);
+        }
     }
 
     /// <summary>

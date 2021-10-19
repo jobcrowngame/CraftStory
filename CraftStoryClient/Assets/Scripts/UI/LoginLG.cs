@@ -97,6 +97,11 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
 
             NWMng.E.GetItems();
 
+            NWMng.E.GetCoins((rp) =>
+            {
+                DataMng.GetCoins(rp);
+            });
+
         }, DataMng.E.UserData.UserPW);
     }
 }
