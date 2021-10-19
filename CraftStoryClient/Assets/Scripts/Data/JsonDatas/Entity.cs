@@ -14,6 +14,5 @@
         public int HaveDirection { get; set; }
         public int CanPut { get; set; }
         public int CanSuspension { get; set; }
-        public int IsSurface { get; set; }
     }
 }
