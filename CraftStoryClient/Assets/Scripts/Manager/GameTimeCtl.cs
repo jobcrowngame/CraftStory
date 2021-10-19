@@ -49,8 +49,8 @@ public class GameTimeCtl
             }
             else
             {
-                RefreshLight(120);
-                RefreshSkyBox(120);
+                RefreshLight(188);
+                RefreshSkyBox(188);
             }
         }
     }
