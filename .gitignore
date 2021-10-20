@@ -98,3 +98,15 @@ CraftStoryClient/UniRx.Examples.csproj
 ExcelToJson/LitJson/LitJSON.csproj
 ExcelToJson/LitJson/LitJSON.sln
 ExcelToJson/LitJson/LitJsonTest/LitJsonTest.csproj
+*.meta
+ExcelToJson/ExcelToJson/bin/
+ExcelToJson/ExcelToJson/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
+ExcelToJson/ExcelToJson/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+ExcelToJson/ExcelToJson/obj/Debug/
+ExcelToJson/ExcelToJson/obj/Release/
+ExcelToJson/JsonConfigData/obj/
+ExcelToJson/JsonConfigData/bin/Debug/JsonConfigData.dll
+ExcelToJson/JsonConfigData/bin/Release/
+ExcelToJson/LitJson/bin/
+ExcelToJson/LitJson/LitJsonTest/
+ExcelToJson/LitJson/obj/
