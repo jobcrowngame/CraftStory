@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31229.75
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelToJson", "ExcelToJson\ExcelToJson.csproj", "{A2569F15-BB52-4F8B-8E7F-B35CDB5C48E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonConfigData", "JsonConfigData\JsonConfigData.csproj", "{6504166F-662C-40E3-A4EC-313EB9E538C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2569F15-BB52-4F8B-8E7F-B35CDB5C48E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2569F15-BB52-4F8B-8E7F-B35CDB5C48E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2569F15-BB52-4F8B-8E7F-B35CDB5C48E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2569F15-BB52-4F8B-8E7F-B35CDB5C48E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6504166F-662C-40E3-A4EC-313EB9E538C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6504166F-662C-40E3-A4EC-313EB9E538C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6504166F-662C-40E3-A4EC-313EB9E538C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6504166F-662C-40E3-A4EC-313EB9E538C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EA4A80E8-711B-4634-AFA0-2684E3901467}
+	EndGlobalSection
+EndGlobal
