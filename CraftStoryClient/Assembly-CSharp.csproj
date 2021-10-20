@@ -235,7 +235,6 @@
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsUI.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterEquipment.cs" />
     <Compile Include="Assets\Scripts\UI\MissionUI.cs" />
-    <Compile Include="Assets\Scripts\UI\WorldUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
     <Compile Include="Assets\Scripts\UI\RouletteLG.cs" />
     <Compile Include="Assets\Scripts\Data\MyShopData.cs" />
@@ -299,7 +298,7 @@
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectEditor.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\SceneMain\HomeMain.cs" />
-    <Compile Include="Assets\Scripts\UI\Battle\HPUICtl.cs" />
+    <Compile Include="Assets\Scripts\UI\Battle\HpUIBase.cs" />
     <Compile Include="Assets\Scripts\UI\MissionChatUI.cs" />
     <Compile Include="Assets\Scripts\UI\Battle\Damage.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
@@ -318,6 +317,9 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
+    <Compile Include="Assets\Scripts\UI\Battle\HpUIMonster.cs" />
+    <Compile Include="Assets\Scripts\UI\Battle\HpUIPlayer.cs" />
+    <Compile Include="Assets\Scripts\UI\HomeUI.Battle.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

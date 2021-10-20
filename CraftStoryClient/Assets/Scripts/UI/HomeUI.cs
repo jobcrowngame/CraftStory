@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HomeUI : UIBase
+public partial class HomeUI : UIBase
 {
     #region 変数
 
@@ -105,11 +105,6 @@ public class HomeUI : UIBase
     Transform SpriteAnim { get => FindChiled("SpriteAnim"); }
 
     /// <summary>
-    /// HPバー
-    /// </summary>
-    HPUICtl hpBar { get => FindChiled<HPUICtl>("HP"); }
-
-    /// <summary>
     /// コインバー
     /// </summary>
     Title2UI Title { get => FindChiled<Title2UI>("Title2"); }
@@ -170,9 +165,6 @@ public class HomeUI : UIBase
         PlayerCtl.E.CameraCtl = Camera.main.GetComponent<CameraCtl>();
 
         SceneName.text = DataMng.E.MapData.Config.Name;
-
-        hpBar.Init(PlayerCtl.E.Character.Parameter.MaxHP);
-        PlayerCtl.E.Character.UIHpBar = hpBar;
 
         skills = new SkillCell[Battle.GetChild(0).childCount];
         for (int i = 0; i < Battle.GetChild(0).childCount; i++)
@@ -419,6 +411,6 @@ public class HomeUI : UIBase
     /// <param name="target">目標</param>
     public void LockUnTarget(Transform target)
     {
-        Camera.main.transform.LookAt(target);
+        PlayerCtl.E.CameraCtl.LockUnTarget(target);
     }
 }

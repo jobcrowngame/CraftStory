@@ -90,7 +90,7 @@ public class PlayerCtl : MonoBehaviour
     private BlueprintPreviewCtl blueprintPreviewCtl; // 設計図プレイビューコンソール
 
 
-    public HPUICtl HpBar;
+    public HpUIBase HpBar;
 
     public void Init()
     {

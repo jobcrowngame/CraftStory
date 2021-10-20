@@ -42,7 +42,7 @@ public class CharacterCtl : Single<CharacterCtl>
 
         player = obj.GetComponent<CharacterPlayer>();
         player.Init(1, CharacterBase.CharacterCamp.Player);
-        var hpbar = CommonFunction.FindChiledByName<HPUICtl>(player.transform, "WorldUI");
+        var hpbar = CommonFunction.FindChiledByName<HpUIBase>(player.transform, "WorldUI");
         player.SetHpBar(hpbar);
 
         characterList.Add(player);
@@ -98,7 +98,7 @@ public class CharacterCtl : Single<CharacterCtl>
             }
 
             monster.Init(characterCfg.ID, CharacterBase.CharacterCamp.Monster);
-            monster.SetHpBar(CommonFunction.FindChiledByName<HPUICtl>(monster.transform, "WorldUI"));
+            monster.SetHpBar(CommonFunction.FindChiledByName<HpUIBase>(monster.transform, "WorldUI"));
             characterList.Add(monster);
         }
     }

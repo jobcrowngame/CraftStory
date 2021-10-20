@@ -60,8 +60,7 @@ public class CharacterBase : MonoBehaviour
 
     public CharacterCamp Camp { get; set; }
 
-    public HPUICtl HpCtl { get; private set; }
-    public HPUICtl UIHpBar { get; set; }
+    public HpUIBase HpCtl { get; private set; }
 
     /// <summary>
     /// スキルDic
@@ -231,11 +230,11 @@ public class CharacterBase : MonoBehaviour
     /// </summary>
     /// <param name="hpbar"></param>
     /// <param name="lockUpCamera">ずっとカメラを向かう</param>
-    public void SetHpBar(HPUICtl hpbar, bool lockUpCamera = true)
+    public void SetHpBar(HpUIBase hpbar, bool lockUpCamera = true)
     {
         HpCtl = hpbar;
         HpCtl.IsLockUpCamera(lockUpCamera);
-        HpCtl.Init(Parameter.MaxHP);
+        HpCtl.Init(Parameter);
     }
 
     /// <summary>
@@ -422,20 +421,12 @@ public class CharacterBase : MonoBehaviour
 
         Logger.Log("{1} が {0} のダメージを受けました。", damage, target.gameObject.name);
 
-        // WorldのHP計算
+        // HP計算
         target.Parameter.CurHP -= damage;
         if (target.HpCtl != null) 
-        {
-            target.HpCtl.ValueChange(-damage);
-            target.HpCtl.AddDamageObj(damage);
-        }
+            target.HpCtl.OnValueChange(-damage);
 
-        // Window HpBar が存在する場合、更新
-        if (target.UIHpBar != null)
-        {
-            target.UIHpBar.ValueChange(-damage);
-        }
-
+        // 死んだ場合
         if (target.Parameter.CurHP <= 0)
         {
             target.Died();
@@ -465,7 +456,7 @@ public class CharacterBase : MonoBehaviour
         StopMove();
         Behavior = BehaviorType.Did;
 
-        HpCtl.HideHpBar();
+        HpCtl.OnDide();
         Controller.enabled = false;
 
         StopAllCoroutines();
