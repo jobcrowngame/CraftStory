@@ -19,25 +19,26 @@ public class CharacterAI
     public void Update()
     {
         // 死んだら何もしない
-        if (mCharacter.State == CharacterBase.StateType.Died)
+        if (mCharacter.Behavior == BehaviorType.Did)
             return;
 
-        // 待てると次の動作を続けます
-        if (mCharacter.State == CharacterBase.StateType.Waiting)
+        if (InCombat)
+        {
+            if (target == null)
+                FindTarget();
+
+            if (CheckInAttackRange())
+            {
+                mCharacter.Attack();
+            }
+            else
+            {
+                mCharacter.MoveToTarget();
+            }
+        }
+        else
         {
             FindTarget();
-
-            if (InCombat)
-            {
-                if (CheckInAttackRange())
-                {
-                    mCharacter.Attack();
-                }
-                else
-                {
-                    mCharacter.MoveToTarget();
-                }
-            }
         }
     }
 
@@ -46,16 +47,16 @@ public class CharacterAI
     /// </summary>
     public void FindTarget()
     {
-        if (InCombat)
-            return;
-
         if (TargetInSecurityRange())
         {
             if (!InCombat)
+            {
+                // 助を呼ぶ
                 mCharacter.CallForHelp();
 
-            // 戦闘状態になる
-            InCombat = true;
+                // 戦闘状態になる
+                InCombat = true;
+            }
         }
         else
         {

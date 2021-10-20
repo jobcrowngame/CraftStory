@@ -19,7 +19,6 @@ public class CharacterBase : MonoBehaviour
     /// </summary>
     public Parameter Parameter { get; private set; }
 
-
     // プレイヤーコンソール
     public CharacterController Controller { get; private set; }
 
@@ -44,19 +43,6 @@ public class CharacterBase : MonoBehaviour
         }
     }
     public BehaviorType mBehavior = BehaviorType.Waiting;
-
-    /// <summary>
-    /// 状態
-    /// </summary>
-    public StateType State
-    {
-        get => mState;
-        set
-        {
-            mState = value;
-        }
-    }
-    public StateType mState = StateType.Waiting;
 
     public CharacterCamp Camp { get; set; }
 
@@ -91,9 +77,14 @@ public class CharacterBase : MonoBehaviour
     private float mShareCD = 0;
     public bool ShareCDIsCooling { get => ShareCD > 0; }
 
+    private float FreezeTime = 0;
+
     private void Update()
     {
-        if (State == StateType.Died)
+        OnUpdate();
+
+        // 死んだら何もしない
+        if (Behavior == BehaviorType.Did)
             return;
 
         // 重力
@@ -118,16 +109,27 @@ public class CharacterBase : MonoBehaviour
         // ジャンプ状態で地面に落ちるとジャンプ前の行動になる
         if (Behavior == BehaviorType.Jump && Controller.isGrounded)
             Behavior = beforBehavior;
-
-        OnUpdate();
     }
     public virtual void OnUpdate()
     {
+        // 共有CD時間
         ShareCD -= Time.deltaTime;
 
         foreach (var skill in SkillList)
         {
             skill.OnUpdate();
+        }
+
+        if (Behavior == BehaviorType.Hit)
+        {
+            FreezeTime -= Time.deltaTime;
+
+            if (FreezeTime < 0)
+            {
+                FreezeTime = 0;
+                Behavior = BehaviorType.Waiting;
+                Debug.Log("回復した。");
+            }
         }
     }
 
@@ -183,47 +185,7 @@ public class CharacterBase : MonoBehaviour
     /// 行動変換する場合
     /// </summary>
     /// <param name="stage">アニメステージ</param>
-    public virtual void OnBehaviorChange(BehaviorType behavior)  
-    {
-        switch (behavior)
-        {
-            case BehaviorType.Waiting:
-                State = StateType.Waiting;
-                break;
-
-            case BehaviorType.Run:
-                break;
-            case BehaviorType.Create:
-                break;
-
-            case BehaviorType.Breack:
-                break;
-
-            case BehaviorType.Jump:
-                break;
-
-            case BehaviorType.observe01:
-                break;
-
-            case BehaviorType.CallForHelp:
-                break;
-
-            case BehaviorType.Attack1:
-                break;
-
-            case BehaviorType.Hit:
-                State = StateType.Freeze;
-                break;
-
-            case BehaviorType.Did:
-                State = StateType.Died;
-                break;
-
-            default:
-                break;
-        }
-
-    }
+    public virtual void OnBehaviorChange(BehaviorType behavior) { }
 
     /// <summary>
     /// HPバーを設定
@@ -279,8 +241,9 @@ public class CharacterBase : MonoBehaviour
             || Behavior == BehaviorType.ReadyAttack
             || Behavior == BehaviorType.Attack1
             || Behavior == BehaviorType.Attack2
-            || State == StateType.Freeze
-            || State == StateType.Died;
+            || Behavior == BehaviorType.Hit
+            || Behavior == BehaviorType.Did
+            || Behavior == BehaviorType.Breack;
     }
 
     /// <summary>
@@ -332,7 +295,7 @@ public class CharacterBase : MonoBehaviour
                 foreach (var target in targets)
                 {
                     // 死んだやつは目標以外にする
-                    if (target.State == StateType.Died)
+                    if (target.Behavior == BehaviorType.Did)
                         continue;
 
                     var targetDir = CharacterCtl.E.CalculationDir(target.transform.position, transform.position);
@@ -354,7 +317,7 @@ public class CharacterBase : MonoBehaviour
                             switch ((ImpactType)impactConfig.Type)
                             {
                                 case ImpactType.AddDamage:
-                                    StartCoroutine(HitDamage(target, this, impactId, skill.Config.TargetFreezeTime));
+                                    HitDamage(target, this, impactId, skill.Config.TargetFreezeTime);
                                     //target.HitDamage(this, impactId, skill.Config.TargetFreezeTime);
                                     break;
 
@@ -368,7 +331,7 @@ public class CharacterBase : MonoBehaviour
 
             case SkillData.SkillType.SingleAttack:
                 // 目標がない、目標が死んだ場合、対象外
-                if (selectTarget != null && selectTarget.State != StateType.Died)
+                if (selectTarget != null && selectTarget.Behavior != BehaviorType.Did)
                 {
                     foreach (var impact in skill.Impacts)
                     {
@@ -380,7 +343,7 @@ public class CharacterBase : MonoBehaviour
                         switch ((ImpactType)impactConfig.Type)
                         {
                             case ImpactType.AddDamage:
-                                StartCoroutine(HitDamage(selectTarget, this, impactId, skill.Config.TargetFreezeTime));
+                                HitDamage(selectTarget, this, impactId, skill.Config.TargetFreezeTime);
                                 //selectTarget.HitDamage(this, impactId, skill.Config.TargetFreezeTime);
                                 break;
 
@@ -412,7 +375,7 @@ public class CharacterBase : MonoBehaviour
     /// <param name="attacker">攻撃者</param>
     /// <param name="impactId">インパクト</param>
     /// <param name="freezeTime">凍結時間</param>
-    private IEnumerator HitDamage(CharacterBase target, CharacterBase attacker, int impactId, float freezeTime)
+    private void HitDamage(CharacterBase target, CharacterBase attacker, int impactId, float freezeTime)
     {
         // ダメージ計算
         int damage = BattleCalculationCtl.CalculationDamage(attacker, target, impactId);
@@ -434,15 +397,10 @@ public class CharacterBase : MonoBehaviour
         }
         else
         {
-            if (target.Behavior != BehaviorType.Hit)
-                target.Behavior = BehaviorType.Hit;
-
             // ターゲットが移動できなくなる
             target.moveDirection = Vector3.zero;
 
-            yield return new WaitForSeconds(freezeTime);
-
-            target.Behavior = BehaviorType.Waiting;
+            target.Freeze(freezeTime);
         }
     }
 
@@ -460,6 +418,20 @@ public class CharacterBase : MonoBehaviour
         Controller.enabled = false;
 
         StopAllCoroutines();
+    }
+
+    /// <summary>
+    /// 凍結する
+    /// </summary>
+    /// <param name="time"></param>
+    protected virtual void Freeze(float time)
+    {
+        if (Behavior == BehaviorType.Hit)
+            return;
+
+        StopMove();
+        Behavior = BehaviorType.Hit;
+        FreezeTime = time;
     }
 
     protected virtual void TargetDied() {}
@@ -578,27 +550,6 @@ public class CharacterBase : MonoBehaviour
     #endregion
 
     #region Emum
-
-    /// <summary>
-    /// 状態
-    /// </summary>
-    public enum StateType
-    {
-        /// <summary>
-        /// 待ってる
-        /// </summary>
-        Waiting,
-
-        /// <summary>
-        /// 死んだ
-        /// </summary>
-        Died,
-
-        /// <summary>
-        /// 凍結してる
-        /// </summary>
-        Freeze,
-    }
 
     /// <summary>
     /// キャンプ

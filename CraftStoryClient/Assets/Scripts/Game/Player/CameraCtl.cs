@@ -67,6 +67,11 @@ public class CameraCtl : MonoBehaviour
         {
             StartCameraMove();
         }
+
+        if (IsLockUn)
+        {
+            AutoRotate();
+        }
     }
 
     public void OnTriggerStay(Collider other)
@@ -208,38 +213,6 @@ public class CameraCtl : MonoBehaviour
     }
 
     /// <summary>
-    /// ロックオン
-    /// </summary>
-    /// <param name="target"></param>
-    public void LockUnTarget(Transform target)
-    {
-
-       
-    }
-
-    Vector2 dir;
-    private void AutoRotate()
-    {
-        //dir = PlayerCtl.E.Character.GetTargetDircetion(target);
-
-        movedAngle = 0;
-        AutoCameraMove = true;
-
-        // カメラ向き
-        Vector2 cameraDir = CommonFunction.AngleToVector2(GetEulerAngleY);
-
-        // 回転する角度
-        offsetAngle = Vector2.Angle(dir, cameraDir);
-
-        // 回転向きを計算
-        var newAngle = GetEulerAngleY + 90;
-        Vector2 newDir = CommonFunction.AngleToVector2(newAngle);
-        var newDot = Vector2.Dot(dir, newDir);
-
-        isRightMove = newDot < 0;
-    }
-
-    /// <summary>
     /// カメラの
     /// </summary>
     private void StartCameraMove()
@@ -268,5 +241,48 @@ public class CameraCtl : MonoBehaviour
                 cameraMoveOverCallback();
             }
         }
+    }
+
+    /// <summary>
+    /// ロックオン
+    /// </summary>
+    /// <param name="target"></param>
+    public void LockUnTarget(Transform target)
+    {
+        this.target = target;
+        IsLockUn = true;
+    }
+    public void CancelLockUn()
+    {
+        target = null;
+        IsLockUn = false;
+    }
+
+    bool IsLockUn;
+    Transform target;
+
+    private void AutoRotate()
+    {
+        // ターゲットがない場合、スキップ
+        if (target == null)
+            return;
+
+        var dir = PlayerCtl.E.Character.GetTargetDircetion(target);
+
+        movedAngle = 0;
+        AutoCameraMove = true;
+
+        // カメラ向き
+        Vector2 cameraDir = CommonFunction.AngleToVector2(GetEulerAngleY);
+
+        // 回転する角度
+        offsetAngle = Vector2.Angle(dir, cameraDir);
+
+        // 回転向きを計算
+        var newAngle = GetEulerAngleY + 90;
+        Vector2 newDir = CommonFunction.AngleToVector2(newAngle);
+        var newDot = Vector2.Dot(dir, newDir);
+
+        isRightMove = newDot < 0;
     }
 }

@@ -86,7 +86,11 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         else
         {
             Vector2 pointerPos = eventData.position - startPos;
-            if (PlayerCtl.E.CameraCtl != null) PlayerCtl.E.CameraCtl.CameraRotate(pointerPos.y, pointerPos.x);
+            if (PlayerCtl.E.CameraCtl != null)
+            {
+                PlayerCtl.E.CameraCtl.CameraRotate(pointerPos.y, pointerPos.x);
+                PlayerCtl.E.CameraCtl.CancelLockUn();
+            }
             if (PlayerCtl.E.BlueprintPreviewCtl != null) PlayerCtl.E.BlueprintPreviewCtl.CameraRotate(pointerPos.y, pointerPos.x);
 
             startPos = eventData.position;

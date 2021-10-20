@@ -75,6 +75,13 @@ public partial class CharacterPlayer : CharacterBase
         }
     }
 
+    protected override void TargetDied()
+    {
+        base.TargetDied();
+
+        PlayerCtl.E.CameraCtl.CancelLockUn();
+    }
+
     /// <summary>
     /// 装備をEquip
     /// </summary>
@@ -102,17 +109,11 @@ public partial class CharacterPlayer : CharacterBase
     /// <param name="y"></param>
     public void Move(float x, float y)
     {
-        // 壊す場合、移動出来ない
-        if (Behavior == BehaviorType.Breack)
+        if (DataMng.E.MapData == null || PlayerCtl.E.CameraCtl == null)
             return;
 
         // 動作変更制限
         if (CanNotChangeBehavior())
-            return;
-
-        if (Behavior == BehaviorType.Breack    // 壊す状態で移動できない
-            || DataMng.E.MapData == null            // マップデータがない場合、移動できない
-            || PlayerCtl.E.CameraCtl == null)       // カメラコンソールが初期化していない場合、移動できない
             return;
 
         Behavior = BehaviorType.Run;

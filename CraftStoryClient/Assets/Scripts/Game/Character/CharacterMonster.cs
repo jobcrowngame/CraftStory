@@ -20,7 +20,7 @@ public class CharacterMonster : CharacterBase
     public override void OnUpdate()
     {
         base.OnUpdate();
-        if (ai != null || State == StateType.Died)
+        if (ai != null || Behavior != BehaviorType.Did)
         {
             ai.Update();
         }
@@ -151,9 +151,6 @@ public class CharacterMonster : CharacterBase
     /// </summary>
     public void Attack()
     {
-        if (Target == null)
-            return;
-
         // 共有CD冷却中場合、スキップ
         if (ShareCDIsCooling)
             return;
