@@ -63,7 +63,7 @@ public class ShopItemCell : UIBase
                             DataMng.GetCoins(rp3);
                             if (ShopChargeLG.E.UI != null) ShopChargeLG.E.UI.RefreshCoins();
                             if (ShopResourceLG.E.UI != null) ShopResourceLG.E.UI.RefreshCoins();
-                            ShopMarketLG.E.UI.RefreshCoins();
+                            HomeLG.E.UI.RefreshCoins();
                         });
 
                         CommonFunction.ShowHintBar(5);

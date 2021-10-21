@@ -198,8 +198,8 @@ Amazonギフト券をお送りいたします。
 
             DataMng.E.RuntimeData.NewEmailCount++;
             DataMng.E.RuntimeData.Email = MailInput.text;
-            ShopMarketLG.E.UI.RefreshRedPoint();
-            ShopMarketLG.E.UI.RefreshCoins();
+            HomeLG.E.UI.RefreshRedPoint();
+            HomeLG.E.UI.RefreshCoins();
         }, point, money, MailInput.text);
     }
 

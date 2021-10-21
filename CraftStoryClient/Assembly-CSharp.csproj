@@ -75,15 +75,20 @@
     <Compile Include="Assets\Scripts\UI\Terms02UI.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryUI.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxLG.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\CharacterGenerated.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintPreviewLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Craft.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingLG.cs" />
     <Compile Include="Assets\Scripts\UI\FriendDescriptionLG.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\BattleCalculationCtl.cs" />
     <Compile Include="Assets\Scripts\Test\TestToggle.cs" />
+    <Compile Include="Assets\Scripts\UI\SceneMain\MarketMain.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintMyShopSelectItemUI.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyScrollRect.cs" />
     <Compile Include="Assets\Scripts\Cor\AttObjC.cs" />
+    <Compile Include="Assets\Scripts\Game\Player\PlayerEquipmentCtl.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Roulette.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Skill.cs" />
     <Compile Include="Assets\Scripts\UI\FriendLG.cs" />
     <Compile Include="Assets\Scripts\UI\FriendUI.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeUI.cs" />
@@ -96,11 +101,13 @@
     <Compile Include="Assets\Scripts\UI\GachaAddBonusUI.cs" />
     <Compile Include="Assets\Scripts\UI\GuideUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
+    <Compile Include="Assets\Scripts\UI\Battle\HpUIPlayer.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintUserCell.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyText.cs" />
     <Compile Include="Assets\Scripts\Test\CreateUIMng.cs" />
     <Compile Include="Assets\Scripts\Test\RunTest.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Gacha.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\Parameter.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csAnimationSpin.cs" />
     <Compile Include="Assets\Scripts\UI\RouletteUI.cs" />
     <Compile Include="Assets\Scripts\UI\BagLG.cs" />
@@ -113,6 +120,7 @@
     <Compile Include="Assets\Scripts\Game\Player\PlayerCtl.cs" />
     <Compile Include="Assets\Scripts\UI\Terms01UI.cs" />
     <Compile Include="Assets\Scripts\UI\BagUI.cs" />
+    <Compile Include="Assets\Scripts\UI\HomeUI.Battle.cs" />
     <Compile Include="Assets\Scripts\UI\PlayDescriptionUI.cs" />
     <Compile Include="Assets\Scripts\UI\HomeUI.cs" />
     <Compile Include="Assets\Scripts\UI\EmailDetailsLG.cs" />
@@ -137,6 +145,7 @@
     <Compile Include="Assets\Scripts\Cor\AudioMng.cs" />
     <Compile Include="Assets\Scripts\Test\TestTriger.cs" />
     <Compile Include="Assets\Scripts\UI\BagItemCell.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Impact.cs" />
     <Compile Include="Assets\Scripts\Data\BlueprintData.cs" />
     <Compile Include="Assets\Scripts\UI\MenuLG.cs" />
     <Compile Include="Assets\Scripts\UI\DebugLG.cs" />
@@ -147,6 +156,7 @@
     <Compile Include="Assets\Scripts\Game\Entity\EntityTransferGate.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityFlowoer.cs" />
     <Compile Include="Assets\Scripts\UI\Common\SimpleMove.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\SkillData.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityBlock.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\LoginBonus.cs" />
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
@@ -155,11 +165,13 @@
     <Compile Include="Assets\Scripts\UI\Common\Title2UI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
     <Compile Include="Assets\Scripts\Manager\CryptMng.cs" />
+    <Compile Include="Assets\Scripts\UI\Battle\SkillCell.cs" />
     <Compile Include="Assets\Scripts\Test\Monster\PlayerController2.cs" />
     <Compile Include="Assets\Scripts\Test\TestJson.cs" />
     <Compile Include="Assets\Scripts\Manager\Logger.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Resource.cs" />
     <Compile Include="Assets\Scripts\UI\PersonalMessageLG.cs" />
+    <Compile Include="Assets\Scripts\UI\SceneMain\GuideMain.cs" />
     <Compile Include="Assets\Scripts\UI\TermsUI.cs" />
     <Compile Include="Assets\Scripts\Manager\WorldMng.cs" />
     <Compile Include="Assets\Scripts\UI\CraftLG.cs" />
@@ -175,7 +187,7 @@
     <Compile Include="Assets\Scripts\UI\Common\MyButton.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintLG.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusCell.cs" />
-    <Compile Include="Assets\Scripts\Game\Player\PlayerEntity.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\CharacterPlayer.cs" />
     <Compile Include="Assets\Scripts\Test\IAPDemo.cs" />
     <Compile Include="Assets\Scripts\Game\Adventure\AdventureCtl.cs" />
     <Compile Include="Assets\Scripts\Game\Player\BuilderPencil.cs" />
@@ -190,6 +202,7 @@
     <Compile Include="Assets\Scripts\UI\ShopGachaLG.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csMouseOrbit.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeCell.cs" />
+    <Compile Include="Assets\Scripts\UI\Battle\HpUIMonster.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintDetailsUI.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintMyShopSelectItemLG.cs" />
     <Compile Include="Assets\Scripts\Game\Effect\EffectMng.cs" />
@@ -198,6 +211,7 @@
     <Compile Include="Assets\Scripts\UI\ChargeCell.cs" />
     <Compile Include="Assets\Scripts\Manager\TimeZoneMng.cs" />
     <Compile Include="Assets\Scripts\UI\ShopChargeLG.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\CharacterAI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mail.cs" />
     <Compile Include="Assets\Scripts\Data\UserData.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyToggleGroupCtl.cs" />
@@ -211,8 +225,9 @@
     <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityDefalt.cs" />
     <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Character.cs" />
     <Compile Include="Assets\Scripts\UI\MapUI.cs" />
-    <Compile Include="Assets\Scripts\UI\BraveCell.cs" />
+    <Compile Include="Assets\Scripts\UI\HomeGetItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\PlayDescriptionLG.cs" />
     <Compile Include="Assets\Scripts\UI\UICtl.cs" />
     <Compile Include="Assets\Scripts\UI\LoginLG.cs" />
@@ -221,8 +236,8 @@
     <Compile Include="Assets\Scripts\UI\BlueprintPreviewUI.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintReNameLG.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsUI.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\CharacterEquipment.cs" />
     <Compile Include="Assets\Scripts\UI\MissionUI.cs" />
-    <Compile Include="Assets\Scripts\UI\WorldUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
     <Compile Include="Assets\Scripts\UI\RouletteLG.cs" />
     <Compile Include="Assets\Scripts\Data\MyShopData.cs" />
@@ -231,6 +246,7 @@
     <Compile Include="Assets\Scripts\UI\ShopChargeUI.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityTreasureBox.cs" />
     <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Equipment.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Chat.cs" />
     <Compile Include="Assets\Scripts\UI\DebugCell.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerController.cs" />
@@ -264,11 +280,12 @@
     <Compile Include="Assets\Scripts\UI\EmailDetailsUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Blueprint.cs" />
     <Compile Include="Assets\Scripts\UI\FriendDescriptionUI.cs" />
+    <Compile Include="Assets\Scripts\UI\SceneMain\BraveMain.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerButton.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\RandomBonusPond.cs" />
     <Compile Include="Assets\Scripts\UI\Common\WaitingLG.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityBase.cs" />
-    <Compile Include="Assets\Scripts\Game\Character\CharacterEntity.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\CharacterBase.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Bonus.cs" />
     <Compile Include="Assets\Scripts\UI\Common\HintBoxUI.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterCtl.cs" />
@@ -283,7 +300,10 @@
     <Compile Include="Assets\Scripts\Manager\IAPMng.cs" />
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectEditor.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingUI.cs" />
+    <Compile Include="Assets\Scripts\UI\SceneMain\HomeMain.cs" />
+    <Compile Include="Assets\Scripts\UI\Battle\HpUIBase.cs" />
     <Compile Include="Assets\Scripts\UI\MissionChatUI.cs" />
+    <Compile Include="Assets\Scripts\UI\Battle\Damage.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
     <Compile Include="Assets\Scripts\UI\MissionCell.cs" />
@@ -294,16 +314,12 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mission.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusLG.cs" />
     <Compile Include="Assets\Scripts\Test\Monster\DogController.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\CharacterMonster.cs" />
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectChanger.cs" />
     <Compile Include="Assets\Scripts\Test\TestRotate.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopMarketUI.cs" />
-    <Compile Include="Assets\Scripts\Game\Player\PlayerBehavior.cs" />
-    <Compile Include="Assets\Scripts\UI\BraveLG.cs" />
-    <Compile Include="Assets\Scripts\UI\ShopMarketLG.cs" />
-    <Compile Include="Assets\Scripts\UI\BraveUI.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
