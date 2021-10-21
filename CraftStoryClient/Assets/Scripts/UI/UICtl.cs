@@ -186,7 +186,7 @@ public class UICtl : Single<UICtl>
         {
             case UIType.Login: return "Prefabs/UI/Login";
             case UIType.NowLoading: return "Prefabs/UI/NowLoading";
-            case UIType.Home: return "Prefabs/UI/Home";
+            case UIType.Home: return "Prefabs/UI/Common/Home";
             case UIType.Menu: return "Prefabs/UI/Menu";
             case UIType.Bag: return "Prefabs/UI/Bag";
             case UIType.Lottery: return "Prefabs/UI/Lottery";

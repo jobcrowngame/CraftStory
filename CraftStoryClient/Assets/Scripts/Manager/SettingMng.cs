@@ -27,10 +27,10 @@ public class SettingMng : Single<SettingMng>
     public const float MoveSpeed = 4F;
 
     // ジャンプ力
-    public const float JumpSpeed = 7F;
+    public const float JumpSpeed = 10;
 
     //重力の大きさ
-    public const float Gravity = 20F;
+    public const float Gravity = 0.1f;
 
     //マイショップレベルアップコスト1
     public const int MyShopCostLv1 = 100;
@@ -53,4 +53,24 @@ public class SettingMng : Single<SettingMng>
     /// NPCと　話す距離
     /// </summary>
     public const float NPCTTalkDistance = 3;
+
+    /// <summary>
+    /// 共有CD
+    /// </summary>
+    public const float ShareCD = 1;
+
+    /// <summary>
+    /// モンスターが近くまで移動する最小距離
+    /// </summary>
+    public const float MinDistance = 2f;
+
+    /// <summary>
+    /// デイズアクション時間
+    /// </summary>
+    public const float DazeTime = 10;
+
+    /// <summary>
+    /// ダメージObjectが削除される時間
+    /// </summary>
+    public const float DamageDestroyTime = 3;
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class GiftBoxUI : UIBase
     Button AdvertisingBtn { get => FindChiled<Button>("AdvertisingBtn"); }
     Transform itemGridRoot;
     List<IconItemCell> cells;
+    Action okBtnCallBack;
 
     public override void Init()
     {
@@ -42,9 +44,13 @@ public class GiftBoxUI : UIBase
         {
             NWMng.E.ClearAdventure((rp) =>
             {
-                Close();
-                DataMng.GetItems(rp);
-                GoToNext();
+                if (okBtnCallBack != null)
+                {
+                    PlayerCtl.E.Lock = false;
+                    ClearCell(itemGridRoot);
+
+                    okBtnCallBack();
+                }
             }, AdventureCtl.E.BonusList);
         });
 
@@ -57,12 +63,6 @@ public class GiftBoxUI : UIBase
 
         PlayerCtl.E.Lock = true;
         DoubleBonus.gameObject.SetActive(false);
-    }
-    public override void Close()
-    {
-        base.Close();
-
-        ClearCell(itemGridRoot);
     }
 
     public void AddBonus(List<int> bonus)
@@ -88,24 +88,10 @@ public class GiftBoxUI : UIBase
             cells.Add(cell);
         }
     }
-
-    private void GoToNext()
-    {
-        PlayerCtl.E.Lock = false;
-        int nextTransferGateID = 0;
-
-        if (DataMng.E.MapData.Config.TransferGateID == 9999)
-        {
-            nextTransferGateID = NowLoadingLG.E.BeforTransferGateID;
-        }
-        else
-        {
-            nextTransferGateID = DataMng.E.MapData.Config.TransferGateID;
-        }
-
-        CommonFunction.GoToNextScene(nextTransferGateID);
-        AdventureCtl.E.Clear();
-    }
+    
+    /// <summary>
+    /// 2倍ボーナスボタンイベント
+    /// </summary>
     private void StartDoubleBonus()
     {
         AdvertisingBtn.gameObject.SetActive(false);
@@ -115,5 +101,14 @@ public class GiftBoxUI : UIBase
         {
             item.StartDoubleAnim();
         }
+    }
+
+    /// <summary>
+    /// OKボタンのイベント
+    /// </summary>
+    /// <param name="action"></param>
+    public void SetCallBack(Action action)
+    {
+        okBtnCallBack = action;
     }
 }

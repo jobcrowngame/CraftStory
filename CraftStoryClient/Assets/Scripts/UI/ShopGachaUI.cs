@@ -82,6 +82,6 @@ public class ShopGachaUI : UIBase
     public void RefreshCoins()
     {
         Title.RefreshCoins();
-        ShopMarketLG.E.UI.RefreshCoins();
+        HomeLG.E.UI.RefreshCoins();
     }
 }

@@ -191,6 +191,8 @@ public class CommonFunction
 
         DataMng.E.RuntimeData.MapType = (MapType)ConfigMng.E.Map[config.NextMap].MapType;
 
+        CharacterCtl.E.ClearCharacter();
+
         // Scene遷移
         SceneManager.LoadSceneAsync("NowLoading");
     }
@@ -231,7 +233,7 @@ public class CommonFunction
     /// <returns></returns>
     public static Direction GetCreateEntityDirection(Vector3 createPos)
     {
-        var playerPos = PlayerCtl.E.PlayerEntity.transform.position;
+        var playerPos = PlayerCtl.E.Character.transform.position;
 
         var angle = Vector2ToAngle(new Vector2(createPos.x, createPos.z) - new Vector2(playerPos.x, playerPos.z)) + 180;
 
@@ -484,4 +486,80 @@ public class CommonFunction
     {
         return Mathf.Abs(Vector3.Distance(p1, p2));
     }
+
+    /// <summary>
+    /// 向きをゲット
+    /// </summary>
+    /// <param name="p1">start</param>
+    /// <param name="p2">end</param>
+    /// <returns></returns>
+    public static Vector2 GetDirection(Vector3 p1, Vector3 p2)
+    {
+        return new Vector2(p1.x - p2.x, p1.z - p2.z);
+    }
+
+
+    /// <summary>
+    /// RandomBonusPondIdからBonusListをゲット
+    /// </summary>
+    /// <param name="pondId"></param>
+    /// <returns></returns>
+    public static List<int> GetBonusListByPondId(int pondId)
+    {
+        List<int> bonusList = new List<int>();
+        var config = ConfigMng.E.RandomBonusPond[pondId];
+
+        GetBonus(config.BonusList01, config.Percent01, ref bonusList);
+        GetBonus(config.BonusList02, config.Percent02, ref bonusList);
+        GetBonus(config.BonusList03, config.Percent03, ref bonusList);
+        GetBonus(config.BonusList04, config.Percent04, ref bonusList);
+        GetBonus(config.BonusList05, config.Percent05, ref bonusList);
+        GetBonus(config.BonusList06, config.Percent06, ref bonusList);
+        GetBonus(config.BonusList07, config.Percent07, ref bonusList);
+
+        return bonusList;
+    }
+    private static void GetBonus(string bonusList, int percent, ref List<int> _bonusList)
+    {
+        var percentR = UnityEngine.Random.Range(0, 1000);
+        if (percentR < percent)
+        {
+            var bonusArr = bonusList.Split(',');
+            var bonusR = UnityEngine.Random.Range(0, bonusArr.Length);
+            _bonusList.Add(int.Parse(bonusArr[bonusR]));
+        }
+    }
+
+
+    #region Item 
+
+    /// <summary>
+    /// アイテムが装備かをチェック
+    /// </summary>
+    /// <param name="itemId"></param>
+    /// <returns></returns>
+    public static bool IsEquipment(int itemId)
+    {
+        var itemConfig = ConfigMng.E.Item[itemId];
+
+        return (ItemType)itemConfig.Type == ItemType.Weapon
+            || (ItemType)itemConfig.Type == ItemType.Armor;
+    }
+
+    /// <summary>
+    /// Equipmentタイプによって装備位置をゲット
+    /// </summary>
+    /// <param name="itemType"></param>
+    /// <returns></returns>
+    public static ItemSite GetEquipSite(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Weapon: return ItemSite.Weapon;
+            case ItemType.Armor: return ItemSite.Armor;
+
+            default: return ItemSite.None;
+        }
+    }
+    #endregion 
 }

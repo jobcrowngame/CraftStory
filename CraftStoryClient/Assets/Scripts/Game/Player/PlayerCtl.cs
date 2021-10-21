@@ -26,10 +26,32 @@ public class PlayerCtl : MonoBehaviour
 
     public bool Lock { get; set; } // ロック
 
-    public PlayerEntity PlayerEntity { get => playerEntity; }
-    private PlayerEntity playerEntity; // プレイヤーエンティティ
+    public CharacterPlayer Character { get; private set; }
 
-    public Joystick Joystick { get => joystick; set => joystick = value; }
+    public Joystick Joystick
+    {
+        get => joystick;
+        set
+        {
+            joystick = value;
+
+            // Joystickをスクロールイベント
+            Joystick.AddListionOnDrag(() =>
+            {
+                if (Lock || Character == null)
+                    return;
+
+                Character.Move(joystick.xAxis.value, joystick.yAxis.value);
+            });
+
+            // Joystickスクロールが停止場合のイベント
+            Joystick.AddListionOnPointerUp(() =>
+            {
+                Character.StopMove();
+                Character.Behavior = BehaviorType.Waiting;
+            });
+        }
+    }
     private Joystick joystick; // ジョイスティック
 
     public ScreenDraggingCtl ScreenDraggingCtl { get => screenDraggingCtl; set => screenDraggingCtl = value; }
@@ -67,6 +89,9 @@ public class PlayerCtl : MonoBehaviour
     }
     private BlueprintPreviewCtl blueprintPreviewCtl; // 設計図プレイビューコンソール
 
+
+    public HpUIBase HpBar;
+
     public void Init()
     {
         builderPencil = new BuilderPencil();
@@ -76,11 +101,8 @@ public class PlayerCtl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            PlayerEntity.Jump();
+            Character.Jump();
         }
-
-        if (joystick != null && !Lock)
-            PlayerEntity.Move(joystick.xAxis.value, joystick.yAxis.value);
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
@@ -101,42 +123,26 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F4))
         {
-            var area = new MapAreaData(1);
+            UserSkill(new SkillData(1));
+        }
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            UserSkill(new SkillData(2));
+        }
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            UserSkill(new SkillData(3));
         }
     }
 
-    /// <summary>
-    /// プレイヤーエンティティをインスタンス
-    /// </summary>
-    /// <returns></returns>
-    public PlayerEntity AddPlayerEntity()
+    public void SetCharacter(CharacterPlayer character)
     {
-        var resource = Resources.Load("Prefabs/Game/Character/Player") as GameObject;
-        if (resource == null)
-            return null;
-
-        Vector3 pos = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 0);
-        pos = MapCtl.FixEntityPos(DataMng.E.MapData, pos, DataMng.E.MapData.Config.CreatePosOffset);
-        pos.y += 5;
-        var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
-        if (obj == null)
-            return null;
-
-        playerEntity = obj.GetComponent<PlayerEntity>();
-        if (playerEntity == null)
-        {
-            Logger.Error("not find CharacterEntity component");
-            return null;
-        }
-
-        playerEntity.Init();
-
-        return playerEntity;
+        Character = character;
     }
 
     public void Jump()
     {
-        PlayerEntity.Jump();
+        Character.Jump();
     }
 
     /// <summary>
@@ -149,10 +155,6 @@ public class PlayerCtl : MonoBehaviour
         builderPencil.CancelUserBlueprint();
 
         selectItem = item;
-
-        PlayerEntity.Behavior.SelectItemType = (selectItem == null)
-            ? ItemType.None
-            : (ItemType)selectItem.Config().Type;
     }
 
     /// <summary>
@@ -192,7 +194,7 @@ public class PlayerCtl : MonoBehaviour
                     case ItemType.NomoObject:
                         Lock = true;
                         CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
-                        PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
+                        Character.Behavior = BehaviorType.Create;
 
                         StartCoroutine(UnLock());
                         break;
@@ -207,7 +209,7 @@ public class PlayerCtl : MonoBehaviour
                         Lock = true;
                         var direction = CommonFunction.GetCreateEntityDirection(pos);
                         CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), direction);
-                        PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
+                        Character.Behavior = BehaviorType.Create;
 
                         StartCoroutine(UnLock());
                         break;
@@ -239,7 +241,7 @@ public class PlayerCtl : MonoBehaviour
                     case ItemType.Torch:
                         Lock = true;
                         CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), dType);
-                        PlayerEntity.Behavior.Type = PlayerBehaviorType.Create;
+                        Character.Behavior = BehaviorType.Create;
 
                         StartCoroutine(UnLock());
                         break;
@@ -253,24 +255,14 @@ public class PlayerCtl : MonoBehaviour
         {
             if (collider != null)
             {
+                // 資源をタップ
                 var entity = collider.GetComponent<EntityBase>();
-                switch (entity.Type)
-                {
-                    case EntityType.Resources:
-                        var effect = EffectMng.E.AddEffect<EffectBase>(pos, EffectType.ResourcesDestroy);
-                        effect.Init();
+                if (entity != null) entity.OnClick();
 
-                        AdventureCtl.E.AddBonus(entity.EConfig.BonusID);
-                        WorldMng.E.MapCtl.DeleteEntity(entity);
-                        break;
-
-                    case EntityType.TreasureBox:
-                        entity.OnClick();
-                        break;
-                }
+                // キャラをタップ
+                var character = collider.GetComponent<CharacterBase>();
+                if (character != null) character.OnClick();
             }
-
-               
         }
     }
 
@@ -299,7 +291,7 @@ public class PlayerCtl : MonoBehaviour
                 }
                 else
                 {
-                    PlayerEntity.Behavior.Type = PlayerBehaviorType.Breack;
+                    Character.Behavior = BehaviorType.Breack;
                     baseCell.OnClicking(time);
                 }
             }
@@ -376,13 +368,13 @@ public class PlayerCtl : MonoBehaviour
     {
         if (NPCTTalkDistanceChect(target))
         {
-            ChangePlayerDirection(target.position, callback);
+            ChangePlayerDirection(target, callback);
         }
         else
         {
-            playerEntity.PlayerMoveTo(target.position, SettingMng.NPCTTalkDistance, () =>
+            Character.PlayerMoveTo(target.position, SettingMng.NPCTTalkDistance, () =>
             {
-                ChangePlayerDirection(target.position, callback);
+                ChangePlayerDirection(target, callback);
             });
         }
     }
@@ -398,16 +390,14 @@ public class PlayerCtl : MonoBehaviour
     }
 
     /// <summary>
-    /// クリックしたおぶぜっく
+    /// クリックしたObjectを向かう
     /// </summary>
     /// <param name="targetPos"></param>
-    private void ChangePlayerDirection(Vector3 targetPos, Action callback)
+    private void ChangePlayerDirection(Transform target, Action callback)
     {
-        var target = new Vector2(targetPos.x, targetPos.z);
-        var player = new Vector2(PlayerEntity.transform.position.x, PlayerEntity.transform.position.z);
-        var dir = new Vector2(target.x- player.x, target.y - player.y).normalized;
+        var dir = Character.GetTargetDircetion(target);
 
-        playerEntity.Rotation(dir);
+        Character.Rotation(dir);
         cameraCtl.CameraslowlyRotateToTarget(dir, callback);
     }
 
@@ -417,7 +407,84 @@ public class PlayerCtl : MonoBehaviour
     /// <returns></returns>
     public bool NPCTTalkDistanceChect(Transform target)
     {
-        var distance = CommonFunction.GetDistance(target.position, PlayerEntity.transform.position);
+        var distance = CommonFunction.GetDistance(target.position, Character.transform.position);
         return distance < SettingMng.NPCTTalkDistance;
     }
+
+
+    #region 戦闘
+
+    /// <summary>
+    /// スキルを使う
+    /// </summary>
+    /// <param name="skill"></param>
+    public void UserSkill(SkillData skill)
+    {
+        if (Character.ShareCDIsCooling || skill.IsCooling)
+            return;
+
+        // 単体攻撃の場合、目標がないと先ず目標を探す
+        if ((SkillData.SkillType)skill.Config.Type == SkillData.SkillType.SingleAttack)
+        {
+            Character.Target = CharacterCtl.E.FindTargetInSecurityRange(CharacterBase.CharacterCamp.Monster,
+                Character.transform.position, skill.distance);
+
+            // 探しても目標がない場合、スキップ
+            if (Character.Target == null)
+                return;
+        }
+
+        // 移動停止
+        Character.StopMove();
+        Character.StartUseSkill(skill, Character.Target);
+    }
+
+    #endregion
+    #region 装備
+
+    /// <summary>
+    /// 装備してるアイテム
+    /// </summary>
+    Dictionary<int, ItemData> equipedItems = new Dictionary<int, ItemData>();
+
+    /// <summary>
+    /// 装備する
+    /// </summary>
+    /// <param name="itemId"></param>
+    public void EquipEquipment(ItemData itemData)
+    {
+        // 装備してるとスキップ
+        if (itemData.equipSite > 0)
+            return;
+
+        // 装備じゃない場合、スキップ
+        if (!CommonFunction.IsEquipment(itemData.itemId))
+            return;
+
+        var itemConfig = ConfigMng.E.Item[itemData.itemId];
+        var equipmentConfig = ConfigMng.E.Equipment[itemConfig.ReferenceID];
+
+        // Equipmentが装備してる場合、先ず装備してるEquipmentを消す
+        if (equipedItems.ContainsKey(itemConfig.Type))
+        {
+            // Equipmentを消す
+            NWMng.E.EquitItem(null, equipedItems[itemConfig.Type].id, 0);
+            Character.RemoveEquipment(equipmentConfig.ID);
+            equipedItems[itemConfig.Type].equipSite = 0;
+        }
+
+        Character.EquipEquipment(equipmentConfig.ID);
+        equipedItems[itemConfig.Type] = itemData;
+
+        // 装備する
+        int equipSite = (int)CommonFunction.GetEquipSite((ItemType)itemData.Config().Type);
+        itemData.equipSite = equipSite;
+        NWMng.E.EquitItem((rp) => { BagLG.E.UI.RefreshItems(); }, equipedItems[itemConfig.Type].id, equipSite);
+
+        //CommonFunction.ShowHintBar(31);
+
+        BagLG.E.UI.RefreshItems();
+    }
+
+    #endregion
 }

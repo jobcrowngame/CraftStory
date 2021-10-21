@@ -45,8 +45,8 @@ public class CameraCtl : MonoBehaviour
 
     public void Init()
     {
-        cameraRotateX = CommonFunction.FindChiledByName(PlayerCtl.E.PlayerEntity.transform, "X").transform;
-        cameraRotateY = CommonFunction.FindChiledByName(PlayerCtl.E.PlayerEntity.transform, "Y").transform;
+        cameraRotateX = CommonFunction.FindChiledByName(PlayerCtl.E.Character.transform, "X").transform;
+        cameraRotateY = CommonFunction.FindChiledByName(PlayerCtl.E.Character.transform, "Y").transform;
 
         transform.SetParent(cameraRotateX);
         transform.localPosition = new Vector3(0, 0, cameraPosZ);
@@ -57,15 +57,20 @@ public class CameraCtl : MonoBehaviour
 
     void Update()
     {
-        if (PlayerCtl.E.PlayerEntity != null)
+        if (PlayerCtl.E.Character != null)
         {
-            PlayerCtl.E.PlayerEntity.IsActive = transform.localPosition.z < SettingMng.EnactiveCharacterModelDistanse;
-            PlayerCtl.E.PlayerEntity.IsModelActive(transform.localPosition.z < SettingMng.EnactiveCharacterModelDistanse);
+            PlayerCtl.E.Character.ShowModel = transform.localPosition.z < SettingMng.EnactiveCharacterModelDistanse;
+            PlayerCtl.E.Character.IsModelActive(transform.localPosition.z < SettingMng.EnactiveCharacterModelDistanse);
         }
 
         if (AutoCameraMove)
         {
             StartCameraMove();
+        }
+
+        if (IsLockUn)
+        {
+            AutoRotate();
         }
     }
 
@@ -236,5 +241,48 @@ public class CameraCtl : MonoBehaviour
                 cameraMoveOverCallback();
             }
         }
+    }
+
+    /// <summary>
+    /// ロックオン
+    /// </summary>
+    /// <param name="target"></param>
+    public void LockUnTarget(Transform target)
+    {
+        this.target = target;
+        IsLockUn = true;
+    }
+    public void CancelLockUn()
+    {
+        target = null;
+        IsLockUn = false;
+    }
+
+    bool IsLockUn;
+    Transform target;
+
+    private void AutoRotate()
+    {
+        // ターゲットがない場合、スキップ
+        if (target == null)
+            return;
+
+        var dir = PlayerCtl.E.Character.GetTargetDircetion(target);
+
+        movedAngle = 0;
+        AutoCameraMove = true;
+
+        // カメラ向き
+        Vector2 cameraDir = CommonFunction.AngleToVector2(GetEulerAngleY);
+
+        // 回転する角度
+        offsetAngle = Vector2.Angle(dir, cameraDir);
+
+        // 回転向きを計算
+        var newAngle = GetEulerAngleY + 90;
+        Vector2 newDir = CommonFunction.AngleToVector2(newAngle);
+        var newDot = Vector2.Dot(dir, newDir);
+
+        isRightMove = newDot < 0;
     }
 }

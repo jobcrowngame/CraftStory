@@ -17,7 +17,6 @@ public class WorldMng : MonoBehaviour
     }
     private static WorldMng entity;
 
-    public CharacterCtl CharacterCtl { get; set; }
     public MapCtl MapCtl { get; set; }
     public GameTimeCtl GameTimeCtl { get; set; }
 
@@ -25,7 +24,6 @@ public class WorldMng : MonoBehaviour
     {
         GameTimeCtl = new GameTimeCtl();
         MapCtl = new MapCtl();
-        CharacterCtl = new CharacterCtl();
     }
 
     /// <summary>
@@ -34,7 +32,7 @@ public class WorldMng : MonoBehaviour
     public void CreateGameObjects()
     {
         MapCtl.CreateMap();
-        CharacterCtl.CreateCharacter();
+        CharacterCtl.E.CreateCharacter();
 
         // ガイドの場合、一時的のアイテムを追加
         if (DataMng.E.RuntimeData.MapType == MapType.Guide)
