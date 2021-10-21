@@ -133,7 +133,7 @@ namespace ExcelToJson
                 case "Equipment": list = Equipment(tbl); break;
 
 
-                default: Console.WriteLine("not find fileName function."); break;
+                default: Console.WriteLine("not find fileName " + fileName); break;
             }
 
             if (list == null)
