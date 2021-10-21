@@ -6,6 +6,7 @@ public class BlueprintReNameUI : UIBase
     Image Icon { get => FindChiled<Image>("Icon"); }
     Button OkBtn { get => FindChiled<Button>("OkBtn"); }
     Button CancelBtn { get => FindChiled<Button>("CancelBtn"); }
+    Button CloseBtn { get => FindChiled<Button>("CloseBtn"); }
     Button PhotographBtn { get => FindChiled<Button>("PhotographBtn"); }
     InputField input { get => FindChiled<InputField>("InputField"); }
 
@@ -19,6 +20,7 @@ public class BlueprintReNameUI : UIBase
 
         OkBtn.onClick.AddListener(OnClickOK);
         CancelBtn.onClick.AddListener(Close);
+        CloseBtn.onClick.AddListener(Close);
         PhotographBtn.onClick.AddListener(OnClickPhotographBtn);
         input.onEndEdit.AddListener((r) =>
         {

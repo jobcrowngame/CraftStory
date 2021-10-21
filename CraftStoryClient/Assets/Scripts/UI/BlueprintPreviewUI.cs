@@ -6,11 +6,13 @@ using System;
 public class BlueprintPreviewUI : UIBase
 {
     Button BlueprintPreviewCloseBtn { get => FindChiled<Button>("BlueprintPreviewCloseBtn"); }
+    Button BlueprintPreviewCancelBtn { get => FindChiled<Button>("BlueprintPreviewCancelBtn"); }
     MyButton BlueprintPreviewPlussBtn { get => FindChiled<MyButton>("BlueprintPreviewPlussBtn"); }
     MyButton BlueprintPreviewMinusBtn { get => FindChiled<MyButton>("BlueprintPreviewMinusBtn"); }
     Button PhotographBtn { get => FindChiled<Button>("PhotographBtn"); }
     Slider Bar { get => FindChiled<Slider>("Slider"); }
     Image PhotographImg { get => FindChiled<Image>("PhotographImg"); }
+    Transform Label { get => FindChiled<Transform>("Label"); }
 
     UIBase beforUI;
     float fadeInTimeStep = 0.05f;
@@ -28,7 +30,9 @@ public class BlueprintPreviewUI : UIBase
             mIsPhotographing = value;
 
             Bar.gameObject.SetActive(!value);
+            Label.gameObject.SetActive(!value);
             BlueprintPreviewCloseBtn.gameObject.SetActive(!value);
+            BlueprintPreviewCancelBtn.gameObject.SetActive(!value);
             BlueprintPreviewPlussBtn.gameObject.SetActive(!value);
             BlueprintPreviewMinusBtn.gameObject.SetActive(!value);
             PhotographBtn.gameObject.SetActive(value);
@@ -42,6 +46,7 @@ public class BlueprintPreviewUI : UIBase
         BlueprintPreviewLG.E.Init(this);
 
         BlueprintPreviewCloseBtn.onClick.AddListener(Close);
+        BlueprintPreviewCancelBtn.onClick.AddListener(Close);
         BlueprintPreviewPlussBtn.AddClickingListener(()=> { PlayerCtl.E.BlueprintPreviewCtl.ChangeCameraPos(1); });
         BlueprintPreviewMinusBtn.AddClickingListener(()=> { PlayerCtl.E.BlueprintPreviewCtl.ChangeCameraPos(-1); });
         PhotographBtn.onClick.AddListener(()=> 
@@ -76,6 +81,9 @@ public class BlueprintPreviewUI : UIBase
 
         PhotographImg.gameObject.SetActive(false);
         PhotographBtn.gameObject.SetActive(renderTextureType != 0);
+        BlueprintPreviewCloseBtn.gameObject.SetActive(renderTextureType == 0);
+        BlueprintPreviewCancelBtn.gameObject.SetActive(renderTextureType != 0);
+        Label.gameObject.SetActive(renderTextureType != 0);
     }
     public override void Close()
     {
