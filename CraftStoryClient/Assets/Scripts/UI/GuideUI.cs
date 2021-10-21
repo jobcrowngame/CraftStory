@@ -64,12 +64,14 @@ public class GuideUI : UIBase
         mask2.offsetMax = new Vector2(-(canvasSize.x - selectedObj.transform.position.x / offset + width / 2), 0);
 
         mask3.offsetMin = new Vector2(selectedObj.transform.position.x / offset - width / 2,
-            selectedObj.transform.position.y / offset + height / 2);
+            selectedObj.transform.position.y / offset + height * selectRect.pivot.y);
+            //selectedObj.transform.position.y / offset + height / 2);
         mask3.offsetMax = new Vector2(-(canvasSize.x - selectedObj.transform.position.x / offset - width / 2), 0);
 
         mask4.offsetMin = new Vector2(selectedObj.transform.position.x / offset - width / 2, 0);
         mask4.offsetMax = new Vector2(-(canvasSize.x - selectedObj.transform.position.x / offset - width / 2), 
-            -(canvasSize.y - selectedObj.transform.position.y / offset + height / 2));
+            -(canvasSize.y - selectedObj.transform.position.y / offset + height * selectRect.pivot.y));
+            //-(canvasSize.y - selectedObj.transform.position.y / offset + height / 2));
 
         SetHand(new Vector2(selectedObj.transform.position.x, selectedObj.transform.position.y));
     }

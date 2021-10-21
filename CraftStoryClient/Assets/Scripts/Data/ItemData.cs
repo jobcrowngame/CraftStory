@@ -41,3 +41,75 @@ public class ItemData
         public int guid { get; set; }
     }
 }
+
+public enum ItemSite
+{
+    None = 0,
+
+    // ホーム用アイテム装備
+    HomeItem1 = 1,
+    HomeItem2 = 2,
+    HomeItem3 = 3,
+    HomeItem4 = 4,
+    HomeItem5 = 5,
+    HomeItem6 = 6,
+
+    /// <summary>
+    /// 武器
+    /// </summary>
+    Weapon = 101,
+
+    /// <summary>
+    /// 防具
+    /// </summary>
+    Armor = 102,
+}
+
+public enum ItemType
+{
+    None = 0,
+    Block = 1,
+    Material = 2,
+    Flower = 3,
+    BigFlower = 4,
+    Grass = 5,
+    BuilderPencil = 50,
+    NullBlueprint = 51,
+    Blueprint = 52,
+
+    /// <summary>
+    /// 掲示板
+    /// </summary>
+    Mission = 53,
+    Workbench = 1000,
+    Kamado = 1001,
+    Door = 2000,
+    Torch = 2100,
+
+    /// <summary>
+    /// ランタン
+    /// </summary>
+    Lanthanum = 2101,
+
+    /// <summary>
+    /// 普通のObject
+    /// </summary>
+    NomoObject = 3000,
+
+    /// <summary>
+    /// 向きがある普通のObject
+    /// </summary>
+    HaveDirectionNomoObject = 3001,
+
+    /// <summary>
+    /// 武器
+    /// </summary>
+    Weapon = 5001,
+
+    /// <summary>
+    /// 防具
+    /// </summary>
+    Armor = 5002,
+
+    TransferGate = 9999,
+}

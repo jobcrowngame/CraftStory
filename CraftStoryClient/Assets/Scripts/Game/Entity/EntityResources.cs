@@ -7,4 +7,14 @@ using UnityEngine;
 /// </summary>
 public class EntityResources : EntityBase
 {
+    public override void OnClick()
+    {
+        base.OnClick();
+
+        var effect = EffectMng.E.AddEffect<EffectBase>(transform.position, EffectType.ResourcesDestroy);
+        effect.Init();
+
+        AdventureCtl.E.AddBonus(EConfig.BonusID);
+        WorldMng.E.MapCtl.DeleteEntity(this);
+    }
 }

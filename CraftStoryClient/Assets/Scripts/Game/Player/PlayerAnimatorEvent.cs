@@ -20,7 +20,7 @@ public class PlayerAnimatorEvent : MonoBehaviour
     IEnumerator Over()
     {
         yield return new WaitForSeconds(0.05f);
-        PlayerCtl.E.PlayerEntity.Behavior.Type = PlayerBehaviorType.Waiting;
+        PlayerCtl.E.Character.Behavior = BehaviorType.Waiting;
         PlayerCtl.E.Lock = false;
         Logger.Log("Un Lock");
     }

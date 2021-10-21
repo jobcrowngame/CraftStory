@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -53,8 +54,8 @@ namespace SimpleInputNamespace
 		private Vector2 m_value = Vector2.zero;
 		public Vector2 Value { get { return m_value; } }
 
-		public bool IsWaiting { get => isWaiting; }
-		private bool isWaiting = true;
+		private Action OnDragEvent;
+		private Action OnPointerUpEvent;
 
 		private void Awake()
 		{
@@ -190,7 +191,7 @@ namespace SimpleInputNamespace
 			xAxis.value = m_value.x;
 			yAxis.value = m_value.y;
 
-			isWaiting = false;
+			if (OnDragEvent != null) OnDragEvent();
 		}
 
 		public void OnPointerUp( PointerEventData eventData )
@@ -205,7 +206,7 @@ namespace SimpleInputNamespace
 			xAxis.value = 0f;
 			yAxis.value = 0f;
 
-			isWaiting = true;
+			if(OnPointerUpEvent != null) OnPointerUpEvent();
 		}
 
 		private void OnUpdate()
@@ -229,5 +230,14 @@ namespace SimpleInputNamespace
 				background.color = c;
 			}
 		}
+
+		public void AddListionOnDrag(Action action)
+        {
+			OnDragEvent = action;
+        }
+		public void AddListionOnPointerUp(Action action)
+        {
+			OnPointerUpEvent = action;
+        }
 	}
 }

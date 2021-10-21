@@ -19,8 +19,34 @@ public class MapUI : UIBase
         {
             GuideLG.E.Next();
 
-            if (DataMng.E.RuntimeData.MapType != MapType.Home)
+            // ホームにからホーム遷移できません
+            if (DataMng.E.RuntimeData.MapType == MapType.Home)
+                return;
+
+            // 冒険途中でホーム戻る場合、ボーナス計算します
+            if (DataMng.E.RuntimeData.MapType == MapType.Brave)
+            {
+                // 手に入れたアイテムがない場合、通信しない
+                if (AdventureCtl.E.BonusList.Count <= 0)
+                {
+                    CommonFunction.GoToNextScene(100);
+                    return;
+                }
+
+                var ui = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox);
+                ui.AddBonus(AdventureCtl.E.BonusList);
+                ui.SetCallBack(() =>
+                {
+                    NWMng.E.GetItems(() =>
+                    {
+                        CommonFunction.GoToNextScene(100);
+                    });
+                });
+            }
+            else
+            {
                 CommonFunction.GoToNextScene(100);
+            }
         });
 
         MarketBtn.onClick.AddListener(() =>
@@ -39,6 +65,12 @@ public class MapUI : UIBase
 
         BraveBtn.onClick.AddListener(() =>
         {
+            if (!PlayerCtl.E.Character.IsEquipedEquipment())
+            {
+                CommonFunction.ShowHintBar(31);
+                return;
+            }
+
             // 冒険入るのミッション
             NWMng.E.ClearMission(2, 1);
 

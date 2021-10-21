@@ -45,8 +45,8 @@ public class UIBase : MonoBehaviour
             return findObj.GetComponent<T>();
         else
         {
-            Logger.Error("Find chiled fail: " + chiledName);
-            Logger.Error("From UI: " + gameObject.name);
+            Logger.Warning("Find chiled fail: " + chiledName);
+            Logger.Warning("From UI: " + gameObject.name);
             return null;
         }
     }
@@ -60,8 +60,8 @@ public class UIBase : MonoBehaviour
             return findObj.transform;
         else
         {
-            Logger.Error("Find chiled fail: " + chiledName);
-            Logger.Error("From UI: " + gameObject.name);
+            Logger.Warning("Find chiled fail: " + chiledName);
+            Logger.Warning("From UI: " + gameObject.name);
             return null;
         }
     }

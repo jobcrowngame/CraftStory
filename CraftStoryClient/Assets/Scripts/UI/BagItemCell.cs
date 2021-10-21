@@ -10,8 +10,10 @@ public class BagItemCell : UIBase
     Text itemCount { get => FindChiled<Text>("Count"); }
     Image Icon { get => FindChiled<Image>("Icon"); }
     Button clickBtn { get => transform.GetComponent<Button>(); }
+    Button EquipBtn { get => FindChiled<Button>("EquipBtn"); }
     Transform selected { get => FindChiled("Select"); }
     Transform Lock { get => FindChiled("Lock"); }
+    Transform Equiped { get => FindChiled("Equiped"); }
 
     /// <summary>
     /// アイテムデータ
@@ -33,6 +35,11 @@ public class BagItemCell : UIBase
             GuideLG.E.Next();
         });
 
+        EquipBtn.onClick.AddListener(() =>
+        {
+            PlayerCtl.E.EquipEquipment(ItemData);
+        });
+
         Lock.gameObject.SetActive(itemData.islocked == 1);
 
         if (itemData == null)
@@ -48,6 +55,9 @@ public class BagItemCell : UIBase
         {
             AWSS3Mng.E.DownLoadTexture2D(Icon, itemData.textureName);
         }
+
+        if (CommonFunction.IsEquipment(itemData.itemId))
+            Equiped.gameObject.SetActive(itemData.equipSite > 0);
     }
 
     /// <summary>
@@ -57,5 +67,10 @@ public class BagItemCell : UIBase
     public void IsSelected(bool b)
     {
         selected.gameObject.SetActive(b);
+
+        if (CommonFunction.IsEquipment(ItemData.itemId))
+        {
+            EquipBtn.gameObject.SetActive(b);
+        }
     }
 }

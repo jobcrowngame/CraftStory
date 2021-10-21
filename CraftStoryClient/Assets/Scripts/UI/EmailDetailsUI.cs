@@ -55,7 +55,7 @@ public class EmailDetailsUI : UIBase
                 NWMng.E.GetCoins((rp) =>
                 {
                     DataMng.GetCoins(rp);
-                    if (ShopMarketLG.E.UI != null) ShopMarketLG.E.UI.RefreshCoins();
+                    if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshCoins();
                 });
             }, cell.Data.id);
         }

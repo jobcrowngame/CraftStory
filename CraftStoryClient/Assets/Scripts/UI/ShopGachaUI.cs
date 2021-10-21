@@ -152,7 +152,7 @@ public class ShopGachaUI : UIBase
     public void RefreshCoins()
     {
         Title.RefreshCoins();
-        ShopMarketLG.E.UI.RefreshCoins();
+        HomeLG.E.UI.RefreshCoins();
     }
 
     // 左ボタン選択状態からGachaTabsの一覧を取得

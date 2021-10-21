@@ -32,7 +32,19 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, MText> MTextConfig = new Dictionary<int, MText>();
     Dictionary<int, Chat> ChatConfig = new Dictionary<int, Chat>();
     Dictionary<int, MapArea> MapAreaConfig = new Dictionary<int, MapArea>();
+    Dictionary<int, Character> CharacterConfig = new Dictionary<int, Character>();
+    Dictionary<int, CharacterGenerated> CharacterGeneratedConfig = new Dictionary<int, CharacterGenerated>();
+    Dictionary<int, Impact> ImpactConfig = new Dictionary<int, Impact>();
+    Dictionary<int, Skill> SkillConfig = new Dictionary<int, Skill>();
+    Dictionary<int, Equipment> EquipmentConfig = new Dictionary<int, Equipment>();
 
+
+
+    public Dictionary<int, Equipment> Equipment { get => EquipmentConfig; }
+    public Dictionary<int, Skill> Skill { get => SkillConfig; }
+    public Dictionary<int, Impact> Impact { get => ImpactConfig; }
+    public Dictionary<int, CharacterGenerated> CharacterGenerated { get => CharacterGeneratedConfig; }
+    public Dictionary<int, Character> Character { get => CharacterConfig; }
     public Dictionary<int, MapArea> MapArea { get => MapAreaConfig; }
     public Dictionary<int, Chat> Chat { get => ChatConfig; }
     public Dictionary<int, MText> MText { get => MTextConfig; }
@@ -82,6 +94,11 @@ class ConfigMng : Single<ConfigMng>
         ReadConfig("Config/Guide", guideConfig);
         ReadConfig("Config/GuideStep", guideStepConfig);
         ReadConfig("Config/MapArea", MapAreaConfig);
+        ReadConfig("Config/Character", CharacterConfig);
+        ReadConfig("Config/CharacterGenerated", CharacterGeneratedConfig);
+        ReadConfig("Config/Impact", ImpactConfig);
+        ReadConfig("Config/Skill", SkillConfig);
+        ReadConfig("Config/Equipment", EquipmentConfig);
 
         yield return null;
     }
@@ -125,5 +142,18 @@ class ConfigMng : Single<ConfigMng>
             }
         }
         return null;
+    }
+
+    public Skill GetSkillById(int id)
+    {
+        if (Skill.ContainsKey(id))
+        {
+            return Skill[id];
+        }
+        else
+        {
+            Logger.Error("Not find skill " + id);
+            return null;
+        }
     }
 }
