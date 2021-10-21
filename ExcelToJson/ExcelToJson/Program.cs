@@ -119,6 +119,7 @@ namespace ExcelToJson
                 case "Guide": list = Guide(tbl); break;
                 case "GuideStep": list = GuideStep(tbl); break;
                 case "Gacha": list = Gacha(tbl); break;
+                case "GachaTabs": list = GachaTabs(tbl); break;
                 case "Roulette": list = Roulette(tbl); break;
                 case "RouletteCell": list = RouletteCell(tbl); break;
                 case "LoginBonus": list = LoginBonus(tbl); break;
@@ -512,10 +513,7 @@ namespace ExcelToJson
                 var data = new Gacha()
                 {
                     ID = ToInt32(tbl.Rows[i]["ID"]),
-                    Image = ToString(tbl.Rows[i]["Image"]),
                     BtnImage = ToString(tbl.Rows[i]["BtnImage"]),
-                    ToggleImageON = ToString(tbl.Rows[i]["ToggleImageON"]),
-                    ToggleImageOFF = ToString(tbl.Rows[i]["ToggleImageOFF"]),
                     PondId = ToInt32(tbl.Rows[i]["PondId"]),
                     Title = ToString(tbl.Rows[i]["Title"]),
                     Des = ToString(tbl.Rows[i]["Des"]),
@@ -523,6 +521,30 @@ namespace ExcelToJson
                     CostCount = ToInt32(tbl.Rows[i]["CostCount"]),
                     Roulette = ToInt32(tbl.Rows[i]["Roulette"]),
                     AddBonusPercent = ToInt32(tbl.Rows[i]["AddBonusPercent"]),
+                    GachaCount = ToInt32(tbl.Rows[i]["GachaCount"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object GachaTabs(DataTable tbl)
+        {
+            List<GachaTabs> list = new List<GachaTabs>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new GachaTabs()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    LeftBtn = ToString(tbl.Rows[i]["LeftBtn"]),
+                    Image = ToString(tbl.Rows[i]["Image"]),
+                    TopBtn = ToString(tbl.Rows[i]["TopBtn"]),
+                    ToggleImageON = ToString(tbl.Rows[i]["ToggleImageON"]),
+                    ToggleImageOFF = ToString(tbl.Rows[i]["ToggleImageOFF"]),
+                    GachaBtn1 = ToString(tbl.Rows[i]["GachaBtn1"]),
+                    GachaGroup1 = ToString(tbl.Rows[i]["GachaGroup1"]),
+                    GachaBtn2 = ToString(tbl.Rows[i]["GachaBtn2"]),
+                    GachaGroup2 = ToString(tbl.Rows[i]["GachaGroup2"])
                 };
 
                 list.Add(data);

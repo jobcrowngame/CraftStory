@@ -18,10 +18,14 @@ public class GachaVerificationUI : UIBase
     Button CancelBtn { get => FindChiled<Button>("CancelBtn"); }
     Button ChageBtn { get => FindChiled<Button>("ChageBtn"); }
 
+    Image CostImage1 { get => FindChiled<Image>("CostImage1"); } // ガチャボタン内のコストのアイコン(一番右)
+    Image CostImage2 { get => FindChiled<Image>("CostImage2"); } // ガチャボタン内のコストのアイコン(その左隣)
+
     int mGachaId;
-    Gacha config;
-    string des = @"クラフトシードを{0}個消費して、
-{1}を10回実行します。";
+    int mGachaGroup;
+    Gacha gachaConfig;
+    string des = @"{0}を{1}個消費して、
+{2}を実行します。";
 
     public override void Init()
     {
@@ -32,7 +36,7 @@ public class GachaVerificationUI : UIBase
 
         OkBtn.onClick.AddListener(() => 
         {
-            if (DataMng.E.RuntimeData.Coin1 < config.CostCount)
+            if (DataMng.E.RuntimeData.Coin1 < gachaConfig.CostCount)
             {
                 CommonFunction.ShowHintBar(1010001);
                 return;
@@ -50,43 +54,65 @@ public class GachaVerificationUI : UIBase
         CancelBtn.onClick.AddListener(Close);
     }
 
-    public void Set(int gachaId)
+    public void Set(int gachaId, int gachaGroup)
     {
         mGachaId = gachaId;
+        mGachaGroup = gachaGroup;
 
-        config = ConfigMng.E.Gacha[mGachaId];
-        Des.text = string.Format(des, config.CostCount, config.Title);
+        gachaConfig = ConfigMng.E.Gacha[mGachaId];
+        Des.text = string.Format(des, ConfigMng.E.Item[gachaConfig.Cost].Name, gachaConfig.CostCount, gachaConfig.Title);
 
-        GachaVerificationLG.UIType uiType = DataMng.E.RuntimeData.Coin1 >= config.CostCount
+        GachaVerificationLG.UIType uiType = DataMng.E.RuntimeData.Coin1 >= gachaConfig.CostCount
             ? GachaVerificationLG.UIType.Type1
             : GachaVerificationLG.UIType.Type2;
 
         CostWindow1.gameObject.SetActive(uiType == GachaVerificationLG.UIType.Type1);
         CostWindow2.gameObject.SetActive(uiType == GachaVerificationLG.UIType.Type2);
+        CostImage1.sprite = ReadResources<Sprite>(ConfigMng.E.Item[gachaConfig.Cost].IconResourcesPath);
+        CostImage2.sprite = ReadResources<Sprite>(ConfigMng.E.Item[gachaConfig.Cost].IconResourcesPath);
 
         OkBtn.gameObject.SetActive(uiType == GachaVerificationLG.UIType.Type1);
         ChageBtn.gameObject.SetActive(uiType == GachaVerificationLG.UIType.Type2);
 
+        int costId = gachaConfig.Cost;
+        int coinRemain =
+            costId == 9000 ? DataMng.E.RuntimeData.Coin1 :
+            costId == 9001 ? DataMng.E.RuntimeData.Coin2 :
+            costId == 9002 ? DataMng.E.RuntimeData.Coin3 :
+            costId == 9003 ? (DataMng.E.GetItemByItemId(costId) != null ? DataMng.E.GetItemByItemId(costId).count : 0) :
+            0;
 
-        Count1.text = DataMng.E.RuntimeData.Coin1.ToString();
-        Count2.text = (DataMng.E.RuntimeData.Coin1 - config.CostCount).ToString();
-        Count3.text = DataMng.E.RuntimeData.Coin1.ToString();
+        Count1.text = coinRemain.ToString();
+        Count2.text = (coinRemain - gachaConfig.CostCount).ToString();
+        Count3.text = coinRemain.ToString();
     }
 
     private void StartGacha(int gachaId)
     {
-        int costId = config.Cost;
-        int costCount = config.CostCount;
-        if (DataMng.E.GetCoinByID(costId) < costCount)
+        int costId = gachaConfig.Cost;
+        int costCount = gachaConfig.CostCount;
+        int gachaCount = gachaConfig.GachaCount;
+        if (costId != 9003)
         {
-            if (costId == 9000) CommonFunction.ShowHintBar(1010001);
-            if (costId == 9001) CommonFunction.ShowHintBar(1010002);
-            if (costId == 9002) CommonFunction.ShowHintBar(1017001);
+            if (DataMng.E.GetCoinByID(costId) < costCount)
+            {
+                if (costId == 9000) CommonFunction.ShowHintBar(1010001);
+                if (costId == 9001) CommonFunction.ShowHintBar(1010002);
+                if (costId == 9002) CommonFunction.ShowHintBar(1017001);
 
-            return;
+                return;
+            }
+        }
+        else
+        {
+            if (DataMng.E.GetItemByItemId(costId) == null || DataMng.E.GetItemByItemId(costId).count < costCount)
+            {
+                if (costId == 9003) CommonFunction.ShowHintBar(1030001);
+                return;
+            }
         }
 
-        NWMng.E.Gacha10((rp) =>
+        NWMng.E.Gacha((rp) =>
         {
             if (string.IsNullOrEmpty(rp.ToString()))
             {
@@ -100,8 +126,12 @@ public class GachaVerificationUI : UIBase
                 ui.Set(result, gachaId);
             }
 
-            DataMng.E.ConsumableCoin(costId, costCount);
+            if (costId != 9003)
+            {
+                DataMng.E.ConsumableCoin(costId, costCount);
+            }
             ShopGachaLG.E.UI.RefreshCoins();
-        }, gachaId);
+            ShopGachaLG.E.UI.RefreshGachaUI();
+        }, gachaId, mGachaGroup);
     }
 }

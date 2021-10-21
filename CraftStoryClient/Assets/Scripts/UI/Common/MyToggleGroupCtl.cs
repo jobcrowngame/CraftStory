@@ -102,4 +102,9 @@ public class MyToggleGroupCtl : UIBase
             cells[index].SetToggleImage(on, off);
         }
     }
+
+    public void SetActive(int index, bool active)
+    {
+        cells[index].gameObject.SetActive(active);
+    }
 }

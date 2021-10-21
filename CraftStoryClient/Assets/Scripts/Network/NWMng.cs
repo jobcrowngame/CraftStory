@@ -43,7 +43,7 @@ public partial class NWMng : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.ProductionURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.TestURL))
         {
             yield return www.SendWebRequest();
 
@@ -606,16 +606,18 @@ public partial class NWMng : MonoBehaviour
     }
 
     /// <summary>
-    /// 10連ガチャ
+    /// ガチャ
     /// </summary>
     /// <param name="rp"></param>
     /// <param name="gachaId"></param>
-    public void Gacha10(Action<JsonData> rp, int gachaId)
+    /// <param name="gachaGroup"></param>
+    public void Gacha(Action<JsonData> rp, int gachaId, int gachaGroup)
     {
         var data = new NWData();
         data.Add("gachaId", gachaId);
+        data.Add("gachaGroup", gachaGroup);
 
-        StartCoroutine(HttpRequest(rp, data, CMD.Gacha10));
+        StartCoroutine(HttpRequest(rp, data, CMD.Gacha));
     }
 
     /// <summary>
@@ -849,9 +851,16 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.GetBlueprintPreviewDataByItemGuid));
     }
 
+    /// <summary>
+    /// ガチャ実施回数取得
+    /// </summary>
+    public void GetGacha(Action<JsonData> rp, int gachaGroup)
+    {
+        var data = new NWData();
+        data.Add("gachaGroup", gachaGroup);
 
-
-
+        StartCoroutine(HttpRequest(rp, data, CMD.GetGacha));
+    }
 
     /// <summary>
     /// ホームデータをサーバーにセーブ
@@ -892,7 +901,6 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(null, data, CMD.ShowClientLog));
     }
 
-
     public enum CMD
     {
         Version = 99,
@@ -928,7 +936,7 @@ public partial class NWMng : MonoBehaviour
         BuySubscription,
         GetSubscriptionInfo,
         GuideEnd,
-        Gacha10 = 1030,
+        Gacha = 1030,
         DeleteItem,
         DeleteItems,
         Follow,
@@ -947,6 +955,7 @@ public partial class NWMng : MonoBehaviour
         GetMissionBonus,
         MyShopGoodEvent,
         GetBlueprintPreviewDataByItemGuid,
+        GetGacha,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

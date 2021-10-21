@@ -19,6 +19,9 @@ public class ShopGachaLG : UILogicBase<ShopGachaLG, ShopGachaUI>
         get => mGachaType;
         set
         {
+            mIndex = 0;
+            UI.ToggleBtns1.SetValue(0);
+
             mGachaType = value;
 
             UI.RefreshGachaUI();
@@ -26,21 +29,14 @@ public class ShopGachaLG : UILogicBase<ShopGachaLG, ShopGachaUI>
     }
     private int mGachaType = 0;
 
-    public int SelectGachaId
-    {
-        get => GachaIds[mGachaType, mIndex];
-    }
-
-    public int[,] GachaIds = new int[3,3] {
-        { 1, 2, 3 },
-        { 1, 2, 3 }, 
-        { 1, 2, 3 }
-    };
-
     public struct GachaResponse
     {
         public List<GacheBonusData> bonusList { get; set; }
         public int index { get; set; }
+    }
+    public struct GetGachaResponse
+    {
+        public int gacha { get; set; }
     }
     public struct GacheBonusData
     {
