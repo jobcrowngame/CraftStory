@@ -287,11 +287,23 @@ public class CharacterBase : MonoBehaviour
         {
             Behavior = (BehaviorType)skill.Config.ReadyAnimation;
 
+            // Effect 追加
+            if (skill.Config.ReadyEffect != "N")
+                EffectMng.E.AddBattleEffect(skill.Config.ReadyEffect, skill.Config.ReadyEffectTime, transform.position);
+
+            // Effect 追加
+            if (selectTarget != null && skill.Config.ReadyTargetEffect != "N")
+                EffectMng.E.AddBattleEffect(skill.Config.ReadyTargetEffect, skill.Config.ReadyTargetEffectTime, selectTarget.transform.position);
+
             // 準備時間を待つ
             yield return new WaitForSeconds(skill.Config.ReadyTime);
         }
 
         Behavior = (BehaviorType)skill.Config.Animation;
+
+        // Effect 追加
+        if (skill.Config.AttackerEffect != "N")
+            EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, transform.position);
 
         // 目標のキャンプ
         var targetCamp = Camp == CharacterCamp.Monster ? CharacterCamp.Player : CharacterCamp.Monster;
@@ -338,7 +350,7 @@ public class CharacterBase : MonoBehaviour
             case SkillData.SkillType.Beam:
                 break;
 
-            // 回復
+            // 自分の回復
             case SkillData.SkillType.Recovery:
                 foreach (var impact in skill.Impacts)
                 {
@@ -367,6 +379,10 @@ public class CharacterBase : MonoBehaviour
             int attackCount = skill.Config.AttackCount;
             float interval = skill.Config.Interval > 0 ? skill.Config.Interval : 0;
 
+            // Effect 追加
+            if (skill.Config.TargetEffect != "N")
+                EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, transform.position);
+
             while (attackCount > 0)
             {
                 var targets = CharacterCtl.E.FindCharacterInRange(mainTarget.transform, skill.Config.Distance, targetCamp);
@@ -394,6 +410,10 @@ public class CharacterBase : MonoBehaviour
 
             int attackCount = skill.Config.AttackCount;
             float interval = skill.Config.Interval > 0 ? skill.Config.Interval : 0;
+
+            // Effect 追加
+            if (skill.Config.TargetEffect != "N")
+                EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, transform.position);
 
             if (CharacterCtl.E.InDistance(skill.distance, transform, mainTarget.transform))
             {

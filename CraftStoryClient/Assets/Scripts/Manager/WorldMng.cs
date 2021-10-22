@@ -20,8 +20,14 @@ public class WorldMng : MonoBehaviour
     public MapCtl MapCtl { get; set; }
     public GameTimeCtl GameTimeCtl { get; set; }
 
+    public Transform CharacterParent;
+    public Transform EffectParent;
+
     public void Init()
     {
+        CharacterParent = CreateParentObj("CharacterParent");
+        EffectParent = CreateParentObj("EffectParent");
+
         GameTimeCtl = new GameTimeCtl();
         MapCtl = new MapCtl();
     }
@@ -43,5 +49,14 @@ public class WorldMng : MonoBehaviour
 
         AdventureCtl.E.Init();
         GoogleMobileAdsMng.E.Init();
+    }
+
+    private Transform CreateParentObj(string name)
+    {
+        var obj = new GameObject();
+        obj.transform.position = Vector3.zero;
+        obj.name = name;
+
+        return obj.transform;
     }
 }

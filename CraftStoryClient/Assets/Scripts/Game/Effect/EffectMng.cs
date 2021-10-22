@@ -7,6 +7,8 @@ public class EffectMng : Single<EffectMng>
 {
     private GameObject destroyEffect;
 
+    const string BattEffectRoot = "Prefabs/Effect/Battle/";
+
     public void AddDestroyEffect(Vector3 pos)
     {
         Logger.Log("Add Effect");
@@ -38,6 +40,12 @@ public class EffectMng : Single<EffectMng>
             GameObject.Destroy(destroyEffect);
             destroyEffect = null;
         }
+    }
+
+    public void AddBattleEffect(string path, float time, Vector3 pos)
+    {
+        var effect = CommonFunction.Instantiate<EffectBase>(BattEffectRoot + path, WorldMng.E.EffectParent, pos);
+        effect.Init(time);
     }
 
     private string GetEffectResourcesPath(EffectType eType)
