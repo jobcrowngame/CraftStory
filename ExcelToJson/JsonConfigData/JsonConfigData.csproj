@@ -78,7 +78,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetPath) D:\Project\CraftStory\Config\Release
-copy $(ProjectDir)*.cs D:\Project\CraftStory\CraftStoryClient\Assets\Scripts\Data\JsonDatas</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetPath) $(SolutionDir)..\Config\Release
+copy $(ProjectDir)*.cs $(SolutionDir)..\CraftStoryClient\Assets\Scripts\Data\JsonDatas
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -44,11 +44,11 @@
     </Reference>
     <Reference Include="LitJSON, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Lib\LitJSON.dll</HintPath>
+      <HintPath>..\packages\lib\LitJSON.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Lib\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,6 +76,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetPath) D:\Project\CraftStory\Config\Release</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetPath) $(SolutionDir)..\Config\Release</PostBuildEvent>
   </PropertyGroup>
 </Project>
