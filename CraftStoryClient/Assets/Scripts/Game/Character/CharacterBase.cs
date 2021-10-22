@@ -281,6 +281,12 @@ public class CharacterBase : MonoBehaviour
     }
     private IEnumerator UseSkillIE(SkillData skill, CharacterBase selectTarget = null)
     {
+        if (selectTarget != null)
+        {
+            // 向きを調整
+            var direction = GetTargetDircetion(selectTarget.transform);
+            Rotation(direction);
+        }
 
         if (skill.Config.ReadyTime > 0)
         {
@@ -288,11 +294,11 @@ public class CharacterBase : MonoBehaviour
 
             // Effect 追加
             if (skill.Config.ReadyEffect != "N")
-                EffectMng.E.AddBattleEffect(skill.Config.ReadyEffect, skill.Config.ReadyEffectTime, transform.position);
+                EffectMng.E.AddBattleEffect(skill.Config.ReadyEffect, skill.Config.ReadyEffectTime, Model.transform);
 
             // Effect 追加
             if (selectTarget != null && skill.Config.ReadyTargetEffect != "N")
-                EffectMng.E.AddBattleEffect(skill.Config.ReadyTargetEffect, skill.Config.ReadyTargetEffectTime, selectTarget.transform.position);
+                EffectMng.E.AddBattleEffect(skill.Config.ReadyTargetEffect, skill.Config.ReadyTargetEffectTime, selectTarget.Model.transform);
 
             // 準備時間を待つ
             yield return new WaitForSeconds(skill.Config.ReadyTime);
@@ -302,9 +308,7 @@ public class CharacterBase : MonoBehaviour
 
         // Effect 追加
         if (skill.Config.AttackerEffect != "N")
-            EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, transform.position);
-
-        
+            EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
 
         // 目標のキャンプ
         var targetCamp = Camp == CharacterCamp.Monster ? CharacterCamp.Player : CharacterCamp.Monster;
@@ -313,13 +317,6 @@ public class CharacterBase : MonoBehaviour
         {
             // 範囲攻撃
             case SkillData.SkillType.RangeAttack:
-                // 向きを調整
-                if (selectTarget != null)
-                {
-                    var direction = GetTargetDircetion(selectTarget.transform);
-                    Rotation(direction);
-                }
-
                 // 攻撃範囲内の目標
                 var targets = CharacterCtl.E.FindCharacterInRange(transform, skill.Config.Distance, targetCamp);
                 foreach (var target in targets)
@@ -373,16 +370,12 @@ public class CharacterBase : MonoBehaviour
     {
         if (mainTarget != null)
         {
-            // 向きを調整
-            var direction = GetTargetDircetion(mainTarget.transform);
-            Rotation(direction);
-
             int attackCount = skill.Config.AttackCount;
             float interval = skill.Config.Interval > 0 ? skill.Config.Interval : 0;
 
             // Effect 追加
             if (skill.Config.TargetEffect != "N")
-                EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, mainTarget.transform.position);
+                EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, mainTarget.Model.transform);
 
             // ディリーダメージを与える
             yield return new WaitForSeconds(skill.Config.DelayDamageTime);
@@ -408,16 +401,12 @@ public class CharacterBase : MonoBehaviour
         // 目標がない、目標が死んだ場合、対象外
         if (mainTarget != null)
         {
-            // 向きを調整
-            var direction = GetTargetDircetion(mainTarget.transform);
-            Rotation(direction);
-
             int attackCount = skill.Config.AttackCount;
             float interval = skill.Config.Interval > 0 ? skill.Config.Interval : 0;
 
             // Effect 追加
             if (skill.Config.TargetEffect != "N")
-                EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, mainTarget.transform.position);
+                EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, mainTarget.Model.transform);
 
             // ディリーダメージを与える
             yield return new WaitForSeconds(skill.Config.DelayDamageTime);
