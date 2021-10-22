@@ -13,6 +13,10 @@ namespace JsonConfigData
         public int RangeAngle { get; set; }
         public float Radius { get; set; }
         public int ReadyAnimation { get; set; }
+        public string ReadyEffect { get; set; }
+        public string ReadyTargetEffect { get; set; }
+        public string AttackerEffect { get; set; }
+        public string TargetEffect { get; set; }
         public float ReadyTime { get; set; }
         public float ProcessTime { get; set; }
         public int AttackCount { get; set; }
