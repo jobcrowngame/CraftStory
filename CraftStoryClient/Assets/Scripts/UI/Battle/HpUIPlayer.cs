@@ -16,24 +16,21 @@ public class HpUIPlayer : HpUIBase
     {
         base.OnValueChange(v);
 
-        AddDamageObj(-v);
-
         RefreshHP();
+
+        if (v < 0)
+        {
+            AddDamageObj(-v, DamageObjParent, "Prefabs/Battle/DamageRed");
+        }
+        else
+        {
+            AddDamageObj(-v, DamageObjParent, "Prefabs/Battle/DamageGreen");
+        }
     }
 
     private void RefreshHP()
     {
         float percent = (float)curHP / p.MaxHP;
         if (HomeLG.E.UI != null) HomeLG.E.UI.OnHpChange(percent);
-    }
-
-    /// <summary>
-    /// ダメージObject
-    /// </summary>
-    /// <param name="damage"></param>
-    private void AddDamageObj(float damage)
-    {
-        var obj = CommonFunction.Instantiate<Damage>("Prefabs/Battle/DamageRed", DamageObjParent, DamageObjParent.position);
-        obj.Set(damage.ToString());
     }
 }

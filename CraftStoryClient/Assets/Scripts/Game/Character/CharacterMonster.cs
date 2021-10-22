@@ -158,6 +158,7 @@ public class CharacterMonster : CharacterBase
         foreach (var skill in SkillList)
         {
             StopMove();
+            Behavior = BehaviorType.Waiting;
             StartUseSkill(skill, Target);
         }
     }

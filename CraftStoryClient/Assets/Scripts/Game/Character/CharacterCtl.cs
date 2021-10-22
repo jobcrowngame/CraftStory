@@ -120,12 +120,12 @@ public class CharacterCtl : Single<CharacterCtl>
     /// <param name="attacker"></param>
     /// <param name="distance"></param>
     /// <returns></returns>
-    public List<CharacterBase> FindCharacterInAttackRange(Transform attacker, float distance)
+    public List<CharacterBase> FindCharacterInRange(Transform startPoint, float distance, CharacterBase.CharacterCamp camp)
     {
         List<CharacterBase> targets = new List<CharacterBase>();
         foreach (var item in characterList)
         {
-            if (InDistance(distance, attacker, item.transform))
+            if (InDistance(distance, startPoint, item.transform) && item.Camp == camp)
             {
                 targets.Add(item);
             }
@@ -140,7 +140,7 @@ public class CharacterCtl : Single<CharacterCtl>
     /// <param name="distanse">指定距離</param>
     /// <param name="target">目標</param>
     /// <returns></returns>
-    private bool InDistance(float distanse, Transform start, Transform end)
+    public bool InDistance(float distanse, Transform start, Transform end)
     {
         return Vector3.Distance(start.position, end.position) <= distanse;
     }

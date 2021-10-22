@@ -11,8 +11,29 @@ public class SkillCell : UIBase
     Image Lock { get => FindChiled<Image>("Lock"); }
 
     SkillData mSkill;
+    SkillData baseSkill;
 
-    public void Set(SkillData skill)
+    private void Awake()
+    {
+        btn.onClick.AddListener(() =>
+        {
+            if (mSkill.IsCooling || PlayerCtl.E.Character.ShareCDIsCooling)
+                return;
+
+            PlayerCtl.E.UserSkill(mSkill);
+
+            int nextSkillID = mSkill.Config.NextSkill;
+            foreach (var item in PlayerCtl.E.Character.SkillList)
+            {
+                if (item.Config.ID == nextSkillID)
+                {
+                    Set(item);
+                }
+            }
+        });
+    }
+
+    public void SetBase(SkillData skill)
     {
         if (skill == null)
         {
@@ -20,20 +41,17 @@ public class SkillCell : UIBase
             return;
         }
 
+        baseSkill = skill;
+        Set(skill);
+        RefreshCD(0);
+    }
+
+    public void Set(SkillData skill)
+    {
         mSkill = skill;
         mSkill.SetSkillCell(this);
 
         Icon.sprite = ReadResources<Sprite>(skill.Config.Icon);
-
-        btn.onClick.AddListener(() => 
-        {
-            if (mSkill.IsCooling)
-                return;
-
-            PlayerCtl.E.UserSkill(mSkill);
-        });
-
-        RefreshCD(0);
     }
 
     /// <summary>

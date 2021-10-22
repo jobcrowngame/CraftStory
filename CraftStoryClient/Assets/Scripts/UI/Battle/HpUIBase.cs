@@ -52,4 +52,34 @@ public class HpUIBase : UIBase
     {
         lockupCamera = b;
     }
+
+    /// <summary>
+    /// ダメージObject
+    /// </summary>
+    /// <param name="damage"></param>
+    protected void AddDamageObj(int damage, Transform parent, string path)
+    {
+        var obj = CommonFunction.Instantiate<Damage>(path, parent, parent.position);
+        obj.Set(damage.ToString());
+    }
+
+    /// <summary>
+    /// ダメージObject
+    /// </summary>
+    /// <param name="damage"></param>
+    protected void AddDamageRedObj(int damage, Transform parent)
+    {
+        var obj = CommonFunction.Instantiate<Damage>("Prefabs/Battle/DamageWhit", parent, parent.position);
+        obj.Set(damage.ToString());
+    }
+
+    /// <summary>
+    /// 回復
+    /// </summary>
+    /// <param name="damage"></param>
+    protected void AddRecoveryObj(int damage, Transform parent)
+    {
+        var obj = CommonFunction.Instantiate<Damage>("Prefabs/Battle/DamageGreen", parent, parent.position);
+        obj.Set(damage.ToString());
+    }
 }

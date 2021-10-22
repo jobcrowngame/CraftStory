@@ -255,6 +255,7 @@ public class CameraCtl : MonoBehaviour
     public void CancelLockUn()
     {
         target = null;
+        PlayerCtl.E.Character.Target = null;
         IsLockUn = false;
     }
 

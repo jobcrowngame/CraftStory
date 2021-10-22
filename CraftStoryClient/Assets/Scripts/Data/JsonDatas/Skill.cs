@@ -11,8 +11,13 @@ namespace JsonConfigData
         public float CD { get; set; }
         public float Distance { get; set; }
         public int RangeAngle { get; set; }
+        public float Radius { get; set; }
+        public int ReadyAnimation { get; set; }
         public float ReadyTime { get; set; }
         public float ProcessTime { get; set; }
-        public float TargetFreezeTime { get; set; }
+        public int AttackCount { get; set; }
+        public float Interval { get; set; }
+        public int NextSkill { get; set; }
+        public int CanEquipment { get; set; }
     }
 }

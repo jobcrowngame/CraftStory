@@ -57,7 +57,7 @@ public class SettingMng : Single<SettingMng>
     /// <summary>
     /// 共有CD
     /// </summary>
-    public const float ShareCD = 1;
+    public const float ShareCD = 0.5f;
 
     /// <summary>
     /// モンスターが近くまで移動する最小距離

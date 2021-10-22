@@ -29,7 +29,14 @@ public class HpUIMonster : HpUIBase
 
         RefreshHP();
 
-        AddDamageObj(-v);
+        if (v < 0)
+        {
+            AddDamageObj(-v, DamageObjParent, "Prefabs/Battle/DamageWhit");
+        }
+        else
+        {
+            AddDamageObj(-v, DamageObjParent, "Prefabs/Battle/DamageGreen");
+        }
     }
 
     public override void OnDide()
@@ -42,16 +49,6 @@ public class HpUIMonster : HpUIBase
     private void RefreshHP()
     {
         hpBar.value = curHP;
-        if (HPText != null) HPText.text = ((curHP / p.MaxHP) * 100) + "%";
-    }
-
-    /// <summary>
-    /// ダメージObject
-    /// </summary>
-    /// <param name="damage"></param>
-    private void AddDamageObj(float damage)
-    {
-        var obj = CommonFunction.Instantiate<Damage>("Prefabs/Battle/DamageWhit", DamageObjParent, DamageObjParent.position);
-        obj.Set(damage.ToString());
+        if (HPText != null) HPText.text = (((float)curHP / p.MaxHP) * 100).ToString("F0") + "%";
     }
 }

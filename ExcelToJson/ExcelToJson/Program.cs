@@ -738,9 +738,12 @@ namespace ExcelToJson
                 {
                     ID = ToInt32(tbl.Rows[i]["ID"]),
                     Type = ToInt32(tbl.Rows[i]["Type"]),
-                    Target = ToInt32(tbl.Rows[i]["Target"]),
                     PercentDamage = ToInt32(tbl.Rows[i]["PercentDamage"]),
                     FixtDamage = ToInt32(tbl.Rows[i]["FixtDamage"]),
+                    Delay = ToFloat(tbl.Rows[i]["Delay"]),
+                    Count = ToInt32(tbl.Rows[i]["Count"]),
+                    Interval = ToInt32(tbl.Rows[i]["Interval"]),
+                    TargetFreezeTime = ToFloat(tbl.Rows[i]["TargetFreezeTime"]),
                 };
 
                 list.Add(data);
@@ -762,9 +765,14 @@ namespace ExcelToJson
                     CD = ToFloat(tbl.Rows[i]["CD"]),
                     Distance = ToFloat(tbl.Rows[i]["Distance"]),
                     RangeAngle = ToInt32(tbl.Rows[i]["RangeAngle"]),
+                    Radius = ToFloat(tbl.Rows[i]["Radius"]),
+                    ReadyAnimation = ToInt32(tbl.Rows[i]["ReadyAnimation"]),
                     ReadyTime = ToFloat(tbl.Rows[i]["ReadyTime"]),
                     ProcessTime = ToFloat(tbl.Rows[i]["ProcessTime"]),
-                    TargetFreezeTime = ToFloat(tbl.Rows[i]["TargetFreezeTime"]),
+                    AttackCount = ToInt32(tbl.Rows[i]["AttackCount"]),
+                    Interval = ToFloat(tbl.Rows[i]["Interval"]),
+                    NextSkill = ToInt32(tbl.Rows[i]["NextSkill"]),
+                    CanEquipment = ToInt32(tbl.Rows[i]["CanEquipment"]),
                 };
 
                 list.Add(data);

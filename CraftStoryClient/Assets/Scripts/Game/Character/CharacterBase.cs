@@ -53,28 +53,16 @@ public class CharacterBase : MonoBehaviour
     /// </summary>
     public List<SkillData> SkillList = new List<SkillData>();
 
+    private List<ImpactCell> impactList = new List<ImpactCell>();
+
     // 移動する値
     public Vector3 moveDirection = Vector3.zero;
     // 前の行動
     protected BehaviorType beforBehavior;
 
-    private float ShareCD 
-    {
-        get { return mShareCD; }
-        set
-        {
-            if (mShareCD <= 0)
-                return;
-            
-            mShareCD = value;
+    private bool IsDied { get => Parameter.CurHP <= 0; }
 
-            if (mShareCD <= 0)
-            {
-                ShareCDIsReady();
-            }
-        }
-    }
-    private float mShareCD = 0;
+    private float ShareCD = 0;
     public bool ShareCDIsCooling { get => ShareCD > 0; }
 
     private float FreezeTime = 0;
@@ -126,10 +114,16 @@ public class CharacterBase : MonoBehaviour
 
             if (FreezeTime < 0)
             {
-                FreezeTime = 0;
-                Behavior = BehaviorType.Waiting;
                 Debug.Log("回復した。");
+                Behavior = BehaviorType.Waiting;
+                FreezeTime = 0;
             }
+        }
+
+        // ImpactのUpdate
+        for (int i = 0; i < impactList.Count; i++)
+        {
+            impactList[i].OnUpdate();
         }
     }
 
@@ -238,11 +232,19 @@ public class CharacterBase : MonoBehaviour
     public bool CanNotChangeBehavior()
     {
         return Behavior == BehaviorType.CallForHelp
-            || Behavior == BehaviorType.ReadyAttack
-            || Behavior == BehaviorType.Attack1
-            || Behavior == BehaviorType.Attack2
+            || Behavior == BehaviorType.Attack80
+            || Behavior == BehaviorType.Attack81
             || Behavior == BehaviorType.Hit
             || Behavior == BehaviorType.Did
+            || Behavior == BehaviorType.ReadyAttack01
+            || Behavior == BehaviorType.ReadyAttack02
+            || Behavior == BehaviorType.ReadyAttack03
+            || Behavior == BehaviorType.ReadyAttack04
+            || Behavior == BehaviorType.Skill_100
+            || Behavior == BehaviorType.Skill_101
+            || Behavior == BehaviorType.Skill_102
+            || Behavior == BehaviorType.Skill_103
+            || Behavior == BehaviorType.Skill_104
             || Behavior == BehaviorType.Breack;
     }
 
@@ -259,11 +261,15 @@ public class CharacterBase : MonoBehaviour
             || ShareCDIsCooling)
             return;
 
-        // 向きを調整
-        if (selectTarget != null)
+        if ((SkillData.SkillType)skill.Config.Type == SkillData.SkillType.SingleAttack
+            || (SkillData.SkillType)skill.Config.Type == SkillData.SkillType.RangedRangeAttack)
         {
-            var direction = GetTargetDircetion(selectTarget.transform);
-            Rotation(direction);
+            // 範囲以外の場合、使用できない
+            if (GetTargetDistance(selectTarget.transform) > skill.distance)
+            {
+                CommonFunction.ShowHintBar(32);
+                return;
+            }
         }
 
         // 共有CD冷却になる
@@ -276,28 +282,35 @@ public class CharacterBase : MonoBehaviour
     }
     private IEnumerator UseSkillIE(SkillData skill, CharacterBase selectTarget = null)
     {
-        Behavior = BehaviorType.ReadyAttack;
 
-        // 準備時間を待つ
-        yield return new WaitForSeconds(skill.Config.ReadyTime);
+        if (skill.Config.ReadyTime > 0)
+        {
+            Behavior = (BehaviorType)skill.Config.ReadyAnimation;
+
+            // 準備時間を待つ
+            yield return new WaitForSeconds(skill.Config.ReadyTime);
+        }
 
         Behavior = (BehaviorType)skill.Config.Animation;
 
-        // 少し後ダメージを与る
-        yield return new WaitForSeconds(0.3f);
+        // 目標のキャンプ
+        var targetCamp = Camp == CharacterCamp.Monster ? CharacterCamp.Player : CharacterCamp.Monster;
 
-        // 範囲攻撃
         switch ((SkillData.SkillType)skill.Config.Type)
         {
+            // 範囲攻撃
             case SkillData.SkillType.RangeAttack:
+                // 向きを調整
+                if (selectTarget != null)
+                {
+                    var direction = GetTargetDircetion(selectTarget.transform);
+                    Rotation(direction);
+                }
+
                 // 攻撃範囲内の目標
-                var targets = CharacterCtl.E.FindCharacterInAttackRange(transform, skill.Config.Distance);
+                var targets = CharacterCtl.E.FindCharacterInRange(transform, skill.Config.Distance, targetCamp);
                 foreach (var target in targets)
                 {
-                    // 死んだやつは目標以外にする
-                    if (target.Behavior == BehaviorType.Did)
-                        continue;
-
                     var targetDir = CharacterCtl.E.CalculationDir(target.transform.position, transform.position);
                     var angle = Vector2.Angle(targetDir, GetMeDirection());
 
@@ -305,60 +318,34 @@ public class CharacterBase : MonoBehaviour
                     {
                         foreach (var impact in skill.Impacts)
                         {
-                            int impactId = int.Parse(impact);
-                            var impactConfig = ConfigMng.E.Impact[impactId];
-
-                            // 目標が違う場合、スキップ
-                            if (target.Camp != (CharacterCamp)impactConfig.Target)
-                                continue;
-
-                            Logger.Warning("{0} を攻撃した下。", target);
-
-                            switch ((ImpactType)impactConfig.Type)
-                            {
-                                case ImpactType.AddDamage:
-                                    HitDamage(target, this, impactId, skill.Config.TargetFreezeTime);
-                                    //target.HitDamage(this, impactId, skill.Config.TargetFreezeTime);
-                                    break;
-
-                                default: Logger.Error("Not find impact type {0}", (ImpactType)impactConfig.Type); break;
-                            }
-
+                            target.AddImpact(target, this, int.Parse(impact));
                         }
                     }
                 }
                 break;
 
+            // 単体攻撃
             case SkillData.SkillType.SingleAttack:
-                // 目標がない、目標が死んだ場合、対象外
-                if (selectTarget != null && selectTarget.Behavior != BehaviorType.Did)
+                StartCoroutine(SingleAttackIE(skill, selectTarget));
+                break;
+
+            // 遠距離範囲攻撃
+            case SkillData.SkillType.RangedRangeAttack:
+                StartCoroutine(RangedRangeAttackIE(skill, selectTarget, targetCamp));
+                break;
+
+            // ビーム
+            case SkillData.SkillType.Beam:
+                break;
+
+            // 回復
+            case SkillData.SkillType.Recovery:
+                foreach (var impact in skill.Impacts)
                 {
-                    foreach (var impact in skill.Impacts)
-                    {
-                        int impactId = int.Parse(impact);
-                        var impactConfig = ConfigMng.E.Impact[impactId];
-
-                        Logger.Warning("{0} を攻撃した下。", selectTarget);
-
-                        switch ((ImpactType)impactConfig.Type)
-                        {
-                            case ImpactType.AddDamage:
-                                HitDamage(selectTarget, this, impactId, skill.Config.TargetFreezeTime);
-                                //selectTarget.HitDamage(this, impactId, skill.Config.TargetFreezeTime);
-                                break;
-
-                            default: Logger.Error("Not find impact type {0}", (ImpactType)impactConfig.Type); break;
-                        }
-                    }
-                }
-                else
-                {
-                    Logger.Warning("目標を見つけません。");
+                    AddImpact(this, this, int.Parse(impact));
                 }
                 break;
 
-            case SkillData.SkillType.MagicBool:
-                break;
             default:
                 break;
         }
@@ -369,39 +356,70 @@ public class CharacterBase : MonoBehaviour
         Behavior = BehaviorType.Waiting;
     }
 
-    /// <summary>
-    /// ダメージを与える
-    /// </summary>
-    /// <param name="attacker">攻撃者</param>
-    /// <param name="impactId">インパクト</param>
-    /// <param name="freezeTime">凍結時間</param>
-    private void HitDamage(CharacterBase target, CharacterBase attacker, int impactId, float freezeTime)
+    private IEnumerator RangedRangeAttackIE(SkillData skill, CharacterBase mainTarget, CharacterCamp targetCamp)
     {
-        // ダメージ計算
-        int damage = BattleCalculationCtl.CalculationDamage(attacker, target, impactId);
-        if (damage <= 0)
-            damage = 1;
-
-        Logger.Log("{1} が {0} のダメージを受けました。", damage, target.gameObject.name);
-
-        // HP計算
-        target.Parameter.CurHP -= damage;
-        if (target.HpCtl != null) 
-            target.HpCtl.OnValueChange(-damage);
-
-        // 死んだ場合
-        if (target.Parameter.CurHP <= 0)
+        if (mainTarget != null)
         {
-            target.Died();
-            attacker.TargetDied();
-        }
-        else
-        {
-            // ターゲットが移動できなくなる
-            target.moveDirection = Vector3.zero;
+            // 向きを調整
+            var direction = GetTargetDircetion(mainTarget.transform);
+            Rotation(direction);
 
-            target.Freeze(freezeTime);
+            int attackCount = skill.Config.AttackCount;
+            float interval = skill.Config.Interval > 0 ? skill.Config.Interval : 0;
+
+            while (attackCount > 0)
+            {
+                var targets = CharacterCtl.E.FindCharacterInRange(mainTarget.transform, skill.Config.Distance, targetCamp);
+                foreach (var target in targets)
+                {
+                    foreach (var impact in skill.Impacts)
+                    {
+                        target.AddImpact(target, this, int.Parse(impact));
+                    }
+                }
+
+                attackCount--;
+                yield return new WaitForSeconds(interval);
+            }
         }
+    }
+    private IEnumerator SingleAttackIE(SkillData skill, CharacterBase mainTarget)
+    {
+        // 目標がない、目標が死んだ場合、対象外
+        if (mainTarget != null)
+        {
+            // 向きを調整
+            var direction = GetTargetDircetion(mainTarget.transform);
+            Rotation(direction);
+
+            int attackCount = skill.Config.AttackCount;
+            float interval = skill.Config.Interval > 0 ? skill.Config.Interval : 0;
+
+            if (CharacterCtl.E.InDistance(skill.distance, transform, mainTarget.transform))
+            {
+                while (attackCount > 0)
+                {
+                    for (int i = 0; i < skill.Impacts.Length; i++)
+                    {
+                        mainTarget.AddImpact(mainTarget, this, int.Parse(skill.Impacts[i]));
+                    }
+
+                    attackCount--;
+                    yield return new WaitForSeconds(interval);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// インパクトの追加
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="attacker"></param>
+    /// <param name="impactId"></param>
+    private void AddImpact(CharacterBase target, CharacterBase attacker, int impactId)
+    {
+        impactList.Add(new ImpactCell(target, attacker, impactId));
     }
 
     /// <summary>
@@ -421,12 +439,65 @@ public class CharacterBase : MonoBehaviour
     }
 
     /// <summary>
+    /// ダメージを与える
+    /// </summary>
+    /// <param name="attacker"></param>
+    /// <param name="damage"></param>
+    public void AddDamage(CharacterBase attacker, int damage)
+    {
+        if (IsDied)
+        {
+            Logger.Log("僕は死にました。");
+            return;
+        }
+
+        Logger.Log("{1} が {0} のダメージを受けました。", damage, gameObject.name);
+
+        // HP計算
+        Parameter.CurHP -= damage;
+        if (HpCtl != null)
+            HpCtl.OnValueChange(-damage);
+
+        // 死んだ場合
+        if (Parameter.CurHP <= 0)
+        {
+            Died();
+            attacker.TargetDied();
+        }
+    }
+
+    /// <summary>
+    /// 回復
+    /// </summary>
+    /// <param name="damage"></param>
+    public void Recovery(int damage)
+    {
+        // 回復後のHPが最大HPより多い場合、最大までの偏差を回復
+        if (damage > Parameter.MaxHP - Parameter.CurHP)
+            damage = Parameter.MaxHP - Parameter.CurHP;
+
+        // HP計算
+        Parameter.CurHP += damage;
+
+        if (HpCtl != null)
+            HpCtl.OnValueChange(damage);
+    }
+
+    /// <summary>
+    /// インパクトを削除
+    /// </summary>
+    public void RemoveImpact(ImpactCell impact)
+    {
+        impactList.Remove(impact);
+    }
+
+    /// <summary>
     /// 凍結する
     /// </summary>
     /// <param name="time"></param>
-    protected virtual void Freeze(float time)
+    public virtual void Hit(float time)
     {
-        if (Behavior == BehaviorType.Hit)
+        if (CanNotChangeBehavior() || time <= 0)
             return;
 
         StopMove();
@@ -592,19 +663,39 @@ public enum BehaviorType
     CallForHelp = 71,
 
     /// <summary>
-    /// 攻撃準備
+    /// ステータススキル準備
     /// </summary>
-    ReadyAttack = 79,
+    ReadyAttack04 = 76,
+
+    /// <summary>
+    /// 攻撃準備（弓）
+    /// </summary>
+    ReadyAttack03 = 77,
+
+    /// <summary>
+    /// 攻撃準備（魔法）
+    /// </summary>
+    ReadyAttack02 = 78,
+
+    /// <summary>
+    /// 攻撃準備（剣）
+    /// </summary>
+    ReadyAttack01 = 79,
 
     /// <summary>
     /// 攻撃
     /// </summary>
-    Attack1 = 80,
+    Attack80 = 80,
 
     /// <summary>
     /// 攻撃2
     /// </summary>
-    Attack2 = 81,
+    Attack81 = 81,
+
+    /// <summary>
+    /// 攻撃2
+    /// </summary>
+    Attack82 = 82,
 
     /// <summary>
     /// 攻撃受ける
@@ -615,11 +706,30 @@ public enum BehaviorType
     /// 死ぬ
     /// </summary>
     Did　= 99,
-}
 
-public enum ImpactType
-{
-    AddDamage = 1,
-}
+    /// <summary>
+    /// スキル
+    /// </summary>
+    Skill_100 = 100,
 
+    /// <summary>
+    /// ため斬り
+    /// </summary>
+    Skill_101 = 101,
+
+    /// <summary>
+    /// 魔法陣、メテオ
+    /// </summary>
+    Skill_102 = 102,
+
+    /// <summary>
+    /// 連打、矢雨
+    /// </summary>
+    Skill_103 = 103,
+
+    /// <summary>
+    /// ステータススキル
+    /// </summary>
+    Skill_104 = 104,
+}
 #endregion

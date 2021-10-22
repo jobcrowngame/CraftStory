@@ -1,35 +1,68 @@
 fileFormatVersion: 2
-guid: b367ff3cf32dbb94391d0af77a02559d
+guid: 6934ac624d8f89f4db99923cf05b5694
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: -6083166256052418153
-    second: metarig|01_wait
+      74: -660694535650636019
+    second: metarig|character_3d_001-001_wait
   - first:
-      74: 8177607488167074441
-    second: metarig|02_run
+      74: 6452142459757471023
+    second: metarig|character_3d_001-002_run
   - first:
-      74: -9184715420234180365
-    second: metarig|03_put
+      74: -3715788052515464311
+    second: metarig|character_3d_001-003_put
   - first:
-      74: 3357482094435850182
-    second: metarig|04_break
+      74: 8708498382239347088
+    second: metarig|character_3d_001-004_break
   - first:
-      74: -1315046669478759993
-    second: metarig|05_talk
+      74: -6539364704102216019
+    second: metarig|character_3d_001-005_talk
   - first:
-      74: 8709805692873552624
-    second: metarig|06_end
+      74: -8380943130106860392
+    second: metarig|character_3d_001-006_end
   - first:
-      74: -5759535459468398788
-    second: metarig|07_Attack_Sword_Default_1
+      74: -1097233976381842354
+    second: metarig|character_3d_001-007_Hit
   - first:
-      74: -6137652038184522072
-    second: metarig|07_Attack_Sword_Default_2
+      74: 868834763588737355
+    second: metarig|character_3d_001-008_Wait_Observe
   - first:
-      74: -4393055127447433764
-    second: metarig|08_Hit
+      74: -5920167422612405551
+    second: metarig|character_3d_001-100_Sword_Default_1
+  - first:
+      74: -8961204770222483686
+    second: metarig|character_3d_001-101_Sword_Default_2
+  - first:
+      74: -1035604731181271901
+    second: metarig|character_3d_001-110_Sword_Wait
+  - first:
+      74: 6171662452055737409
+    second: metarig|character_3d_001-121_Sword_Power
+  - first:
+      74: -113507560444367084
+    second: metarig|character_3d_001-121_Sword_Roteto
+  - first:
+      74: -5647746982054637164
+    second: metarig|character_3d_001-200_Bow_Default
+  - first:
+      74: -6509372715654051835
+    second: metarig|character_3d_001-210_Bow_Wait
+  - first:
+      74: 7552001247358536530
+    second: metarig|character_3d_001-220_Bow_Rain
+  - first:
+      74: 1259487687936996161
+    second: metarig|character_3d_001-310_Wand_Wait
+  - first:
+      74: -7797789098067638459
+    second: metarig|character_3d_001-320_Wand_Long
+  - first:
+      74: 3284602463641585631
+    second: metarig|character_3d_001-410_Common_WaitHeal
+  - first:
+      74: -7052485033355862779
+    second: metarig|character_3d_001-420_Common_Heal
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -50,7 +83,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -59,8 +92,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: metarig|01_wait
-      takeName: metarig|01_wait
+      name: metarig|character_3d_001-001_wait
+      takeName: metarig|character_3d_001-001_wait
       internalID: 0
       firstFrame: 0
       lastFrame: 39
@@ -88,8 +121,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: metarig|02_run
-      takeName: metarig|02_run
+      name: metarig|character_3d_001-002_run
+      takeName: metarig|character_3d_001-002_run
       internalID: 0
       firstFrame: 0
       lastFrame: 14
@@ -117,8 +150,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: metarig|03_put
-      takeName: metarig|03_put
+      name: metarig|character_3d_001-003_put
+      takeName: metarig|character_3d_001-003_put
       internalID: 0
       firstFrame: 0
       lastFrame: 9
@@ -128,7 +161,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -146,8 +179,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: metarig|04_break
-      takeName: metarig|04_break
+      name: metarig|character_3d_001-004_break
+      takeName: metarig|character_3d_001-004_break
       internalID: 0
       firstFrame: 0
       lastFrame: 8
@@ -157,7 +190,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -175,8 +208,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: metarig|05_talk
-      takeName: metarig|05_talk
+      name: metarig|character_3d_001-005_talk
+      takeName: metarig|character_3d_001-005_talk
       internalID: 0
       firstFrame: 0
       lastFrame: 24
@@ -204,8 +237,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: metarig|06_end
-      takeName: metarig|06_end
+      name: metarig|character_3d_001-006_end
+      takeName: metarig|character_3d_001-006_end
       internalID: 0
       firstFrame: 0
       lastFrame: 84
@@ -233,8 +266,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: metarig|07_Attack_Sword_Default_1
-      takeName: metarig|07_Attack_Sword_Default_1
+      name: metarig|character_3d_001-007_Hit
+      takeName: metarig|character_3d_001-007_Hit
       internalID: 0
       firstFrame: 0
       lastFrame: 6
@@ -262,8 +295,66 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: metarig|07_Attack_Sword_Default_2
-      takeName: metarig|07_Attack_Sword_Default_2
+      name: metarig|character_3d_001-008_Wait_Observe
+      takeName: metarig|character_3d_001-008_Wait_Observe
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 49
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: metarig|character_3d_001-100_Sword_Default_1
+      takeName: metarig|character_3d_001-100_Sword_Default_1
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 6
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: metarig|character_3d_001-101_Sword_Default_2
+      takeName: metarig|character_3d_001-101_Sword_Default_2
       internalID: 0
       firstFrame: 0
       lastFrame: 11
@@ -291,11 +382,272 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: metarig|08_Hit
-      takeName: metarig|08_Hit
+      name: metarig|character_3d_001-110_Sword_Wait
+      takeName: metarig|character_3d_001-110_Sword_Wait
       internalID: 0
       firstFrame: 0
-      lastFrame: 8
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: metarig|character_3d_001-121_Sword_Power
+      takeName: metarig|character_3d_001-121_Sword_Power
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 14
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: metarig|character_3d_001-121_Sword_Roteto
+      takeName: metarig|character_3d_001-121_Sword_Roteto
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 20
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: metarig|character_3d_001-200_Bow_Default
+      takeName: metarig|character_3d_001-200_Bow_Default
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 7
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: metarig|character_3d_001-210_Bow_Wait
+      takeName: metarig|character_3d_001-210_Bow_Wait
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 18
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: metarig|character_3d_001-220_Bow_Rain
+      takeName: metarig|character_3d_001-220_Bow_Rain
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 4
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: metarig|character_3d_001-310_Wand_Wait
+      takeName: metarig|character_3d_001-310_Wand_Wait
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 13
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: metarig|character_3d_001-320_Wand_Long
+      takeName: metarig|character_3d_001-320_Wand_Long
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 11
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: metarig|character_3d_001-410_Common_WaitHeal
+      takeName: metarig|character_3d_001-410_Common_WaitHeal
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: metarig|character_3d_001-420_Common_Heal
+      takeName: metarig|character_3d_001-420_Common_Heal
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 4
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -376,7 +728,7 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1

@@ -49,6 +49,7 @@
     <Compile Include="Blueprint.cs" />
     <Compile Include="Equipment.cs" />
     <Compile Include="Gacha.cs" />
+    <Compile Include="GachaTabs.cs" />
     <Compile Include="Guide.cs" />
     <Compile Include="GuideStep.cs" />
     <Compile Include="Impact.cs" />

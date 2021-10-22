@@ -13,8 +13,8 @@ public class EntityTransferGate : EntityBase
 
     private void OnTriggerEnter(Collider other)
     {
-        var characterCtl = other.GetComponent<CharacterController>();
-        if (characterCtl != null)
+        var player = other.GetComponent<CharacterPlayer>();
+        if (player != null)
         {
             // 手に入れたアイテムがない場合、通信しない
             if (AdventureCtl.E.BonusList.Count <= 0)

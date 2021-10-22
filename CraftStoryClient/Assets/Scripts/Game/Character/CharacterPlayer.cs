@@ -47,13 +47,16 @@ public partial class CharacterPlayer : CharacterBase
         deleteEffect = CommonFunction.FindChiledByName(transform, "DeleteEffect").transform;
 
         Behavior = BehaviorType.Waiting;
+
+        // 装備する
+        PlayerCtl.E.EquipEquipments();
     }
 
     public override void OnBehaviorChange(BehaviorType behavior)
     {
         base.OnBehaviorChange(behavior);
 
-        //Logger.Log("Player Behavior: " + behavior);
+        Logger.Log("Player Behavior: " + behavior);
 
         PlayerCtl.E.Character.ShowDestroyEffect(behavior == BehaviorType.Breack);
 
@@ -80,26 +83,6 @@ public partial class CharacterPlayer : CharacterBase
         base.TargetDied();
 
         PlayerCtl.E.CameraCtl.CancelLockUn();
-    }
-
-    /// <summary>
-    /// 装備をEquip
-    /// </summary>
-    public void EquipEquipments()
-    {
-        foreach (var item in DataMng.E.Items)
-        {
-            if (CommonFunction.IsEquipment(item.itemId) && item.equipSite > 0)
-            {
-                var itemConfig = ConfigMng.E.Item[item.itemId];
-
-                // 装備パラメータ追加
-                Parameter.Equipment.AddEquiptment(itemConfig.ReferenceID);
-
-                // スキル追加
-                AddSkills(ConfigMng.E.Equipment[itemConfig.ReferenceID].Skill);
-            }
-        }
     }
 
     /// <summary>

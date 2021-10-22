@@ -10,6 +10,6 @@ public partial class HomeUI
     public void OnHpChange(float percent)
     {
         hpBar.fillAmount = percent;
-        hpText.text = (percent * 100).ToString("F1") + "%";
+        hpText.text = (percent * 100).ToString("F0") + "%";
     }
 }

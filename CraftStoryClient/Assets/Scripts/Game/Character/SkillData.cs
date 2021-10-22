@@ -52,8 +52,29 @@ public class SkillData
 
     public enum SkillType
     {
+        /// <summary>
+        /// 範囲攻撃
+        /// </summary>
         RangeAttack = 1,
+
+        /// <summary>
+        /// 単体攻撃
+        /// </summary>
         SingleAttack = 2,
-        MagicBool = 3,
+
+        /// <summary>
+        /// 遠距離範囲攻撃
+        /// </summary>
+        RangedRangeAttack = 3,
+
+        /// <summary>
+        /// ビーム
+        /// </summary>
+        Beam = 4,
+
+        /// <summary>
+        /// 回復
+        /// </summary>
+        Recovery = 5,
     }
 }

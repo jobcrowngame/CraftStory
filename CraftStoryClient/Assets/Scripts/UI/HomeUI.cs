@@ -190,12 +190,6 @@ public partial class HomeUI : UIBase
         base.Open();
 
         Title.RefreshCoins();
-
-        // 装備をEquip
-        PlayerCtl.E.Character.EquipEquipments();
-
-        // スキルを設置
-        SetSkills();
     }
 
     /// <summary>
@@ -374,34 +368,28 @@ public partial class HomeUI : UIBase
     /// <summary>
     /// スキル設定
     /// </summary>
-    private void SetSkills()
+    public void SetSkills()
     {
+        int index = 0;
         for (int i = 0; i < Battle.GetChild(0).childCount; i++)
         {
-            if (PlayerCtl.E.Character.SkillList.Count > i)
+            if (PlayerCtl.E.Character.SkillList.Count > index)
             {
-                SetSkill(skills[i], i);
+                if (PlayerCtl.E.Character.SkillList[index].Config.CanEquipment != 1)
+                {
+                    i--;
+                    index++;
+                    continue;
+                }
+
+                skills[i].SetBase(PlayerCtl.E.Character.SkillList[index]);
             }
             else
             {
-                SetSkill(null, i);
+                skills[i].SetBase(null);
             }
-        }
-    }
-    /// <summary>
-    /// スキルを設定
-    /// </summary>
-    /// <param name="skill"></param>
-    /// <param name="index"></param>
-    private void SetSkill(SkillCell skill, int index)
-    {
-        if (skill == null)
-        {
-            skills[index].Set(null);
-        }
-        else
-        {
-            skills[index].Set(PlayerCtl.E.Character.SkillList[index]);
+
+            index++;
         }
     }
 
