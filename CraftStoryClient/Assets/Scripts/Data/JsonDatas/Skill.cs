@@ -25,6 +25,7 @@ namespace JsonConfigData
         public float ProcessTime { get; set; }
         public int AttackCount { get; set; }
         public float Interval { get; set; }
+        public float DelayDamageTime { get; set; }
         public int NextSkill { get; set; }
         public int CanEquipment { get; set; }
     }

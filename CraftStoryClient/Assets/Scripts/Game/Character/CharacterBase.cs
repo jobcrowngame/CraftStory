@@ -114,7 +114,6 @@ public class CharacterBase : MonoBehaviour
 
             if (FreezeTime < 0)
             {
-                Debug.Log("回復した。");
                 Behavior = BehaviorType.Waiting;
                 FreezeTime = 0;
             }
@@ -305,6 +304,8 @@ public class CharacterBase : MonoBehaviour
         if (skill.Config.AttackerEffect != "N")
             EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, transform.position);
 
+        
+
         // 目標のキャンプ
         var targetCamp = Camp == CharacterCamp.Monster ? CharacterCamp.Player : CharacterCamp.Monster;
 
@@ -381,11 +382,14 @@ public class CharacterBase : MonoBehaviour
 
             // Effect 追加
             if (skill.Config.TargetEffect != "N")
-                EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, transform.position);
+                EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, mainTarget.transform.position);
+
+            // ディリーダメージを与える
+            yield return new WaitForSeconds(skill.Config.DelayDamageTime);
 
             while (attackCount > 0)
             {
-                var targets = CharacterCtl.E.FindCharacterInRange(mainTarget.transform, skill.Config.Distance, targetCamp);
+                var targets = CharacterCtl.E.FindCharacterInRange(mainTarget.transform, skill.Config.Radius, targetCamp);
                 foreach (var target in targets)
                 {
                     foreach (var impact in skill.Impacts)
@@ -413,7 +417,10 @@ public class CharacterBase : MonoBehaviour
 
             // Effect 追加
             if (skill.Config.TargetEffect != "N")
-                EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, transform.position);
+                EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, mainTarget.transform.position);
+
+            // ディリーダメージを与える
+            yield return new WaitForSeconds(skill.Config.DelayDamageTime);
 
             if (CharacterCtl.E.InDistance(skill.distance, transform, mainTarget.transform))
             {
