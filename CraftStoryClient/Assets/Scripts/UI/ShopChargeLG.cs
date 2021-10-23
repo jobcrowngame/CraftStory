@@ -54,4 +54,5 @@ public enum ShopType
     Blueprint,
     Blueprint2,
     CraftResource,
+    EventItem,
 }

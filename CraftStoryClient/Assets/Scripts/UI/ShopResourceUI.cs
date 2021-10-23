@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopResourceUI : UIBase
 {
     Title2UI Title { get => FindChiled<Title2UI>("Title2"); }
+    Text CoinText4 { get => FindChiled<Text>("CoinText4"); }
     MyToggleGroupCtl ToggleBtns { get => FindChiled<MyToggleGroupCtl>("ToggleBtns"); }
     Text Des { get => FindChiled<Text>("Des"); }
     Button BackBtn { get => FindChiled<Button>("BackBtn"); }
@@ -24,19 +26,27 @@ public class ShopResourceUI : UIBase
         Des.text = ConfigMng.E.MText[3].Text;
 
         BackBtn.onClick.AddListener(Close);
-        RefreshItemWindow(0);
+
+        NWMng.E.GetAllShopLimitedCounts((rp) =>
+        {
+            ShopResourceLG.E.SetAllLimitedCounts(rp); 
+            RefreshItemWindow(0);
+        });
     }
 
     public override void Open()
     {
         base.Open();
 
-        Title.RefreshCoins();
+        RefreshCoins();
     }
 
     private void RefreshItemWindow(int index)
     {
-        int itemType = index == 0 ? 4 : 7;
+        int itemType = 
+            index == 0 ? 4 : 
+            index == 1 ? 7 :
+            8;
         var parent = FindChiled("Parent", ItemsWind.gameObject);
         ClearCell(parent);
 
@@ -53,5 +63,12 @@ public class ShopResourceUI : UIBase
     public void RefreshCoins()
     {
         Title.RefreshCoins();
+        RefreshEventCoin();
+    }
+
+    public void RefreshEventCoin()
+    {
+        var coin = (DataMng.E.GetItemByItemId(9004) != null ? DataMng.E.GetItemByItemId(9004).count : 0);
+        CoinText4.text = coin.ToString();
     }
 }

@@ -31,13 +31,13 @@ public class IconItemCell : UIBase
         this.count = count;
     }
 
-    public void StartDoubleAnim()
+    public void StartMultiAnim(int multiple)
     {
-        StartCoroutine(DoubleAnim());
+        StartCoroutine(MultiAnim(multiple));
     }
-    private IEnumerator DoubleAnim()
+    private IEnumerator MultiAnim(int multiple)
     {
-        float offset = count / upCount;
+        float offset = (count / upCount) * (multiple - 1);
         float newCount = count;
 
         for (int i = 0; i < upCount; i++)
@@ -46,6 +46,6 @@ public class IconItemCell : UIBase
             newCount += offset;
             Count.text = "x" + (int)newCount;
         }
-        Count.text = "x" + count * 2;
+        Count.text = "x" + count * multiple;
     }
 }

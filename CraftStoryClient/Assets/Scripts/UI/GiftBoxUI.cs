@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 public class GiftBoxUI : UIBase
 {
-    Transform DoubleBonus { get => FindChiled("DoubleBonus"); }
+    Image MultiBonus { get => FindChiled<Image>("MultiBonus"); }
+    Button Bonus3XBtn { get => FindChiled<Button>("Bonus3XBtn"); }
+    Transform Bonus3XLabel { get => FindChiled<Transform>("Bonus3XLabel"); }
     Button OKBtn { get => FindChiled<Button>("OKBtn"); }
     Button AdvertisingBtn { get => FindChiled<Button>("AdvertisingBtn"); }
     Transform itemGridRoot;
@@ -34,12 +36,39 @@ public class GiftBoxUI : UIBase
                     AdventureCtl.E.BonusList.Add(AdventureCtl.E.BonusList[i]);
                 }
 
-                NWMng.E.ClearAdventure((rp) =>
-                {
-                    StartDoubleBonus();
-                }, AdventureCtl.E.BonusList);
+                //NWMng.E.ClearAdventure((rp) =>
+                //{
+                //    StartDoubleBonus();
+                //}, AdventureCtl.E.BonusList);
+                StartDoubleBonus();
             });
         });
+        ItemData ticket = DataMng.E.GetItemByItemId(9005);
+        if (ticket != null)
+        {
+            Bonus3XBtn.gameObject.SetActive(true);
+            Bonus3XBtn.onClick.AddListener(() =>
+            {
+                DataMng.E.ConsumableItem(9005);
+                int count = AdventureCtl.E.BonusList.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    AdventureCtl.E.BonusList.Add(AdventureCtl.E.BonusList[i]);
+                    AdventureCtl.E.BonusList.Add(AdventureCtl.E.BonusList[i]);
+                }
+                //NWMng.E.ClearAdventure((rp) =>
+                //{
+                //    StartTripleBonus();
+                //}, AdventureCtl.E.BonusList);
+                StartTripleBonus();
+            });
+            Bonus3XLabel.gameObject.SetActive(false);
+        }
+        else
+        {
+            Bonus3XBtn.gameObject.SetActive(false);
+            Bonus3XLabel.gameObject.SetActive(true);
+        }
         OKBtn.onClick.AddListener(() => 
         {
             NWMng.E.ClearAdventure((rp) =>
@@ -62,7 +91,7 @@ public class GiftBoxUI : UIBase
         base.Open();
 
         PlayerCtl.E.Lock = true;
-        DoubleBonus.gameObject.SetActive(false);
+        MultiBonus.gameObject.SetActive(false);
     }
 
     public void AddBonus(List<int> bonus)
@@ -88,18 +117,38 @@ public class GiftBoxUI : UIBase
             cells.Add(cell);
         }
     }
-    
+
     /// <summary>
     /// 2倍ボーナスボタンイベント
     /// </summary>
     private void StartDoubleBonus()
     {
+        Bonus3XBtn.gameObject.SetActive(false);
+        Bonus3XLabel.gameObject.SetActive(false);
         AdvertisingBtn.gameObject.SetActive(false);
-        DoubleBonus.gameObject.SetActive(true);
+        MultiBonus.gameObject.SetActive(true);
+        MultiBonus.sprite = ReadResources<Sprite>("Textures/brave_2d_001"); ;
 
         foreach (var item in cells)
         {
-            item.StartDoubleAnim();
+            item.StartMultiAnim(2);
+        }
+    }
+
+    /// <summary>
+    /// 3倍ボーナスボタンイベント
+    /// </summary>
+    private void StartTripleBonus()
+    {
+        Bonus3XBtn.gameObject.SetActive(false);
+        Bonus3XLabel.gameObject.SetActive(false);
+        AdvertisingBtn.gameObject.SetActive(false);
+        MultiBonus.gameObject.SetActive(true);
+        MultiBonus.sprite = ReadResources<Sprite>("Textures/brave_2d_002"); ;
+
+        foreach (var item in cells)
+        {
+            item.StartMultiAnim(3);
         }
     }
 

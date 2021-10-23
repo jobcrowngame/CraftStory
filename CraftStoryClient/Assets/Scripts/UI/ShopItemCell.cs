@@ -1,10 +1,12 @@
-using JsonConfigData;
+﻿using JsonConfigData;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopItemCell : UIBase
 {
     Transform Limited { get => FindChiled("Limited"); }
+    Text LimitedText { get => FindChiled<Text>("LimitedText"); }
+    Transform Mask { get => FindChiled<Transform>("Mask"); }
     Image Icon { get => FindChiled<Image>("Icon"); }
     Text Des { get => FindChiled<Text>("Des"); }
     Button BuyBtn { get => FindChiled<Button>("BuyBtn"); }
@@ -21,7 +23,8 @@ public class ShopItemCell : UIBase
         config = t as Shop;
 
         BuyBtn.onClick.AddListener(OnClickBuyBtn);
-        Limited.gameObject.SetActive(config.LimitedCount > 0);
+        Limited.gameObject.SetActive(false);
+        Mask.gameObject.SetActive(false);
         Icon.sprite = ReadResources<Sprite>(config.IconResources);
         Des.text = config.Des;
         BuyBtnText.text = config.BtnText;
@@ -38,6 +41,30 @@ public class ShopItemCell : UIBase
             PreviewBtn.gameObject.SetActive(true);
             PreviewBtn.onClick.AddListener(OnClickPreviewBtn);
         }
+
+        if (shopType == ShopType.EventItem)
+        {
+            UpdateLimited();
+        }
+    }
+
+    private void UpdateLimited()
+    {
+        if (config.LimitedCount != -1)
+        {
+            int limitedCount = ShopResourceLG.E.GetLimitedCount(config.ID);
+            int remainCount = config.LimitedCount - limitedCount;
+            bool masked = remainCount <= 0;
+            LimitedText.text = masked ? "交換可能な上限まで交換済" : string.Format("あと{0}回交換可能", remainCount);
+            Mask.gameObject.SetActive(masked);
+            Limited.gameObject.SetActive(true);
+        }
+        else
+        {
+            LimitedText.text = "";
+            Mask.gameObject.SetActive(false);
+            Limited.gameObject.SetActive(false);
+        }
     }
 
     private void OnClickBuyBtn()
@@ -51,24 +78,33 @@ public class ShopItemCell : UIBase
         else if (type == ShopType.Point 
             || type == ShopType.Exchange 
             || type == ShopType.Blueprint
-            || type == ShopType.CraftResource)
+            || type == ShopType.CraftResource
+            || type == ShopType.EventItem)
         {
-            CommonFunction.ShowHintBox(config.IconResources, config.Des2, 
-                () => {
-                    NWMng.E.Buy((rp) =>
+            CommonFunction.ShowHintBox(config.IconResources, config.Des2, () =>
+            {
+                NWMng.E.Buy((rp) =>
+                {
+                    NWMng.E.GetItems(()=> 
                     {
-                        NWMng.E.GetItems(null);
                         NWMng.E.GetCoins((rp3) =>
                         {
                             DataMng.GetCoins(rp3);
                             if (ShopChargeLG.E.UI != null) ShopChargeLG.E.UI.RefreshCoins();
                             if (ShopResourceLG.E.UI != null) ShopResourceLG.E.UI.RefreshCoins();
                             HomeLG.E.UI.RefreshCoins();
+                            if (config.LimitedCount != -1)
+                            {
+                                NWMng.E.GetShopLimitedCount((rp4) => {
+                                    ShopResourceLG.E.SetLimitedCount(config.ID, (int)rp4);
+                                    UpdateLimited();
+                                }, config.ID);
+                            }
                         });
-
-                        CommonFunction.ShowHintBar(5);
-                    }, config.ID);
-                },()=> { });
+                    });
+                    CommonFunction.ShowHintBar(5);
+                }, config.ID);
+            },()=> { });
         }
     }
 

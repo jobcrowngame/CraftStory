@@ -863,6 +863,27 @@ public partial class NWMng : MonoBehaviour
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    public void GetAllShopLimitedCounts(Action<JsonData> rp)
+    {
+        var data = new NWData();
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetAllShopLimitedCounts));
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void GetShopLimitedCount(Action<JsonData> rp, int shopId)
+    {
+        var data = new NWData();
+        data.Add("shopId", shopId);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetShopLimitedCount));
+    }
+
+    /// <summary>
     /// ホームデータをサーバーにセーブ
     /// </summary>
     /// <param name="rp"></param>
@@ -956,6 +977,8 @@ public partial class NWMng : MonoBehaviour
         MyShopGoodEvent,
         GetBlueprintPreviewDataByItemGuid,
         GetGacha,
+        GetAllShopLimitedCounts = 1050,
+        GetShopLimitedCount,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,
