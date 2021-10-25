@@ -537,7 +537,7 @@ public class CharacterBase : MonoBehaviour
     /// 装備する
     /// </summary>
     /// <param name="equipmentId"></param>
-    public void EquipEquipment(int equipmentId)
+    public virtual void EquipEquipment(int equipmentId)
     {
         // スキル追加
         AddSkills(ConfigMng.E.Equipment[equipmentId].Skill);
@@ -550,7 +550,7 @@ public class CharacterBase : MonoBehaviour
     /// 装備を消す
     /// </summary>
     /// <param name="equipmentId"></param>
-    public void RemoveEquipment(int equipmentId)
+    public virtual void RemoveEquipment(int equipmentId)
     {
         // スキル削除
         RemoveSkills(ConfigMng.E.Equipment[equipmentId].Skill);

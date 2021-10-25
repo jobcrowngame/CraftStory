@@ -125,7 +125,7 @@ public class CharacterCtl : Single<CharacterCtl>
         List<CharacterBase> targets = new List<CharacterBase>();
         foreach (var item in characterList)
         {
-            if (InDistance(distance, startPoint, item.transform) && item.Camp == camp)
+            if (item.Behavior != BehaviorType.Did && InDistance(distance, startPoint, item.transform) && item.Camp == camp)
             {
                 targets.Add(item);
             }

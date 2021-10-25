@@ -11,6 +11,9 @@ public partial class CharacterPlayer : CharacterBase
     // ブロック壊す場合のエフェクト
     private Transform deleteEffect;
 
+    private Transform weaponL;
+    private Transform weaponR;
+
     // アニメション
     private Animator animator { get => CommonFunction.FindChiledByName<Animator>(transform, "Model"); }
 
@@ -46,6 +49,9 @@ public partial class CharacterPlayer : CharacterBase
         base.Init(characterId, camp);
         deleteEffect = CommonFunction.FindChiledByName(transform, "DeleteEffect").transform;
 
+        weaponL = CommonFunction.FindChiledByName(transform, "Weapon_L").transform;
+        weaponR = CommonFunction.FindChiledByName(transform, "Weapon_R").transform;
+
         Behavior = BehaviorType.Waiting;
 
         // 装備する
@@ -78,11 +84,52 @@ public partial class CharacterPlayer : CharacterBase
         }
     }
 
+    /// <summary>
+    /// 目標が死んだ場合
+    /// </summary>
     protected override void TargetDied()
     {
         base.TargetDied();
 
         PlayerCtl.E.CameraCtl.CancelLockUn();
+    }
+
+    /// <summary>
+    /// 装備する場合
+    /// </summary>
+    /// <param name="equipmentId"></param>
+    public override void EquipEquipment(int equipmentId)
+    {
+        base.EquipEquipment(equipmentId);
+
+        var equipmentConfig = ConfigMng.E.Equipment[equipmentId];
+        if (string.IsNullOrEmpty(equipmentConfig.ResourcesPath) || equipmentConfig.ResourcesPath == "N")
+            return;
+
+        // どの手に装備するか
+        Transform parent = equipmentConfig.LeftEquipment == 1 ? weaponL : weaponR;
+
+        // オブジェクトをインスタンス
+        var obj = CommonFunction.Instantiate(equipmentConfig.ResourcesPath, parent, Vector3.zero);
+        if (obj != null)
+        {
+            obj.transform.localPosition = Vector3.zero;
+            obj.transform.localEulerAngles = Vector3.zero;
+        }
+    }
+
+    /// <summary>
+    /// 装備解除場合
+    /// </summary>
+    /// <param name="equipmentId"></param>
+    public override void RemoveEquipment(int equipmentId)
+    {
+        base.RemoveEquipment(equipmentId);
+
+        var equipmentConfig = ConfigMng.E.Equipment[equipmentId];
+
+        CommonFunction.ClearCell(weaponL);
+        CommonFunction.ClearCell(weaponR);
     }
 
     /// <summary>
@@ -168,7 +215,6 @@ public partial class CharacterPlayer : CharacterBase
             deleteEffect.gameObject.SetActive(b);
         }
     }
-
 
     Vector3 targetPos;
     bool moveing;

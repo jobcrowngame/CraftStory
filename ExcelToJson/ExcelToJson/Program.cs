@@ -797,6 +797,8 @@ namespace ExcelToJson
                 var data = new Equipment()
                 {
                     ID = ToInt32(tbl.Rows[i]["ID"]),
+                    ResourcesPath = ToString(tbl.Rows[i]["ResourcesPath"]),
+                    LeftEquipment = ToInt32(tbl.Rows[i]["LeftEquipment"]),
                     HP = ToInt32(tbl.Rows[i]["HP"]),
                     Damage = ToInt32(tbl.Rows[i]["Damage"]),
                     Defnse = ToInt32(tbl.Rows[i]["Defnse"]),
