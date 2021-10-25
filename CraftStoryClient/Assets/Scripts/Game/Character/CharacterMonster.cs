@@ -47,14 +47,32 @@ public class CharacterMonster : CharacterBase
     {
         base.Died();
 
-        // 目標が死んだ場合
-        ai.OnTargetDied();
-
         // モンスターを倒す場合、ボーナスが手に入る
         foreach (var item in CommonFunction.GetBonusListByPondId(Parameter.PondId))
         {
             AdventureCtl.E.AddBonus(item);
         }
+
+        StartCoroutine(DiedIE());
+    }
+
+    protected override void TargetDied()
+    {
+        base.TargetDied();
+
+        // 目標が死んだ場合
+        ai.OnTargetDied();
+    }
+
+    IEnumerator DiedIE()
+    {
+        yield return new WaitForSeconds(3);
+
+        EffectMng.E.AddBattleEffect("Die", 3, transform);
+
+        yield return new WaitForSeconds(0.3f);
+
+        GameObject.Destroy(gameObject);
     }
 
     /// <summary>

@@ -90,6 +90,7 @@ public class CharacterAI
     public void OnTargetDied()
     {
         target = null;
+        mCharacter.Behavior = BehaviorType.Waiting;
     }
 
     /// <summary>
