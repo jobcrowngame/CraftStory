@@ -40,6 +40,11 @@ public class HpUIBase : UIBase
     }
 
     /// <summary>
+    /// 復活
+    /// </summary>
+    public virtual void OnResurrection() { }
+
+    /// <summary>
     /// 死んだ場合
     /// </summary>
     public virtual void OnDide() { }

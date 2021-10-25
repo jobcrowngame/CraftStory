@@ -34,9 +34,9 @@ public class CharacterBase : MonoBehaviour
             if (mBehavior == value)
                 return;
 
-            // 死んだ後、他の動作に変更できません。
-            if (Behavior == BehaviorType.Did)
-                return;
+            //// 死んだ後、他の動作に変更できません。
+            //if (Behavior == BehaviorType.Did)
+            //    return;
 
             mBehavior = value;
             OnBehaviorChange(value);
@@ -60,7 +60,7 @@ public class CharacterBase : MonoBehaviour
     // 前の行動
     protected BehaviorType beforBehavior;
 
-    private bool IsDied { get => Parameter.CurHP <= 0; }
+    public bool IsDied { get => Parameter.CurHP <= 0; }
 
     private float ShareCD = 0;
     public bool ShareCDIsCooling { get => ShareCD > 0; }
@@ -92,7 +92,7 @@ public class CharacterBase : MonoBehaviour
             moveDirection.z = 0;
 
         // 移動
-        Controller.Move(moveDirection);
+        if (Controller.enabled == true) Controller.Move(moveDirection);
 
         // ジャンプ状態で地面に落ちるとジャンプ前の行動になる
         if (Behavior == BehaviorType.Jump && Controller.isGrounded)
@@ -264,7 +264,7 @@ public class CharacterBase : MonoBehaviour
             || (SkillData.SkillType)skill.Config.Type == SkillData.SkillType.RangedRangeAttack)
         {
             // 範囲以外の場合、使用できない
-            if (GetTargetDistance(selectTarget.transform) > skill.distance)
+            if (selectTarget != null && GetTargetDistance(selectTarget.transform) > skill.distance)
             {
                 CommonFunction.ShowHintBar(32);
                 return;
@@ -528,7 +528,18 @@ public class CharacterBase : MonoBehaviour
 
     protected virtual void TargetDied() {}
 
+    /// <summary>
+    /// 復活
+    /// </summary>
+    public virtual void Resurrection()
+    {
+        Parameter.CurHP = Parameter.MaxHP;
+        Controller.enabled = true;
+        Behavior = BehaviorType.Waiting;
 
+        if (HpCtl != null)
+            HpCtl.OnResurrection();
+    }
 
     #endregion
     #region 装備

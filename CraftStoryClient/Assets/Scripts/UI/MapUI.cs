@@ -67,7 +67,7 @@ public class MapUI : UIBase
         {
             if (!PlayerCtl.E.Character.IsEquipedEquipment())
             {
-                CommonFunction.ShowHintBar(31);
+                CommonFunction.ShowHintBar(33);
                 return;
             }
 

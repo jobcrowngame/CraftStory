@@ -168,7 +168,7 @@ public class CharacterCtl : Single<CharacterCtl>
         float minDis = 0;
         foreach (var character in characterList)
         {
-            if (character.Behavior != BehaviorType.Did && character.Camp == camp)
+            if (!character.IsDied && character.Camp == camp)
             {
                 var dis = Mathf.Abs(Vector3.Distance(character.transform.position, startPos));
 
@@ -207,6 +207,9 @@ public class CharacterCtl : Single<CharacterCtl>
         List<CharacterBase> list = new List<CharacterBase>();
         foreach (var item in characterList)
         {
+            if (item.IsDied)
+                continue;
+
             if (Mathf.Abs(Vector3.Distance(item.transform.position, startPos)) <= distance
                 && item.Camp == camp)
             {

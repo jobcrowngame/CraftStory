@@ -70,7 +70,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
     /// <param name="eventData"></param>
     public void OnDrag(PointerEventData eventData)
     {
-        if (PlayerCtl.E.Lock)
+        if (PlayerCtl.E.Lock || PlayerCtl.E.Character.IsDied)
             return;
 
         if (eventData.pointerId == 0) touch1 = eventData.position;

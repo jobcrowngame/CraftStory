@@ -47,8 +47,11 @@ public class PlayerCtl : MonoBehaviour
             // Joystickスクロールが停止場合のイベント
             Joystick.AddListionOnPointerUp(() =>
             {
-                Character.StopMove();
-                Character.Behavior = BehaviorType.Waiting;
+                if (!Character.IsDied)
+                {
+                    Character.StopMove();
+                    Character.Behavior = BehaviorType.Waiting;
+                }
             });
         }
     }
@@ -106,7 +109,7 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            Character.Hit(1);
+            Character.Resurrection();
         }
 
         if (Input.GetKeyDown(KeyCode.F2))
@@ -419,7 +422,7 @@ public class PlayerCtl : MonoBehaviour
     /// <param name="skill"></param>
     public void UserSkill(SkillData skill)
     {
-        if (Character.ShareCDIsCooling || skill.IsCooling)
+        if (Character.ShareCDIsCooling || skill.IsCooling || Character.IsDied)
             return;
 
         // 単体攻撃、遠距離範囲攻撃の場合、目標がないと先ず目標を探す

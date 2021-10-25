@@ -28,6 +28,13 @@ public class HpUIPlayer : HpUIBase
         }
     }
 
+    public override void OnResurrection()
+    {
+        base.OnResurrection();
+
+        if (HomeLG.E.UI != null) HomeLG.E.UI.OnHpChange(1);
+    }
+
     private void RefreshHP()
     {
         float percent = (float)curHP / p.MaxHP;

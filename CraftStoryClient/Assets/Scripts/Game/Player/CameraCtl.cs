@@ -123,6 +123,9 @@ public class CameraCtl : MonoBehaviour
 
     public void ChangeCameraPos(float v)
     {
+        if (PlayerCtl.E.Character.IsDied)
+            return;
+
         //if (IsBlock())
         //    return;
 

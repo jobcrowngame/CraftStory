@@ -38,9 +38,12 @@ public partial class CharacterPlayer : CharacterBase
 
             Model.gameObject.SetActive(value);
 
-            Behavior = value
+            if (!IsDied)
+            {
+                Behavior = value
                 ? BehaviorType.Run
                 : BehaviorType.Waiting;
+            }
         }
     }
 
@@ -94,6 +97,19 @@ public partial class CharacterPlayer : CharacterBase
         PlayerCtl.E.CameraCtl.CancelLockUn();
     }
 
+    protected override void Died()
+    {
+        base.Died();
+
+        CommonFunction.ShowHintBox("", () =>
+            {
+                Resurrection();
+            }, () =>
+            {
+                CommonFunction.GoToNextScene(100);
+            });
+    }
+
     /// <summary>
     /// 装備する場合
     /// </summary>
@@ -139,7 +155,7 @@ public partial class CharacterPlayer : CharacterBase
     /// <param name="y"></param>
     public void Move(float x, float y)
     {
-        if (DataMng.E.MapData == null || PlayerCtl.E.CameraCtl == null)
+        if (DataMng.E.MapData == null || PlayerCtl.E.CameraCtl == null || IsDied)
             return;
 
         // 動作変更制限

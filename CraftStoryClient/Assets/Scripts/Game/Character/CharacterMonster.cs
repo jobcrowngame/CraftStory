@@ -66,12 +66,9 @@ public class CharacterMonster : CharacterBase
 
     IEnumerator DiedIE()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(0.8f);
 
         EffectMng.E.AddBattleEffect("Die", 3, transform);
-
-        yield return new WaitForSeconds(0.3f);
-
         GameObject.Destroy(gameObject);
     }
 

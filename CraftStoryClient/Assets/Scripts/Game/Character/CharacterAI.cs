@@ -24,16 +24,14 @@ public class CharacterAI
 
         if (InCombat)
         {
-            if (target == null)
+            if (target == null || target.IsDied)
                 FindTarget();
-
-            if (CheckInAttackRange())
-            {
-                mCharacter.Attack();
-            }
             else
             {
-                mCharacter.MoveToTarget();
+                if (CheckInAttackRange())
+                    mCharacter.Attack();
+                else
+                    mCharacter.MoveToTarget();
             }
         }
         else
@@ -111,8 +109,9 @@ public class CharacterAI
     /// <returns></returns>
     public bool CheckInAttackRange()
     {
-        if (target == null)
-            return false;
+        var pointS = mCharacter.transform.position;
+        var pointE = target.transform.position;
+        var dis = Vector3.Distance(pointS, pointE);
 
         // 攻撃範囲内のスキルを選ぶ
         float maxDistance = 0;
@@ -133,7 +132,7 @@ public class CharacterAI
             maxDistance = SettingMng.MinDistance;
         }
 
-        return Mathf.Abs(Vector3.Distance(mCharacter.transform.position, target.transform.position)) <= maxDistance;
+        return Mathf.Abs(dis) <= maxDistance;
     }
 
     /// <summary>

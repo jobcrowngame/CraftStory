@@ -738,6 +738,7 @@ namespace ExcelToJson
                 {
                     ID = ToInt32(tbl.Rows[i]["ID"]),
                     Type = ToInt32(tbl.Rows[i]["Type"]),
+                    Effect = ToString(tbl.Rows[i]["Effect"]),
                     PercentDamage = ToInt32(tbl.Rows[i]["PercentDamage"]),
                     FixtDamage = ToInt32(tbl.Rows[i]["FixtDamage"]),
                     Delay = ToFloat(tbl.Rows[i]["Delay"]),
