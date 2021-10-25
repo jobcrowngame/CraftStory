@@ -122,10 +122,14 @@ public class CharacterCtl : Single<CharacterCtl>
     /// <returns></returns>
     public List<CharacterBase> FindCharacterInRange(Transform startPoint, float distance, CharacterBase.CharacterCamp camp)
     {
+        return FindCharacterInRange(startPoint.position, distance, camp);
+    }
+    public List<CharacterBase> FindCharacterInRange(Vector3 startPoint, float distance, CharacterBase.CharacterCamp camp)
+    {
         List<CharacterBase> targets = new List<CharacterBase>();
         foreach (var item in characterList)
         {
-            if (item.Behavior != BehaviorType.Did && InDistance(distance, startPoint, item.transform) && item.Camp == camp)
+            if (!item.IsDied && InDistance(distance, startPoint, item.transform.position) && item.Camp == camp)
             {
                 targets.Add(item);
             }
@@ -140,9 +144,9 @@ public class CharacterCtl : Single<CharacterCtl>
     /// <param name="distanse">指定距離</param>
     /// <param name="target">目標</param>
     /// <returns></returns>
-    public bool InDistance(float distanse, Transform start, Transform end)
+    public bool InDistance(float distanse, Vector3 start, Vector3 end)
     {
-        return Vector3.Distance(start.position, end.position) <= distanse;
+        return Vector3.Distance(start, end) <= distanse;
     }
 
     /// <summary>

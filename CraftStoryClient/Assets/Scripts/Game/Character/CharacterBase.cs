@@ -380,11 +380,16 @@ public class CharacterBase : MonoBehaviour
             // ディリーダメージを与える
             yield return new WaitForSeconds(skill.Config.DelayDamageTime);
 
+            var startPoint = mainTarget.transform.position;
+
             while (attackCount > 0)
             {
-                var targets = CharacterCtl.E.FindCharacterInRange(mainTarget.transform, skill.Config.Radius, targetCamp);
+                var targets = CharacterCtl.E.FindCharacterInRange(startPoint, skill.Config.Radius, targetCamp);
                 foreach (var target in targets)
                 {
+                    if (target == null || target.IsDied)
+                        break;
+
                     foreach (var impact in skill.Impacts)
                     {
                         target.AddImpact(target, this, int.Parse(impact));
