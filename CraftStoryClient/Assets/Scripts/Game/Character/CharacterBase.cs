@@ -664,7 +664,12 @@ public enum BehaviorType
     Waiting, // 何もしない
     Run, // 走る
     Create, // 作る
-    Breack, // 壊す
+
+    /// <summary>
+    /// 壊す
+    /// </summary>
+    Breack = 4,
+
     Jump, // ジャンプ
 
 
