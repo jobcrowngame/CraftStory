@@ -21,6 +21,7 @@ namespace JsonConfigData
         public float AttackerEffectTime { get; set; }
         public string TargetEffect { get; set; }
         public float TargetEffectTime { get; set; }
+        public int TargetEffectParentInModel { get; set; }
         public float ReadyTime { get; set; }
         public float ProcessTime { get; set; }
         public int AttackCount { get; set; }

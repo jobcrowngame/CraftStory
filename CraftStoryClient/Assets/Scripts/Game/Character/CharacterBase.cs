@@ -406,23 +406,28 @@ public class CharacterBase : MonoBehaviour
 
             // Effect 追加
             if (skill.Config.TargetEffect != "N")
-                EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, mainTarget.Model.transform);
+            {
+                var effect = EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, mainTarget.Model.transform, Model.transform);
+
+                // Effectのパレットセット
+                if (skill.Config.TargetEffectParentInModel == 1)
+                {
+                    effect.transform.SetParent(mainTarget.transform);
+                }
+            }
 
             // ディリーダメージを与える
             yield return new WaitForSeconds(skill.Config.DelayDamageTime);
 
-            if (CharacterCtl.E.InDistance(skill.distance, transform, mainTarget.transform))
+            while (attackCount > 0)
             {
-                while (attackCount > 0)
+                for (int i = 0; i < skill.Impacts.Length; i++)
                 {
-                    for (int i = 0; i < skill.Impacts.Length; i++)
-                    {
-                        mainTarget.AddImpact(mainTarget, this, int.Parse(skill.Impacts[i]));
-                    }
-
-                    attackCount--;
-                    yield return new WaitForSeconds(interval);
+                    mainTarget.AddImpact(mainTarget, this, int.Parse(skill.Impacts[i]));
                 }
+
+                attackCount--;
+                yield return new WaitForSeconds(interval);
             }
         }
     }

@@ -775,6 +775,7 @@ namespace ExcelToJson
                     AttackerEffectTime = ToFloat(tbl.Rows[i]["AttackerEffectTime"]),
                     TargetEffect = ToString(tbl.Rows[i]["TargetEffect"]),
                     TargetEffectTime = ToFloat(tbl.Rows[i]["TargetEffectTime"]),
+                    TargetEffectParentInModel = ToInt32(tbl.Rows[i]["TargetEffectParentInModel"]),
                     ReadyTime = ToFloat(tbl.Rows[i]["ReadyTime"]),
                     ProcessTime = ToFloat(tbl.Rows[i]["ProcessTime"]),
                     AttackCount = ToInt32(tbl.Rows[i]["AttackCount"]),

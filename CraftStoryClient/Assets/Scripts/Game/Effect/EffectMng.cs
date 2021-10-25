@@ -42,11 +42,12 @@ public class EffectMng : Single<EffectMng>
         }
     }
 
-    public void AddBattleEffect(string path, float time, Transform transform)
+    public EffectBase AddBattleEffect(string path, float time, Transform transform, Transform rotation = null)
     {
         var effect = CommonFunction.Instantiate<EffectBase>(BattEffectRoot + path, WorldMng.E.EffectParent, transform.position);
-        effect.transform.rotation = transform.rotation;
+        effect.transform.rotation = rotation == null ? transform.rotation : rotation.rotation;
         effect.Init(time);
+        return effect;
     }
 
     private string GetEffectResourcesPath(EffectType eType)
