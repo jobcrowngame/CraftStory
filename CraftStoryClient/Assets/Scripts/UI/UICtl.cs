@@ -142,8 +142,14 @@ public class UICtl : Single<UICtl>
             else
                 uiClass.Init(data);
 
-            uiDic[uiType] = uiClass;
-
+            if (openType == UIOpenType.OnCloseDestroyObj)
+            {
+                uiClass.OnCloseDestroyObject = true;
+            }
+            else
+            {
+                uiDic[uiType] = uiClass;
+            }
         }
         else
         {
@@ -281,6 +287,7 @@ public enum UIOpenType
     None,
     AllClose,
     BeforeClose,
+    OnCloseDestroyObj,
 }
 public enum UIType
 {

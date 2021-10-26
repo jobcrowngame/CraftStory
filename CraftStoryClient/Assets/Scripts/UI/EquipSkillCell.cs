@@ -11,7 +11,7 @@ public class EquipSkillCell : UIBase
     {
         MyButton.AddClickListener((i) =>
         {
-            UICtl.E.OpenUI<SkillExplanationUI>(UIType.SkillExplanation, UIOpenType.None, skillId);
+            UICtl.E.OpenUI<SkillExplanationUI>(UIType.SkillExplanation, UIOpenType.OnCloseDestroyObj, skillId);
         });
     }
 
