@@ -57,6 +57,7 @@ public class EffectMng : Single<EffectMng>
             case EffectType.BlockDestroy: return "Prefabs/Effect/effect_001";
             case EffectType.BlockDestroyEnd: return "Prefabs/Effect/BlockBreackEffect";
             case EffectType.ResourcesDestroy: return "Prefabs/Effect/ResourcesDeleteEffect";
+            case EffectType.AppraisalEquipment: return "Prefabs/Effect/ResourcesDeleteEffect";
             case EffectType.Gacha: return "Prefabs/Effect/TreasureBoxEffect";
             default: return "";
         }
@@ -67,5 +68,6 @@ public enum EffectType
     BlockDestroy,
     BlockDestroyEnd,
     ResourcesDestroy,
+    AppraisalEquipment,
     Gacha,
 }

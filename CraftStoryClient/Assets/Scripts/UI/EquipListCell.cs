@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+using System.Collections;
+
 public class EquipListCell : UIBase
 {
     Image Icon { get => FindChiled<Image>("Icon"); }
@@ -63,7 +65,26 @@ public class EquipListCell : UIBase
         data.islocked = 1;
         data.SetAttachSkills(skills);
 
-        RefreshUI();
+        StartCoroutine(AppraisalEquipmentIE());
+    }
+    IEnumerator AppraisalEquipmentIE()
+    {
+        var attachSkills = data.AttachSkills;
+        for (int i = 0; i < cells.Length; i++)
+        {
+            if (attachSkills != null && attachSkills.Length > i)
+            {
+                cells[i].ShowNewAddAnimation(int.Parse(attachSkills[i]));
+                yield return new WaitForSeconds(1f);
+            }
+            else
+            {
+                cells[i].Set(-1);
+            }
+        }
+
+        EquipBtn.gameObject.SetActive(data.IsLocked);
+        AppraisalBtn.gameObject.SetActive(!data.IsLocked);
     }
 
     private void RefreshUI()

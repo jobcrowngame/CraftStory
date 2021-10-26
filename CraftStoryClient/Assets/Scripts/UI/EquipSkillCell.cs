@@ -1,4 +1,8 @@
 ﻿using JsonConfigData;
+using System;
+using System.Collections;
+
+using UnityEngine;
 
 public class EquipSkillCell : UIBase
 {
@@ -26,5 +30,20 @@ public class EquipSkillCell : UIBase
         this.skillId = skillId;
 
         MyButton.SetIcon(config.Icon);
+    }
+
+    public void ShowNewAddAnimation(int skillId)
+    {
+        StartCoroutine(ShowNewAddAnimationIE(skillId));
+    }
+
+    IEnumerator ShowNewAddAnimationIE(int skillId)
+    {
+        var effect = EffectMng.E.AddUIEffect<EffectBase>(EquipListLG.E.UI.transform, transform.position, EffectType.Gacha);
+        effect.Init();
+
+        yield return new WaitForSeconds(1);
+
+        Set(skillId);
     }
 }
