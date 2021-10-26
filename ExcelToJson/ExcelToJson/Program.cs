@@ -761,6 +761,7 @@ namespace ExcelToJson
                 {
                     ID = ToInt32(tbl.Rows[i]["ID"]),
                     Icon = ToString(tbl.Rows[i]["Icon"]),
+                    Name = ToString(tbl.Rows[i]["Name"]),
                     Type = ToInt32(tbl.Rows[i]["Type"]),
                     Impact = ToString(tbl.Rows[i]["Impact"]),
                     Animation = ToInt32(tbl.Rows[i]["Animation"]),
@@ -785,6 +786,7 @@ namespace ExcelToJson
                     DelayDamageTime = ToFloat(tbl.Rows[i]["DelayDamageTime"]),
                     NextSkill = ToInt32(tbl.Rows[i]["NextSkill"]),
                     CanEquipment = ToInt32(tbl.Rows[i]["CanEquipment"]),
+                    Des = ToString(tbl.Rows[i]["Des"]),
                 };
 
                 list.Add(data);

@@ -11,9 +11,16 @@ public class UIBase : MonoBehaviour
     public virtual void Init(object data) { }
     public virtual void Init<T>(T t) where T : class { }
 
+    public bool OnCloseDestroyObject { get; set; }
+
     public virtual void Close()
     {
         gameObject.SetActive(false);
+
+        if (OnCloseDestroyObject)
+        {
+            Destroy();
+        }
     }
     public virtual void Open(object data)
     {

@@ -142,8 +142,14 @@ public class UICtl : Single<UICtl>
             else
                 uiClass.Init(data);
 
-            uiDic[uiType] = uiClass;
-
+            if (openType == UIOpenType.OnCloseDestroyObj)
+            {
+                uiClass.OnCloseDestroyObject = true;
+            }
+            else
+            {
+                uiDic[uiType] = uiClass;
+            }
         }
         else
         {
@@ -231,9 +237,8 @@ public class UICtl : Single<UICtl>
             case UIType.Market: return "Prefabs/UI/Market";
             case UIType.Equip: return "Prefabs/UI/Equip";
             case UIType.EquipList: return "Prefabs/UI/EquipList";
-
-
-
+            case UIType.SkillExplanation: return "Prefabs/UI/SkillExplanation";
+                
             default: Logger.Error("not find UIType " + ui); return "";
         }
     }
@@ -282,6 +287,7 @@ public enum UIOpenType
     None,
     AllClose,
     BeforeClose,
+    OnCloseDestroyObj,
 }
 public enum UIType
 {
@@ -333,4 +339,5 @@ public enum UIType
     Market,
     Equip,
     EquipList,
+    SkillExplanation,
 }
