@@ -103,13 +103,21 @@ public class ShopGachaUI : UIBase
             Cost1.text = gachaCfg.CostCount.ToString();
             CostImage1.sprite = ReadResources<Sprite>(ConfigMng.E.Item[gachaCfg.Cost].IconResourcesPath);
             // 提供割合
-            RatioBtn.onClick.AddListener(() =>
+            if(ShopGachaLG.E.GachaType == 0)
             {
-                var ui = UICtl.E.OpenUI<GachaRatioUI>(UIType.GachaRatio);
-                ui.Set(gachaCfg.ID);
-            });
+                RatioBtn.gameObject.SetActive(true);
+                RatioBtn.onClick.AddListener(() =>
+                {
+                    var ui = UICtl.E.OpenUI<GachaRatioUI>(UIType.GachaRatio);
+                    ui.Set(gachaCfg.ID);
+                });
+            }
+            else
+            {
+                RatioBtn.gameObject.SetActive(false);
+            }
             // 複数ステップアリの場合のみステップを表示
-            if(step != 0)
+            if (step != 0)
             {
                 StepText1.text = string.Format(StepTextTmpl, step);
                 Step1.gameObject.SetActive(true);
