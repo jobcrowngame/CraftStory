@@ -701,6 +701,7 @@ namespace ExcelToJson
                     LvUpExp = ToInt32(tbl.Rows[i]["LvUpExp"]),
                     Skills = ToString(tbl.Rows[i]["Skills"]),
                     PondId = ToInt32(tbl.Rows[i]["PondId"]),
+                    AddExp = ToInt32(tbl.Rows[i]["AddExp"]),
                     SecurityRange = ToInt32(tbl.Rows[i]["SecurityRange"]),
                     CallForHelpRange = ToInt32(tbl.Rows[i]["CallForHelpRange"]),
                     DazeTime = ToFloat(tbl.Rows[i]["DazeTime"]),
@@ -799,6 +800,7 @@ namespace ExcelToJson
                 {
                     ID = ToInt32(tbl.Rows[i]["ID"]),
                     ResourcesPath = ToString(tbl.Rows[i]["ResourcesPath"]),
+                    RareLevel = ToInt32(tbl.Rows[i]["RareLevel"]),
                     LeftEquipment = ToInt32(tbl.Rows[i]["LeftEquipment"]),
                     HP = ToInt32(tbl.Rows[i]["HP"]),
                     Damage = ToInt32(tbl.Rows[i]["Damage"]),
