@@ -15,6 +15,7 @@ public class GiftBoxUI : UIBase
     List<IconItemCell> cells;
     Action okBtnCallBack;
 
+
     public override void Init()
     {
         base.Init();
@@ -71,16 +72,26 @@ public class GiftBoxUI : UIBase
         }
         OKBtn.onClick.AddListener(() => 
         {
-            NWMng.E.ClearAdventure((rp) =>
+            NWMng.E.AddExp((rp) => 
             {
-                if (okBtnCallBack != null)
-                {
-                    PlayerCtl.E.Lock = false;
-                    ClearCell(itemGridRoot);
+                DataMng.E.RuntimeData.Lv = (int)rp["lv"];
+                DataMng.E.RuntimeData.Exp = (int)rp["exp"];
 
-                    okBtnCallBack();
-                }
-            }, AdventureCtl.E.BonusList);
+                // レベルアップ表現があると追加
+                // ...
+                // ...
+
+                NWMng.E.ClearAdventure((rp) =>
+                {
+                    if (okBtnCallBack != null)
+                    {
+                        PlayerCtl.E.Lock = false;
+                        ClearCell(itemGridRoot);
+
+                        okBtnCallBack();
+                    }
+                }, AdventureCtl.E.BonusList);
+            }, AdventureCtl.E.CurExp);
         });
 
         itemGridRoot = FindChiled("Content");

@@ -920,6 +920,22 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.AppraisalEquipment));
     }
 
+    /// <summary>
+    /// 経験値追加
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="exp"></param>
+    public void AddExp(Action<JsonData> rp, int exp)
+    {
+        var data = new NWData();
+        data.Add("exp", exp);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.AddExp));
+    }
+
+
+
+
 
     /// <summary>
     /// ホームデータをサーバーにセーブ
@@ -1020,6 +1036,7 @@ public partial class NWMng : MonoBehaviour
         GetEquipmentInfo,
         GetEquipmentInfoList,
         AppraisalEquipment,
+        AddExp,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

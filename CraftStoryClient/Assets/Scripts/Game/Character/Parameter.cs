@@ -15,6 +15,7 @@ public class Parameter
     public float MoveSpeed { get => config.MoveSpeed; }
 
     public int PondId { get => config.PondId; }
+    public int AddExp { get => config.AddExp; }
 
 
     public int CurHP { get; set; }

@@ -41,7 +41,7 @@ public class CharacterCtl : Single<CharacterCtl>
         }
 
         player = obj.GetComponent<CharacterPlayer>();
-        player.Init(1, CharacterBase.CharacterCamp.Player);
+        player.Init(DataMng.E.RuntimeData.Lv, CharacterBase.CharacterCamp.Player);
         var hpbar = CommonFunction.FindChiledByName<HpUIBase>(player.transform, "WorldUI");
         player.SetHpBar(hpbar);
 

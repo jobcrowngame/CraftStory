@@ -27,21 +27,9 @@ public class MapUI : UIBase
             // 冒険途中でホーム戻る場合、ボーナス計算します
             if (DataMng.E.RuntimeData.MapType == MapType.Brave)
             {
-                // 手に入れたアイテムがない場合、通信しない
-                if (AdventureCtl.E.BonusList.Count <= 0)
+                AdventureCtl.E.GetBonus(() =>
                 {
                     CommonFunction.GoToNextScene(100);
-                    return;
-                }
-
-                var ui = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox);
-                ui.AddBonus(AdventureCtl.E.BonusList);
-                ui.SetCallBack(() =>
-                {
-                    NWMng.E.GetItems(() =>
-                    {
-                        CommonFunction.GoToNextScene(100);
-                    });
                 });
             }
             else

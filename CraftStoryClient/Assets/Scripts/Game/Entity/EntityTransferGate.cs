@@ -16,21 +16,9 @@ public class EntityTransferGate : EntityBase
         var player = other.GetComponent<CharacterPlayer>();
         if (player != null)
         {
-            // 手に入れたアイテムがない場合、通信しない
-            if (AdventureCtl.E.BonusList.Count <= 0)
+            AdventureCtl.E.GetBonus(() =>
             {
                 GoToNext();
-                return;
-            }
-
-            var ui = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox);
-            ui.AddBonus(AdventureCtl.E.BonusList);
-            ui.SetCallBack(() =>
-            {
-                NWMng.E.GetItems(() =>
-                {
-                    GoToNext();
-                });
             });
         }
     }

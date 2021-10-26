@@ -45,6 +45,8 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             if (rp["comment"] != null) DataMng.E.RuntimeData.Comment = (string)rp["comment"];
             if (rp["email"] != null) DataMng.E.RuntimeData.Email = (string)rp["email"];
             if (rp["goodNum"] != null) DataMng.E.RuntimeData.MyShopGoodNum = (int)rp["goodNum"];
+            DataMng.E.RuntimeData.Lv = (int)rp["lv"];
+            DataMng.E.RuntimeData.Exp = (int)rp["exp"];
 
             // IAPMngを初期化
             IAPMng.E.Init();

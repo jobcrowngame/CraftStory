@@ -25,6 +25,16 @@ public class RuntimeData
     /// </summary>
     public string Email { get; set; }
 
+    /// <summary>
+    /// レベル
+    /// </summary>
+    public int Lv { get; set; }
+
+    /// <summary>
+    /// 経験値
+    /// </summary>
+    public int Exp { get; set; }
+
     public int NewEmailCount { get; set; } // 新しいメール数
     public int SubscriptionLv01 { get; set; } // サブスクリプション 1
     public int SubscriptionLv02 { get; set; } // サブスクリプション 2
