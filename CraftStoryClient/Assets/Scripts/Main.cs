@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using LitJson;
 
 /// <summary>
 /// メインクラス
@@ -34,13 +35,14 @@ public class Main : MonoBehaviour
 
             NWMng.E.GetVersion((rp) =>
             {
-                if (Application.version == (string)rp["version"])
+                var result = JsonMapper.ToObject<GetVersionRP>(rp.ToJson());
+                if (Application.version == result.version)
                 {
-                    LoginLg.E.Login((int)rp["IsMaintenance"]);
+                    LoginLg.E.Login(result.IsMaintenance);
                 }
                 else
                 {
-                    CommonFunction.VersionUp((string)rp["version"]);
+                    CommonFunction.VersionUp(result.version);
                 }
             });
         });
@@ -62,5 +64,12 @@ public class Main : MonoBehaviour
         Logger.Log("初期化 LoadData");
 
         yield return DataMng.E.Load();
+    }
+
+
+    private struct GetVersionRP
+    {
+        public string version { get; set; }
+        public int IsMaintenance { get; set; }
     }
 }

@@ -19,6 +19,11 @@ public class MyButton : Button
     bool isClicking;
 
     /// <summary>
+    /// アイコン
+    /// </summary>
+    Image Icon { get => GetComponent<Image>(); }
+
+    /// <summary>
     /// クリック場合のイベント
     /// </summary>
     Action<int> onClickEvent;
@@ -84,4 +89,12 @@ public class MyButton : Button
         GetComponent<Image>().color = b ? Color.white : Color.grey;
     }
 
+    /// <summary>
+    /// アイコン設定
+    /// </summary>
+    /// <param name="path">パス</param>
+    public void SetIcon(string path)
+    {
+        Icon.sprite = UICtl.ReadResources<Sprite>(path);
+    }
 }

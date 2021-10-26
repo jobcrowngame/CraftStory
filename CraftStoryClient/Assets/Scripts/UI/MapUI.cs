@@ -7,6 +7,7 @@ public class MapUI : UIBase
     Button HomeBtn { get => FindChiled<Button>("HomeBtn"); }
     Button MarketBtn { get => FindChiled<Button>("MarketBtn"); }
     Button BraveBtn { get => FindChiled<Button>("BraveBtn"); }
+    Button EquipBtn { get => FindChiled<Button>("EquipBtn"); }
     Transform SpriteAnim { get => FindChiled("SpriteAnim"); }
 
     public override void Init()
@@ -76,6 +77,11 @@ public class MapUI : UIBase
 
             if (DataMng.E.RuntimeData.MapType != MapType.Brave)
                 CommonFunction.GoToNextScene(1000);
+        });
+
+        EquipBtn.onClick.AddListener(() =>
+        {
+            UICtl.E.OpenUI<EquipUI>(UIType.Equip, UIOpenType.BeforeClose);
         });
     }
 

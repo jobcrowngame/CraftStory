@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using LitJson;
 using SimpleInputNamespace;
 using UnityEngine;
 
@@ -114,7 +115,10 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            GuideLG.E.GoTo(32);
+            //NWMng.E.AddItem((rp) => 
+            //{
+            //    NWMng.E.AddNewEquipmen((rp=> { }, ))
+            //}, 10001, 1);
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
@@ -453,27 +457,54 @@ public class PlayerCtl : MonoBehaviour
     /// <summary>
     /// 装備してるアイテム（equipType, itemData）
     /// </summary>
-    Dictionary<int, ItemData> equipedItems = new Dictionary<int, ItemData>();
+    Dictionary<int, ItemEquipmentData> equipedItems = new Dictionary<int, ItemEquipmentData>();
+
+    /// <summary>
+    /// アイテムタイプによって装備してる装備をゲット
+    /// </summary>
+    /// <param name="itemType"></param>
+    /// <returns></returns>
+    public ItemEquipmentData GetEquipByItemType(ItemType itemType)
+    {
+        if (equipedItems.ContainsKey((int)itemType))
+        {
+            return equipedItems[(int)itemType];
+        }
+        else
+        {
+            return null;
+        }
+    }
 
     /// <summary>
     /// 装備をEquip
     /// </summary>
     public void EquipEquipments()
     {
-        foreach (var item in DataMng.E.Items)
+        NWMng.E.GetEquipmentInfoList((rp) =>
         {
-            if (CommonFunction.IsEquipment(item.itemId) && item.equipSite > 0)
+            if (string.IsNullOrEmpty(rp.ToString()))
+                return;
+            else
             {
-                Equipment(item);
+                var result = JsonMapper.ToObject<List<EquipListLG.EquipListRP>>(rp.ToJson());
+                foreach (var r in result)
+                {
+                    var item = DataMng.E.GetItemByGuid(r.id);
+                    if (item != null && item.equipSite > 0)
+                    {
+                        OnEquipment(new ItemEquipmentData(r), item.equipSite);
+                    }
+                }
             }
-        }
+        });
     }
 
     /// <summary>
     /// 装備する
     /// </summary>
     /// <param name="itemId"></param>
-    public void EquipEquipment(ItemData itemData)
+    public void EquipEquipment(ItemEquipmentData itemData)
     {
         // 装備してるとスキップ
         if (itemData.equipSite > 0)
@@ -504,40 +535,62 @@ public class PlayerCtl : MonoBehaviour
     /// <param name="equipType"></param>
     private void Unequipment(Action callback, int equipType)
     {
-        // Equipmentを消す
-        NWMng.E.EquitItem((rp) =>
+        if (equipedItems.ContainsKey(equipType))
         {
-            // 装備解除
-            DataMng.E.GetItemByGuid(equipedItems[equipType].id).equipSite = 0;
-            Character.RemoveEquipment(equipedItems[equipType].Config().ReferenceID);
+            // Equipmentを消す
+            NWMng.E.EquitItem((rp) =>
+            {
 
-            if (callback != null) 
-                callback();
-        }, equipedItems[equipType].id, 0);
+                // 装備解除
+                DataMng.E.GetItemByGuid(equipedItems[equipType].id).equipSite = 0;
+                Character.RemoveEquipment(equipedItems[equipType]);
+
+                equipedItems.Remove(equipType);
+
+                if (callback != null)
+                    callback();
+            }, equipedItems[equipType].id, 0);
+        }
     }
 
     /// <summary>
     /// 装備
     /// </summary>
     /// <param name="itemData"></param>
-    private void Equipment(ItemData itemData)
+    private void Equipment(ItemEquipmentData itemData)
     {
         // 装備する
         int equipSite = (int)CommonFunction.GetEquipSite((ItemType)itemData.Config().Type);
         NWMng.E.EquitItem((rp) =>
         {
-            var equipmentConfig = ConfigMng.E.Equipment[itemData.Config().ReferenceID];
-
-            Character.EquipEquipment(equipmentConfig.ID);
-            equipedItems[itemData.Config().Type] = itemData;
             itemData.equipSite = equipSite;
 
-            // 持ち物アイテム更新
-            if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
-
-            // ホームのスキル更新
-            if (HomeLG.E.UI != null) HomeLG.E.UI.SetSkills();
+            OnEquipment(itemData, equipSite);
         }, itemData.id, equipSite);
+    }
+    private void OnEquipment(ItemEquipmentData itemData, int equipSite)
+    {
+        Character.EquipEquipment(itemData);
+        equipedItems[itemData.Config().Type] = itemData;
+        DataMng.E.GetItemByGuid(itemData.id).equipSite = equipSite;
+
+        // 持ち物アイテム更新
+        if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
+
+        // ホームのスキル更新
+        if (HomeLG.E.UI != null) HomeLG.E.UI.SetSkills();
+
+        // 装備Window更新
+        if (EquipLG.E.UI != null) EquipLG.E.UI.RefreshEquip();
+    }
+
+    /// <summary>
+    /// 装備してるアイテムゲット
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<int, ItemEquipmentData> GetEquipedItems()
+    {
+        return equipedItems;
     }
 
     #endregion

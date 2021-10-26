@@ -168,9 +168,16 @@ public class CharacterBase : MonoBehaviour
             return;
 
         var skillArr = skills.Split(',');
-        foreach (var item in skillArr)
+        foreach (var skillStr in skillArr)
         {
-            SkillList.Remove(new SkillData(int.Parse(item)));
+            for (int i = 0; i < SkillList.Count; i++)
+            {
+                if (int.Parse(skillStr) == SkillList[i].Config.ID)
+                {
+                    SkillList.Remove(SkillList[i]);
+                    break;
+                }
+            }
         }
     }
 
@@ -553,26 +560,31 @@ public class CharacterBase : MonoBehaviour
     /// 装備する
     /// </summary>
     /// <param name="equipmentId"></param>
-    public virtual void EquipEquipment(int equipmentId)
+    public virtual void EquipEquipment(ItemEquipmentData equipmentData)
     {
-        // スキル追加
-        AddSkills(ConfigMng.E.Equipment[equipmentId].Skill);
+        // デフォルトスキル追加
+        AddSkills(ConfigMng.E.Equipment[equipmentData.equipmentConfig.ID].Skill);
+        // ゲットスキル追加
+        AddSkills(equipmentData.AttachSkillsStr);
 
         // 装備ステータス追加
-        Parameter.Equipment.AddEquiptment(equipmentId);
+        Parameter.Equipment.AddEquiptment(equipmentData.equipmentConfig.ID);
     }
 
     /// <summary>
     /// 装備を消す
     /// </summary>
     /// <param name="equipmentId"></param>
-    public virtual void RemoveEquipment(int equipmentId)
+    public virtual void RemoveEquipment(ItemEquipmentData equipmentData)
     {
-        // スキル削除
-        RemoveSkills(ConfigMng.E.Equipment[equipmentId].Skill);
+        // デフォルトスキル削除
+        RemoveSkills(ConfigMng.E.Equipment[equipmentData.equipmentConfig.ID].Skill);
+
+        // ゲットスキル削除
+        RemoveSkills(equipmentData.AttachSkillsStr);
 
         // 装備ステータス削除
-        Parameter.Equipment.RemoveEquipment(equipmentId);
+        Parameter.Equipment.RemoveEquipment(equipmentData.equipmentConfig.ID);
     }
 
     #endregion

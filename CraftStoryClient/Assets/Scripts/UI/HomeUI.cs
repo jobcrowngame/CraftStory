@@ -109,10 +109,6 @@ public partial class HomeUI : UIBase
     /// </summary>
     Title2UI Title { get => FindChiled<Title2UI>("Title2"); }
 
-
-    Transform Battle { get => FindChiled("Battle"); }
-    SkillCell[] skills;
-
     /// <summary>
     /// 選択用アイテム欄ボタンリスト
     /// </summary>
@@ -363,34 +359,6 @@ public partial class HomeUI : UIBase
         }
 
         FadeinImg.gameObject.SetActive(false);
-    }
-
-    /// <summary>
-    /// スキル設定
-    /// </summary>
-    public void SetSkills()
-    {
-        int index = 0;
-        for (int i = 0; i < Battle.GetChild(0).childCount; i++)
-        {
-            if (PlayerCtl.E.Character.SkillList.Count > index)
-            {
-                if (PlayerCtl.E.Character.SkillList[index].Config.CanEquipment != 1)
-                {
-                    i--;
-                    index++;
-                    continue;
-                }
-
-                skills[i].SetBase(PlayerCtl.E.Character.SkillList[index]);
-            }
-            else
-            {
-                skills[i].SetBase(null);
-            }
-
-            index++;
-        }
     }
 
     /// <summary>

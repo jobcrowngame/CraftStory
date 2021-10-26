@@ -8,7 +8,6 @@ public class SkillCell : UIBase
     Image CDMask { get => FindChiled<Image>("CDMask"); }
     Text CD { get => FindChiled<Text>("CD"); }
     Image CanNotUse { get => FindChiled<Image>("CanNotUse"); }
-    Image Lock { get => FindChiled<Image>("Lock"); }
 
     SkillData mSkill;
     SkillData baseSkill;
@@ -17,7 +16,7 @@ public class SkillCell : UIBase
     {
         btn.onClick.AddListener(() =>
         {
-            if (mSkill.IsCooling || PlayerCtl.E.Character.ShareCDIsCooling)
+            if (mSkill == null || mSkill.IsCooling || PlayerCtl.E.Character.ShareCDIsCooling)
                 return;
 
             PlayerCtl.E.UserSkill(mSkill);
@@ -60,9 +59,8 @@ public class SkillCell : UIBase
     private void IsNull()
     {
         CD.text = "";
-
-        // ÉçÉbÉNÇ≥ÇÍÇƒÇÈ
-        Lock.gameObject.SetActive(true);
+        CDMask.fillAmount = 0;
+        Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Skill[0].Icon);
     }
 
     public void RefreshCD(float curCD)

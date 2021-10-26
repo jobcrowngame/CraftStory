@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\Common\SaveLoadFile.cs" />
     <Compile Include="Assets\Scripts\Manager\DataMng.cs" />
     <Compile Include="Assets\Scripts\Test\TestRender.cs" />
+    <Compile Include="Assets\Scripts\UI\EquipLG.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintReNameUI.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion1.cs" />
     <Compile Include="Assets\Scripts\Manager\ResourcesMng.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Assets\Scripts\UI\Common\WaitingUI.cs" />
     <Compile Include="Assets\Scripts\Game\Player\CameraCtl.cs" />
     <Compile Include="Assets\Scripts\UI\ChatUI.cs" />
+    <Compile Include="Assets\Scripts\UI\EquipListUI.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusUI.cs" />
     <Compile Include="Assets\Scripts\UI\GachaVerificationLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\TransferGate.cs" />
@@ -183,6 +185,7 @@
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
     <Compile Include="Assets\Scripts\UI\FriendSearchLG.cs" />
+    <Compile Include="Assets\Scripts\UI\EquipSkillCell.cs" />
     <Compile Include="Assets\Scripts\UI\ShopResourceLG.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyButton.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintLG.cs" />
@@ -224,6 +227,7 @@
     <Compile Include="Assets\Scripts\Game\Map\MapCtl.cs" />
     <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityDefalt.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\GachaTabs.cs" />
     <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Character.cs" />
     <Compile Include="Assets\Scripts\UI\MapUI.cs" />
@@ -247,10 +251,12 @@
     <Compile Include="Assets\Scripts\Game\Entity\EntityTreasureBox.cs" />
     <Compile Include="Assets\Scripts\Test\minecraftLocomotion.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Equipment.cs" />
+    <Compile Include="Assets\RPG VFX Particles package 1\Demo\RPG_VFX_Particles_package_1_Demo.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Chat.cs" />
     <Compile Include="Assets\Scripts\UI\DebugCell.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerController.cs" />
     <Compile Include="Assets\Scripts\UI\GachaRatioUI.cs" />
+    <Compile Include="Assets\Scripts\UI\EquipListCell.cs" />
     <Compile Include="Assets\Scripts\UI\CraftItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\FriednCell.cs" />
     <Compile Include="Assets\Scripts\Test\Locomotion2.cs" />
@@ -302,12 +308,15 @@
     <Compile Include="Assets\Scripts\UI\NowLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\SceneMain\HomeMain.cs" />
     <Compile Include="Assets\Scripts\UI\Battle\HpUIBase.cs" />
+    <Compile Include="Assets\Scripts\UI\EquipUI.cs" />
     <Compile Include="Assets\Scripts\UI\MissionChatUI.cs" />
     <Compile Include="Assets\Scripts\UI\Battle\Damage.cs" />
     <Compile Include="Assets\Scripts\Game\Character\ImpactCell.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxUI.cs" />
     <Compile Include="Assets\Scripts\Test\SaveTest.cs" />
+    <Compile Include="Assets\Scripts\UI\EquipListLG.cs" />
     <Compile Include="Assets\Scripts\UI\MissionCell.cs" />
+    <Compile Include="Assets\Scripts\Data\ItemEquipmentData.cs" />
     <Compile Include="Assets\Scripts\Test\Test3.cs" />
     <Compile Include="Assets\Scripts\UI\CraftCostCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestCollider.cs" />
@@ -321,8 +330,6 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\GachaTabs.cs" />
-    <Compile Include="Assets\RPG VFX Particles package 1\Demo\RPG_VFX_Particles_package_1_Demo.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

@@ -55,10 +55,10 @@ public partial class CharacterPlayer : CharacterBase
         weaponL = CommonFunction.FindChiledByName(transform, "Weapon_L").transform;
         weaponR = CommonFunction.FindChiledByName(transform, "Weapon_R").transform;
 
-        Behavior = BehaviorType.Waiting;
-
         // 装備する
         PlayerCtl.E.EquipEquipments();
+
+        Behavior = BehaviorType.Waiting;
     }
 
     public override void OnBehaviorChange(BehaviorType behavior)
@@ -110,42 +110,26 @@ public partial class CharacterPlayer : CharacterBase
             });
     }
 
-    /// <summary>
-    /// 装備する場合
-    /// </summary>
-    /// <param name="equipmentId"></param>
-    public override void EquipEquipment(int equipmentId)
+    public override void EquipEquipment(ItemEquipmentData equipmentData)
     {
-        base.EquipEquipment(equipmentId);
+        base.EquipEquipment(equipmentData);
 
-        var equipmentConfig = ConfigMng.E.Equipment[equipmentId];
-        if (string.IsNullOrEmpty(equipmentConfig.ResourcesPath) || equipmentConfig.ResourcesPath == "N")
+        CommonFunction.ClearCell(weaponL);
+        CommonFunction.ClearCell(weaponR);
+
+        if (string.IsNullOrEmpty(equipmentData.equipmentConfig.ResourcesPath) || equipmentData.equipmentConfig.ResourcesPath == "N")
             return;
 
         // どの手に装備するか
-        Transform parent = equipmentConfig.LeftEquipment == 1 ? weaponL : weaponR;
+        Transform parent = equipmentData.equipmentConfig.LeftEquipment == 1 ? weaponL : weaponR;
 
         // オブジェクトをインスタンス
-        var obj = CommonFunction.Instantiate(equipmentConfig.ResourcesPath, parent, Vector3.zero);
+        var obj = CommonFunction.Instantiate(equipmentData.equipmentConfig.ResourcesPath, parent, Vector3.zero);
         if (obj != null)
         {
             obj.transform.localPosition = Vector3.zero;
             obj.transform.localEulerAngles = Vector3.zero;
         }
-    }
-
-    /// <summary>
-    /// 装備解除場合
-    /// </summary>
-    /// <param name="equipmentId"></param>
-    public override void RemoveEquipment(int equipmentId)
-    {
-        base.RemoveEquipment(equipmentId);
-
-        var equipmentConfig = ConfigMng.E.Equipment[equipmentId];
-
-        CommonFunction.ClearCell(weaponL);
-        CommonFunction.ClearCell(weaponR);
     }
 
     /// <summary>

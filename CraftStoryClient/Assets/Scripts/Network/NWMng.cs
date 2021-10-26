@@ -43,7 +43,7 @@ public partial class NWMng : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.TestURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.ProductionURL))
         {
             yield return www.SendWebRequest();
 
@@ -884,6 +884,44 @@ public partial class NWMng : MonoBehaviour
     }
 
     /// <summary>
+    /// 装備データをゲット
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="itemGuid">アイテムGUID</param>
+    public void GetEquipmentInfo(Action<JsonData> rp, int itemGuid)
+    {
+        var data = new NWData();
+        data.Add("itemGuid", itemGuid);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetEquipmentInfo));
+    }
+
+    /// <summary>
+    /// 装備一覧ゲット
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="itemGuid"></param>
+    public void GetEquipmentInfoList(Action<JsonData> rp)
+    {
+        var data = new NWData();
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetEquipmentInfoList));
+    }
+
+    /// <summary>
+    /// 装備鑑定
+    /// </summary>
+    public void AppraisalEquipment(Action<JsonData> rp, int itemGuid, int equipmentId)
+    {
+        var data = new NWData();
+        data.Add("itemGuid", itemGuid);
+        data.Add("equipmentId", equipmentId);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.AppraisalEquipment));
+    }
+
+
+    /// <summary>
     /// ホームデータをサーバーにセーブ
     /// </summary>
     /// <param name="rp"></param>
@@ -979,6 +1017,9 @@ public partial class NWMng : MonoBehaviour
         GetGacha,
         GetAllShopLimitedCounts = 1050,
         GetShopLimitedCount,
+        GetEquipmentInfo,
+        GetEquipmentInfoList,
+        AppraisalEquipment,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

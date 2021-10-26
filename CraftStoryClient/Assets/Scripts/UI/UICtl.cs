@@ -229,6 +229,8 @@ public class UICtl : Single<UICtl>
             case UIType.ShopBlueprintMyShopUpload: return "Prefabs/UI/ShopBlueprintMyShopUpload";
             case UIType.Chat: return "Prefabs/UI/Chat";
             case UIType.Market: return "Prefabs/UI/Market";
+            case UIType.Equip: return "Prefabs/UI/Equip";
+            case UIType.EquipList: return "Prefabs/UI/EquipList";
 
 
 
@@ -258,6 +260,21 @@ public class UICtl : Single<UICtl>
             }
         }
     }
+
+    #region public function
+
+    /// <summary>
+    /// アセットをロード
+    /// </summary>
+    /// <typeparam name="T">アセットタイプ</typeparam>
+    /// <param name="resourcesPath">パス</param>
+    /// <returns></returns>
+    public static T ReadResources<T>(string resourcesPath) where T : Object
+    {
+        return ResourcesMng.E.ReadResources<T>(resourcesPath);
+    }
+
+    #endregion
 }
 
 public enum UIOpenType
@@ -314,4 +331,6 @@ public enum UIType
     ShopBlueprintMyShopUpload,
     Chat,
     Market,
+    Equip,
+    EquipList,
 }

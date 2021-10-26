@@ -35,11 +35,6 @@ public class BagItemCell : UIBase
             GuideLG.E.Next();
         });
 
-        EquipBtn.onClick.AddListener(() =>
-        {
-            PlayerCtl.E.EquipEquipment(ItemData);
-        });
-
         Lock.gameObject.SetActive(itemData.islocked == 1);
 
         if (itemData == null)
