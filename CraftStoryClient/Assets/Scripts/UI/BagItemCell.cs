@@ -10,7 +10,6 @@ public class BagItemCell : UIBase
     Text itemCount { get => FindChiled<Text>("Count"); }
     Image Icon { get => FindChiled<Image>("Icon"); }
     Button clickBtn { get => transform.GetComponent<Button>(); }
-    Button EquipBtn { get => FindChiled<Button>("EquipBtn"); }
     Transform selected { get => FindChiled("Select"); }
     Transform Lock { get => FindChiled("Lock"); }
     Transform Equiped { get => FindChiled("Equiped"); }
@@ -62,10 +61,5 @@ public class BagItemCell : UIBase
     public void IsSelected(bool b)
     {
         selected.gameObject.SetActive(b);
-
-        if (CommonFunction.IsEquipment(ItemData.itemId))
-        {
-            EquipBtn.gameObject.SetActive(b);
-        }
     }
 }

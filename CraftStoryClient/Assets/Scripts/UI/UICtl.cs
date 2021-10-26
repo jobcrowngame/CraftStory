@@ -231,9 +231,8 @@ public class UICtl : Single<UICtl>
             case UIType.Market: return "Prefabs/UI/Market";
             case UIType.Equip: return "Prefabs/UI/Equip";
             case UIType.EquipList: return "Prefabs/UI/EquipList";
-
-
-
+            case UIType.SkillExplanation: return "Prefabs/UI/SkillExplanation";
+                
             default: Logger.Error("not find UIType " + ui); return "";
         }
     }
@@ -333,4 +332,5 @@ public enum UIType
     Market,
     Equip,
     EquipList,
+    SkillExplanation,
 }

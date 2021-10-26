@@ -5,6 +5,7 @@ namespace JsonConfigData
     public class Skill : ConfigBase
     {
         public string Icon { get; set; }
+        public string Name { get; set; }
         public int Type { get; set; }
         public string Impact { get; set; }
         public int Animation { get; set; }
@@ -29,5 +30,6 @@ namespace JsonConfigData
         public float DelayDamageTime { get; set; }
         public int NextSkill { get; set; }
         public int CanEquipment { get; set; }
+        public string Des { get; set; }
     }
 }

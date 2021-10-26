@@ -11,7 +11,7 @@ public class EquipSkillCell : UIBase
     {
         MyButton.AddClickListener((i) =>
         {
-            Logger.Warning("スキル説明");
+            UICtl.E.OpenUI<SkillExplanationUI>(UIType.SkillExplanation, UIOpenType.None, skillId);
         });
     }
 
