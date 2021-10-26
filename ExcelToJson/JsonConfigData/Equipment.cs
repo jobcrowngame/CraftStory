@@ -10,5 +10,6 @@ namespace JsonConfigData
         public int Damage { get; set; }
         public int Defnse { get; set; }
         public string Skill { get; set; }
+        public int PondId { get; set; }
     }
 }
