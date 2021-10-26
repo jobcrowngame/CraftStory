@@ -5,6 +5,7 @@ public class EquipUI : UIBase
 {
     TitleUI Title { get => FindChiled<TitleUI>("Title"); }
     Text Level { get => FindChiled<Text>("Level"); }
+    Text Exp { get => FindChiled<Text>("Exp"); }
     Text HP { get => FindChiled<Text>("HP"); }
     Text Damage { get => FindChiled<Text>("Damage"); }
     Text Defense { get => FindChiled<Text>("Defense"); }
@@ -57,7 +58,11 @@ public class EquipUI : UIBase
     /// </summary>
     private void RefreshParameter()
     {
-        Level.text = "レベル：" + PlayerCtl.E.Character.Parameter.Level;
+        Level.text = "レベル：" + DataMng.E.RuntimeData.Lv;
+
+        int nextExp = ConfigMng.E.Character[PlayerCtl.E.Character.Parameter.Level].LvUpExp;
+        Exp.text = string.Format("Exp：{0}/{1}", DataMng.E.RuntimeData.Exp, nextExp);
+
         HP.text = "HP：" + PlayerCtl.E.Character.Parameter.MaxHP;
         Damage.text = "攻撃力：" + PlayerCtl.E.Character.Parameter.Damage;
         Defense.text = "防御力：" + PlayerCtl.E.Character.Parameter.Defense;
