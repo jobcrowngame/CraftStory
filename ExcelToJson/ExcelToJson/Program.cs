@@ -806,7 +806,7 @@ namespace ExcelToJson
                     Damage = ToInt32(tbl.Rows[i]["Damage"]),
                     Defnse = ToInt32(tbl.Rows[i]["Defnse"]),
                     Skill = ToString(tbl.Rows[i]["Skill"]),
-                    PondId = ToInt32(tbl.Rows[i]["PondId"]),
+                    PondId = ToString(tbl.Rows[i]["PondId"]),
                 };
 
                 list.Add(data);
