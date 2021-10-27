@@ -18,14 +18,18 @@ public class GachaVerificationUI : UIBase
     Button CancelBtn { get => FindChiled<Button>("CancelBtn"); }
     Button ChageBtn { get => FindChiled<Button>("ChageBtn"); }
 
+    Text LackText { get => FindChiled<Text>("LackText"); }
+
     Image CostImage1 { get => FindChiled<Image>("CostImage1"); } // ガチャボタン内のコストのアイコン(一番右)
     Image CostImage2 { get => FindChiled<Image>("CostImage2"); } // ガチャボタン内のコストのアイコン(その左隣)
+    Image CostImage3 { get => FindChiled<Image>("CostImage3"); } // ガチャボタン内のコストのアイコン(不足時)
 
     int mGachaId;
     int mGachaGroup;
     Gacha gachaConfig;
     string des = @"{0}を{1}個消費して、
 {2}を実行します。";
+    string lackTextTmpl = "{0}が不足しています。";
 
     public override void Init()
     {
@@ -34,9 +38,18 @@ public class GachaVerificationUI : UIBase
         Title.SetTitle("ガチャ");
         Title.SetOnClose(() => { Close(); });
 
-        OkBtn.onClick.AddListener(() => 
+        OkBtn.onClick.AddListener(() =>
         {
-            if (DataMng.E.RuntimeData.Coin1 < gachaConfig.CostCount)
+            int costId = gachaConfig.Cost;
+            int coinRemain =
+                costId == 9000 ? DataMng.E.RuntimeData.Coin1 :
+                costId == 9001 ? DataMng.E.RuntimeData.Coin2 :
+                costId == 9002 ? DataMng.E.RuntimeData.Coin3 :
+                costId == 9003 ? (DataMng.E.GetItemByItemId(costId) != null ? DataMng.E.GetItemByItemId(costId).count : 0) :
+                0;
+
+
+            if (coinRemain < gachaConfig.CostCount)
             {
                 CommonFunction.ShowHintBar(1010001);
                 return;
@@ -60,19 +73,8 @@ public class GachaVerificationUI : UIBase
         mGachaGroup = gachaGroup;
 
         gachaConfig = ConfigMng.E.Gacha[mGachaId];
-        Des.text = string.Format(des, ConfigMng.E.Item[gachaConfig.Cost].Name, gachaConfig.CostCount, gachaConfig.Title);
-
-        GachaVerificationLG.UIType uiType = DataMng.E.RuntimeData.Coin1 >= gachaConfig.CostCount
-            ? GachaVerificationLG.UIType.Type1
-            : GachaVerificationLG.UIType.Type2;
-
-        CostWindow1.gameObject.SetActive(uiType == GachaVerificationLG.UIType.Type1);
-        CostWindow2.gameObject.SetActive(uiType == GachaVerificationLG.UIType.Type2);
-        CostImage1.sprite = ReadResources<Sprite>(ConfigMng.E.Item[gachaConfig.Cost].IconResourcesPath);
-        CostImage2.sprite = ReadResources<Sprite>(ConfigMng.E.Item[gachaConfig.Cost].IconResourcesPath);
-
-        OkBtn.gameObject.SetActive(uiType == GachaVerificationLG.UIType.Type1);
-        ChageBtn.gameObject.SetActive(uiType == GachaVerificationLG.UIType.Type2);
+        string confItemName = ConfigMng.E.Item[gachaConfig.Cost].Name;
+        Des.text = string.Format(des, confItemName, gachaConfig.CostCount, gachaConfig.Title);
 
         int costId = gachaConfig.Cost;
         int coinRemain =
@@ -81,6 +83,21 @@ public class GachaVerificationUI : UIBase
             costId == 9002 ? DataMng.E.RuntimeData.Coin3 :
             costId == 9003 ? (DataMng.E.GetItemByItemId(costId) != null ? DataMng.E.GetItemByItemId(costId).count : 0) :
             0;
+
+        GachaVerificationLG.UIType uiType = coinRemain >= gachaConfig.CostCount
+            ? GachaVerificationLG.UIType.Type1
+            : GachaVerificationLG.UIType.Type2;
+
+        CostWindow1.gameObject.SetActive(uiType == GachaVerificationLG.UIType.Type1);
+        CostWindow2.gameObject.SetActive(uiType == GachaVerificationLG.UIType.Type2);
+        CostImage1.sprite = ReadResources<Sprite>(ConfigMng.E.Item[gachaConfig.Cost].IconResourcesPath);
+        CostImage2.sprite = ReadResources<Sprite>(ConfigMng.E.Item[gachaConfig.Cost].IconResourcesPath);
+        CostImage3.sprite = ReadResources<Sprite>(ConfigMng.E.Item[gachaConfig.Cost].IconResourcesPath);
+
+        OkBtn.gameObject.SetActive(uiType == GachaVerificationLG.UIType.Type1);
+        ChageBtn.gameObject.SetActive(uiType == GachaVerificationLG.UIType.Type2 && costId == 9000);
+
+        LackText.text = string.Format(lackTextTmpl, confItemName);
 
         Count1.text = coinRemain.ToString();
         Count2.text = (coinRemain - gachaConfig.CostCount).ToString();
