@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,14 +6,17 @@ public class BraveMain : MonoBehaviour
 {
     void Start()
     {
-        // ŠÔƒAƒNƒeƒBƒui’‹A–é·‚µ‘Ö‚¦j
+        // æ™‚é–“ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ï¼ˆæ˜¼ã€å¤œå·®ã—æ›¿ãˆï¼‰
         WorldMng.E.GameTimeCtl.Active = false;
 
-        // ƒIƒuƒWƒFƒNƒg‚ğ¶¬
+        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
         WorldMng.E.CreateGameObjects();
 
         UICtl.E.OpenUI<HomeUI>(UIType.Home);
 
         AudioMng.E.ShowBGM("bgm_02");
+
+        // å†’é™ºã‚¨ãƒªã‚¢æœ€å¤§ãƒ¬ãƒ™ãƒ«çµ±è¨ˆ
+        NWMng.E.ArriveFloor(null, DataMng.E.MapData.Config.Floor);
     }
 }

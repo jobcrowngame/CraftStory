@@ -360,7 +360,7 @@ public partial class NWMng : MonoBehaviour
     /// </summary>
     /// <param name="rp"></param>
     /// <param name="resources"></param>
-    public void ClearAdventure(Action<JsonData> rp, List<int> resources, int arrivedFloor)
+    public void ClearAdventure(Action<JsonData> rp, List<int> resources)
     {
         var data = new NWData();
 
@@ -378,7 +378,6 @@ public partial class NWMng : MonoBehaviour
             msg = "-1";
         }
         data.Add("bonusList", msg);
-        data.Add("arrivedFloor", arrivedFloor);
 
         StartCoroutine(HttpRequest(rp, data, CMD.ClearAdventure));
     }
@@ -933,6 +932,20 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.AddExp));
     }
+
+    /// <summary>
+    /// 冒険エリアに入る場合
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="exp"></param>
+    public void ArriveFloor(Action<JsonData> rp, int arrivedFloor)
+    {
+        var data = new NWData();
+        data.Add("arrivedFloor", arrivedFloor);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.AddExp));
+    }
+
 
 
 
