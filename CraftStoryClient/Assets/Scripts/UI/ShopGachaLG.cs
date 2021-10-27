@@ -20,7 +20,18 @@ public class ShopGachaLG : UILogicBase<ShopGachaLG, ShopGachaUI>
         set
         {
             mIndex = 0;
-            UI.ToggleBtns1.SetValue(0);
+            try
+            {
+                UI.ToggleBtns1.OnValueChangeAddListener(null);
+                UI.ToggleBtns1.SetValue(0);
+            } 
+            finally
+            {
+                UI.ToggleBtns1.OnValueChangeAddListener((index) =>
+                {
+                    ShopGachaLG.E.Index = index;
+                });
+            }
 
             mGachaType = value;
 
@@ -40,7 +51,7 @@ public class ShopGachaLG : UILogicBase<ShopGachaLG, ShopGachaUI>
     }
     public struct GacheBonusData
     {
-        public int bonusId { get; set; }
+        public string bonusId { get; set; }
         public int rare { get; set; }
     }
 }

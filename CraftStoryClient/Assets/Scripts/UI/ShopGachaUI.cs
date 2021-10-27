@@ -34,10 +34,6 @@ public class ShopGachaUI : UIBase
         Title.ShowCoin(2);
 
         ToggleBtns1.Init();
-        ToggleBtns1.OnValueChangeAddListener((index) =>
-        {
-            ShopGachaLG.E.Index = index;
-        });
 
         ToggleBtns2.Init();
         ToggleBtns2.OnValueChangeAddListener((index) =>

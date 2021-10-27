@@ -56,7 +56,7 @@ public class GachaBonusUI : UIBase
             var cell = AddCell<GachaBonusCell>("Prefabs/UI/GachaBonusCell", Parent);
             if (cell != null)
             {
-                var config = ConfigMng.E.Bonus[item.bonusId];
+                var config = ConfigMng.E.Bonus[int.Parse(item.bonusId)];
 
                 // レベルアップするかの判断
                 var random = Random.Range(0, 100);
