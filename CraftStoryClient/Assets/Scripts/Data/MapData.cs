@@ -367,7 +367,10 @@ public class MapData
     public void OnClear()
     {
         if (TransferGate != null)
+        {
             TransferGate.gameObject.SetActive(true);
+            PlayerCtl.E.Character.ShowArrow(TransferGate.transform);
+        }
     }
 
     [Serializable]
