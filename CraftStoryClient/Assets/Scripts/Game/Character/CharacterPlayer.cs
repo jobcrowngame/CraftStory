@@ -27,6 +27,9 @@ public partial class CharacterPlayer : CharacterBase
     }
     private CharacterBase mTarget;
 
+    private Transform Arrow;
+    private Transform ArrowTarget;
+
     public bool IsGrand;
 
     // モジュールのアクティブ
@@ -52,6 +55,7 @@ public partial class CharacterPlayer : CharacterBase
     private void Awake()
     {
         animator = CommonFunction.FindChiledByName<Animator>(transform, "Model");
+        Arrow = CommonFunction.FindChiledByName(transform, "Arrow").transform;
     }
 
     public override void Init(int characterId, CharacterCamp camp)
@@ -66,6 +70,8 @@ public partial class CharacterPlayer : CharacterBase
         PlayerCtl.E.EquipEquipments();
 
         Behavior = BehaviorType.Waiting;
+
+        ShowArrow(null, false);
     }
 
     public override void OnBehaviorChange(BehaviorType behavior)
@@ -93,6 +99,13 @@ public partial class CharacterPlayer : CharacterBase
         if (moveing)
         {
             PlayerMove();
+        }
+
+        if (ArrowTarget != null)
+        {
+            var start = new Vector2(transform.position.x, transform.position.z);
+            var end = new Vector2(ArrowTarget.position.x, ArrowTarget.position.z);
+            Arrow.eulerAngles = new Vector3(0,270 - CommonFunction.Vector2ToAngle(start - end),0);
         }
     }
 
@@ -225,6 +238,16 @@ public partial class CharacterPlayer : CharacterBase
         {
             deleteEffect.gameObject.SetActive(b);
         }
+    }
+
+    /// <summary>
+    /// 矢印
+    /// </summary>
+    /// <param name="b"></param>
+    public void ShowArrow(Transform target, bool b = true)
+    {
+        Arrow.gameObject.SetActive(b);
+        ArrowTarget = target;
     }
 
     Vector3 targetPos;
