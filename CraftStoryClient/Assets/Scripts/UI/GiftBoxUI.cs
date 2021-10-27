@@ -90,7 +90,7 @@ public class GiftBoxUI : UIBase
 
                         okBtnCallBack();
                     }
-                }, AdventureCtl.E.BonusList);
+                }, AdventureCtl.E.BonusList, DataMng.E.MapData.Config.Floor);
             }, AdventureCtl.E.CurExp);
         });
 

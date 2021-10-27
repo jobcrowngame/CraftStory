@@ -4,6 +4,7 @@ namespace JsonConfigData
     public class Map : ConfigBase
     {
         public string Name { get; set; }
+        public int Floor { get; set; }
         public int MapType { get; set; }
         public int SizeX { get; set; }
         public int SizeY { get; set; }

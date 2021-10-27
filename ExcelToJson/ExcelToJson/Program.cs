@@ -235,6 +235,7 @@ namespace ExcelToJson
                 data.ID =               ToInt32(tbl.Rows[i]["ID"]);
                 data.MapType =          ToInt32(tbl.Rows[i]["MapType"]);
                 data.Name =             ToString(tbl.Rows[i]["Name"]);
+                data.Floor =            ToInt32(tbl.Rows[i]["Floor"]);
                 data.SizeX =            ToInt32(tbl.Rows[i]["SizeX"]);
                 data.SizeY =            ToInt32(tbl.Rows[i]["SizeY"]);
                 data.SizeZ =            ToInt32(tbl.Rows[i]["SizeZ"]);
