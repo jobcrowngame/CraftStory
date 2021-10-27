@@ -424,6 +424,8 @@ public class MapCtl
         if (pos.z > mData.GetMapSize().z - offset)
             pos.z = mData.GetMapSize().z - offset;
 
+        pos.y = GetVertexY(mData, (int)pos.x, (int)pos.z);
+
         return pos;
     }
     /// <summary>
@@ -439,15 +441,7 @@ public class MapCtl
         if (posX < 0) posX = UnityEngine.Random.Range(0, mapData.SizeX);
         if (posZ < 0) posZ = UnityEngine.Random.Range(0, mapData.SizeZ);
 
-        int posY = 0;
-        for (int i = mapData.SizeY - 1; i >= 0; i--)
-        {
-            if (mapData.Map[posX, i, posZ].entityID == 0)
-                continue;
-
-            posY = (int)(i + 1 + offsetY);
-            break;
-        }
+        int posY = GetVertexY(mapData, posX, posZ);
 
         Vector3Int newPos = new Vector3Int(posX, posY, posZ);
         if (!CheckCreatePos(mapData, newPos))
@@ -457,18 +451,9 @@ public class MapCtl
             {
                 posX = UnityEngine.Random.Range(0, mapData.SizeX);
                 posZ = UnityEngine.Random.Range(0, mapData.SizeZ);
-
-                posY = 0;
-                for (int i = mapData.SizeY - 1; i >= 0; i--)
-                {
-                    if (mapData.Map[posX, i, posZ].entityID == 0)
-                        continue;
-
-                    posY = (int)(i + 1 + offsetY);
-                    break;
-                }
-
+                posY = GetVertexY(mapData, posX, posZ);
                 newPos = new Vector3Int(posX, posY, posZ);
+
                 if (CheckCreatePos(mapData, newPos))
                     break;
             }
@@ -476,6 +461,20 @@ public class MapCtl
 
         return newPos;
     }
+    private static int GetVertexY(MapData mapData, int x, int z)
+    {
+        int y = 0;
+        for (int i = mapData.SizeY - 1; i >= 0; i--)
+        {
+            if (mapData.Map[x, i, z].entityID == 0)
+                continue;
+
+            y = i + 1;
+            break;
+        }
+        return y;
+    }
+
     /// <summary>
     /// 生成できるかのチェック
     /// </summary>

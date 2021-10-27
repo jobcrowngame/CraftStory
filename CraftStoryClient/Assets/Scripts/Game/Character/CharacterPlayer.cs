@@ -15,7 +15,7 @@ public partial class CharacterPlayer : CharacterBase
     private Transform weaponR;
 
     // アニメション
-    private Animator animator { get => CommonFunction.FindChiledByName<Animator>(transform, "Model"); }
+    private Animator animator;
 
     public CharacterBase Target
     {
@@ -49,6 +49,11 @@ public partial class CharacterPlayer : CharacterBase
         }
     }
 
+    private void Awake()
+    {
+        animator = CommonFunction.FindChiledByName<Animator>(transform, "Model");
+    }
+
     public override void Init(int characterId, CharacterCamp camp)
     {
         base.Init(characterId, camp);
@@ -77,7 +82,7 @@ public partial class CharacterPlayer : CharacterBase
             EffectMng.E.RemoveDestroyEffect();
         }
 
-        animator.SetInteger("State", (int)behavior);
+        if (animator != null) animator.SetInteger("State", (int)behavior);
     }
     public override void OnUpdate()
     {
