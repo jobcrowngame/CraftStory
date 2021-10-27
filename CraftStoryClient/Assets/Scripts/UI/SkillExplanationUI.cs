@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class SkillExplanationUI : UIBase
@@ -17,7 +17,7 @@ public class SkillExplanationUI : UIBase
 
         SkillExplanationLG.E.Init(this);
 
-        Title.SetTitle("ƒXƒLƒ‹à–¾");
+        Title.SetTitle("ã‚¹ã‚­ãƒ«èª¬æ˜");
         Title.SetOnClose(Close);
     }
 
