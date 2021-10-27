@@ -56,6 +56,8 @@ public class CharacterMonster : CharacterBase
         // 経験値手に入る
         AdventureCtl.E.AddExp(Parameter.AddExp);
 
+        CharacterCtl.E.MonsterDied();
+
         StartCoroutine(DiedIE());
     }
 

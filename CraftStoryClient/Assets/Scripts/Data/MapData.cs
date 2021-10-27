@@ -27,6 +27,8 @@ public class MapData
     [NonSerialized]
     Dictionary<Vector3Int, EntityBase> entityDic = new Dictionary<Vector3Int, EntityBase>();
 
+    public EntityBase TransferGate { get; set; }
+
     public MapData(int mapID)
     {
         id = mapID;
@@ -265,6 +267,13 @@ public class MapData
 #endif
         }
 
+        // 転送門の場合、保存
+        if ((EntityType)config.Type == EntityType.TransferGate)
+        {
+            TransferGate = entity;
+            TransferGate.gameObject.SetActive(false);
+        }
+
         return entity;
     }
     /// <summary>
@@ -350,6 +359,14 @@ public class MapData
         Logger.Log("Map");
         Logger.Log(strMap);
         return strMap;
+    }
+
+    /// <summary>
+    /// クリアする場合
+    /// </summary>
+    public void OnClear()
+    {
+        TransferGate.gameObject.SetActive(true);
     }
 
     [Serializable]

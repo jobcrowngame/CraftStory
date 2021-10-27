@@ -10,6 +10,8 @@ public class CharacterCtl : Single<CharacterCtl>
     private CharacterPlayer player;
     private List<CharacterBase> characterList = new List<CharacterBase>();
 
+    private int RemainingNumber = 0;
+
     public void CreateCharacter()
     {
         AddPlayer();
@@ -62,6 +64,7 @@ public class CharacterCtl : Single<CharacterCtl>
     {
         var characterGeneratedStr = DataMng.E.MapData.Config.CharacterGenerated;
         string[] characterGenerated = characterGeneratedStr.Split(',');
+        RemainingNumber = characterGenerated.Length;
         foreach (var item in characterGenerated)
         {
             if (item == "N")
@@ -100,6 +103,18 @@ public class CharacterCtl : Single<CharacterCtl>
             monster.Init(characterCfg.ID, CharacterBase.CharacterCamp.Monster);
             monster.SetHpBar(CommonFunction.FindChiledByName<HpUIBase>(monster.transform, "WorldUI"));
             characterList.Add(monster);
+        }
+    }
+
+    /// <summary>
+    /// モンスターを倒す場合
+    /// </summary>
+    public void MonsterDied()
+    {
+        RemainingNumber--;
+        if (RemainingNumber == 0)
+        {
+            DataMng.E.MapData.OnClear();
         }
     }
 

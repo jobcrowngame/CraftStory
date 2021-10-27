@@ -943,7 +943,7 @@ public partial class NWMng : MonoBehaviour
         var data = new NWData();
         data.Add("arrivedFloor", arrivedFloor);
 
-        StartCoroutine(HttpRequest(rp, data, CMD.AddExp));
+        StartCoroutine(HttpRequest(rp, data, CMD.ArriveFloor));
     }
 
 
@@ -1051,6 +1051,7 @@ public partial class NWMng : MonoBehaviour
         GetEquipmentInfoList,
         AppraisalEquipment,
         AddExp,
+        ArriveFloor,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,
