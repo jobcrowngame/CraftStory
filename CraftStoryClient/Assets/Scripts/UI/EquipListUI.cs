@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 public class EquipListUI : UIBase
@@ -23,7 +23,7 @@ public class EquipListUI : UIBase
 
         itemType = (ItemType)data;
 
-        Title.SetTitle("‘•”õˆê——");
+        Title.SetTitle("è£…å‚™ä¸€è¦§");
         Title.SetOnClose(Close);
 
         EquipListLG.E.GetList();
