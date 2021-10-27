@@ -104,6 +104,8 @@ public class CharacterCtl : Single<CharacterCtl>
             monster.SetHpBar(CommonFunction.FindChiledByName<HpUIBase>(monster.transform, "WorldUI"));
             characterList.Add(monster);
         }
+
+        CheckMapClear();
     }
 
     /// <summary>
@@ -112,6 +114,11 @@ public class CharacterCtl : Single<CharacterCtl>
     public void MonsterDied()
     {
         RemainingNumber--;
+        CheckMapClear();
+    }
+
+    private void CheckMapClear()
+    {
         if (RemainingNumber == 0)
         {
             DataMng.E.MapData.OnClear();
