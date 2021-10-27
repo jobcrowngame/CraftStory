@@ -69,12 +69,20 @@ public enum ItemType
 {
     None = 0,
     Block = 1,
-    Material = 2,
-    Flower = 3,
-    BigFlower = 4,
-    Grass = 5,
-    BuilderPencil = 50,
+
+    /// <summary>
+    /// 素材
+    /// </summary>
+    Resource = 2,
+
+    /// <summary>
+    /// 空の設計図
+    /// </summary>
     NullBlueprint = 51,
+
+    /// <summary>
+    /// 設計図
+    /// </summary>
     Blueprint = 52,
 
     /// <summary>

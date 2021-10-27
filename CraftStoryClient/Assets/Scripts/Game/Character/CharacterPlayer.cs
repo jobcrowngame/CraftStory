@@ -27,6 +27,8 @@ public partial class CharacterPlayer : CharacterBase
     }
     private CharacterBase mTarget;
 
+    public bool IsGrand;
+
     // モジュールのアクティブ
     public bool ShowModel
     {
@@ -80,6 +82,8 @@ public partial class CharacterPlayer : CharacterBase
     public override void OnUpdate()
     {
         base.OnUpdate();
+
+        IsGrand = Controller.isGrounded;
 
         if (moveing)
         {
@@ -153,21 +157,13 @@ public partial class CharacterPlayer : CharacterBase
         var newVec = CommonFunction.AngleToVector2(angle1 + angle2);
 
         //キャラクターの移動と回転
-        if (Controller.isGrounded && Behavior != BehaviorType.Jump)
+        //if (Controller.isGrounded)
         {
-            moveDirection.x = newVec.x * SettingMng.MoveSpeed * Time.deltaTime;
-            moveDirection.z = newVec.y * SettingMng.MoveSpeed * Time.deltaTime;
+            moveDirection.x = newVec.x * SettingMng.MoveSpeed;
+            moveDirection.z = newVec.y * SettingMng.MoveSpeed;
 
-            //if (x != 0 || y != 0)
-            //{
-            //    moveDirection.x = newVec.x * SettingMng.MoveSpeed * Time.deltaTime;
-            //    moveDirection.z = newVec.y * SettingMng.MoveSpeed * Time.deltaTime;
-            //}
-            //else
-            //{
-            //    moveDirection.x = 0;
-            //    moveDirection.z = 0;
-            //}
+            //moveDirection.x = newVec.x * SettingMng.MoveSpeed * Time.deltaTime;
+            //moveDirection.z = newVec.y * SettingMng.MoveSpeed * Time.deltaTime;
         }
 
         if (x != 0 || y != 0)

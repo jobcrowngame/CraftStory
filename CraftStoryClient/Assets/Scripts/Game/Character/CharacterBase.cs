@@ -67,7 +67,7 @@ public class CharacterBase : MonoBehaviour
 
     private float FreezeTime = 0;
 
-    private void Update()
+    private void FixedUpdate()
     {
         OnUpdate();
 
@@ -76,14 +76,7 @@ public class CharacterBase : MonoBehaviour
             return;
 
         // 重力
-        if (Controller.isGrounded)
-        {
-            moveDirection.y = 0;
-        }
-        else
-        {
-            moveDirection.y -= SettingMng.Gravity * Time.deltaTime;
-        }
+        moveDirection.y -= SettingMng.Gravity;
 
         // マップ範囲外に出ないようにする
         if (MoveBoundaryCheckPosX(moveDirection.x))
@@ -92,7 +85,11 @@ public class CharacterBase : MonoBehaviour
             moveDirection.z = 0;
 
         // 移動
-        if (Controller.enabled == true) Controller.Move(moveDirection);
+        if (Controller.enabled == true) 
+            Controller.Move(moveDirection);
+
+        if (Controller.isGrounded)
+            moveDirection.y = 0;
 
         // ジャンプ状態で地面に落ちるとジャンプ前の行動になる
         if (Behavior == BehaviorType.Jump && Controller.isGrounded)

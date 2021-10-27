@@ -24,13 +24,13 @@ public class SettingMng : Single<SettingMng>
     public const int MoveBoundaryOffset = 3;
 
     // 移動スピード
-    public const float MoveSpeed = 4F;
+    public const float MoveSpeed = 0.07f;
 
     // ジャンプ力
-    public const float JumpSpeed = 10;
+    public const float JumpSpeed = 0.2f;
 
     //重力の大きさ
-    public const float Gravity = 0.1f;
+    public const float Gravity = 0.01f;
 
     //マイショップレベルアップコスト1
     public const int MyShopCostLv1 = 100;

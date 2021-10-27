@@ -194,7 +194,6 @@ public class PlayerCtl : MonoBehaviour
                 switch ((ItemType)selectItem.Config().Type)
                 {
                     case ItemType.Block:
-                    case ItemType.Grass:
                     case ItemType.Lanthanum:
                     case ItemType.NomoObject:
                         Lock = true;
@@ -204,8 +203,6 @@ public class PlayerCtl : MonoBehaviour
                         StartCoroutine(UnLock());
                         break;
 
-                    case ItemType.Flower:
-                    case ItemType.BigFlower:
                     case ItemType.Workbench:
                     case ItemType.Kamado:
                     case ItemType.Door:
@@ -219,7 +216,7 @@ public class PlayerCtl : MonoBehaviour
                         StartCoroutine(UnLock());
                         break;
 
-                    case ItemType.BuilderPencil:
+                    case ItemType.NullBlueprint:
                         var newPos = collider.transform.position;
                         newPos.y += 1;
 
