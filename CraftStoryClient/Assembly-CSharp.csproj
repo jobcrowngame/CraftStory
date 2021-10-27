@@ -230,6 +230,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\GachaTabs.cs" />
     <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Character.cs" />
+    <Compile Include="Assets\Scripts\UI\SkillExplanationLG.cs" />
     <Compile Include="Assets\Scripts\UI\MapUI.cs" />
     <Compile Include="Assets\Scripts\UI\HomeGetItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\PlayDescriptionLG.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\RandomBonusPond.cs" />
     <Compile Include="Assets\Scripts\UI\Common\WaitingLG.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityBase.cs" />
+    <Compile Include="Assets\Scripts\UI\SkillExplanationUI.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterBase.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Bonus.cs" />
     <Compile Include="Assets\Scripts\UI\Common\HintBoxUI.cs" />
@@ -330,8 +332,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\UI\SkillExplanationUI.cs" />
-    <Compile Include="Assets\Scripts\UI\SkillExplanationLG.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\ParameterSkill.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

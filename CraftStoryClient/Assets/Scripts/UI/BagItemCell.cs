@@ -28,13 +28,15 @@ public class BagItemCell : UIBase
     {
         this.itemData = itemData;
 
-        clickBtn.onClick.AddListener(() => 
-        { 
+        clickBtn.onClick.AddListener(() =>
+        {
             BagLG.E.SelectItem = this;
             GuideLG.E.Next();
         });
 
-        Lock.gameObject.SetActive(itemData.islocked == 1);
+        Lock.gameObject.SetActive(
+            !CommonFunction.IsEquipment(itemData.itemId)
+            && itemData.islocked == 1);
 
         if (itemData == null)
             return;

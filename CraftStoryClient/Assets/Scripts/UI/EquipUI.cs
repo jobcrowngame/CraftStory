@@ -56,7 +56,7 @@ public class EquipUI : UIBase
     /// <summary>
     /// パラメータ更新
     /// </summary>
-    private void RefreshParameter()
+    public void RefreshParameter()
     {
         Level.text = "レベル：" + DataMng.E.RuntimeData.Lv;
 

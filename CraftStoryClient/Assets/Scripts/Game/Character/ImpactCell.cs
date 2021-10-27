@@ -72,7 +72,7 @@ public class ImpactCell
     }
 
 
-    private enum ImpactType
+    public enum ImpactType
     {
         /// <summary>
         /// ダメージを与える
@@ -83,5 +83,10 @@ public class ImpactCell
         /// 回復（HP）
         /// </summary>
         Recovery = 5,
+
+        /// <summary>
+        /// ダメージアップ
+        /// </summary>
+        DamageUp = 10,
     }
 }

@@ -118,21 +118,36 @@ public partial class CharacterPlayer : CharacterBase
     {
         base.EquipEquipment(equipmentData);
 
-        CommonFunction.ClearCell(weaponL);
-        CommonFunction.ClearCell(weaponR);
-
         if (string.IsNullOrEmpty(equipmentData.equipmentConfig.ResourcesPath) || equipmentData.equipmentConfig.ResourcesPath == "N")
             return;
 
-        // どの手に装備するか
-        Transform parent = equipmentData.equipmentConfig.LeftEquipment == 1 ? weaponL : weaponR;
-
-        // オブジェクトをインスタンス
-        var obj = CommonFunction.Instantiate(equipmentData.equipmentConfig.ResourcesPath, parent, Vector3.zero);
-        if (obj != null)
+        Transform parent = null;
+        switch ((ItemType)equipmentData.Config().Type)
         {
-            obj.transform.localPosition = Vector3.zero;
-            obj.transform.localEulerAngles = Vector3.zero;
+            case ItemType.Weapon:
+                // どの手に装備するか
+                parent = equipmentData.equipmentConfig.LeftEquipment == 1 ? weaponL : weaponR;
+                break;
+
+            case ItemType.Armor:
+                break;
+
+            default:
+                break;
+        }
+
+        if (parent != null)
+        {
+            CommonFunction.ClearCell(weaponL);
+            CommonFunction.ClearCell(weaponR);
+
+            // オブジェクトをインスタンス
+            var obj = CommonFunction.Instantiate(equipmentData.equipmentConfig.ResourcesPath, parent, Vector3.zero);
+            if (obj != null)
+            {
+                obj.transform.localPosition = Vector3.zero;
+                obj.transform.localEulerAngles = Vector3.zero;
+            }
         }
     }
 
@@ -157,19 +172,11 @@ public partial class CharacterPlayer : CharacterBase
         var newVec = CommonFunction.AngleToVector2(angle1 + angle2);
 
         //キャラクターの移動と回転
-        //if (Controller.isGrounded)
-        {
-            moveDirection.x = newVec.x * SettingMng.MoveSpeed;
-            moveDirection.z = newVec.y * SettingMng.MoveSpeed;
-
-            //moveDirection.x = newVec.x * SettingMng.MoveSpeed * Time.deltaTime;
-            //moveDirection.z = newVec.y * SettingMng.MoveSpeed * Time.deltaTime;
-        }
+        moveDirection.x = newVec.x * SettingMng.MoveSpeed;
+        moveDirection.z = newVec.y * SettingMng.MoveSpeed;
 
         if (x != 0 || y != 0)
             Model.rotation = Quaternion.Euler(new Vector3(0, angle1 + angle2, 0));
-
-        //moveDirection = transform.TransformDirection(moveDirection);
 
         // 落ちた場合、遷移
         if (transform.position.y < -10)

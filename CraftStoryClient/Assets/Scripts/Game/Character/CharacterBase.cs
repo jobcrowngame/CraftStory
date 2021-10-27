@@ -151,7 +151,9 @@ public class CharacterBase : MonoBehaviour
         var skillArr = skills.Split(',');
         foreach (var item in skillArr)
         {
-            SkillList.Add(new SkillData(int.Parse(item)));
+            var skill = new SkillData(int.Parse(item));
+            SkillList.Add(skill);
+            ParameterChangeImpact(skill);
         }
     }
     /// <summary>
@@ -170,12 +172,39 @@ public class CharacterBase : MonoBehaviour
             {
                 if (int.Parse(skillStr) == SkillList[i].Config.ID)
                 {
+                    ParameterChangeImpact(SkillList[i], false);
                     SkillList.Remove(SkillList[i]);
                     break;
                 }
             }
         }
     }
+    /// <summary>
+    /// ステータス変更インパクト
+    /// </summary>
+    /// <param name="skill"></param>
+    /// <param name="isUp">増える (true)　or 減る (false)</param>
+    private void ParameterChangeImpact(SkillData skill, bool isUp = true)
+    {
+        // ステータスアップスキルがある場合
+        if ((SkillData.SkillType)skill.Config.Type != SkillData.SkillType.ParameterUp)
+            return;
+
+        foreach (var imp in skill.Impacts)
+        {
+            var config = ConfigMng.E.Impact[int.Parse(imp)];
+            var percentDamage = config.PercentDamage > 0 ? config.PercentDamage : 0;
+
+            switch ((ImpactCell.ImpactType)config.Type)
+            {
+                case ImpactCell.ImpactType.DamageUp: 
+                    Parameter.skillPar.PercentDamage += percentDamage * (isUp ? 1 : -1);
+                    Parameter.skillPar.FixDamage += config.FixtDamage * (isUp ? 1 : -1);
+                    break;
+            }
+        }
+    }
+
 
     /// <summary>
     /// 行動変換する場合
@@ -284,9 +313,9 @@ public class CharacterBase : MonoBehaviour
     }
     private IEnumerator UseSkillIE(SkillData skill, CharacterBase selectTarget = null)
     {
+        // 目標がある場合、向きを調整
         if (selectTarget != null)
         {
-            // 向きを調整
             var direction = GetTargetDircetion(selectTarget.transform);
             Rotation(direction);
         }

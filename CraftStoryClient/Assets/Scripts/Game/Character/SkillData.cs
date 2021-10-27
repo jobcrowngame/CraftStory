@@ -76,5 +76,10 @@ public class SkillData
         /// 回復
         /// </summary>
         Recovery = 5,
+
+        /// <summary>
+        /// ステータスアップ（被動）
+        /// </summary>
+        ParameterUp = 6,
     }
 }

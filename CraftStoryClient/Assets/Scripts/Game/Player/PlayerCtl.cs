@@ -578,7 +578,11 @@ public class PlayerCtl : MonoBehaviour
         if (HomeLG.E.UI != null) HomeLG.E.UI.SetSkills();
 
         // 装備Window更新
-        if (EquipLG.E.UI != null) EquipLG.E.UI.RefreshEquip();
+        if (EquipLG.E.UI != null)
+        {
+            EquipLG.E.UI.RefreshEquip();
+            EquipLG.E.UI.RefreshParameter();
+        }
     }
 
     /// <summary>
