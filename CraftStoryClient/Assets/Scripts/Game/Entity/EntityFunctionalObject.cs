@@ -60,11 +60,8 @@ public class EntityFunctionalObject : EntityBase
 
             case EntityType.Workbench:
             case EntityType.Kamado:
-                HomeLG.E.UI.LockUnTarget(transform);
-
-
-                //var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
-                //ui.SetType(Type);
+                var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
+                ui.SetType(Type);
                 break;
 
             case EntityType.Mission:
