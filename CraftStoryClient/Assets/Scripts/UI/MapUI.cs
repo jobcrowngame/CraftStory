@@ -47,8 +47,20 @@ public class MapUI : UIBase
             }
             else
             {
-                if (DataMng.E.RuntimeData.MapType != MapType.Market)
+                if (DataMng.E.RuntimeData.MapType == MapType.Market)
+                    return;
+
+                if (DataMng.E.RuntimeData.MapType == MapType.Brave)
+                {
+                    AdventureCtl.E.GetBonus(() =>
+                    {
+                        CommonFunction.GoToNextScene(103);
+                    });
+                }
+                else
+                {
                     CommonFunction.GoToNextScene(103);
+                }
             }
         });
 
