@@ -52,8 +52,9 @@ public class BagItemCell : UIBase
             AWSS3Mng.E.DownLoadTexture2D(Icon, itemData.textureName);
         }
 
-        if (CommonFunction.IsEquipment(itemData.itemId))
-            Equiped.gameObject.SetActive(itemData.equipSite > 0);
+        Equiped.gameObject.SetActive(
+            CommonFunction.IsEquipment(itemData.itemId)
+            && itemData.equipSite > 0);
     }
 
     /// <summary>

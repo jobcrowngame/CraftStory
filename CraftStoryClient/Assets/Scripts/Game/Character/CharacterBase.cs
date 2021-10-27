@@ -145,7 +145,7 @@ public class CharacterBase : MonoBehaviour
     /// </summary>
     public void AddSkills(string skills)
     {
-        if (skills == "N")
+        if (string.IsNullOrEmpty(skills) || skills == "N")
             return;
 
         var skillArr = skills.Split(',');
