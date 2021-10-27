@@ -157,7 +157,6 @@ public class CharacterBase : MonoBehaviour
             SkillList.Add(new SkillData(int.Parse(item)));
         }
     }
-
     /// <summary>
     /// スキル削除
     /// </summary>
@@ -668,7 +667,6 @@ public class CharacterBase : MonoBehaviour
     }
 
     #endregion
-
     #region Emum
 
     /// <summary>

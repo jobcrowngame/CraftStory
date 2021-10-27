@@ -20,8 +20,8 @@ public class BattleCalculationCtl
 
         int defense = target.Parameter.Defense;
 
-        // (攻撃力* (10 + スキル補正値) -防御力* 5) * 0.3
-        int endDamage = (int)((damage * (10 + skillDamage) - defense * 5) * 0.3f);
+        // (攻撃力 * (10 + スキル補正値) -防御力 * 5) * 0.3
+        int endDamage = (int)((damage + (10 + skillDamage) - defense * 5) * 0.3f);
         if (endDamage <= 0)
             endDamage = 1;
 

@@ -155,18 +155,19 @@ public partial class CharacterPlayer : CharacterBase
         //キャラクターの移動と回転
         if (Controller.isGrounded && Behavior != BehaviorType.Jump)
         {
-            if (x != 0 || y != 0)
-            {
-                moveDirection.x = newVec.x * SettingMng.MoveSpeed * Time.deltaTime;
-                moveDirection.z = newVec.y * SettingMng.MoveSpeed * Time.deltaTime;
-            }
-            else
-            {
-                moveDirection.x = 0;
-                moveDirection.z = 0;
-            }
+            moveDirection.x = newVec.x * SettingMng.MoveSpeed * Time.deltaTime;
+            moveDirection.z = newVec.y * SettingMng.MoveSpeed * Time.deltaTime;
 
-            moveDirection.y = 0;
+            //if (x != 0 || y != 0)
+            //{
+            //    moveDirection.x = newVec.x * SettingMng.MoveSpeed * Time.deltaTime;
+            //    moveDirection.z = newVec.y * SettingMng.MoveSpeed * Time.deltaTime;
+            //}
+            //else
+            //{
+            //    moveDirection.x = 0;
+            //    moveDirection.z = 0;
+            //}
         }
 
         if (x != 0 || y != 0)
@@ -174,10 +175,9 @@ public partial class CharacterPlayer : CharacterBase
 
         //moveDirection = transform.TransformDirection(moveDirection);
 
+        // 落ちた場合、遷移
         if (transform.position.y < -10)
-        {
             transform.position = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5);
-        }
     }
 
     /// <summary>
