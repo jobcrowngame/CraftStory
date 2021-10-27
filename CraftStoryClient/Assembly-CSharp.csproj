@@ -238,6 +238,7 @@
     <Compile Include="Assets\Scripts\UI\LoginLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mountain.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsLG.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\ParameterSkill.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintPreviewUI.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintReNameLG.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsUI.cs" />
@@ -332,7 +333,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Game\Character\ParameterSkill.cs" />
+    <Compile Include="Assets\Scripts\UI\World\LockupCamera.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
