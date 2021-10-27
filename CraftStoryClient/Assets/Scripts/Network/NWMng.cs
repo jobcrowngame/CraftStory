@@ -946,6 +946,16 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.ArriveFloor));
     }
 
+    /// <summary>
+    /// 復活
+    /// </summary>
+    /// <param name="rp"></param>
+    public void Resurrection(Action<JsonData> rp)
+    {
+        var data = new NWData();
+
+        StartCoroutine(HttpRequest(rp, data, CMD.Resurrection));
+    }
 
 
 
@@ -1052,6 +1062,7 @@ public partial class NWMng : MonoBehaviour
         AppraisalEquipment,
         AddExp,
         ArriveFloor,
+        Resurrection,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

@@ -505,7 +505,10 @@ public class PlayerCtl : MonoBehaviour
     {
         // 装備してるとスキップ
         if (itemData.equipSite > 0)
+        {
+            CommonFunction.ShowHintBar(34);
             return;
+        }
 
         // 装備じゃない場合、スキップ
         if (!CommonFunction.IsEquipment(itemData.itemId))

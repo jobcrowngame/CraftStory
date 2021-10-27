@@ -107,7 +107,10 @@ public partial class CharacterPlayer : CharacterBase
 
         CommonFunction.ShowHintBox("", () =>
             {
-                Resurrection();
+                NWMng.E.Resurrection((rp) => 
+                { 
+                    Resurrection();
+                });
             }, () =>
             {
                 CommonFunction.GoToNextScene(100);
