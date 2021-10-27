@@ -366,7 +366,8 @@ public class MapData
     /// </summary>
     public void OnClear()
     {
-        TransferGate.gameObject.SetActive(true);
+        if (TransferGate != null)
+            TransferGate.gameObject.SetActive(true);
     }
 
     [Serializable]

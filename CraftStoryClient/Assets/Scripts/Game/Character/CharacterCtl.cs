@@ -64,7 +64,11 @@ public class CharacterCtl : Single<CharacterCtl>
     {
         var characterGeneratedStr = DataMng.E.MapData.Config.CharacterGenerated;
         string[] characterGenerated = characterGeneratedStr.Split(',');
-        RemainingNumber = characterGenerated.Length;
+
+        RemainingNumber = (characterGeneratedStr != "N") 
+            ? characterGenerated.Length 
+            : 0;
+
         foreach (var item in characterGenerated)
         {
             if (item == "N")
