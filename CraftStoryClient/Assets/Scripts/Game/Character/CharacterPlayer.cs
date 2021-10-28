@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using SimpleInputNamespace;
 using System;
+using System.Collections;
 
 /// <summary>
 /// プレイヤーエンティティ
@@ -123,17 +123,25 @@ public partial class CharacterPlayer : CharacterBase
     {
         base.Died();
 
-        CommonFunction.ShowHintBox("", () =>
-            {
-                NWMng.E.Resurrection((rp) => 
-                { 
-                    Resurrection();
-                });
-            }, () =>
-            {
-                CommonFunction.GoToNextScene(100);
-            });
+        StartCoroutine(OnDied());
+
+        //CommonFunction.ShowHintBox("", () =>
+        //    {
+        //        NWMng.E.Resurrection((rp) => 
+        //        { 
+        //            Resurrection();
+        //        });
+        //    }, () =>
+        //    {
+        //        CommonFunction.GoToNextScene(100);
+        //    });
     }
+    IEnumerator OnDied()
+    {
+        yield return new WaitForSeconds(4);
+        CommonFunction.GoToNextScene(100);
+    }
+    
 
     public override void EquipEquipment(ItemEquipmentData equipmentData)
     {
