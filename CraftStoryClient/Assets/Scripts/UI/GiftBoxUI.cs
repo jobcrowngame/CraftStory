@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class GiftBoxUI : UIBase
 {
+    Transform LevelUp { get => FindChiled<Transform>("LevelUp"); }
+
     Image MultiBonus { get => FindChiled<Image>("MultiBonus"); }
     Button Bonus3XBtn { get => FindChiled<Button>("Bonus3XBtn"); }
     Transform Bonus3XLabel { get => FindChiled<Transform>("Bonus3XLabel"); }
@@ -14,6 +16,8 @@ public class GiftBoxUI : UIBase
     Transform itemGridRoot;
     List<IconItemCell> cells;
     Action okBtnCallBack;
+
+    bool levelUped;
 
 
     public override void Init()
@@ -74,12 +78,13 @@ public class GiftBoxUI : UIBase
         {
             NWMng.E.AddExp((rp) => 
             {
+                levelUped = DataMng.E.RuntimeData.Lv < (int)rp["lv"];
+
                 DataMng.E.RuntimeData.Lv = (int)rp["lv"];
                 DataMng.E.RuntimeData.Exp = (int)rp["exp"];
 
                 // レベルアップ表現があると追加
-                // ...
-                // ...
+                LevelUp.gameObject.SetActive(levelUped);
 
                 NWMng.E.ClearAdventure((rp) =>
                 {
@@ -88,7 +93,7 @@ public class GiftBoxUI : UIBase
                         PlayerCtl.E.Lock = false;
                         ClearCell(itemGridRoot);
 
-                        okBtnCallBack();
+                        StartCoroutine(GotoNextIE());
                     }
                 }, AdventureCtl.E.BonusList);
             }, AdventureCtl.E.CurExp);
@@ -103,6 +108,14 @@ public class GiftBoxUI : UIBase
 
         PlayerCtl.E.Lock = true;
         MultiBonus.gameObject.SetActive(false);
+        LevelUp.gameObject.SetActive(false);
+    }
+
+    private IEnumerator GotoNextIE()
+    {
+        float timer = levelUped ? 1.8f : 0;
+        yield return new WaitForSeconds(timer);
+        okBtnCallBack();
     }
 
     public void AddBonus(List<int> bonus)
