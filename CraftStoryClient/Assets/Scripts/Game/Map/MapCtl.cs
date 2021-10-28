@@ -441,7 +441,7 @@ public class MapCtl
         if (posX < 0) posX = UnityEngine.Random.Range(0, mapData.SizeX);
         if (posZ < 0) posZ = UnityEngine.Random.Range(0, mapData.SizeZ);
 
-        int posY = GetVertexY(mapData, posX, posZ);
+        int posY = GetVertexY(mapData, posX, posZ) + (int)offsetY;
 
         Vector3Int newPos = new Vector3Int(posX, posY, posZ);
         if (!CheckCreatePos(mapData, newPos))
@@ -451,7 +451,7 @@ public class MapCtl
             {
                 posX = UnityEngine.Random.Range(0, mapData.SizeX);
                 posZ = UnityEngine.Random.Range(0, mapData.SizeZ);
-                posY = GetVertexY(mapData, posX, posZ);
+                posY = GetVertexY(mapData, posX, posZ) + (int)offsetY;
                 newPos = new Vector3Int(posX, posY, posZ);
 
                 if (CheckCreatePos(mapData, newPos))

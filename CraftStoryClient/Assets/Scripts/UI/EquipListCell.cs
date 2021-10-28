@@ -75,12 +75,13 @@ public class EquipListCell : UIBase
             if (attachSkills != null && attachSkills.Length > i)
             {
                 cells[i].ShowNewAddAnimation(int.Parse(attachSkills[i]));
-                yield return new WaitForSeconds(1f);
             }
             else
             {
-                cells[i].Set(-1);
+                cells[i].ShowNewAddAnimation(-1);
             }
+
+            yield return new WaitForSeconds(1f);
         }
 
         EquipBtn.gameObject.SetActive(data.IsLocked);
@@ -98,7 +99,7 @@ public class EquipListCell : UIBase
             }
             else
             {
-                cells[i].Set(-1);
+                cells[i].Set(-2);
             }
         }
 

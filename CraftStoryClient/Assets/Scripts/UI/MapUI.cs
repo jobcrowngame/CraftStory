@@ -93,7 +93,8 @@ public class MapUI : UIBase
         EnActiveBtn(MarketBtn, DataMng.E.RuntimeData.MapType == MapType.Market);
         EnActiveBtn(BraveBtn, DataMng.E.RuntimeData.MapType == MapType.Brave);
 
-        SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd2 == 0);
+        //SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd2 == 0);
+        SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide);
     }
 
     private void EnActiveBtn(Button btn, bool b = true)

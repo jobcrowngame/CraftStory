@@ -43,6 +43,7 @@ public class ImpactCell
         switch ((ImpactType)config.Type)
         {
             case ImpactType.AddDamage:
+            case ImpactType.Debuffer:
                 // ダメージ計算
                 damage = BattleCalculationCtl.CalculationDamage(attacker, target, impactId);
                 target.AddDamage(attacker, damage);
@@ -63,7 +64,7 @@ public class ImpactCell
 
         if (count > 0)
         {
-            timer += config.Interval;
+            timer = config.Delay;
         }
         else
         {
@@ -78,6 +79,11 @@ public class ImpactCell
         /// ダメージを与える
         /// </summary>
         AddDamage = 1,
+
+        /// <summary>
+        /// デバフ
+        /// </summary>
+        Debuffer = 2,
 
         /// <summary>
         /// 回復（HP）

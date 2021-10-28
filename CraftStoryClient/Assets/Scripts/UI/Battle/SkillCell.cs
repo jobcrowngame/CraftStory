@@ -60,7 +60,7 @@ public class SkillCell : UIBase
     {
         CD.text = "";
         CDMask.fillAmount = 0;
-        Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Skill[0].Icon);
+        Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Skill[-1].Icon);
     }
 
     public void RefreshCD(float curCD)

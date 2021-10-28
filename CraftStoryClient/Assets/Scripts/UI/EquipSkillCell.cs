@@ -26,7 +26,7 @@ public class EquipSkillCell : UIBase
     {
         if (skillId <= 0)
         {
-            MyButton.SetIcon(ConfigMng.E.Skill[0].Icon);
+            MyButton.SetIcon(ConfigMng.E.Skill[skillId].Icon);
             return;
         }
 
