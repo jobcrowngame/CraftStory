@@ -22,7 +22,7 @@ public class ItemEquipmentData : ItemData
         id = rp.id;
         itemId = rp.itemId;
         islocked = rp.islocked;
-        attachSkills = rp.skills;
+        if (islocked == 1) attachSkills = rp.skills;
         count = 1;
 
         equipSite = DataMng.E.GetItemByGuid(rp.id).equipSite;
