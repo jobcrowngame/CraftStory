@@ -99,7 +99,7 @@ public class EquipListCell : UIBase
             }
             else
             {
-                cells[i].Set(-2);
+                cells[i].Set(data.islocked == 1 ? -1 : -2);
             }
         }
 
