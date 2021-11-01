@@ -117,7 +117,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
         {
             if (retryCount > 0)
             {
-                LoadHomeData(retryCount--);
+                LoadHomeData(--retryCount);
             }
         });
     }
