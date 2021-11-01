@@ -111,13 +111,18 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             {
                 DataMng.E.SetMapData(WorldMng.E.MapCtl.CreateMapData(100), MapType.Home);
             }
-            ui.LoginResponse();
 
+            ui.LoginResponse();
         }, ()=>
         {
             if (retryCount > 0)
             {
                 LoadHomeData(--retryCount);
+            }
+            else
+            {
+                DataMng.E.SetMapData(WorldMng.E.MapCtl.CreateMapData(100), MapType.Home);
+                ui.LoginResponse();
             }
         });
     }

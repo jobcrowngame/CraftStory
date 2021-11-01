@@ -262,12 +262,6 @@ public class AWSS3Mng : MonoBehaviour
         {
             Client.GetObjectAsync(request, (responseObject) =>
             {
-                if (responseObject == null || responseObject.Response == null)
-                {
-                    if (failureCallback != null) failureCallback();
-                    return;
-                }
-
                 if (responseObject.Exception == null)
                 {
                     MemoryStream stream = new MemoryStream();
@@ -280,7 +274,6 @@ public class AWSS3Mng : MonoBehaviour
                 else
                 {
                     if (failureCallback != null) failureCallback();
-                    Logger.Error("S3 DownLoad Object Failure:" + responseObject.Exception.Message);
                 }
             });
         }
