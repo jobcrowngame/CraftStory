@@ -122,7 +122,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             ui.LoginResponse();
         }, ()=>
         {
-            if (retryCount > 0)
+            if (retryCount > 1)
             {
                 LoadHomeData(--retryCount);
             }
