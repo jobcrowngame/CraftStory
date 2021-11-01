@@ -198,7 +198,7 @@ public class CharacterCtl : Single<CharacterCtl>
         float minDis = 0;
         foreach (var character in characterList)
         {
-            if (!character.IsDied && character.Camp == camp)
+            if (character != null && !character.IsDied && character.Camp == camp)
             {
                 var dis = Mathf.Abs(Vector3.Distance(character.transform.position, startPos));
 

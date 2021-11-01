@@ -349,21 +349,7 @@ public class CharacterBase : MonoBehaviour
         {
             // 範囲攻撃
             case SkillData.SkillType.RangeAttack:
-                // 攻撃範囲内の目標
-                var targets = CharacterCtl.E.FindCharacterInRange(transform, skill.Config.Distance, targetCamp);
-                foreach (var target in targets)
-                {
-                    var targetDir = CharacterCtl.E.CalculationDir(target.transform.position, transform.position);
-                    var angle = Vector2.Angle(targetDir, GetMeDirection());
-
-                    if (angle * 2 <= skill.Config.RangeAngle)
-                    {
-                        foreach (var impact in skill.Impacts)
-                        {
-                            target.AddImpact(target, this, int.Parse(impact));
-                        }
-                    }
-                }
+                StartCoroutine(RangeAttack(skill, targetCamp));
                 break;
 
             // 単体攻撃
@@ -398,6 +384,29 @@ public class CharacterBase : MonoBehaviour
         Behavior = BehaviorType.Waiting;
     }
 
+    private IEnumerator RangeAttack(SkillData skill,  CharacterCamp targetCamp)
+    {
+        for (int i = 0; i < skill.Config.AttackCount; i++)
+        {
+            // 攻撃範囲内の目標
+            var targets = CharacterCtl.E.FindCharacterInRange(transform, skill.Config.Distance, targetCamp);
+            foreach (var target in targets)
+            {
+                var targetDir = CharacterCtl.E.CalculationDir(target.transform.position, transform.position);
+                var angle = Vector2.Angle(targetDir, GetMeDirection());
+
+                if (angle * 2 <= skill.Config.RangeAngle)
+                {
+                    foreach (var impact in skill.Impacts)
+                    {
+                        target.AddImpact(target, this, int.Parse(impact));
+                    }
+                }
+            }
+
+            yield return new WaitForSeconds(skill.Config.Interval);
+        }
+    }
     private IEnumerator RangedRangeAttackIE(SkillData skill, CharacterBase mainTarget, CharacterCamp targetCamp)
     {
         if (mainTarget != null)
@@ -631,7 +640,11 @@ public class CharacterBase : MonoBehaviour
     /// <returns></returns>
     public Vector2 GetTargetDircetion(Transform target)
     {
-        return CommonFunction.GetDirection(target.position, transform.position).normalized;
+        return GetTargetDircetion(target.position);
+    }
+    public Vector2 GetTargetDircetion(Vector3 target)
+    {
+        return CommonFunction.GetDirection(target, transform.position).normalized;
     }
 
     /// <summary>
