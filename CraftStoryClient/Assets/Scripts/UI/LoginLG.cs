@@ -73,30 +73,6 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
 
             NoticeLG.E.IsFirst = true;
 
-            // ローカルデータがある場合サーバーにセーブ
-            if (DataMng.E.GetHomeData() != null)
-            {
-                NWMng.E.SaveHomeData(null, DataMng.E.GetHomeData().ToStringData());
-                ui.LoginResponse();
-            }
-            // あるいは、サーバーからデータをもらう
-            else
-            {
-                NWMng.E.LoadHomeData((rp) =>
-                {
-                    if (!string.IsNullOrEmpty(rp.ToString()))
-                    {
-                        DataMng.E.SetMapData(new MapData((string)rp["homedata"]), MapType.Home);
-                    }
-                    else
-                    {
-                        DataMng.E.SetMapData(WorldMng.E.MapCtl.CreateMapData(100), MapType.Home);
-                    }
-
-                    ui.LoginResponse();
-                });
-            }
-
             NWMng.E.GetItems();
 
             NWMng.E.GetCoins((rp) =>
@@ -104,6 +80,45 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 DataMng.GetCoins(rp);
             });
 
+            // ローカルデータがある場合サーバーにセーブ
+            if (DataMng.E.GetHomeData() != null)
+            {
+                //NWMng.E.SaveHomeData(null, DataMng.E.GetHomeData().ToStringData());
+                AWSS3Mng.E.SaveHomeData(DataMng.E.UserData.Account, DataMng.E.GetHomeData().ToStringData());
+                ui.LoginResponse();
+            }
+            // あるいは、サーバーからデータをもらう
+            else
+            {
+                LoadHomeData(5);
+            }
         }, DataMng.E.UserData.UserPW);
+    }
+
+    /// <summary>
+    /// S3から　ホームデータをロード
+    /// </summary>
+    /// <param name="retryCount"></param>
+    private void LoadHomeData(int retryCount)
+    {
+        AWSS3Mng.E.LoadHomeData(DataMng.E.UserData.Account, (rp) =>
+        {
+            if (!string.IsNullOrEmpty(rp))
+            {
+                DataMng.E.SetMapData(new MapData(rp), MapType.Home);
+            }
+            else
+            {
+                DataMng.E.SetMapData(WorldMng.E.MapCtl.CreateMapData(100), MapType.Home);
+            }
+            ui.LoginResponse();
+
+        }, ()=>
+        {
+            if (retryCount > 0)
+            {
+                LoadHomeData(retryCount--);
+            }
+        });
     }
 }

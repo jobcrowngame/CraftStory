@@ -28,6 +28,7 @@ public class AWSS3Mng : MonoBehaviour
 
     private string IdentityPoolId = "ap-northeast-1:073ecf65-6c35-42df-8607-5a304f7a9006";
     private string S3BucketName = "j-de";
+    private string S3BucketNameHomeData = "j-de/home";
 
     private RegionEndpoint _CognitoIdentityRegion
     {
@@ -172,6 +173,109 @@ public class AWSS3Mng : MonoBehaviour
                     Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
                     if (img != null) img.sprite = sprite;
                     if (successCallback != null) successCallback();
+                }
+                else
+                {
+                    if (failureCallback != null) failureCallback();
+                    Logger.Error("S3 DownLoad Object Failure:" + responseObject.Exception.Message);
+                }
+            });
+        }
+        catch (HttpErrorResponseException ex)
+        {
+            Logger.Error("HttpErrorResponseException:" + ex);
+        }
+        catch (AmazonS3Exception ex)
+        {
+            Logger.Error("AmazonS3Exception:" + ex);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex);
+        }
+    }
+
+    /// <summary>
+    /// マップデータをセーブ
+    /// </summary>
+    /// <param name="strData"></param>
+    public void SaveHomeData(string key, string strData, Action successCallback = null, Action failureCallback = null)
+    {
+        byte[] data = System.Text.Encoding.ASCII.GetBytes(strData);
+
+        MemoryStream stream = new MemoryStream(data.Length);
+        stream.Write(data, 0, data.Length);
+        stream.Seek(0, SeekOrigin.Begin);
+
+        var request = new PutObjectRequest()
+        {
+            BucketName = S3BucketNameHomeData,
+            Key = key,
+            InputStream = stream,
+            CannedACL = S3CannedACL.Private
+        };
+
+        try
+        {
+            Client.PutObjectAsync(request, (responseObj) =>
+            {
+                if (responseObj.Exception == null)
+                {
+                    if (successCallback != null) successCallback();
+                }
+                else
+                {
+                    if (failureCallback != null) failureCallback();
+                    Logger.Error("S3 Upload Failure:" + responseObj.Exception.Message);
+                }
+            });
+        }
+        catch (HttpErrorResponseException ex)
+        {
+            Logger.Error("HttpErrorResponseException:" + ex);
+        }
+        catch (AmazonS3Exception ex)
+        {
+            Logger.Error("AmazonS3Exception:" + ex);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="successCallback"></param>
+    /// <param name="failureCallback"></param>
+    public void LoadHomeData(string key, Action<string> successCallback, Action failureCallback = null)
+    {
+        GetObjectRequest request = new GetObjectRequest
+        {
+            BucketName = S3BucketNameHomeData,
+            Key = key,
+        };
+
+        try
+        {
+            Client.GetObjectAsync(request, (responseObject) =>
+            {
+                if (responseObject == null || responseObject.Response == null)
+                {
+                    if (failureCallback != null) failureCallback();
+                    return;
+                }
+
+                if (responseObject.Exception == null)
+                {
+                    MemoryStream stream = new MemoryStream();
+                    responseObject.Response.ResponseStream.CopyTo(stream);
+                    byte[] data = stream.ToArray();
+
+                    string text = System.Text.Encoding.ASCII.GetString(data);
+                    if (successCallback != null) successCallback(text);
                 }
                 else
                 {
