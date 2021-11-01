@@ -64,4 +64,9 @@ public class RuntimeData
     /// マイショップいいねした数
     /// </summary>
     public int MyShopGoodNum { get; set; }
+
+    /// <summary>
+    /// 新規アカウントのフラグ
+    /// </summary>
+    public bool IsNewUser { get; set; }
 }

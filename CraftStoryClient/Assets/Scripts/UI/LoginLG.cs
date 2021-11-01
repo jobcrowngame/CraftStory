@@ -14,6 +14,8 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
 
             Logger.Log("新しいアカウント作成成功しました。\n{0}", (string)rp["acc"]);
 
+            DataMng.E.RuntimeData.IsNewUser = true;
+
             Login(0);
         });
     }
@@ -80,14 +82,19 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 DataMng.GetCoins(rp);
             });
 
-            // ローカルデータがある場合サーバーにセーブ
-            if (DataMng.E.GetHomeData() != null)
+            // 新規ユーザーの場合、S3に送信しない
+            if (DataMng.E.RuntimeData.IsNewUser)
             {
-                //NWMng.E.SaveHomeData(null, DataMng.E.GetHomeData().ToStringData());
+                DataMng.E.SetMapData(WorldMng.E.MapCtl.CreateMapData(100), MapType.Home);
+                ui.LoginResponse();
+            }
+            // ローカルデータがある場合、サーバーにセーブ
+            else if (DataMng.E.GetHomeData() != null)
+            {
                 AWSS3Mng.E.SaveHomeData(DataMng.E.UserData.Account, DataMng.E.GetHomeData().ToStringData());
                 ui.LoginResponse();
             }
-            // あるいは、サーバーからデータをもらう
+            // ローカルデータがない場合、サーバーからデータをもらう
             else
             {
                 LoadHomeData(5);
