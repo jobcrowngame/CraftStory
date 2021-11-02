@@ -78,6 +78,7 @@ public class GiftBoxUI : UIBase
         {
             OKBtn.gameObject.SetActive(false);
             AdvertisingBtn.gameObject.SetActive(false);
+            Bonus3XBtn.gameObject.SetActive(false);
             Bonus3XLabel.gameObject.SetActive(false);
 
             NWMng.E.AddExp((rp) => 

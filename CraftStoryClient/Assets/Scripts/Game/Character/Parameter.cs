@@ -33,6 +33,7 @@ public class Parameter
         mCharacterId = characterId;
         Equipment = new CharacterEquipment(this);
         skillPar = new ParameterSkill(this);
+        CurHP = MaxHP;
     }
 
     public void Refresh()
