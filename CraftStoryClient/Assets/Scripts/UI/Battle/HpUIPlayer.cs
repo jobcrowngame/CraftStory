@@ -12,6 +12,12 @@ public class HpUIPlayer : HpUIBase
         RefreshHP();
     }
 
+    public override void RefreshHpBar()
+    {
+        base.RefreshHpBar();
+        RefreshHP();
+    }
+
     public override void OnValueChange(int v)
     {
         base.OnValueChange(v);
@@ -37,7 +43,7 @@ public class HpUIPlayer : HpUIBase
 
     private void RefreshHP()
     {
-        float percent = (float)curHP / p.MaxHP;
+        float percent = (float)p.CurHP / p.MaxHP;
         if (HomeLG.E.UI != null) HomeLG.E.UI.OnHpChange(percent);
     }
 }

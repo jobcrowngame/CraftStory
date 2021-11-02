@@ -23,6 +23,14 @@ public class HpUIMonster : HpUIBase
         RefreshHP();
     }
 
+    public override void RefreshHpBar()
+    {
+        base.RefreshHpBar();
+
+        hpBar.maxValue = p.MaxHP;
+        RefreshHP();
+    }
+
     public override void OnValueChange(int v)
     {
         base.OnValueChange(v);
@@ -48,7 +56,7 @@ public class HpUIMonster : HpUIBase
 
     private void RefreshHP()
     {
-        hpBar.value = curHP;
-        if (HPText != null) HPText.text = (((float)curHP / p.MaxHP) * 100).ToString("F0") + "%";
+        hpBar.value = p.CurHP;
+        if (HPText != null) HPText.text = (((float)p.CurHP / p.MaxHP) * 100).ToString("F0") + "%";
     }
 }

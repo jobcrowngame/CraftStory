@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class HpUIBase : UIBase
 {
     protected Parameter p;
-    protected int curHP;
     protected bool lockupCamera;
 
     void LateUpdate()
@@ -24,20 +23,18 @@ public class HpUIBase : UIBase
     public override void Init<T>(T data)
     {
         p = data as Parameter;
-        curHP = p.MaxHP;
     }
+
+    /// <summary>
+    /// Hpバーを更新
+    /// </summary>
+    public virtual void RefreshHpBar() { }
 
     /// <summary>
     /// HP 数値が変更
     /// </summary>
     /// <param name="v"></param>
-    public virtual void OnValueChange(int v)
-    {
-        curHP += v;
-
-        if (curHP < 0)
-            curHP = 0;
-    }
+    public virtual void OnValueChange(int v) { }
 
     /// <summary>
     /// 復活

@@ -131,9 +131,8 @@ public class CharacterBase : MonoBehaviour
 
         // パラメータ初期化
         Parameter = new Parameter(characterId);
-        Parameter.Init();
-
         AddSkills(Parameter.Skills);
+
 
         Behavior = BehaviorType.Waiting;
     }
@@ -153,8 +152,9 @@ public class CharacterBase : MonoBehaviour
         {
             var skill = new SkillData(int.Parse(item));
             SkillList.Add(skill);
-            ParameterChangeImpact(skill);
+            Parameter.skillPar.AddSkill(skill);
         }
+        Parameter.Refresh();
     }
     /// <summary>
     /// スキル削除
@@ -172,39 +172,14 @@ public class CharacterBase : MonoBehaviour
             {
                 if (int.Parse(skillStr) == SkillList[i].Config.ID)
                 {
-                    ParameterChangeImpact(SkillList[i], false);
+                    Parameter.skillPar.RemoveSkill(SkillList[i]);
                     SkillList.Remove(SkillList[i]);
                     break;
                 }
             }
         }
+        Parameter.Refresh();
     }
-    /// <summary>
-    /// ステータス変更インパクト
-    /// </summary>
-    /// <param name="skill"></param>
-    /// <param name="isUp">増える (true)　or 減る (false)</param>
-    private void ParameterChangeImpact(SkillData skill, bool isUp = true)
-    {
-        // ステータスアップスキルがある場合
-        if ((SkillData.SkillType)skill.Config.Type != SkillData.SkillType.ParameterUp)
-            return;
-
-        foreach (var imp in skill.Impacts)
-        {
-            var config = ConfigMng.E.Impact[int.Parse(imp)];
-            var percentDamage = config.PercentDamage > 0 ? config.PercentDamage : 0;
-
-            switch ((ImpactCell.ImpactType)config.Type)
-            {
-                case ImpactCell.ImpactType.DamageUp: 
-                    Parameter.skillPar.PercentDamage += percentDamage * (isUp ? 1 : -1);
-                    Parameter.skillPar.FixDamage += config.FixtDamage * (isUp ? 1 : -1);
-                    break;
-            }
-        }
-    }
-
 
     /// <summary>
     /// 行動変換する場合
@@ -222,6 +197,10 @@ public class CharacterBase : MonoBehaviour
         HpCtl = hpbar;
         HpCtl.IsLockUpCamera(lockUpCamera);
         HpCtl.Init(Parameter);
+    }
+    public void RefreshHpBar()
+    {
+        HpCtl.RefreshHpBar();
     }
 
     /// <summary>
@@ -247,14 +226,6 @@ public class CharacterBase : MonoBehaviour
     }
 
     #region 戦闘
-
-    /// <summary>
-    /// 共有CD回復完了
-    /// </summary>
-    private void ShareCDIsReady()
-    {
-        Behavior = BehaviorType.Waiting;
-    }
 
     /// <summary>
     /// 行動を変更できないのチェック
@@ -316,7 +287,7 @@ public class CharacterBase : MonoBehaviour
         // 目標がある場合、向きを調整
         if (selectTarget != null)
         {
-            var direction = GetTargetDircetion(selectTarget.transform);
+            var direction = GetDircetion(selectTarget.transform);
             Rotation(direction);
         }
 
@@ -603,6 +574,9 @@ public class CharacterBase : MonoBehaviour
 
         // 装備ステータス追加
         Parameter.Equipment.AddEquiptment(equipmentData.equipmentConfig.ID);
+
+        // Hpバーを更新
+        RefreshHpBar();
     }
 
     /// <summary>
@@ -619,6 +593,9 @@ public class CharacterBase : MonoBehaviour
 
         // 装備ステータス削除
         Parameter.Equipment.RemoveEquipment(equipmentData.equipmentConfig.ID);
+
+        // Hpバーを更新
+        RefreshHpBar();
     }
 
     #endregion
@@ -638,11 +615,11 @@ public class CharacterBase : MonoBehaviour
     /// </summary>
     /// <param name="target">目標</param>
     /// <returns></returns>
-    public Vector2 GetTargetDircetion(Transform target)
+    public Vector2 GetDircetion(Transform target)
     {
-        return GetTargetDircetion(target.position);
+        return GetDircetion(target.position);
     }
-    public Vector2 GetTargetDircetion(Vector3 target)
+    protected Vector2 GetDircetion(Vector3 target)
     {
         return CommonFunction.GetDirection(target, transform.position).normalized;
     }

@@ -12,11 +12,12 @@ public class CharacterEquipment
     public int Defnse { get => mDefnse; }
     private int mDefnse = 0;
 
-
+    Parameter par;
     Dictionary<int, Equipment> equiped = new Dictionary<int, Equipment>();
 
-    public CharacterEquipment()
+    public CharacterEquipment(Parameter par)
     {
+        this.par = par;
         CalculationParameter();
     }
 
@@ -47,15 +48,18 @@ public class CharacterEquipment
     /// </summary>
     private void CalculationParameter()
     {
+        var oldHP = mHP;
         mHP = 0;
         mDamage = 0;
         mDefnse = 0;
 
         foreach (var item in equiped.Values)
         {
-            if(item.HP > 0) mHP = item.HP;
-            if (item.Damage > 0) mDamage = item.Damage;
-            if (item.Defnse > 0) mDefnse = item.Defnse;
+            if(item.HP > 0) mHP += item.HP;
+            if (item.Damage > 0) mDamage += item.Damage;
+            if (item.Defnse > 0) mDefnse += item.Defnse;
         }
+
+        par.CurHP += mHP - oldHP;
     }
 }

@@ -31,11 +31,11 @@ public class Parameter
     public Parameter(int characterId)
     {
         mCharacterId = characterId;
-        Equipment = new CharacterEquipment();
-        skillPar = new ParameterSkill();
+        Equipment = new CharacterEquipment(this);
+        skillPar = new ParameterSkill(this);
     }
 
-    public void Init()
+    public void Refresh()
     {
         CurHP = MaxHP;
     }
