@@ -93,9 +93,6 @@ public class PlayerCtl : MonoBehaviour
     }
     private BlueprintPreviewCtl blueprintPreviewCtl; // 設計図プレイビューコンソール
 
-
-    public HpUIBase HpBar;
-
     public void Init()
     {
         builderPencil = new BuilderPencil();
@@ -115,10 +112,6 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            //NWMng.E.AddItem((rp) => 
-            //{
-            //    NWMng.E.AddNewEquipmen((rp=> { }, ))
-            //}, 10001, 1);
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
@@ -398,7 +391,7 @@ public class PlayerCtl : MonoBehaviour
     /// <param name="targetPos"></param>
     private void ChangePlayerDirection(Transform target, Action callback)
     {
-        var dir = Character.GetTargetDircetion(target);
+        var dir = Character.GetDircetion(target);
 
         Character.Rotation(dir);
         cameraCtl.CameraslowlyRotateToTarget(dir, callback);

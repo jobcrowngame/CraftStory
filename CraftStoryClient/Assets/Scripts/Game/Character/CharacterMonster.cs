@@ -122,7 +122,7 @@ public class CharacterMonster : CharacterBase
         Behavior = BehaviorType.CallForHelp;
 
         // 向きを調整
-        var direction = GetTargetDircetion(ai.Target.transform);
+        var direction = GetDircetion(ai.Target.transform);
         Rotation(direction);
 
         // 助け呼ぶ範囲内のモンスター
@@ -151,15 +151,13 @@ public class CharacterMonster : CharacterBase
             return;
 
         // 向きを調整
-        var direction = GetTargetDircetion(Target.transform);
+        var direction = GetDircetion(Target.transform);
+        Rotation(direction);
         MoveToTarget(direction);
     }
     public void MoveToTarget(Vector2 direction)
     {
         Behavior = BehaviorType.Run;
-
-        // 向きを調整
-        Rotation(direction);
 
         // 移動遷移量設定
         moveDirection.x = direction.x * Parameter.MoveSpeed * Time.deltaTime;

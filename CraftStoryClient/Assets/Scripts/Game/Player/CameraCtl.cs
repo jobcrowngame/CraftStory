@@ -271,7 +271,7 @@ public class CameraCtl : MonoBehaviour
         if (target == null)
             return;
 
-        var dir = PlayerCtl.E.Character.GetTargetDircetion(target);
+        var dir = PlayerCtl.E.Character.GetDircetion(target);
 
         movedAngle = 0;
         AutoCameraMove = true;

@@ -124,17 +124,6 @@ public partial class CharacterPlayer : CharacterBase
         base.Died();
 
         StartCoroutine(OnDied());
-
-        //CommonFunction.ShowHintBox("", () =>
-        //    {
-        //        NWMng.E.Resurrection((rp) => 
-        //        { 
-        //            Resurrection();
-        //        });
-        //    }, () =>
-        //    {
-        //        CommonFunction.GoToNextScene(100);
-        //    });
     }
     IEnumerator OnDied()
     {
@@ -263,6 +252,8 @@ public partial class CharacterPlayer : CharacterBase
     float offsetDistance;
     Action moveCallback;
 
+    public Vector2 newDir;
+
     /// <summary>
     /// 移動する
     /// </summary>
@@ -280,8 +271,14 @@ public partial class CharacterPlayer : CharacterBase
     {
         if (Vector3.Distance(transform.position, targetPos) > offsetDistance)
         {
-            var dir = (targetPos - transform.position).normalized;
-            Move(dir.x, dir.z);
+            var dir = GetDircetion(targetPos);
+            var angle = CommonFunction.Vector2ToAngle(dir);
+            var cameraAngle = PlayerCtl.E.CameraCtl.GetEulerAngleY;
+
+            newDir = CommonFunction.AngleToVector2(90 - angle - cameraAngle);
+
+            Rotation(newDir);
+            Move(newDir.x, newDir.y);
         }
         else
         {
