@@ -76,6 +76,10 @@ public class GiftBoxUI : UIBase
         }
         OKBtn.onClick.AddListener(() => 
         {
+            OKBtn.gameObject.SetActive(false);
+            AdvertisingBtn.gameObject.SetActive(false);
+            Bonus3XLabel.gameObject.SetActive(false);
+
             NWMng.E.AddExp((rp) => 
             {
                 levelUped = DataMng.E.RuntimeData.Lv < (int)rp["lv"];
