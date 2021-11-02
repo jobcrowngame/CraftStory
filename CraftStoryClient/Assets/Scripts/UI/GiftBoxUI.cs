@@ -33,6 +33,9 @@ public class GiftBoxUI : UIBase
     {
         AdvertisingBtn.onClick.AddListener(() => 
         {
+            Bonus3XBtn.gameObject.SetActive(false);
+            Bonus3XLabel.gameObject.SetActive(false);
+            AdvertisingBtn.gameObject.SetActive(false);
             GoogleMobileAdsMng.E.ShowReawrd(()=> 
             {
                 int count = AdventureCtl.E.BonusList.Count;
@@ -54,6 +57,9 @@ public class GiftBoxUI : UIBase
             Bonus3XBtn.gameObject.SetActive(true);
             Bonus3XBtn.onClick.AddListener(() =>
             {
+                Bonus3XBtn.gameObject.SetActive(false);
+                Bonus3XLabel.gameObject.SetActive(false);
+                AdvertisingBtn.gameObject.SetActive(false);
                 DataMng.E.ConsumableItem(9005);
                 int count = AdventureCtl.E.BonusList.Count;
                 for (int i = 0; i < count; i++)
@@ -76,11 +82,10 @@ public class GiftBoxUI : UIBase
         }
         OKBtn.onClick.AddListener(() => 
         {
-            OKBtn.gameObject.SetActive(false);
-            AdvertisingBtn.gameObject.SetActive(false);
             Bonus3XBtn.gameObject.SetActive(false);
             Bonus3XLabel.gameObject.SetActive(false);
-
+            AdvertisingBtn.gameObject.SetActive(false);
+            OKBtn.gameObject.SetActive(false);
             NWMng.E.AddExp((rp) => 
             {
                 levelUped = DataMng.E.RuntimeData.Lv < (int)rp["lv"];
