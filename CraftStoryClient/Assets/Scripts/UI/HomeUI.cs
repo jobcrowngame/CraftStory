@@ -185,7 +185,11 @@ public partial class HomeUI : UIBase
     {
         base.Open();
 
-        Title.RefreshCoins();
+        NWMng.E.GetCoins((rp) =>
+        {
+            DataMng.GetCoins(rp);
+            RefreshCoins();
+        });
     }
 
     /// <summary>

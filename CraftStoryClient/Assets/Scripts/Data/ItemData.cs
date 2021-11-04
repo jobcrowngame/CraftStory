@@ -89,6 +89,37 @@ public enum ItemType
     /// 掲示板
     /// </summary>
     Mission = 53,
+
+    /// <summary>
+    /// クラフトシード
+    /// </summary>
+    CraftSeed = 90,
+
+    /// <summary>
+    /// クリスタル
+    /// </summary>
+    Crystal = 91,
+
+    /// <summary>
+    /// ポイント
+    /// </summary>
+    Point = 92,
+
+    /// <summary>
+    /// ガチャチケット
+    /// </summary>
+    GachaTicket = 93,
+
+    /// <summary>
+    /// ロイヤルコイン
+    /// </summary>
+    RoyalCoin = 94,
+
+    /// <summary>
+    /// 3倍チケット
+    /// </summary>
+    ThreeXTicket = 95,
+
     Workbench = 1000,
     Kamado = 1001,
     Door = 2000,
