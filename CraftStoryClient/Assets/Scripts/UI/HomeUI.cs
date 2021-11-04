@@ -186,6 +186,8 @@ public partial class HomeUI : UIBase
         base.Open();
 
         Title.RefreshCoins();
+
+        SetSkills();
     }
 
     /// <summary>
