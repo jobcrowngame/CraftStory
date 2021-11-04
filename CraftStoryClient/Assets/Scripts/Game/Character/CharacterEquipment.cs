@@ -9,7 +9,7 @@ public class CharacterEquipment
     public int Damage { get => mDamage; }
     private int mDamage = 0;
 
-    public int Defnse { get => mDefnse; }
+    public int Defense { get => mDefnse; }
     private int mDefnse = 0;
 
     Parameter par;

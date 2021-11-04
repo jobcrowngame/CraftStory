@@ -120,6 +120,7 @@
     <Compile Include="Assets\Scripts\Game\Entity\EntityResources.cs" />
     <Compile Include="Assets\Scripts\UI\GachaAddBonusLG.cs" />
     <Compile Include="Assets\Scripts\Game\Player\PlayerCtl.cs" />
+    <Compile Include="Assets\Scripts\Test\CombineScript.cs" />
     <Compile Include="Assets\Scripts\UI\Terms01UI.cs" />
     <Compile Include="Assets\Scripts\UI\BagUI.cs" />
     <Compile Include="Assets\Scripts\UI\HomeUI.Battle.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Assets\Scripts\UI\Common\HintBarUI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapCtl.cs" />
     <Compile Include="Assets\Scripts\Data\RuntimeData.cs" />
+    <Compile Include="Assets\Scripts\UI\World\LockupCamera.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityDefalt.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\GachaTabs.cs" />
     <Compile Include="Assets\Scripts\UI\CraftUI.cs" />
@@ -333,7 +335,6 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\UI\World\LockupCamera.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

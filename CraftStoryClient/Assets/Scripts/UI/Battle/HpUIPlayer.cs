@@ -43,7 +43,7 @@ public class HpUIPlayer : HpUIBase
 
     private void RefreshHP()
     {
-        float percent = (float)p.CurHP / p.MaxHP;
+        float percent = (float)p.CurHP / p.AllHP;
         if (HomeLG.E.UI != null) HomeLG.E.UI.OnHpChange(percent);
     }
 }

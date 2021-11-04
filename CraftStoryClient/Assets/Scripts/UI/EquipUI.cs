@@ -6,9 +6,18 @@ public class EquipUI : UIBase
     TitleUI Title { get => FindChiled<TitleUI>("Title"); }
     Text Level { get => FindChiled<Text>("Level"); }
     Text Exp { get => FindChiled<Text>("Exp"); }
+
     Text HP { get => FindChiled<Text>("HP"); }
     Text Damage { get => FindChiled<Text>("Damage"); }
     Text Defense { get => FindChiled<Text>("Defense"); }
+
+    Text EquipmentHP { get => FindChiled<Text>("EquipmentHP"); }
+    Text EquipmentDamage { get => FindChiled<Text>("EquipmentDamage"); }
+    Text EquipmentDefense { get => FindChiled<Text>("EquipmentDefense"); }
+
+    Text SkillHP { get => FindChiled<Text>("SkillHP"); }
+    Text SkillDamage { get => FindChiled<Text>("SkillDamage"); }
+    Text SkillDefense { get => FindChiled<Text>("SkillDefense"); }
 
     MyButton WeaponIcon { get => FindChiled<MyButton>("WeaponIcon"); }
     MyButton ArmorIcon { get => FindChiled<MyButton>("ArmorIcon"); }
@@ -63,9 +72,17 @@ public class EquipUI : UIBase
         int nextExp = ConfigMng.E.Character[PlayerCtl.E.Character.Parameter.Level].LvUpExp;
         Exp.text = string.Format("Exp：{0}/{1}", DataMng.E.RuntimeData.Exp, nextExp);
 
-        HP.text = "HP：" + PlayerCtl.E.Character.Parameter.MaxHP;
-        Damage.text = "攻撃力：" + PlayerCtl.E.Character.Parameter.Damage;
-        Defense.text = "防御力：" + PlayerCtl.E.Character.Parameter.Defense;
+        HP.text = string.Format("HP      ：{0} <color=yellow>(+{1})</color>", 
+            PlayerCtl.E.Character.Parameter.config.HP, 
+            PlayerCtl.E.Character.Parameter.Equipment.HP + PlayerCtl.E.Character.Parameter.skillPar.HP);
+
+        Damage.text = string.Format("攻撃力：{0} <color=yellow>(+{1})</color>",
+            PlayerCtl.E.Character.Parameter.config.Damage,
+            PlayerCtl.E.Character.Parameter.Equipment.Damage + PlayerCtl.E.Character.Parameter.skillPar.Damage);
+
+        Defense.text = string.Format("防御力：{0} <color=yellow>(+{1})</color>",
+            PlayerCtl.E.Character.Parameter.config.Defense,
+            PlayerCtl.E.Character.Parameter.Equipment.Defense + PlayerCtl.E.Character.Parameter.skillPar.Defense);
     }
 
     /// <summary>
@@ -101,5 +118,13 @@ public class EquipUI : UIBase
                     break;
             }
         }
+
+        EquipmentHP.text = string.Format("HP      ：{0}", PlayerCtl.E.Character.Parameter.Equipment.HP);
+        EquipmentDamage.text = string.Format("攻撃力：{0}", PlayerCtl.E.Character.Parameter.Equipment.Damage);
+        EquipmentDefense.text = string.Format("防御力：{0}", PlayerCtl.E.Character.Parameter.Equipment.Defense);
+
+        SkillHP.text = string.Format("HP      ：{0}", PlayerCtl.E.Character.Parameter.skillPar.HP);
+        SkillDamage.text = string.Format("攻撃力：{0}", PlayerCtl.E.Character.Parameter.skillPar.Damage);
+        SkillDefense.text = string.Format("防御力：{0}", PlayerCtl.E.Character.Parameter.skillPar.Defense);
     }
 }

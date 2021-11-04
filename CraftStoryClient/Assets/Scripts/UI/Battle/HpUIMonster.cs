@@ -14,8 +14,8 @@ public class HpUIMonster : HpUIBase
     {
         base.Init<T>(data);
 
-        hpBar.maxValue = p.MaxHP;
-        hpBar.value = p.MaxHP;
+        hpBar.maxValue = p.AllHP;
+        hpBar.value = p.AllHP;
 
         Name.text = p.Name;
         Level.text = "Lv." + p.Level;
@@ -27,7 +27,7 @@ public class HpUIMonster : HpUIBase
     {
         base.RefreshHpBar();
 
-        hpBar.maxValue = p.MaxHP;
+        hpBar.maxValue = p.AllHP;
         RefreshHP();
     }
 
@@ -57,6 +57,6 @@ public class HpUIMonster : HpUIBase
     private void RefreshHP()
     {
         hpBar.value = p.CurHP;
-        if (HPText != null) HPText.text = (((float)p.CurHP / p.MaxHP) * 100).ToString("F0") + "%";
+        if (HPText != null) HPText.text = (((float)p.CurHP / p.AllHP) * 100).ToString("F0") + "%";
     }
 }

@@ -511,8 +511,8 @@ public class CharacterBase : MonoBehaviour
     public void Recovery(int damage)
     {
         // 回復後のHPが最大HPより多い場合、最大までの偏差を回復
-        if (damage > Parameter.MaxHP - Parameter.CurHP)
-            damage = Parameter.MaxHP - Parameter.CurHP;
+        if (damage > Parameter.AllHP - Parameter.CurHP)
+            damage = Parameter.AllHP - Parameter.CurHP;
 
         // HP計算
         Parameter.CurHP += damage;
@@ -550,7 +550,7 @@ public class CharacterBase : MonoBehaviour
     /// </summary>
     public virtual void Resurrection()
     {
-        Parameter.CurHP = Parameter.MaxHP;
+        Parameter.CurHP = Parameter.AllHP;
         Controller.enabled = true;
         Behavior = BehaviorType.Waiting;
 
