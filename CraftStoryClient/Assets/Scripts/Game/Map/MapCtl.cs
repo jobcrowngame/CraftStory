@@ -436,7 +436,7 @@ public class MapCtl
     /// <param name="posZ"></param>
     /// <param name="offsetY">偏位量</param>
     /// <returns></returns>
-    public static Vector3Int GetGroundPos(MapData mapData, int posX, int posZ, float offsetY = 0)
+    public static Vector3Int GetGroundPos(MapData mapData, int posX, int posZ, float offsetY = 0, int CreatePosOffset = 3)
     {
         if (posX < 0) posX = UnityEngine.Random.Range(0, mapData.SizeX);
         if (posZ < 0) posZ = UnityEngine.Random.Range(0, mapData.SizeZ);
@@ -453,6 +453,7 @@ public class MapCtl
                 posZ = UnityEngine.Random.Range(0, mapData.SizeZ);
                 posY = GetVertexY(mapData, posX, posZ) + (int)offsetY;
                 newPos = new Vector3Int(posX, posY, posZ);
+                newPos = Vector3Int.CeilToInt(FixEntityPos(mapData, newPos, CreatePosOffset));
 
                 if (CheckCreatePos(mapData, newPos))
                     break;

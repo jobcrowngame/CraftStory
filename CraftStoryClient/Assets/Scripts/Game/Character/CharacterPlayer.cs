@@ -107,6 +107,14 @@ public partial class CharacterPlayer : CharacterBase
             var end = new Vector2(ArrowTarget.position.x, ArrowTarget.position.z);
             Arrow.eulerAngles = new Vector3(0,270 - CommonFunction.Vector2ToAngle(start - end),0);
         }
+
+        // 落ちた場合、遷移
+        if (transform.position.y < -10)
+        {
+            Controller.enabled = false;
+            transform.position = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5);
+            Controller.enabled = true;
+        }
     }
 
     /// <summary>
@@ -196,9 +204,7 @@ public partial class CharacterPlayer : CharacterBase
         if (x != 0 || y != 0)
             Model.rotation = Quaternion.Euler(new Vector3(0, angle1 + angle2, 0));
 
-        // 落ちた場合、遷移
-        if (transform.position.y < -10)
-            transform.position = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5);
+        
     }
 
     /// <summary>

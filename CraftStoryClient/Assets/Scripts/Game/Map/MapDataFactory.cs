@@ -171,12 +171,7 @@ public class MapDataFactory
                 if (range > config.Percent)
                     continue;
 
-                Vector3 newPos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ, config.OffsetY);
-
-                newPos = MapCtl.FixEntityPos(mData, newPos, config.CreatePosOffset);
-                newPos = MapCtl.GetGroundPos(mData, (int)newPos.x, (int)newPos.z, config.OffsetY);
-
-
+                Vector3 newPos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ, config.OffsetY, config.CreatePosOffset);
                 var entityConfig = ConfigMng.E.Entity[config.EntityID];
                 for (int x = 0; x < entityConfig.ScaleX; x++)
                 {
@@ -217,12 +212,6 @@ public class MapDataFactory
         }
 
         Vector3 newPos = MapCtl.GetGroundPos(mData, config.PosX, config.PosZ);
-        if (config.PosX > 0) newPos.x = config.PosX;
-        if (config.PosY > 0) newPos.y = config.PosY;
-        if (config.PosZ > 0) newPos.z = config.PosZ;
-
-        newPos = MapCtl.GetGroundPos(mData, (int)newPos.x, (int)newPos.z);
-        newPos = MapCtl.FixEntityPos(mData, newPos, config.CreatePosOffset);
 
         mData.Map[(int)newPos.x, (int)newPos.y, (int)newPos.z] = new MapData.MapCellData() { entityID = config.EntityID };
     }
