@@ -190,6 +190,8 @@ public partial class HomeUI : UIBase
             DataMng.GetCoins(rp);
             RefreshCoins();
         });
+
+        SetSkills();
     }
 
     /// <summary>
