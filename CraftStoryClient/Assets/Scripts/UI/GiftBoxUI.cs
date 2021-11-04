@@ -119,6 +119,10 @@ public class GiftBoxUI : UIBase
         PlayerCtl.E.Lock = true;
         MultiBonus.gameObject.SetActive(false);
         LevelUp.gameObject.SetActive(false);
+
+#if UNITY_ANDROID
+        AdvertisingBtn.gameObject.SetActive(false);
+#endif
     }
 
     private IEnumerator GotoNextIE()
