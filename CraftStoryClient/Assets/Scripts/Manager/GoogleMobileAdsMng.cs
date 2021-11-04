@@ -31,19 +31,20 @@ public class GoogleMobileAdsMng : Single<GoogleMobileAdsMng>
         AdRequest request = new AdRequest.Builder().Build();
         this.rewardedAd.LoadAd(request);
     }
+
     //動画の視聴が完了したら実行される（途中で閉じられた場合は呼ばれない）
     public void HandleUserEarnedReward(object sender, Reward args)
     {
-        Logger.Log("報酬獲得！");
+        Logger.Log("動画の視聴が完了");
 
         if (callBack != null)
         {
             callBack();
         }
-
     }
     public void ShowReawrd(Action callBack)
     {
+        Logger.Log("動画の視聴を開始");
         this.callBack = callBack;
 
         if (this.rewardedAd.IsLoaded())

@@ -38,16 +38,13 @@ public class GiftBoxUI : UIBase
             AdvertisingBtn.gameObject.SetActive(false);
             GoogleMobileAdsMng.E.ShowReawrd(()=> 
             {
+                Logger.Log("•ñVŠl“¾I");
+
                 int count = AdventureCtl.E.BonusList.Count;
                 for (int i = 0; i < count; i++)
                 {
                     AdventureCtl.E.BonusList.Add(AdventureCtl.E.BonusList[i]);
                 }
-
-                //NWMng.E.ClearAdventure((rp) =>
-                //{
-                //    StartDoubleBonus();
-                //}, AdventureCtl.E.BonusList);
                 StartDoubleBonus();
             });
         });

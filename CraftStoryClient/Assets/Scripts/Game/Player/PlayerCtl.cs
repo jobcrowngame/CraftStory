@@ -119,18 +119,6 @@ public class PlayerCtl : MonoBehaviour
             var area = new MapAreaData(4);
         }
 
-        if (Input.GetKeyDown(KeyCode.F4))
-        {
-            UserSkill(new SkillData(1));
-        }
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            UserSkill(new SkillData(2));
-        }
-        if (Input.GetKeyDown(KeyCode.F6))
-        {
-            UserSkill(new SkillData(3));
-        }
     }
 
     public void SetCharacter(CharacterPlayer character)
