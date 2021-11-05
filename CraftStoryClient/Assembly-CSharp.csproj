@@ -335,8 +335,9 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Test\MeshMaterialCombiner.cs" />
+    <Compile Include="Assets\Scripts\Test\CombineMesh\MeshMaterialCombiner.cs" />
     <Compile Include="Assets\Scripts\Test\CombineMesh\CombineMeshMain.cs" />
+    <Compile Include="Assets\Scripts\Test\CombineMesh\ScreenCtl.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
