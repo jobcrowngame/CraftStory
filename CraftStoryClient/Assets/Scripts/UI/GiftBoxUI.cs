@@ -26,17 +26,12 @@ public class GiftBoxUI : UIBase
 
         GiftBoxLG.E.Init(this);
 
-        InitUI();
-    }
-
-    private void InitUI()
-    {
-        AdvertisingBtn.onClick.AddListener(() => 
+        AdvertisingBtn.onClick.AddListener(() =>
         {
             Bonus3XBtn.gameObject.SetActive(false);
             Bonus3XLabel.gameObject.SetActive(false);
             AdvertisingBtn.gameObject.SetActive(false);
-            GoogleMobileAdsMng.E.ShowReawrd(()=> 
+            GoogleMobileAdsMng.E.ShowReawrd(() =>
             {
                 int count = AdventureCtl.E.BonusList.Count;
                 for (int i = 0; i < count; i++)
@@ -51,27 +46,28 @@ public class GiftBoxUI : UIBase
                 StartDoubleBonus();
             });
         });
+
         ItemData ticket = DataMng.E.GetItemByItemId(9005);
         if (ticket != null)
         {
             Bonus3XBtn.gameObject.SetActive(true);
             Bonus3XBtn.onClick.AddListener(() =>
             {
-                Bonus3XBtn.gameObject.SetActive(false);
-                Bonus3XLabel.gameObject.SetActive(false);
-                AdvertisingBtn.gameObject.SetActive(false);
-                DataMng.E.ConsumableItem(9005);
-                int count = AdventureCtl.E.BonusList.Count;
-                for (int i = 0; i < count; i++)
+                string msg = @"test";
+                CommonFunction.ShowHintBox(msg, () =>
                 {
-                    AdventureCtl.E.BonusList.Add(AdventureCtl.E.BonusList[i]);
-                    AdventureCtl.E.BonusList.Add(AdventureCtl.E.BonusList[i]);
-                }
-                //NWMng.E.ClearAdventure((rp) =>
-                //{
-                //    StartTripleBonus();
-                //}, AdventureCtl.E.BonusList);
-                StartTripleBonus();
+                    Bonus3XBtn.gameObject.SetActive(false);
+                    Bonus3XLabel.gameObject.SetActive(false);
+                    AdvertisingBtn.gameObject.SetActive(false);
+                    DataMng.E.ConsumableItem(9005);
+                    int count = AdventureCtl.E.BonusList.Count;
+                    for (int i = 0; i < count; i++)
+                    {
+                        AdventureCtl.E.BonusList.Add(AdventureCtl.E.BonusList[i]);
+                        AdventureCtl.E.BonusList.Add(AdventureCtl.E.BonusList[i]);
+                    }
+                    StartTripleBonus();
+                }, ()=> { });
             });
             Bonus3XLabel.gameObject.SetActive(false);
         }
@@ -80,13 +76,14 @@ public class GiftBoxUI : UIBase
             Bonus3XBtn.gameObject.SetActive(false);
             Bonus3XLabel.gameObject.SetActive(true);
         }
-        OKBtn.onClick.AddListener(() => 
+
+        OKBtn.onClick.AddListener(() =>
         {
             Bonus3XBtn.gameObject.SetActive(false);
             Bonus3XLabel.gameObject.SetActive(false);
             AdvertisingBtn.gameObject.SetActive(false);
             OKBtn.gameObject.SetActive(false);
-            NWMng.E.AddExp((rp) => 
+            NWMng.E.AddExp((rp) =>
             {
                 levelUped = DataMng.E.RuntimeData.Lv < (int)rp["lv"];
 
