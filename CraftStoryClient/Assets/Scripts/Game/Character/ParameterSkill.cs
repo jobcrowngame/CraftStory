@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 public class ParameterSkill
 {
     public int HP { get; set; }
-    public int Damage { get => FixDamage + PercentDamage; }
+    public int Damage { get => FixDamage + (int)(par.FixDamage * PercentDamage * 0.01f); }
     public int FixDamage { get; set; }
     public int PercentDamage { get; set; }
     public int Defense { get; set; }
