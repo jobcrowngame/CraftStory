@@ -1,12 +1,12 @@
 {
-    "m_SelectedDeviceId": "R58M60VLF2P",
+    "m_SelectedDeviceId": "3c547aa",
     "m_SelectedPackage": {
         "deviceId": "",
         "name": "",
         "processId": 0,
         "exited": false
     },
-    "m_SelectedPriority": 0,
+    "m_SelectedPriority": 4,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "R58M60VLF2P",
@@ -43,6 +43,12 @@
             "name": "com.jobcrown.craftstory",
             "processId": 6355,
             "exited": false
+        },
+        {
+            "deviceId": "3c547aa",
+            "name": "com.miui.home",
+            "processId": 2759,
+            "exited": false
         }
     ],
     "m_Tags": {
@@ -53,7 +59,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "",
@@ -69,7 +75,7 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "CRASH",
