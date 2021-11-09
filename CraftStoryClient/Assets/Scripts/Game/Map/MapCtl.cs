@@ -315,15 +315,12 @@ public class MapCtl
         // サスペンションのチェック
         var downEntityPos = new Vector3Int(pos.x, pos.y - 1, pos.z);
         var downEntityId = DataMng.E.MapData.Map[downEntityPos.x, downEntityPos.y, downEntityPos.z].entityID;
-        if (downEntityId > 0)
-        {
-            var downEntityConfig = ConfigMng.E.Entity[downEntityId];
-            return downEntityConfig.CanPut == 1;
-        }
-        else
+        if (downEntityId <= 0)
         {
             return config.CanSuspension == 1;
         }
+
+        return true;
     }
 
     /// <summary>

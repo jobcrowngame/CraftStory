@@ -25,7 +25,7 @@ public class EquipListUI : UIBase
     /// <summary>
     /// ソート
     /// </summary>
-    Button SortBtn { get => FindChiled<Button>("SortBtn"); }
+    MyButton SortBtn { get => FindChiled<MyButton>("SortBtn"); }
 
     Text HP { get => FindChiled<Text>("HP"); }
     Text Damage { get => FindChiled<Text>("Damage"); }
@@ -59,10 +59,10 @@ public class EquipListUI : UIBase
         SortBtn.onClick.AddListener(() =>
         {
             EquipListLG.E.SortUp = !EquipListLG.E.SortUp;
-            EquipBtn.SetIcon(EquipListLG.E.SortUp ? "" : "");
+            SortBtn.SetIcon(EquipListLG.E.SortUp ? "" : "");
         });
 
-        EquipBtn.SetIcon("");
+        SortBtn.SetIcon("");
     }
 
     public override void Open(object data)

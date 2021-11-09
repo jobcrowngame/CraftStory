@@ -499,6 +499,8 @@ public class CharacterBase : MonoBehaviour
         // 死んだ場合
         if (Parameter.CurHP <= 0)
         {
+            Parameter.CurHP = 0;
+
             Died();
             attacker.TargetDied();
         }

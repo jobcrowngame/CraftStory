@@ -215,7 +215,12 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         if (obj == null)
             return;
 
-        var createPos = _cacheRaycastHit.normal + _cacheRaycastHit.collider.transform.position;
+
+        var createPos = _cacheRaycastHit.normal + _cacheRaycastHit.point;
+        int x = Mathf.RoundToInt(createPos.x);
+        int y = Mathf.RoundToInt(createPos.y);
+        int z = Mathf.RoundToInt(createPos.z);
+        createPos = new Vector3(x, y, z);
 
         Direction dType = Direction.foward;
         CheckTouchPos(_cacheRaycastHit.collider.transform.position, createPos , out dType);
