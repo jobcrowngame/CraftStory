@@ -214,7 +214,7 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
             return;
 
 
-        var createPos = _cacheRaycastHit.normal + _cacheRaycastHit.point;
+        var createPos = _cacheRaycastHit.normal * 0.5f + _cacheRaycastHit.point;
         int x = Mathf.RoundToInt(createPos.x);
         int y = Mathf.RoundToInt(createPos.y);
         int z = Mathf.RoundToInt(createPos.z);
