@@ -24,13 +24,13 @@ public class EquipSkillCell : UIBase
 
     public void Set(int skillId)
     {
+        this.skillId = skillId;
+
         if (skillId <= 0)
         {
             MyButton.SetIcon(ConfigMng.E.Skill[skillId].Icon);
             return;
         }
-
-        this.skillId = skillId;
 
         MyButton.SetIcon(config.Icon);
     }
