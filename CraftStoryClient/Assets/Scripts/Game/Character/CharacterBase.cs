@@ -493,9 +493,7 @@ public class CharacterBase : MonoBehaviour
 
         // HP計算
         Parameter.CurHP -= damage;
-        if (HpCtl != null)
-            HpCtl.OnValueChange(-damage);
-
+       
         // 死んだ場合
         if (Parameter.CurHP <= 0)
         {
@@ -504,6 +502,9 @@ public class CharacterBase : MonoBehaviour
             Died();
             attacker.TargetDied();
         }
+
+        if (HpCtl != null)
+            HpCtl.OnValueChange(-damage);
     }
 
     /// <summary>
