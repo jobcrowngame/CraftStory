@@ -94,8 +94,6 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
             if (PlayerCtl.E.BlueprintPreviewCtl != null) PlayerCtl.E.BlueprintPreviewCtl.CameraRotate(pointerPos.y, pointerPos.x);
 
             startPos = eventData.position;
-
-            PlayerCtl.E.Character.Behavior = BehaviorType.Waiting;
         }
     }
 
