@@ -804,6 +804,7 @@ namespace ExcelToJson
                     ID = ToInt32(tbl.Rows[i]["ID"]),
                     ResourcesPath = ToString(tbl.Rows[i]["ResourcesPath"]),
                     RareLevel = ToInt32(tbl.Rows[i]["RareLevel"]),
+                    TagType = ToInt32(tbl.Rows[i]["TagType"]),
                     LeftEquipment = ToInt32(tbl.Rows[i]["LeftEquipment"]),
                     HP = ToInt32(tbl.Rows[i]["HP"]),
                     Damage = ToInt32(tbl.Rows[i]["Damage"]),

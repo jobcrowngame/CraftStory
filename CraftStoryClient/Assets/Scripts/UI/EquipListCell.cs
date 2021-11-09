@@ -1,25 +1,41 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
-
-using System.Collections;
 
 public class EquipListCell : UIBase
 {
     Image Icon { get => FindChiled<Image>("Icon"); }
-    Text HP { get => FindChiled<Text>("HP"); }
-    Text Damage { get => FindChiled<Text>("Damage"); }
-    Text Defence { get => FindChiled<Text>("Defence"); }
+    Text Name { get => FindChiled<Text>("Name"); }
+    Text Rare { get => FindChiled<Text>("Rare"); }
+    Button OnClickBtn { get => GetComponent<Button>(); }
+
+    Transform Equiped { get => FindChiled("EquipTag"); }
+    Transform SelectedMask { get => FindChiled("SelectedMask"); }
 
     Transform Skills { get => FindChiled("Skills"); }
     EquipSkillCell[] cells;
 
-    Button EquipBtn { get => FindChiled<Button>("EquipBtn"); }
-    Button AppraisalBtn { get => FindChiled<Button>("AppraisalBtn"); }
+    public ItemEquipmentData Data { get; private set; }
 
-    ItemEquipmentData data;
+    private bool IsSelected { get => SelectedMask.gameObject.activeSelf == true; }
+    public bool IsEquiped { get => Data.equipSite > 0; }
 
     private void Awake()
     {
+        OnClickBtn.onClick.AddListener(() =>
+        {
+            if (IsSelected)
+                return;
+
+            if (EquipListLG.E.SelectedItem != null)
+                EquipListLG.E.SelectedItem.Selected(false);
+
+            EquipListLG.E.SelectedItem = this;
+            EquipListLG.E.UI.RefreshParameter();
+
+            Selected();
+        });
+
         cells = new EquipSkillCell[Skills.childCount];
         for (int i = 0; i < Skills.childCount; i++)
         {
@@ -30,46 +46,68 @@ public class EquipListCell : UIBase
             }
             cells[i] = cell;
         }
-
-        EquipBtn.onClick.AddListener(() =>
-        {
-            PlayerCtl.E.EquipEquipment(data);
-            EquipListLG.E.UI.Close();
-        });
-        AppraisalBtn.onClick.AddListener(() =>
-        {
-            EquipListLG.E.AppraisalEquipment(data, this);
-        });
     }
 
     public void Set(ItemEquipmentData data)
     {
-        this.data = data;
+        this.Data = data;
 
         Icon.sprite = ReadResources<Sprite>(data.Config().IconResourcesPath);
 
-        HP.text = string.Format("HP：{0}", data.equipmentConfig.HP);
-        if (data.equipmentConfig.HP < 0) HP.gameObject.SetActive(false);
+        Name.text = data.Config().Name;
 
-        Damage.text = string.Format("攻撃力：{0}", data.equipmentConfig.Damage);
-        if (data.equipmentConfig.Damage < 0) Damage.gameObject.SetActive(false);
+        string rareText = "";
+        for (int i = 0; i < data.equipmentConfig.RareLevel; i++)
+        {
+            rareText += "★";
+        }
+        Rare.text = rareText;
 
-        Defence.text = string.Format("防御力：{0}", data.equipmentConfig.Defnse);
-        if (data.equipmentConfig.Defnse < 0) Defence.gameObject.SetActive(false);
+        var attachSkills = data.AttachSkills;
+        for (int i = 0; i < cells.Length; i++)
+        {
+            if (attachSkills != null && attachSkills.Length > i)
+            {
+                cells[i].Set(int.Parse(attachSkills[i]));
+            }
+            else
+            {
+                cells[i].Set(data.islocked == 1 ? -1 : -2);
+            }
+        }
 
-        RefreshUI();
+        Selected(false);
+        ShowEquipedTag(data.equipSite > 0);
+    }
+
+    /// <summary>
+    /// 装備マック
+    /// </summary>
+    /// <param name="b"></param>
+    private void ShowEquipedTag(bool b = true)
+    {
+        Equiped.gameObject.SetActive(b);
+    }
+
+    /// <summary>
+    /// 選択マック
+    /// </summary>
+    /// <param name="b"></param>
+    public void Selected(bool b = true)
+    {
+        SelectedMask.gameObject.SetActive(b);
     }
 
     public void AppraisalEquipment(string skills)
     {
-        data.islocked = 1;
-        data.SetAttachSkills(skills);
+        Data.islocked = 1;
+        Data.SetAttachSkills(skills);
 
         StartCoroutine(AppraisalEquipmentIE());
     }
     IEnumerator AppraisalEquipmentIE()
     {
-        var attachSkills = data.AttachSkills;
+        var attachSkills = Data.AttachSkills;
         for (int i = 0; i < cells.Length; i++)
         {
             if (attachSkills != null && attachSkills.Length > i)
@@ -84,43 +122,6 @@ public class EquipListCell : UIBase
             yield return new WaitForSeconds(1f);
         }
 
-        EquipBtn.gameObject.SetActive(data.IsLocked);
-        AppraisalBtn.gameObject.SetActive(!data.IsLocked);
-    }
-
-    private void RefreshUI()
-    {
-        var attachSkills = data.AttachSkills;
-        for (int i = 0; i < cells.Length; i++)
-        {
-            if (attachSkills != null && attachSkills.Length > i)
-            {
-                cells[i].Set(int.Parse(attachSkills[i]));
-            }
-            else
-            {
-                cells[i].Set(data.islocked == 1 ? -1 : -2);
-            }
-        }
-
-        EquipBtn.gameObject.SetActive(data.IsLocked);
-        AppraisalBtn.gameObject.SetActive(!data.IsLocked);
-
-        //　装備してるEquipment
-        var equipedEquipment = PlayerCtl.E.GetEquipByItemType((ItemType)data.Config().Type);
-        if (equipedEquipment == null)
-        {
-            EneableEquipBtn(true);
-        }
-        else
-        {
-            EneableEquipBtn(PlayerCtl.E.GetEquipByItemType((ItemType)data.Config().Type).id != data.id);
-        }
-    }
-
-    private void EneableEquipBtn(bool b)
-    {
-        EquipBtn.enabled = b;
-        EquipBtn.GetComponent<Image>().color = b ? Color.white : Color.grey;
+        EquipListLG.E.UI.RefreshParameter();
     }
 }
