@@ -45,9 +45,7 @@ public partial class CharacterPlayer : CharacterBase
 
             if (!IsDied)
             {
-                Behavior = value
-                ? BehaviorType.Run
-                : BehaviorType.Waiting;
+                Behavior = Behavior;
             }
         }
     }
@@ -77,6 +75,9 @@ public partial class CharacterPlayer : CharacterBase
     public override void OnBehaviorChange(BehaviorType behavior)
     {
         base.OnBehaviorChange(behavior);
+
+        if (PlayerCtl.E.Character == null)
+            return;
 
         Logger.Log("Player Behavior: " + behavior);
 
@@ -183,7 +184,7 @@ public partial class CharacterPlayer : CharacterBase
         if (CanNotChangeBehavior())
             return;
 
-        Behavior = BehaviorType.Run;
+        if (Behavior != BehaviorType.Run) Behavior = BehaviorType.Run;
 
         var angle1 = 360 - CommonFunction.Vector2ToAngle(new Vector2(x, y).normalized) + 90;
         var angle2 = PlayerCtl.E.CameraCtl.GetEulerAngleY;

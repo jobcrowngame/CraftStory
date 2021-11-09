@@ -14,22 +14,29 @@ public class SkillCell : UIBase
 
     private void Awake()
     {
-        btn.onClick.AddListener(() =>
+        btn.onClick.AddListener(OnClickSkillBtn);
+    }
+
+    private void OnClickSkillBtn()
+    {
+        if (mSkill == null || mSkill.IsCooling || PlayerCtl.E.Character.ShareCDIsCooling)
+            return;
+
+        PlayerCtl.E.UserSkill(mSkill);
+
+        int nextSkillID = mSkill.Config.NextSkill;
+        foreach (var item in PlayerCtl.E.Character.SkillList)
         {
-            if (mSkill == null || mSkill.IsCooling || PlayerCtl.E.Character.ShareCDIsCooling)
-                return;
-
-            PlayerCtl.E.UserSkill(mSkill);
-
-            int nextSkillID = mSkill.Config.NextSkill;
-            foreach (var item in PlayerCtl.E.Character.SkillList)
+            if (item.Config.ID == nextSkillID)
             {
-                if (item.Config.ID == nextSkillID)
-                {
-                    Set(item);
-                }
+                Set(item);
             }
-        });
+        }
+    }
+
+    public void Click()
+    {
+        OnClickSkillBtn();
     }
 
     public void SetBase(SkillData skill)

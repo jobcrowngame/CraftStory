@@ -31,8 +31,8 @@ public class CharacterBase : MonoBehaviour
         set
         {
             // 同じValue場合、スキップ
-            if (mBehavior == value)
-                return;
+            //if (mBehavior == value)
+            //    return;
 
             //// 死んだ後、他の動作に変更できません。
             //if (Behavior == BehaviorType.Did)
@@ -236,6 +236,7 @@ public class CharacterBase : MonoBehaviour
         return Behavior == BehaviorType.CallForHelp
             || Behavior == BehaviorType.Attack80
             || Behavior == BehaviorType.Attack81
+            || Behavior == BehaviorType.Attack82
             || Behavior == BehaviorType.Hit
             || Behavior == BehaviorType.Did
             || Behavior == BehaviorType.ReadyAttack01
