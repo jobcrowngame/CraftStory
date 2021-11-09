@@ -24,7 +24,7 @@ public class SettingMng : Single<SettingMng>
     public const int MoveBoundaryOffset = 3;
 
     // 移動スピード
-    public const float MoveSpeed = 0.07f;
+    public const float MoveSpeed = 0.1f;
 
     // ジャンプ力
     public const float JumpSpeed = 0.2f;
