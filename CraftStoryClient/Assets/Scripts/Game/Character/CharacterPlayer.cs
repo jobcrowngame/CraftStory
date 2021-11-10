@@ -90,6 +90,11 @@ public partial class CharacterPlayer : CharacterBase
         }
 
         if (animator != null) animator.SetInteger("State", (int)behavior);
+
+        if (HpCtl != null)
+        {
+            HpCtl.SetBehavior(behavior.ToString());
+        }
     }
     public override void OnUpdate()
     {

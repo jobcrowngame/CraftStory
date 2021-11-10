@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class HpUIPlayer : HpUIBase
 {
     Transform DamageObjParent { get => FindChiled("DamageObjParent"); }
+    Text Behavior { get => FindChiled<Text>("Behavior"); }
 
     Stack<int> addedExpStack;
 
@@ -84,5 +85,10 @@ public class HpUIPlayer : HpUIBase
         int addExp = addedExpStack.Pop();
         var obj = CommonFunction.Instantiate<ExpAdd>("Prefabs/Battle/ExpAdd", transform, transform.position);
         obj.Set(addExp);
+    }
+
+    public override void SetBehavior(string msg)
+    {
+        Behavior.text = msg;
     }
 }
