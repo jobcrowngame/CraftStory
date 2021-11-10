@@ -47,6 +47,11 @@ public class HpUIBase : UIBase
     public virtual void OnDide() { }
 
     /// <summary>
+    /// Exp 追加
+    /// </summary>
+    public virtual void AddExp(int exp) { }
+
+    /// <summary>
     /// カメラを向かう
     /// </summary>
     /// <param name="b"></param>

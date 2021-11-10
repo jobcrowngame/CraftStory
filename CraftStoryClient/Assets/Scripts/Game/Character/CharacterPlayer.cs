@@ -303,4 +303,12 @@ public partial class CharacterPlayer : CharacterBase
     {
         return SkillList.Count > 0;
     }
+
+    /// <summary>
+    /// Exp追加
+    /// </summary>
+    public void AddExp(int exp)
+    {
+        HpCtl.AddExp(exp);
+    }
 }

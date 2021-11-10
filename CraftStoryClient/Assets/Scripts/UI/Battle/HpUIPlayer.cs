@@ -1,15 +1,36 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HpUIPlayer : HpUIBase
 {
     Transform DamageObjParent { get => FindChiled("DamageObjParent"); }
 
+    Stack<int> addedExpStack;
+
+    float expAddStep = 0.2f;
+    float curExpAddTimer = 0;
+
     public override void Init<T>(T data)
     {
         base.Init<T>(data);
 
+        addedExpStack = new Stack<int>();
+
         RefreshHP();
+    }
+
+    private void Update()
+    {
+        curExpAddTimer += Time.deltaTime;
+
+        if (curExpAddTimer > expAddStep)
+        {
+            curExpAddTimer = 0;
+            AddExpInstance();
+        }
     }
 
     public override void RefreshHpBar()
@@ -45,5 +66,23 @@ public class HpUIPlayer : HpUIBase
     {
         float percent = (float)p.CurHP / p.AllHP;
         if (HomeLG.E.UI != null) HomeLG.E.UI.OnHpChange(percent);
+    }
+
+    /// <summary>
+    /// Exp追加
+    /// </summary>
+    /// <param name="exp"></param>
+    public override void AddExp(int exp)
+    {
+        addedExpStack.Push(exp);
+    }
+    private void AddExpInstance()
+    {
+        if (addedExpStack.Count == 0)
+            return;
+
+        int addExp = addedExpStack.Pop();
+        var obj = CommonFunction.Instantiate<ExpAdd>("Prefabs/Battle/ExpAdd", transform, transform.position);
+        obj.Set(addExp);
     }
 }

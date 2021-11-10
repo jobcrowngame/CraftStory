@@ -6,7 +6,16 @@ using UnityEngine.UI;
 
 public class GiftBoxUI : UIBase
 {
+    Text TitleText { get => FindChiled<Text>("TitleText"); }
+
     Transform LevelUp { get => FindChiled<Transform>("LevelUp"); }
+
+    Transform Exp { get => FindChiled<Transform>("Exp"); }
+    Image Icon { get => FindChiled<Image>("Icon"); }
+    Text Name { get => FindChiled<Text>("Name"); }
+    Text Lv { get => FindChiled<Text>("Lv"); }
+    Text AddExp { get => FindChiled<Text>("AddExp"); }
+    Slider Slider { get => FindChiled<Slider>("Slider"); }
 
     Image MultiBonus { get => FindChiled<Image>("MultiBonus"); }
     Button Bonus3XBtn { get => FindChiled<Button>("Bonus3XBtn"); }
@@ -17,7 +26,7 @@ public class GiftBoxUI : UIBase
     List<IconItemCell> cells;
     Action okBtnCallBack;
 
-    bool levelUped;
+    float addedExp;
 
 
     public override void Init()
@@ -38,11 +47,6 @@ public class GiftBoxUI : UIBase
                 {
                     AdventureCtl.E.BonusList.Add(AdventureCtl.E.BonusList[i]);
                 }
-
-                //NWMng.E.ClearAdventure((rp) =>
-                //{
-                //    StartDoubleBonus();
-                //}, AdventureCtl.E.BonusList);
                 StartDoubleBonus();
             });
         });
@@ -85,14 +89,6 @@ public class GiftBoxUI : UIBase
             OKBtn.gameObject.SetActive(false);
             NWMng.E.AddExp((rp) =>
             {
-                levelUped = DataMng.E.RuntimeData.Lv < (int)rp["lv"];
-
-                DataMng.E.RuntimeData.Lv = (int)rp["lv"];
-                DataMng.E.RuntimeData.Exp = (int)rp["exp"];
-
-                // レベルアップ表現があると追加
-                LevelUp.gameObject.SetActive(levelUped);
-
                 NWMng.E.ClearAdventure((rp) =>
                 {
                     if (okBtnCallBack != null)
@@ -100,7 +96,7 @@ public class GiftBoxUI : UIBase
                         PlayerCtl.E.Lock = false;
                         ClearCell(itemGridRoot);
 
-                        StartCoroutine(GotoNextIE());
+                        StartCoroutine(StartAnimIE());
                     }
                 }, AdventureCtl.E.BonusList);
             }, AdventureCtl.E.CurExp);
@@ -116,17 +112,86 @@ public class GiftBoxUI : UIBase
         PlayerCtl.E.Lock = true;
         MultiBonus.gameObject.SetActive(false);
         LevelUp.gameObject.SetActive(false);
+        Exp.gameObject.SetActive(false);
+
+        TitleText.text = "あつめたアイテム";
+        addedExp = AdventureCtl.E.CurExp;
+
+        Icon.sprite = ReadResources<Sprite>("");
+        Name.text = DataMng.E.RuntimeData.NickName;
+        Lv.text = "Lv." + DataMng.E.RuntimeData.Lv;
+        AddExp.text = "+" + addedExp;
+        Slider.value = DataMng.E.RuntimeData.Exp / (float)ConfigMng.E.Character[DataMng.E.RuntimeData.Lv].LvUpExp;
 
 #if UNITY_ANDROID
         AdvertisingBtn.gameObject.SetActive(false);
 #endif
     }
 
-    private IEnumerator GotoNextIE()
+    private IEnumerator StartAnimIE()
     {
-        float timer = levelUped ? 1.8f : 0;
-        yield return new WaitForSeconds(timer);
-        okBtnCallBack();
+        TitleText.text = "獲得した経験値";
+
+        // Expバーを表示
+        Exp.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+
+        var lvUpExp = ConfigMng.E.Character[DataMng.E.RuntimeData.Lv].LvUpExp;
+        var step = DataMng.E.RuntimeData.Exp + addedExp < lvUpExp ?
+               addedExp / 50f :
+               (lvUpExp - DataMng.E.RuntimeData.Exp) / 50f;
+
+        // 経験値加算
+        for (int i = 0; i < 50; i++)
+        {
+            if (addedExp <= 0 || DataMng.E.RuntimeData.Exp >= lvUpExp)
+                break;
+            
+            addedExp -= step;
+            DataMng.E.RuntimeData.Exp += step;
+
+            AddExp.text = "+" + (int)addedExp;
+            Slider.value = DataMng.E.RuntimeData.Exp / (float)lvUpExp;
+
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        // レベルアップなかった場合、残りのExpあると加算
+        if (DataMng.E.RuntimeData.Exp + addedExp < lvUpExp && addedExp > 0)
+        {
+            DataMng.E.RuntimeData.Exp += addedExp;
+            addedExp -= addedExp;
+
+            AddExp.text = "+" + (int)addedExp;
+            Slider.value = DataMng.E.RuntimeData.Exp / (float)lvUpExp;
+        }
+
+        // レベルアップした場合
+        if (DataMng.E.RuntimeData.Exp + addedExp >= lvUpExp)
+        {
+            DataMng.E.RuntimeData.Exp -= lvUpExp;
+            StartCoroutine(LevelUpIE());
+        }
+        else
+        {
+            okBtnCallBack();
+        }
+    }
+    private IEnumerator LevelUpIE()
+    {
+        DataMng.E.RuntimeData.Lv++;
+        Lv.text = "Lv." + DataMng.E.RuntimeData.Lv;
+        Slider.value = 0;
+
+        Lv.GetComponent<Animation>().Play("LevelUpText");
+        yield return new WaitForSeconds(0.5f);
+
+        LevelUp.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+
+        LevelUp.gameObject.SetActive(false);
+
+        StartCoroutine(StartAnimIE());
     }
 
     public void AddBonus(List<int> bonus)

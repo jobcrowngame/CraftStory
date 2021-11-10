@@ -72,7 +72,9 @@
     <Compile Include="Assets\Scripts\UI\ChatUI.cs" />
     <Compile Include="Assets\Scripts\UI\EquipListUI.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusUI.cs" />
+    <Compile Include="Assets\Scripts\Test\CombineMesh\ScreenCtl.cs" />
     <Compile Include="Assets\Scripts\UI\GachaVerificationLG.cs" />
+    <Compile Include="Assets\Scripts\Test\CombineMesh\CombineMeshMain.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\TransferGate.cs" />
     <Compile Include="Assets\Scripts\UI\Terms02UI.cs" />
     <Compile Include="Assets\Scripts\UI\LotteryUI.cs" />
@@ -157,6 +159,7 @@
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionCell.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityTransferGate.cs" />
+    <Compile Include="Assets\Scripts\Test\CombineMesh\MeshMaterialCombiner.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityFlowoer.cs" />
     <Compile Include="Assets\Scripts\UI\Common\SimpleMove.cs" />
     <Compile Include="Assets\Scripts\Game\Character\SkillData.cs" />
@@ -335,6 +338,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
+    <Compile Include="Assets\Scripts\UI\Battle\ExpAdd.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

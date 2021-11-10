@@ -441,6 +441,14 @@ public class PlayerCtl : MonoBehaviour
         Character.StartUseSkill(skill, Character.Target);
     }
 
+    /// <summary>
+    /// Exp 追加
+    /// </summary>
+    public void AddExp(int exp)
+    {
+        Character.AddExp(exp);
+    }
+
     #endregion
     #region 装備
 

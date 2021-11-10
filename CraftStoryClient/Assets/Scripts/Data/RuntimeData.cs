@@ -33,7 +33,7 @@ public class RuntimeData
     /// <summary>
     /// 経験値
     /// </summary>
-    public int Exp { get; set; }
+    public float Exp { get; set; }
 
     public int NewEmailCount { get; set; } // 新しいメール数
     public int SubscriptionLv01 { get; set; } // サブスクリプション 1
