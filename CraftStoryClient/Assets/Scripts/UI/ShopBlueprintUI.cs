@@ -22,7 +22,9 @@ public class ShopBlueprintUI : UIBase
     Transform BlueprintItemParent { get => FindChiled("Parent", BlueprintItem.gameObject); }
 
     Transform MyShop { get => FindChiled("MyShop"); }
+    Transform MyShopCells { get => FindChiled("MyShopCells", MyShop.gameObject); }
     ShopBlueprintMyShopCell[] myShopCells;
+    Text MyGoodNum { get => FindChiled<Text>("MyGoodNum"); }
 
     private int maxCount;
 
@@ -66,10 +68,10 @@ public class ShopBlueprintUI : UIBase
             ShopBlueprintLG.E.RefreshMyShopBlueprint(InputField.text, value);
         });
 
-        myShopCells = new ShopBlueprintMyShopCell[MyShop.childCount];
-        for (int i = 0; i < MyShop.childCount; i++)
+        myShopCells = new ShopBlueprintMyShopCell[MyShopCells.childCount];
+        for (int i = 0; i < MyShopCells.childCount; i++)
         {
-            myShopCells[i] = MyShop.GetChild(i).gameObject.AddComponent<ShopBlueprintMyShopCell>();
+            myShopCells[i] = MyShopCells.GetChild(i).gameObject.AddComponent<ShopBlueprintMyShopCell>();
         }
     }
 
@@ -86,6 +88,8 @@ public class ShopBlueprintUI : UIBase
         GuideLG.E.Next();
 
         Dropdown.value = 2;
+
+        MyGoodNum.text = DataMng.E.RuntimeData.MyGoodNum.ToString();
     }
 
     public void RefreshItemWindow(ShopBlueprintLG.UIType type)

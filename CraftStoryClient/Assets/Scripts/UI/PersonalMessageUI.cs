@@ -14,6 +14,8 @@ public class PersonalMessageUI : UIBase
     InputField InputField { get=> FindChiled<InputField>("InputField", ChangeNickName); }
     Button OKBtn { get => FindChiled<Button>("OKBtn", ChangeNickName); }
 
+    Text MyGoodNum { get => FindChiled<Text>("MyGoodNum"); }
+
     Transform Comment { get => FindChiled("Comment"); }
     InputField CommentInputField { get => FindChiled<InputField>("CommentInputField", Comment); }
 
@@ -87,5 +89,6 @@ public class PersonalMessageUI : UIBase
         Account.text = DataMng.E.UserData.Account;
         NickNameText.text = DataMng.E.RuntimeData.NickName;
         CommentInputField.text = DataMng.E.RuntimeData.Comment;
+        MyGoodNum.text = DataMng.E.RuntimeData.MyGoodNum.ToString();
     }
 }

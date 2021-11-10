@@ -15,7 +15,7 @@ public class ShopBlueprintUserCell : UIBase
     {
         GoodBtn.onClick.AddListener(() =>
         {
-            if (DataMng.E.RuntimeData.MyShopGoodNum >= 3)
+            if (DataMng.E.RuntimeData.UseGoodNum >= 3)
             {
                 CommonFunction.ShowHintBar(1047001);
                 return;
@@ -24,7 +24,7 @@ public class ShopBlueprintUserCell : UIBase
             NWMng.E.MyShopGoodEvent((rp) =>
             {
                 ShopBlueprintLG.E.RefreshGoodNum(data.targetAcc);
-                DataMng.E.RuntimeData.MyShopGoodNum++;
+                DataMng.E.RuntimeData.UseGoodNum++;
             }, data.targetAcc);
         });
 

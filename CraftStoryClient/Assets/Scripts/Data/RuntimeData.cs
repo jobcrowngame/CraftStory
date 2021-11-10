@@ -63,7 +63,12 @@ public class RuntimeData
     /// <summary>
     /// マイショップいいねした数
     /// </summary>
-    public int MyShopGoodNum { get; set; }
+    public int UseGoodNum { get; set; }
+
+    /// <summary>
+    /// 自分のいいね数
+    /// </summary>
+    public int MyGoodNum { get; set; }
 
     /// <summary>
     /// 新規アカウントのフラグ

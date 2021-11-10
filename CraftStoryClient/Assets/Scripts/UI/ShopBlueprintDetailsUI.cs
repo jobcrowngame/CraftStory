@@ -90,7 +90,7 @@ public class ShopBlueprintDetailsUI : UIBase
 
     public void OnClickGoodBtn()
     {
-        if (DataMng.E.RuntimeData.MyShopGoodNum >= 3)
+        if (DataMng.E.RuntimeData.UseGoodNum >= 3)
         {
             CommonFunction.ShowHintBar(1047001);
             return;
@@ -103,7 +103,7 @@ public class ShopBlueprintDetailsUI : UIBase
 
             ShopBlueprintLG.E.UI.RefreshGoodNum(data.targetAcc);
 
-            DataMng.E.RuntimeData.MyShopGoodNum++;
+            DataMng.E.RuntimeData.UseGoodNum++;
         }, data.targetAcc);
     }
 
