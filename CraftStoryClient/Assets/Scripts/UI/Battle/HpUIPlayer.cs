@@ -30,7 +30,7 @@ public class HpUIPlayer : HpUIBase
         }
         else
         {
-            AddDamageObj(-v, DamageObjParent, "Prefabs/Battle/DamageGreen");
+            AddDamageObj(v, DamageObjParent, "Prefabs/Battle/DamageGreen");
         }
     }
 
