@@ -57,6 +57,10 @@ public class HpUIMonster : HpUIBase
     private void RefreshHP()
     {
         hpBar.value = p.CurHP;
-        if (HPText != null) HPText.text = (((float)p.CurHP / p.AllHP) * 100).ToString("F0") + "%";
+        var percent = ((float)p.CurHP / p.AllHP) * 100 + 1;
+        if (percent > 100)
+            percent = 100;
+
+        if (HPText != null) HPText.text = percent.ToString("F0") + "%";
     }
 }
