@@ -62,6 +62,10 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
         if (eventData.pointerId == 1) touch2 = eventData.position;
         if (touch1 != Vector2.zero && touch2 != Vector2.zero)
             curDistance = Vector2.Distance(touch1, touch2);
+
+        // スクリーンシドラッグする場合、
+        if (PlayerCtl.E.Character.Behavior == BehaviorType.Breack)
+            PlayerCtl.E.Character.Behavior = BehaviorType.Waiting;
     }
 
     /// <summary>
