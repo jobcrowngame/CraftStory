@@ -207,6 +207,8 @@ public partial class HomeUI : UIBase
     /// </summary>
     private void RefreshUiByMapType()
     {
+        MenuBtn.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Brave);
+
         SceneName.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave);
         ItemDropParent.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave);
         Battle.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave);
