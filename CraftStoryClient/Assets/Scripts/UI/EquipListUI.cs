@@ -61,8 +61,6 @@ public class EquipListUI : UIBase
             EquipListLG.E.SortUp = !EquipListLG.E.SortUp;
             SortBtn.SetIcon(EquipListLG.E.SortUp ? "" : "");
         });
-
-        SortBtn.SetIcon("");
     }
 
     public override void Open(object data)
@@ -70,6 +68,9 @@ public class EquipListUI : UIBase
         base.Open(data);
 
         EquipListLG.E.itemType = (ItemType)data;
+
+        SortBtn.SetIcon(EquipListLG.E.SortUp ? "" : "");
+        ToggleBtns.SetValue((int)EquipListLG.E.Tag);
 
         EquipListLG.E.GetEquipmentList();
 

@@ -29,6 +29,7 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
             mTagType = value;
             RefreshCells();
         }
+        get => mTagType;
     }
     private TagType mTagType = TagType.All;
 
