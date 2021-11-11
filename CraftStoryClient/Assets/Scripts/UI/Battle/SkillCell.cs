@@ -10,7 +10,6 @@ public class SkillCell : UIBase
     Image CanNotUse { get => FindChiled<Image>("CanNotUse"); }
 
     SkillData mSkill;
-    SkillData baseSkill;
 
     private void Awake()
     {
@@ -34,11 +33,6 @@ public class SkillCell : UIBase
         }
     }
 
-    public void Click()
-    {
-        OnClickSkillBtn();
-    }
-
     public void SetBase(SkillData skill)
     {
         if (skill == null)
@@ -47,7 +41,6 @@ public class SkillCell : UIBase
             return;
         }
 
-        baseSkill = skill;
         Set(skill);
         RefreshCD(0);
     }
@@ -76,6 +69,8 @@ public class SkillCell : UIBase
 
         int cd = (int)curCD + 1;
         CD.text = curCD > 0 ? cd.ToString() : "";
+
+        btn.enabled = CDMask.fillAmount == 0;
     }
 
     /// <summary>

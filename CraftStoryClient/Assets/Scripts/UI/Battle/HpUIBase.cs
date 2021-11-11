@@ -51,9 +51,6 @@ public class HpUIBase : UIBase
     /// </summary>
     public virtual void AddExp(int exp) { }
 
-    public virtual void SetBehavior(string msg) { }
-
-
     /// <summary>
     /// カメラを向かう
     /// </summary>

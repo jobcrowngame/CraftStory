@@ -86,9 +86,4 @@ public class HpUIPlayer : HpUIBase
         var obj = CommonFunction.Instantiate<ExpAdd>("Prefabs/Battle/ExpAdd", transform, transform.position);
         obj.Set(addExp);
     }
-
-    public override void SetBehavior(string msg)
-    {
-        Behavior.text = msg;
-    }
 }
