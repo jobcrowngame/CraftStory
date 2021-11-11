@@ -88,6 +88,7 @@ public class PersonalMessageUI : UIBase
         base.Open();
         Account.text = DataMng.E.UserData.Account;
         NickNameText.text = DataMng.E.RuntimeData.NickName;
+        InputField.text = DataMng.E.RuntimeData.NickName;
         CommentInputField.text = DataMng.E.RuntimeData.Comment;
         MyGoodNum.text = DataMng.E.RuntimeData.MyGoodNum.ToString();
     }

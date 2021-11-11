@@ -316,23 +316,22 @@ public class PlayerCtl : MonoBehaviour
         WorldMng.E.MapCtl.CreateEntity(entityId, pos, dType);
 
         // ブロックやオブジェクトを置くミッション
-        NWMng.E.ClearMission((rp)=>
+        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
         {
-            if (DataMng.E.RuntimeData.MapType != MapType.Guide)
+            NWMng.E.ClearMission(4, 1);
+
+            DataMng.E.RuntimeData.TotalSetBlockCount++;
+            if (DataMng.E.RuntimeData.TotalSetBlockCount >= 20 && DataMng.E.RuntimeData.GuideEnd == 0)
             {
-                DataMng.E.RuntimeData.TotalSetBlockCount++;
-                if (DataMng.E.RuntimeData.TotalSetBlockCount >= 20 && DataMng.E.RuntimeData.GuideEnd == 0)
+                // 設計図チュートリアルへ招待
+                var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 7);
+                chatUi.AddListenerOnClose(() =>
                 {
-                    // 設計図チュートリアルへ招待
-                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 7);
-                    chatUi.AddListenerOnClose(() =>
-                    {
-                        DataMng.E.RuntimeData.GuideId = 1;
-                        CommonFunction.GoToNextScene(105);
-                    });
-                }
+                    DataMng.E.RuntimeData.GuideId = 1;
+                    CommonFunction.GoToNextScene(105);
+                });
             }
-        }, 4, 1, 1);
+        }
     }
 
     /// <summary>

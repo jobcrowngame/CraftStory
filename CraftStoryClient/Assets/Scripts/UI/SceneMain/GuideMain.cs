@@ -6,6 +6,8 @@ public class GuideMain : MonoBehaviour
 {
     void Start()
     {
+        GuideLG.E.ReStart();
+
         // オブジェクトを生成
         WorldMng.E.CreateGameObjects();
 

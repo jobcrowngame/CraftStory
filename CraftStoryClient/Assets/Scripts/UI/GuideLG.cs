@@ -51,7 +51,7 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
     public void ReStart()
     {
         end = false;
-        stepIndex = 0;
+        stepIndex = 1;
         itemGuid = 1;
         createBlockCount = 0;
     }
