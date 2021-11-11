@@ -321,7 +321,7 @@ public class PlayerCtl : MonoBehaviour
             NWMng.E.ClearMission(4, 1);
 
             DataMng.E.RuntimeData.TotalSetBlockCount++;
-            if (DataMng.E.RuntimeData.TotalSetBlockCount >= 20 && DataMng.E.RuntimeData.GuideEnd == 0)
+            if (DataMng.E.RuntimeData.TotalSetBlockCount >= 100 && DataMng.E.RuntimeData.GuideEnd == 0)
             {
                 // 設計図チュートリアルへ招待
                 var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 7);
