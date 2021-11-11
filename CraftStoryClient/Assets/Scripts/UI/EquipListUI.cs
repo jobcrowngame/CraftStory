@@ -59,7 +59,7 @@ public class EquipListUI : UIBase
         SortBtn.onClick.AddListener(() =>
         {
             EquipListLG.E.SortUp = !EquipListLG.E.SortUp;
-            SortBtn.SetIcon(EquipListLG.E.SortUp ? "" : "");
+            SortBtn.SetIcon(EquipListLG.E.SortUp ? "Textures/menu_2d_023" : "Textures/menu_2d_022");
         });
     }
 
@@ -69,7 +69,7 @@ public class EquipListUI : UIBase
 
         EquipListLG.E.itemType = (ItemType)data;
 
-        SortBtn.SetIcon(EquipListLG.E.SortUp ? "" : "");
+        SortBtn.SetIcon(EquipListLG.E.SortUp ? "Textures/menu_2d_023" : "Textures/menu_2d_022");
         ToggleBtns.SetValue((int)EquipListLG.E.Tag);
 
         EquipListLG.E.GetEquipmentList();
