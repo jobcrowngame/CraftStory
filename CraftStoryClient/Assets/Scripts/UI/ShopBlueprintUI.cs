@@ -90,6 +90,8 @@ public class ShopBlueprintUI : UIBase
         Dropdown.value = 2;
 
         MyGoodNum.text = DataMng.E.RuntimeData.MyGoodNum.ToString();
+
+        ShopBlueprintLG.E.Type = ShopBlueprintLG.UIType.Blueprint1;
     }
 
     public void RefreshItemWindow(ShopBlueprintLG.UIType type)
