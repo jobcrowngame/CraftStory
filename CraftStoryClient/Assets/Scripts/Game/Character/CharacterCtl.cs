@@ -32,9 +32,7 @@ public class CharacterCtl : Single<CharacterCtl>
         }
 
         // 生成する座標ゲット
-        Vector3 pos = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 0);
-        pos = MapCtl.FixEntityPos(DataMng.E.MapData, pos, DataMng.E.MapData.Config.CreatePosOffset);
-        pos.y += 3;
+        Vector3 pos = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 3, DataMng.E.MapData.Config.CreatePosOffset);
         var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
         if (obj == null)
         {
@@ -86,9 +84,7 @@ public class CharacterCtl : Single<CharacterCtl>
             }
 
             // 生成する座標ゲット
-            Vector3 pos = MapCtl.GetGroundPos(DataMng.E.MapData, characterGeneratedCfg.PosX, characterGeneratedCfg.PosZ, 0);
-            pos = MapCtl.FixEntityPos(DataMng.E.MapData, pos, DataMng.E.MapData.Config.CreatePosOffset);
-            pos.y += 3;
+            Vector3 pos = MapCtl.GetGroundPos(DataMng.E.MapData, characterGeneratedCfg.PosX, characterGeneratedCfg.PosZ, 3, DataMng.E.MapData.Config.CreatePosOffset);
 
             var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
             if (obj == null)

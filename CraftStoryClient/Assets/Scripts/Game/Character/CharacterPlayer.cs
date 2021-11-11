@@ -118,7 +118,7 @@ public partial class CharacterPlayer : CharacterBase
         if (transform.position.y < -10)
         {
             Controller.enabled = false;
-            transform.position = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5);
+            transform.position = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5, DataMng.E.MapData.Config.CreatePosOffset);
             Controller.enabled = true;
         }
     }

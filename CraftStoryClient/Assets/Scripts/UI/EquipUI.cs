@@ -70,7 +70,7 @@ public class EquipUI : UIBase
         Level.text = "レベル：" + DataMng.E.RuntimeData.Lv;
 
         int nextExp = ConfigMng.E.Character[PlayerCtl.E.Character.Parameter.Level].LvUpExp;
-        Exp.text = string.Format("Exp：{0}/{1}", DataMng.E.RuntimeData.Exp, nextExp);
+        Exp.text = string.Format("Exp：{0}/{1}", (int)DataMng.E.RuntimeData.Exp, nextExp);
 
         HP.text = string.Format("HP      ：{0} <color=yellow>(+{1})</color>", 
             PlayerCtl.E.Character.Parameter.config.HP, 
