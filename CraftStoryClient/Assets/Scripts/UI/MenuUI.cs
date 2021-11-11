@@ -39,7 +39,7 @@ public class MenuUI : UIBase
             switch (value)
             {
                 case MapType.Home:
-                    Banner.gameObject.SetActive(true);
+                    //Banner.gameObject.SetActive(true);
                     PointList.gameObject.SetActive(true);
 
                     //AdventureBtn.gameObject.SetActive(true);

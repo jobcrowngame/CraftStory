@@ -121,7 +121,7 @@ public class GiftBoxUI : UIBase
         TitleText.text = "あつめたアイテム";
         addedExp = AdventureCtl.E.CurExp;
 
-        Icon.sprite = ReadResources<Sprite>("");
+        //Icon.sprite = ReadResources<Sprite>("");
         Name.text = DataMng.E.RuntimeData.NickName;
         Lv.text = "Lv." + DataMng.E.RuntimeData.Lv;
         AddExp.text = "+" + addedExp;
