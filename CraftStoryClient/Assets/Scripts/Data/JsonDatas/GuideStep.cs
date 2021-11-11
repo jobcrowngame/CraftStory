@@ -13,5 +13,10 @@ namespace JsonConfigData
         public int HideHand { get; set; }
         public int NextMask { get; set; }
         public int AutoMove { get; set; }
+        public string ClickType { get; set; }
+        public string CreateBlockCount { get; set; }
+        public string DisplayObject { get; set; }
+        public string HideObject { get; set; }
+
     }
 }

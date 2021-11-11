@@ -150,7 +150,8 @@ public class BuilderPencil
         {
             // 設計図内容が空の場合、エラーメッセージを出す
             CommonFunction.ShowHintBar(26);
-            GuideLG.E.GoTo(13);
+            //GuideLG.E.GoTo(13);
+            GuideLG.E.Rollback();
         }
 
         CancelCreateBlueprint();
@@ -295,11 +296,14 @@ public class BuilderPencil
             // 設計図を消耗
             PlayerCtl.E.UseItem();
 
+            GuideLG.E.Next();
+
             CancelUserBlueprint();
         }
         else
         {
             CommonFunction.ShowHintBar(28);
+            GuideLG.E.Rollback();
         }
     }
 

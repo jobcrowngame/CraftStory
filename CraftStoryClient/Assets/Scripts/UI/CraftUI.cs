@@ -31,7 +31,7 @@ public class CraftUI : UIBase
         RightBtn10.onClick.AddListener(CraftLG.E.OnClickAdd10);
         LeftBtn.onClick.AddListener(CraftLG.E.OnClickRemove);
         LeftBtn10.onClick.AddListener(CraftLG.E.OnClickRemove10);
-        CloseBtn.onClick.AddListener(() => { Close(); });
+        CloseBtn.onClick.AddListener(() => { Close(); GuideLG.E.Next(); });
         CraftBtn.onClick.AddListener(OnCraft);
 
         var costCellParent = FindChiled("CostList");
@@ -112,6 +112,7 @@ public class CraftUI : UIBase
         var cell = AddCell<CraftItemCell>("Prefabs/UI/IconItem", craftItemParent);
         if (cell != null)
         {
+            cell.gameObject.name = config.ItemID.ToString();
             cell.Init(config);
         }
     }
@@ -134,23 +135,34 @@ public class CraftUI : UIBase
         }
         else
         {
-            NWMng.E.Craft((rp) => 
+            if (DataMng.E.RuntimeData.MapType != MapType.Guide)
             {
-                // クラフトミッション
-                NWMng.E.ClearMission(3, 1, CraftLG.E.SelectCount);
-
-                if (CraftLG.E.SelectCraft.ItemID == 3003 && DataMng.E.UserData.FirstCraftMission == 0)
+                NWMng.E.Craft((rp) =>
                 {
-                    DataMng.E.UserData.FirstCraftMission = 1;
-                    UICtl.E.OpenUI<MissionChatUI>(UIType.MissionChat, UIOpenType.None, 0);
-                }
+                    // クラフトミッション
+                    NWMng.E.ClearMission(3, 1, CraftLG.E.SelectCount);
 
-                NWMng.E.GetItems(() =>
-                {
-                    CommonFunction.ShowHintBar(6);
-                    RefreshCost();
-                });
-            }, CraftLG.E.SelectCraft, CraftLG.E.SelectCount);
+                    if (CraftLG.E.SelectCraft.ItemID == 3003 && DataMng.E.UserData.FirstCraftMission == 0)
+                    {
+                        DataMng.E.UserData.FirstCraftMission = 1;
+                        UICtl.E.OpenUI<MissionChatUI>(UIType.MissionChat, UIOpenType.None, 0);
+                    }
+
+                    NWMng.E.GetItems(() =>
+                    {
+                        CommonFunction.ShowHintBar(6);
+                        RefreshCost();
+                    });
+                }, CraftLG.E.SelectCraft, CraftLG.E.SelectCount);
+            }
+            else
+            {
+                DataMng.E.RemoveItemByItemId(CraftLG.E.SelectCraft.Cost1, CraftLG.E.SelectCraft.Cost1Count);
+                DataMng.E.RemoveItemByItemId(CraftLG.E.SelectCraft.Cost2, CraftLG.E.SelectCraft.Cost2Count);
+                DataMng.E.RemoveItemByItemId(CraftLG.E.SelectCraft.Cost3, CraftLG.E.SelectCraft.Cost3Count);
+                DataMng.E.RemoveItemByItemId(CraftLG.E.SelectCraft.Cost4, CraftLG.E.SelectCraft.Cost4Count);
+                GuideLG.E.Next();
+            }
         }
 
         UICtl.E.LockUI();

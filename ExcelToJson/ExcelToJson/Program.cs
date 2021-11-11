@@ -483,7 +483,9 @@ namespace ExcelToJson
                     ID = ToInt32(tbl.Rows[i]["ID"]),
                     StepList = ToString(tbl.Rows[i]["StepList"]),
                     ItemList = ToString(tbl.Rows[i]["ItemList"]),
-                    ItemCount = ToString(tbl.Rows[i]["ItemCount"])
+                    ItemCount = ToString(tbl.Rows[i]["ItemCount"]),
+                    FailCheckIndexList = ToString(tbl.Rows[i]["FailCheckIndexList"]),
+                    RollbackIndexList = ToString(tbl.Rows[i]["RollbackIndexList"])
                 };
 
                 list.Add(data);
@@ -508,6 +510,10 @@ namespace ExcelToJson
                     HideHand = ToInt32(tbl.Rows[i]["HideHand"]),
                     NextMask = ToInt32(tbl.Rows[i]["NextMask"]),
                     AutoMove = ToInt32(tbl.Rows[i]["AutoMove"]),
+                    ClickType = ToString(tbl.Rows[i]["ClickType"]),
+                    CreateBlockCount = ToString(tbl.Rows[i]["CreateBlockCount"]),
+                    DisplayObject = ToString(tbl.Rows[i]["DisplayObject"]),
+                    HideObject = ToString(tbl.Rows[i]["HideObject"]),
                 };
 
                 list.Add(data);

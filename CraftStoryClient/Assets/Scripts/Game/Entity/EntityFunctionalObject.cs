@@ -134,5 +134,7 @@ public class EntityFunctionalObject : EntityBase
 
             default: Logger.Error("not find entityType " + Type); break;
         }
+
+        GuideLG.E.NextOnClickEntity(Type);
     }
 }

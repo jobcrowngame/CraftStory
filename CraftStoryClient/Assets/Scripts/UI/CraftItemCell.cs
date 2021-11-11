@@ -48,7 +48,8 @@ public class CraftItemCell : UIBase
             SelectedCraftItem = this;
             CraftLG.E.SelectCraft = config;
             CraftLG.E.SelectCraftItemCell = this;
-            CraftLG.E.UI.RefreshCost(); 
+            CraftLG.E.UI.RefreshCost();
+            GuideLG.E.Next();
         });
 
         if (config.Recommendation == 1)

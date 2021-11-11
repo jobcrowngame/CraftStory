@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using System.Collections;
+using System.Text.RegularExpressions;
 
 /// <summary>
 /// チュートリアル
@@ -112,9 +113,18 @@ public class GuideUI : UIBase
             if (DataMng.E.RuntimeData.GuideId == 1)
             {
                 DataMng.E.RuntimeData.GuideEnd = 1;
-            }else if (DataMng.E.RuntimeData.GuideId == 2)
+            }
+            else if (DataMng.E.RuntimeData.GuideId == 2)
             {
                 DataMng.E.RuntimeData.GuideEnd2 = 1;
+            }
+            else if (DataMng.E.RuntimeData.GuideId == 3)
+            {
+                DataMng.E.RuntimeData.GuideEnd3 = 1;
+            }
+            else if (DataMng.E.RuntimeData.GuideId == 4)
+            {
+                DataMng.E.RuntimeData.GuideEnd4 = 1;
             }
         }, DataMng.E.RuntimeData.GuideId);
     }
@@ -179,6 +189,34 @@ public class GuideUI : UIBase
         Vector2 size = new Vector2(config.MsgSizeX, config.MsgSizeY);
         SetMessage(pos, size, config.Message);
 
+        // 表示オブジェクト
+        if(config.DisplayObject != "N")
+        {
+            var targetObj = GetGameObject(config.DisplayObject);
+            if (targetObj != null)
+            {
+                targetObj.gameObject.SetActive(true);
+            }
+            else
+            {
+                Logger.Error("DisplayObject が見つけません。{0}", config.DisplayObject);
+            }
+        }
+
+        // 非表示オブジェクト
+        if (config.HideObject != "N")
+        {
+            var targetObj = GetGameObject(config.HideObject);
+            if (targetObj != null)
+            {
+                targetObj.gameObject.SetActive(false);
+            }
+            else
+            {
+                Logger.Error("HideObject が見つけません。{0}", config.HideObject);
+            }
+        }
+
         // 手オブジェクト表し
         Hand.gameObject.SetActive(config.HideHand != 1);
 
@@ -191,5 +229,21 @@ public class GuideUI : UIBase
             // 画面ロック解除
             GuideLG.E.UnLock();
         }
+    }
+
+    private GameObject GetGameObject(string path)
+    {
+        string target = path;
+        Transform parent = UICtl.E.Root;
+        // '/'始まりの場合ルートからのパスとする、それ以外の場合Canvasからのパスとする
+        Regex re = new Regex(@"^\/(.+?)\/(.+)", RegexOptions.Compiled);
+        Match match = re.Match(path);
+        if (match.Success)
+        {
+            string rootPath = match.Groups[1].Value;
+            parent = GameObject.Find(rootPath).transform;
+            target = match.Groups[2].Value;
+        }
+        return CommonFunction.FindChiledByName(parent, target);
     }
 }

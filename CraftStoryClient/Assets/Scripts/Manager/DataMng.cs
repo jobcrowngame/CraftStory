@@ -1,4 +1,5 @@
-﻿using LitJson;
+﻿using JsonConfigData;
+using LitJson;
 using System;
 using System.Collections.Generic;
 
@@ -133,32 +134,21 @@ public class DataMng : Single<DataMng>
     /// <param name="mapId">マップID</param>
     public void SetMapData(int mapId)
     {
-        MapData mData = null;
-        MapType mType = MapType.Home;
+        Map map = ConfigMng.E.Map[mapId];
 
-        if (mapId == 100)
+        MapData mData = null;
+        MapType mType = (MapType)map.MapType;
+
+        if (mType == MapType.Home)
         {
-            mType = MapType.Home;
             mData = mHomeData;
         }
-        else if (mapId == 101 || mapId == 104)
+        else if (mType == MapType.FriendHome)
         {
-            mType = MapType.Guide;
-            mData = WorldMng.E.MapCtl.CreateMapData(mapId);
-        }
-        else if (mapId == 102)
-        {
-            mType = MapType.FriendHome;
             mData = mFriendHomeData;
-        }
-        else if (mapId == 103)
-        {
-            mType = MapType.Market;
-            mData = WorldMng.E.MapCtl.CreateMapData(mapId);
         }
         else
         {
-            mType = MapType.Brave;
             mData = WorldMng.E.MapCtl.CreateMapData(mapId);
         }
 
@@ -348,6 +338,29 @@ public class DataMng : Single<DataMng>
             }
         }
     }
+    // ローカルのアイテムを消費(チュートリアルでのみ使用すること)
+    public void RemoveItemByItemId(int itemId, int count)
+    {
+        for (int i = 0; i < E.Items.Count; i++)
+        {
+            if (E.Items[i].itemId == itemId)
+            {
+                if (E.Items[i].count >= count)
+                {
+                    E.Items[i].count -= count;
+
+                    if (E.Items[i].count == 0)
+                    {
+                        E.Items.Remove(E.Items[i]);
+                    }
+                }
+                else
+                {
+                    Logger.Error("Remve item fild(itemId) " + itemId);
+                }
+            }
+        }
+    }
     /// <summary>
     /// 消耗アイテム
     /// </summary>
@@ -365,7 +378,7 @@ public class DataMng : Single<DataMng>
                 if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
                 if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
 
-                GuideLG.E.CreateBlock();
+                GuideLG.E.NextOnCreateBlock();
             }
             else
             {
@@ -383,10 +396,19 @@ public class DataMng : Single<DataMng>
         bool itemCheck = CheckConsumableItem(itemID, count);
         if (itemCheck)
         {
-            NWMng.E.RemoveItem((rp) =>
+            if (DataMng.E.RuntimeData.MapType != MapType.Guide)
             {
-                NWMng.E.GetItems(null);
-            }, itemID, count);
+                NWMng.E.RemoveItem((rp) =>
+                {
+                    NWMng.E.GetItems(null);
+                }, itemID, count);
+            }
+            else
+            {
+                RemoveItemByItemId(itemID, count);
+                if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
+                if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
+            }
         }
         else
         {

@@ -957,9 +957,16 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.Resurrection));
     }
 
+    /// <summary>
+    /// トータル設置済ブロック数を取得
+    /// </summary>
+    /// <param name="rp"></param>
+    public void GetTotalSetBlockCount(Action<JsonData> rp)
+    {
+        var data = new NWData();
 
-
-
+        StartCoroutine(HttpRequest(rp, data, CMD.GetTotalSetBlockCount));
+    }
 
     /// <summary>
     /// ホームデータをサーバーにセーブ
@@ -1063,6 +1070,7 @@ public partial class NWMng : MonoBehaviour
         AddExp,
         ArriveFloor,
         Resurrection,
+        GetTotalSetBlockCount,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

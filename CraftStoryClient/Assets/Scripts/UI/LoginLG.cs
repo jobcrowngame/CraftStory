@@ -43,6 +43,8 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             DataMng.E.MyShop.myShopLv = (int)rp["myShopLv"];
             DataMng.E.RuntimeData.GuideEnd = (int)rp["guide_end"];
             DataMng.E.RuntimeData.GuideEnd2 = (int)rp["guide_end2"];
+            DataMng.E.RuntimeData.GuideEnd3 = (int)rp["guide_end3"];
+            DataMng.E.RuntimeData.GuideEnd4 = (int)rp["guide_end4"];
             if (rp["nickname"] != null) DataMng.E.RuntimeData.NickName = (string)rp["nickname"];
             if (rp["comment"] != null) DataMng.E.RuntimeData.Comment = (string)rp["comment"];
             if (rp["email"] != null) DataMng.E.RuntimeData.Email = (string)rp["email"];
@@ -81,6 +83,14 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             NWMng.E.GetCoins((rp) =>
             {
                 DataMng.GetCoins(rp);
+            });
+
+            NWMng.E.GetTotalSetBlockCount((rp) =>
+            {
+                if (string.IsNullOrEmpty(rp.ToString()))
+                    return;
+
+                DataMng.E.RuntimeData.TotalSetBlockCount = (int)rp;
             });
 
             // 新規ユーザーの場合、S3に送信しない

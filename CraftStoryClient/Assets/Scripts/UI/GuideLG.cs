@@ -1,4 +1,6 @@
 ﻿using JsonConfigData;
+using System;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 class GuideLG : UILogicBase<GuideLG, GuideUI>
@@ -57,28 +59,83 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
     {
         Lock = false;
     }
-    public void Next(int step)
-    {
-        if (step != stepIndex)
-            return;
-        Next();
-    }
+
+    /// <summary>
+    // 通常のNext
+    /// </summary>
     public void Next()
     {
-        if (end || Lock)
+        if (!CanNext())
             return;
 
-        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
-            return;
+        // CreateBlockCount設定時は通常のNextをはじく
+        if (stepIndex != 0)
+        {
+            string createBlockCountCfg = ConfigMng.E.GuideStep[int.Parse(guideSteps[stepIndex - 1])].CreateBlockCount;
+            if (createBlockCountCfg != null && createBlockCountCfg != "N")
+                return;
+        }
 
-        CurStep = guideSteps[stepIndex];
-        stepIndex++;
-        Lock = true;
+        DoNext();
     }
-    public void GoTo(int index)
+
+    /// <summary>
+    // エンティティクリックでのNext
+    /// </summary>
+    public void NextOnClickEntity(EntityType type)
     {
-        stepIndex = index - 1;
-        Next();
+        if (!CanNext())
+            return;
+
+        string clickType = ConfigMng.E.GuideStep[int.Parse(guideSteps[stepIndex - 1])].ClickType;
+        if (clickType == null || clickType == "N")
+            return;
+
+        if ((EntityType)int.Parse(clickType) != type)
+            return;
+
+        DoNext();
+    }
+
+    /// <summary>
+    /// ブロック作成時のNext
+    /// チュートリアル中作成したブロック数を記録
+    /// </summary>
+    public void NextOnCreateBlock()
+    {
+        if (!CanNext())
+            return;
+
+        string createBlockCountCfg = ConfigMng.E.GuideStep[int.Parse(guideSteps[stepIndex - 1])].CreateBlockCount;
+        if (createBlockCountCfg == null || createBlockCountCfg == "N")
+            return;
+
+        createBlockCount++;
+        if (createBlockCount == int.Parse(createBlockCountCfg))
+        {
+            createBlockCount = 0;
+            DoNext();
+        }
+    }
+
+    /// <summary>
+    /// エラー発生などで指定のステップに戻す際に使用する
+    /// ※GuideにFailCheckIndexListとRollbackIndexListを設定する必要あり、未設定時は只のNextになる
+
+    /// </summary>
+    public void Rollback()
+    {
+        if (!CanNext())
+            return;
+
+        int failCheckIndex = Array.IndexOf(config.FailCheckIndexList.Split(','), stepIndex.ToString());
+        if (failCheckIndex != -1)
+        {
+            int rollbackIndex = int.Parse(config.RollbackIndexList.Split(',')[failCheckIndex]);
+            stepIndex = rollbackIndex - 1;
+        }
+
+        DoNext();
     }
 
     /// <summary>
@@ -92,18 +149,6 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         createBlockCount = 0;
     }
 
-
-    /// <summary>
-    /// チュートリアル中作成したブロック数を記録
-    /// </summary>
-    public void CreateBlock()
-    {
-        createBlockCount++;
-        if (createBlockCount == 3)
-        {
-            Next();
-        }
-    }
     public void SetGuideItems()
     {
         var items = ConfigMng.E.Guide[DataMng.E.RuntimeData.GuideId].ItemList.Split(',');
@@ -143,4 +188,23 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
             equipSite = 1,
         });
     }
+
+    private bool CanNext()
+    {
+        if (end || Lock)
+            return false;
+
+        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
+            return false;
+
+        return true;
+    }
+
+    private void DoNext()
+    {
+        CurStep = guideSteps[stepIndex];
+        stepIndex++;
+        Lock = true;
+    }
+
 }

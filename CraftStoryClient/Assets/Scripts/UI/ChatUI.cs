@@ -36,6 +36,7 @@ public class ChatUI : UIBase
         Chat.text = "";
         CharacterIcon.sprite = ReadResources<Sprite>(config.CharacterIcon);
         NameIcon.sprite = ReadResources<Sprite>(config.NameIcon);
+        OnClick.gameObject.SetActive(false);
 
         StartCoroutine(StartChat());
     }
