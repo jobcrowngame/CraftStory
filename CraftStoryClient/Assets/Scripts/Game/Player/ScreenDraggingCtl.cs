@@ -92,6 +92,12 @@ public class ScreenDraggingCtl : MonoBehaviour, IBeginDragHandler, IDragHandler,
             Vector2 pointerPos = eventData.position - startPos;
             if (PlayerCtl.E.CameraCtl != null)
             {
+                int maxV = 100;
+                if (pointerPos.x > maxV) pointerPos.x = maxV;
+                if (pointerPos.y > maxV) pointerPos.y = maxV;
+                if (pointerPos.x < -maxV) pointerPos.x = -maxV;
+                if (pointerPos.y < -maxV) pointerPos.x = -maxV;
+
                 PlayerCtl.E.CameraCtl.CameraRotate(pointerPos.y, pointerPos.x);
                 PlayerCtl.E.CameraCtl.CancelLockUn();
             }
