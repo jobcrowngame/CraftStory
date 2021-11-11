@@ -20,7 +20,7 @@ public class CharacterMonster : CharacterBase
     public override void OnUpdate()
     {
         base.OnUpdate();
-        if (ai != null || Behavior != BehaviorType.Did)
+        if (ai != null && Behavior != BehaviorType.Did)
         {
             ai.Update();
         }

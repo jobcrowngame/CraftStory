@@ -510,6 +510,8 @@ public class PlayerCtl : MonoBehaviour
                     }
                 }
             }
+
+            Character.Parameter.Refresh();
         });
     }
 

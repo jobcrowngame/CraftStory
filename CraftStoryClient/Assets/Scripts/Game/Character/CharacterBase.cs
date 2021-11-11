@@ -154,7 +154,6 @@ public class CharacterBase : MonoBehaviour
             SkillList.Add(skill);
             Parameter.skillPar.AddSkill(skill);
         }
-        Parameter.Refresh();
     }
     /// <summary>
     /// スキル削除
@@ -178,7 +177,6 @@ public class CharacterBase : MonoBehaviour
                 }
             }
         }
-        Parameter.Refresh();
     }
 
     /// <summary>
