@@ -21,7 +21,7 @@ public class ImpactCell
         count = config.Count;
         timer = config.Delay;
 
-        if (config.Effect != "N")
+        if (target != null && config.Effect != "N")
         {
             EffectMng.E.AddBattleEffect(config.Effect, 3, target.transform, target.transform);
         }
