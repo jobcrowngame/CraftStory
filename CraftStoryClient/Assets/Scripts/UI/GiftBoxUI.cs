@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +28,10 @@ public class GiftBoxUI : UIBase
 
     float addedExp;
 
+    string Bonus3XMsg = @"ã‚ã¤ã‚ãŸã‚¢ã‚¤ãƒ†ãƒ ãŒï¼“å€ã«å¢—ãˆã€
+ã€Œç´ æï¼“å€ãƒã‚±ãƒƒãƒˆã€ãŒï¼‘æšæ¶ˆè²»ã•ã‚Œã¾ã™ã€‚
+
+ç´ æï¼“å€ãƒã‚±ãƒƒãƒˆã‚’ä½¿ç”¨ã—ã¾ã™ã‹ï¼Ÿ";
 
     public override void Init()
     {
@@ -57,8 +61,8 @@ public class GiftBoxUI : UIBase
             Bonus3XBtn.gameObject.SetActive(true);
             Bonus3XBtn.onClick.AddListener(() =>
             {
-                string msg = @"test";
-                CommonFunction.ShowHintBox(msg, () =>
+               
+                CommonFunction.ShowHintBox(Bonus3XMsg, () =>
                 {
                     Bonus3XBtn.gameObject.SetActive(false);
                     Bonus3XLabel.gameObject.SetActive(false);
@@ -114,7 +118,7 @@ public class GiftBoxUI : UIBase
         LevelUp.gameObject.SetActive(false);
         Exp.gameObject.SetActive(false);
 
-        TitleText.text = "‚ ‚Â‚ß‚½ƒAƒCƒeƒ€";
+        TitleText.text = "ã‚ã¤ã‚ãŸã‚¢ã‚¤ãƒ†ãƒ ";
         addedExp = AdventureCtl.E.CurExp;
 
         Icon.sprite = ReadResources<Sprite>("");
@@ -130,9 +134,9 @@ public class GiftBoxUI : UIBase
 
     private IEnumerator StartAnimIE()
     {
-        TitleText.text = "Šl“¾‚µ‚½ŒoŒ±’l";
+        TitleText.text = "ç²å¾—ã—ãŸçµŒé¨“å€¤";
 
-        // Expƒo[‚ğ•\¦
+        // Expãƒãƒ¼ã‚’è¡¨ç¤º
         Exp.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
 
@@ -141,7 +145,7 @@ public class GiftBoxUI : UIBase
                addedExp / 50f :
                (lvUpExp - DataMng.E.RuntimeData.Exp) / 50f;
 
-        // ŒoŒ±’l‰ÁZ
+        // çµŒé¨“å€¤åŠ ç®—
         for (int i = 0; i < 50; i++)
         {
             if (addedExp <= 0 || DataMng.E.RuntimeData.Exp >= lvUpExp)
@@ -156,7 +160,7 @@ public class GiftBoxUI : UIBase
             yield return new WaitForSeconds(0.02f);
         }
 
-        // ƒŒƒxƒ‹ƒAƒbƒv‚È‚©‚Á‚½ê‡Ac‚è‚ÌExp‚ ‚é‚Æ‰ÁZ
+        // ãƒ¬ãƒ™ãƒ«ã‚¢ãƒƒãƒ—ãªã‹ã£ãŸå ´åˆã€æ®‹ã‚Šã®Expã‚ã‚‹ã¨åŠ ç®—
         if (DataMng.E.RuntimeData.Exp + addedExp < lvUpExp && addedExp > 0)
         {
             DataMng.E.RuntimeData.Exp += addedExp;
@@ -166,7 +170,7 @@ public class GiftBoxUI : UIBase
             Slider.value = DataMng.E.RuntimeData.Exp / (float)lvUpExp;
         }
 
-        // ƒŒƒxƒ‹ƒAƒbƒv‚µ‚½ê‡
+        // ãƒ¬ãƒ™ãƒ«ã‚¢ãƒƒãƒ—ã—ãŸå ´åˆ
         if (DataMng.E.RuntimeData.Exp + addedExp >= lvUpExp)
         {
             DataMng.E.RuntimeData.Exp -= lvUpExp;
@@ -219,7 +223,7 @@ public class GiftBoxUI : UIBase
     }
 
     /// <summary>
-    /// 2”{ƒ{[ƒiƒXƒ{ƒ^ƒ“ƒCƒxƒ“ƒg
+    /// 2å€ãƒœãƒ¼ãƒŠã‚¹ãƒœã‚¿ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆ
     /// </summary>
     private void StartDoubleBonus()
     {
@@ -236,7 +240,7 @@ public class GiftBoxUI : UIBase
     }
 
     /// <summary>
-    /// 3”{ƒ{[ƒiƒXƒ{ƒ^ƒ“ƒCƒxƒ“ƒg
+    /// 3å€ãƒœãƒ¼ãƒŠã‚¹ãƒœã‚¿ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆ
     /// </summary>
     private void StartTripleBonus()
     {
@@ -253,7 +257,7 @@ public class GiftBoxUI : UIBase
     }
 
     /// <summary>
-    /// OKƒ{ƒ^ƒ“‚ÌƒCƒxƒ“ƒg
+    /// OKãƒœã‚¿ãƒ³ã®ã‚¤ãƒ™ãƒ³ãƒˆ
     /// </summary>
     /// <param name="action"></param>
     public void SetCallBack(Action action)
