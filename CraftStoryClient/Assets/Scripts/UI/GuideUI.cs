@@ -113,6 +113,7 @@ public class GuideUI : UIBase
             if (DataMng.E.RuntimeData.GuideId == 1)
             {
                 DataMng.E.RuntimeData.GuideEnd = 1;
+                DataMng.E.RuntimeData.NewEmailCount++;
             }
             else if (DataMng.E.RuntimeData.GuideId == 2)
             {
@@ -121,6 +122,7 @@ public class GuideUI : UIBase
             else if (DataMng.E.RuntimeData.GuideId == 3)
             {
                 DataMng.E.RuntimeData.GuideEnd3 = 1;
+                DataMng.E.RuntimeData.NewEmailCount++;
             }
             else if (DataMng.E.RuntimeData.GuideId == 4)
             {
