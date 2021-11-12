@@ -334,6 +334,7 @@ namespace ExcelToJson
                 data.ReferenceID = ToInt32(tbl.Rows[i]["ReferenceID"]);
                 data.MaxCount = ToInt32(tbl.Rows[i]["MaxCount"]);
                 data.CanDelete = ToInt32(tbl.Rows[i]["CanDelete"]);
+                data.CanEquip = ToInt32(tbl.Rows[i]["CanEquip"]);
 
                 list.Add(data);
             }

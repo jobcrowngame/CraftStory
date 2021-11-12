@@ -42,8 +42,7 @@ public class BagSelectItem : UIBase
         if (BagLG.E.SelectItem == null)
             return;
 
-        if (BagLG.E.SelectItem.ItemData.Config().Type == 2
-            || CommonFunction.IsEquipment(BagLG.E.SelectItem.ItemData.itemId))
+        if (BagLG.E.SelectItem.ItemData.Config().CanEquip != 1)
             return;
 
         // 空の場合

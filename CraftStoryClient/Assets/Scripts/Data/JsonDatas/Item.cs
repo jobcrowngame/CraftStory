@@ -11,5 +11,6 @@ namespace JsonConfigData
         public int ReferenceID { get; set; }
         public int MaxCount { get; set; }
         public int CanDelete { get; set; }
+        public int CanEquip { get; set; }
     }
 }
