@@ -42,7 +42,7 @@ public class SettingMng : Single<SettingMng>
     public const int GameDaySeconds = 60 * 10;
 
     // Skybox　明るさ最小
-    public const float MinAmbientIntensity = 0.6f;
+    public const float MinAmbientIntensity = 0.8f;
 
     /// <summary>
     /// フレンド最大数
