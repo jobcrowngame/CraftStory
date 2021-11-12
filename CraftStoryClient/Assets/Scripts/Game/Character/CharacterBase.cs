@@ -201,14 +201,6 @@ public class CharacterBase : MonoBehaviour
         HpCtl.RefreshHpBar();
     }
 
-    /// <summary>
-    /// 角度によって回転
-    /// </summary>
-    /// <param name="angle"></param>
-    public void Rotation(Transform target)
-    {
-
-    }
     public void Rotation(Vector2 direction)
     {
         var angle = CommonFunction.Vector2ToAngle(direction);
