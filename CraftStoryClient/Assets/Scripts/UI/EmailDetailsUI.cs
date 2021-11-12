@@ -11,6 +11,8 @@ public class EmailDetailsUI : UIBase
     Transform ItemScrollView { get => FindChiled("Item Scroll View"); }
     Transform Parent { get => FindChiled("Content"); }
 
+    ScrollRect ScrollView { get => FindChiled<ScrollRect>("Scroll View"); }
+
     public override void Init()
     {
         base.Init();
@@ -21,6 +23,13 @@ public class EmailDetailsUI : UIBase
             UICtl.E.OpenUI<EmailUI>(UIType.Email);
             Close();
         });
+    }
+
+    public override void Open()
+    {
+        base.Open();
+
+        ScrollView.verticalNormalizedPosition = 1;
     }
 
     public void Set(EmailCell cell)
