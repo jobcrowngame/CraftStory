@@ -30,6 +30,7 @@ public partial class CharacterPlayer : CharacterBase
     private Transform Arrow;
     private Transform ArrowTarget;
 
+
     public bool IsGrand;
 
     // モジュールのアクティブ
@@ -50,10 +51,15 @@ public partial class CharacterPlayer : CharacterBase
         }
     }
 
+    public Transform FollowPoint { get => followPoint; }
+    private Transform followPoint;
+
     private void Awake()
     {
         animator = CommonFunction.FindChiledByName<Animator>(transform, "Model");
         Arrow = CommonFunction.FindChiledByName(transform, "Arrow").transform;
+
+        followPoint = CommonFunction.FindChiledByName(transform, "FollowPoint").transform;
     }
 
     public override void Init(int characterId, CharacterCamp camp)

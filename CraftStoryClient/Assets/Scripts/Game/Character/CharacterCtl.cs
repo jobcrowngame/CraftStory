@@ -16,6 +16,7 @@ public class CharacterCtl : Single<CharacterCtl>
     {
         AddPlayer();
         AddMonsters();
+        AddFollowCharacter();
     }
 
     /// <summary>
@@ -106,6 +107,28 @@ public class CharacterCtl : Single<CharacterCtl>
         }
 
         CheckMapClear();
+    }
+
+    /// <summary>
+    /// フォローしてる妖精を生成
+    /// </summary>
+    private void AddFollowCharacter()
+    {
+        int id = 10001;
+        var config = ConfigMng.E.Character[id];
+
+        // 生成する座標ゲット
+        var followCharacter = CommonFunction.Instantiate<CharacterFollow>(config.Prefab, null, player.FollowPoint.position);
+        if (followCharacter == null)
+        {
+            Logger.Error("EntityFollowCharacter Instantiate fail");
+            return;
+        }
+
+        followCharacter.Init(id, CharacterBase.CharacterCamp.Fairy);
+        followCharacter.SetTarget(player.FollowPoint);
+
+        PlayerCtl.E.Fairy = followCharacter;
     }
 
     /// <summary>

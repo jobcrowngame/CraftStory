@@ -43,7 +43,7 @@ public partial class NWMng : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.ProductionURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.TestURL))
         {
             yield return www.SendWebRequest();
 
@@ -969,6 +969,19 @@ public partial class NWMng : MonoBehaviour
     }
 
     /// <summary>
+    /// タスク完了
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="taskId"></param>
+    public void MainTaskEnd(Action<JsonData> rp, int taskId)
+    {
+        var data = new NWData();
+        data.Add("taskId", taskId);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.MainTaskEnd));
+    }
+
+    /// <summary>
     /// ホームデータをサーバーにセーブ
     /// </summary>
     /// <param name="rp"></param>
@@ -1071,6 +1084,7 @@ public partial class NWMng : MonoBehaviour
         ArriveFloor,
         Resurrection,
         GetTotalSetBlockCount,
+        MainTaskEnd,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

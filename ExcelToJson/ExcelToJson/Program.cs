@@ -132,6 +132,7 @@ namespace ExcelToJson
                 case "Impact": list = Impact(tbl); break;
                 case "Skill": list = Skill(tbl); break;
                 case "Equipment": list = Equipment(tbl); break;
+                case "MainTask": list = MainTask(tbl); break;
 
 
                 default: Console.WriteLine("not find fileName " + fileName); break;
@@ -818,6 +819,25 @@ namespace ExcelToJson
                     Defnse = ToInt32(tbl.Rows[i]["Defnse"]),
                     Skill = ToString(tbl.Rows[i]["Skill"]),
                     PondId = ToString(tbl.Rows[i]["PondId"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object MainTask(DataTable tbl)
+        {
+            List<MainTask> list = new List<MainTask>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new MainTask()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Type = ToInt32(tbl.Rows[i]["Type"]),
+                    ClearCount = ToInt32(tbl.Rows[i]["ClearCount"]),
+                    Bonus = ToInt32(tbl.Rows[i]["Bonus"]),
+                    StartChat = ToInt32(tbl.Rows[i]["StartChat"]),
+                    EndChat = ToInt32(tbl.Rows[i]["EndChat"]),
                 };
 
                 list.Add(data);

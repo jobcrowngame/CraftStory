@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class CharacterBase : MonoBehaviour
 {
+    #region パラメータ
+
     /// <summary>
     /// モジュール
     /// </summary>
@@ -67,6 +69,8 @@ public class CharacterBase : MonoBehaviour
 
     private float FreezeTime = 0;
 
+    #endregion
+
     private void FixedUpdate()
     {
         OnUpdate();
@@ -85,14 +89,14 @@ public class CharacterBase : MonoBehaviour
             moveDirection.z = 0;
 
         // 移動
-        if (Controller.enabled == true) 
+        if (Controller != null && Controller.enabled == true) 
             Controller.Move(moveDirection);
 
-        if (Controller.isGrounded)
+        if (Controller != null && Controller.isGrounded)
             moveDirection.y = 0;
 
         // ジャンプ状態で地面に落ちるとジャンプ前の行動になる
-        if (Behavior == BehaviorType.Jump && Controller.isGrounded)
+        if (Controller != null && Behavior == BehaviorType.Jump && Controller.isGrounded)
             Behavior = beforBehavior;
     }
     public virtual void OnUpdate()
@@ -693,6 +697,11 @@ public class CharacterBase : MonoBehaviour
         /// モンスター
         /// </summary>
         Monster,
+
+        /// <summary>
+        /// 妖精
+        /// </summary>
+        Fairy,
     }
 }
 

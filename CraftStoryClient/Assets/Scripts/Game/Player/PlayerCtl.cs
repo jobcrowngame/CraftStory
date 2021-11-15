@@ -28,6 +28,7 @@ public class PlayerCtl : MonoBehaviour
     public bool Lock { get; set; } // ロック
 
     public CharacterPlayer Character { get; private set; }
+    public CharacterFollow Fairy { get; set; }
 
     public Joystick Joystick
     {
@@ -107,29 +108,7 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            Character.Resurrection();
-        }
-
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-        }
-
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            var area = new MapAreaData(4);
-        }
-
-        if (Input.GetKeyDown(KeyCode.F4))
-        {
-            UserSkill(new SkillData(1));
-        }
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            UserSkill(new SkillData(2));
-        }
-        if (Input.GetKeyDown(KeyCode.F6))
-        {
-            UserSkill(new SkillData(3));
+            TaskMng.E.AddMainTaskCount();
         }
     }
 
@@ -178,6 +157,10 @@ public class PlayerCtl : MonoBehaviour
                 {
                     var entity = collider.GetComponent<EntityBase>();
                     if(entity != null) entity.OnClick();
+
+                    // キャラをタップ
+                    var character = collider.GetComponent<CharacterBase>();
+                    if (character != null) character.OnClick();
                 }
 
                 return;

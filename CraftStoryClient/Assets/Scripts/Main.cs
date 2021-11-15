@@ -17,6 +17,7 @@ public class Main : MonoBehaviour
     IEnumerator Init()
     {
         DataMng.E.Init();
+        TaskMng.E.Init();
 
         yield return ConfigMng.E.InitInitCoroutine();
         yield return ResourcesMng.E.InitInitCoroutine();

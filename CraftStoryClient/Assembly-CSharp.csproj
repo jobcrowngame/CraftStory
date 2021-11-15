@@ -73,6 +73,8 @@
     <Compile Include="Assets\Scripts\UI\EquipListUI.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusUI.cs" />
     <Compile Include="Assets\Scripts\Test\CombineMesh\ScreenCtl.cs" />
+    <Compile Include="Assets\Scripts\Test\LerpTest.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\MainTask.cs" />
     <Compile Include="Assets\Scripts\UI\GachaVerificationLG.cs" />
     <Compile Include="Assets\Scripts\Test\CombineMesh\CombineMeshMain.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\TransferGate.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Assets\Scripts\UI\LotteryUI.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\CharacterGenerated.cs" />
+    <Compile Include="Assets\Scripts\Game\Character\CharacterFollow.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintPreviewLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Craft.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingLG.cs" />
@@ -295,6 +298,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Blueprint.cs" />
     <Compile Include="Assets\Scripts\UI\FriendDescriptionUI.cs" />
     <Compile Include="Assets\Scripts\UI\SceneMain\BraveMain.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\MainSkill.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerButton.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\RandomBonusPond.cs" />
     <Compile Include="Assets\Scripts\UI\Common\WaitingLG.cs" />
@@ -339,8 +343,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Test\LerpTest.cs" />
-    <Compile Include="Assets\Scripts\Game\Entity\EntityFollowCharacter.cs" />
+    <Compile Include="Assets\Scripts\Manager\TaskMng.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

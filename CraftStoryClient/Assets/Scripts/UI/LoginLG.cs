@@ -39,19 +39,25 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
         UICtl.E.LockUI();
         NWMng.E.Login((rp) =>
         {
-            DataMng.E.token = (string)rp["token"];
-            DataMng.E.MyShop.myShopLv = (int)rp["myShopLv"];
-            DataMng.E.RuntimeData.GuideEnd = (int)rp["guide_end"];
-            DataMng.E.RuntimeData.GuideEnd2 = (int)rp["guide_end2"];
-            DataMng.E.RuntimeData.GuideEnd3 = (int)rp["guide_end3"];
-            DataMng.E.RuntimeData.GuideEnd4 = (int)rp["guide_end4"];
-            if (rp["nickname"] != null) DataMng.E.RuntimeData.NickName = (string)rp["nickname"];
-            if (rp["comment"] != null) DataMng.E.RuntimeData.Comment = (string)rp["comment"];
-            if (rp["email"] != null) DataMng.E.RuntimeData.Email = (string)rp["email"];
-            if (rp["goodNum"] != null) DataMng.E.RuntimeData.UseGoodNum = (int)rp["goodNum"];
-            DataMng.E.RuntimeData.Lv = (int)rp["lv"];
-            DataMng.E.RuntimeData.Exp = (int)rp["exp"];
-            DataMng.E.RuntimeData.MyGoodNum = (int)rp["myGoodNum"];
+            var loginRP = JsonMapper.ToObject<LoginRP>(rp.ToJson());
+
+            DataMng.E.token = loginRP.token;
+            DataMng.E.MyShop.myShopLv = loginRP.myShopLv;
+            DataMng.E.RuntimeData.GuideEnd = loginRP.guide_end;
+            DataMng.E.RuntimeData.GuideEnd2 = loginRP.guide_end2;
+            DataMng.E.RuntimeData.GuideEnd3 = loginRP.guide_end3;
+            DataMng.E.RuntimeData.GuideEnd4 = loginRP.guide_end4;
+            DataMng.E.RuntimeData.NickName = loginRP.nickname;
+            DataMng.E.RuntimeData.Comment = loginRP.comment;
+            DataMng.E.RuntimeData.Email = loginRP.email;
+            DataMng.E.RuntimeData.UseGoodNum = loginRP.goodNum;
+            DataMng.E.RuntimeData.Lv = loginRP.lv;
+            DataMng.E.RuntimeData.Exp = loginRP.exp;
+            DataMng.E.RuntimeData.MyGoodNum = loginRP.myGoodNum;
+
+            TaskMng.E.MainTaskId = loginRP.mainTaskID;
+            TaskMng.E.MainTaskClearedCount = loginRP.mainTaskClearedCount;
+            TaskMng.E.CheckClearedCount();
 
             // IAPMngを初期化
             IAPMng.E.Init();
@@ -143,5 +149,81 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 ui.LoginResponse();
             }
         });
+    }
+
+    private struct LoginRP
+    {
+        // Token
+        public string token { get; set; }
+
+        /// <summary>
+        /// マイショップレベル
+        /// </summary>
+        public int myShopLv { get; set; }
+
+        /// <summary>
+        /// ガイド終了１
+        /// </summary>
+        public int guide_end { get; set; }
+
+        /// <summary>
+        /// ガイド終了２
+        /// </summary>
+        public int guide_end2 { get; set; }
+
+        /// <summary>
+        /// ガイド終了１３
+        /// </summary>
+        public int guide_end3 { get; set; }
+
+        /// <summary>
+        /// ガイド終了４
+        /// </summary>
+        public int guide_end4 { get; set; }
+
+        /// <summary>
+        /// ニックネーム
+        /// </summary>
+        public string nickname { get; set; }
+
+        /// <summary>
+        /// コメント
+        /// </summary>
+        public string comment { get; set; }
+
+        /// <summary>
+        /// メール
+        /// </summary>
+        public string email { get; set; }
+
+        /// <summary>
+        /// いいねした数
+        /// </summary>
+        public int goodNum { get; set; }
+
+        /// <summary>
+        /// レベル
+        /// </summary>
+        public int lv { get; set; }
+
+        /// <summary>
+        /// 経験値
+        /// </summary>
+        public int exp { get; set; }
+
+        /// <summary>
+        /// 自分のいいね数
+        /// </summary>
+        public int myGoodNum { get; set; }
+
+        /// <summary>
+        /// 今のメインタスクID
+        /// </summary>
+        public int mainTaskID { get; set; }
+
+        /// <summary>
+        /// クリアしたメインタスク内容数
+        /// </summary>
+        public int mainTaskClearedCount { get; set; }
     }
 }
