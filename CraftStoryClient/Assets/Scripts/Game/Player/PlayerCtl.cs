@@ -495,6 +495,7 @@ public class PlayerCtl : MonoBehaviour
             }
 
             Character.Parameter.Refresh();
+            HomeLG.E.UI.ShowSpriteAnimation();
         });
     }
 

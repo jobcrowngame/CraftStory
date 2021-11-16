@@ -18,7 +18,14 @@ public class SkillExplanationUI : UIBase
         SkillExplanationLG.E.Init(this);
 
         Title.SetTitle("スキル説明");
-        Title.SetOnClose(Close);
+        Title.SetOnClose(() => 
+        {
+            Close();
+            if (DataMng.E.MapData.Config.MapType == (int)MapType.Guide)
+            {
+                GuideLG.E.Next();
+            }
+        });
     }
 
     public override void Open(object data)

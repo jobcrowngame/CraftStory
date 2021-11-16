@@ -50,20 +50,32 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
 
     public void GetEquipmentList()
     {
-        NWMng.E.GetEquipmentInfoList((rp) => 
+        if (DataMng.E.MapData.Config.MapType != (int)MapType.Guide)
         {
-            if (!string.IsNullOrEmpty(rp.ToString()))
+            NWMng.E.GetEquipmentInfoList((rp) =>
             {
-                var result = JsonMapper.ToObject<List<EquipListRP>>(rp.ToJson());
-                items.Clear();
-                foreach (var item in result)
+                if (!string.IsNullOrEmpty(rp.ToString()))
                 {
-                    items.Add(new ItemEquipmentData(item));
+                    var result = JsonMapper.ToObject<List<EquipListRP>>(rp.ToJson());
+                    items.Clear();
+                    foreach (var item in result)
+                    {
+                        items.Add(new ItemEquipmentData(item));
+                    }
                 }
-            }
 
+                RefreshCells();
+            });
+        }
+        else
+        {
+            foreach (var item in DataMng.E.GuideItems)
+            {
+                items.Add(new ItemEquipmentData(item));
+            }
             RefreshCells();
-        });
+            GuideLG.E.Next();
+        }
     }
 
     public void RefreshCells()
@@ -120,10 +132,18 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
 
     public void AppraisalEquipment(EquipListCell cell)
     {
-        NWMng.E.AppraisalEquipment((rp) => 
+        if (DataMng.E.MapData.Config.MapType != (int)MapType.Guide)
         {
-            cell.AppraisalEquipment((string)rp);
-        }, cell.Data.id, cell.Data.equipmentConfig.ID);
+            NWMng.E.AppraisalEquipment((rp) =>
+            {
+                cell.AppraisalEquipment((string)rp);
+            }, cell.Data.id, cell.Data.equipmentConfig.ID);
+        }
+        else
+        {
+            cell.AppraisalEquipment("107");
+            GuideLG.E.Next();
+        }
     }
 
     public struct EquipListRP
