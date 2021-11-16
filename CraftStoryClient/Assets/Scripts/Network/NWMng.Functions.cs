@@ -30,6 +30,21 @@ public partial class NWMng
     }
 
     /// <summary>
+    /// コインの更新
+    /// </summary>
+    /// <param name="callBack"></param>
+    public void RefreshCoins(Action callBack = null)
+    {
+        GetCoins((rp) =>
+        {
+            DataMng.GetCoins(rp);
+
+            if (callBack != null)
+                callBack();
+        });
+    }
+
+    /// <summary>
     /// サブスクリプション情報をゲット
     /// </summary>
     /// <param name="callBack"></param>

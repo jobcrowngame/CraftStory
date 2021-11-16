@@ -41,6 +41,7 @@ public class ChatUI : UIBase
         }
         else
         {
+            CharacterIcon.gameObject.SetActive(true);
             CharacterIcon.sprite = ReadResources<Sprite>(config.CharacterIcon);
         }
 

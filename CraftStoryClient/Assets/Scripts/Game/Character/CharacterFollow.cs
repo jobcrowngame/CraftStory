@@ -12,6 +12,7 @@ public class CharacterFollow : CharacterBase
 
     bool following = false;
 
+
     public override void Init(int characterId, CharacterCamp camp)
     {
         base.Init(characterId, camp);
@@ -39,6 +40,12 @@ public class CharacterFollow : CharacterBase
                 {
                     UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, TaskMng.E.MainTaskConfig.EndChat);
                     TaskMng.E.Next();
+
+                    NWMng.E.RefreshCoins(() =>
+                    {
+                        if (HomeLG.E.UI != null) 
+                            HomeLG.E.UI.RefreshCoins();
+                    });
                 }, TaskMng.E.MainTaskId);
             }
             else
@@ -108,8 +115,12 @@ public class CharacterFollow : CharacterBase
         // アニメション完了待つ
         yield return new WaitForSeconds(1.8f);
 
-        // 挨拶チャット
-        UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 99);
+        if (DataMng.E.UserData.FirstShowFairy)
+        {
+            // 挨拶チャット
+            UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 99);
+            DataMng.E.UserData.FirstShowFairy = false;
+        }
 
         Behavior = BehaviorType.Run;
 
@@ -117,6 +128,12 @@ public class CharacterFollow : CharacterBase
         if (!TaskMng.E.IsEnd)
         {
             ShowChatFlg(!TaskMng.E.IsReaded);
+        }
+
+        // タスクがクリア状態なら吹き出しを出す
+        if (TaskMng.E.IsClear)
+        {
+            ShowChatFlg();
         }
     }
 }

@@ -129,6 +129,7 @@ public class CharacterCtl : Single<CharacterCtl>
             return;
         }
 
+        followCharacter.transform.localRotation = Quaternion.Euler(0,0,0);
         followCharacter.Init(id, CharacterBase.CharacterCamp.Fairy);
         followCharacter.SetTarget(player.FollowPoint);
 

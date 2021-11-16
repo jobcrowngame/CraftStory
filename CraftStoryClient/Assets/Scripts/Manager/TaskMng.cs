@@ -43,15 +43,22 @@ public class TaskMng : Single<TaskMng>
     /// メインタスク数追加
     /// </summary>
     /// <param name="count"></param>
-    public void AddMainTaskCount(int taskId, int count = 1)
+    public void AddMainTaskCount(int taskType, int count = 1)
     {
         // 今のタスクと違う場合スキップ
-        if (MainTaskId != taskId)
+        if (MainTaskConfig.Type != taskType)
             return;
 
         NWMng.E.AddMainTaskClearCount((rp) =>
         {
             MainTaskClearedCount += count;
+
+            // タスクの条件に達成すると、妖精の吹き出しを出す
+            if (MainTaskConfig.ClearCount <= MainTaskClearedCount)
+            {
+                if(PlayerCtl.E.Fairy != null) 
+                    PlayerCtl.E.Fairy.ShowChatFlg();
+            }
         }, count);
     }
 
