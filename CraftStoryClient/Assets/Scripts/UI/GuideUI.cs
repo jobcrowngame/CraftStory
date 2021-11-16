@@ -114,10 +114,14 @@ public class GuideUI : UIBase
             {
                 DataMng.E.RuntimeData.GuideEnd = 1;
                 DataMng.E.RuntimeData.NewEmailCount++;
+                // 設計図タスク完了
+                TaskMng.E.AddMainTaskCount(5);
             }
             else if (DataMng.E.RuntimeData.GuideId == 2)
             {
                 DataMng.E.RuntimeData.GuideEnd2 = 1;
+                // ショップタスク完了
+                TaskMng.E.AddMainTaskCount(1);
             }
             else if (DataMng.E.RuntimeData.GuideId == 3)
             {

@@ -5,6 +5,7 @@ using System.Collections;
 public class CharacterFollow : CharacterBase
 {
     Image ChatFlg { get => CommonFunction.FindChiledByName<Image>(transform, "ChatFlg"); }
+    Animator animator { get => CommonFunction.FindChiledByName<Animator>(transform, "Model"); }
 
     public Transform target;
     float smoothing = 1;
@@ -30,10 +31,11 @@ public class CharacterFollow : CharacterBase
         if (!TaskMng.E.IsEnd)
         {
             ChangeChatFlgImg();
+            TaskMng.E.IsReaded = true;
 
             if (TaskMng.E.IsClear)
             {
-                NWMng.E.MainTaskEnd((rp) => 
+                NWMng.E.MainTaskEnd((rp) =>
                 {
                     UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, TaskMng.E.MainTaskConfig.EndChat);
                     TaskMng.E.Next();
@@ -45,7 +47,14 @@ public class CharacterFollow : CharacterBase
             }
         }
     }
-   
+
+    public override void OnBehaviorChange(BehaviorType behavior)
+    {
+        base.OnBehaviorChange(behavior);
+
+        animator.SetInteger("State", (int)behavior);
+    }
+
     void Update()
     {
         if (target != null)
@@ -100,25 +109,24 @@ public class CharacterFollow : CharacterBase
     /// <returns></returns>
     IEnumerator AppearancePerformanceIE()
     {
+        // 2S 後出る
         yield return new WaitForSeconds(2);
 
         // add effect
-
-        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(1);
 
         Model.gameObject.SetActive(true);
-
-        // アニメション
 
         ChangeChatFlgImg(false);
 
         // アニメション完了待つ
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.8f);
+        Behavior = BehaviorType.Run;
 
         // チャットフラグ出す
         if (!TaskMng.E.IsEnd)
         {
-            ChangeChatFlgImg(false);
+            ChangeChatFlgImg(TaskMng.E.IsReaded);
             ShowChatFlg(true);
         }
     }

@@ -62,6 +62,9 @@ public class ShopBlueprintMyShopUploadUI : UIBase
                                 }, itemData.id, Index, GetPrice(), textureName);
                             });
                         });
+
+                        // 設計図アップロードタスク
+                        TaskMng.E.AddMainTaskCount(6);
                     }, ShopBlueprintMyShopSelectItemLG.E.SelectItem.ItemData.id);
                 }
             }

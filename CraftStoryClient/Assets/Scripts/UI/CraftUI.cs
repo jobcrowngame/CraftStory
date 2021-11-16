@@ -142,6 +142,14 @@ public class CraftUI : UIBase
                     // クラフトミッション
                     NWMng.E.ClearMission(3, 1, CraftLG.E.SelectCount);
 
+                    // 掲示板を作るタスク完了
+                    if (CraftLG.E.SelectCraft.ItemID == 3003)
+                        TaskMng.E.AddMainTaskCount(3);
+
+                    // かまどを使うタスク
+                    TaskMng.E.AddMainTaskCount(4);
+
+
                     if (CraftLG.E.SelectCraft.ItemID == 3003 && DataMng.E.UserData.FirstCraftMission == 0)
                     {
                         DataMng.E.UserData.FirstCraftMission = 1;

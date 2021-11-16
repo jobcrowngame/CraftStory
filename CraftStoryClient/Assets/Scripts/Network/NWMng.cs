@@ -982,6 +982,19 @@ public partial class NWMng : MonoBehaviour
     }
 
     /// <summary>
+    /// メインタスククリア数追加
+    /// </summary>
+    /// <param name="rp"></param>
+    /// <param name="count"></param>
+    public void AddMainTaskClearCount(Action<JsonData> rp, int count)
+    {
+        var data = new NWData();
+        data.Add("count", count);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.AddMainTaskClearCount));
+    }
+
+    /// <summary>
     /// ホームデータをサーバーにセーブ
     /// </summary>
     /// <param name="rp"></param>
@@ -1085,6 +1098,7 @@ public partial class NWMng : MonoBehaviour
         Resurrection,
         GetTotalSetBlockCount,
         MainTaskEnd,
+        AddMainTaskClearCount = 1060,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

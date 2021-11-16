@@ -100,6 +100,10 @@ public class ShopItemCell : UIBase
                                     UpdateLimited();
                                 }, config.ID);
                             }
+
+                            // ロイヤルコインを使うタスク
+                            if (config.Type == 8)
+                                TaskMng.E.AddMainTaskCount(8);
                         });
                     });
                     CommonFunction.ShowHintBar(5);

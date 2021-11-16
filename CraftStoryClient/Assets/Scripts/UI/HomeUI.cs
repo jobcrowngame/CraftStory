@@ -192,6 +192,10 @@ public partial class HomeUI : UIBase
         });
 
         SetSkills();
+
+        // 10階まで行くタスク
+        if (DataMng.E.MapData.Config.Floor >= 10)
+            TaskMng.E.AddMainTaskCount(9);
     }
 
     /// <summary>

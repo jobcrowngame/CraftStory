@@ -37,14 +37,22 @@ public class TaskMng : Single<TaskMng>
     public MainTask MainTaskConfig { get => ConfigMng.E.MainTask[MainTaskId]; }
     public bool IsEnd { get => MainTaskConfig.Type == 0; }
     public bool IsClear { get => MainTaskClearedCount >= MainTaskConfig.ClearCount; }
+    public bool IsReaded { get; set; }
 
     /// <summary>
     /// メインタスク数追加
     /// </summary>
     /// <param name="count"></param>
-    public void AddMainTaskCount(int count = 1)
+    public void AddMainTaskCount(int taskId, int count = 1)
     {
-        MainTaskClearedCount += count;
+        // 今のタスクと違う場合スキップ
+        if (MainTaskId != taskId)
+            return;
+
+        NWMng.E.AddMainTaskClearCount((rp) =>
+        {
+            MainTaskClearedCount += count;
+        }, count);
     }
 
     /// <summary>
@@ -52,10 +60,10 @@ public class TaskMng : Single<TaskMng>
     /// </summary>
     public void Next()
     {
+        MainTaskClearedCount = 0;
+
         // 次のタスク
         MainTaskId++;
-
-        CheckClearedCount();
 
         if (IsEnd)
         {
@@ -65,14 +73,17 @@ public class TaskMng : Single<TaskMng>
         {
             PlayerCtl.E.Fairy.ChangeChatFlgImg(false);
         }
+
+        IsReaded = false;
     }
 
     public void CheckClearedCount()
     {
         switch ((TaskType)MainTaskConfig.Type)
         {
-            case TaskType.GuideEnd2: MainTaskClearedCount = DataMng.E.RuntimeData.GuideEnd2; break;
-            case TaskType.GUideEnd3: MainTaskClearedCount = DataMng.E.RuntimeData.GuideEnd3; break;
+            case TaskType.GuideEndShop: MainTaskClearedCount = DataMng.E.RuntimeData.GuideEnd2; break;
+            case TaskType.GUideEndEquipment: MainTaskClearedCount = DataMng.E.RuntimeData.GuideEnd4; break;
+            case TaskType.GuideEndBlueprint: MainTaskClearedCount = DataMng.E.RuntimeData.GuideEnd; break;
 
             default: MainTaskClearedCount = 0; break;
         }
@@ -81,7 +92,15 @@ public class TaskMng : Single<TaskMng>
     public enum TaskType
     {
         End = 0,
-        GuideEnd2,
-        GUideEnd3,
+        GuideEndShop,// ショップチュートリアル完了
+        GUideEndEquipment,// 武器チュートリアル完了
+        CreateMission,// 掲示板作る
+        UseCamado,// かまどを使う
+        GuideEndBlueprint,// 設計図チュートリアル完了
+        UploadBlueprint,// マイショップアップロード
+        AddGood,// 他のユーザーいいねする
+        UseCoin4,// ロイヤルコイン使う
+        BraveLv10,// 冒険エリア１０階
+        UserLv10,// レベル10
     }
 }

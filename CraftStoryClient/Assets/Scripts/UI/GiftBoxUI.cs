@@ -195,6 +195,10 @@ public class GiftBoxUI : UIBase
 
         LevelUp.gameObject.SetActive(false);
 
+        // レベル10になるタスク
+        if (DataMng.E.RuntimeData.Lv >= 10)
+            TaskMng.E.AddMainTaskCount(10);
+
         StartCoroutine(StartAnimIE());
     }
 

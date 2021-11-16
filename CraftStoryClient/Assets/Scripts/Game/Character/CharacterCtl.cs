@@ -114,6 +114,10 @@ public class CharacterCtl : Single<CharacterCtl>
     /// </summary>
     private void AddFollowCharacter()
     {
+        // チュートリアルの場合、スキップ
+        if (DataMng.E.RuntimeData.MapType == MapType.Guide)
+            return;
+
         int id = 10001;
         var config = ConfigMng.E.Character[id];
 

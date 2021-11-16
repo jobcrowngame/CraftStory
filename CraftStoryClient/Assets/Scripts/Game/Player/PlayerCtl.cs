@@ -108,7 +108,7 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            TaskMng.E.AddMainTaskCount();
+            TaskMng.E.AddMainTaskCount(2);
         }
     }
 

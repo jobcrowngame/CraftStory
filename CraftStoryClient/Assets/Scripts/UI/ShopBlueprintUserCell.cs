@@ -25,6 +25,9 @@ public class ShopBlueprintUserCell : UIBase
             {
                 ShopBlueprintLG.E.RefreshGoodNum(data.targetAcc);
                 DataMng.E.RuntimeData.UseGoodNum++;
+
+                // 他のユーザーいいねするタスク
+                TaskMng.E.AddMainTaskCount(7);
             }, data.targetAcc);
         });
 
