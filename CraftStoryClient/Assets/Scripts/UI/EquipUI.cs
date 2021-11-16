@@ -32,7 +32,14 @@ public class EquipUI : UIBase
         EquipLG.E.Init(this);
 
         Title.SetTitle("装備");
-        Title.SetOnClose(Close);
+        Title.SetOnClose(() =>
+        {
+            Close();
+            if (DataMng.E.MapData.Config.MapType == (int)MapType.Guide)
+            {
+                GuideLG.E.Next();
+            }
+        });
 
         WeaponIcon.AddClickListener((index) => 
         {

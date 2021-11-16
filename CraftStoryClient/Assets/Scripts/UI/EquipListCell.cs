@@ -34,6 +34,11 @@ public class EquipListCell : UIBase
             EquipListLG.E.UI.RefreshParameter();
 
             Selected();
+
+            if (DataMng.E.MapData.Config.MapType == (int)MapType.Guide)
+            {
+                GuideLG.E.Next();
+            }
         });
 
         cells = new EquipSkillCell[Skills.childCount];

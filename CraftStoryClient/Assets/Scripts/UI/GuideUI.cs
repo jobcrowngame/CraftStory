@@ -131,6 +131,7 @@ public class GuideUI : UIBase
             else if (DataMng.E.RuntimeData.GuideId == 4)
             {
                 DataMng.E.RuntimeData.GuideEnd4 = 1;
+                PlayerCtl.E.GetEquipedItems().Clear();
             }
         }, DataMng.E.RuntimeData.GuideId);
     }

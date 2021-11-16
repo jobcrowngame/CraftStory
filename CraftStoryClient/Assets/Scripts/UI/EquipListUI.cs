@@ -50,6 +50,10 @@ public class EquipListUI : UIBase
         {
             PlayerCtl.E.EquipEquipment(EquipListLG.E.SelectedItem.Data);
             Close();
+            if (DataMng.E.MapData.Config.MapType == (int)MapType.Guide)
+            {
+                GuideLG.E.Next();
+            }
         });
         AppraisalBtn.onClick.AddListener(() =>
         {
@@ -100,6 +104,7 @@ public class EquipListUI : UIBase
         foreach (var item in list)
         {
             var cell = AddCell<EquipListCell>("Prefabs/UI/EquipListCell", Parent);
+            cell.name = item.itemId.ToString();
             cell.Set(item);
         }
     }
