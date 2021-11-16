@@ -17,4 +17,10 @@ public class UserData
     /// 最初の掲示板作り
     /// </summary>
     public int FirstCraftMission { get; set; }
+
+    /// <summary>
+    /// 始めに妖精を出す
+    /// </summary>
+    public bool FirstShowFairy = true;
+
 }

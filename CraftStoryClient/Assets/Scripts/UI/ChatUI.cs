@@ -34,7 +34,17 @@ public class ChatUI : UIBase
         chatId = (int)obj;
 
         Chat.text = "";
-        CharacterIcon.sprite = ReadResources<Sprite>(config.CharacterIcon);
+
+        if (config.CharacterIcon == "N")
+        {
+            CharacterIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            CharacterIcon.gameObject.SetActive(true);
+            CharacterIcon.sprite = ReadResources<Sprite>(config.CharacterIcon);
+        }
+
         NameIcon.sprite = ReadResources<Sprite>(config.NameIcon);
         OnClick.gameObject.SetActive(false);
 

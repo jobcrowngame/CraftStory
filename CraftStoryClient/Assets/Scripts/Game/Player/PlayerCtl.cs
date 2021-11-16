@@ -105,11 +105,6 @@ public class PlayerCtl : MonoBehaviour
         {
             Character.Jump();
         }
-
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            TaskMng.E.AddMainTaskCount(2);
-        }
     }
 
     public void SetCharacter(CharacterPlayer character)

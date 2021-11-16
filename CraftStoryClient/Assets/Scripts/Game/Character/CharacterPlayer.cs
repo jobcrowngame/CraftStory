@@ -76,6 +76,10 @@ public partial class CharacterPlayer : CharacterBase
         Behavior = BehaviorType.Waiting;
 
         ShowArrow(null, false);
+
+        // レベル10になるタスク
+        if (DataMng.E.RuntimeData.Lv >= 10)
+            TaskMng.E.AddMainTaskCount(10);
     }
 
     public override void OnBehaviorChange(BehaviorType behavior)
