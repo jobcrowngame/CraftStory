@@ -29,7 +29,7 @@ public class TaskMng : Single<TaskMng>
 
             if (PlayerCtl.E.Fairy != null && IsClear)
             {
-                PlayerCtl.E.Fairy.ChangeChatFlgImg(false);
+                PlayerCtl.E.Fairy.ShowChatFlg();
             }
         }
     }
@@ -71,9 +71,8 @@ public class TaskMng : Single<TaskMng>
         }
         else
         {
-            PlayerCtl.E.Fairy.ChangeChatFlgImg(false);
+            PlayerCtl.E.Fairy.ShowChatFlg(true);
         }
-
         IsReaded = false;
     }
 

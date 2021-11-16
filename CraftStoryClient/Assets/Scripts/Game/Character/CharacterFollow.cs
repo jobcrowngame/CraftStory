@@ -4,7 +4,7 @@ using System.Collections;
 
 public class CharacterFollow : CharacterBase
 {
-    Image ChatFlg { get => CommonFunction.FindChiledByName<Image>(transform, "ChatFlg"); }
+    Transform ChatFlg { get => CommonFunction.FindChiledByName(transform, "effect_2d_010").transform; }
     Animator animator { get => CommonFunction.FindChiledByName<Animator>(transform, "Model"); }
 
     public Transform target;
@@ -30,8 +30,8 @@ public class CharacterFollow : CharacterBase
 
         if (!TaskMng.E.IsEnd)
         {
-            ChangeChatFlgImg();
             TaskMng.E.IsReaded = true;
+            ShowChatFlg(false);
 
             if (TaskMng.E.IsClear)
             {
@@ -91,19 +91,6 @@ public class CharacterFollow : CharacterBase
     }
 
     /// <summary>
-    /// チャット画像
-    /// </summary>
-    /// <param name="isReaded">true = 既読　false = 未読</param>
-    public void ChangeChatFlgImg(bool isReaded = true)
-    {
-        string iconPath = isReaded 
-            ? "Textures/button_2D_006"
-            : "Textures/button_2D_007";
-
-        ChatFlg.sprite = ResourcesMng.E.ReadResources<Sprite>(iconPath);
-    }
-
-    /// <summary>
     /// 出現演出
     /// </summary>
     /// <returns></returns>
@@ -113,21 +100,23 @@ public class CharacterFollow : CharacterBase
         yield return new WaitForSeconds(2);
 
         // add effect
-        //yield return new WaitForSeconds(1);
+        EffectMng.E.AddEffect<EffectBase>(transform.position + new Vector3(0,1,0), EffectType.FairyCreate);
 
         Model.gameObject.SetActive(true);
-
-        ChangeChatFlgImg(false);
+        ShowChatFlg(false);
 
         // アニメション完了待つ
         yield return new WaitForSeconds(1.8f);
+
+        // 挨拶チャット
+        UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 99);
+
         Behavior = BehaviorType.Run;
 
         // チャットフラグ出す
         if (!TaskMng.E.IsEnd)
         {
-            ChangeChatFlgImg(TaskMng.E.IsReaded);
-            ShowChatFlg(true);
+            ShowChatFlg(!TaskMng.E.IsReaded);
         }
     }
 }

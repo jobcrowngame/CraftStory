@@ -132,6 +132,7 @@ public class GuideUI : UIBase
             {
                 DataMng.E.RuntimeData.GuideEnd4 = 1;
                 PlayerCtl.E.GetEquipedItems().Clear();
+                TaskMng.E.AddMainTaskCount(2);
             }
         }, DataMng.E.RuntimeData.GuideId);
     }
