@@ -491,6 +491,10 @@ public class PlayerCtl : MonoBehaviour
 
             Character.Parameter.Refresh();
             HomeLG.E.UI.ShowSpriteAnimation();
+
+            // 武器を装備してる場合、タスクが完了とする
+            if (Character.IsEquipedEquipment())
+                TaskMng.E.AddMainTaskCount(2);
         });
     }
 
