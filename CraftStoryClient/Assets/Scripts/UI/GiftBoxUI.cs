@@ -23,7 +23,7 @@ public class GiftBoxUI : UIBase
     Button OKBtn { get => FindChiled<Button>("OKBtn"); }
     Button AdvertisingBtn { get => FindChiled<Button>("AdvertisingBtn"); }
 
-    RawImage RawImageforRT { get => FindChiled<RawImage>("RawImage for RT"); }
+    Camera CameraforRT { get => FindChiled<Camera>("Camera for RT"); }
     Transform itemGridRoot;
     List<IconItemCell> cells;
     Action okBtnCallBack;
@@ -136,7 +136,7 @@ public class GiftBoxUI : UIBase
 
     public override void Destroy()
     {
-        RawImageforRT.texture = null;
+        CameraforRT.targetTexture = null;
 
         base.Destroy();
     }

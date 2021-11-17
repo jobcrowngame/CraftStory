@@ -389,23 +389,11 @@ public partial class HomeUI : UIBase
     {
         try
         {
-            if (SpriteAnim == null)
+            if (SpriteAnim != null)
             {
-                Logger.Error("SpriteAnim is null");
-            }
-
-            if (SpriteAnim.gameObject == null)
-            {
-                Logger.Error("SpriteAnim gameObject is null");
-            }
-
-            if (DataMng.E.RuntimeData == null)
-            {
-                Logger.Error("DataMng.E.RuntimeData is null");
-            }
-
-            SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide &&
+                SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide &&
                 (DataMng.E.RuntimeData.GuideEnd2 == 0 || MapLG.E.IsEquipTutorial()));
+            }
         }
         catch (Exception ex)
         {
