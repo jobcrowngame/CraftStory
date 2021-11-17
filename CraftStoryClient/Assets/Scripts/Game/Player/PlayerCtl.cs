@@ -49,7 +49,7 @@ public class PlayerCtl : MonoBehaviour
             // Joystickスクロールが停止場合のイベント
             Joystick.AddListionOnPointerUp(() =>
             {
-                if (!Character.IsDied)
+                if (Character != null && !Character.IsDied)
                 {
                     Character.StopMove();
                     Character.Behavior = BehaviorType.Waiting;

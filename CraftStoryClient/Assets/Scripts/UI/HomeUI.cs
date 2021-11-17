@@ -214,6 +214,8 @@ public partial class HomeUI : UIBase
         RefreshItemBtns();
 
         RefreshUiByMapType();
+
+        SpriteAnim.gameObject.SetActive(false);
     }
 
     public override void Open()
