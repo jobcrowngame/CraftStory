@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Profiling;
@@ -210,7 +211,6 @@ public partial class HomeUI : UIBase
 
         StartCoroutine(FadeIn());
         RefreshRedPoint();
-        ShowSpriteAnimation();
         RefreshItemBtns();
 
         RefreshUiByMapType();
@@ -387,8 +387,15 @@ public partial class HomeUI : UIBase
     /// </summary>
     public void ShowSpriteAnimation()
     {
-        SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide &&
-            (DataMng.E.RuntimeData.GuideEnd2 == 0 || MapLG.E.IsEquipTutorial()));
+        try
+        {
+            SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide &&
+                (DataMng.E.RuntimeData.GuideEnd2 == 0 || MapLG.E.IsEquipTutorial()));
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex.Message);
+        }
     }
 
     public Vector2 GetBagIconPos()
