@@ -457,6 +457,11 @@ public class PlayerCtl : MonoBehaviour
     /// <returns></returns>
     public ItemEquipmentData GetEquipByItemType(ItemType itemType)
     {
+        if (equipedItems == null)
+        {
+            Logger.Error("equipedItems is null");
+        }
+
         if (equipedItems.ContainsKey((int)itemType))
         {
             return equipedItems[(int)itemType];
