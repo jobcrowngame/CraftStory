@@ -487,7 +487,7 @@ public class CharacterBase : MonoBehaviour
             return;
         }
 
-        Logger.Log("{1} が {0} のダメージを受けました。", damage, gameObject.name);
+        //Logger.Log("{1} が {0} のダメージを受けました。", damage, gameObject.name);
 
         // HP計算
         Parameter.CurHP -= damage;
