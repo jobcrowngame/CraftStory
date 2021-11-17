@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.UI;
 
 public partial class HomeUI : UIBase
@@ -110,6 +111,11 @@ public partial class HomeUI : UIBase
     Title2UI Title { get => FindChiled<Title2UI>("Title2"); }
 
     /// <summary>
+    /// Debug ボタン
+    /// </summary>
+    Button DebugBtn { get => FindChiled<Button>("DebugBtn"); }
+
+    /// <summary>
     /// 選択用アイテム欄ボタンリスト
     /// </summary>
     List<HomeItemBtn> itemBtns;
@@ -143,6 +149,10 @@ public partial class HomeUI : UIBase
         BagBtn.onClick.AddListener(() => 
         { 
             UICtl.E.OpenUI<BagUI>(UIType.Bag); 
+        });
+        DebugBtn.onClick.AddListener(() =>
+        {
+            UICtl.E.OpenUI<DebugUI>(UIType.Debug);
         });
 
         AddItemBtns();

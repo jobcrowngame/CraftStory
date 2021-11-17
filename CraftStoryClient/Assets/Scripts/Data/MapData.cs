@@ -356,8 +356,8 @@ public class MapData
 
 
         var strMap = sb.ToString();
-        Logger.Log("Map");
-        Logger.Log(strMap);
+        //Logger.Log("Map");
+        //Logger.Log(strMap);
         return strMap;
     }
 
