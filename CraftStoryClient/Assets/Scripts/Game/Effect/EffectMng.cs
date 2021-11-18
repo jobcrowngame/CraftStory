@@ -60,6 +60,7 @@ public class EffectMng : Single<EffectMng>
             case EffectType.AppraisalEquipment: return "Prefabs/Effect/ResourcesDeleteEffect";
             case EffectType.Gacha: return "Prefabs/Effect/TreasureBoxEffect";
             case EffectType.FairyCreate: return "Prefabs/Effect/effect_2d_011";
+            case EffectType.TreasureBox: return "Prefabs/Effect/TreasureBox";
             default: return "";
         }
     }
@@ -72,4 +73,5 @@ public enum EffectType
     AppraisalEquipment,
     Gacha,
     FairyCreate,
+    TreasureBox,
 }
