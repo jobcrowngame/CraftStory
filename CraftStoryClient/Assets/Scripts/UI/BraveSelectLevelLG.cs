@@ -1,4 +1,6 @@
 ﻿using JsonConfigData;
+using LitJson;
+using UnityEngine;
 
 public class BraveSelectLevelLG : UILogicBase<BraveSelectLevelLG, BraveSelectLevelUI>
 {
@@ -6,10 +8,10 @@ public class BraveSelectLevelLG : UILogicBase<BraveSelectLevelLG, BraveSelectLev
     {
         NWMng.E.GetMaxBraveLevel((rp) =>
         {
-            int maxLv = (int)rp["maxArrivedFloor"];
-            int count = maxLv / 5;
+            var result = JsonMapper.ToObject<BraveSelectLevelRP>(rp.ToJson());
+            int count = Mathf.Abs(result.maxArrivedFloor - 1) / 5;
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i <= count; i++)
             {
                 var map = GetMapIdByIndex(i);
                 if (map != null)
@@ -22,22 +24,18 @@ public class BraveSelectLevelLG : UILogicBase<BraveSelectLevelLG, BraveSelectLev
 
     private Map GetMapIdByIndex(int index)
     {
-        var floor = index * 5;
-        if (floor <= 0) floor = 1;
-
-        if (floor == 1)
+        var floor = index * 5 + 1;
+        foreach (var item in ConfigMng.E.Map.Values)
         {
-            return ConfigMng.E.Map[1000];
-        }
-        else
-        {
-            foreach (var item in ConfigMng.E.Map.Values)
-            {
-                if (floor == item.Floor)
-                    return item;
-            }
+            if (floor == item.Floor)
+                return item;
         }
 
         return null;
+    }
+
+    struct BraveSelectLevelRP
+    {
+        public int maxArrivedFloor { get; set; }
     }
 }

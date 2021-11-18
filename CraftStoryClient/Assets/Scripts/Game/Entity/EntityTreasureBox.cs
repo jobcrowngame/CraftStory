@@ -17,11 +17,9 @@ public class EntityTreasureBox : EntityBase
     {
         base.OnClick();
 
-        NWMng.E.GetRandomBonus((rp) => 
+        NWMng.E.GetRandomBonus((rp) =>
         {
-            if (string.IsNullOrEmpty(rp.ToString()))
-                Logger.Error("Bad bonusID " + EConfig.BonusID);
-            else
+            if (!string.IsNullOrEmpty(rp.ToString()))
             {
                 var bonusList = JsonMapper.ToObject<List<BonusListCell>>(rp.ToJson());
                 foreach (var cell in bonusList)
@@ -31,9 +29,8 @@ public class EntityTreasureBox : EntityBase
                         AdventureCtl.E.AddBonus(cell.bonus);
                     }
                 }
-
-                WorldMng.E.MapCtl.DeleteEntity(this);
             }
+            WorldMng.E.MapCtl.DeleteEntity(this);
         }, EConfig.BonusID);
     }
 

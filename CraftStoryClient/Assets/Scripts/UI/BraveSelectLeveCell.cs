@@ -16,13 +16,13 @@ public class BraveSelectLeveCell : UIBase
             // –`Œ¯“ü‚é‚Ìƒ~ƒbƒVƒ‡ƒ“
             NWMng.E.ClearMission(2, 1);
 
-            CommonFunction.GoToNextScene(config.TransferGateID);
+            CommonFunction.GoToNextScene(config.ID);
         });
     }
 
     public void Set(Map config)
     {
         this.config = config;
-        Text.text = (config.Floor + 1) + "F";
+        Text.text = config.Floor + "F";
     }
 }
