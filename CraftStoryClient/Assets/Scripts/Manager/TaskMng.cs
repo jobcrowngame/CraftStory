@@ -108,5 +108,6 @@ public class TaskMng : Single<TaskMng>
         UseCoin4,// ロイヤルコイン使う
         BraveLv10,// 冒険エリア１０階
         UserLv10,// レベル10
+        GuideBrave,// 冒険エリアチュートリアルが完了
     }
 }

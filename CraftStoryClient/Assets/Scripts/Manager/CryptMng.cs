@@ -83,6 +83,7 @@ public class CryptMng : Single<CryptMng>
         }
         catch (Exception e)
         {
+            Logger.Error("Response 解析失敗：");
             Logger.Error(e);
             Logger.Error(cipherText);
         }
