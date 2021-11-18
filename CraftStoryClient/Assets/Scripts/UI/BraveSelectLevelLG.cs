@@ -11,6 +11,8 @@ public class BraveSelectLevelLG : UILogicBase<BraveSelectLevelLG, BraveSelectLev
             var result = JsonMapper.ToObject<BraveSelectLevelRP>(rp.ToJson());
             int count = Mathf.Abs(result.maxArrivedFloor - 1) / 5;
 
+            UI.SetMaxFloor(result.maxArrivedFloor);
+
             for (int i = 0; i <= count; i++)
             {
                 var map = GetMapIdByIndex(i);
