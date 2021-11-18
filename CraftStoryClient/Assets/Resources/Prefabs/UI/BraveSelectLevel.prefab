@@ -50,17 +50,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: 20
+    m_Right: 20
+    m_Top: 10
+    m_Bottom: 10
   m_ChildAlignment: 0
-  m_StartCorner: 0
+  m_StartCorner: 2
   m_StartAxis: 0
-  m_CellSize: {x: 110, y: 50}
+  m_CellSize: {x: 240, y: 50}
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 1
-  m_ConstraintCount: 5
+  m_ConstraintCount: 1
 --- !u!114 &5437296325760103512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,13 +104,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1704318784860726048}
-  m_RootOrder: 2
+  m_Father: {fileID: 3938567257365173481}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 40}
-  m_SizeDelta: {x: -20, y: 40}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6252512089518641631
 CanvasRenderer:
@@ -153,7 +153,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u73FE\u5728\u306E\u6700\u5927\u5230\u9054\u968E\u5C64\uFF1A\u3007F"
+  m_Text: "\u73FE\u5728\u306E\u6700\u5927\u5230\u9054\u968E\u5C64\uFF1A\n\u3007F"
 --- !u!1 &2217343385680766586
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,11 +276,11 @@ RectTransform:
   m_Father: {fileID: 3938567257365173481}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 0, y: 100}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8984074643607545221
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -322,7 +322,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "1F\u304B\u30895\u968E\u5C64\u30AF\u30EA\u30A2\u3059\u308B\u3054\u3068\u306B\u3001\r\n\u9014\u4E2D\u306E\u968E\u5C64\u304B\u3089\u5192\u967A\u304C\u3067\u304D\u307E\u3059\u3002"
+  m_Text: "1F\u304B\u30895\u968E\u5C64\u30AF\u30EA\u30A2\u3059\u308B\n\u3054\u3068\u306B\u3001\r\u9014\u4E2D\u306E\u968E\u5C64\u304B\u3089\n\u5192\u967A\u304C\u3067\u304D\u307E\u3059\u3002"
 --- !u!1 &5623560896353803302
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,14 +353,15 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6919609466227540256}
+  - {fileID: 5692661467898166322}
   m_Father: {fileID: 1704318784860726048}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -60}
-  m_SizeDelta: {x: -20, y: 60}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 10, y: -60}
+  m_SizeDelta: {x: 300, y: -70}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &187221573873506910
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -520,13 +521,13 @@ RectTransform:
   m_Children:
   - {fileID: 573559024246217790}
   m_Father: {fileID: 1704318784860726048}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -75}
-  m_SizeDelta: {x: -20, y: -170}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -10, y: -25}
+  m_SizeDelta: {x: 280, y: -70}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &6175946754831354278
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -542,7 +543,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6690181674735906701}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -626,7 +627,6 @@ RectTransform:
   m_Children:
   - {fileID: 1891743855208074298}
   - {fileID: 3938567257365173481}
-  - {fileID: 5692661467898166322}
   - {fileID: 8254539439621406069}
   m_Father: {fileID: 2148318467006247022}
   m_RootOrder: 0

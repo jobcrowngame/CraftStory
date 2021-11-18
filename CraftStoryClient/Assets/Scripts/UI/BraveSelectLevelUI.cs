@@ -8,6 +8,10 @@ public class BraveSelectLevelUI : UIBase
     Transform Paretn { get => FindChiled("Content"); }
     Text MaxFloor { get => FindChiled<Text>("MaxFloor"); }
 
+    string msg = @"現在の
+最大到達フロア
+{0}Ｆ";
+
     public override void Init()
     {
         base.Init();
@@ -41,6 +45,6 @@ public class BraveSelectLevelUI : UIBase
 
     public void SetMaxFloor(int floor)
     {
-        MaxFloor.text = string.Format("現在の最大到達階層：{0}F", floor);
+        MaxFloor.text = string.Format(msg, floor);
     }
 }
