@@ -145,6 +145,7 @@ public class GuideUI : UIBase
                 DataMng.E.RuntimeData.GuideEnd5 = 1;
                 DataMng.E.RuntimeData.Lv = GuideLG.E.HomeRuntimeData.Lv;
                 DataMng.E.RuntimeData.Exp = GuideLG.E.HomeRuntimeData.Exp;
+                TaskMng.E.AddMainTaskCount(11);
             }
         }, DataMng.E.RuntimeData.GuideId);
     }
