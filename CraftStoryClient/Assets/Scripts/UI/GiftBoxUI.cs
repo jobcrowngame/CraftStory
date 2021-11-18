@@ -22,6 +22,8 @@ public class GiftBoxUI : UIBase
     Transform Bonus3XLabel { get => FindChiled<Transform>("Bonus3XLabel"); }
     Button OKBtn { get => FindChiled<Button>("OKBtn"); }
     Button AdvertisingBtn { get => FindChiled<Button>("AdvertisingBtn"); }
+
+    Camera CameraforRT { get => FindChiled<Camera>("Camera for RT"); }
     Transform itemGridRoot;
     List<IconItemCell> cells;
     Action okBtnCallBack;
@@ -142,6 +144,13 @@ public class GiftBoxUI : UIBase
 #if UNITY_ANDROID
         AdvertisingBtn.gameObject.SetActive(false);
 #endif
+    }
+
+    public override void Destroy()
+    {
+        CameraforRT.targetTexture = null;
+
+        base.Destroy();
     }
 
     private IEnumerator StartAnimIE()

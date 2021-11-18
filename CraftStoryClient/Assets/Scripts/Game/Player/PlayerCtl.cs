@@ -49,7 +49,7 @@ public class PlayerCtl : MonoBehaviour
             // Joystickスクロールが停止場合のイベント
             Joystick.AddListionOnPointerUp(() =>
             {
-                if (!Character.IsDied)
+                if (Character != null && !Character.IsDied)
                 {
                     Character.StopMove();
                     Character.Behavior = BehaviorType.Waiting;
@@ -471,6 +471,10 @@ public class PlayerCtl : MonoBehaviour
     /// <returns></returns>
     public ItemEquipmentData GetEquipByItemType(ItemType itemType)
     {
+        if (EquipedItems == null)
+        {
+            Logger.Error("equipedItems is null");
+        }
         if (EquipedItems.ContainsKey((int)itemType))
         {
             return EquipedItems[(int)itemType];
@@ -504,7 +508,11 @@ public class PlayerCtl : MonoBehaviour
             }
 
             Character.Parameter.Refresh();
-            HomeLG.E.UI.ShowSpriteAnimation();
+            if(HomeLG.E.UI != null) HomeLG.E.UI.ShowSpriteAnimation();
+
+            // 武器を装備してる場合、タスクが完了とする
+            if (Character.IsEquipedEquipment())
+                TaskMng.E.AddMainTaskCount(2);
         });
     }
 

@@ -91,7 +91,7 @@ public class ShopBlueprintUI : UIBase
 
         MyGoodNum.text = DataMng.E.RuntimeData.MyGoodNum.ToString();
 
-        ShopBlueprintLG.E.Type = ShopBlueprintLG.UIType.Blueprint1;
+        ShopBlueprintLG.E.Type = ShopBlueprintLG.E.Type;
     }
 
     public void RefreshItemWindow(ShopBlueprintLG.UIType type)

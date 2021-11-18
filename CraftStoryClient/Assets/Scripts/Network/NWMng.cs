@@ -43,7 +43,7 @@ public partial class NWMng : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.ProductionURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.TestURL))
         {
             yield return www.SendWebRequest();
 
@@ -995,6 +995,18 @@ public partial class NWMng : MonoBehaviour
     }
 
     /// <summary>
+    /// 最大冒険レベルゲット
+    /// </summary>
+    /// <param name="rp"></param>
+    public void GetMaxBraveLevel(Action<JsonData> rp)
+    {
+        var data = new NWData();
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetMaxBraveLevel));
+    }
+
+
+    /// <summary>
     /// ホームデータをサーバーにセーブ
     /// </summary>
     /// <param name="rp"></param>
@@ -1099,6 +1111,7 @@ public partial class NWMng : MonoBehaviour
         GetTotalSetBlockCount,
         MainTaskEnd,
         AddMainTaskClearCount = 1060,
+        GetMaxBraveLevel,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,

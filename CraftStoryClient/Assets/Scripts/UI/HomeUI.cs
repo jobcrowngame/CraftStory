@@ -1,125 +1,156 @@
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.UI;
 
 public partial class HomeUI : UIBase
 {
-    #region •Ï”
+    #region å¤‰æ•°
 
     /// <summary>
-    /// “ü‚½ƒ}ƒbƒv–¼
+    /// å…¥ãŸãƒãƒƒãƒ—å
     /// </summary>
-    MyText SceneName { get => FindChiled<MyText>("SceneName"); }
+    MyText SceneName;
 
     /// <summary>
-    /// Fadein ‚Ìƒ}ƒXƒN
+    /// Fadein ã®ãƒã‚¹ã‚¯
     /// </summary>
-    Image FadeinImg { get => FindChiled<Image>("Fadein"); }
+    Image FadeinImg;
 
     /// <summary>
-    /// ƒƒjƒ…[ƒ{ƒ^ƒ“
+    /// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒœã‚¿ãƒ³
     /// </summary>
-    Button MenuBtn { get => FindChiled<Button>("MenuBtn"); }
+    Button MenuBtn;
 
     /// <summary>
-    /// ƒ}ƒbƒvƒ{ƒ^ƒ“
+    /// ãƒãƒƒãƒ—ãƒœã‚¿ãƒ³
     /// </summary>
-    Button MapBtn { get => FindChiled<Button>("MapBtn"); }
+    Button MapBtn;
 
     /// <summary>
-    /// ƒAƒCƒeƒ€—“
+    /// ã‚¢ã‚¤ãƒ†ãƒ æ¬„
     /// </summary>
     public Transform Items { get => FindChiled("Items"); }
 
     /// <summary>
-    /// ‚¿•¨ƒ{ƒ^ƒ“
+    /// æŒã¡ç‰©ãƒœã‚¿ãƒ³
     /// </summary>
-    Button BagBtn { get => FindChiled<Button>("BagBtn"); }
+    Button BagBtn;
 
     /// <summary>
-    /// ƒZƒ“ƒ^—p‚ÌƒAƒCƒeƒ€—“
+    /// ã‚»ãƒ³ã‚¿ç”¨ã®ã‚¢ã‚¤ãƒ†ãƒ æ¬„
     /// </summary>
-    Transform btnsParent { get => FindChiled("Grid"); }
+    Transform btnsParent;
 
     /// <summary>
-    /// ƒrƒ‹ƒ_[ƒyƒ“ƒZƒ‹
+    /// ãƒ“ãƒ«ãƒ€ãƒ¼ãƒšãƒ³ã‚»ãƒ«
     /// </summary>
-    Transform BuilderPencil { get => FindChiled("BuilderPencil"); }
+    Transform BuilderPencil;
+    /// </summary>
+    Button BuilderBtn;
     /// <summary>
-    /// ƒrƒ‹ƒ_[ƒ{ƒ^ƒ“
+    /// ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒ“ãƒ«ãƒ€ãƒ¼ãƒœã‚¿ãƒ³
     /// </summary>
-    Button BuilderBtn { get => FindChiled<Button>("BuilderBtn", BuilderPencil); }
-    /// <summary>
-    /// ƒLƒƒƒ“ƒZƒ‹ƒrƒ‹ƒ_[ƒ{ƒ^ƒ“
-    /// </summary>
-    Button BuilderPencilCancelBtn { get => FindChiled<Button>("BuilderPencilCancelBtn", BuilderPencil); }
+    Button BuilderPencilCancelBtn;
 
     /// <summary>
-    /// è‚É“ü‚éƒAƒCƒeƒ€e
+    /// æ‰‹ã«å…¥ã‚‹ã‚¢ã‚¤ãƒ†ãƒ è¦ª
     /// </summary>
-    Transform ItemDropParent { get => FindChiled("ItemDropParent"); }
+    Transform ItemDropParent;
 
     /// <summary>
-    /// İŒv}‚ğg—p‚·‚éê‡AƒRƒ“ƒ\[ƒ‹Window
+    /// è¨­è¨ˆå›³ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã€ã‚³ãƒ³ã‚½ãƒ¼ãƒ«Window
     /// </summary>
-    Transform Blueprint { get => FindChiled("Blueprint"); }
+    Transform Blueprint;
     /// <summary>
-    /// Á–Õ‚·‚éƒAƒCƒeƒ€ƒŠƒXƒg‚ÌƒTƒue
+    /// æ¶ˆè€—ã™ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ãƒªã‚¹ãƒˆã®ã‚µãƒ–è¦ª
     /// </summary>
-    Transform BlueprintCellGrid { get => FindChiled("Content", Blueprint.gameObject); }
+    Transform BlueprintCellGrid;
     /// <summary>
-    /// ‰ñ“]ƒ{ƒ^ƒ“
+    /// å›è»¢ãƒœã‚¿ãƒ³
     /// </summary>
-    Button SpinBtn { get => FindChiled<Button>("SpinBtn", Blueprint); }
+    Button SpinBtn;
     /// <summary>
-    /// ƒrƒ‹ƒ_[ƒLƒƒƒ“ƒZƒ‹ƒ{ƒ^ƒ“
+    /// ãƒ“ãƒ«ãƒ€ãƒ¼ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒœã‚¿ãƒ³
     /// </summary>
-    Button BlueprintCancelBtn { get => FindChiled<Button>("BlueprintCancelBtn", Blueprint); }
+    Button BlueprintCancelBtn;
     /// <summary>
-    /// ƒrƒ‹ƒ_[ƒ{ƒ^ƒ“
+    /// ãƒ“ãƒ«ãƒ€ãƒ¼ãƒœã‚¿ãƒ³
     /// </summary>
-    Button BuildBtn { get => FindChiled<Button>("BuildBtn", Blueprint); }
+    Button BuildBtn;
 
     /// <summary>
-    /// ƒWƒƒƒ“ƒvƒ{ƒ^ƒ“
+    /// ã‚¸ãƒ£ãƒ³ãƒ—ãƒœã‚¿ãƒ³
     /// </summary>
-    Button Jump { get => FindChiled<Button>("Jump"); }
+    Button Jump;
     /// <summary>
-    /// ‰æ–Ê‘€ì—p@+ƒ{ƒ^ƒ“
+    /// ç”»é¢æ“ä½œç”¨ã€€+ãƒœã‚¿ãƒ³
     /// </summary>
-    MyButton PlussBtn { get => FindChiled<MyButton>("PlussBtn"); }
+    MyButton PlussBtn;
     /// <summary>
-    /// ‰æ–Ê‘€ì—p@-ƒ{ƒ^ƒ“
+    /// ç”»é¢æ“ä½œç”¨ã€€-ãƒœã‚¿ãƒ³
     /// </summary>
-    MyButton MinusBtn { get => FindChiled<MyButton>("MinusBtn"); }
+    MyButton MinusBtn;
 
     /// <summary>
-    /// ‚Ñ‚Á‚­‚èƒ}ƒbƒN
+    /// ã³ã£ãã‚Šãƒãƒƒã‚¯
     /// </summary>
-    Transform RedPoint { get => FindChiled("RedPoint"); }
+    Transform RedPoint;
 
     /// <summary>
-    /// ƒXƒvƒŠƒbƒgAnimation
+    /// ã‚¹ãƒ—ãƒªãƒƒãƒˆAnimation
     /// </summary>
-    Transform SpriteAnim { get => FindChiled("SpriteAnim"); }
+    Transform SpriteAnim;
 
     /// <summary>
-    /// ƒRƒCƒ“ƒo[
+    /// ã‚³ã‚¤ãƒ³ãƒãƒ¼
     /// </summary>
-    Title2UI Title { get => FindChiled<Title2UI>("Title2"); }
+    Title2UI Title;
 
     /// <summary>
-    /// ‘I‘ğ—pƒAƒCƒeƒ€—“ƒ{ƒ^ƒ“ƒŠƒXƒg
+    /// Debug ãƒœã‚¿ãƒ³
+    /// </summary>
+    Button DebugBtn;
+
+    /// <summary>
+    /// é¸æŠç”¨ã‚¢ã‚¤ãƒ†ãƒ æ¬„ãƒœã‚¿ãƒ³ãƒªã‚¹ãƒˆ
     /// </summary>
     List<HomeItemBtn> itemBtns;
 
     /// <summary>
-    /// Fadein@ŠÔ•
+    /// Fadeinã€€æ™‚é–“å¹…
     /// </summary>
     private float fadeInTimeStep = 0.05f;
 
     #endregion
+
+    private void Awake()
+    {
+        SceneName = FindChiled<MyText>("SceneName");
+        FadeinImg = FindChiled<Image>("Fadein");
+        MenuBtn = FindChiled<Button>("MenuBtn");
+        MapBtn = FindChiled<Button>("MapBtn");
+        BagBtn = FindChiled<Button>("BagBtn");
+        btnsParent = FindChiled("Grid");
+        BuilderPencil = FindChiled("BuilderPencil");
+        BuilderBtn = FindChiled<Button>("BuilderBtn", BuilderPencil);
+        BuilderPencilCancelBtn = FindChiled<Button>("BuilderPencilCancelBtn", BuilderPencil);
+        ItemDropParent = FindChiled("ItemDropParent");
+        Blueprint = FindChiled("Blueprint");
+        BlueprintCellGrid = FindChiled("Content", Blueprint.gameObject);
+        SpinBtn = FindChiled<Button>("SpinBtn", Blueprint);
+        BlueprintCancelBtn = FindChiled<Button>("BlueprintCancelBtn", Blueprint);
+        BuildBtn = FindChiled<Button>("BuildBtn", Blueprint);
+        Jump = FindChiled<Button>("Jump");
+        PlussBtn = FindChiled<MyButton>("PlussBtn");
+        MinusBtn = FindChiled<MyButton>("MinusBtn");
+        RedPoint = FindChiled("RedPoint");
+        SpriteAnim = FindChiled("SpriteAnim");
+        Title = FindChiled<Title2UI>("Title2");
+        DebugBtn = FindChiled<Button>("DebugBtn");
+    }
 
     public override void Init()
     {
@@ -143,6 +174,10 @@ public partial class HomeUI : UIBase
         BagBtn.onClick.AddListener(() => 
         { 
             UICtl.E.OpenUI<BagUI>(UIType.Bag); 
+        });
+        DebugBtn.onClick.AddListener(() =>
+        {
+            UICtl.E.OpenUI<DebugUI>(UIType.Debug);
         });
 
         AddItemBtns();
@@ -175,10 +210,11 @@ public partial class HomeUI : UIBase
 
         StartCoroutine(FadeIn());
         RefreshRedPoint();
-        ShowSpriteAnimation();
         RefreshItemBtns();
 
         RefreshUiByMapType();
+
+        SpriteAnim.gameObject.SetActive(false);
     }
 
     public override void Open()
@@ -193,13 +229,13 @@ public partial class HomeUI : UIBase
 
         SetSkills();
 
-        // 10ŠK‚Ü‚Ås‚­ƒ^ƒXƒN
+        // 10éšã¾ã§è¡Œãã‚¿ã‚¹ã‚¯
         if (DataMng.E.MapData.Config.Floor >= 10)
             TaskMng.E.AddMainTaskCount(9);
     }
 
     /// <summary>
-    /// ƒRƒCƒ“‚ğXV
+    /// ã‚³ã‚¤ãƒ³ã‚’æ›´æ–°
     /// </summary>
     public void RefreshCoins()
     {
@@ -207,7 +243,7 @@ public partial class HomeUI : UIBase
     }
 
     /// <summary>
-    /// ƒ}ƒbƒv‚É‚æ‚Á‚ÄUIXV
+    /// ãƒãƒƒãƒ—ã«ã‚ˆã£ã¦UIæ›´æ–°
     /// </summary>
     private void RefreshUiByMapType()
     {
@@ -241,9 +277,9 @@ public partial class HomeUI : UIBase
     }
 
     /// <summary>
-    /// İŒv}‚ğg‚¤‚É•K—v‚ÈƒuƒƒbƒNƒŠƒXƒg
+    /// è¨­è¨ˆå›³ã‚’ä½¿ã†ã«å¿…è¦ãªãƒ–ãƒ­ãƒƒã‚¯ãƒªã‚¹ãƒˆ
     /// </summary>
-    /// <param name="blueprint">İŒv}</param>
+    /// <param name="blueprint">è¨­è¨ˆå›³</param>
     public void AddBlueprintCostItems(BlueprintData blueprint)
     {
         ClearCell(BlueprintCellGrid);
@@ -251,7 +287,7 @@ public partial class HomeUI : UIBase
         Dictionary<int, int> costs = new Dictionary<int, int>();
         foreach (var entity in blueprint.blocks)
         {
-            // Obstacle‚Í–³‹
+            // Obstacleã¯ç„¡è¦–
             if ((EntityType)ConfigMng.E.Entity[entity.id].Type == EntityType.Obstacle)
                 continue;
 
@@ -305,7 +341,7 @@ public partial class HomeUI : UIBase
     }
 
     /// <summary>
-    /// ƒrƒ‹ƒ_[ƒyƒ“ƒZƒ‹ƒRƒ“ƒ\[ƒ‹‚ğ•\‚µ
+    /// ãƒ“ãƒ«ãƒ€ãƒ¼ãƒšãƒ³ã‚»ãƒ«ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚’è¡¨ã—
     /// </summary>
     /// <param name="b"></param>
     public void ShowBuilderPencilBtn(bool b = true)
@@ -315,7 +351,7 @@ public partial class HomeUI : UIBase
     }
 
     /// <summary>
-    /// İŒv}g—pê‡‚ÌƒRƒ“ƒ\[ƒ‹Window‚ğ•\‚µ
+    /// è¨­è¨ˆå›³ä½¿ç”¨å ´åˆã®ã‚³ãƒ³ã‚½ãƒ¼ãƒ«Windowã‚’è¡¨ã—
     /// </summary>
     /// <param name="b"></param>
     public void ShowBlueprintBtn(bool b = true)
@@ -325,7 +361,7 @@ public partial class HomeUI : UIBase
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‘I‘ğ—“‚ğXV
+    /// ã‚¢ã‚¤ãƒ†ãƒ é¸æŠæ¬„ã‚’æ›´æ–°
     /// </summary>
     public void RefreshItemBtns()
     {
@@ -336,7 +372,7 @@ public partial class HomeUI : UIBase
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ğè‚É“ü‚é‰‰o
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚’æ‰‹ã«å…¥ã‚‹æ¼”å‡º
     /// </summary>
     /// <param name="item"></param>
     public void AddItem(HomeLG.BraveCellItem item)
@@ -349,12 +385,22 @@ public partial class HomeUI : UIBase
     }
 
     /// <summary>
-    /// ƒ}ƒbƒv‚Ì‚Ò[‚¿‚á‚ñ‚ÌAnim
+    /// ãƒãƒƒãƒ—ã®ã´ãƒ¼ã¡ã‚ƒã‚“ã®Anim
     /// </summary>
     public void ShowSpriteAnimation()
     {
-        SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide &&
-            (DataMng.E.RuntimeData.GuideEnd2 == 0 || MapLG.E.IsEquipTutorial()));
+        try
+        {
+            if (SpriteAnim != null)
+            {
+                SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide &&
+                (DataMng.E.RuntimeData.GuideEnd2 == 0 || MapLG.E.IsEquipTutorial()));
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex.Message);
+        }
     }
 
     public Vector2 GetBagIconPos()
@@ -364,11 +410,11 @@ public partial class HomeUI : UIBase
 
     IEnumerator FadeIn()
     {
-        //@Color‚ÌƒAƒ‹ƒtƒ@‚ğ0.1‚¸‚Â‰º‚°‚Ä‚¢‚­
+        //ã€€Colorã®ã‚¢ãƒ«ãƒ•ã‚¡ã‚’0.1ãšã¤ä¸‹ã’ã¦ã„ã
         for (var i = 1f; i > 0; i -= 0.1f)
         {
             FadeinImg.color = new Color(0f, 0f, 0f, i);
-            //@w’è•b”‘Ò‚Â
+            //ã€€æŒ‡å®šç§’æ•°å¾…ã¤
             yield return new WaitForSeconds(fadeInTimeStep);
         }
 
@@ -376,9 +422,9 @@ public partial class HomeUI : UIBase
     }
 
     /// <summary>
-    /// ƒƒbƒNƒIƒ“
+    /// ãƒ­ãƒƒã‚¯ã‚ªãƒ³
     /// </summary>
-    /// <param name="target">–Ú•W</param>
+    /// <param name="target">ç›®æ¨™</param>
     public void LockUnTarget(Transform target)
     {
         PlayerCtl.E.CameraCtl.LockUnTarget(target);

@@ -45,7 +45,12 @@ public class WorldMng : MonoBehaviour
             GuideLG.E.SetGuideItems();
 
         // 設計図プレイビューコンソールObjectを追加
-        PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
+        if (DataMng.E.RuntimeData.MapType == MapType.Home ||
+            DataMng.E.RuntimeData.MapType == MapType.Market ||
+            DataMng.E.RuntimeData.MapType == MapType.Guide)
+        {
+            PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
+        }
 
         AdventureCtl.E.Init();
         GoogleMobileAdsMng.E.Init();

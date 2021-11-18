@@ -73,6 +73,9 @@ public class CharacterBase : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (DataMng.E.MapData == null)
+            return;
+
         OnUpdate();
 
         // 死んだら何もしない
@@ -484,7 +487,7 @@ public class CharacterBase : MonoBehaviour
             return;
         }
 
-        Logger.Log("{1} が {0} のダメージを受けました。", damage, gameObject.name);
+        //Logger.Log("{1} が {0} のダメージを受けました。", damage, gameObject.name);
 
         // HP計算
         Parameter.CurHP -= damage;
@@ -657,9 +660,9 @@ public class CharacterBase : MonoBehaviour
 
             return false;
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
-            Debug.Log(ex);
+            Logger.Warning(ex.Message);
             return false;
         }
 
@@ -681,9 +684,9 @@ public class CharacterBase : MonoBehaviour
 
             return false;
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
-            Debug.Log(ex);
+            Logger.Warning(ex.Message);
             return false;
         }
     }
