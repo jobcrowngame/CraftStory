@@ -73,11 +73,10 @@ public class MapUI : UIBase
                 return;
             }
 
-            // –`Œ¯“ü‚é‚Ìƒ~ƒbƒVƒ‡ƒ“
-            NWMng.E.ClearMission(2, 1);
-
             if (DataMng.E.RuntimeData.MapType != MapType.Brave)
-                CommonFunction.GoToNextScene(1000);
+            {
+                UICtl.E.OpenUI<BraveSelectLevelUI>(UIType.BraveSelectLevel);
+            }
         });
 
         EquipBtn.onClick.AddListener(() =>

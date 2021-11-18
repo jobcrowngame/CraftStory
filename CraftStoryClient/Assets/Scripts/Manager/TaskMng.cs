@@ -90,6 +90,7 @@ public class TaskMng : Single<TaskMng>
             case TaskType.GuideEndShop: MainTaskClearedCount = DataMng.E.RuntimeData.GuideEnd2; break;
             case TaskType.GUideEndEquipment: MainTaskClearedCount = DataMng.E.RuntimeData.GuideEnd4; break;
             case TaskType.GuideEndBlueprint: MainTaskClearedCount = DataMng.E.RuntimeData.GuideEnd; break;
+            case TaskType.GuideBrave: MainTaskClearedCount = DataMng.E.RuntimeData.GuideEnd5; break;
 
             default: MainTaskClearedCount = 0; break;
         }

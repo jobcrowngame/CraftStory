@@ -188,59 +188,7 @@ public class UICtl : Single<UICtl>
 
     private string GetUIResourcesPath(UIType ui)
     {
-        switch (ui)
-        {
-            case UIType.Login: return "Prefabs/UI/Login";
-            case UIType.NowLoading: return "Prefabs/UI/NowLoading";
-            case UIType.Home: return "Prefabs/UI/Common/Home";
-            case UIType.Menu: return "Prefabs/UI/Menu";
-            case UIType.Bag: return "Prefabs/UI/Bag";
-            case UIType.Lottery: return "Prefabs/UI/Lottery";
-            case UIType.GiftBox: return "Prefabs/UI/GiftBox";
-            case UIType.Terms: return "Prefabs/UI/Terms";
-            case UIType.Terms01: return "Prefabs/UI/Terms01";
-            case UIType.Terms02: return "Prefabs/UI/Terms02";
-            case UIType.Charge: return "Prefabs/UI/Charge";
-            case UIType.Craft: return "Prefabs/UI/Craft";
-            case UIType.BlueprintReName: return "Prefabs/UI/BlueprintReName";
-            case UIType.PlayDescription: return "Prefabs/UI/PlayDescription";
-            case UIType.PersonalMessage: return "Prefabs/UI/PersonalMessage";
-            case UIType.BlueprintPreview: return "Prefabs/UI/BlueprintPreview";
-            case UIType.Email: return "Prefabs/UI/Email";
-            case UIType.EmailDetails: return "Prefabs/UI/EmailDetails";
-            case UIType.Notice: return "Prefabs/UI/Notice";
-            case UIType.NoticeDetail: return "Prefabs/UI/NoticeDetail";
-            case UIType.Debug: return "Prefabs/UI/Common/Debug";
-            case UIType.ShopSubscriptionDetails: return "Prefabs/UI/ShopSubscriptionDetails";
-            case UIType.Waiting: return "Prefabs/UI/Common/Waiting";
-            case UIType.GachaBonus: return "Prefabs/UI/GachaBonus";
-            case UIType.Roulette: return "Prefabs/UI/Roulette";
-            case UIType.GachaRatio: return "Prefabs/UI/GachaRatio";
-            case UIType.DeleteItem: return "Prefabs/UI/DeleteItem";
-            case UIType.Friend: return "Prefabs/UI/Friend";
-            case UIType.FriendSearch: return "Prefabs/UI/FriendSearch";
-            case UIType.FriendDescription: return "Prefabs/UI/FriendDescription";
-            case UIType.GachaVerification: return "Prefabs/UI/GachaVerification";
-            case UIType.GachaAddBonus: return "Prefabs/UI/GachaAddBonus";
-            case UIType.ExchangePoint: return "Prefabs/UI/ExchangePoint";
-            case UIType.Mission: return "Prefabs/UI/Mission";
-            case UIType.MissionChat: return "Prefabs/UI/MissionChat";
-            case UIType.Map: return "Prefabs/UI/Map";
-            case UIType.ShopCharge: return "Prefabs/UI/ShopCharge";
-            case UIType.ShopGacha: return "Prefabs/UI/ShopGacha";
-            case UIType.ShopResource: return "Prefabs/UI/ShopResource";
-            case UIType.ShopBlueprint: return "Prefabs/UI/ShopBlueprint";
-            case UIType.ShopBlueprintDetails: return "Prefabs/UI/ShopBlueprintDetails";
-            case UIType.ShopBlueprintMyShopSelectItem: return "Prefabs/UI/ShopBlueprintMyShopSelectItem";
-            case UIType.ShopBlueprintMyShopUpload: return "Prefabs/UI/ShopBlueprintMyShopUpload";
-            case UIType.Chat: return "Prefabs/UI/Chat";
-            case UIType.Market: return "Prefabs/UI/Market";
-            case UIType.Equip: return "Prefabs/UI/Equip";
-            case UIType.EquipList: return "Prefabs/UI/EquipList";
-            case UIType.SkillExplanation: return "Prefabs/UI/SkillExplanation";
-                
-            default: Logger.Error("not find UIType " + ui); return "";
-        }
+        return "Prefabs/UI/" + ui.ToString();
     }
 
     /// <summary>
@@ -340,4 +288,5 @@ public enum UIType
     Equip,
     EquipList,
     SkillExplanation,
+    BraveSelectLevel,
 }
