@@ -49,6 +49,8 @@ public class CharacterFollow : CharacterBase
                         if (HomeLG.E.UI != null) 
                             HomeLG.E.UI.RefreshCoins();
                     });
+
+                    NWMng.E.GetItems();
                 }, TaskMng.E.MainTaskId);
             }
             else
