@@ -326,6 +326,12 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         DataMng.E.MapData.OnClear();
     }
 
+    public void MaskAdButton()
+    {
+        UI.GetGameObject("GiftBox(Clone)/Image/GameObject/AdvertisingBtn").SetActive(false);
+        UI.GetGameObject("GiftBox(Clone)/Image/GameObject/AdvertisingLabel").SetActive(true);
+    }
+
     public void EndBraveGuide1()
     {
         DataMng.E.RuntimeData.GuideId = 6;

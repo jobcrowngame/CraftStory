@@ -20,6 +20,7 @@ public class GiftBoxUI : UIBase
     Image MultiBonus { get => FindChiled<Image>("MultiBonus"); }
     Button Bonus3XBtn { get => FindChiled<Button>("Bonus3XBtn"); }
     Transform Bonus3XLabel { get => FindChiled<Transform>("Bonus3XLabel"); }
+    Transform AdvertisingLabel { get => FindChiled<Transform>("AdvertisingLabel"); }
     Button OKBtn { get => FindChiled<Button>("OKBtn"); }
     Button AdvertisingBtn { get => FindChiled<Button>("AdvertisingBtn"); }
 
@@ -41,11 +42,15 @@ public class GiftBoxUI : UIBase
 
         GiftBoxLG.E.Init(this);
 
+        AdvertisingBtn.gameObject.SetActive(true);
+        AdvertisingLabel.gameObject.SetActive(false);
+
         AdvertisingBtn.onClick.AddListener(() =>
         {
             Bonus3XBtn.gameObject.SetActive(false);
             Bonus3XLabel.gameObject.SetActive(false);
             AdvertisingBtn.gameObject.SetActive(false);
+            AdvertisingLabel.gameObject.SetActive(false);
             GoogleMobileAdsMng.E.ShowReawrd(() =>
             {
                 int count = AdventureCtl.E.BonusList.Count;
@@ -69,6 +74,7 @@ public class GiftBoxUI : UIBase
                     Bonus3XBtn.gameObject.SetActive(false);
                     Bonus3XLabel.gameObject.SetActive(false);
                     AdvertisingBtn.gameObject.SetActive(false);
+                    AdvertisingLabel.gameObject.SetActive(false);
                     DataMng.E.ConsumableItem(9005);
                     int count = AdventureCtl.E.BonusList.Count;
                     for (int i = 0; i < count; i++)
@@ -92,6 +98,7 @@ public class GiftBoxUI : UIBase
             Bonus3XBtn.gameObject.SetActive(false);
             Bonus3XLabel.gameObject.SetActive(false);
             AdvertisingBtn.gameObject.SetActive(false);
+            AdvertisingLabel.gameObject.SetActive(false);
             OKBtn.gameObject.SetActive(false);
 
             if (DataMng.E.RuntimeData.MapType == MapType.Guide)
@@ -251,6 +258,7 @@ public class GiftBoxUI : UIBase
         Bonus3XBtn.gameObject.SetActive(false);
         Bonus3XLabel.gameObject.SetActive(false);
         AdvertisingBtn.gameObject.SetActive(false);
+        AdvertisingLabel.gameObject.SetActive(false);
         MultiBonus.gameObject.SetActive(true);
         MultiBonus.sprite = ReadResources<Sprite>("Textures/brave_2d_001"); ;
 
@@ -268,6 +276,7 @@ public class GiftBoxUI : UIBase
         Bonus3XBtn.gameObject.SetActive(false);
         Bonus3XLabel.gameObject.SetActive(false);
         AdvertisingBtn.gameObject.SetActive(false);
+        AdvertisingLabel.gameObject.SetActive(false);
         MultiBonus.gameObject.SetActive(true);
         MultiBonus.sprite = ReadResources<Sprite>("Textures/brave_2d_002"); ;
 
