@@ -64,7 +64,15 @@ public class MapCtl
                     var site = new Vector3Int(x, y, z);
                     if (CheckBlockIsSurface(mData, site))
                     {
-                        DataMng.E.MapData.Add(mData.Map[x, y, z], site);
+                        // ガイドの転送門の場合
+                        if (DataMng.E.RuntimeData.MapType == MapType.Guide && mData.Map[x, y, z].entityID == 9999)
+                        {
+                            GuideLG.E.TransferGateSite = site;
+                        }
+                        else
+                        {
+                            DataMng.E.MapData.Add(mData.Map[x, y, z], site);
+                        }
                     }
                 }
             }

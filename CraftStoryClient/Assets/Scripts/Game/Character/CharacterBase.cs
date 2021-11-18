@@ -488,7 +488,15 @@ public class CharacterBase : MonoBehaviour
 
         // HP計算
         Parameter.CurHP -= damage;
-       
+
+        // ガイドの場合、70%以下にさせない
+        if (DataMng.E.RuntimeData.MapType == MapType.Guide &&
+            Camp == CharacterCamp.Player &&
+            Parameter.CurHP < (Parameter.AllHP * 0.7))
+        {
+            Parameter.CurHP = (int)(Parameter.AllHP * 0.7);
+        }
+
         // 死んだ場合
         if (Parameter.CurHP <= 0)
         {

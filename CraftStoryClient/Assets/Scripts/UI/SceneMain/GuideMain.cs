@@ -15,9 +15,19 @@ public class GuideMain : MonoBehaviour
         WorldMng.E.GameTimeCtl.Active = false;
 
         UICtl.E.OpenUI<HomeUI>(UIType.Home);
-        if(DataMng.E.RuntimeData.GuideId == 4)
+        if (DataMng.E.RuntimeData.GuideId == 4)
         {
             UICtl.E.OpenUI<EquipUI>(UIType.Equip);
+        }
+        if (DataMng.E.RuntimeData.GuideId == 5)
+        {
+            HomeLG.E.UI.Battle.gameObject.SetActive(true);
+            HomeLG.E.UI.Items.gameObject.SetActive(false);
+        }
+        if (DataMng.E.RuntimeData.GuideId == 6)
+        {
+            HomeLG.E.UI.Battle.gameObject.SetActive(true);
+            HomeLG.E.UI.Items.gameObject.SetActive(false);
         }
 
         AudioMng.E.ShowBGM("bgm_01");

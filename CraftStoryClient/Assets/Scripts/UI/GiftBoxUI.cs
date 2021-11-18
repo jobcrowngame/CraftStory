@@ -91,19 +91,31 @@ public class GiftBoxUI : UIBase
             Bonus3XLabel.gameObject.SetActive(false);
             AdvertisingBtn.gameObject.SetActive(false);
             OKBtn.gameObject.SetActive(false);
-            NWMng.E.AddExp((rp) =>
-            {
-                NWMng.E.ClearAdventure((rp) =>
-                {
-                    if (okBtnCallBack != null)
-                    {
-                        PlayerCtl.E.Lock = false;
-                        ClearCell(itemGridRoot);
 
-                        StartCoroutine(StartAnimIE());
-                    }
-                }, AdventureCtl.E.BonusList);
-            }, AdventureCtl.E.CurExp);
+            if (DataMng.E.RuntimeData.MapType == MapType.Guide)
+            {
+                GuideLG.E.Next();
+                PlayerCtl.E.Lock = false;
+                ClearCell(itemGridRoot);
+
+                StartCoroutine(StartAnimIE());
+            }
+            else
+            {
+                NWMng.E.AddExp((rp) =>
+                {
+                    NWMng.E.ClearAdventure((rp) =>
+                    {
+                        if (okBtnCallBack != null)
+                        {
+                            PlayerCtl.E.Lock = false;
+                            ClearCell(itemGridRoot);
+
+                            StartCoroutine(StartAnimIE());
+                        }
+                    }, AdventureCtl.E.BonusList);
+                }, AdventureCtl.E.CurExp);
+            }
         });
 
         itemGridRoot = FindChiled("Content");

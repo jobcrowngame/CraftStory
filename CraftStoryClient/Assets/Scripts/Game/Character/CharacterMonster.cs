@@ -61,6 +61,8 @@ public class CharacterMonster : CharacterBase
 
         CharacterCtl.E.MonsterDied();
 
+        GuideLG.E.NextOnCreateBlock();
+
         StartCoroutine(DiedIE());
     }
 

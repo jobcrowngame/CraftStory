@@ -432,6 +432,12 @@ public class PlayerCtl : MonoBehaviour
         // 移動停止
         Character.StopMove();
         Character.StartUseSkill(skill, Character.Target);
+
+
+        if (DataMng.E.RuntimeData.MapType == MapType.Guide)
+        {
+            GuideLG.E.NextWithSkill(skill);
+        }
     }
 
     /// <summary>
@@ -449,6 +455,14 @@ public class PlayerCtl : MonoBehaviour
     /// 装備してるアイテム（equipType, itemData）
     /// </summary>
     Dictionary<int, ItemEquipmentData> equipedItems = new Dictionary<int, ItemEquipmentData>();
+    Dictionary<int, ItemEquipmentData> guideGquipedItems = new Dictionary<int, ItemEquipmentData>();
+    Dictionary<int, ItemEquipmentData> EquipedItems 
+    {
+        get
+        {
+            return DataMng.E.RuntimeData.MapType == MapType.Guide ? guideGquipedItems : equipedItems;
+        }
+    }
 
     /// <summary>
     /// アイテムタイプによって装備してる装備をゲット
@@ -457,9 +471,9 @@ public class PlayerCtl : MonoBehaviour
     /// <returns></returns>
     public ItemEquipmentData GetEquipByItemType(ItemType itemType)
     {
-        if (equipedItems.ContainsKey((int)itemType))
+        if (EquipedItems.ContainsKey((int)itemType))
         {
-            return equipedItems[(int)itemType];
+            return EquipedItems[(int)itemType];
         }
         else
         {
@@ -512,7 +526,7 @@ public class PlayerCtl : MonoBehaviour
             return;
 
         // Equipmentが装備してる場合、先ず装備してるEquipmentを消す
-        if (equipedItems.ContainsKey(itemData.Config().Type))
+        if (EquipedItems.ContainsKey(itemData.Config().Type))
         {
             Unequipment(() =>
             {
@@ -532,21 +546,21 @@ public class PlayerCtl : MonoBehaviour
     /// <param name="equipType"></param>
     private void Unequipment(Action callback, int equipType)
     {
-        if (equipedItems.ContainsKey(equipType))
+        if (EquipedItems.ContainsKey(equipType))
         {
             // Equipmentを消す
             NWMng.E.EquitItem((rp) =>
             {
 
                 // 装備解除
-                DataMng.E.GetItemByGuid(equipedItems[equipType].id).equipSite = 0;
-                Character.RemoveEquipment(equipedItems[equipType]);
+                DataMng.E.GetItemByGuid(EquipedItems[equipType].id).equipSite = 0;
+                Character.RemoveEquipment(EquipedItems[equipType]);
 
-                equipedItems.Remove(equipType);
+                EquipedItems.Remove(equipType);
 
                 if (callback != null)
                     callback();
-            }, equipedItems[equipType].id, 0);
+            }, EquipedItems[equipType].id, 0);
         }
     }
 
@@ -568,7 +582,7 @@ public class PlayerCtl : MonoBehaviour
     private void OnEquipment(ItemEquipmentData itemData, int equipSite)
     {
         Character.EquipEquipment(itemData);
-        equipedItems[itemData.Config().Type] = itemData;
+        EquipedItems[itemData.Config().Type] = itemData;
         DataMng.E.GetItemByGuid(itemData.id).equipSite = equipSite;
 
         // 持ち物アイテム更新
@@ -585,13 +599,22 @@ public class PlayerCtl : MonoBehaviour
         }
     }
 
+    public void EquipGuideEquipment(ItemEquipmentData itemData)
+    {
+        Character.EquipEquipment(itemData);
+        EquipedItems[itemData.Config().Type] = itemData;
+
+        // ホームのスキル更新
+        if (HomeLG.E.UI != null) HomeLG.E.UI.SetSkills();
+    }
+
     /// <summary>
     /// 装備してるアイテムゲット
     /// </summary>
     /// <returns></returns>
     public Dictionary<int, ItemEquipmentData> GetEquipedItems()
     {
-        return equipedItems;
+        return EquipedItems;
     }
 
     #endregion

@@ -11,10 +11,17 @@ public class EntityResources : EntityBase
     {
         base.OnClick();
 
-        var effect = EffectMng.E.AddEffect<EffectBase>(transform.position, EffectType.ResourcesDestroy);
-        effect.Init();
+        if (DataMng.E.RuntimeData.MapType == MapType.Guide)
+        {
+            GuideLG.E.OnClickEntityResource(this);
+        }
+        else
+        {
+            var effect = EffectMng.E.AddEffect<EffectBase>(transform.position, EffectType.ResourcesDestroy);
+            effect.Init();
 
-        AdventureCtl.E.AddBonus(EConfig.BonusID);
-        WorldMng.E.MapCtl.DeleteEntity(this);
+            AdventureCtl.E.AddBonus(EConfig.BonusID);
+            WorldMng.E.MapCtl.DeleteEntity(this);
+        }
     }
 }

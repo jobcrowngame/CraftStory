@@ -59,6 +59,10 @@ public class RuntimeData
     /// 装備チュートリアル完了のフラグ 0 = false 1 = true
     /// </summary>
     public int GuideEnd4 { get; set; }
+    /// <summary>
+    /// 冒険チュートリアル完了のフラグ 0 = false 1 = true
+    /// </summary>
+    public int GuideEnd5 { get; set; }
 
     /// <summary>
     /// 今のマップタイプ

@@ -7,7 +7,7 @@ public partial class HomeUI
     Image hpBar { get => FindChiled<Image>("HpImg", battle); }
     Text hpText { get => FindChiled<Text>("HpText", battle); }
 
-    Transform Battle { get => FindChiled("Battle"); }
+    public Transform Battle { get => FindChiled("Battle"); }
     SkillCell[] skills;
 
     public void OnHpChange(float percent)

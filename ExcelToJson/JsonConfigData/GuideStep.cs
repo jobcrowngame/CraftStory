@@ -14,9 +14,12 @@ namespace JsonConfigData
         public int NextMask { get; set; }
         public int AutoMove { get; set; }
         public string ClickType { get; set; }
+        public string ClickObject { get; set; }
         public string CreateBlockCount { get; set; }
+        public string Skill { get; set; }
         public string DisplayObject { get; set; }
         public string HideObject { get; set; }
+        public string GuideLGMethodList { get; set; }
 
     }
 }

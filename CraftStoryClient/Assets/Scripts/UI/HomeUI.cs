@@ -30,7 +30,7 @@ public partial class HomeUI : UIBase
     /// <summary>
     /// アイテム欄
     /// </summary>
-    Transform Items { get => FindChiled("Items"); }
+    public Transform Items { get => FindChiled("Items"); }
 
     /// <summary>
     /// 持ち物ボタン
@@ -214,7 +214,8 @@ public partial class HomeUI : UIBase
         MenuBtn.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Brave);
 
         SceneName.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave);
-        ItemDropParent.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave);
+        ItemDropParent.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave
+            || DataMng.E.RuntimeData.MapType == MapType.Guide);
         Battle.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave);
         
         Items.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home

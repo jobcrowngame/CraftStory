@@ -2,6 +2,8 @@
 using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.UI;
+using static MapData;
 
 class GuideLG : UILogicBase<GuideLG, GuideUI>
 {
@@ -12,6 +14,9 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
     /// チュートリアルが完了してるかのフラグ
     /// </summary>
     public bool end { get; set; }
+
+    public Vector3Int TransferGateSite { get; set; }
+    public RuntimeData HomeRuntimeData { get; set; }
 
     private int itemGuid = 1;
     private int createBlockCount = 0;
@@ -39,6 +44,7 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
     private string mCurStep;
 
     public int Step { get => stepIndex; }
+
     private int stepIndex = 0;
 
     public override void Init(GuideUI ui)
@@ -58,6 +64,30 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
     public void UnLock()
     {
         Lock = false;
+    }
+
+    /// <summary>
+    // ガイドでリソースがクリックされた場合呼び出される
+    /// </summary>
+    public void OnClickEntityResource(EntityResources entity)
+    {
+        // ClickObject設定時、クリックしたパスとあっていない場合はクリック無効とする
+        string objPath = ConfigMng.E.GuideStep[int.Parse(guideSteps[stepIndex - 1])].ClickObject;
+        if (objPath != null && objPath != "N")
+        {
+            GameObject obj = UI.GetGameObject(objPath);
+            if(obj.transform != entity.transform)
+            {
+                return;
+            }
+        }
+
+        var effect = EffectMng.E.AddEffect<EffectBase>(entity.transform.position, EffectType.ResourcesDestroy);
+        AdventureCtl.E.AddBonus(entity.EConfig.BonusID);
+        effect.Init();
+        WorldMng.E.MapCtl.DeleteEntity(entity);
+
+        Next();
     }
 
     /// <summary>
@@ -116,6 +146,26 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
             createBlockCount = 0;
             DoNext();
         }
+    }
+
+    /// <summary>
+    /// スキル発動時のNext
+    /// 指定したスキルでない場合Nextにしない
+    /// </summary>
+    public void NextWithSkill(SkillData skill)
+    {
+        if (!CanNext())
+            return;
+
+        string skillCfg = ConfigMng.E.GuideStep[int.Parse(guideSteps[stepIndex - 1])].Skill;
+        if (skillCfg == "N")
+            return;
+
+        int skillCfgInt = int.Parse(skillCfg);
+        if (skillCfgInt != skill.Config.ID)
+            return;
+
+        DoNext();
     }
 
     /// <summary>
@@ -207,4 +257,77 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         Lock = true;
     }
 
+    /*
+    ここからはGuideLGMethodListの設定で呼び出すメソッド     
+    */
+
+    public void PreserveRuntimeData()
+    {
+        HomeRuntimeData = new RuntimeData();
+        HomeRuntimeData.Lv = DataMng.E.RuntimeData.Lv;
+        HomeRuntimeData.Exp = DataMng.E.RuntimeData.Exp;
+        HomeRuntimeData.Coin1 = DataMng.E.RuntimeData.Coin1;
+        HomeRuntimeData.Coin2 = DataMng.E.RuntimeData.Coin2;
+        HomeRuntimeData.Coin3 = DataMng.E.RuntimeData.Coin3;
+    }
+
+    public void InitGuideEquip()
+    {
+        var data = DataMng.E.GetItemByItemId(10004);
+        var equip = new ItemEquipmentData(data);
+        data.equipSite = 101;
+        equip.SetAttachSkills("100,107");
+        PlayerCtl.E.EquipGuideEquipment(equip);
+    }
+
+    public void AddGuideMonster1()
+    {
+        CharacterCtl.E.AddMonster(1);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (1)").SetActive(false);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (2)").SetActive(true);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (3)").SetActive(true);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (4)").SetActive(true);
+        UI.ShowHandOnObj(UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (1)"));
+    }
+
+    public void AddGuideMonster2()
+    {
+        CharacterCtl.E.AddMonster(1);
+        CharacterCtl.E.AddMonster(1);
+        CharacterCtl.E.AddMonster(1);
+        CharacterCtl.E.AddMonster(1);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (1)").SetActive(true);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (2)").SetActive(false);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (3)").SetActive(true);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (4)").SetActive(true);
+        UI.ShowHandOnObj(UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (2)"));
+    }
+
+    public void SetSkill2Enabled()
+    {
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (1)").SetActive(true);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (2)").SetActive(true);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (3)").SetActive(false);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (4)").SetActive(true);
+        UI.ShowHandOnObj(UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (3)"));
+    }
+
+    public void DisableAllSkillUI()
+    {
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (1)").SetActive(true);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (2)").SetActive(true);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (3)").SetActive(true);
+        UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (4)").SetActive(true);
+    }
+
+    public void GenerateGate()
+    {
+        DataMng.E.MapData.Add(DataMng.E.MapData.Map[TransferGateSite.x, TransferGateSite.y, TransferGateSite.z], TransferGateSite);
+        DataMng.E.MapData.OnClear();
+    }
+
+    public void EndBraveGuide1()
+    {
+        DataMng.E.RuntimeData.GuideId = 6;
+    }
 }

@@ -73,40 +73,48 @@ public class CharacterCtl : Single<CharacterCtl>
             if (item == "N")
                 continue;
 
-            // モンスターをインスタンス
-            var characterGeneratedCfg = ConfigMng.E.CharacterGenerated[int.Parse(item)];
-            var characterCfg = ConfigMng.E.Character[characterGeneratedCfg.CharacterId];
-
-            var resource = Resources.Load(characterCfg.Prefab) as GameObject;
-            if (resource == null)
-            {
-                Logger.Error("not find Monster Prefabs： {0}", characterCfg.Prefab);
-                return;
-            }
-
-            // 生成する座標ゲット
-            Vector3 pos = MapCtl.GetGroundPos(DataMng.E.MapData, characterGeneratedCfg.PosX, characterGeneratedCfg.PosZ, 3, DataMng.E.MapData.Config.CreatePosOffset);
-
-            var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
-            if (obj == null)
-            {
-                Logger.Error("Monster Instantiate fail ID: {0}", characterCfg.ID);
-                return;
-            }
-
-            var monster = obj.GetComponent<CharacterMonster>();
-            if (monster == null)
-            {
-                Logger.Error("not find CharacterMonster component");
-                return;
-            }
-
-            monster.Init(characterCfg.ID, CharacterBase.CharacterCamp.Monster);
-            monster.SetHpBar(CommonFunction.FindChiledByName<HpUIBase>(monster.transform, "WorldUI"));
-            characterList.Add(monster);
+            AddMonster(int.Parse(item));
         }
 
         CheckMapClear();
+    }
+
+    /// <summary>
+    /// モンスターを生成
+    /// </summary>
+    public void AddMonster(int characterGeneratedID)
+    {
+        // モンスターをインスタンス
+        var characterGeneratedCfg = ConfigMng.E.CharacterGenerated[characterGeneratedID];
+        var characterCfg = ConfigMng.E.Character[characterGeneratedCfg.CharacterId];
+
+        var resource = Resources.Load(characterCfg.Prefab) as GameObject;
+        if (resource == null)
+        {
+            Logger.Error("not find Monster Prefabs： {0}", characterCfg.Prefab);
+            return;
+        }
+
+        // 生成する座標ゲット
+        Vector3 pos = MapCtl.GetGroundPos(DataMng.E.MapData, characterGeneratedCfg.PosX, characterGeneratedCfg.PosZ, 3, DataMng.E.MapData.Config.CreatePosOffset);
+
+        var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
+        if (obj == null)
+        {
+            Logger.Error("Monster Instantiate fail ID: {0}", characterCfg.ID);
+            return;
+        }
+
+        var monster = obj.GetComponent<CharacterMonster>();
+        if (monster == null)
+        {
+            Logger.Error("not find CharacterMonster component");
+            return;
+        }
+
+        monster.Init(characterCfg.ID, CharacterBase.CharacterCamp.Monster);
+        monster.SetHpBar(CommonFunction.FindChiledByName<HpUIBase>(monster.transform, "WorldUI"));
+        characterList.Add(monster);
     }
 
     /// <summary>

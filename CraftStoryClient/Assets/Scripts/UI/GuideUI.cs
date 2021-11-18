@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 using System.Collections;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 /// <summary>
 /// チュートリアル
@@ -90,6 +91,11 @@ public class GuideUI : UIBase
     {
         Hand.transform.position = pos;
     }
+    public void ShowHandOnObj(GameObject obj)
+    {
+        Hand.gameObject.SetActive(true);
+        Hand.transform.position = obj.transform.position;
+    }
     private void ShowMask(bool b = true)
     {
         mask1.gameObject.SetActive(b);
@@ -133,6 +139,12 @@ public class GuideUI : UIBase
                 DataMng.E.RuntimeData.GuideEnd4 = 1;
                 PlayerCtl.E.GetEquipedItems().Clear();
                 TaskMng.E.AddMainTaskCount(2);
+            }
+            else if (DataMng.E.RuntimeData.GuideId == 6)
+            {
+                DataMng.E.RuntimeData.GuideEnd5 = 1;
+                DataMng.E.RuntimeData.Lv = GuideLG.E.HomeRuntimeData.Lv;
+                DataMng.E.RuntimeData.Exp = GuideLG.E.HomeRuntimeData.Exp;
             }
         }, DataMng.E.RuntimeData.GuideId);
     }
@@ -198,7 +210,7 @@ public class GuideUI : UIBase
         SetMessage(pos, size, config.Message);
 
         // 表示オブジェクト
-        if(config.DisplayObject != "N")
+        if (config.DisplayObject != "N")
         {
             var targetObj = GetGameObject(config.DisplayObject);
             if (targetObj != null)
@@ -228,6 +240,16 @@ public class GuideUI : UIBase
         // 手オブジェクト表し
         Hand.gameObject.SetActive(config.HideHand != 1);
 
+        // メソッド実行
+        if (config.GuideLGMethodList != "N")
+        {
+            foreach(string method in config.GuideLGMethodList.Split(','))
+            {
+                MethodInfo mi = GuideLG.E.GetType().GetMethod(method);
+                mi.Invoke(GuideLG.E, null);
+            }
+        }
+ 
         // 次会話に遷移
         NextMask.gameObject.SetActive(config.NextMask == 1);
 
@@ -239,7 +261,7 @@ public class GuideUI : UIBase
         }
     }
 
-    private GameObject GetGameObject(string path)
+    public GameObject GetGameObject(string path)
     {
         string target = path;
         Transform parent = UICtl.E.Root;

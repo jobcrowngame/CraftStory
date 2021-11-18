@@ -10,6 +10,7 @@ public class MapUI : UIBase
     Button EquipBtn { get => FindChiled<Button>("EquipBtn"); }
     Transform SpriteAnim { get => FindChiled("SpriteAnim"); }
     Transform SpriteAnim4 { get => FindChiled("SpriteAnim4"); }
+    Transform SpriteAnim5 { get => FindChiled("SpriteAnim5"); }
 
     public override void Init()
     {
@@ -76,8 +77,18 @@ public class MapUI : UIBase
             // –`Œ¯“ü‚é‚Ìƒ~ƒbƒVƒ‡ƒ“
             NWMng.E.ClearMission(2, 1);
 
-            if (DataMng.E.RuntimeData.MapType != MapType.Brave)
-                CommonFunction.GoToNextScene(1000);
+            if (DataMng.E.RuntimeData.GuideEnd5 == 0)
+            {
+                DataMng.E.RuntimeData.GuideId = 5;
+                CommonFunction.GoToNextScene(107);
+            }
+            else 
+            {
+                if (DataMng.E.RuntimeData.MapType != MapType.Brave)
+                {
+                    CommonFunction.GoToNextScene(1000);
+                } 
+            }
         });
 
         EquipBtn.onClick.AddListener(() =>
@@ -105,6 +116,7 @@ public class MapUI : UIBase
         //SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd2 == 0);
         SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide);
         SpriteAnim4.gameObject.SetActive(MapLG.E.IsEquipTutorial());
+        SpriteAnim5.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd5 == 0);
     }
 
     private void EnActiveBtn(Button btn, bool b = true)

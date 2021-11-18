@@ -47,6 +47,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             DataMng.E.RuntimeData.GuideEnd2 = loginRP.guide_end2;
             DataMng.E.RuntimeData.GuideEnd3 = loginRP.guide_end3;
             DataMng.E.RuntimeData.GuideEnd4 = loginRP.guide_end4;
+            DataMng.E.RuntimeData.GuideEnd5 = loginRP.guide_end5;
             DataMng.E.RuntimeData.NickName = loginRP.nickname;
             DataMng.E.RuntimeData.Comment = loginRP.comment;
             DataMng.E.RuntimeData.Email = loginRP.email;
@@ -180,6 +181,11 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
         /// ガイド終了４
         /// </summary>
         public int guide_end4 { get; set; }
+
+        /// <summary>
+        /// ガイド終了５
+        /// </summary>
+        public int guide_end5 { get; set; }
 
         /// <summary>
         /// ニックネーム

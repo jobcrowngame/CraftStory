@@ -513,9 +513,12 @@ namespace ExcelToJson
                     NextMask = ToInt32(tbl.Rows[i]["NextMask"]),
                     AutoMove = ToInt32(tbl.Rows[i]["AutoMove"]),
                     ClickType = ToString(tbl.Rows[i]["ClickType"]),
+                    ClickObject = ToString(tbl.Rows[i]["ClickObject"]),
                     CreateBlockCount = ToString(tbl.Rows[i]["CreateBlockCount"]),
+                    Skill = ToString(tbl.Rows[i]["Skill"]),
                     DisplayObject = ToString(tbl.Rows[i]["DisplayObject"]),
                     HideObject = ToString(tbl.Rows[i]["HideObject"]),
+                    GuideLGMethodList = ToString(tbl.Rows[i]["GuideLGMethodList"]),
                 };
 
                 list.Add(data);

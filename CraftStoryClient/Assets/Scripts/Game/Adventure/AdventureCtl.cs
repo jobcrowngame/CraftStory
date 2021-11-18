@@ -48,6 +48,11 @@ public class AdventureCtl : Single<AdventureCtl>
             return;
         }
 
+        if (DataMng.E.RuntimeData.MapType == MapType.Guide)
+        {
+            GuideLG.E.Next();
+        }
+
         var ui = UICtl.E.OpenUI<GiftBoxUI>(UIType.GiftBox);
         ui.AddBonus(BonusList);
         ui.SetCallBack(() =>
