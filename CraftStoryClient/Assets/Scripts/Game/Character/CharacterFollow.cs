@@ -29,6 +29,9 @@ public class CharacterFollow : CharacterBase
     {
         base.OnClick();
 
+        if (DataMng.E.RuntimeData.MapType == MapType.Brave)
+            return;
+
         if (!TaskMng.E.IsEnd)
         {
             TaskMng.E.IsReaded = true;
@@ -124,16 +127,19 @@ public class CharacterFollow : CharacterBase
 
         Behavior = BehaviorType.Run;
 
-        // チャットフラグ出す
-        if (!TaskMng.E.IsEnd)
+        if (DataMng.E.RuntimeData.MapType != MapType.Brave)
         {
-            ShowChatFlg(!TaskMng.E.IsReaded);
-        }
+            // チャットフラグ出す
+            if (!TaskMng.E.IsEnd)
+            {
+                ShowChatFlg(!TaskMng.E.IsReaded);
+            }
 
-        // タスクがクリア状態なら吹き出しを出す
-        if (TaskMng.E.IsClear)
-        {
-            ShowChatFlg();
+            // タスクがクリア状態なら吹き出しを出す
+            if (TaskMng.E.IsClear)
+            {
+                ShowChatFlg();
+            }
         }
     }
 }
