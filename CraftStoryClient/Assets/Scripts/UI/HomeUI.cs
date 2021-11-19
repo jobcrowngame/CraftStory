@@ -215,6 +215,7 @@ public partial class HomeUI : UIBase
         RefreshUiByMapType();
 
         SpriteAnim.gameObject.SetActive(false);
+        ShowMonsterNumberLeft();
     }
 
     public override void Open()

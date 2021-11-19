@@ -10,7 +10,8 @@ public class CharacterCtl : Single<CharacterCtl>
     private CharacterPlayer player;
     private List<CharacterBase> characterList = new List<CharacterBase>();
 
-    private int RemainingNumber = 0;
+    private int mRemainingNumber = 0;
+    public int RemainingNumber { get => mRemainingNumber; }
 
     public void CreateCharacter()
     {
@@ -64,7 +65,7 @@ public class CharacterCtl : Single<CharacterCtl>
         var characterGeneratedStr = DataMng.E.MapData.Config.CharacterGenerated;
         string[] characterGenerated = characterGeneratedStr.Split(',');
 
-        RemainingNumber = (characterGeneratedStr != "N") 
+        mRemainingNumber = (characterGeneratedStr != "N") 
             ? characterGenerated.Length 
             : 0;
 
@@ -77,6 +78,9 @@ public class CharacterCtl : Single<CharacterCtl>
         }
 
         CheckMapClear();
+
+        if (HomeLG.E.UI != null)
+            HomeLG.E.UI.ShowMonsterNumberLeft();
     }
 
     /// <summary>
@@ -149,13 +153,16 @@ public class CharacterCtl : Single<CharacterCtl>
     /// </summary>
     public void MonsterDied()
     {
-        RemainingNumber--;
+        mRemainingNumber--;
         CheckMapClear();
     }
 
     private void CheckMapClear()
     {
-        if (RemainingNumber == 0)
+        if (HomeLG.E.UI != null)
+            HomeLG.E.UI.UpdateNumberLeftMonster(mRemainingNumber);
+
+        if (mRemainingNumber == 0)
         {
             DataMng.E.MapData.OnClear();
         }
