@@ -17,7 +17,7 @@ public class BraveSelectLevelUI : UIBase
         base.Init();
         BraveSelectLevelLG.E.Init(this);
 
-        Title.SetTitle("冒険フロア");
+        Title.SetTitle("冒険フロア選択");
         Title.SetOnClose(Close);
     }
 

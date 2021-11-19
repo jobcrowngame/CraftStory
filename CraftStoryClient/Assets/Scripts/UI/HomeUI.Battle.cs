@@ -6,6 +6,7 @@ public partial class HomeUI
     Transform battle { get => FindChiled("Battle"); }
     Image hpBar { get => FindChiled<Image>("HpImg", battle); }
     Text hpText { get => FindChiled<Text>("HpText", battle); }
+    MyText MonsterNumberLeft { get => FindChiled<MyText>("NumberLeft"); }
 
     public Transform Battle { get => FindChiled("Battle"); }
     SkillCell[] skills;
@@ -42,5 +43,25 @@ public partial class HomeUI
 
             index++;
         }
+    }
+
+    /// <summary>
+    /// 敵残り数を出す
+    /// </summary>
+    public void ShowMonsterNumberLeft()
+    {
+        MonsterNumberLeft.gameObject.SetActive(CharacterCtl.E.RemainingNumber > 0);
+        UpdateNumberLeftMonster(CharacterCtl.E.RemainingNumber);
+    }
+
+    /// <summary>
+    /// 残った敵数
+    /// </summary>
+    public void UpdateNumberLeftMonster(int count)
+    {
+        MonsterNumberLeft.text = "残り敵：" + count;
+
+        if (count == 0)
+            MonsterNumberLeft.GetComponent<Animation>().Play("HomeNumberLeft");
     }
 }
