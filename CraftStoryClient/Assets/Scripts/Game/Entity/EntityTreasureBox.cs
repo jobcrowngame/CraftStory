@@ -47,7 +47,7 @@ public class EntityTreasureBox : EntityBase
 
         effect.gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(0.2f);
 
         if (!string.IsNullOrEmpty(rp.ToString()))
         {
@@ -60,6 +60,8 @@ public class EntityTreasureBox : EntityBase
                 }
             }
         }
+
+        yield return new WaitForSeconds(2);
 
         WorldMng.E.MapCtl.DeleteEntity(this);
     }
