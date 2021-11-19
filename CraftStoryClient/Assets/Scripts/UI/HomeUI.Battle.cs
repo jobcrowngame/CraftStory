@@ -59,7 +59,7 @@ public partial class HomeUI
     /// </summary>
     public void UpdateNumberLeftMonster(int count)
     {
-        MonsterNumberLeft.text = "残り敵：" + count;
+        MonsterNumberLeft.text = string.Format("残り {0} 体", count);
 
         if (count == 0)
             MonsterNumberLeft.GetComponent<Animation>().Play("HomeNumberLeft");
