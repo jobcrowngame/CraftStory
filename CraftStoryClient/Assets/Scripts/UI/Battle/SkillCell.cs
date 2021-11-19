@@ -21,16 +21,10 @@ public class SkillCell : UIBase
         if (mSkill == null || mSkill.IsCooling || PlayerCtl.E.Character.ShareCDIsCooling)
             return;
 
-        PlayerCtl.E.UserSkill(mSkill);
-
-        int nextSkillID = mSkill.Config.NextSkill;
-        foreach (var item in PlayerCtl.E.Character.SkillList)
+        PlayerCtl.E.UserSkill(mSkill, (newSkill)=>
         {
-            if (item.Config.ID == nextSkillID)
-            {
-                Set(item);
-            }
-        }
+            Set(newSkill);
+        });
     }
 
     public void SetBase(SkillData skill)

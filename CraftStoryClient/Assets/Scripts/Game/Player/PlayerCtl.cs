@@ -407,7 +407,7 @@ public class PlayerCtl : MonoBehaviour
     /// スキルを使う
     /// </summary>
     /// <param name="skill"></param>
-    public void UserSkill(SkillData skill)
+    public void UserSkill(SkillData skill, Action<SkillData> successCallback)
     {
         if (Character.ShareCDIsCooling || skill.IsCooling || Character.IsDied)
             return;
@@ -433,6 +433,13 @@ public class PlayerCtl : MonoBehaviour
         Character.StopMove();
         Character.StartUseSkill(skill, Character.Target);
 
+        foreach (var item in Character.SkillList)
+        {
+            if (item.Config.ID == skill.Config.NextSkill && successCallback != null)
+            {
+                successCallback(item);
+            }
+        }
 
         if (DataMng.E.RuntimeData.MapType == MapType.Guide)
         {
