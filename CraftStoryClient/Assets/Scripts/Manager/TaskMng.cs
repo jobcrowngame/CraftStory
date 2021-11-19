@@ -70,7 +70,7 @@ public class TaskMng : Single<TaskMng>
         MainTaskClearedCount = 0;
 
         // 次のタスク
-        MainTaskId++;
+        MainTaskId = MainTaskConfig.Next;
 
         if (IsEnd)
         {

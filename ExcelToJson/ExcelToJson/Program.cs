@@ -837,6 +837,7 @@ namespace ExcelToJson
                 {
                     ID = ToInt32(tbl.Rows[i]["ID"]),
                     Type = ToInt32(tbl.Rows[i]["Type"]),
+                    Next = ToInt32(tbl.Rows[i]["Next"]),
                     ClearCount = ToInt32(tbl.Rows[i]["ClearCount"]),
                     Bonus = ToInt32(tbl.Rows[i]["Bonus"]),
                     StartChat = ToInt32(tbl.Rows[i]["StartChat"]),
