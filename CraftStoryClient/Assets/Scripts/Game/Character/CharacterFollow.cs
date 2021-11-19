@@ -131,14 +131,24 @@ public class CharacterFollow : CharacterBase
 
         if (DataMng.E.RuntimeData.MapType != MapType.Brave)
         {
-            // 今のタスクを既読した場合、吹き出しを出さない
-            ShowChatFlg(!TaskMng.E.IsReaded);
-
-            // タスクがクリア状態なら吹き出しを出す
-            ShowChatFlg(TaskMng.E.IsClear);
-
             // タスク全部Endしたら吹き出しを出さない
-            ShowChatFlg(!TaskMng.E.IsEnd);
+            if (TaskMng.E.IsEnd)
+            {
+                ShowChatFlg(false);
+            }
+            else
+            {
+                if (TaskMng.E.IsClear)
+                {
+                    // タスクがクリア状態なら吹き出しを出す
+                    ShowChatFlg(true);
+                }
+                else
+                {
+                    // 今のタスクを既読した場合、吹き出しを出さない
+                    ShowChatFlg(!TaskMng.E.IsReaded);
+                }
+            }
         }
     }
 }
