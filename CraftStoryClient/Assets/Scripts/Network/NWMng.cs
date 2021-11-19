@@ -103,6 +103,7 @@ public partial class NWMng : MonoBehaviour
                 if (string.IsNullOrEmpty(www.downloadHandler.text))
                 {
                     Logger.Error("Null Response.[CMD: {0}]", cmd);
+                    CommonFunction.ShowHintBar(35);
                     yield return null;
                 }
                 else

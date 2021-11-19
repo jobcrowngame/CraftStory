@@ -42,7 +42,7 @@ public class TaskMng : Single<TaskMng>
     /// <summary>
     /// メインタスク数追加
     /// </summary>
-    /// <param name="count"></param>
+    /// <param name="taskType">タスクタイプ</param>
     public void AddMainTaskCount(int taskType, int count = 1)
     {
         // 今のタスクと違う場合スキップ

@@ -55,6 +55,10 @@ public class GachaVerificationUI : UIBase
                 return;
             }
 
+            // タスク13のチェック
+            if (gachaConfig.ID == 15)
+                TaskMng.E.AddMainTaskCount(12);
+
             StartGacha(mGachaId);
             Close();
         });
