@@ -1,4 +1,5 @@
 ﻿using LitJson;
+using System;
 using System.Collections.Generic;
 
 public class LoginLg : UILogicBase<LoginLg, LoginUI>
@@ -116,6 +117,11 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             else
             {
                 LoadHomeData(5);
+            }
+            // 強制表示お知らせ当日チェックマップがない場合は追加
+            if (DataMng.E.UserData.PickupNoticeCheckMap == null)
+            {
+                DataMng.E.UserData.PickupNoticeCheckMap = new Dictionary<int, DateTime>();
             }
         }, DataMng.E.UserData.UserPW);
     }

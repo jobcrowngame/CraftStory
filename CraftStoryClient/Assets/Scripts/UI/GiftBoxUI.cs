@@ -47,6 +47,7 @@ public class GiftBoxUI : UIBase
 
         AdvertisingBtn.onClick.AddListener(() =>
         {
+            AudioMng.E.StopBGM();
             Bonus3XBtn.gameObject.SetActive(false);
             Bonus3XLabel.gameObject.SetActive(false);
             AdvertisingBtn.gameObject.SetActive(false);

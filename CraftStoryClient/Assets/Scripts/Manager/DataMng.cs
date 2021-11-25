@@ -124,6 +124,7 @@ public class DataMng : Single<DataMng>
         uData = new UserData();
         uData.Account = id;
         uData.UserPW = pw;
+        uData.PickupNoticeCheckMap = new Dictionary<int, DateTime>();
     }
     #endregion
     #region Map
