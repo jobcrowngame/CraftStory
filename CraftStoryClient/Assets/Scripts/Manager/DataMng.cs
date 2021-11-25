@@ -164,6 +164,7 @@ public class DataMng : Single<DataMng>
             case MapType.Brave: mBraveData = mData; break;
             case MapType.FriendHome: mFriendHomeData = mData; break;
             case MapType.Market: mMarketData = mData; break;
+            case MapType.Test: mBraveData = mData; break;
         }
     }
 

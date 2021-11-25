@@ -19,7 +19,8 @@ public class CharacterAI
     public void Update()
     {
         // 死んだら何もしない
-        if (mCharacter.Behavior == BehaviorType.Did)
+        if (mCharacter.Behavior == BehaviorType.Did ||
+            mCharacter.Behavior == BehaviorType.Hit)
             return;
 
         if (InCombat)
@@ -31,7 +32,9 @@ public class CharacterAI
                 if (CheckInAttackRange())
                     mCharacter.Attack();
                 else
+                {
                     mCharacter.MoveToTarget();
+                }
             }
         }
         else

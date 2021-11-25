@@ -194,7 +194,28 @@ public class CharacterCtl : Single<CharacterCtl>
         List<CharacterBase> targets = new List<CharacterBase>();
         foreach (var item in characterList)
         {
+            if (item == null)
+                continue;
+
             if (!item.IsDied && InDistance(distance, startPoint, item.transform.position) && item.Camp == camp)
+            {
+                targets.Add(item);
+            }
+        }
+
+        return targets;
+    }
+    public List<CharacterBase> FindCharacterInRect(CharacterBase attacker, float maxDistance, float radius, CharacterBase.CharacterCamp camp)
+    {
+        List<CharacterBase> targets = new List<CharacterBase>();
+
+        foreach (var item in characterList)
+        {
+            if (item == null || item.Camp != camp)
+                continue;
+
+            var result = CommonFunction.TargetPosInRect(attacker.FowardObj.transform.position, attacker.transform.position, item.transform.position, maxDistance, radius);
+            if (result)
             {
                 targets.Add(item);
             }

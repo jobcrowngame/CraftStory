@@ -1,4 +1,4 @@
-﻿
+﻿using UnityEngine;
 
 public class BattleCalculationCtl
 {
@@ -45,4 +45,5 @@ public class BattleCalculationCtl
 
         return (int)skillDamage;
     }
+
 }

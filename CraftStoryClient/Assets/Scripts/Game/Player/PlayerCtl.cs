@@ -105,6 +105,27 @@ public class PlayerCtl : MonoBehaviour
         {
             Character.Jump();
         }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            var dir = Vector3.zero - Character.transform.position;
+            var targetPos = new Vector3(10, 2, 10);
+
+            var r = CommonFunction.TargetPosInRect(dir, Character.transform.position, targetPos, 10, 3);
+            Logger.Warning(r.ToString());
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            var ang1 = 25;
+            var ang2 = 30;
+            var ang3 = 45;
+            var ang4 = 60;
+
+            Logger.Log("a1{0}, a2{1}, a3{2}, a4{3}", Math.Sinh(ang1), Math.Sinh(ang2), Math.Sinh(ang3), Math.Sinh(ang4));
+            Logger.Log("a1{0}, a2{1}, a3{2}, a4{3}", Math.Sin(ang1), Math.Sin(ang2), Math.Sin(ang3), Math.Sin(ang4));
+            Logger.Log("a1{0}, a2{1}, a3{2}, a4{3}", Math.Sin(ang1 * (Math.PI / 180)), Math.Sin(ang2 * (Math.PI / 180)), Math.Sin(ang3 * (Math.PI / 180)), Math.Sin(ang4 * (Math.PI / 180)));
+        }
     }
 
     public void SetCharacter(CharacterPlayer character)

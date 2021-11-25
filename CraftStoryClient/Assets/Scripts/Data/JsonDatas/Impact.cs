@@ -6,6 +6,7 @@ namespace JsonConfigData
     {
         public int Type { get; set; }
         public string Effect { get; set; }
+        public string Effect2 { get; set; }
         public int PercentDamage { get; set; }
         public int FixtDamage { get; set; }
         public float Delay { get; set; }

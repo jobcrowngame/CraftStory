@@ -162,7 +162,7 @@ public class CharacterMonster : CharacterBase
     }
     public void MoveToTarget(Vector2 direction)
     {
-        Behavior = BehaviorType.Run;
+        if (Behavior != BehaviorType.Run) Behavior = BehaviorType.Run;
 
         // 移動遷移量設定
         moveDirection.x = direction.x * Parameter.MoveSpeed * Time.deltaTime;

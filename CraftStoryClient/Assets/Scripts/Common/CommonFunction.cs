@@ -530,6 +530,30 @@ public class CommonFunction
         }
     }
 
+    #region Vector
+
+    /// <summary>
+    /// 目標がRect範囲ないにあるかのチェック
+    /// </summary>
+    /// <param name="selectPos">向き</param>
+    /// <param name="targetPos">目標座標</param>
+    /// <param name="maxDistance">最大距離</param>
+    /// <param name="radius">半径</param>
+    public static bool TargetPosInRect(Vector3 selectPos, Vector3 startPos, Vector3 targetPos, float maxDistance, float radius)
+    {
+        Debug.DrawLine(startPos, targetPos, Color.blue, 5);
+        Debug.DrawLine(startPos, selectPos, Color.red, 5);
+
+        var angle = Vector3.Angle(selectPos - startPos, targetPos - startPos);
+        var c = Vector3.Distance(startPos, targetPos);
+        var b = Math.Sin(angle * (Math.PI / 180)) * c;
+        var a = Math.Cos(angle * (Math.PI / 180)) * c;
+
+        return a < maxDistance && b < radius;
+    }
+
+    #endregion
+
 
     #region Item 
 

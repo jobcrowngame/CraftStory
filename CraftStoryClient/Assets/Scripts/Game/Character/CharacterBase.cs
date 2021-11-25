@@ -16,6 +16,9 @@ public class CharacterBase : MonoBehaviour
     private Transform model;
     public Transform Model { get => model; }
 
+    public Transform fowardObj;
+    public Transform FowardObj { get => fowardObj; }
+
     /// <summary>
     /// パラメータ
     /// </summary>
@@ -48,6 +51,8 @@ public class CharacterBase : MonoBehaviour
 
     public CharacterCamp Camp { get; set; }
 
+    public float MoveSpeed { get; set; }
+
     public HpUIBase HpCtl { get; private set; }
 
     /// <summary>
@@ -67,7 +72,9 @@ public class CharacterBase : MonoBehaviour
     private float ShareCD = 0;
     public bool ShareCDIsCooling { get => ShareCD > 0; }
 
-    private float FreezeTime = 0;
+    public float FreezeTime = 0;
+
+    protected bool ForcedRotate = false;
 
     #endregion
 
@@ -117,10 +124,7 @@ public class CharacterBase : MonoBehaviour
             FreezeTime -= Time.deltaTime;
 
             if (FreezeTime < 0)
-            {
                 Behavior = BehaviorType.Waiting;
-                FreezeTime = 0;
-            }
         }
 
         // ImpactのUpdate
@@ -133,8 +137,13 @@ public class CharacterBase : MonoBehaviour
     public virtual void Init(int characterId, CharacterCamp camp)
     {
         model = CommonFunction.FindChiledByName(transform, "Model").transform;
+
+        var fObj = CommonFunction.FindChiledByName(transform, "FowardObj");
+        if(fObj != null) fowardObj = fObj.transform;
+
         Controller = GetComponent<CharacterController>();
         Camp = camp;
+        MoveSpeed = 1;
 
         // パラメータ初期化
         Parameter = new Parameter(characterId);
@@ -307,10 +316,6 @@ public class CharacterBase : MonoBehaviour
 
         Behavior = (BehaviorType)skill.Config.Animation;
 
-        // Effect 追加
-        if (skill.Config.AttackerEffect != "N")
-            EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
-
         // 目標のキャンプ
         var targetCamp = Camp == CharacterCamp.Monster ? CharacterCamp.Player : CharacterCamp.Monster;
 
@@ -318,28 +323,73 @@ public class CharacterBase : MonoBehaviour
         {
             // 範囲攻撃
             case SkillData.SkillType.RangeAttack:
+                // Effect 追加
+                if (skill.Config.AttackerEffect != "N")
+                    EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
+
                 StartCoroutine(RangeAttack(skill, targetCamp));
                 break;
 
             // 単体攻撃
             case SkillData.SkillType.SingleAttack:
+                // Effect 追加
+                if (skill.Config.AttackerEffect != "N")
+                    EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
+
                 StartCoroutine(SingleAttackIE(skill, selectTarget));
                 break;
 
             // 遠距離範囲攻撃
             case SkillData.SkillType.RangedRangeAttack:
+                // Effect 追加
+                if (skill.Config.AttackerEffect != "N")
+                    EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
+
                 StartCoroutine(RangedRangeAttackIE(skill, selectTarget, targetCamp));
                 break;
 
             // ビーム
             case SkillData.SkillType.Beam:
+                // Effect 追加
+                if (skill.Config.AttackerEffect != "N")
+                    EffectMng.E.AddBattleEffectHaveParent(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
+
+                StartCoroutine(BeamIE(skill, targetCamp));
                 break;
 
             // 自分の回復
             case SkillData.SkillType.Recovery:
+                // Effect 追加
+                if (skill.Config.AttackerEffect != "N")
+                    EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
+
                 foreach (var impact in skill.Impacts)
                 {
                     AddImpact(this, this, int.Parse(impact));
+                }
+                break;
+
+            // ジャンプ
+            case SkillData.SkillType.Jump:
+                // Effect 追加
+                if (skill.Config.AttackerEffect != "N")
+                    EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
+
+                Jump();
+                break;
+
+            // ジャンプ
+            case SkillData.SkillType.MoveSpeedUp:
+                // Effect 追加
+                if (skill.Config.AttackerEffect != "N")
+                    EffectMng.E.AddBattleEffectHaveParent(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
+
+                for (int i = 0; i < skill.Impacts.Length; i++)
+                {
+                    if (skill.Impacts[0] == "N")
+                        continue;
+
+                    AddImpact(this, this, int.Parse(skill.Impacts[0]));
                 }
                 break;
 
@@ -355,27 +405,90 @@ public class CharacterBase : MonoBehaviour
 
     private IEnumerator RangeAttack(SkillData skill,  CharacterCamp targetCamp)
     {
+        // 複数のダメージImpact
         for (int i = 0; i < skill.Config.AttackCount; i++)
         {
-            // 攻撃範囲内の目標
-            var targets = CharacterCtl.E.FindCharacterInRange(transform, skill.Config.Distance, targetCamp);
-            foreach (var target in targets)
-            {
-                var targetDir = CharacterCtl.E.CalculationDir(target.transform.position, transform.position);
-                var angle = Vector2.Angle(targetDir, GetMeDirection());
+            RangeAttackAddImpact(skill, targetCamp, skill.Impacts);
+            yield return new WaitForSeconds(skill.Config.Interval);
+        }
 
-                if (angle * 2 <= skill.Config.RangeAngle)
+        // 一回のImpact
+        RangeAttackAddImpact(skill, targetCamp, skill.OneceImpacts);
+    }
+    private void RangeAttackAddImpact(SkillData skill, CharacterCamp targetCamp, string[] impacts)
+    {
+        // 目標を探す
+        var targets = CharacterCtl.E.FindCharacterInRange(transform, skill.Config.Distance, targetCamp);
+        foreach (var target in targets)
+        {
+            // 不存在、死んだ目標はスキップ
+            if (target == null || target.IsDied)
+                break;
+
+            var targetDir = CharacterCtl.E.CalculationDir(target.transform.position, transform.position);
+            var angle = Vector2.Angle(targetDir, GetMeDirection());
+
+            if (angle * 2 <= skill.Config.RangeAngle)
+            {
+                foreach (var impact in impacts)
                 {
-                    foreach (var impact in skill.Impacts)
-                    {
-                        target.AddImpact(target, this, int.Parse(impact));
-                    }
+                    if (impact == "N")
+                        continue;
+
+                    target.AddImpact(target, this, int.Parse(impact));
+                }
+            }
+        }
+    }
+   
+    private IEnumerator SingleAttackIE(SkillData skill, CharacterBase mainTarget)
+    {
+        // 目標がない、目標が死んだ場合、対象外
+        if (mainTarget != null)
+        {
+            int attackCount = skill.Config.AttackCount;
+            float interval = skill.Config.Interval > 0 ? skill.Config.Interval : 0;
+
+            // Effect 追加
+            if (skill.Config.TargetEffect != "N")
+            {
+                var effect = EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, mainTarget.Model.transform.position, Model.transform.rotation);
+
+                // Effectのパレットセット
+                if (skill.Config.TargetEffectParentInModel == 1)
+                {
+                    effect.transform.SetParent(mainTarget.transform);
                 }
             }
 
-            yield return new WaitForSeconds(skill.Config.Interval);
+            // ディリーダメージを与える
+            yield return new WaitForSeconds(skill.Config.DelayDamageTime);
+
+            while (attackCount > 0)
+            {
+                SingleAttackIEAddImpact(skill, mainTarget, skill.Impacts);
+
+                 attackCount--;
+                yield return new WaitForSeconds(interval);
+            }
+
+            SingleAttackIEAddImpact(skill, mainTarget, skill.OneceImpacts);
         }
     }
+    private void SingleAttackIEAddImpact(SkillData skill, CharacterBase target, string[] impacts)
+    {
+        if (target == null || target.IsDied)
+            return;
+
+        foreach (var impact in impacts)
+        {
+            if (impact == "N")
+                continue;
+            
+            target.AddImpact(target, this, int.Parse(impact));
+        }
+    }
+
     private IEnumerator RangedRangeAttackIE(SkillData skill, CharacterBase mainTarget, CharacterCamp targetCamp)
     {
         if (mainTarget != null)
@@ -390,62 +503,78 @@ public class CharacterBase : MonoBehaviour
             // ディリーダメージを与える
             yield return new WaitForSeconds(skill.Config.DelayDamageTime);
 
-            var startPoint = mainTarget.transform.position;
 
             while (attackCount > 0)
             {
-                var targets = CharacterCtl.E.FindCharacterInRange(startPoint, skill.Config.Radius, targetCamp);
-                foreach (var target in targets)
-                {
-                    if (target == null || target.IsDied)
-                        break;
-
-                    foreach (var impact in skill.Impacts)
-                    {
-                        target.AddImpact(target, this, int.Parse(impact));
-                    }
-                }
+                RangedRangeAttackIEAddImpact(skill, mainTarget, targetCamp, skill.Impacts);
 
                 attackCount--;
                 yield return new WaitForSeconds(interval);
             }
+
+            // 一回のImpact
+            RangedRangeAttackIEAddImpact(skill, mainTarget, targetCamp, skill.OneceImpacts);
         }
     }
-    private IEnumerator SingleAttackIE(SkillData skill, CharacterBase mainTarget)
+    private void RangedRangeAttackIEAddImpact(SkillData skill, CharacterBase mainTarget, CharacterCamp targetCamp, string[] impacts)
     {
-        // 目標がない、目標が死んだ場合、対象外
-        if (mainTarget != null)
+        var targets = CharacterCtl.E.FindCharacterInRange(mainTarget.transform.position, skill.Config.Radius, targetCamp);
+        foreach (var target in targets)
         {
-            int attackCount = skill.Config.AttackCount;
-            float interval = skill.Config.Interval > 0 ? skill.Config.Interval : 0;
+            if (target == null || target.IsDied)
+                break;
 
-            // Effect 追加
-            if (skill.Config.TargetEffect != "N")
+            foreach (var impact in impacts)
             {
-                var effect = EffectMng.E.AddBattleEffect(skill.Config.TargetEffect, skill.Config.TargetEffectTime, mainTarget.Model.transform, Model.transform);
+                if (impact == "N")
+                    continue;
 
-                // Effectのパレットセット
-                if (skill.Config.TargetEffectParentInModel == 1)
-                {
-                    effect.transform.SetParent(mainTarget.transform);
-                }
-            }
-
-            // ディリーダメージを与える
-            yield return new WaitForSeconds(skill.Config.DelayDamageTime);
-
-            while (attackCount > 0)
-            {
-                for (int i = 0; i < skill.Impacts.Length; i++)
-                {
-                    mainTarget.AddImpact(mainTarget, this, int.Parse(skill.Impacts[i]));
-                }
-
-                attackCount--;
-                yield return new WaitForSeconds(interval);
+                target.AddImpact(target, this, int.Parse(impact));
             }
         }
     }
+
+    private IEnumerator BeamIE(SkillData skill, CharacterCamp targetCamp)
+    {
+        int attackCount = skill.Config.AttackCount;
+        float interval = skill.Config.Interval > 0 ? skill.Config.Interval : 0;
+
+        // ディリーダメージを与える
+        yield return new WaitForSeconds(skill.Config.DelayDamageTime);
+
+        ForcedRotate = true;
+
+        while (attackCount > 0)
+        {
+            BeamIEAddImpact(skill, targetCamp, skill.Impacts);
+
+            attackCount--;
+            yield return new WaitForSeconds(interval);
+        }
+
+        ForcedRotate = false;
+
+        // 一回のImpact
+        BeamIEAddImpact(skill, targetCamp, skill.OneceImpacts);
+    }
+    private void BeamIEAddImpact(SkillData skill, CharacterCamp targetCamp, string[] impacts)
+    {
+        var targets = CharacterCtl.E.FindCharacterInRect(this, skill.Config.Distance, skill.Config.Radius, targetCamp);
+        foreach (var target in targets)
+        {
+            if (target == null || target.IsDied)
+                break;
+
+            foreach (var impact in impacts)
+            {
+                if (impact == "N")
+                    continue;
+
+                target.AddImpact(target, this, int.Parse(impact));
+            }
+        }
+    }
+
 
     /// <summary>
     /// インパクトの追加
@@ -544,12 +673,14 @@ public class CharacterBase : MonoBehaviour
     /// <param name="time"></param>
     public virtual void Hit(float time)
     {
-        if (CanNotChangeBehavior() || time <= 0)
+        if (time <= 0)
             return;
+
+        if (time > FreezeTime)
+            FreezeTime = time;
 
         StopMove();
         Behavior = BehaviorType.Hit;
-        FreezeTime = time;
     }
 
     protected virtual void TargetDied() {}
@@ -565,6 +696,21 @@ public class CharacterBase : MonoBehaviour
 
         if (HpCtl != null)
             HpCtl.OnResurrection();
+    }
+
+    /// <summary>
+    /// ジャンプ
+    /// </summary>
+    public void Jump()
+    {
+        if (Controller.isGrounded)
+        {
+            // ジャンプ前の行動を記録
+            beforBehavior = Behavior;
+
+            moveDirection.y = SettingMng.JumpSpeed;
+            Behavior = BehaviorType.Jump;
+        }
     }
 
     #endregion
@@ -631,6 +777,11 @@ public class CharacterBase : MonoBehaviour
     protected Vector2 GetDircetion(Vector3 target)
     {
         return CommonFunction.GetDirection(target, transform.position).normalized;
+    }
+
+    public Vector3 Get()
+    {
+        return FowardObj.position - transform.position;
     }
 
     /// <summary>
@@ -733,6 +884,10 @@ public enum BehaviorType
 
     Jump, // ジャンプ
 
+    /// <summary>
+    /// 凍結
+    /// </summary>
+    Freeze = 10,
 
     /// <summary>
     /// 動作01

@@ -12,6 +12,7 @@ public class SkillData
 
     // インパクト
     public string[] Impacts { get => Config.Impact.Split(','); }
+    public string[] OneceImpacts { get => Config.OneceImpact.Split(','); }
 
     public Skill Config { get; private set; }
 
@@ -81,5 +82,15 @@ public class SkillData
         /// ステータスアップ（被動）
         /// </summary>
         ParameterUp = 6,
+
+        /// <summary>
+        /// ジャンプ
+        /// </summary>
+        Jump = 100,
+
+        /// <summary>
+        /// 移動スピードアップ
+        /// </summary>
+        MoveSpeedUp = 101,
     }
 }

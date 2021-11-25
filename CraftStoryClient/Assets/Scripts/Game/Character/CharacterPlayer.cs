@@ -198,38 +198,31 @@ public partial class CharacterPlayer : CharacterBase
         if (DataMng.E.MapData == null || PlayerCtl.E.CameraCtl == null || IsDied)
             return;
 
-        // 動作変更制限
-        if (CanNotChangeBehavior())
-            return;
-
-        if (Behavior != BehaviorType.Run) Behavior = BehaviorType.Run;
-
         var angle1 = 360 - CommonFunction.Vector2ToAngle(new Vector2(x, y).normalized) + 90;
         var angle2 = PlayerCtl.E.CameraCtl.GetEulerAngleY;
         var newVec = CommonFunction.AngleToVector2(angle1 + angle2);
 
-        //キャラクターの移動と回転
-        moveDirection.x = newVec.x * SettingMng.MoveSpeed;
-        moveDirection.z = newVec.y * SettingMng.MoveSpeed;
-
-        if (x != 0 || y != 0)
-            Model.rotation = Quaternion.Euler(new Vector3(0, angle1 + angle2, 0));
-
-       
-    }
-
-    /// <summary>
-    /// ジャンプ
-    /// </summary>
-    public void Jump()
-    {
-        if (Controller.isGrounded)
+        // 動作変更制限
+        if (!CanNotChangeBehavior())
         {
-            // ジャンプ前の行動を記録
-            beforBehavior = Behavior;
+            //キャラクターの移動と回転
+            moveDirection.x = newVec.x * SettingMng.MoveSpeed * MoveSpeed;
+            moveDirection.z = newVec.y * SettingMng.MoveSpeed * MoveSpeed;
 
-            moveDirection.y = SettingMng.JumpSpeed;
-            Behavior = BehaviorType.Jump;
+            if (Behavior != BehaviorType.Run) Behavior = BehaviorType.Run;
+        }
+
+
+        if (ForcedRotate)
+        {
+            Model.rotation = Quaternion.Euler(new Vector3(0, angle1 + angle2, 0));
+        }
+        else
+        {
+            if (!CanNotChangeBehavior())
+            {
+                Model.rotation = Quaternion.Euler(new Vector3(0, angle1 + angle2, 0));
+            }
         }
     }
 

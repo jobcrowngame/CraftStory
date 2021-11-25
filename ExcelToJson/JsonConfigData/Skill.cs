@@ -8,6 +8,7 @@ namespace JsonConfigData
         public string Name { get; set; }
         public int Type { get; set; }
         public string Impact { get; set; }
+        public string OneceImpact { get; set; }
         public int Animation { get; set; }
         public float CD { get; set; }
         public float Distance { get; set; }

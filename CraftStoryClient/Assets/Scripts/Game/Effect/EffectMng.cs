@@ -42,10 +42,22 @@ public class EffectMng : Single<EffectMng>
         }
     }
 
-    public EffectBase AddBattleEffect(string path, float time, Transform transform, Transform rotation = null)
+    public EffectBase AddBattleEffect(string path, float time, Transform transform)
     {
-        var effect = CommonFunction.Instantiate<EffectBase>(BattEffectRoot + path, WorldMng.E.EffectParent, transform.position);
-        effect.transform.rotation = rotation == null ? transform.rotation : rotation.rotation;
+        return AddBattleEffectHaveParent(path, time, WorldMng.E.EffectParent, transform.position, transform.rotation);
+    }
+    public EffectBase AddBattleEffect(string path, float time, Vector3 pos, Quaternion rotation)
+    {
+        return AddBattleEffectHaveParent(path, time, WorldMng.E.EffectParent, pos, rotation);
+    }
+    public EffectBase AddBattleEffectHaveParent(string path, float time, Transform parent)
+    {
+        return AddBattleEffectHaveParent(path, time, parent, parent.position, parent.rotation);
+    }
+    public EffectBase AddBattleEffectHaveParent(string path, float time, Transform parent, Vector3 pos,  Quaternion rotation)
+    {
+        var effect = CommonFunction.Instantiate<EffectBase>(BattEffectRoot + path, parent, pos);
+        effect.transform.rotation = rotation;
         effect.Init(time);
         return effect;
     }

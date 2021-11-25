@@ -62,7 +62,7 @@ public class SettingMng : Single<SettingMng>
     /// <summary>
     /// モンスターが近くまで移動する最小距離
     /// </summary>
-    public const float MinDistance = 2f;
+    public const float MinDistance = 3f;
 
     /// <summary>
     /// デイズアクション時間
