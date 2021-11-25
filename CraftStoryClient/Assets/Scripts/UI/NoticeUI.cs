@@ -45,14 +45,6 @@ public class NoticeUI : UIBase
         if (list == null || list.Count == 0)
             return;
 
-        // 最新時間によるソート
-        list.Sort(delegate (NoticeLG.NoticeData x, NoticeLG.NoticeData y) {
-            if (x.activedate == null && y.activedate == null) return 0;
-            else if (x.activedate == null) return 1;
-            else if (y.activedate == null) return -1;
-            else return y.activedate.CompareTo(x.activedate);
-        });
-
         foreach (var item in list)
         {
             if (index == (int)NoticeFilterTab.Important && item.category != (int)Category.Important) continue;

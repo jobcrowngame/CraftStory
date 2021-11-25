@@ -16,7 +16,6 @@ public class HomeMain : MonoBehaviour
         if (NoticeLG.E.IsFirst)
         {
             UICtl.E.OpenUI<NoticeUI>(UIType.Notice);
-            NoticeLG.E.IsFirst = false;
         }
 
         AudioMng.E.ShowBGM("bgm_01");

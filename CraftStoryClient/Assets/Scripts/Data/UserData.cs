@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class UserData
@@ -22,5 +23,10 @@ public class UserData
     /// 始めに妖精を出す
     /// </summary>
     public bool FirstShowFairy = true;
+
+    /// <summary>
+    /// 強制表示お知らせ当日チェックマップ
+    /// </summary>
+    public Dictionary<int, DateTime> PickupNoticeCheckMap { get; set; }
 
 }
