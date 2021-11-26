@@ -51,8 +51,11 @@ public class PlayerCtl : MonoBehaviour
             {
                 if (Character != null && !Character.IsDied)
                 {
-                    Character.StopMove();
-                    Character.Behavior = BehaviorType.Waiting;
+                    if (!Character.CanNotChangeBehavior())
+                    {
+                        Character.StopMove();
+                        Character.Behavior = BehaviorType.Waiting;
+                    }
                 }
             });
         }
@@ -430,7 +433,7 @@ public class PlayerCtl : MonoBehaviour
     /// <param name="skill"></param>
     public void UserSkill(SkillData skill, Action<SkillData> successCallback)
     {
-        if (Character.ShareCDIsCooling || skill.IsCooling || Character.IsDied)
+        if (Character.ShareCDIsCooling || skill.IsCooling || Character.IsDied || Character.UseSkilling)
             return;
 
         // 単体攻撃、遠距離範囲攻撃の場合、目標がないと先ず目標を探す
