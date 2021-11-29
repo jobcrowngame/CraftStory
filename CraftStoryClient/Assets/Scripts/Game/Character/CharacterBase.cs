@@ -150,8 +150,14 @@ public class CharacterBase : MonoBehaviour
         Parameter = new Parameter(characterId);
         AddSkills(Parameter.Skills);
 
-
-        Behavior = BehaviorType.Waiting;
+        if (Parameter.RandomMoveOnWait == 1)
+        {
+            Behavior = BehaviorType.Waiting;
+        }
+        else
+        {
+            Behavior = BehaviorType.observe01;
+        }
     }
 
     public virtual void OnClick() { }
