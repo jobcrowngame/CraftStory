@@ -349,6 +349,9 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
+    <Compile Include="Assets\Scripts\UI\LoginBonusUI.cs" />
+    <Compile Include="Assets\Scripts\UI\LoginBonusCell.cs" />
+    <Compile Include="Assets\Scripts\UI\LoginBonusLG.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

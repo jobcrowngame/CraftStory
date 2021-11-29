@@ -91,4 +91,16 @@ public class RuntimeData
     /// トータル設置済ブロック数
     /// </summary>
     public int TotalSetBlockCount { get; set; }
+
+
+
+
+
+
+
+
+    /// <summary>
+    /// 本日の最初ログイン
+    /// </summary>
+    public int FirstLoginDaily { get; set; }
 }

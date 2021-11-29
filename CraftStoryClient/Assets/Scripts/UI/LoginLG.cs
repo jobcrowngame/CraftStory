@@ -56,6 +56,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             DataMng.E.RuntimeData.Lv = loginRP.lv;
             DataMng.E.RuntimeData.Exp = loginRP.exp;
             DataMng.E.RuntimeData.MyGoodNum = loginRP.myGoodNum;
+            DataMng.E.RuntimeData.FirstLoginDaily = loginRP.firstLoginDaily;
 
             TaskMng.E.MainTaskId = loginRP.mainTaskID;
             TaskMng.E.MainTaskClearedCount = loginRP.mainTaskClearedCount;
@@ -237,5 +238,11 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
         /// クリアしたメインタスク内容数
         /// </summary>
         public int mainTaskClearedCount { get; set; }
+
+
+        /// <summary>
+        /// 本日の最初ログイン
+        /// </summary>
+        public int firstLoginDaily { get; set; }
     }
 }

@@ -6,6 +6,7 @@ namespace JsonConfigData
     {
         public string Name { get; set; }
         public string IconResourcesPath { get; set; }
+        public string Explanatory { get; set; }
         public int Type { get; set; }
         public int BagType { get; set; }
         public int ReferenceID { get; set; }
