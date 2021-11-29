@@ -22,6 +22,7 @@ namespace JsonConfigData
         public int AddExp { get; set; }
         public int SecurityRange { get; set; }
         public int CallForHelpRange { get; set; }
+        public int RespondToHelp { get; set; }
         public float DazeTime { get; set; }
         public float MoveSpeed { get; set; }
     }

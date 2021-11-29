@@ -12,6 +12,7 @@ public class Parameter
     public int Defense { get => config.Defense + Equipment.Defense + skillPar.Defense; }
     public int SecurityRange { get => config.SecurityRange; }
     public int CallForHelpRange { get => config.CallForHelpRange; }
+    public int RespondToHelp { get => config.RespondToHelp; }
     public string Skills { get => config.Skills; }
     public float DazeTime { get => config.DazeTime; }
     public float MoveSpeed { get => config.MoveSpeed; }

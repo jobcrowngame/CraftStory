@@ -134,7 +134,10 @@ public class CharacterMonster : CharacterBase
         var monsterList = CharacterCtl.E.FindTargetListInSecurityRange(Camp, transform.position, Parameter.CallForHelpRange);
         foreach (CharacterMonster item in monsterList)
         {
-            item.ai.SetTarget(Target);
+            if (item.Parameter.RespondToHelp == 1)
+            {
+                item.ai.SetTarget(Target);
+            }
         }
 
         yield return new WaitForSeconds(time);

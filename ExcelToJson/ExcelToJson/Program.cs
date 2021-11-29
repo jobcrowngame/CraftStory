@@ -717,6 +717,7 @@ namespace ExcelToJson
                     AddExp = ToInt32(tbl.Rows[i]["AddExp"]),
                     SecurityRange = ToInt32(tbl.Rows[i]["SecurityRange"]),
                     CallForHelpRange = ToInt32(tbl.Rows[i]["CallForHelpRange"]),
+                    RespondToHelp = ToInt32(tbl.Rows[i]["RespondToHelp"]),
                     DazeTime = ToFloat(tbl.Rows[i]["DazeTime"]),
                     MoveSpeed = ToFloat(tbl.Rows[i]["MoveSpeed"]),
 
