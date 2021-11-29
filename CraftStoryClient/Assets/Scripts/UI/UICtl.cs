@@ -289,4 +289,5 @@ public enum UIType
     EquipList,
     SkillExplanation,
     BraveSelectLevel,
+    LoginBonus,
 }

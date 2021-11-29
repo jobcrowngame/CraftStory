@@ -29,6 +29,7 @@ public class AWSS3Mng : MonoBehaviour
     private string IdentityPoolId = "ap-northeast-1:073ecf65-6c35-42df-8607-5a304f7a9006";
     private string S3BucketName = "j-de";
     private string S3BucketNameHomeData = "j-de/home";
+    private string S3BucketNameLoginBonus = "j-de/loginbonus";
 
     private RegionEndpoint _CognitoIdentityRegion
     {
@@ -142,11 +143,15 @@ public class AWSS3Mng : MonoBehaviour
     /// <summary>
     /// 画像をダウンロード
     /// </summary>
-    public void DownLoadTexture2D(Image img, string fileName, Action successCallback = null, Action failureCallback = null)
+    public void DownLoadTexture2D(Image img, string fileName, string bucetName)
+    {
+        DownLoadTexture2D(img, fileName, null, null, bucetName);
+    }
+    public void DownLoadTexture2D(Image img, string fileName, Action successCallback = null, Action failureCallback = null, string bucetName = "")
     {
         GetObjectRequest request = new GetObjectRequest
         {
-            BucketName = S3BucketName,
+            BucketName = string.IsNullOrEmpty(bucetName) ? S3BucketName : bucetName,
             Key = fileName,
         };
 
@@ -289,5 +294,13 @@ public class AWSS3Mng : MonoBehaviour
         {
             Logger.Error(ex);
         }
+    }
+
+    /// <summary>
+    /// ログインボーナスIconロード
+    /// </summary>
+    public void LoadLoginBonusTexture2D(Image img, string fileName)
+    {
+        DownLoadTexture2D(img, fileName, null, null, S3BucketNameLoginBonus);
     }
 }

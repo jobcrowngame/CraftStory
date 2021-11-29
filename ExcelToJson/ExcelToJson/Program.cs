@@ -330,6 +330,7 @@ namespace ExcelToJson
                 data.ID = ToInt32(tbl.Rows[i]["ID"]);
                 data.Name = ToString(tbl.Rows[i]["Name"]);
                 data.IconResourcesPath = ToString(tbl.Rows[i]["IconResourcesPath"]);
+                data.Explanatory = ToString(tbl.Rows[i]["Explanatory"]);
                 data.Type = ToInt32(tbl.Rows[i]["Type"]);
                 data.BagType = ToInt32(tbl.Rows[i]["BagType"]);
                 data.ReferenceID = ToInt32(tbl.Rows[i]["ReferenceID"]);

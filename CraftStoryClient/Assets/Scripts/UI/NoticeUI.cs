@@ -31,6 +31,17 @@ public class NoticeUI : UIBase
         NoticeLG.E.GetNoticeList();
     }
 
+    public override void Close()
+    {
+        base.Close();
+
+        // 今日の始めのログインの場合、ログインボーナス画面を出す
+        if (DataMng.E.RuntimeData.FirstLoginDaily == 1)
+        {
+            LoginBonusLG.E.GetInfo();
+        }
+    }
+
     public void MoveToTop()
     {
         ScrollRect.verticalNormalizedPosition = 1;

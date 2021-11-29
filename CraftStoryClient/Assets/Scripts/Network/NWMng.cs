@@ -1006,6 +1006,30 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.GetMaxBraveLevel));
     }
 
+    /// <summary>
+    /// ログインボーナス情報をゲット
+    /// </summary>
+    /// <param name="rp"></param>
+    public void GetLoginBonusInfo(Action<JsonData> rp)
+    {
+        var data = new NWData();
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetLoginBonusInfo));
+    }
+
+    /// <summary>
+    /// ログインボーナスをゲット
+    /// </summary>
+    /// <param name="rp"></param>
+    public void GetLoginBonus(Action<JsonData> rp, int id, int step)
+    {
+        var data = new NWData();
+        data.Add("id", id);
+        data.Add("step", step);
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetLoginBonus));
+    }
+
 
     /// <summary>
     /// ホームデータをサーバーにセーブ
@@ -1113,6 +1137,8 @@ public partial class NWMng : MonoBehaviour
         MainTaskEnd,
         AddMainTaskClearCount = 1060,
         GetMaxBraveLevel,
+        GetLoginBonusInfo,
+        GetLoginBonus,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,
