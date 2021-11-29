@@ -288,14 +288,18 @@ public class CharacterBase : MonoBehaviour
         // スキルを使用
         skill.Use();
 
-        UseSkilling = true;
+        // ジャンプ以外はスキル中状態にする
+        if ((SkillData.SkillType)skill.Config.Type != SkillData.SkillType.Jump)
+            UseSkilling = true;
 
         StartCoroutine(UseSkillIE(skill, selectTarget));
     }
     private IEnumerator UseSkillIE(SkillData skill, CharacterBase selectTarget = null)
     {
         // 目標がある場合、向きを調整
-        if (selectTarget != null)
+        if (selectTarget != null && 
+            (SkillData.SkillType)skill.Config.Type != SkillData.SkillType.Jump &&
+            (SkillData.SkillType)skill.Config.Type != SkillData.SkillType.MoveSpeedUp)
         {
             var direction = GetDircetion(selectTarget.transform);
             Rotation(direction);
