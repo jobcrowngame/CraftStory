@@ -13,6 +13,7 @@ public class Parameter
     public int SecurityRange { get => config.SecurityRange; }
     public int CallForHelpRange { get => config.CallForHelpRange; }
     public int RespondToHelp { get => config.RespondToHelp; }
+    public int RandomMoveOnWait { get => config.RandomMoveOnWait; }
     public string Skills { get => config.Skills; }
     public float DazeTime { get => config.DazeTime; }
     public float MoveSpeed { get => config.MoveSpeed; }

@@ -111,7 +111,10 @@ public class CharacterMonster : CharacterBase
     {
         Behavior = BehaviorType.observe01;
         yield return new WaitForSeconds(Parameter.DazeTime);
-        Behavior = BehaviorType.Waiting;
+        if (Parameter.RandomMoveOnWait == 1)
+        {
+            Behavior = BehaviorType.Waiting;
+        }
     }
 
     /// <summary>

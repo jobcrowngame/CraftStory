@@ -718,6 +718,7 @@ namespace ExcelToJson
                     SecurityRange = ToInt32(tbl.Rows[i]["SecurityRange"]),
                     CallForHelpRange = ToInt32(tbl.Rows[i]["CallForHelpRange"]),
                     RespondToHelp = ToInt32(tbl.Rows[i]["RespondToHelp"]),
+                    RandomMoveOnWait = ToInt32(tbl.Rows[i]["RandomMoveOnWait"]),
                     DazeTime = ToFloat(tbl.Rows[i]["DazeTime"]),
                     MoveSpeed = ToFloat(tbl.Rows[i]["MoveSpeed"]),
 

@@ -59,6 +59,10 @@ public class CharacterAI
                 InCombat = true;
             }
         }
+        else if (mCharacter.Parameter.RandomMoveOnWait == 0)
+        {
+            mCharacter.DazeAction();
+        }
         else
         {
             InCombat = false;

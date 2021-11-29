@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// ゲーム時間コンソール
@@ -6,6 +7,14 @@
 public class GameTimeCtl
 {
     Light DirectionalLight { get => GameObject.Find("Directional Light").GetComponent<Light>(); }
+    Image ClockHand 
+    {
+        get 
+        {
+            GameObject obj = GameObject.Find("ClockHand");
+            return obj != null ? obj.GetComponent<Image>() : null; 
+        } 
+    }
 
     /// <summary>
     /// ゲーム時間変化をアクティブ
@@ -44,6 +53,7 @@ public class GameTimeCtl
                 float percent = curTime / SettingMng.GameDaySeconds;
                 float angle = 360 * percent;
 
+                RefreshClock(angle);
                 RefreshLight(angle);
                 RefreshSkyBox(angle);
             }
@@ -58,9 +68,17 @@ public class GameTimeCtl
 
     public GameTimeCtl()
     {
-        CurTime = SettingMng.GameDaySeconds * 0.2f;
+        ResetTime(); 
         TimeZoneMng.E.AddTimerEvent02(() => { CurTime += 0.02f; });
         Active = false;
+    }
+
+    /// <summary>
+    /// 時間を朝にリセット
+    /// </summary>
+    public void ResetTime()
+    {
+        CurTime = SettingMng.GameDaySeconds * 0.0f;
     }
 
     /// <summary>
@@ -91,6 +109,18 @@ public class GameTimeCtl
     }
 
     /// <summary>
+    /// ClockHandの角度を変更
+    /// </summary>
+    /// <param name="angle"></param>
+    private void RefreshClock(float angle)
+    {
+        if (ClockHand != null)
+        {
+            ClockHand.transform.rotation = Quaternion.Euler(0, 0, 120 - angle);
+        }
+    }
+
+    /// <summary>
     /// 角度によって今の明るさパーセントをゲット
     /// </summary>
     /// <param name="angle"></param>
@@ -98,17 +128,17 @@ public class GameTimeCtl
     private float GetPercentByAngle(float angle)
     {
         float newV = 0;
-        if (angle < 180)
+        if (angle < 220)
         {
             newV = 1;
         }
-        else if (angle >= 180 && angle < 210)
+        else if (angle >= 220 && angle < 240)
         {
-            newV = 1 - ((angle - 180) / 30);
+            newV = 1 - ((angle - 220) / 20);
         }
-        else if (angle >= 330 && angle < 360)
+        else if (angle >= 340 && angle < 360)
         {
-            newV = 1 - ((360 - angle) / 30);
+            newV = 1 - ((360 - angle) / 20);
         }
         else
         {
