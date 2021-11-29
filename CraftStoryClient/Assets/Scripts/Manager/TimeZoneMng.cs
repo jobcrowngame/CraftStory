@@ -29,34 +29,29 @@ public class TimeZoneMng : MonoBehaviour
         SecondTimerEvent01 = new UnityEvent();
         SecondTimerEvent02 = new UnityEvent();
         SecondTimerEvent03 = new UnityEvent();
-
-        StartCoroutine(SecondTimer01());
-        StartCoroutine(SecondTimer02());
-        StartCoroutine(SecondTimer03());
     }
 
-    private IEnumerator SecondTimer01()
+    private int Timer01Counter = 0;
+    private int Timer03Counter = 0;
+    private readonly int Timer01Ratio = 10;
+    private readonly int Timer03Ratio = 50;
+
+    public void FixedUpdate()
     {
-        while (true)
+        Timer01Counter++;
+        if (Timer01Counter >= Timer01Ratio)
         {
+            Timer01Counter %= Timer01Ratio;
             SecondTimerEvent01.Invoke();
-            yield return new WaitForSeconds(0.2f);
         }
-    }
-    private IEnumerator SecondTimer02()
-    {
-        while (true)
+
+        SecondTimerEvent02.Invoke();
+
+        Timer03Counter++;
+        if(Timer03Counter >= Timer03Ratio)
         {
-            SecondTimerEvent02.Invoke();
-            yield return new WaitForSeconds(0.02f);
-        }
-    }
-    private IEnumerator SecondTimer03()
-    {
-        while (true)
-        {
+            Timer03Counter %= Timer03Ratio;
             SecondTimerEvent03.Invoke();
-            yield return new WaitForSeconds(1f);
         }
     }
 

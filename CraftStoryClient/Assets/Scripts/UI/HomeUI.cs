@@ -120,6 +120,12 @@ public partial class HomeUI : UIBase
     List<HomeItemBtn> itemBtns;
 
     /// <summary>
+    /// 時計
+    /// </summary>
+    Image Clock;
+
+
+    /// <summary>
     /// Fadein　時間幅
     /// </summary>
     private float fadeInTimeStep = 0.05f;
@@ -150,6 +156,7 @@ public partial class HomeUI : UIBase
         SpriteAnim = FindChiled("SpriteAnim");
         Title = FindChiled<Title2UI>("Title2");
         DebugBtn = FindChiled<Button>("DebugBtn");
+        Clock = FindChiled<Image>("Clock");
     }
 
     public override void Init()
@@ -260,6 +267,8 @@ public partial class HomeUI : UIBase
             || DataMng.E.RuntimeData.MapType == MapType.Guide);
 
         Title.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Market);
+
+        Clock.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home);
     }
 
     private void AddItemBtns()
