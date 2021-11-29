@@ -52,6 +52,8 @@ public class SkillCell : UIBase
     /// </summary>
     private void IsNull()
     {
+        mSkill = null;
+
         CD.text = "";
         CDMask.fillAmount = 0;
         Icon.sprite = ReadResources<Sprite>(ConfigMng.E.Skill[-1].Icon);
