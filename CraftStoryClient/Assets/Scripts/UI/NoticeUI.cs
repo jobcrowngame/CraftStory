@@ -40,6 +40,11 @@ public class NoticeUI : UIBase
         {
             LoginBonusLG.E.GetInfo();
         }
+        else
+        {
+            // ログインボーナス完了後妖精を出す。
+            PlayerCtl.E.Fairy.ShowFairy();
+        }
     }
 
     public void MoveToTop()

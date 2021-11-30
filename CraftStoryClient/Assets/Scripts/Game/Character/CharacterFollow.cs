@@ -22,7 +22,6 @@ public class CharacterFollow : CharacterBase
 
         Model.gameObject.SetActive(false);
 
-        StartCoroutine(AppearancePerformanceIE());
     }
 
     public override void OnClick()
@@ -84,6 +83,11 @@ public class CharacterFollow : CharacterBase
         }
     }
 
+    public void ShowFairy()
+    {
+        StartCoroutine(AppearancePerformanceIE());
+    }
+
     /// <summary>
     /// 目標の設定
     /// </summary>
@@ -108,9 +112,6 @@ public class CharacterFollow : CharacterBase
     /// <returns></returns>
     IEnumerator AppearancePerformanceIE()
     {
-        // 2S 後出る
-        yield return new WaitForSeconds(2);
-
         // add effect
         EffectMng.E.AddEffect<EffectBase>(transform.position + new Vector3(0,1,0), EffectType.FairyCreate);
 
