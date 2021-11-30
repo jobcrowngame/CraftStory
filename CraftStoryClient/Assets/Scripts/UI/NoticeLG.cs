@@ -43,7 +43,7 @@ public class NoticeLG : UILogicBase<NoticeLG, NoticeUI>
                         else return y.activedate.CompareTo(x.activedate);
                     });
 
-                    var ui = UICtl.E.OpenUI<NoticeDetailUI>(UIType.NoticeDetail, UIOpenType.BeforeClose);
+                    var ui = UICtl.E.OpenUI<NoticeDetailUI>(UIType.NoticeDetail);
                     ui.SetPickup(pickupList);
                 }
 
@@ -52,8 +52,6 @@ public class NoticeLG : UILogicBase<NoticeLG, NoticeUI>
             else
             {
                 UICtl.E.OpenUI<NoticeUI>(UIType.Notice);
-                UI.ToggleBtns.SetValue(0);
-                UI.SetCell(0);
             }
         });
     }
