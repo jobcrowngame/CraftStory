@@ -25,7 +25,7 @@ public class LoginBonusCell : UIBase
 
     private string GetDayImagePath(int index)
     {
-        return "" + (index + 1);
+        return "Textures/Loginbonus_Texture_00" + (index + 1);
     }
 
     public void IsGeted(bool showAnim = true)
