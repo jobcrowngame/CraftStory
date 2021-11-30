@@ -123,22 +123,35 @@ public class GuideUI : UIBase
                 // 設計図タスク完了
                 TaskMng.E.AddMainTaskCount(5);
             }
+            // ショップのチュートリアル完了
             else if (DataMng.E.RuntimeData.GuideId == 2)
             {
                 DataMng.E.RuntimeData.GuideEnd2 = 1;
                 // ショップタスク完了
                 TaskMng.E.AddMainTaskCount(1);
             }
+            // 最初のクラフトチュートリアル完了
             else if (DataMng.E.RuntimeData.GuideId == 3)
             {
                 DataMng.E.RuntimeData.GuideEnd3 = 1;
                 DataMng.E.RuntimeData.NewEmailCount++;
             }
+            // 武器チュートリアル完了
             else if (DataMng.E.RuntimeData.GuideId == 4)
             {
                 DataMng.E.RuntimeData.GuideEnd4 = 1;
                 PlayerCtl.E.GetEquipedItems().Clear();
                 TaskMng.E.AddMainTaskCount(2);
+
+                // チュートリアルが完了後、デフォルトで武器を鑑定して装備
+                var item = DataMng.E.GetItemByItemId(10001);
+                NWMng.E.AppraisalEquipment((rp) =>
+                {
+                    NWMng.E.EquitItem((rp)=> 
+                    {
+                        PlayerCtl.E.EquipEquipment(new ItemEquipmentData(item));
+                    }, item.id, 101);
+                }, item.id, 1);
             }
             else if (DataMng.E.RuntimeData.GuideId == 6)
             {
