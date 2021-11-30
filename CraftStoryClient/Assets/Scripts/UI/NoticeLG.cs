@@ -17,42 +17,39 @@ public class NoticeLG : UILogicBase<NoticeLG, NoticeUI>
             }
 
             NoticeList = JsonMapper.ToObject<List<NoticeData>>(rp.ToJson());
-           
-            if (IsFirst)
+
+            // 強制表示設定あり かつ 当日中に「今日は表示しない」のチェックをつけていない場合、
+            // 初回表示で強制表示対象のお知らせ詳細を表示
+            DateTime nowDate = DateTime.Now.Date;
+            List<NoticeData> pickupList = new List<NoticeData>();
+            Dictionary<int, DateTime> map = DataMng.E.UserData.PickupNoticeCheckMap;
+            foreach (NoticeData nd in NoticeList)
             {
-                // 強制表示設定あり かつ 当日中に「今日は表示しない」のチェックをつけていない場合、
-                // 初回表示で強制表示対象のお知らせ詳細を表示
-                DateTime nowDate = DateTime.Now.Date;
-                List<NoticeData> pickupList = new List<NoticeData>();
-                Dictionary<int, DateTime> map = DataMng.E.UserData.PickupNoticeCheckMap;
-                foreach (NoticeData nd in NoticeList)
+                if (nd.pickup != null && IsPickupNoticeDisplay(map, nd.id, nowDate))
                 {
-                    if (nd.pickup != null && IsPickupNoticeDisplay(map, nd.id, nowDate)) 
-                    {
-                        pickupList.Add(nd);
-                    }
+                    pickupList.Add(nd);
                 }
-                if (pickupList.Count > 0)
-                {
-                    // 強制表示順序(昇順)と最新時間(降順)によるソート
-                    pickupList.Sort(delegate (NoticeLG.NoticeData x, NoticeLG.NoticeData y) {
-                        if (((int)(x.pickup)).CompareTo((int)y.pickup) != 0) return ((int)(x.pickup)).CompareTo((int)y.pickup);
-                        if (x.activedate == null && y.activedate == null) return 0;
-                        else if (x.activedate == null) return 1;
-                        else if (y.activedate == null) return -1;
-                        else return y.activedate.CompareTo(x.activedate);
-                    });
+            }
+            if (pickupList.Count > 0)
+            {
+                // 強制表示順序(昇順)と最新時間(降順)によるソート
+                pickupList.Sort(delegate (NoticeLG.NoticeData x, NoticeLG.NoticeData y) {
+                    if (((int)(x.pickup)).CompareTo((int)y.pickup) != 0) return ((int)(x.pickup)).CompareTo((int)y.pickup);
+                    if (x.activedate == null && y.activedate == null) return 0;
+                    else if (x.activedate == null) return 1;
+                    else if (y.activedate == null) return -1;
+                    else return y.activedate.CompareTo(x.activedate);
+                });
 
-                    var ui = UICtl.E.OpenUI<NoticeDetailUI>(UIType.NoticeDetail);
-                    ui.SetPickup(pickupList);
-                }
-
-                IsFirst = false;
+                var ui = UICtl.E.OpenUI<NoticeDetailUI>(UIType.NoticeDetail);
+                ui.SetPickup(pickupList);
             }
             else
             {
                 UICtl.E.OpenUI<NoticeUI>(UIType.Notice);
             }
+
+            IsFirst = false;
         });
     }
 
