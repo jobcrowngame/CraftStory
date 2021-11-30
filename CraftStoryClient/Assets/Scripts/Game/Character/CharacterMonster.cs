@@ -79,6 +79,10 @@ public class CharacterMonster : CharacterBase
         yield return new WaitForSeconds(0.8f);
 
         EffectMng.E.AddBattleEffect("Die", 3, transform);
+
+        Model.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(10f);
         GameObject.Destroy(gameObject);
     }
 

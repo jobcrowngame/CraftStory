@@ -466,8 +466,6 @@ public class MapCtl
                 
                 if (CheckCreatePos(mapData, newPos))
                     break;
-
-                Debug.LogError("111");
             }
         }
 
