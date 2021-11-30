@@ -42,7 +42,7 @@ public class PublicPar
 
     public static string LocalURL = "http://localhost/Server/PHP/UrlLocal.php";
     public static string TestURL = "13.230.170.40/TestUrl.php";
-    public static string ProductionURL = "craftstory.awscraftstoryserver.com/2_0_5.php";
+    public static string ProductionURL = "craftstory.awscraftstoryserver.com/2_0_6.php";
 
     public static string Maintenance = @"ただいま、メンテナンスを実施中です。
 完了までしばらくお待ちください。
