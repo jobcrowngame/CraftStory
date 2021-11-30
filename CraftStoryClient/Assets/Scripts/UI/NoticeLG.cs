@@ -17,9 +17,7 @@ public class NoticeLG : UILogicBase<NoticeLG, NoticeUI>
             }
 
             NoticeList = JsonMapper.ToObject<List<NoticeData>>(rp.ToJson());
-            UI.ToggleBtns.SetValue(0);
-            UI.SetCell(0);
-
+           
             if (IsFirst)
             {
                 // 強制表示設定あり かつ 当日中に「今日は表示しない」のチェックをつけていない場合、
@@ -50,6 +48,12 @@ public class NoticeLG : UILogicBase<NoticeLG, NoticeUI>
                 }
 
                 IsFirst = false;
+            }
+            else
+            {
+                UICtl.E.OpenUI<NoticeUI>(UIType.Notice);
+                UI.ToggleBtns.SetValue(0);
+                UI.SetCell(0);
             }
         });
     }

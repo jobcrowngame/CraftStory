@@ -16,7 +16,7 @@ public class HomeMain : MonoBehaviour
         // ログイン後、始めにホームに入る場合、お知らせWindowを出す
         if (NoticeLG.E.IsFirst)
         {
-            UICtl.E.OpenUI<NoticeUI>(UIType.Notice);
+            NoticeLG.E.GetNoticeList();
         }
 
         AudioMng.E.ShowBGM("bgm_01");

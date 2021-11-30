@@ -28,9 +28,9 @@ public class NoticeUI : UIBase
     public override void Open()
     {
         base.Open();
-        NoticeLG.E.GetNoticeList();
+        ToggleBtns.SetValue(0);
+        SetCell(0);
     }
-
     public override void Close()
     {
         base.Close();
