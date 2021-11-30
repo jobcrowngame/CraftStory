@@ -1,4 +1,4 @@
-
+ï»¿
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,7 +46,7 @@ public class LoginBonusUI : UIBase
         string[] items = info.items.Split(',');
         string[] counts = info.itemCounts.Split(',');
 
-        // ‘S•”‚ÌƒAƒCƒeƒ€‚ğƒQƒbƒg‚µ‚½ê‡A“–ŠY‰æ–Ê‚ğ•Â‚¶‚ÄŸ‚Ì‰æ–Ê‚É‘JˆÚ
+        // å…¨éƒ¨ã®ã‚¢ã‚¤ãƒ†ãƒ ã‚’ã‚²ãƒƒãƒˆã—ãŸå ´åˆã€å½“è©²ç”»é¢ã‚’é–‰ã˜ã¦æ¬¡ã®ç”»é¢ã«é·ç§»
         if (step >= items.Length)
         {
             bonusIsGeted = true;
@@ -57,18 +57,18 @@ public class LoginBonusUI : UIBase
         Plan1.gameObject.SetActive(info.type == 1);
         Plan2.gameObject.SetActive(info.type == 2);
        
-        // ƒe[ƒ}ƒAƒCƒRƒ“ƒZƒbƒg
+        // ãƒ†ãƒ¼ãƒã‚¢ã‚¤ã‚³ãƒ³ã‚»ãƒƒãƒˆ
         AWSS3Mng.E.LoadLoginBonusTexture2D(Icon1, info.themeTexture);
 
-        // ƒAƒCƒeƒ€ƒAƒCƒRƒ“
+        // ã‚¢ã‚¤ãƒ†ãƒ ã‚¢ã‚¤ã‚³ãƒ³
         var curStepItemConfig = ConfigMng.E.Item[int.Parse(items[step])];
         Icon2.sprite = ReadResources<Sprite>(curStepItemConfig.IconResourcesPath);
 
-        // ƒAƒCƒeƒ€à–¾
+        // ã‚¢ã‚¤ãƒ†ãƒ èª¬æ˜
         Des.text = curStepItemConfig.Explanatory;
 
-        // ƒCƒxƒ“ƒgŠÔ
-        Time.text = string.Format("{0}`{1}", info.start_at.ToString("D"), info.end_at.ToString("D"));
+        // ã‚¤ãƒ™ãƒ³ãƒˆæ™‚é–“
+        Time.text = string.Format("{0}ï½{1}", info.start_at.ToString("D"), info.end_at.ToString("D"));
 
         if (info.type == 1)
         {
