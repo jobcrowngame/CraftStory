@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public partial class HomeUI
 {
     Transform battle { get => FindChiled("Battle"); }
+    Transform PointGet { get => FindChiled("PointGet"); }
+    
     Image hpBar { get => FindChiled<Image>("HpImg", battle); }
     Text hpText { get => FindChiled<Text>("HpText", battle); }
     MyText MonsterNumberLeft { get => FindChiled<MyText>("NumberLeft"); }
@@ -62,6 +64,17 @@ public partial class HomeUI
         MonsterNumberLeft.text = string.Format("残り {0} 体", count);
 
         if (count == 0)
-            MonsterNumberLeft.GetComponent<Animation>().Play("HomeNumberLeft");
+        {
+            //MonsterNumberLeft.GetComponent<Animation>().Play("HomeNumberLeft");
+            MonsterNumberLeft.text = string.Format("転送門へ移動しよう");
+        }
+    }
+
+    /// <summary>
+    /// ポイントゲット場合の表現
+    /// </summary>
+    public void ShowPointGet()
+    {
+        PointGet.GetComponent<Animation>().Play("HomePointGet");
     }
 }

@@ -393,6 +393,12 @@ public partial class HomeUI : UIBase
         {
             cell.Set(item);
         }
+
+        // ポイントゲットの場合、表現を追加
+        if (item.itemId == 9002)
+        {
+            ShowPointGet();
+        }
     }
 
     /// <summary>
