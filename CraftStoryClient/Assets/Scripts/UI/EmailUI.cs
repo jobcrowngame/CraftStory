@@ -31,7 +31,7 @@ public class EmailUI : UIBase
         EmailLG.E.Refresh();
     }
 
-    public void Refresh(List<EmailRP> datas)
+    public void Refresh(List<EmailLG.EmailCellRP> datas)
     {
         ClearCell(cellParent);
         foreach (var item in datas)
@@ -44,5 +44,16 @@ public class EmailUI : UIBase
     public void SetPageText(string msg)
     {
         Page.text = msg;
+    }
+
+    public void ActiveLeftBtn(bool b = true)
+    {
+        LeftBtn.enabled = b;
+        LeftBtn.GetComponentInChildren<Image>().color = b ? Color.white : Color.grey;
+    }
+    public void ActiveRightBtn(bool b = true)
+    {
+        RightBtn.enabled = b;
+        RightBtn.GetComponentInChildren<Image>().color = b ? Color.white : Color.grey;
     }
 }

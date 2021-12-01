@@ -8,8 +8,8 @@ public class EmailCell : UIBase
     Button Btn { get => GetComponent<Button>(); }
     Image inObj { get => FindChiled<Image>("Image"); }
 
-    EmailRP data;
-    public EmailRP Data { get => data; }
+    EmailLG.EmailCellRP data;
+    public EmailLG.EmailCellRP Data { get => data; }
 
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class EmailCell : UIBase
         });
     }
 
-    public void Set(EmailRP data)
+    public void Set(EmailLG.EmailCellRP data)
     {
         this.data = data;
 
