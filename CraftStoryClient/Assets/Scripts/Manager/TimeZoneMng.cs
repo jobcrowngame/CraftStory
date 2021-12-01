@@ -63,6 +63,10 @@ public class TimeZoneMng : MonoBehaviour
     {
         SecondTimerEvent01.AddListener(ac);
     }
+    public void RemoveTimerEvent01(UnityAction ac)
+    {
+        SecondTimerEvent01.RemoveListener(ac);
+    }
 
     /// <summary>
     /// 毎0.02秒
@@ -71,6 +75,11 @@ public class TimeZoneMng : MonoBehaviour
     {
         SecondTimerEvent02.AddListener(ac);
     }
+    public void RemoveTimerEvent02(UnityAction ac)
+    {
+        SecondTimerEvent02.RemoveListener(ac);
+    }
+
     /// <summary>
     /// 毎秒
     /// </summary>
