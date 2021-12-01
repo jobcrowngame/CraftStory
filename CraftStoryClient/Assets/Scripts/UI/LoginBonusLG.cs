@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LitJson;
 
 public class LoginBonusLG : UILogicBase<LoginBonusLG, LoginBonusUI>
@@ -23,7 +20,11 @@ public class LoginBonusLG : UILogicBase<LoginBonusLG, LoginBonusUI>
     public void OpenNextUI()
     {
         if (result.arr.Count ==0 || index == result.arr.Count)
+        {
+            // ログインボーナス完了後妖精を出す。
+            PlayerCtl.E.Fairy.ShowFairy();
             return;
+        }
 
         var Type = result.arr[index].type;
         LoginBonusInfoCellRP info = result.arr[index];
