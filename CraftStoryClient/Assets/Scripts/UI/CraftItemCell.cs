@@ -56,6 +56,12 @@ public class CraftItemCell : UIBase
         {
             RecommendationIcon.gameObject.SetActive(true);
         }
+
+        // 掲示板の場合、始めに作る以外はおすすめしない
+        if (config.ItemID == 3003 && DataMng.E.UserData.FirstCraftMission == 1)
+        {
+            RecommendationIcon.gameObject.SetActive(false);
+        }
     }
 
     private void IsSelected(bool b)

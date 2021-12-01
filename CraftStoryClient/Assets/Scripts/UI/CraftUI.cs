@@ -41,6 +41,12 @@ public class CraftUI : UIBase
             costCells[i] = costCellParent.GetChild(i).gameObject.AddComponent<CraftCostCell>();
         }
     }
+    public override void Open()
+    {
+        base.Open();
+
+        ActiveSlectCountBtns(false);
+    }
 
     public void SetType(EntityType type)
     {
@@ -56,7 +62,7 @@ public class CraftUI : UIBase
 
     public void SetSelectCountText(string text)
     {
-        SelectCount.text = text;
+        SelectCount.text = text + "　個";
     }
 
     /// <summary>
@@ -79,14 +85,19 @@ public class CraftUI : UIBase
                 // おすすめの場合
                 if (item.Recommendation == 1)
                 {
+                    // 掲示板の場合、始めに作る以外はおすすめしない
+                    if (item.ItemID == 3003 && DataMng.E.UserData.FirstCraftMission == 1)
+                    {
+                        Order.Add(item);
+                        continue;
+                    }
+
                     Recommendation.Add(item);
                 }
                 else
                 {
                     Order.Add(item);
                 }
-
-
             }
         }
 
@@ -154,6 +165,11 @@ public class CraftUI : UIBase
                     {
                         DataMng.E.UserData.FirstCraftMission = 1;
                         UICtl.E.OpenUI<MissionChatUI>(UIType.MissionChat, UIOpenType.None, 0);
+
+                        CraftLG.E.SelectCount = 1;
+                        CraftLG.E.SelectCraft = null;
+
+                        RefreshCraftCellList();
                     }
 
                     NWMng.E.GetItems(() =>
@@ -174,7 +190,37 @@ public class CraftUI : UIBase
         }
 
         UICtl.E.LockUI();
-        StartCoroutine(CloneIcon(CraftLG.E.SelectCount));
+        createCount = CraftLG.E.SelectCount > 10 ? 10 : CraftLG.E.SelectCount;
+        maxTimer = step * createCount;
+        timer = 0;
+        TimeZoneMng.E.AddTimerEvent02(CloneIcon);
+    }
+
+    float timer;
+    float maxTimer;
+    int createCount;
+    float step = 10;
+
+    /// <summary>
+    /// AnimationIconをコピー
+    /// </summary>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    private void CloneIcon()
+    {
+        if (timer >= maxTimer)
+        {
+            TimeZoneMng.E.RemoveTimerEvent02(CloneIcon);
+            UICtl.E.LockUI(false);
+            return;
+        }
+
+        if (timer++ % step == 0 && CraftLG.E.SelectCraftItemCell != null)
+        {
+            CraftLG.E.SelectCraftItemCell.CloneIconToBag();
+        }
+
+        timer++;
     }
 
     /// <summary>
@@ -219,24 +265,16 @@ public class CraftUI : UIBase
         return ret;
     }
 
-    /// <summary>
-    /// AnimationIconをコピー
-    /// </summary>
-    /// <param name="count"></param>
-    /// <returns></returns>
-    private IEnumerator CloneIcon(int count)
+    public void ActiveSlectCountBtns(bool b = true)
     {
-        if (count > 10)
-            count = 10;
-
-        for (int i = 0; i < count; i++)
-        {
-            if (CraftLG.E.SelectCraftItemCell != null)
-            {
-                CraftLG.E.SelectCraftItemCell.CloneIconToBag();
-            }
-            yield return new WaitForSeconds(0.1f);
-        }
-        UICtl.E.LockUI(false);
+        ActiveSlectCountBtn(RightBtn, b);
+        ActiveSlectCountBtn(RightBtn10, b);
+        ActiveSlectCountBtn(LeftBtn, b);
+        ActiveSlectCountBtn(LeftBtn10, b);
+    }
+    private void ActiveSlectCountBtn(Button btn, bool enable)
+    {
+        btn.enabled = enable;
+        btn.GetComponent<Image>().color = enable ? Color.white : Color.grey;
     }
 }
