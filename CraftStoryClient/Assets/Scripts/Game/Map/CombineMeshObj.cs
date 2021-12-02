@@ -57,6 +57,13 @@ public class CombineMeshObj : MonoBehaviour
             renderer.material = materials[k];
         }
     }
+
+    public void Clear()
+    {
+        combine.Clear();
+        materials.Clear();
+        meshObjs.Clear();
+    }
   
     /// <Summary>
     /// 結合したメッシュを表示するGameObjectを作成します。

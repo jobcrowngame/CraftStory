@@ -345,6 +345,8 @@ public class MapData
     public void ClearMapObj()
     {
         entityDic.Clear();
+        blocks.Clear();
+
     }
 
     /// <summary>
