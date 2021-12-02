@@ -212,6 +212,7 @@ public class PlayerCtl : MonoBehaviour
                     case ItemType.Door:
                     case ItemType.Mission:
                     case ItemType.HaveDirectionNomoObject:
+                    case ItemType.Bed:
                         Lock = true;
                         var direction = CommonFunction.GetCreateEntityDirection(pos);
                         CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), direction);

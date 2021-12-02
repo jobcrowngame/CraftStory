@@ -119,6 +119,8 @@ public enum EntityType
     GiftShop = 1007,
     Door = 2000,
 
+    Bed = 2001,
+
     /// <summary>
     /// 松明
     /// </summary>

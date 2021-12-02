@@ -222,6 +222,10 @@ public class MapData
                     entity = CommonFunction.Instantiate<EntityHaveDirection>(config.Resources, parent, pos);
                     break;
 
+                case EntityType.Bed:
+                    entity = CommonFunction.Instantiate<EntityBed>(config.Resources, parent, pos);
+                    break;
+
 
                 default: Logger.Error("not find entityType "+ (EntityType)config.Type); break;
             }

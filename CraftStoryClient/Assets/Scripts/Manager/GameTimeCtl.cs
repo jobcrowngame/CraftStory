@@ -127,6 +127,7 @@ public class GameTimeCtl
     /// <returns></returns>
     private float GetPercentByAngle(float angle)
     {
+        canSleep = false;
         float newV = 0;
         if (angle < 220)
         {
@@ -135,6 +136,7 @@ public class GameTimeCtl
         else if (angle >= 220 && angle < 240)
         {
             newV = 1 - ((angle - 220) / 20);
+            canSleep = true;
         }
         else if (angle >= 340 && angle < 360)
         {
@@ -143,8 +145,12 @@ public class GameTimeCtl
         else
         {
             newV = 0;
+            canSleep = true;
         }
 
         return newV;
     }
+
+    public bool canSleep;
+    public bool CanSleep { get => canSleep; }
 }
