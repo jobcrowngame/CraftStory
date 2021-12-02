@@ -446,4 +446,40 @@ public partial class HomeUI : UIBase
     {
         PlayerCtl.E.CameraCtl.LockUnTarget(target);
     }
+
+    public void FadeOutAndIn()
+    {
+        StartCoroutine(IFadeOutAndIn());
+    }
+    IEnumerator IFadeOutAndIn()
+    {
+        TimeZoneMng.E.Stop();
+
+        FadeinImg.color = new Color(0f, 0f, 0f, 0);
+        FadeinImg.gameObject.SetActive(true);
+
+        //　Colorのアルファを0.1ずつ上げていく
+        for (var i = 0f; i < 1; i += 0.1f)
+        {
+            //if (i > 1f) i = 1f;
+            FadeinImg.color = new Color(0f, 0f, 0f, i);
+            //　指定秒数待つ
+            yield return new WaitForSeconds(fadeInTimeStep);
+        }
+
+        WorldMng.E.GameTimeCtl.ResetTime();
+
+        //　Colorのアルファを0.1ずつ下げていく
+        for (var i = 1f; i > 0; i -= 0.1f)
+        {
+            FadeinImg.color = new Color(0f, 0f, 0f, i);
+            //　指定秒数待つ
+            yield return new WaitForSeconds(fadeInTimeStep);
+        }
+
+        FadeinImg.gameObject.SetActive(false);
+
+        TimeZoneMng.E.Resume();
+    }
+
 }

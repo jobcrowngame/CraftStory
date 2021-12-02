@@ -108,7 +108,10 @@ public class BlueprintPreviewUI : UIBase
             if (beforUI != null) beforUI.Open();
         }
 
-        WorldMng.E.GameTimeCtl.Active = true;
+        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
+        {
+            WorldMng.E.GameTimeCtl.Active = true;
+        }
         DataMng.E.RuntimeData.IsPreviev = false;
     }
 

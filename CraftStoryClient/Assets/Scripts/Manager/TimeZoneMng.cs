@@ -26,11 +26,13 @@ public class TimeZoneMng : MonoBehaviour
 
     public void Init()
     {
+        Stopping = false;
         SecondTimerEvent01 = new UnityEvent();
         SecondTimerEvent02 = new UnityEvent();
         SecondTimerEvent03 = new UnityEvent();
     }
 
+    private bool Stopping;
     private int Timer01Counter = 0;
     private int Timer03Counter = 0;
     private readonly int Timer01Ratio = 10;
@@ -38,6 +40,8 @@ public class TimeZoneMng : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (Stopping) return;
+
         Timer01Counter++;
         if (Timer01Counter >= Timer01Ratio)
         {
@@ -87,9 +91,18 @@ public class TimeZoneMng : MonoBehaviour
     {
         SecondTimerEvent03.AddListener(ac);
     }
-
     public void RemoveTimerEvent03(UnityAction ac)
     {
         SecondTimerEvent03.RemoveListener(ac);
+    }
+
+    public void Stop()
+    {
+        Stopping = true;
+    }
+
+    public void Resume()
+    {
+        Stopping = false;
     }
 }
