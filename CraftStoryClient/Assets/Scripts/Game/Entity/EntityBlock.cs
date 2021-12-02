@@ -11,5 +11,7 @@ public class EntityBlock : EntityBase
         base.ClickingEnd();
 
         OnDestroyEntity();
+
+        WorldMng.E.MapCtl.RemoveMesh(this);
     }
 }

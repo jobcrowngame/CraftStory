@@ -22,6 +22,17 @@ public class CharacterFollow : CharacterBase
 
         Model.gameObject.SetActive(false);
 
+        if ((MapType)DataMng.E.MapData.Config.MapType == MapType.Home)
+        {
+            if (!NoticeLG.E.IsFirst)
+            {
+                ShowFairy();
+            }
+        }
+        else
+        {
+            ShowFairy();
+        }
     }
 
     public override void OnClick()
@@ -112,6 +123,8 @@ public class CharacterFollow : CharacterBase
     /// <returns></returns>
     IEnumerator AppearancePerformanceIE()
     {
+        yield return new WaitForSeconds(1f);
+
         // add effect
         EffectMng.E.AddEffect<EffectBase>(transform.position + new Vector3(0,1,0), EffectType.FairyCreate);
 

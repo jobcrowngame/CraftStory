@@ -189,6 +189,15 @@ public class PlayerCtl : MonoBehaviour
                 switch ((ItemType)selectItem.Config().Type)
                 {
                     case ItemType.Block:
+                        Lock = true;
+                        CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
+                        Character.Behavior = BehaviorType.Create;
+
+                        WorldMng.E.MapCtl.CellParent.GetComponent<CombineMeshObj>().Combine();
+
+                        StartCoroutine(UnLock());
+                        break;
+
                     case ItemType.Lanthanum:
                     case ItemType.NomoObject:
                         Lock = true;

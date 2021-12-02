@@ -118,11 +118,15 @@ public class MapData
             // 裏の場合、エンティティのインスタンスを削除
             if (entityDic.ContainsKey(pos))
             {
+                WorldMng.E.MapCtl.CellParent.GetComponent<CombineMeshObj>().RemoveObj(entityDic[pos].EntityID, pos);
+
                 GameObject.Destroy(entityDic[pos].gameObject);
                 entityDic.Remove(pos);
             }
         }
     }
+
+    static Dictionary<int, GameObject> blocks = new Dictionary<int, GameObject>();
     
     /// <summary>
     /// エンティティをインスタンス
@@ -142,6 +146,7 @@ public class MapData
             // 設定ファイル
             var config = ConfigMng.E.Entity[entityCell.entityID];
             EntityBase entity = null;
+            GameObject obj = null;
             switch ((EntityType)config.Type)
             {
                 case EntityType.Obstacle:
@@ -150,7 +155,20 @@ public class MapData
                 case EntityType.Block:
                 case EntityType.Block2:
                 case EntityType.Block99:
-                    entity = CommonFunction.Instantiate<EntityBlock>(config.Resources, parent, pos);
+                    if (!blocks.TryGetValue(entityCell.entityID, out obj))
+                    {
+                        obj = CommonFunction.Instantiate(config.Resources, parent, pos);
+                        obj.gameObject.SetActive(false);
+                        blocks[entityCell.entityID] = obj;
+                    }
+
+                    var mesh = obj.GetComponent<MeshFilter>();
+                    var render = obj.GetComponent<MeshRenderer>();
+
+                    parent.GetComponent<CombineMeshObj>().AddObj(entityCell.entityID, mesh.mesh, render.material, pos);
+
+                    entity = CommonFunction.Instantiate<EntityBlock>(ConfigMng.E.Entity[0].Resources, parent, pos);
+
                     break;
 
                 case EntityType.Grass:

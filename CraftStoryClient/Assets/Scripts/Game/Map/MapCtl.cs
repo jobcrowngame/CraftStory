@@ -27,7 +27,7 @@ public class MapCtl
     {
         DataMng.E.SetMapData(NowLoadingLG.E.NextMapID);
 
-        mapCellParent = new GameObject("Ground").transform;
+        mapCellParent = new GameObject("Ground", typeof(CombineMeshObj)).transform;
         effectParent = new GameObject("Effects").transform;
 
         var startTime = DateTime.Now;
@@ -77,6 +77,8 @@ public class MapCtl
                 }
             }
         }
+
+        CellParent.GetComponent<CombineMeshObj>().Combine();
     }
 
     /// <summary>
@@ -250,6 +252,11 @@ public class MapCtl
     {
         DataMng.E.MapData.Remove(entity);
         CheckNextToEntitys(entity.Pos);
+    }
+
+    public void RemoveMesh(EntityBase entity)
+    {
+        CellParent.GetComponent<CombineMeshObj>().RemoveObj(entity.EntityID, entity.Pos);
     }
     /// <summary>
     /// 設計図エンティティを削除
