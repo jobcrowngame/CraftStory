@@ -48,12 +48,12 @@ public class CombineMeshObj : MonoBehaviour
             meshObjs[k] = obj;
 
             var mesh = obj.AddComponent<MeshFilter>();
-            var renderer = obj.AddComponent<MeshRenderer>();
-
             mesh.mesh = new Mesh();
             mesh.mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
             mesh.mesh.CombineMeshes(combine[k].Values.ToArray());
 
+            var renderer = obj.AddComponent<MeshRenderer>();
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             renderer.material = materials[k];
         }
     }
