@@ -98,7 +98,7 @@ public class MapCtl
             if ((EntityType)ConfigMng.E.Entity[item.id].Type == EntityType.Obstacle)
                 continue;
 
-            var entity = MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, builderPencilParent, item.GetPos());
+            var entity = MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, builderPencilParent, item.GetPos(), false);
             entity.transform.localPosition = item.GetPos();
 
             // 向きによって回転
@@ -208,6 +208,9 @@ public class MapCtl
                 , CommonFunction.Vector3Sum(item.GetPos(), buildPos));
             //CheckNextToEntitys(item.GetPos());
         }
+
+        // メッシュを結合
+        WorldMng.E.MapCtl.CellParent.GetComponent<CombineMeshObj>().Combine();
     }
     /// <summary>
     /// エンティティを作成

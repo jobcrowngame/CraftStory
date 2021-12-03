@@ -154,9 +154,10 @@ public class BlueprintPreviewCtl : MonoBehaviour
         {
             if (item.id == 10000)
                 continue;
-            
-            var entity = MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, Parent, Vector3Int.zero);
-            entity.transform.localPosition = item.GetPos();
+
+            MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, Parent, item.GetPos());
         }
+
+        Parent.GetComponent<CombineMeshObj>().Combine();
     }
 }

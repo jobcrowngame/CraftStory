@@ -135,7 +135,7 @@ public class MapData
     /// <param name="parent">親</param>
     /// <param name="pos">座標</param>
     /// <returns></returns>
-    public static EntityBase InstantiateEntity(MapCellData entityCell, Transform parent, Vector3Int pos)
+    public static EntityBase InstantiateEntity(MapCellData entityCell, Transform parent, Vector3Int pos, bool isCombineMesh = true)
     {
         try
         {
@@ -155,20 +155,30 @@ public class MapData
                 case EntityType.Block:
                 case EntityType.Block2:
                 case EntityType.Block99:
-                    if (!blocks.TryGetValue(entityCell.entityID, out obj))
+                    if (isCombineMesh)
                     {
-                        obj = CommonFunction.Instantiate(config.Resources, parent, pos);
-                        obj.gameObject.SetActive(false);
-                        blocks[entityCell.entityID] = obj;
+                        if (!blocks.TryGetValue(entityCell.entityID, out obj))
+                        {
+                            obj = CommonFunction.Instantiate(config.Resources, parent, pos);
+                            obj.gameObject.SetActive(false);
+                            blocks[entityCell.entityID] = obj;
+                        }
+
+                        var mesh = obj.GetComponent<MeshFilter>();
+                        var render = obj.GetComponent<MeshRenderer>();
+
+                        var combineMO = parent.GetComponent<CombineMeshObj>();
+                        if (combineMO != null)
+                        {
+                            combineMO.AddObj(entityCell.entityID, mesh.mesh, render.material, pos);
+                        }
+
+                        entity = CommonFunction.Instantiate<EntityBlock>(ConfigMng.E.Entity[0].Resources, parent, pos);
                     }
-
-                    var mesh = obj.GetComponent<MeshFilter>();
-                    var render = obj.GetComponent<MeshRenderer>();
-
-                    parent.GetComponent<CombineMeshObj>().AddObj(entityCell.entityID, mesh.mesh, render.material, pos);
-
-                    entity = CommonFunction.Instantiate<EntityBlock>(ConfigMng.E.Entity[0].Resources, parent, pos);
-
+                    else
+                    {
+                        entity = CommonFunction.Instantiate<EntityBlock>(config.Resources, parent, pos);
+                    }
                     break;
 
                 case EntityType.Grass:
