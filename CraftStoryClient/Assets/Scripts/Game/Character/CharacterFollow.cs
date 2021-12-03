@@ -13,7 +13,7 @@ public class CharacterFollow : CharacterBase
     bool following = false;
 
 
-    public override void Init(int characterId, CharacterCamp camp)
+    public override void Init(int characterId, CharacterGroup camp)
     {
         base.Init(characterId, camp);
 

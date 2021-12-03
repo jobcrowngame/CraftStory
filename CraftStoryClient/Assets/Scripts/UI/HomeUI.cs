@@ -253,6 +253,7 @@ public partial class HomeUI : UIBase
             TaskMng.E.AddMainTaskCount(9);
 
         TaskOverview.text = "";
+        PlayerCtl.E.Pause(false);
     }
 
     /// <summary>

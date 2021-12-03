@@ -452,7 +452,7 @@ public class PlayerCtl : MonoBehaviour
         {
             // 目標がない場合、探す
             if (Character.Target == null)
-                Character.Target = CharacterCtl.E.FindTargetInSecurityRange(CharacterBase.CharacterCamp.Monster,
+                Character.Target = CharacterCtl.E.FindTargetInSecurityRange(CharacterBase.CharacterGroup.Monster,
                     Character.transform.position, skill.distance);
 
             // 探しても目標がない場合、スキップ
@@ -487,6 +487,15 @@ public class PlayerCtl : MonoBehaviour
     public void AddExp(int exp)
     {
         Character.AddExp(exp);
+    }
+
+    /// <summary>
+    /// 一時停止
+    /// </summary>
+    /// <param name="pause"></param>
+    public void Pause(bool pause = true)
+    {
+        Time.timeScale = pause ? 0 : 1;
     }
 
     #endregion

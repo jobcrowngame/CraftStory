@@ -62,9 +62,9 @@ public partial class CharacterPlayer : CharacterBase
         followPoint = CommonFunction.FindChiledByName(transform, "FollowPoint").transform;
     }
 
-    public override void Init(int characterId, CharacterCamp camp)
+    public override void Init(int characterId, CharacterGroup group)
     {
-        base.Init(characterId, camp);
+        base.Init(characterId, group);
         deleteEffect = CommonFunction.FindChiledByName(transform, "DeleteEffect").transform;
 
         weaponL = CommonFunction.FindChiledByName(transform, "Weapon_L").transform;
