@@ -36,7 +36,11 @@ public class MapUI : UIBase
         SpriteAnim4.gameObject.SetActive(MapLG.E.IsEquipTutorial());
         SpriteAnim5.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd5 == 0);
 
-        PlayerCtl.E.Pause();
+        // チュートリアル以外開ける場合、一時停止
+        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
+        {
+            PlayerCtl.E.Pause();
+        }
     }
     public override void Close()
     {

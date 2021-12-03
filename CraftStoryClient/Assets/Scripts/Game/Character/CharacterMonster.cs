@@ -9,7 +9,7 @@ public class CharacterMonster : CharacterBase
     CharacterAI ai;
     CharacterBase Target { get => ai.Target; }
 
-    public override void Init(int characterId, CharacterCamp camp)
+    public override void Init(int characterId, CharacterGroup camp)
     {
         base.Init(characterId, camp);
 
@@ -138,7 +138,7 @@ public class CharacterMonster : CharacterBase
         Rotation(direction);
 
         // 助け呼ぶ範囲内のモンスター
-        var monsterList = CharacterCtl.E.FindTargetListInSecurityRange(Camp, transform.position, Parameter.CallForHelpRange);
+        var monsterList = CharacterCtl.E.FindTargetListInSecurityRange(Group, transform.position, Parameter.CallForHelpRange);
         foreach (CharacterMonster item in monsterList)
         {
             if (item.Parameter.RespondToHelp == 1)

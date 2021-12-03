@@ -43,7 +43,7 @@ public class CharacterCtl : Single<CharacterCtl>
         }
 
         player = obj.GetComponent<CharacterPlayer>();
-        player.Init(DataMng.E.RuntimeData.Lv, CharacterBase.CharacterCamp.Player);
+        player.Init(DataMng.E.RuntimeData.Lv, CharacterBase.CharacterGroup.Player);
         var hpbar = CommonFunction.FindChiledByName<HpUIBase>(player.transform, "WorldUI");
         player.SetHpBar(hpbar);
 
@@ -116,7 +116,7 @@ public class CharacterCtl : Single<CharacterCtl>
             return;
         }
 
-        monster.Init(characterCfg.ID, CharacterBase.CharacterCamp.Monster);
+        monster.Init(characterCfg.ID, CharacterBase.CharacterGroup.Monster);
         monster.SetHpBar(CommonFunction.FindChiledByName<HpUIBase>(monster.transform, "WorldUI"));
         characterList.Add(monster);
     }
@@ -142,7 +142,7 @@ public class CharacterCtl : Single<CharacterCtl>
         }
 
         followCharacter.transform.localRotation = Quaternion.Euler(0,0,0);
-        followCharacter.Init(id, CharacterBase.CharacterCamp.Fairy);
+        followCharacter.Init(id, CharacterBase.CharacterGroup.Fairy);
         followCharacter.SetTarget(player.FollowPoint);
 
         PlayerCtl.E.Fairy = followCharacter;
@@ -185,11 +185,11 @@ public class CharacterCtl : Single<CharacterCtl>
     /// <param name="attacker"></param>
     /// <param name="distance"></param>
     /// <returns></returns>
-    public List<CharacterBase> FindCharacterInRange(Transform startPoint, float distance, CharacterBase.CharacterCamp camp)
+    public List<CharacterBase> FindCharacterInRange(Transform startPoint, float distance, CharacterBase.CharacterGroup camp)
     {
         return FindCharacterInRange(startPoint.position, distance, camp);
     }
-    public List<CharacterBase> FindCharacterInRange(Vector3 startPoint, float distance, CharacterBase.CharacterCamp camp)
+    public List<CharacterBase> FindCharacterInRange(Vector3 startPoint, float distance, CharacterBase.CharacterGroup camp)
     {
         List<CharacterBase> targets = new List<CharacterBase>();
         foreach (var item in characterList)
@@ -197,7 +197,7 @@ public class CharacterCtl : Single<CharacterCtl>
             if (item == null)
                 continue;
 
-            if (!item.IsDied && InDistance(distance, startPoint, item.transform.position) && item.Camp == camp)
+            if (!item.IsDied && InDistance(distance, startPoint, item.transform.position) && item.Group == camp)
             {
                 targets.Add(item);
             }
@@ -205,13 +205,13 @@ public class CharacterCtl : Single<CharacterCtl>
 
         return targets;
     }
-    public List<CharacterBase> FindCharacterInRect(CharacterBase attacker, float maxDistance, float radius, CharacterBase.CharacterCamp camp)
+    public List<CharacterBase> FindCharacterInRect(CharacterBase attacker, float maxDistance, float radius, CharacterBase.CharacterGroup camp)
     {
         List<CharacterBase> targets = new List<CharacterBase>();
 
         foreach (var item in characterList)
         {
-            if (item == null || item.Camp != camp)
+            if (item == null || item.Group != camp)
                 continue;
 
             var result = CommonFunction.TargetPosInRect(attacker.FowardObj.transform.position, attacker.transform.position, item.transform.position, maxDistance, radius);
@@ -252,13 +252,13 @@ public class CharacterCtl : Single<CharacterCtl>
     /// <param name="camp">キャンプ</param>
     /// <param name="startPos">始点</param>
     /// <param name="distance">距離</param>
-    public CharacterBase FindTargetInSecurityRange(CharacterBase.CharacterCamp camp, Vector3 startPos, float distance)
+    public CharacterBase FindTargetInSecurityRange(CharacterBase.CharacterGroup camp, Vector3 startPos, float distance)
     {
         CharacterBase selected = null;
         float minDis = 0;
         foreach (var character in characterList)
         {
-            if (character != null && !character.IsDied && character.Camp == camp)
+            if (character != null && !character.IsDied && character.Group == camp)
             {
                 var dis = Mathf.Abs(Vector3.Distance(character.transform.position, startPos));
 
@@ -292,7 +292,7 @@ public class CharacterCtl : Single<CharacterCtl>
     /// <param name="startPos">始点</param>
     /// <param name="distance">距離</param>
     /// <returns></returns>
-    public List<CharacterBase> FindTargetListInSecurityRange(CharacterBase.CharacterCamp camp, Vector3 startPos, int distance)
+    public List<CharacterBase> FindTargetListInSecurityRange(CharacterBase.CharacterGroup camp, Vector3 startPos, int distance)
     {
         List<CharacterBase> list = new List<CharacterBase>();
         foreach (var item in characterList)
@@ -301,7 +301,7 @@ public class CharacterCtl : Single<CharacterCtl>
                 continue;
 
             if (Mathf.Abs(Vector3.Distance(item.transform.position, startPos)) <= distance
-                && item.Camp == camp)
+                && item.Group == camp)
             {
                 list.Add(item);
             }

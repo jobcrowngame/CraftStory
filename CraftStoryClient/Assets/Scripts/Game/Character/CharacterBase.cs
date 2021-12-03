@@ -49,7 +49,7 @@ public class CharacterBase : MonoBehaviour
     }
     public BehaviorType mBehavior = BehaviorType.Waiting;
 
-    public CharacterCamp Camp { get; set; }
+    public CharacterGroup Group { get; set; }
 
     public float MoveSpeed { get; set; }
 
@@ -135,7 +135,7 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-    public virtual void Init(int characterId, CharacterCamp camp)
+    public virtual void Init(int characterId, CharacterGroup camp)
     {
         model = CommonFunction.FindChiledByName(transform, "Model").transform;
 
@@ -143,7 +143,7 @@ public class CharacterBase : MonoBehaviour
         if(fObj != null) fowardObj = fObj.transform;
 
         Controller = GetComponent<CharacterController>();
-        Camp = camp;
+        Group = camp;
         MoveSpeed = 1;
 
         // パラメータ初期化
@@ -184,7 +184,7 @@ public class CharacterBase : MonoBehaviour
     /// <param name="skills"></param>
     public void RemoveSkills(string skills)
     {
-        if (skills == "N")
+        if (skills == "N"　|| string.IsNullOrEmpty(skills))
             return;
 
         var skillArr = skills.Split(',');
@@ -330,7 +330,7 @@ public class CharacterBase : MonoBehaviour
         Behavior = (BehaviorType)skill.Config.Animation;
 
         // 目標のキャンプ
-        var targetCamp = Camp == CharacterCamp.Monster ? CharacterCamp.Player : CharacterCamp.Monster;
+        var targetCamp = Group == CharacterGroup.Monster ? CharacterGroup.Player : CharacterGroup.Monster;
 
         switch ((SkillData.SkillType)skill.Config.Type)
         {
@@ -420,7 +420,7 @@ public class CharacterBase : MonoBehaviour
         Behavior = BehaviorType.Waiting;
     }
 
-    private IEnumerator RangeAttack(SkillData skill,  CharacterCamp targetCamp)
+    private IEnumerator RangeAttack(SkillData skill,  CharacterGroup targetCamp)
     {
         // 複数のダメージImpact
         for (int i = 0; i < skill.Config.AttackCount; i++)
@@ -434,7 +434,7 @@ public class CharacterBase : MonoBehaviour
 
         UseSkilling = false;
     }
-    private void RangeAttackAddImpact(SkillData skill, CharacterCamp targetCamp, string[] impacts)
+    private void RangeAttackAddImpact(SkillData skill, CharacterGroup targetCamp, string[] impacts)
     {
         // 目標を探す
         var targets = CharacterCtl.E.FindCharacterInRange(transform, skill.Config.Distance, targetCamp);
@@ -510,7 +510,7 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-    private IEnumerator RangedRangeAttackIE(SkillData skill, CharacterBase mainTarget, CharacterCamp targetCamp)
+    private IEnumerator RangedRangeAttackIE(SkillData skill, CharacterBase mainTarget, CharacterGroup targetCamp)
     {
         if (mainTarget != null)
         {
@@ -539,7 +539,7 @@ public class CharacterBase : MonoBehaviour
 
         UseSkilling = false;
     }
-    private void RangedRangeAttackIEAddImpact(SkillData skill, CharacterBase mainTarget, CharacterCamp targetCamp, string[] impacts)
+    private void RangedRangeAttackIEAddImpact(SkillData skill, CharacterBase mainTarget, CharacterGroup targetCamp, string[] impacts)
     {
         var targets = CharacterCtl.E.FindCharacterInRange(mainTarget.transform.position, skill.Config.Radius, targetCamp);
         foreach (var target in targets)
@@ -557,7 +557,7 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-    private IEnumerator BeamIE(SkillData skill, CharacterCamp targetCamp)
+    private IEnumerator BeamIE(SkillData skill, CharacterGroup targetCamp)
     {
         int attackCount = skill.Config.AttackCount;
         float interval = skill.Config.Interval > 0 ? skill.Config.Interval : 0;
@@ -581,7 +581,7 @@ public class CharacterBase : MonoBehaviour
         // 一回のImpact
         BeamIEAddImpact(skill, targetCamp, skill.OneceImpacts);
     }
-    private void BeamIEAddImpact(SkillData skill, CharacterCamp targetCamp, string[] impacts)
+    private void BeamIEAddImpact(SkillData skill, CharacterGroup targetCamp, string[] impacts)
     {
         var targets = CharacterCtl.E.FindCharacterInRect(this, skill.Config.Distance, skill.Config.Radius, targetCamp);
         foreach (var target in targets)
@@ -647,7 +647,7 @@ public class CharacterBase : MonoBehaviour
 
         // ガイドの場合、70%以下にさせない
         if (DataMng.E.RuntimeData.MapType == MapType.Guide &&
-            Camp == CharacterCamp.Player &&
+            Group == CharacterGroup.Player &&
             Parameter.CurHP < (Parameter.AllHP * 0.7))
         {
             Parameter.CurHP = (int)(Parameter.AllHP * 0.7);
@@ -874,9 +874,9 @@ public class CharacterBase : MonoBehaviour
     #region Emum
 
     /// <summary>
-    /// キャンプ
+    /// キャラクタグループ
     /// </summary>
-    public enum CharacterCamp
+    public enum CharacterGroup
     {
         /// <summary>
         /// キャラクター
