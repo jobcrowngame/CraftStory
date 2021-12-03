@@ -35,6 +35,14 @@ public class MapUI : UIBase
         SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide);
         SpriteAnim4.gameObject.SetActive(MapLG.E.IsEquipTutorial());
         SpriteAnim5.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd5 == 0);
+
+        PlayerCtl.E.Pause();
+    }
+    public override void Close()
+    {
+        base.Close();
+
+        PlayerCtl.E.Pause(false);
     }
 
     private void OnClickHomeBtn()

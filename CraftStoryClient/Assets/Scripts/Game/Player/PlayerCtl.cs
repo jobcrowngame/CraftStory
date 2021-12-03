@@ -489,6 +489,15 @@ public class PlayerCtl : MonoBehaviour
         Character.AddExp(exp);
     }
 
+    /// <summary>
+    /// 一時停止
+    /// </summary>
+    /// <param name="pause"></param>
+    public void Pause(bool pause = true)
+    {
+        Time.timeScale = pause ? 0 : 1;
+    }
+
     #endregion
     #region 装備
 

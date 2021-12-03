@@ -240,6 +240,8 @@ public partial class HomeUI : UIBase
         // 10階まで行くタスク
         if (DataMng.E.MapData.Config.Floor >= 10)
             TaskMng.E.AddMainTaskCount(9);
+
+        PlayerCtl.E.Pause(false);
     }
 
     /// <summary>
