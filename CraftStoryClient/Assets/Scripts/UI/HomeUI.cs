@@ -124,6 +124,15 @@ public partial class HomeUI : UIBase
     /// </summary>
     Image Clock;
 
+    /// <summary>
+    /// タスク概要
+    /// </summary>
+    MyText TaskOverview;
+
+    /// <summary>
+    /// タスク概要テキスト(表示制御用)
+    /// </summary>
+    Transform TaskOverviewText;
 
     /// <summary>
     /// Fadein　時間幅
@@ -157,6 +166,8 @@ public partial class HomeUI : UIBase
         Title = FindChiled<Title2UI>("Title2");
         DebugBtn = FindChiled<Button>("DebugBtn");
         Clock = FindChiled<Image>("Clock");
+        TaskOverview = FindChiled<MyText>("TaskOverview");
+        TaskOverviewText = FindChiled<Transform>("Text", TaskOverview.transform);
     }
 
     public override void Init()
@@ -240,6 +251,8 @@ public partial class HomeUI : UIBase
         // 10階まで行くタスク
         if (DataMng.E.MapData.Config.Floor >= 10)
             TaskMng.E.AddMainTaskCount(9);
+
+        TaskOverview.text = "";
     }
 
     /// <summary>
@@ -269,6 +282,8 @@ public partial class HomeUI : UIBase
         Title.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Market);
 
         Clock.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home);
+        TaskOverview.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home);
+        TaskOverviewText.gameObject.SetActive(false);
     }
 
     private void AddItemBtns()
@@ -480,6 +495,40 @@ public partial class HomeUI : UIBase
         FadeinImg.gameObject.SetActive(false);
 
         TimeZoneMng.E.Resume();
+    }
+
+    /// <summary>
+    /// タスク概要アクティブ
+    /// </summary>
+    public void ActivateTaskOverview()
+    {
+        TaskOverviewText.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// タスク概要更新
+    /// </summary>
+    public void RefreshTaskOverview()
+    {
+        if (!TaskOverview.gameObject.activeSelf) return;
+
+        GameObject ChatFlg = GameObject.Find("effect_2d_010");
+
+        if (ChatFlg != null && ChatFlg.activeSelf)
+        {
+            TaskOverview.text = "フィーが何か伝えたいみたいだよ！";
+        }
+        else
+        {
+            int chatId = ConfigMng.E.MainTask[TaskMng.E.MainTaskConfig.ID].StartChat;
+            if (chatId == -1)
+            {
+                TaskOverview.text = "";
+                return;
+            }
+            string overview = ConfigMng.E.Chat[chatId].Overview;
+            TaskOverview.text = overview != "N" ? overview : "";
+        }
     }
 
 }

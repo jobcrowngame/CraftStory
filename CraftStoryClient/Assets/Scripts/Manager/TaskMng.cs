@@ -56,8 +56,11 @@ public class TaskMng : Single<TaskMng>
             // タスクの条件に達成すると、妖精の吹き出しを出す
             if (MainTaskConfig.ClearCount <= MainTaskClearedCount)
             {
-                if(PlayerCtl.E.Fairy != null) 
+                if (PlayerCtl.E.Fairy != null)
+                {
                     PlayerCtl.E.Fairy.ShowChatFlg();
+                    HomeLG.E.UI.RefreshTaskOverview();
+                }
             }
         }, count);
     }

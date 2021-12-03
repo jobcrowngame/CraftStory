@@ -51,7 +51,11 @@ public class CharacterFollow : CharacterBase
             {
                 NWMng.E.MainTaskEnd((rp) =>
                 {
-                    UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, TaskMng.E.MainTaskConfig.EndChat);
+                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, TaskMng.E.MainTaskConfig.EndChat);
+                    chatUi.AddListenerOnClose(() =>
+                    {
+                        HomeLG.E.UI.RefreshTaskOverview();
+                    });
                     TaskMng.E.Next();
 
                     NWMng.E.RefreshCoins(() =>
@@ -65,7 +69,11 @@ public class CharacterFollow : CharacterBase
             }
             else
             {
-                UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, TaskMng.E.MainTaskConfig.StartChat);
+                var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, TaskMng.E.MainTaskConfig.StartChat);
+                chatUi.AddListenerOnClose(() =>
+                {
+                    HomeLG.E.UI.RefreshTaskOverview();
+                });
             }
         }
     }
@@ -163,6 +171,9 @@ public class CharacterFollow : CharacterBase
                     ShowChatFlg(!TaskMng.E.IsReaded);
                 }
             }
+
+            HomeLG.E.UI.ActivateTaskOverview();
+            HomeLG.E.UI.RefreshTaskOverview();
         }
     }
 }
