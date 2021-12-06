@@ -38,9 +38,11 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, Skill> SkillConfig = new Dictionary<int, Skill>();
     Dictionary<int, Equipment> EquipmentConfig = new Dictionary<int, Equipment>();
     Dictionary<int, MainTask> MainTaskConfig = new Dictionary<int, MainTask>();
+    Dictionary<int, AdventureBuff> AdventureBuffConfig = new Dictionary<int, AdventureBuff>();
 
 
 
+    public Dictionary<int, AdventureBuff> AdventureBuff { get => AdventureBuffConfig; }
     public Dictionary<int, MainTask> MainTask { get => MainTaskConfig; }
     public Dictionary<int, Equipment> Equipment { get => EquipmentConfig; }
     public Dictionary<int, Skill> Skill { get => SkillConfig; }
@@ -102,7 +104,8 @@ class ConfigMng : Single<ConfigMng>
         ReadConfig("Config/Skill", SkillConfig);
         ReadConfig("Config/Equipment", EquipmentConfig);
         ReadConfig("Config/MainTask", MainTaskConfig);
-        
+        ReadConfig("Config/AdventureBuff", AdventureBuffConfig);
+
         yield return null;
     }
 

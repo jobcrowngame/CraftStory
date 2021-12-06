@@ -36,8 +36,8 @@ public class MapUI : UIBase
         SpriteAnim4.gameObject.SetActive(MapLG.E.IsEquipTutorial());
         SpriteAnim5.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd5 == 0);
 
-        // チュートリアル以外開ける場合、一時停止
-        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
+        // 冒険エリアの場合、時間を停止
+        if (DataMng.E.RuntimeData.MapType == MapType.Brave)
         {
             PlayerCtl.E.Pause();
         }

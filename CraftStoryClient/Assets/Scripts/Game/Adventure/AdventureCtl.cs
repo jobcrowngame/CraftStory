@@ -72,4 +72,16 @@ public class AdventureCtl : Single<AdventureCtl>
     {
         curExp += count;
     }
+
+    /// <summary>
+    /// 冒険BUFFを追加
+    /// </summary>
+    /// <param name="id"></param>
+    public void AddAdventureBuff(int id)
+    {
+        var config = ConfigMng.E.AdventureBuff[id];
+
+        var pos = MapCtl.GetGroundPos(DataMng.E.MapData, -1, -1, 5);
+        CommonFunction.Instantiate<AdventureBuffCell>(config.ResourcesPath, null, pos);
+    }
 }

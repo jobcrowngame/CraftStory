@@ -133,7 +133,8 @@ namespace ExcelToJson
                 case "Skill": list = Skill(tbl); break;
                 case "Equipment": list = Equipment(tbl); break;
                 case "MainTask": list = MainTask(tbl); break;
-
+                case "AdventureBuff": list = AdventureBuff(tbl); break;
+                    
 
                 default: Console.WriteLine("not find fileName " + fileName); break;
             }
@@ -853,5 +854,25 @@ namespace ExcelToJson
             }
             return list;
         }
+        private static object AdventureBuff(DataTable tbl)
+        {
+            List<AdventureBuff> list = new List<AdventureBuff>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new AdventureBuff()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Name = ToString(tbl.Rows[i]["Name"]),
+                    ResourcesPath = ToString(tbl.Rows[i]["ResourcesPath"]),
+                    TargetGroup = ToInt32(tbl.Rows[i]["TargetGroup"]),
+                    Skill = ToInt32(tbl.Rows[i]["Skill"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+
+        
     }
 }
