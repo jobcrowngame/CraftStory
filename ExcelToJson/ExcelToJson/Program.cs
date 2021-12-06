@@ -671,6 +671,7 @@ namespace ExcelToJson
                     CharacterIcon = ToString(tbl.Rows[i]["CharacterIcon"]),
                     NameIcon = ToString(tbl.Rows[i]["NameIcon"]),
                     Text = ToString(tbl.Rows[i]["Text"]),
+                    Overview = ToString(tbl.Rows[i]["Overview"]),
                 };
 
                 list.Add(data);

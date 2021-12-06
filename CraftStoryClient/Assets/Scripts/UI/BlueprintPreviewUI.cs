@@ -93,7 +93,7 @@ public class BlueprintPreviewUI : UIBase
         if (HomeLG.E.UI != null)
         {
             HomeLG.E.UI.Open();
-            if(beforUI != null) beforUI.Open();
+            if (beforUI != null) beforUI.Open();
         }
 
         if (HomeLG.E.UI != null)
@@ -106,6 +106,11 @@ public class BlueprintPreviewUI : UIBase
         {
             GuideLG.E.UI.Open();
             if (beforUI != null) beforUI.Open();
+        }
+
+        if (HomeLG.E.UI != null)
+        {
+            HomeLG.E.UI.RefreshTaskOverview();
         }
 
         if (DataMng.E.RuntimeData.MapType != MapType.Guide)
