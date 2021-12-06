@@ -14,11 +14,23 @@ public class AdventureCtl : Single<AdventureCtl>
     int curExp = 0;
     public int CurExp { get => curExp; }
 
+    int timer;
+
+    private void UpdateBySeconds()
+    {
+        timer++;
+
+        //AddBuff();
+    }
+
     public override void Init()
     {
         base.Init();
 
         bonusList = new List<int>();
+        timer = 0;
+
+        TimeZoneMng.E.AddTimerEvent03(UpdateBySeconds);
     }
 
     // ボーナス追加
@@ -33,6 +45,8 @@ public class AdventureCtl : Single<AdventureCtl>
     {
         bonusList.Clear();
         curExp = 0;
+
+        TimeZoneMng.E.RemoveTimerEvent03(UpdateBySeconds);
     }
 
     /// <summary>
@@ -73,12 +87,25 @@ public class AdventureCtl : Single<AdventureCtl>
         curExp += count;
     }
 
+    private void AddBuff()
+    {
+        if (DataMng.E.RuntimeData.MapType != MapType.Brave)
+            return;
+
+        if (timer % SettingMng.CreateAdventureBuffStep == 0)
+        {
+            AddAdventureBuff(1);
+        }
+    }
+
     /// <summary>
     /// 冒険BUFFを追加
     /// </summary>
     /// <param name="id"></param>
     public void AddAdventureBuff(int id)
     {
+        Logger.Log("add buff");
+
         var config = ConfigMng.E.AdventureBuff[id];
 
         var pos = MapCtl.GetGroundPos(DataMng.E.MapData, -1, -1, 0);

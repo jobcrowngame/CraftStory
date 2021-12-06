@@ -626,8 +626,6 @@ public class CharacterBase : MonoBehaviour
     }
     private void RangeRecoveryIEAddImpact(SkillData skill, CharacterGroup targetCamp, string[] impacts)
     {
-        Logger.Log("Add RangeRecovery Impact");
-
         // 目標を探す
         var targets = CharacterCtl.E.FindCharacterInRange(transform.position, skill.Config.Radius, targetCamp);
         foreach (var target in targets)

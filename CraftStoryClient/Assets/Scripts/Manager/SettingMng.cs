@@ -73,4 +73,9 @@ public class SettingMng : Single<SettingMng>
     /// ダメージObjectが削除される時間
     /// </summary>
     public const float DamageDestroyTime = 3;
+
+    /// <summary>
+    /// 冒険エリアでBuffを更新する
+    /// </summary>
+    public const int CreateAdventureBuffStep = 10;
 }

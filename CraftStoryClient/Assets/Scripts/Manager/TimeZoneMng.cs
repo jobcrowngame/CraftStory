@@ -8,8 +8,13 @@ using UnityEngine.Events;
 /// </summary>
 public class TimeZoneMng : MonoBehaviour
 {
+    // 毎0.2秒
     UnityEvent SecondTimerEvent01;
+
+    // 毎0.02秒
     UnityEvent SecondTimerEvent02;
+
+    // 毎1秒
     UnityEvent SecondTimerEvent03;
 
     public static TimeZoneMng E
