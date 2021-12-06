@@ -7,5 +7,5 @@ public class MyText : MonoBehaviour
 {
     Text mText { get => CommonFunction.FindChiledByName<Text>(transform, "Text"); }
 
-    public string text { set => mText.text = value; }
+    public string text { get => mText.text; set => mText.text = value; }
 }

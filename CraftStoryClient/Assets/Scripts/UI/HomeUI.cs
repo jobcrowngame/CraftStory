@@ -511,7 +511,13 @@ public partial class HomeUI : UIBase
     /// </summary>
     public void RefreshTaskOverview()
     {
-        if (!TaskOverview.gameObject.activeSelf) return;
+        Image toImage = TaskOverview.GetComponent<Image>();
+
+        if (!TaskOverview.gameObject.activeSelf)
+        {
+            toImage.color = new Color(0f, 0f, 0f, 1 / 256f);
+            return;
+        }
 
         GameObject ChatFlg = GameObject.Find("effect_2d_010");
 
@@ -525,10 +531,21 @@ public partial class HomeUI : UIBase
             if (chatId == -1)
             {
                 TaskOverview.text = "";
-                return;
             }
-            string overview = ConfigMng.E.Chat[chatId].Overview;
-            TaskOverview.text = overview != "N" ? overview : "";
+            else
+            {
+                string overview = ConfigMng.E.Chat[chatId].Overview;
+                TaskOverview.text = overview != "N" ? overview : "";
+            }
+        }
+
+        if (TaskOverview.text == "")
+        {
+            toImage.color = new Color(0f, 0f, 0f, 1 / 256f);
+        }
+        else
+        {
+            toImage.color = new Color(0f, 0f, 0f, 100 / 256f);
         }
     }
 
