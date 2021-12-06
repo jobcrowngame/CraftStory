@@ -18,7 +18,7 @@ public class Parameter
     public float DazeTime { get => config.DazeTime; }
     public float MoveSpeed { get => config.MoveSpeed; }
 
-    public int PondId { get => config.PondId; }
+    public string PondIds { get => config.PondIds; }
     public int AddExp { get => config.AddExp; }
 
 

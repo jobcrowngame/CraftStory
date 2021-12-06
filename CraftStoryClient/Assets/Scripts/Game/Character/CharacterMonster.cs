@@ -48,9 +48,13 @@ public class CharacterMonster : CharacterBase
         base.Died();
 
         // モンスターを倒す場合、ボーナスが手に入る
-        foreach (var item in CommonFunction.GetBonusListByPondId(Parameter.PondId))
+        string[] pondIds = Parameter.PondIds.Split(',');
+        for (int i = 0; i < pondIds.Length; i++)
         {
-            AdventureCtl.E.AddBonus(item);
+            foreach (var item in CommonFunction.GetBonusListByPondId(int.Parse(pondIds[i])))
+            {
+                AdventureCtl.E.AddBonus(item);
+            }
         }
 
         // 経験値手に入る

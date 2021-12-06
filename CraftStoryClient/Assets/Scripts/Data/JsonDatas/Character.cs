@@ -18,7 +18,7 @@ namespace JsonConfigData
         public int Defense { get; set; }
         public int LvUpExp { get; set; }
         public string Skills { get; set; }
-        public int PondId { get; set; }
+        public string PondIds { get; set; }
         public int AddExp { get; set; }
         public int SecurityRange { get; set; }
         public int CallForHelpRange { get; set; }

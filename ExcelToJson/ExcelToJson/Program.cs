@@ -715,7 +715,7 @@ namespace ExcelToJson
                     Defense = ToInt32(tbl.Rows[i]["Defense"]),
                     LvUpExp = ToInt32(tbl.Rows[i]["LvUpExp"]),
                     Skills = ToString(tbl.Rows[i]["Skills"]),
-                    PondId = ToInt32(tbl.Rows[i]["PondId"]),
+                    PondIds = ToString(tbl.Rows[i]["PondIds"]),
                     AddExp = ToInt32(tbl.Rows[i]["AddExp"]),
                     SecurityRange = ToInt32(tbl.Rows[i]["SecurityRange"]),
                     CallForHelpRange = ToInt32(tbl.Rows[i]["CallForHelpRange"]),
