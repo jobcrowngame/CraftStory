@@ -81,7 +81,8 @@ public class AdventureCtl : Single<AdventureCtl>
     {
         var config = ConfigMng.E.AdventureBuff[id];
 
-        var pos = MapCtl.GetGroundPos(DataMng.E.MapData, -1, -1, 5);
-        CommonFunction.Instantiate<AdventureBuffCell>(config.ResourcesPath, null, pos);
+        var pos = MapCtl.GetGroundPos(DataMng.E.MapData, -1, -1, 0);
+        var cell = CommonFunction.Instantiate<AdventureBuffCell>(config.ResourcesPath, null, pos);
+        cell.Set(config);
     }
 }

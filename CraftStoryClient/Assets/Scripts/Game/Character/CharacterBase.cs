@@ -269,7 +269,7 @@ public class CharacterBase : MonoBehaviour
     /// </summary>
     /// <param name="skillId">スキルID</param>
     /// <param name="target">目標</param>
-    public void StartUseSkill(SkillData skill, CharacterBase selectTarget = null)
+    public void StartUseSkill(CharacterGroup targetGroup, SkillData skill, CharacterBase selectTarget = null)
     {
         // 攻撃中、スキル冷却中、共有CD冷却中場合、スキップ
         if (CanNotChangeBehavior()
@@ -298,9 +298,9 @@ public class CharacterBase : MonoBehaviour
         if ((SkillData.SkillType)skill.Config.Type != SkillData.SkillType.Jump)
             UseSkilling = true;
 
-        StartCoroutine(UseSkillIE(skill, selectTarget));
+        StartCoroutine(UseSkillIE(targetGroup, skill, selectTarget));
     }
-    private IEnumerator UseSkillIE(SkillData skill, CharacterBase selectTarget = null)
+    private IEnumerator UseSkillIE(CharacterGroup targetGroup, SkillData skill, CharacterBase selectTarget = null)
     {
         // 目標がある場合、向きを調整
         if (selectTarget != null && 
@@ -329,9 +329,6 @@ public class CharacterBase : MonoBehaviour
 
         Behavior = (BehaviorType)skill.Config.Animation;
 
-        // 目標のキャンプ
-        var targetCamp = Group == CharacterGroup.Monster ? CharacterGroup.Player : CharacterGroup.Monster;
-
         switch ((SkillData.SkillType)skill.Config.Type)
         {
             // 範囲攻撃
@@ -340,7 +337,7 @@ public class CharacterBase : MonoBehaviour
                 if (skill.Config.AttackerEffect != "N")
                     EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
 
-                StartCoroutine(RangeAttack(skill, targetCamp));
+                StartCoroutine(RangeAttack(skill, targetGroup));
                 break;
 
             // 単体攻撃
@@ -358,7 +355,7 @@ public class CharacterBase : MonoBehaviour
                 if (skill.Config.AttackerEffect != "N")
                     EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
 
-                StartCoroutine(RangedRangeAttackIE(skill, selectTarget, targetCamp));
+                StartCoroutine(RangedRangeAttackIE(skill, selectTarget, targetGroup));
                 break;
 
             // ビーム
@@ -367,7 +364,7 @@ public class CharacterBase : MonoBehaviour
                 if (skill.Config.AttackerEffect != "N")
                     EffectMng.E.AddBattleEffectHaveParent(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
 
-                StartCoroutine(BeamIE(skill, targetCamp));
+                StartCoroutine(BeamIE(skill, targetGroup));
                 break;
 
             // 自分の回復
@@ -382,6 +379,14 @@ public class CharacterBase : MonoBehaviour
                 }
 
                 UseSkilling = false;
+                break;
+
+            case SkillData.SkillType.RangeRecovery:
+                // Effect 追加
+                if (skill.Config.AttackerEffect != "N")
+                    EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
+
+                StartCoroutine(RangeRecoveryIE(skill, targetGroup));
                 break;
 
             // ジャンプ
@@ -595,6 +600,54 @@ public class CharacterBase : MonoBehaviour
                     continue;
 
                 target.AddImpact(target, this, int.Parse(impact));
+            }
+        }
+    }
+
+    private IEnumerator RangeRecoveryIE(SkillData skill, CharacterGroup targetCamp)
+    {
+        int attackCount = skill.Config.AttackCount;
+        float interval = skill.Config.Interval > 0 ? skill.Config.Interval : 0;
+
+        // ディリーダメージを与える
+        yield return new WaitForSeconds(skill.Config.DelayDamageTime);
+
+
+        while (attackCount > 0)
+        {
+            BeamIEAddImpact(skill, targetCamp, skill.Impacts);
+
+            attackCount--;
+            yield return new WaitForSeconds(interval);
+        }
+
+        UseSkilling = false;
+
+        // 一回のImpact
+        RangeRecoveryIEAddImpact(skill, targetCamp, skill.OneceImpacts);
+    }
+    private void RangeRecoveryIEAddImpact(SkillData skill, CharacterGroup targetCamp, string[] impacts)
+    {
+        // 目標を探す
+        var targets = CharacterCtl.E.FindCharacterInRange(transform, skill.Config.Distance, targetCamp);
+        foreach (var target in targets)
+        {
+            // 不存在、死んだ目標はスキップ
+            if (target == null || target.IsDied)
+                break;
+
+            var targetDir = CharacterCtl.E.CalculationDir(target.transform.position, transform.position);
+            var angle = Vector2.Angle(targetDir, GetMeDirection());
+
+            if (angle * 2 <= skill.Config.RangeAngle)
+            {
+                foreach (var impact in impacts)
+                {
+                    if (impact == "N")
+                        continue;
+
+                    target.AddImpact(target, this, int.Parse(impact));
+                }
             }
         }
     }

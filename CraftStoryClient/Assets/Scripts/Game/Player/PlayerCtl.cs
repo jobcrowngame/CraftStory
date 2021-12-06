@@ -111,11 +111,7 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            var dir = Vector3.zero - Character.transform.position;
-            var targetPos = new Vector3(10, 2, 10);
-
-            var r = CommonFunction.TargetPosInRect(dir, Character.transform.position, targetPos, 10, 3);
-            Logger.Warning(r.ToString());
+            AdventureCtl.E.AddAdventureBuff(1);
         }
 
         if (Input.GetKeyDown(KeyCode.F2))
@@ -465,7 +461,7 @@ public class PlayerCtl : MonoBehaviour
 
         // 移動停止
         Character.StopMove();
-        Character.StartUseSkill(skill, Character.Target);
+        Character.StartUseSkill(CharacterBase.CharacterGroup.Monster, skill, Character.Target);
 
         foreach (var item in Character.SkillList)
         {

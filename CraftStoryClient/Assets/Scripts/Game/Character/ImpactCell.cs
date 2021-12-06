@@ -50,12 +50,6 @@ public class ImpactCell
                 target.Hit(config.TargetFreezeTime);
                 break;
 
-            case ImpactType.Recovery:
-                // 回復量計算
-                damage = BattleCalculationCtl.CalculationRecoveryValue(attacker, impactId);
-                target.Recovery(damage);
-                break;
-
             // 即死ぬ
             case ImpactType.DieInstantly:
                 int random = Random.Range(0, 100);
@@ -80,6 +74,18 @@ public class ImpactCell
 
                     target.Hit(config.TargetFreezeTime);
                 }
+                break;
+
+            case ImpactType.Recovery:
+                // 回復量計算
+                damage = BattleCalculationCtl.CalculationRecoveryValue(attacker, impactId);
+                target.Recovery(damage);
+                break;
+
+            case ImpactType.PercentRecovery:
+                // 回復量計算
+                damage = (int)(target.Parameter.AllHP * config.PercentDamage * 0.01f);
+                target.Recovery(damage);
                 break;
 
             // フリーズ
@@ -139,6 +145,11 @@ public class ImpactCell
         /// 回復（HP）
         /// </summary>
         Recovery = 5,
+
+        /// <summary>
+        /// MaxHPパーセント回復（HP）
+        /// </summary>
+        PercentRecovery = 6,
 
         /// <summary>
         /// ダメージアップ

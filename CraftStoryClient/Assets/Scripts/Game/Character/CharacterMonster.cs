@@ -196,7 +196,7 @@ public class CharacterMonster : CharacterBase
         {
             StopMove();
             Behavior = BehaviorType.Waiting;
-            StartUseSkill(skill, Target);
+            StartUseSkill(CharacterGroup.Player, skill, Target);
         }
     }
 }

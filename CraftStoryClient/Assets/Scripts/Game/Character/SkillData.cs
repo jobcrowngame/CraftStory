@@ -84,6 +84,11 @@ public class SkillData
         ParameterUp = 6,
 
         /// <summary>
+        /// 範囲回復
+        /// </summary>
+        RangeRecovery = 7,
+
+        /// <summary>
         /// ジャンプ
         /// </summary>
         Jump = 100,
