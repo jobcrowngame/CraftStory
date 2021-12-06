@@ -563,6 +563,30 @@ public class PlayerCtl : MonoBehaviour
             // 武器を装備してる場合、タスクが完了とする
             if (Character.IsEquipedEquipment())
                 TaskMng.E.AddMainTaskCount(2);
+
+            // チュートリアルマップ以外、武器チュートリアル完了、現在武器装備してない場合
+            // デフォルトで10001を装備する
+            if (DataMng.E.RuntimeData.MapType != MapType.Guide &&
+                DataMng.E.RuntimeData.GuideEnd4 == 1 &&
+                PlayerCtl.E.GetEquipByItemType(ItemType.Weapon) == null)
+            {
+                // チュートリアルが完了後、デフォルトで武器を鑑定して装備
+                var item = DataMng.E.GetItemByItemId(10001);
+                if (item != null)
+                {
+                    var equipment = new ItemEquipmentData(item);
+                    NWMng.E.AppraisalEquipment((rp) =>
+                    {
+                        equipment.islocked = 1;
+                        equipment.SetAttachSkills((string)rp);
+
+                        NWMng.E.EquitItem((rp) =>
+                        {
+                            PlayerCtl.E.EquipEquipment(equipment);
+                        }, item.id, 101);
+                    }, item.id, 1);
+                }
+            }
         });
     }
 
