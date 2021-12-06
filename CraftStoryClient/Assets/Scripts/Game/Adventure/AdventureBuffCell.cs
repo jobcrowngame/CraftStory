@@ -13,6 +13,8 @@ public class AdventureBuffCell : CharacterBase
             var character = other.GetComponent<CharacterBase>();
             if (character != null && character.Group == CharacterGroup.Player)
             {
+                Model.gameObject.SetActive(false);
+                gameObject.GetComponent<Collider>().enabled = false;
                 UserSkill();
             }
         }

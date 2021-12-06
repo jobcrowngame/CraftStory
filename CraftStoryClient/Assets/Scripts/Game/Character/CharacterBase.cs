@@ -14,7 +14,7 @@ public class CharacterBase : MonoBehaviour
     /// モジュール
     /// </summary>
     private Transform model;
-    public Transform Model { get => model; }
+    public Transform Model { get => CommonFunction.FindChiledByName(transform, "Model").transform; }
 
     public Transform fowardObj;
     public Transform FowardObj { get => fowardObj; }
@@ -137,8 +137,6 @@ public class CharacterBase : MonoBehaviour
 
     public virtual void Init(int characterId, CharacterGroup camp)
     {
-        model = CommonFunction.FindChiledByName(transform, "Model").transform;
-
         var fObj = CommonFunction.FindChiledByName(transform, "FowardObj");
         if(fObj != null) fowardObj = fObj.transform;
 
@@ -615,7 +613,7 @@ public class CharacterBase : MonoBehaviour
 
         while (attackCount > 0)
         {
-            BeamIEAddImpact(skill, targetCamp, skill.Impacts);
+            RangeRecoveryIEAddImpact(skill, targetCamp, skill.Impacts);
 
             attackCount--;
             yield return new WaitForSeconds(interval);
@@ -628,26 +626,21 @@ public class CharacterBase : MonoBehaviour
     }
     private void RangeRecoveryIEAddImpact(SkillData skill, CharacterGroup targetCamp, string[] impacts)
     {
+        Logger.Log("Add RangeRecovery Impact");
+
         // 目標を探す
-        var targets = CharacterCtl.E.FindCharacterInRange(transform, skill.Config.Distance, targetCamp);
+        var targets = CharacterCtl.E.FindCharacterInRange(transform.position, skill.Config.Radius, targetCamp);
         foreach (var target in targets)
         {
-            // 不存在、死んだ目標はスキップ
             if (target == null || target.IsDied)
                 break;
 
-            var targetDir = CharacterCtl.E.CalculationDir(target.transform.position, transform.position);
-            var angle = Vector2.Angle(targetDir, GetMeDirection());
-
-            if (angle * 2 <= skill.Config.RangeAngle)
+            foreach (var impact in impacts)
             {
-                foreach (var impact in impacts)
-                {
-                    if (impact == "N")
-                        continue;
+                if (impact == "N")
+                    continue;
 
-                    target.AddImpact(target, this, int.Parse(impact));
-                }
+                target.AddImpact(target, this, int.Parse(impact));
             }
         }
     }
