@@ -34,7 +34,7 @@ public class CraftLG : UILogicBase<CraftLG, CraftUI>
 
     public void OnClickAdd()
     {
-        if (selectCount < 100)
+        if (selectCount < 99)
         {
             SelectCount++;
             UI.RefreshCost();
@@ -42,7 +42,7 @@ public class CraftLG : UILogicBase<CraftLG, CraftUI>
     }
     public void OnClickAdd10()
     {
-        if (selectCount < 100)
+        if (selectCount < 99)
         {
             SelectCount += 10;
 
