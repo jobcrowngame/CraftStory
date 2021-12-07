@@ -67,6 +67,19 @@ public class EquipUI : UIBase
 
         RefreshParameter();
         RefreshEquip();
+
+
+        // 冒険エリアの場合、時間を停止
+        if (DataMng.E.RuntimeData.MapType == MapType.Brave)
+        {
+            PlayerCtl.E.Pause();
+        }
+    }
+
+    public override void Close()
+    {
+        base.Close();
+        PlayerCtl.E.Pause(false);
     }
 
     /// <summary>
