@@ -112,26 +112,25 @@ public class GiftBoxUI : UIBase
             }
             else
             {
-                if (AdventureCtl.E.CurExp > 0)
+                NWMng.E.AddExp((rp) =>
                 {
-                    NWMng.E.AddExp((rp) =>
+                    NWMng.E.ClearAdventure((rp) =>
                     {
-                        NWMng.E.ClearAdventure((rp) =>
+                        if (okBtnCallBack != null)
                         {
-                            if (okBtnCallBack != null)
+                            PlayerCtl.E.Lock = false;
+                            ClearCell(itemGridRoot);
+                            if (AdventureCtl.E.CurExp > 0)
                             {
-                                PlayerCtl.E.Lock = false;
-                                ClearCell(itemGridRoot);
-
                                 StartCoroutine(StartAnimIE());
                             }
-                        }, AdventureCtl.E.BonusList);
-                    }, AdventureCtl.E.CurExp);
-                }
-                else
-                {
-                    okBtnCallBack();
-                }
+                            else
+                            {
+                                okBtnCallBack();
+                            }
+                        }
+                    }, AdventureCtl.E.BonusList);
+                }, AdventureCtl.E.CurExp);
             }
         });
 
