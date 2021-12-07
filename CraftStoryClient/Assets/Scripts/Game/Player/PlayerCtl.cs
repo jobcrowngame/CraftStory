@@ -491,7 +491,7 @@ public class PlayerCtl : MonoBehaviour
     /// <param name="pause"></param>
     public void Pause(bool pause = true)
     {
-        Time.timeScale = pause ? 0 : 1;
+        //Time.timeScale = pause ? 0 : 1;
     }
 
     #endregion
