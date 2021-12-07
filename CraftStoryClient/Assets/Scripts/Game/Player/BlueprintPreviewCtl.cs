@@ -149,13 +149,15 @@ public class BlueprintPreviewCtl : MonoBehaviour
     public void CreateEntity(BlueprintData data)
     {
         CommonFunction.ClearCell(Parent);
+        Parent.GetComponent<CombineMeshObj>().Clear();
 
         foreach (var item in data.blocks)
         {
             if (item.id == 10000)
                 continue;
 
-            MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, Parent, item.GetPos());
+            var entity = MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, Parent, item.GetPos());
+            entity.transform.localPosition = new Vector3(entity.transform.localPosition.x, entity.transform.localPosition.y - 10000, entity.transform.localPosition.z);
         }
 
         Parent.GetComponent<CombineMeshObj>().Combine();
