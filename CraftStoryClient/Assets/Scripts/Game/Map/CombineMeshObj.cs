@@ -8,7 +8,7 @@ public class CombineMeshObj : MonoBehaviour
 {
     Dictionary<int, Dictionary<Vector3, CombineInstance>> combine = new Dictionary<int, Dictionary<Vector3, CombineInstance>>();
     Dictionary<int, Material> materials = new Dictionary<int, Material>();
-    Dictionary<int, GameObject> meshObjs = new Dictionary<int, GameObject>();
+    List<Mesh> meshObjs = new List<Mesh>();
 
     public void AddObj(int key, Mesh mesh, Material material, Vector3 pos)
     {
@@ -31,26 +31,24 @@ public class CombineMeshObj : MonoBehaviour
     public void RemoveObj(int key, Vector3 pos)
     {
         combine[key].Remove(pos);
-        Combine();
     }
 
     public void Combine()
     {
+        foreach (var item in meshObjs)
+        {
+            Destroy(item);
+        }
+        meshObjs.Clear();
+
         foreach (var k in combine.Keys)
         {
-            if (meshObjs.ContainsKey(k))
-            {
-                Destroy(meshObjs[k].gameObject);
-                meshObjs.Remove(k);
-            }
-
             var obj = CreateMeshObj(k.ToString());
-            meshObjs[k] = obj;
-
             var mesh = obj.AddComponent<MeshFilter>();
             mesh.mesh = new Mesh();
             mesh.mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
             mesh.mesh.CombineMeshes(combine[k].Values.ToArray());
+            meshObjs.Add(mesh.mesh);
 
             var renderer = obj.AddComponent<MeshRenderer>();
             renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
