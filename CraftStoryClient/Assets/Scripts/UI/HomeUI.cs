@@ -253,6 +253,8 @@ public partial class HomeUI : UIBase
             TaskMng.E.AddMainTaskCount(9);
 
         TaskOverview.text = "";
+        Image toImage = TaskOverview.GetComponent<Image>();
+        toImage.color = new Color(0f, 0f, 0f, 1 / 256f);
         PlayerCtl.E.Pause(false);
     }
 
@@ -513,7 +515,7 @@ public partial class HomeUI : UIBase
     {
         Image toImage = TaskOverview.GetComponent<Image>();
 
-        if (!TaskOverview.gameObject.activeSelf)
+        if (!TaskOverviewText.gameObject.activeSelf)
         {
             toImage.color = new Color(0f, 0f, 0f, 1 / 256f);
             return;
