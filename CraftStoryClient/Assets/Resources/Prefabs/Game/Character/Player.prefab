@@ -218,10 +218,10 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1
-  m_Radius: 0.4
+  m_Height: 1.2
+  m_Radius: 0.48
   m_SlopeLimit: 45
-  m_StepOffset: 1
+  m_StepOffset: 1.2
   m_SkinWidth: 0.001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
@@ -241,6 +241,7 @@ MonoBehaviour:
   mBehavior: 1
   moveDirection: {x: 0, y: 0, z: 0}
   FreezeTime: 0
+  UseSkilling: 0
   IsGrand: 0
   newDir: {x: 0, y: 0}
 --- !u!114 &9107403550295837978
@@ -334,7 +335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6934ac624d8f89f4db99923cf05b5694, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -0.68
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6934ac624d8f89f4db99923cf05b5694, type: 3}
       propertyPath: m_LocalPosition.z

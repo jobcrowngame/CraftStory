@@ -231,8 +231,8 @@ public partial class CharacterPlayer : CharacterBase
     /// </summary>
     public void IsModelActive(bool b)
     {
-        Controller.radius = b ? 0.40f : 0.01f;
-        Controller.height = b ? 1.1f : 1f;
+        Controller.radius = b ? 0.48f : 0.01f;
+        //Controller.height = b ? 1.8f : 1.8f;
     }
 
     /// <summary>
