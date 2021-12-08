@@ -57,7 +57,11 @@ public class EntityBlast : EntityBase
         Dictionary<int, int> addItems = new Dictionary<int, int>();
 
         var startPos = Vector3Int.CeilToInt(transform.position);
-        for (int y = -radius; y <= radius; y++)
+
+        // 爆破範囲判定
+        int minY = config.Type == 1 ? -radius : 0;
+
+        for (int y = minY; y <= radius; y++)
         {
             for (int z = -radius; z <= radius; z++)
             {
