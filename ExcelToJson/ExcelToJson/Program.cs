@@ -134,7 +134,8 @@ namespace ExcelToJson
                 case "Equipment": list = Equipment(tbl); break;
                 case "MainTask": list = MainTask(tbl); break;
                 case "AdventureBuff": list = AdventureBuff(tbl); break;
-                    
+                case "Blast": list = Blast(tbl); break;
+
 
                 default: Console.WriteLine("not find fileName " + fileName); break;
             }
@@ -873,7 +874,26 @@ namespace ExcelToJson
             }
             return list;
         }
+        private static object Blast(DataTable tbl)
+        {
+            List<Blast> list = new List<Blast>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Blast()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Name = ToString(tbl.Rows[i]["Name"]),
+                    EntityID = ToInt32(tbl.Rows[i]["EntityID"]),
+                    Type = ToInt32(tbl.Rows[i]["Type"]),
+                    Radius = ToInt32(tbl.Rows[i]["Radius"]),
+                    Effect = ToString(tbl.Rows[i]["Effect"]),
+                    Timer = ToFloat(tbl.Rows[i]["Timer"]),
+                    Des = ToString(tbl.Rows[i]["Des"]),
+                };
 
-        
+                list.Add(data);
+            }
+            return list;
+        }
     }
 }

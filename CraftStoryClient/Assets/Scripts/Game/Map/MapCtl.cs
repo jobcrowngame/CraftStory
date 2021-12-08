@@ -13,6 +13,7 @@ public class MapCtl
     private Transform effectParent; // エフェクト親
 
     public Transform CellParent { get => mapCellParent; }
+    private CombineMeshObj CombineMeshObj { get => CellParent.GetComponent<CombineMeshObj>(); }
     public Transform EffectParent { get => effectParent; }
 
     public MapCtl()
@@ -78,7 +79,7 @@ public class MapCtl
             }
         }
 
-        CellParent.GetComponent<CombineMeshObj>().Combine();
+        CombineMesh();
     }
 
     /// <summary>
@@ -210,7 +211,7 @@ public class MapCtl
         }
 
         // メッシュを結合
-        WorldMng.E.MapCtl.CellParent.GetComponent<CombineMeshObj>().Combine();
+        WorldMng.E.MapCtl.CombineMesh();
     }
     /// <summary>
     /// エンティティを作成
@@ -253,14 +254,47 @@ public class MapCtl
     /// <param name="entity"></param>
     public void DeleteEntity(EntityBase entity)
     {
-        DataMng.E.MapData.Remove(entity);
+        //Logger.Warning("DeleteEntity by entity {0}:{1}", entity.gameObject.name, entity.Pos);
+
+        DataMng.E.MapData.RemoveEntity(entity);
         CheckNextToEntitys(entity.Pos);
+        CombineMesh();
+    }
+    public void DeleteEntity(Vector3Int pos)
+    {
+        EntityBase entity = DataMng.E.MapData.GetEntity(pos);
+        if (entity != null)
+        {
+            DataMng.E.MapData.RemoveEntity(entity);
+            //Logger.Warning("DeleteEntity {0}:{1} ", entity.gameObject.name, pos);
+        }
     }
 
     public void RemoveMesh(EntityBase entity)
     {
-        CellParent.GetComponent<CombineMeshObj>().RemoveObj(entity.EntityID, entity.Pos);
+        CellParent.GetComponent<CombineMeshObj>().RemoveMesh(entity.EntityID, entity.Pos);
     }
+    public void CombineMesh()
+    {
+        if (CellParent == null)
+        {
+            Logger.Warning("CellParent is null");
+            return;
+        }
+
+        CombineMeshObj.Combine();
+    }
+    public void ClearMesh()
+    {
+        if (CellParent == null)
+        {
+            Logger.Warning("CellParent is null");
+            return;
+        }
+
+        CombineMeshObj.Clear();
+    }
+
     /// <summary>
     /// 設計図エンティティを削除
     /// </summary>
@@ -272,7 +306,7 @@ public class MapCtl
     /// <summary>
     /// 隣のエンティティをチェック
     /// </summary>
-    private void CheckNextToEntitys(Vector3Int pos)
+    public void CheckNextToEntitys(Vector3Int pos)
     {
         List<Vector3Int> entitys = new List<Vector3Int>();
 
@@ -288,7 +322,7 @@ public class MapCtl
             if (IsOutRange(DataMng.E.MapData, entitys[i]))
                 continue;
 
-            DataMng.E.MapData.IsSurface(entitys[i], CheckBlockIsSurface(DataMng.E.MapData, entitys[i]));
+            DataMng.E.MapData.OnSurface(entitys[i], CheckBlockIsSurface(DataMng.E.MapData, entitys[i]));
         }
     }
 
@@ -559,6 +593,7 @@ public class MapCtl
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.GiftShop
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.DefaltSurfaceEntity
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.HaveDirectionSurfaceEntity
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Blast
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.TransferGate;
     }
     /// <summary>

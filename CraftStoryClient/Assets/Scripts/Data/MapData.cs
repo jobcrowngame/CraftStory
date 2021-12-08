@@ -99,7 +99,7 @@ public class MapData
     /// </summary>
     /// <param name="pos">ブロックの座標</param>
     /// <param name="b">表面の場合　true</param>
-    public void IsSurface(Vector3Int pos, bool b = true)
+    public void OnSurface(Vector3Int pos, bool b = true)
     {
         if (b)
         {
@@ -111,6 +111,7 @@ public class MapData
             if (entity != null)
             {
                 entityDic[pos] = entity;
+                //Logger.Warning("AddEntity:{0}", pos);
             }
         }
         else
@@ -118,10 +119,8 @@ public class MapData
             // 裏の場合、エンティティのインスタンスを削除
             if (entityDic.ContainsKey(pos))
             {
-                WorldMng.E.MapCtl.CellParent.GetComponent<CombineMeshObj>().RemoveObj(entityDic[pos].EntityID, pos);
-
-                GameObject.Destroy(entityDic[pos].gameObject);
-                entityDic.Remove(pos);
+                RemoveEntity(entityDic[pos], false);
+                //Logger.Warning("RemoveEntity:{0}", pos);
             }
         }
     }
@@ -236,6 +235,12 @@ public class MapData
                     entity = CommonFunction.Instantiate<EntityBed>(config.Resources, parent, pos);
                     break;
 
+                case EntityType.Blast:
+                    var entityBlast = CommonFunction.Instantiate<EntityBlast>(config.Resources, parent, pos);
+                    entityBlast.Set(config.ID);
+                    entity = entityBlast;
+                    break;
+
 
                 default: Logger.Error("not find entityType "+ (EntityType)config.Type); break;
             }
@@ -262,6 +267,16 @@ public class MapData
         }
     }
 
+    /// <summary>
+    /// エンティティをゲット
+    /// </summary>
+    /// <param name="pos"></param>
+    public EntityBase GetEntity(Vector3Int pos)
+    {
+        EntityBase entity = null;
+        entityDic.TryGetValue(pos, out entity);
+        return entity;
+    }
     /// <summary>
     /// エンティティ追加
     /// </summary>
@@ -312,10 +327,12 @@ public class MapData
     /// エンティティ削除
     /// </summary>
     /// <param name="entity">エンティティ</param>
-    public void Remove(EntityBase entity)
+    /// <param name="removeMapdat">マップデータを削除するか</param>
+    public void RemoveEntity(EntityBase entity, bool removeMapdat = true)
     {
         try
         {
+            // マップ範囲以外のエンティティチェック
             if (MapCtl.IsOutRange(this, entity.Pos))
             {
                 Logger.Error("Remove mapdata file." + entity.Pos);
@@ -325,7 +342,9 @@ public class MapData
             if ((EntityType)entity.EConfig.Type == EntityType.Obstacle)
                 return;
 
-            map[entity.Pos.x, entity.Pos.y, entity.Pos.z].entityID = 0;
+            // マップデータを削除
+            if (removeMapdat)
+                map[entity.Pos.x, entity.Pos.y, entity.Pos.z].entityID = 0;
 
             // 阻害を削除
             var obstacleList = MapCtl.GetEntityPosListByDirection(entity.EntityID, entity.Pos, entity.direction);
@@ -342,6 +361,13 @@ public class MapData
             else
             {
                 Logger.Warning("Remove entity Failure");
+            }
+
+            if ((EntityType)entity.EConfig.Type == EntityType.Block ||
+                (EntityType)entity.EConfig.Type == EntityType.Block2 ||
+                (EntityType)entity.EConfig.Type == EntityType.Block99)
+            {
+                WorldMng.E.MapCtl.RemoveMesh(entity);
             }
         }
         catch (Exception ex)

@@ -28,7 +28,7 @@ public class CombineMeshObj : MonoBehaviour
         combine[key][pos] = instance;
     }
 
-    public void RemoveObj(int key, Vector3 pos)
+    public void RemoveMesh(int key, Vector3 pos)
     {
         combine[key].Remove(pos);
     }

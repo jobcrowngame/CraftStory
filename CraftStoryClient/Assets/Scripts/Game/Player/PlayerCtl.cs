@@ -189,13 +189,21 @@ public class PlayerCtl : MonoBehaviour
                         CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
                         Character.Behavior = BehaviorType.Create;
 
-                        WorldMng.E.MapCtl.CellParent.GetComponent<CombineMeshObj>().Combine();
+                        WorldMng.E.MapCtl.CombineMesh();
 
                         StartCoroutine(UnLock());
                         break;
 
                     case ItemType.Lanthanum:
                     case ItemType.NomoObject:
+                        Lock = true;
+                        CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
+                        Character.Behavior = BehaviorType.Create;
+
+                        StartCoroutine(UnLock());
+                        break;
+
+                    case ItemType.Blast:
                         Lock = true;
                         CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
                         Character.Behavior = BehaviorType.Create;

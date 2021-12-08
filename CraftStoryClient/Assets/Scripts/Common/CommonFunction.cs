@@ -193,8 +193,8 @@ public class CommonFunction
 
         CharacterCtl.E.ClearCharacter();
 
-        if(WorldMng.E.MapCtl.CellParent != null) 
-            WorldMng.E.MapCtl.CellParent.GetComponent<CombineMeshObj>().Clear();
+        // メッシュをクリア
+        WorldMng.E.MapCtl.ClearMesh();
 
         // Scene遷移
         SceneManager.LoadSceneAsync("NowLoading");

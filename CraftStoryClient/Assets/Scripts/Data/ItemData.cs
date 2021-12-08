@@ -142,6 +142,11 @@ public enum ItemType
     HaveDirectionNomoObject = 3001,
 
     /// <summary>
+    /// 爆弾
+    /// </summary>
+    Blast = 4000,
+
+    /// <summary>
     /// 武器
     /// </summary>
     Weapon = 5001,

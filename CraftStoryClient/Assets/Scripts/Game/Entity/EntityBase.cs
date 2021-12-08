@@ -151,6 +151,11 @@ public enum EntityType
     /// </summary>
     HaveDirectionSurfaceEntity = 3003,
 
+    /// <summary>
+    /// 爆弾
+    /// </summary>
+    Blast = 4000,
+
     TransferGate = 9999,
     Obstacle = 10000,
 }

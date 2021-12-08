@@ -32,6 +32,13 @@ public class EffectMng : Single<EffectMng>
         var effect = CommonFunction.Instantiate<T>(GetEffectResourcesPath(eType), parent, pos);
         return effect;
     }
+    public T AddEffect<T>(Vector3 pos, string path) where T : Component
+    {
+        Logger.Log("Add Effect");
+
+        var effect = CommonFunction.Instantiate<T>(path, WorldMng.E.MapCtl.EffectParent, pos);
+        return effect;
+    }
     public void RemoveDestroyEffect()
     {
         if (destroyEffect != null)
