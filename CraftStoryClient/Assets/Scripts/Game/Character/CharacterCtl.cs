@@ -211,7 +211,7 @@ public class CharacterCtl : Single<CharacterCtl>
 
         foreach (var item in characterList)
         {
-            if (item == null || item.Group != camp)
+            if (item == null || item.Group != camp || item.IsDied)
                 continue;
 
             var result = CommonFunction.TargetPosInRect(attacker.FowardObj.transform.position, attacker.transform.position, item.transform.position, maxDistance, radius);

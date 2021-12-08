@@ -551,9 +551,21 @@ public class CommonFunction
         var angle = Vector3.Angle(selectPos - startPos, targetPos - startPos);
         var c = Vector3.Distance(startPos, targetPos);
         var b = Math.Sin(angle * (Math.PI / 180)) * c;
-        var a = Math.Cos(angle * (Math.PI / 180)) * c;
+        var distance = Vector3.Distance(startPos, targetPos);
 
-        return a < maxDistance && b < radius;
+        if (b <= radius && angle < 90)
+        {
+            if (distance < maxDistance)
+            {
+                Logger.Log("b:{0}, distance:{1}", b, distance);
+            }
+            else
+            {
+                Logger.Warning("distance:{0}", distance);
+            }
+        }
+
+        return angle < 90 && distance < maxDistance && b < radius;
     }
 
     #endregion

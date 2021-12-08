@@ -590,7 +590,7 @@ public class CharacterBase : MonoBehaviour
         foreach (var target in targets)
         {
             if (target == null || target.IsDied)
-                break;
+                continue;
 
             foreach (var impact in impacts)
             {
