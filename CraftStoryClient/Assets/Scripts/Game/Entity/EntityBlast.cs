@@ -54,6 +54,8 @@ public class EntityBlast : EntityBase
 
     private void DestroyEntitys(int radius)
     {
+        Dictionary<int, int> addItems = new Dictionary<int, int>();
+
         var startPos = Vector3Int.CeilToInt(transform.position);
         for (int y = -radius; y <= radius; y++)
         {
@@ -74,6 +76,23 @@ public class EntityBlast : EntityBase
 
                     var pos = new Vector3Int(indexX, indexY, indexZ);
 
+                    // 手にいるアイテムを記録
+                    if (DataMng.E.MapData.Map[indexX, indexY, indexZ].entityID > 0)
+                    {
+                        var config = ConfigMng.E.Entity[DataMng.E.MapData.Map[indexX, indexY, indexZ].entityID];
+                        if (config.ItemID > 0)
+                        {
+                            if (addItems.ContainsKey(config.ItemID))
+                            {
+                                addItems[config.ItemID] += 1;
+                            }
+                            else
+                            {
+                                addItems[config.ItemID] = 1;
+                            }
+                        }
+                    }
+
                     // マップデータ削除
                     DataMng.E.MapData.Map[indexX, indexY, indexZ] = new MapData.MapCellData() { entityID = 0, direction = 0 };
 
@@ -91,5 +110,10 @@ public class EntityBlast : EntityBase
         }
 
         WorldMng.E.MapCtl.CombineMesh();
+
+        NWMng.E.AddItems((rp) => 
+        {
+            NWMng.E.GetItems();
+        }, addItems);
     }
 }
