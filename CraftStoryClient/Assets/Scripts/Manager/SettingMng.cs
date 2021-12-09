@@ -77,5 +77,5 @@ public class SettingMng : Single<SettingMng>
     /// <summary>
     /// 冒険エリアでBuffを更新する
     /// </summary>
-    public const int CreateAdventureBuffStep = 10;
+    public const int CreateAdventureBuffStep = 30;
 }

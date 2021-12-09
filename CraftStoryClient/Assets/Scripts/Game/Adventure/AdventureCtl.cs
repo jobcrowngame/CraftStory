@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// 冒険コンソル
@@ -20,7 +21,7 @@ public class AdventureCtl : Single<AdventureCtl>
     {
         timer++;
 
-        //AddBuff();
+        AddBuff();
     }
 
     public override void Init()
