@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdventureBuff.cs" />
+    <Compile Include="Blast.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="CharacterGenerated.cs" />
     <Compile Include="Chat.cs" />
