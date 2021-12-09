@@ -21,7 +21,7 @@ public class AdventureCtl : Single<AdventureCtl>
     {
         timer++;
 
-        AddBuff();
+        //AddBuff();
     }
 
     public override void Init()
