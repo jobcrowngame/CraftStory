@@ -325,7 +325,10 @@ public class CharacterBase : MonoBehaviour
             yield return new WaitForSeconds(skill.Config.ReadyTime);
         }
 
-        Behavior = (BehaviorType)skill.Config.Animation;
+        if ((SkillData.SkillType)skill.Config.Type != SkillData.SkillType.Jump)
+        {
+            Behavior = (BehaviorType)skill.Config.Animation;
+        }
 
         switch ((SkillData.SkillType)skill.Config.Type)
         {
@@ -420,7 +423,14 @@ public class CharacterBase : MonoBehaviour
         // 攻撃後の凍結
         yield return new WaitForSeconds(skill.Config.ProcessTime);
 
-        Behavior = BehaviorType.Waiting;
+        if ((SkillData.SkillType)skill.Config.Type == SkillData.SkillType.Jump)
+        {
+            Behavior = beforBehavior;
+        }
+        else
+        {
+            Behavior = BehaviorType.Waiting;
+        }
     }
 
     private IEnumerator RangeAttack(SkillData skill,  CharacterGroup targetCamp)

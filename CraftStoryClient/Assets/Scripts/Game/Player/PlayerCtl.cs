@@ -461,7 +461,7 @@ public class PlayerCtl : MonoBehaviour
         }
 
         // 移動停止
-        Character.StopMove();
+        //Character.StopMove();
         Character.StartUseSkill(CharacterBase.CharacterGroup.Monster, skill, Character.Target);
 
         foreach (var item in Character.SkillList)
