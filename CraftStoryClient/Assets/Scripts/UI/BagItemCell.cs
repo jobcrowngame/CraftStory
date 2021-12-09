@@ -42,12 +42,12 @@ public class BagItemCell : UIBase
             return;
 
         itemName.text = string.IsNullOrEmpty(ItemData.newName)
-            ? itemData.Config().Name
+            ? itemData.Config.Name
             : itemData.newName;
-        Icon.sprite = ReadResources<Sprite>(itemData.Config().IconResourcesPath);
+        Icon.sprite = ReadResources<Sprite>(itemData.Config.IconResourcesPath);
         itemCount.text = "x" + itemData.count;
 
-        if (itemData.Config().Type == (int)ItemType.Blueprint && !string.IsNullOrEmpty(itemData.textureName))
+        if (itemData.Config.Type == (int)ItemType.Blueprint && !string.IsNullOrEmpty(itemData.textureName))
         {
             AWSS3Mng.E.DownLoadTexture2D(Icon, itemData.textureName);
         }

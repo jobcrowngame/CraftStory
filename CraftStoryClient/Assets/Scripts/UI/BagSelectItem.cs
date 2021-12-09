@@ -26,7 +26,7 @@ public class BagSelectItem : UIBase
 
         Icon.sprite = itemData == null
             ? ReadResources<Sprite>("Textures/icon_noimg")
-            : ReadResources<Sprite>(itemData.Config().IconResourcesPath);
+            : ReadResources<Sprite>(itemData.Config.IconResourcesPath);
 
         if (itemData != null && !string.IsNullOrEmpty(itemData.textureName))
         {
@@ -42,7 +42,7 @@ public class BagSelectItem : UIBase
         if (BagLG.E.SelectItem == null)
             return;
 
-        if (BagLG.E.SelectItem.ItemData.Config().CanEquip != 1)
+        if (BagLG.E.SelectItem.ItemData.Config.CanEquip != 1)
             return;
 
         // 空の場合

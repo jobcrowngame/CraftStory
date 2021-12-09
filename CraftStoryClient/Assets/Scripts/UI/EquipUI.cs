@@ -112,10 +112,10 @@ public class EquipUI : UIBase
     {
         foreach (var item in PlayerCtl.E.GetEquipedItems().Values)
         {
-            switch ((ItemType)item.Config().Type)
+            switch ((ItemType)item.Config.Type)
             {
                 case ItemType.Weapon: 
-                    WeaponIcon.SetIcon(item.Config().IconResourcesPath);
+                    WeaponIcon.SetIcon(item.Config.IconResourcesPath);
 
                     if (item.AttachSkills != null)
                     {
@@ -134,7 +134,7 @@ public class EquipUI : UIBase
                     break;
 
                 case ItemType.Armor: 
-                    ArmorIcon.SetIcon(item.Config().IconResourcesPath); 
+                    ArmorIcon.SetIcon(item.Config.IconResourcesPath); 
                     break;
             }
         }

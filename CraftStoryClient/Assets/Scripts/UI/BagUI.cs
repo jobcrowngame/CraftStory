@@ -92,7 +92,7 @@ public class BagUI : UIBase
         if (DataMng.E.Items == null)
             return;
 
-        DataMng.E.Items.Sort((a, b) => a.itemId - b.itemId);
+        DataMng.E.Items.Sort((a, b) => a.Config.Sort - b.Config.Sort);
 
         if (BagLG.E.Classification == BagLG.BagClassification.All)
         {
@@ -105,7 +105,7 @@ public class BagUI : UIBase
         {
             foreach (var item in DataMng.E.Items)
             {
-                if ((BagLG.BagClassification)item.Config().BagType == BagLG.E.Classification)
+                if ((BagLG.BagClassification)item.Config.BagType == BagLG.E.Classification)
                 {
                     AddItem(item);
                 }
@@ -121,9 +121,9 @@ public class BagUI : UIBase
             cell.Set(item);
             cell.name = cell.ItemData.id.ToString();
 
-            if (!cellDic.ContainsKey(item.Config().Name))
+            if (!cellDic.ContainsKey(item.Config.Name))
             {
-                cellDic[item.Config().Name] = cell;
+                cellDic[item.Config.Name] = cell;
             }
         }
     }

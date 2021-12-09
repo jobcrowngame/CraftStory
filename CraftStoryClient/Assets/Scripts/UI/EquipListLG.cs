@@ -117,7 +117,7 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
         foreach (var item in items)
         {
             // 指定したアイテムタイプではないとスキップ
-            if ((ItemType)item.Config().Type != itemType)
+            if ((ItemType)item.Config.Type != itemType)
                 continue;
 
             // 同じタグちゃないとスキップ

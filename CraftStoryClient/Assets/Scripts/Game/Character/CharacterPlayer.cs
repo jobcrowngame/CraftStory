@@ -159,7 +159,7 @@ public partial class CharacterPlayer : CharacterBase
             return;
 
         Transform parent = null;
-        switch ((ItemType)equipmentData.Config().Type)
+        switch ((ItemType)equipmentData.Config.Type)
         {
             case ItemType.Weapon:
                 // どの手に装備するか

@@ -111,19 +111,12 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            AdventureCtl.E.AddAdventureBuff(1);
+            CommonFunction.GoToNextScene(0);
         }
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            var ang1 = 25;
-            var ang2 = 30;
-            var ang3 = 45;
-            var ang4 = 60;
-
-            Logger.Log("a1{0}, a2{1}, a3{2}, a4{3}", Math.Sinh(ang1), Math.Sinh(ang2), Math.Sinh(ang3), Math.Sinh(ang4));
-            Logger.Log("a1{0}, a2{1}, a3{2}, a4{3}", Math.Sin(ang1), Math.Sin(ang2), Math.Sin(ang3), Math.Sin(ang4));
-            Logger.Log("a1{0}, a2{1}, a3{2}, a4{3}", Math.Sin(ang1 * (Math.PI / 180)), Math.Sin(ang2 * (Math.PI / 180)), Math.Sin(ang3 * (Math.PI / 180)), Math.Sin(ang4 * (Math.PI / 180)));
+            AdventureCtl.E.AddAdventureBuff(1);
         }
     }
 
@@ -182,11 +175,11 @@ public class PlayerCtl : MonoBehaviour
             }
             else
             {
-                switch ((ItemType)selectItem.Config().Type)
+                switch ((ItemType)selectItem.Config.Type)
                 {
                     case ItemType.Block:
                         Lock = true;
-                        CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
+                        CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos));
                         Character.Behavior = BehaviorType.Create;
 
                         WorldMng.E.MapCtl.CombineMesh();
@@ -197,7 +190,7 @@ public class PlayerCtl : MonoBehaviour
                     case ItemType.Lanthanum:
                     case ItemType.NomoObject:
                         Lock = true;
-                        CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
+                        CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos));
                         Character.Behavior = BehaviorType.Create;
 
                         StartCoroutine(UnLock());
@@ -205,7 +198,7 @@ public class PlayerCtl : MonoBehaviour
 
                     case ItemType.Blast:
                         Lock = true;
-                        CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos));
+                        CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos));
                         Character.Behavior = BehaviorType.Create;
 
                         StartCoroutine(UnLock());
@@ -219,7 +212,7 @@ public class PlayerCtl : MonoBehaviour
                     case ItemType.Bed:
                         Lock = true;
                         var direction = CommonFunction.GetCreateEntityDirection(pos);
-                        CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), direction);
+                        CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos), direction);
                         Character.Behavior = BehaviorType.Create;
 
                         StartCoroutine(UnLock());
@@ -251,13 +244,13 @@ public class PlayerCtl : MonoBehaviour
 
                     case ItemType.Torch:
                         Lock = true;
-                        CreateEntity(collider, selectItem.Config().ReferenceID, Vector3Int.CeilToInt(pos), dType);
+                        CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos), dType);
                         Character.Behavior = BehaviorType.Create;
 
                         StartCoroutine(UnLock());
                         break;
 
-                    default: Logger.Error("Not find ItemType " + (ItemType)selectItem.Config().Type); break;
+                    default: Logger.Error("Not find ItemType " + (ItemType)selectItem.Config.Type); break;
                 }
             }
         }
@@ -612,12 +605,12 @@ public class PlayerCtl : MonoBehaviour
             return;
 
         // Equipmentが装備してる場合、先ず装備してるEquipmentを消す
-        if (EquipedItems.ContainsKey(itemData.Config().Type))
+        if (EquipedItems.ContainsKey(itemData.Config.Type))
         {
             Unequipment(() =>
             {
                 Equipment(itemData);
-            }, itemData.Config().Type);
+            }, itemData.Config.Type);
         }
         else
         {
@@ -657,7 +650,7 @@ public class PlayerCtl : MonoBehaviour
     private void Equipment(ItemEquipmentData itemData)
     {
         // 装備する
-        int equipSite = (int)CommonFunction.GetEquipSite((ItemType)itemData.Config().Type);
+        int equipSite = (int)CommonFunction.GetEquipSite((ItemType)itemData.Config.Type);
         NWMng.E.EquitItem((rp) =>
         {
             itemData.equipSite = equipSite;
@@ -668,7 +661,7 @@ public class PlayerCtl : MonoBehaviour
     private void OnEquipment(ItemEquipmentData itemData, int equipSite)
     {
         Character.EquipEquipment(itemData);
-        EquipedItems[itemData.Config().Type] = itemData;
+        EquipedItems[itemData.Config.Type] = itemData;
         DataMng.E.GetItemByGuid(itemData.id).equipSite = equipSite;
 
         // 持ち物アイテム更新
@@ -688,7 +681,7 @@ public class PlayerCtl : MonoBehaviour
     public void EquipGuideEquipment(ItemEquipmentData itemData)
     {
         Character.EquipEquipment(itemData);
-        EquipedItems[itemData.Config().Type] = itemData;
+        EquipedItems[itemData.Config.Type] = itemData;
 
         // ホームのスキル更新
         if (HomeLG.E.UI != null) HomeLG.E.UI.SetSkills();

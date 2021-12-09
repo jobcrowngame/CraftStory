@@ -47,9 +47,9 @@ public class DeleteItemCell : UIBase
             return;
 
         itemName.text = string.IsNullOrEmpty(ItemData.newName)
-            ? itemData.Config().Name
+            ? itemData.Config.Name
             : itemData.newName;
-        Icon.sprite = ReadResources<Sprite>(itemData.Config().IconResourcesPath);
+        Icon.sprite = ReadResources<Sprite>(itemData.Config.IconResourcesPath);
         itemCount.text = "x" + itemData.count;
 
         Lock.gameObject.SetActive(itemData.islocked == 1);

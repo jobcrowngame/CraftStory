@@ -330,6 +330,7 @@ namespace ExcelToJson
                 var data = new Item();
 
                 data.ID = ToInt32(tbl.Rows[i]["ID"]);
+                data.Sort = ToInt32(tbl.Rows[i]["Sort"]);
                 data.Name = ToString(tbl.Rows[i]["Name"]);
                 data.IconResourcesPath = ToString(tbl.Rows[i]["IconResourcesPath"]);
                 data.Explanatory = ToString(tbl.Rows[i]["Explanatory"]);
@@ -352,6 +353,7 @@ namespace ExcelToJson
                 var data = new Craft();
 
                 data.ID = ToInt32(tbl.Rows[i]["ID"]);
+                data.Sort = ToInt32(tbl.Rows[i]["Sort"]);
                 data.ItemID = ToInt32(tbl.Rows[i]["ItemID"]);
                 data.Type = ToInt32(tbl.Rows[i]["Type"]);
                 data.Cost1 = ToInt32(tbl.Rows[i]["Cost1"]);

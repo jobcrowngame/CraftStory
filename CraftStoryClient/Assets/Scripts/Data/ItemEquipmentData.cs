@@ -23,7 +23,7 @@ public class ItemEquipmentData : ItemData
         equipSite = DataMng.E.GetItemByGuid(rp.id).equipSite;
     }
 
-    public Equipment equipmentConfig { get => ConfigMng.E.Equipment[Config().ReferenceID]; }
+    public Equipment equipmentConfig { get => ConfigMng.E.Equipment[Config.ReferenceID]; }
 
     public string[] AttachSkills { get => string.IsNullOrEmpty(attachSkills) ? null : attachSkills.Split(','); }
 

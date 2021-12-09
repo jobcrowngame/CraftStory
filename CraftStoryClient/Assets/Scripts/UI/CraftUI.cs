@@ -107,6 +107,9 @@ public class CraftUI : UIBase
             AddCell(item);
         }
 
+        // ソート
+        Order.Sort((a, b) => a.Sort - b.Sort);
+
         // 他をインスタンス
         foreach (var item in Order)
         {

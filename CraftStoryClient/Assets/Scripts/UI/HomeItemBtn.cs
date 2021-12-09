@@ -83,8 +83,8 @@ public class HomeItemBtn : UIBase
         }
         else
         {
-            Icon.sprite = ReadResources<Sprite>(itemData.Config().IconResourcesPath);
-            Count.text = itemData.Config().MaxCount == 1
+            Icon.sprite = ReadResources<Sprite>(itemData.Config.IconResourcesPath);
+            Count.text = itemData.Config.MaxCount == 1
                 ? ""
                 : "x" + itemData.count;
 

@@ -3,6 +3,7 @@ namespace JsonConfigData
 {
     public class Craft : ConfigBase
     {
+        public int Sort { get; set; }
         public int ItemID { get; set; }
         public int Type { get; set; }
         public int Cost1 { get; set; }

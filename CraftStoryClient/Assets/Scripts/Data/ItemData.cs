@@ -24,10 +24,7 @@ public class ItemData
         this.count = count;
     }
 
-    public Item Config()
-    {
-        return ConfigMng.E.Item[itemId];
-    }
+    public Item Config { get => ConfigMng.E.Item[itemId];}
 
     public override string ToString()
     {

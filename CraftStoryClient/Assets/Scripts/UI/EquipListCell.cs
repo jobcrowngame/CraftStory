@@ -57,9 +57,9 @@ public class EquipListCell : UIBase
     {
         this.Data = data;
 
-        Icon.sprite = ReadResources<Sprite>(data.Config().IconResourcesPath);
+        Icon.sprite = ReadResources<Sprite>(data.Config.IconResourcesPath);
 
-        Name.text = data.Config().Name;
+        Name.text = data.Config.Name;
 
         string rareText = "";
         for (int i = 0; i < data.equipmentConfig.RareLevel; i++)

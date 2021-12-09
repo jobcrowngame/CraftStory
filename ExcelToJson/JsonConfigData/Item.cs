@@ -4,6 +4,7 @@ namespace JsonConfigData
 {
     public class Item : ConfigBase
     {
+        public int Sort { get; set; }
         public string Name { get; set; }
         public string IconResourcesPath { get; set; }
         public string Explanatory { get; set; }
