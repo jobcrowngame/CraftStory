@@ -33,6 +33,7 @@ public class DataMng : Single<DataMng>
                 case MapType.Guide: return mGuideData;
                 case MapType.FriendHome: return mFriendHomeData;
                 case MapType.Market: return mMarketData;
+                case MapType.Event: return mEventData;
                 default: return mBraveData;
             }
         }
@@ -42,6 +43,7 @@ public class DataMng : Single<DataMng>
     private MapData mBraveData;
     private MapData mFriendHomeData;
     private MapData mMarketData;
+    private MapData mEventData;
 
     /// <summary>
     /// マイショップデータ
@@ -165,6 +167,7 @@ public class DataMng : Single<DataMng>
             case MapType.Brave: mBraveData = mData; break;
             case MapType.FriendHome: mFriendHomeData = mData; break;
             case MapType.Market: mMarketData = mData; break;
+            case MapType.Event: mEventData = mData; break;
             case MapType.Test: mBraveData = mData; break;
         }
     }

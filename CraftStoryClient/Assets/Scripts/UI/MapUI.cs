@@ -7,6 +7,7 @@ public class MapUI : UIBase
     Button HomeBtn { get => FindChiled<Button>("HomeBtn"); }
     Button MarketBtn { get => FindChiled<Button>("MarketBtn"); }
     Button BraveBtn { get => FindChiled<Button>("BraveBtn"); }
+    Button BraveBtn2 { get => FindChiled<Button>("BraveBtn2"); }
     Button EquipBtn { get => FindChiled<Button>("EquipBtn"); }
     Transform SpriteAnim { get => FindChiled("SpriteAnim"); }
     Transform SpriteAnim4 { get => FindChiled("SpriteAnim4"); }
@@ -20,6 +21,7 @@ public class MapUI : UIBase
         HomeBtn.onClick.AddListener(OnClickHomeBtn);
         MarketBtn.onClick.AddListener(OnClickMarketBtn);
         BraveBtn.onClick.AddListener(OnClickBraveBtn);
+        BraveBtn2.onClick.AddListener(OnClickBraveBtn2);
         EquipBtn.onClick.AddListener(OnClickEquipBtn);
     }
 
@@ -30,6 +32,7 @@ public class MapUI : UIBase
         EnActiveBtn(HomeBtn, DataMng.E.RuntimeData.MapType == MapType.Home);
         EnActiveBtn(MarketBtn, DataMng.E.RuntimeData.MapType == MapType.Market);
         EnActiveBtn(BraveBtn, DataMng.E.RuntimeData.MapType == MapType.Brave);
+        EnActiveBtn(BraveBtn2, DataMng.E.RuntimeData.MapType == MapType.Event);
 
         //SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd2 == 0);
         SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide);
@@ -114,6 +117,24 @@ public class MapUI : UIBase
             {
                 UICtl.E.OpenUI<BraveSelectLevelUI>(UIType.BraveSelectLevel);
             }
+        }
+    }
+    private void OnClickBraveBtn2()
+    {
+        if (!PlayerCtl.E.Character.IsEquipedEquipment())
+        {
+            OnClickEquipBtn();
+            return;
+        }
+
+        if (DataMng.E.RuntimeData.GuideEnd5 == 0)
+        {
+            DataMng.E.RuntimeData.GuideId = 5;
+            CommonFunction.GoToNextScene(107);
+        }
+        else
+        {
+            CommonFunction.GoToNextScene(2000);
         }
     }
     private void OnClickEquipBtn()

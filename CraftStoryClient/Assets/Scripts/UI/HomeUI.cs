@@ -228,13 +228,17 @@ public partial class HomeUI : UIBase
     /// </summary>
     private void RefreshUiByMapType()
     {
-        MenuBtn.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Brave);
+        MenuBtn.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Brave 
+            || DataMng.E.RuntimeData.MapType != MapType.Event);
 
-        SceneName.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave);
+        SceneName.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave 
+            || DataMng.E.RuntimeData.MapType == MapType.Event);
         ItemDropParent.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave
+            || DataMng.E.RuntimeData.MapType == MapType.Event
             || DataMng.E.RuntimeData.MapType == MapType.Guide);
         Battle.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave
-             || DataMng.E.RuntimeData.MapType == MapType.Test);
+            || DataMng.E.RuntimeData.MapType == MapType.Event
+            || DataMng.E.RuntimeData.MapType == MapType.Test);
         
         Items.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home
             || DataMng.E.RuntimeData.MapType == MapType.Guide);
