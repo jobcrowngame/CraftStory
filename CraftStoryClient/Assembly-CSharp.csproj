@@ -167,6 +167,7 @@
     <Compile Include="Assets\Scripts\UI\DebugLG.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintMyShopCell.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Building.cs" />
+    <Compile Include="Assets\Scripts\UI\HomeUI.Blueprint.cs" />
     <Compile Include="Assets\Scripts\Common\PublicPar.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionCell.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityTransferGate.cs" />
@@ -359,7 +360,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\UI\HomeUI.Blueprint.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\LodingTips.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

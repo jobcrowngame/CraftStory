@@ -135,7 +135,8 @@ namespace ExcelToJson
                 case "MainTask": list = MainTask(tbl); break;
                 case "AdventureBuff": list = AdventureBuff(tbl); break;
                 case "Blast": list = Blast(tbl); break;
-
+                case "LodingTips": list = LodingTips(tbl); break;
+                    
 
                 default: Console.WriteLine("not find fileName " + fileName); break;
             }
@@ -891,6 +892,21 @@ namespace ExcelToJson
                     Effect = ToString(tbl.Rows[i]["Effect"]),
                     Timer = ToFloat(tbl.Rows[i]["Timer"]),
                     Des = ToString(tbl.Rows[i]["Des"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object LodingTips(DataTable tbl)
+        {
+            List<LodingTips> list = new List<LodingTips>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new LodingTips()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    Text = ToString(tbl.Rows[i]["Text"]),
                 };
 
                 list.Add(data);

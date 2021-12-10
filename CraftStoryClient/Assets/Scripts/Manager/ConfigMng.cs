@@ -40,9 +40,11 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, MainTask> MainTaskConfig = new Dictionary<int, MainTask>();
     Dictionary<int, AdventureBuff> AdventureBuffConfig = new Dictionary<int, AdventureBuff>();
     Dictionary<int, Blast> BlastConfig = new Dictionary<int, Blast>();
+    Dictionary<int, LodingTips> LodingTipsConfig = new Dictionary<int, LodingTips>();
 
 
 
+    public Dictionary<int, LodingTips> LodingTips { get => LodingTipsConfig; }
     public Dictionary<int, Blast> Blast { get => BlastConfig; }
     public Dictionary<int, AdventureBuff> AdventureBuff { get => AdventureBuffConfig; }
     public Dictionary<int, MainTask> MainTask { get => MainTaskConfig; }
@@ -108,7 +110,9 @@ class ConfigMng : Single<ConfigMng>
         ReadConfig("Config/MainTask", MainTaskConfig);
         ReadConfig("Config/AdventureBuff", AdventureBuffConfig);
         ReadConfig("Config/Blast", BlastConfig);
-        
+        ReadConfig("Config/LodingTips", LodingTipsConfig);
+
+
 
         yield return null;
     }
