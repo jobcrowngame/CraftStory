@@ -144,6 +144,11 @@ public enum ItemType
     Blast = 4000,
 
     /// <summary>
+    /// クワ
+    /// </summary>
+    Hoe = 4100,
+
+    /// <summary>
     /// 武器
     /// </summary>
     Weapon = 5001,
