@@ -25,7 +25,7 @@ public class NowLoadingLG : UILogicBase<NowLoadingLG, NowLoadingUI>
         {
             curPercent = async.progress > UI.Percent ? UI.Percent : async.progress;
 
-            Debug.LogWarning(curPercent);
+            //Debug.LogWarning(curPercent);
 
             var progressVal = Mathf.Clamp01(curPercent / 0.9f);
             UI.SetSlider(progressVal);
