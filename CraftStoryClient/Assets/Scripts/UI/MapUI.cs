@@ -134,7 +134,7 @@ public class MapUI : UIBase
         }
         else
         {
-            CommonFunction.GoToNextScene(2009);
+            CommonFunction.GoToNextScene(2000);
         }
     }
     private void OnClickEquipBtn()
