@@ -70,28 +70,37 @@ public class HomeItemBtn : UIBase
 
     public void Refresh()
     {
-        itemData = DataMng.E.GetItemByEquipedSite(Index + 1);
+        var newItemData = DataMng.E.GetItemByEquipedSite(Index + 1);
 
         if (CurSelectBtn == this && CurSelectBtn.itemData == null)
             CurSelectBtn = null;
 
-        if (itemData == null)
+        if (newItemData == null)
         {
             Icon.sprite = ReadResources<Sprite>("Textures/icon_noimg");
             Count.text = "";
             OnSelected(false);
+            itemData = null;
         }
         else
         {
-            Icon.sprite = ReadResources<Sprite>(itemData.Config.IconResourcesPath);
-            Count.text = itemData.Config.MaxCount == 1
-                ? ""
-                : "x" + itemData.count;
-
-            if (itemData != null && !string.IsNullOrEmpty(itemData.textureName))
+            // アイテムが変わった場合、Iconを更新
+            if (itemData == null || newItemData.id != itemData.id)
             {
-                AWSS3Mng.E.DownLoadTexture2D(Icon, itemData.textureName);
+
+                if (!string.IsNullOrEmpty(newItemData.textureName))
+                {
+                    AWSS3Mng.E.DownLoadTexture2D(Icon, newItemData.textureName);
+                }
+                else
+                {
+                    Icon.sprite = ReadResources<Sprite>(newItemData.Config.IconResourcesPath);
+                }
+
+                itemData = newItemData;
             }
+
+            Count.text = newItemData.Config.MaxCount == 1 ? "" : "x" + newItemData.count;
         }
     }
 }

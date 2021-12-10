@@ -99,22 +99,13 @@ public class BagUI : UIBase
 
         DataMng.E.Items.Sort((a, b) => a.Config.Sort - b.Config.Sort);
 
-        if (BagLG.E.Classification == BagLG.BagClassification.All)
+        foreach (var item in DataMng.E.Items)
         {
-            foreach (var item in DataMng.E.Items)
-            {
-                AddItem(item);
-            }
-        }
-        else
-        {
-            foreach (var item in DataMng.E.Items)
-            {
-                if ((BagLG.BagClassification)item.Config.BagType == BagLG.E.Classification)
-                {
-                    AddItem(item);
-                }
-            }
+            if (BagLG.E.Classification != BagLG.BagClassification.All &&
+                BagLG.E.Classification != (BagLG.BagClassification)item.Config.BagType)
+                continue;
+
+            AddItem(item);
         }
     }
     private void AddItem(ItemData item)
