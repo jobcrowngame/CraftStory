@@ -59,13 +59,7 @@ public class BlueprintPreviewUI : UIBase
             texture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
             texture.Apply();
 
-            if (onPhotographCallback != null)
-            {
-                onPhotographCallback(texture);
-                onPhotographCallback = null;
-            }
-
-            StartCoroutine(PhotographIE());
+            StartCoroutine(PhotographIE(texture));
         });
     }
     public override void Open(object data)
@@ -151,7 +145,7 @@ public class BlueprintPreviewUI : UIBase
         Bar.value = v;
     }
 
-    IEnumerator PhotographIE()
+    IEnumerator PhotographIE(Texture2D texture)
     {
         PhotographImg.gameObject.SetActive(true);
 
@@ -171,5 +165,11 @@ public class BlueprintPreviewUI : UIBase
 
         // チュートリアル
         GuideLG.E.Next();
+
+        if (onPhotographCallback != null)
+        {
+            onPhotographCallback(texture);
+            onPhotographCallback = null;
+        }
     }
 }

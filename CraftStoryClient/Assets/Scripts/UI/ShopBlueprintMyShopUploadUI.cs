@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopBlueprintMyShopUploadUI : UIBase
@@ -58,6 +59,19 @@ public class ShopBlueprintMyShopUploadUI : UIBase
                                     {
                                         ShopBlueprintLG.E.UI.RefreshMyShopWindow();
                                         CommonFunction.ShowHintBar(16);
+
+                                        // 設計図アップロード案内の表示
+                                        NWMng.E.GetTotalUploadBlueprintCount((rp) =>
+                                        {
+                                            int count = int.Parse(rp.ToString());
+                                            Image img = GameObject.Find("BluePrintHintImage").GetComponent<Image>();
+                                            img.color = new Color(1f, 1f, 1f, count == 0 ? 1 : 1 / 256f);
+                                            if (count == 1)
+                                            {
+                                                UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 124);
+                                            }
+                                        });
+
                                     });
                                 }, itemData.id, Index, GetPrice(), textureName);
                             });
@@ -76,7 +90,6 @@ public class ShopBlueprintMyShopUploadUI : UIBase
     public override void Open()
     {
         base.Open();
-
     }
     public override void Close()
     {

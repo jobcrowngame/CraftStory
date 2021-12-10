@@ -71,7 +71,7 @@ public class EntityFunctionalObject : EntityBase
             case EntityType.ChargeShop:
                 PlayerCtl.E.TalkToNPC(transform, () =>
                 {
-                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 1);
+                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 1);
                     chatUi.AddListenerOnClose(() =>
                     {
                         UICtl.E.OpenUI<ShopChargeUI>(UIType.ShopCharge);
@@ -82,7 +82,7 @@ public class EntityFunctionalObject : EntityBase
             case EntityType.GachaShop:
                 PlayerCtl.E.TalkToNPC(transform, () =>
                 {
-                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 2);
+                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 2);
                     chatUi.AddListenerOnClose(() =>
                     {
                         UICtl.E.OpenUI<ShopGachaUI>(UIType.ShopGacha);
@@ -93,7 +93,7 @@ public class EntityFunctionalObject : EntityBase
             case EntityType.ResourceShop:
                 PlayerCtl.E.TalkToNPC(transform, () =>
                 {
-                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 3);
+                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 3);
                     chatUi.AddListenerOnClose(() =>
                     {
                         UICtl.E.OpenUI<ShopResourceUI>(UIType.ShopResource);
@@ -107,7 +107,7 @@ public class EntityFunctionalObject : EntityBase
                     GuideLG.E.UnLock();
                     if(GuideLG.E.UI != null) GuideLG.E.UI.CloseChatWindow();
 
-                    var chatUi  = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 4);
+                    var chatUi  = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 4);
                     chatUi.AddListenerOnClose(() =>
                     {
                         UICtl.E.OpenUI<ShopBlueprintUI>(UIType.ShopBlueprint);
@@ -120,11 +120,11 @@ public class EntityFunctionalObject : EntityBase
                 {
                     if (DataMng.E.RuntimeData.Coin3 < 1000)
                     {
-                        UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 6);
+                        UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 6);
                         return;
                     }
 
-                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 5);
+                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 5);
                     chatUi.AddListenerOnClose(() =>
                     {
                         UICtl.E.OpenUI<ExchangePointUI>(UIType.ExchangePoint);

@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class MapUI : UIBase
@@ -12,6 +12,11 @@ public class MapUI : UIBase
     Transform SpriteAnim { get => FindChiled("SpriteAnim"); }
     Transform SpriteAnim4 { get => FindChiled("SpriteAnim4"); }
     Transform SpriteAnim5 { get => FindChiled("SpriteAnim5"); }
+    MyText BluePrintHint { get => FindChiled<MyText>("BluePrintHint"); }
+
+    readonly string BluePrintHint1 = @"è¨­è¨ˆå›³ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã§ãƒã‚¤ãƒ³ãƒˆã‚²ãƒƒãƒˆï¼";
+    readonly string BluePrintHint2 = @"è¨­è¨ˆå›³å¸‚å ´ã§ã©ã‚“ãªè¨­è¨ˆå›³ãŒã‚ã‚‹ã‹
+ã¿ã¦ã¿ã‚ˆã†ï¼";
 
     public override void Init()
     {
@@ -39,11 +44,13 @@ public class MapUI : UIBase
         SpriteAnim4.gameObject.SetActive(MapLG.E.IsEquipTutorial());
         SpriteAnim5.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd5 == 0);
 
-        // –`Œ¯ƒGƒŠƒA‚Ìê‡AŽžŠÔ‚ð’âŽ~
+        // å†’é™ºã‚¨ãƒªã‚¢ã®å ´åˆã€æ™‚é–“ã‚’åœæ­¢
         if (DataMng.E.RuntimeData.MapType == MapType.Brave)
         {
             PlayerCtl.E.Pause();
         }
+
+        BluePrintHint.text = BluePrintHint2;
     }
     public override void Close()
     {
@@ -56,11 +63,11 @@ public class MapUI : UIBase
     {
         GuideLG.E.Next();
 
-        // ƒz[ƒ€‚É‚©‚çƒz[ƒ€‘JˆÚ‚Å‚«‚Ü‚¹‚ñ
+        // ãƒ›ãƒ¼ãƒ ã«ã‹ã‚‰ãƒ›ãƒ¼ãƒ é·ç§»ã§ãã¾ã›ã‚“
         if (DataMng.E.RuntimeData.MapType == MapType.Home)
             return;
 
-        // –`Œ¯“r’†‚Åƒz[ƒ€–ß‚éê‡Aƒ{[ƒiƒXŒvŽZ‚µ‚Ü‚·
+        // å†’é™ºé€”ä¸­ã§ãƒ›ãƒ¼ãƒ æˆ»ã‚‹å ´åˆã€ãƒœãƒ¼ãƒŠã‚¹è¨ˆç®—ã—ã¾ã™
         if (DataMng.E.RuntimeData.MapType == MapType.Brave)
         {
             AdventureCtl.E.GetBonus(() =>

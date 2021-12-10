@@ -43,7 +43,7 @@ public partial class NWMng : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.ProductionURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.TestURL))
         {
             yield return www.SendWebRequest();
 
@@ -1030,6 +1030,16 @@ public partial class NWMng : MonoBehaviour
         StartCoroutine(HttpRequest(rp, data, CMD.GetLoginBonus));
     }
 
+    /// <summary>
+    /// 設計図アップロード回数を取得
+    /// </summary>
+    /// <param name="rp"></param>
+    public void GetTotalUploadBlueprintCount(Action<JsonData> rp)
+    {
+        var data = new NWData();
+
+        StartCoroutine(HttpRequest(rp, data, CMD.GetTotalUploadBlueprintCount));
+    }
 
     /// <summary>
     /// ホームデータをサーバーにセーブ
@@ -1139,6 +1149,7 @@ public partial class NWMng : MonoBehaviour
         GetMaxBraveLevel,
         GetLoginBonusInfo,
         GetLoginBonus,
+        GetTotalUploadBlueprintCount,
 
         SaveHomeData = 6000,
         LoadHomeData = 6001,
