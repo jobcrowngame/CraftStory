@@ -1,8 +1,10 @@
+using UnityEngine;
 using UnityEngine.UI;
 
 public class NowLoadingUI : UIBase
 {
     Text text { get => FindChiled<Text>("Text"); }
+    Text Tips { get => FindChiled<Text>("Tips"); }
     Slider slider { get => FindChiled<Slider>("Slider"); }
 
     float timer = 0;
@@ -18,6 +20,7 @@ public class NowLoadingUI : UIBase
         text.text = "Now Loading...";
         slider.value = 0;
 
+        SetTips();
         StartCoroutine(NowLoadingLG.E.LoadData());
     }
 
@@ -29,5 +32,24 @@ public class NowLoadingUI : UIBase
     public void SetSlider(float v)
     {
         slider.value = v;
+    }
+
+    private void SetTips()
+    {
+        string tips = "";
+
+        if (NowLoadingLG.E.FixtTips < 0)
+        {
+            var random = Random.Range(1, ConfigMng.E.LodingTips.Count);
+            tips = ConfigMng.E.LodingTips[random].Text;
+        }
+        else
+        {
+            tips = ConfigMng.E.LodingTips[NowLoadingLG.E.FixtTips].Text;
+        }
+
+        Tips.text = tips;
+
+        NowLoadingLG.E.FixtTips = -1;
     }
 }

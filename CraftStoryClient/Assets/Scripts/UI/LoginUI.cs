@@ -30,6 +30,8 @@ public class LoginUI : UIBase
 
             Lock = true;
 
+            NowLoadingLG.E.FixtTips = 0;
+
             if (DataMng.E.RuntimeData.GuideEnd3 == 1)
             {
                 CommonFunction.GoToNextScene(100);

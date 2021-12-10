@@ -11,6 +11,7 @@ public class NowLoadingLG : UILogicBase<NowLoadingLG, NowLoadingUI>
     public int NextMapID { get; set; }
 
     public int BeforTransferGateID { get; set; }
+    public int FixtTips { get; set; }
 
     public IEnumerator LoadData()
     {
