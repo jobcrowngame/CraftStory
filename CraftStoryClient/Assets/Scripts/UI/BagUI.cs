@@ -13,8 +13,11 @@ public class BagUI : UIBase
     Transform itemGridRoot { get => FindChiled("Content"); }
     Dictionary<string, BagItemCell> cellDic;
     BagSelectItem[] selectItems;
+    public MyText Explanatory { get => FindChiled<MyText>("Explanatory"); }
 
     Button DeleteBtn { get => FindChiled<Button>("DeleteBtn"); }
+
+    public readonly string ExplanatoryNoSelect = "アイテムをタップすると説明が表示されます";
 
     public override void Init()
     {
@@ -77,6 +80,8 @@ public class BagUI : UIBase
             DataMng.GetCoins(rp);
             Title.RefreshCoins();
         });
+        
+        Explanatory.text = ExplanatoryNoSelect;
     }
     public override void Close()
     {
@@ -143,5 +148,6 @@ public class BagUI : UIBase
         }
 
         btns[index].IsSelected(true);
+        Explanatory.text = ExplanatoryNoSelect;
     }
 }

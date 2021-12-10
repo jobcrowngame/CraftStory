@@ -17,7 +17,15 @@ public class BagLG : UILogicBase<BagLG, BagUI>
             }
 
             selectItem = value;
-            if (selectItem != null) selectItem.IsSelected(true);
+            if (selectItem != null)
+            {
+                selectItem.IsSelected(true);
+                UI.Explanatory.text = ConfigMng.E.Item[selectItem.ItemData.itemId].Explanatory;
+            }
+            else
+            {
+                UI.Explanatory.text = UI.ExplanatoryNoSelect;
+            }
         }
     }
     private BagItemCell selectItem;
