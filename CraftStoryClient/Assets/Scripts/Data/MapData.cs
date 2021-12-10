@@ -472,6 +472,11 @@ public enum MapType
     Market = 5,
 
     /// <summary>
+    /// イベント
+    /// </summary>
+    Event = 7,
+
+    /// <summary>
     /// テスト
     /// </summary>
     Test = 99,
