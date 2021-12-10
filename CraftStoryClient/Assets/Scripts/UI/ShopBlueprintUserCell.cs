@@ -7,6 +7,7 @@ public class ShopBlueprintUserCell : UIBase
     Button GoodBtn { get => FindChiled<Button>("Button"); }
     Text GoodNum { get => FindChiled<Text>("Text"); }
     Button ShowDetailsBtn { get => gameObject.GetComponent<Button>(); }
+    Animation anim { get => GetComponent<Animation>(); }
 
     public string TargetAcc { get => data.targetAcc; }
     MyShopItem data;
@@ -23,11 +24,16 @@ public class ShopBlueprintUserCell : UIBase
 
             NWMng.E.MyShopGoodEvent((rp) =>
             {
-                ShopBlueprintLG.E.RefreshGoodNum(data.targetAcc);
                 DataMng.E.RuntimeData.UseGoodNum++;
+                DataMng.E.RuntimeData.Coin3 += SettingMng.GoodAddPointCount;
+
+                ShopBlueprintLG.E.RefreshGoodNum(data.targetAcc);
+                ShopBlueprintLG.E.UI.RefreshCoin();
 
                 // 他のユーザーいいねするタスク
                 TaskMng.E.AddMainTaskCount(7);
+
+                ShowGoodAnim();
             }, data.targetAcc);
         });
 
@@ -68,5 +74,13 @@ public class ShopBlueprintUserCell : UIBase
     {
         data.goodNum++;
         GoodNum.text = data.goodNum.ToString();
+    }
+
+    private void ShowGoodAnim()
+    {
+        if (anim != null && !anim.isPlaying)
+        {
+            anim.Play("ShopBlueprintGoodBtn");
+        }
     }
 }

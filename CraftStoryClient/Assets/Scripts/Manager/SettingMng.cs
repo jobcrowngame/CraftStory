@@ -78,4 +78,9 @@ public class SettingMng : Single<SettingMng>
     /// 冒険エリアでBuffを更新する
     /// </summary>
     public const int CreateAdventureBuffStep = 30;
+
+    /// <summary>
+    /// いいね場合、ポイント追加数
+    /// </summary>
+    public const int GoodAddPointCount = 3;
 }

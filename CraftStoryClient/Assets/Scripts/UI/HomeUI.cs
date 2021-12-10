@@ -45,41 +45,9 @@ public partial class HomeUI : UIBase
     Transform btnsParent;
 
     /// <summary>
-    /// ビルダーペンセル
-    /// </summary>
-    Transform BuilderPencil;
-    /// </summary>
-    Button BuilderBtn;
-    /// <summary>
-    /// キャンセルビルダーボタン
-    /// </summary>
-    Button BuilderPencilCancelBtn;
-
-    /// <summary>
     /// 手に入るアイテム親
     /// </summary>
     Transform ItemDropParent;
-
-    /// <summary>
-    /// 設計図を使用する場合、コンソールWindow
-    /// </summary>
-    Transform Blueprint;
-    /// <summary>
-    /// 消耗するアイテムリストのサブ親
-    /// </summary>
-    Transform BlueprintCellGrid;
-    /// <summary>
-    /// 回転ボタン
-    /// </summary>
-    Button SpinBtn;
-    /// <summary>
-    /// ビルダーキャンセルボタン
-    /// </summary>
-    Button BlueprintCancelBtn;
-    /// <summary>
-    /// ビルダーボタン
-    /// </summary>
-    Button BuildBtn;
 
     /// <summary>
     /// ジャンプボタン
@@ -149,15 +117,7 @@ public partial class HomeUI : UIBase
         MapBtn = FindChiled<Button>("MapBtn");
         BagBtn = FindChiled<Button>("BagBtn");
         btnsParent = FindChiled("Grid");
-        BuilderPencil = FindChiled("BuilderPencil");
-        BuilderBtn = FindChiled<Button>("BuilderBtn", BuilderPencil);
-        BuilderPencilCancelBtn = FindChiled<Button>("BuilderPencilCancelBtn", BuilderPencil);
         ItemDropParent = FindChiled("ItemDropParent");
-        Blueprint = FindChiled("Blueprint");
-        BlueprintCellGrid = FindChiled("Content", Blueprint.gameObject);
-        SpinBtn = FindChiled<Button>("SpinBtn", Blueprint);
-        BlueprintCancelBtn = FindChiled<Button>("BlueprintCancelBtn", Blueprint);
-        BuildBtn = FindChiled<Button>("BuildBtn", Blueprint);
         Jump = FindChiled<Button>("Jump");
         PlussBtn = FindChiled<MyButton>("PlussBtn");
         MinusBtn = FindChiled<MyButton>("MinusBtn");
@@ -174,6 +134,8 @@ public partial class HomeUI : UIBase
     {
         base.Init();
         HomeLG.E.Init(this);
+
+        InitBlueprint();
 
         FadeinImg.enabled = true;
 
@@ -199,12 +161,7 @@ public partial class HomeUI : UIBase
         });
 
         AddItemBtns();
-
-        BuilderBtn.onClick.AddListener(CreateBlueprint);
-        BuilderPencilCancelBtn.onClick.AddListener(CancelBuilderPencilCancelBtn);
-        SpinBtn.onClick.AddListener(SpinBlueprint);
-        BlueprintCancelBtn.onClick.AddListener(CancelUserBlueprint);
-        BuildBtn.onClick.AddListener(BuildBlueprint);
+       
         PlussBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(1); });
         MinusBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(-1); });
         Jump.onClick.AddListener(PlayerCtl.E.Jump);
@@ -305,88 +262,9 @@ public partial class HomeUI : UIBase
         }
     }
 
-    /// <summary>
-    /// 設計図を使うに必要なブロックリスト
-    /// </summary>
-    /// <param name="blueprint">設計図</param>
-    public void AddBlueprintCostItems(BlueprintData blueprint)
-    {
-        ClearCell(BlueprintCellGrid);
-
-        Dictionary<int, int> costs = new Dictionary<int, int>();
-        foreach (var entity in blueprint.blocks)
-        {
-            // Obstacleは無視
-            if ((EntityType)ConfigMng.E.Entity[entity.id].Type == EntityType.Obstacle)
-                continue;
-
-            if (costs.ContainsKey(entity.id))
-            {
-                costs[entity.id]++;
-            }
-            else
-            {
-                costs[entity.id] = 1;
-            }
-        }
-
-        foreach (var key in costs.Keys)
-        {
-            var cell = AddCell<BlueprintCell>("Prefabs/UI/BlueprintCell", BlueprintCellGrid);
-            if (cell == null)
-                return;
-
-            cell.Init(ConfigMng.E.Entity[key].ItemID, costs[key]);
-        }
-    }
-
-    private void CreateBlueprint()
-    {
-        Logger.Log("BuilderBtn");
-
-        PlayerCtl.E.BuilderPencil.CreateBlueprint();
-    }
-    private void CancelBuilderPencilCancelBtn()
-    {
-        Logger.Log("CancelBtn");
-
-        PlayerCtl.E.BuilderPencil.CancelCreateBlueprint();
-    }
-    private void SpinBlueprint()
-    {
-        PlayerCtl.E.BuilderPencil.SpinBlueprint();
-    }
-    private void CancelUserBlueprint()
-    {
-        PlayerCtl.E.BuilderPencil.CancelUserBlueprint();
-    }
-    private void BuildBlueprint()
-    {
-        PlayerCtl.E.BuilderPencil.BuildBlueprint();
-    }
     public void RefreshRedPoint()
     {
         RedPoint.gameObject.SetActive(CommonFunction.MenuRedPoint());
-    }
-
-    /// <summary>
-    /// ビルダーペンセルコンソールを表し
-    /// </summary>
-    /// <param name="b"></param>
-    public void ShowBuilderPencilBtn(bool b = true)
-    {
-        if (BuilderPencil != null)
-            BuilderPencil.gameObject.SetActive(b);
-    }
-
-    /// <summary>
-    /// 設計図使用場合のコンソールWindowを表し
-    /// </summary>
-    /// <param name="b"></param>
-    public void ShowBlueprintBtn(bool b = true)
-    {
-        if (Blueprint != null)
-            Blueprint.gameObject.SetActive(b);
     }
 
     /// <summary>

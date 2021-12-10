@@ -237,7 +237,7 @@ public class PlayerCtl : MonoBehaviour
                         {
                             NWMng.E.GetItemRelationData(selectItem.id, selectItem, () =>
                             {
-                                BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.relationData);
+                                BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.relationData, selectItem.IsLocked);
                             });
                         }
                         break;

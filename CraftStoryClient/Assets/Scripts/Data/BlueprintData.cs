@@ -32,6 +32,11 @@ public class BlueprintData
     private bool isDuplicate;
     public bool IsDuplicate { get => isDuplicate; set => isDuplicate = value; }
 
+    // 買った設計図はロックされる
+    [NonSerialized]
+    private bool isLocked;
+    public bool IsLocked { get => isLocked; set => isLocked = value; }
+
     public BlueprintData() { }
     public BlueprintData(string json)
     {

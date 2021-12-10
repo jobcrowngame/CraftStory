@@ -109,6 +109,7 @@
     <Compile Include="Assets\Scripts\UI\EmailUI.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityHaveDirection.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Entity.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Blast.cs" />
     <Compile Include="Assets\Scripts\UI\GachaAddBonusUI.cs" />
     <Compile Include="Assets\Scripts\UI\GuideUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="Assets\Scripts\UI\ShopGachaLG.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csMouseOrbit.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeCell.cs" />
+    <Compile Include="Assets\Scripts\Game\Entity\EntityBlast.cs" />
     <Compile Include="Assets\Scripts\UI\Battle\HpUIMonster.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintDetailsUI.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintMyShopSelectItemLG.cs" />
@@ -357,8 +359,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Blast.cs" />
-    <Compile Include="Assets\Scripts\Game\Entity\EntityBlast.cs" />
+    <Compile Include="Assets\Scripts\UI\HomeUI.Blueprint.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

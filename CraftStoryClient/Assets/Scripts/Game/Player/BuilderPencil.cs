@@ -174,10 +174,11 @@ public class BuilderPencil
     /// </summary>
     /// <param name="startPos">作成点</param>
     /// <param name="data">設計図内容</param>
-    public void UseBlueprint(Vector3Int startPos, string data)
+    public void UseBlueprint(Vector3Int startPos, string data, bool isLocked = false)
     {
         // 設計図内容によって、設計図データを生成
         selectBlueprintData = new BlueprintData(data);
+        selectBlueprintData.IsLocked = isLocked;
 
         // 残ってる設計図エンティティを作成
         WorldMng.E.MapCtl.DeleteBuilderPencil();
@@ -194,8 +195,15 @@ public class BuilderPencil
         // 半透明ブロックを作る
         WorldMng.E.MapCtl.InstantiateTransparenEntitys(selectBlueprintData, buildPos);
 
-        // コストブロックを設定
-        HomeLG.E.UI.AddBlueprintCostItems(selectBlueprintData);
+        if (selectBlueprintData.IsLocked)
+        {
+            HomeLG.E.UI.ShowLockBlueprintDes();
+        }
+        else
+        {
+            // コストブロックを設定
+            HomeLG.E.UI.AddBlueprintCostItems(selectBlueprintData);
+        }
 
         var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
         if (homeUI != null) homeUI.ShowBlueprintBtn();
@@ -263,31 +271,34 @@ public class BuilderPencil
 
         if (!selectBlueprintData.IsDuplicate)
         {
-            Dictionary<int, int> consumableItems = new Dictionary<int, int>();
-
-            foreach (var entity in selectBlueprintData.blocks)
+            if (!selectBlueprintData.IsLocked)
             {
-                var config = ConfigMng.E.Entity[entity.id];
-                // Obstacle は無視
-                if ((EntityType)config.Type == EntityType.Obstacle)
-                    continue;
+                Dictionary<int, int> consumableItems = new Dictionary<int, int>();
 
-                int itemId = config.ItemID;
-                if (consumableItems.ContainsKey(itemId))
+                foreach (var entity in selectBlueprintData.blocks)
                 {
-                    consumableItems[itemId]++;
-                }
-                else
-                {
-                    consumableItems[itemId] = 1;
-                }
-            }
+                    var config = ConfigMng.E.Entity[entity.id];
+                    // Obstacle は無視
+                    if ((EntityType)config.Type == EntityType.Obstacle)
+                        continue;
 
-            var ret = PlayerCtl.E.ConsumableItems(consumableItems);
-            if (!ret)
-            {
-                CommonFunction.ShowHintBar(1);
-                return;
+                    int itemId = config.ItemID;
+                    if (consumableItems.ContainsKey(itemId))
+                    {
+                        consumableItems[itemId]++;
+                    }
+                    else
+                    {
+                        consumableItems[itemId] = 1;
+                    }
+                }
+
+                var ret = PlayerCtl.E.ConsumableItems(consumableItems);
+                if (!ret)
+                {
+                    CommonFunction.ShowHintBar(1);
+                    return;
+                }
             }
 
             // ブロックを作る

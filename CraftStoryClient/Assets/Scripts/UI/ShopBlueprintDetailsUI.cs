@@ -1,5 +1,6 @@
 ﻿
 using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopBlueprintDetailsUI : UIBase
@@ -11,9 +12,11 @@ public class ShopBlueprintDetailsUI : UIBase
     MyText Price { get => FindChiled<MyText>("Price"); }
     MyText GoodNum { get => FindChiled<MyText>("GoodNum"); }
     Button BuyBtn { get => FindChiled<Button>("BuyBtn"); }
-    Button GoodBtn { get => FindChiled<Button>("GoodBtn"); }
+    Button GoodBtn { get => FindChiled<Button>("Button"); }
     Button PreviewBtn { get => Icon.GetComponent<Button>(); }
     Button Mask { get => transform.GetComponent<Button>(); }
+
+    Animation anim { get => Icon.GetComponent<Animation>(); }
 
     MyShopItem data;
 
@@ -101,12 +104,17 @@ public class ShopBlueprintDetailsUI : UIBase
             data.goodNum++;
             GoodNum.text = data.goodNum.ToString();
 
-            ShopBlueprintLG.E.UI.RefreshGoodNum(data.targetAcc);
 
             DataMng.E.RuntimeData.UseGoodNum++;
+            DataMng.E.RuntimeData.Coin3 += SettingMng.GoodAddPointCount;
+
+            ShopBlueprintLG.E.UI.RefreshGoodNum(data.targetAcc);
+            ShopBlueprintLG.E.UI.RefreshCoin();
 
             // 他のユーザーいいねするタスク
             TaskMng.E.AddMainTaskCount(7);
+
+            ShowGoodAnim();
         }, data.targetAcc);
     }
 
@@ -116,5 +124,13 @@ public class ShopBlueprintDetailsUI : UIBase
         Time.text = t.Days > 0 ?
                 string.Format("残り時間: {0}日", t.Days) :
                 string.Format("残り時間: {1}:{2}:{3}", t.Days, t.Hours, t.Minutes, t.Seconds);
+    }
+
+    private void ShowGoodAnim()
+    {
+        if (anim != null && !anim.isPlaying)
+        {
+            anim.Play("ShopBlueprintGoodBtn");
+        }
     }
 }
