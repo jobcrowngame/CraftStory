@@ -87,7 +87,7 @@ public class ShopBlueprintUI : UIBase
 
         GuideLG.E.Next();
 
-        Dropdown.value = 2;
+        Dropdown.value = 5;
 
         MyGoodNum.text = DataMng.E.RuntimeData.MyGoodNum.ToString();
 
