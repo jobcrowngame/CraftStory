@@ -19,12 +19,19 @@ public class CraftLG : UILogicBase<CraftLG, CraftUI>
     public Craft SelectCraft
     {
         get => selectCraft;
-        set 
+        set
         {
-            selectCraft = value; 
+            selectCraft = value;
 
-            if(value != null) 
+            if (value != null)
+            {
                 UI.ActiveSlectCountBtns();
+                UI.Explanatory.text = ConfigMng.E.Item[selectCraft.ItemID].Explanatory;
+            }
+            else
+            {
+                UI.Explanatory.text = UI.ExplanatoryNoSelect;
+            }
         }
     }
     Craft selectCraft;

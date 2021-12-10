@@ -15,8 +15,10 @@ public class CraftUI : UIBase
     Button RightBtn10 { get => FindChiled<Button>("RightBtn10"); }
     Button LeftBtn { get => FindChiled<Button>("LeftBtn"); }
     Button LeftBtn10 { get => FindChiled<Button>("LeftBtn10"); }
+    public MyText Explanatory { get => FindChiled<MyText>("Explanatory"); }
     CraftCostCell[] costCells;
 
+    public readonly string ExplanatoryNoSelect = "アイテムをタップすると説明が表示されます";
 
     private EntityType entityType;
 
@@ -46,6 +48,8 @@ public class CraftUI : UIBase
         base.Open();
 
         ActiveSlectCountBtns(false);
+
+        Explanatory.text = ExplanatoryNoSelect;
     }
 
     public void SetType(EntityType type)
