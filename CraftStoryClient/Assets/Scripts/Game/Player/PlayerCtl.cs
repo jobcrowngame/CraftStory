@@ -350,7 +350,7 @@ public class PlayerCtl : MonoBehaviour
             if (DataMng.E.RuntimeData.TotalSetBlockCount >= 100 && DataMng.E.RuntimeData.GuideEnd == 0)
             {
                 // 設計図チュートリアルへ招待
-                var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 7);
+                var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 7);
                 chatUi.AddListenerOnClose(() =>
                 {
                     DataMng.E.RuntimeData.GuideId = 1;

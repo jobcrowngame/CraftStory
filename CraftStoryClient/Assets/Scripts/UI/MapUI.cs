@@ -50,7 +50,11 @@ public class MapUI : UIBase
             PlayerCtl.E.Pause();
         }
 
-        BluePrintHint.text = BluePrintHint2;
+        NWMng.E.GetTotalUploadBlueprintCount((rp) =>
+        {
+            int count = int.Parse(rp.ToString());
+            BluePrintHint.text = count == 0 ? BluePrintHint1 : BluePrintHint2;
+        });
     }
     public override void Close()
     {
