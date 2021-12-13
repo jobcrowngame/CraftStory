@@ -158,7 +158,7 @@ public class MapData
                     {
                         if (!blocks.TryGetValue(entityCell.entityID, out obj))
                         {
-                            obj = CommonFunction.Instantiate(config.Resources, parent, pos);
+                            obj = CommonFunction.Instantiate(config.Resources, null, pos);
                             obj.gameObject.SetActive(false);
                             blocks[entityCell.entityID] = obj;
                         }
@@ -182,6 +182,10 @@ public class MapData
 
                 case EntityType.Grass:
                     entity = CommonFunction.Instantiate<EntityGrass>(config.Resources, parent, pos);
+                    break;
+
+                case EntityType.Crops:
+                    entity = CommonFunction.Instantiate<EntityCrops>(config.Resources, parent, pos);
                     break;
 
                 case EntityType.Resources:

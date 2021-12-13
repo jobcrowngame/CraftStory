@@ -127,6 +127,7 @@ public class DataMng : Single<DataMng>
         uData.Account = id;
         uData.UserPW = pw;
         uData.PickupNoticeCheckMap = new Dictionary<int, DateTime>();
+        uData.CropsTimers = new Dictionary<UnityEngine.Vector3, DateTime>();
     }
     #endregion
     #region Map

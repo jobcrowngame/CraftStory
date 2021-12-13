@@ -83,6 +83,12 @@ public enum EntityType
     BigFlower = 4, // 巨大花
     Grass = 5, // 草
     Firm = 6, // 畑
+
+    /// <summary>
+    /// 農作物
+    /// </summary>
+    Crops = 7,
+
     Block99 = 99, // 壊れないブロック
     Resources = 100, // 
     TreasureBox = 110,

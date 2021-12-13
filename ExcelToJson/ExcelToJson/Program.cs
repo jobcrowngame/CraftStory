@@ -136,7 +136,9 @@ namespace ExcelToJson
                 case "AdventureBuff": list = AdventureBuff(tbl); break;
                 case "Blast": list = Blast(tbl); break;
                 case "LodingTips": list = LodingTips(tbl); break;
-                    
+                case "Crops": list = Crops(tbl); break;
+
+
 
                 default: Console.WriteLine("not find fileName " + fileName); break;
             }
@@ -907,6 +909,26 @@ namespace ExcelToJson
                 {
                     ID = ToInt32(tbl.Rows[i]["ID"]),
                     Text = ToString(tbl.Rows[i]["Text"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Crops(DataTable tbl)
+        {
+            List<Crops> list = new List<Crops>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Crops()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    ItemID = ToInt32(tbl.Rows[i]["ItemID"]),
+                    EntityID = ToInt32(tbl.Rows[i]["EntityID"]),
+                    StateTime1 = ToFloat(tbl.Rows[i]["StateTime1"]),
+                    StateTime2 = ToFloat(tbl.Rows[i]["StateTime2"]),
+                    DestroyAddItem = ToInt32(tbl.Rows[i]["DestroyAddItem"]),
+                    Count = ToInt32(tbl.Rows[i]["Count"]),
                 };
 
                 list.Add(data);

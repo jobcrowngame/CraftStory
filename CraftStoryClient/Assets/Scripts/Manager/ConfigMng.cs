@@ -41,9 +41,11 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, AdventureBuff> AdventureBuffConfig = new Dictionary<int, AdventureBuff>();
     Dictionary<int, Blast> BlastConfig = new Dictionary<int, Blast>();
     Dictionary<int, LodingTips> LodingTipsConfig = new Dictionary<int, LodingTips>();
+    Dictionary<int, Crops> CropsConfig = new Dictionary<int, Crops>();
 
 
 
+    public Dictionary<int, Crops> Crops { get => CropsConfig; }
     public Dictionary<int, LodingTips> LodingTips { get => LodingTipsConfig; }
     public Dictionary<int, Blast> Blast { get => BlastConfig; }
     public Dictionary<int, AdventureBuff> AdventureBuff { get => AdventureBuffConfig; }
@@ -111,7 +113,8 @@ class ConfigMng : Single<ConfigMng>
         ReadConfig("Config/AdventureBuff", AdventureBuffConfig);
         ReadConfig("Config/Blast", BlastConfig);
         ReadConfig("Config/LodingTips", LodingTipsConfig);
-
+        ReadConfig("Config/Crops", CropsConfig);
+        
 
 
         yield return null;
@@ -167,6 +170,19 @@ class ConfigMng : Single<ConfigMng>
         else
         {
             Logger.Error("Not find skill " + id);
+            return null;
+        }
+    }
+
+    public Crops GetCropsByEntityID(int entityId)
+    {
+        if (Crops.ContainsKey(entityId))
+        {
+            return Crops[entityId];
+        }
+        else
+        {
+            Logger.Error("Not find Crops " + entityId);
             return null;
         }
     }

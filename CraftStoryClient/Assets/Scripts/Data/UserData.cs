@@ -29,4 +29,8 @@ public class UserData
     /// </summary>
     public Dictionary<int, DateTime> PickupNoticeCheckMap { get; set; }
 
+    /// <summary>
+    /// 農作物時間
+    /// </summary>
+    public Dictionary<UnityEngine.Vector3, DateTime> CropsTimers { get; set; }
 }
