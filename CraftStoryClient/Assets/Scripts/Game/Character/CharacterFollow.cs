@@ -51,7 +51,7 @@ public class CharacterFollow : CharacterBase
             {
                 NWMng.E.MainTaskEnd((rp) =>
                 {
-                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, TaskMng.E.MainTaskConfig.EndChat);
+                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, TaskMng.E.MainTaskConfig.EndChat);
                     chatUi.AddListenerOnClose(() =>
                     {
                         HomeLG.E.UI.RefreshTaskOverview();
@@ -69,7 +69,7 @@ public class CharacterFollow : CharacterBase
             }
             else
             {
-                var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, TaskMng.E.MainTaskConfig.StartChat);
+                var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, TaskMng.E.MainTaskConfig.StartChat);
                 chatUi.AddListenerOnClose(() =>
                 {
                     HomeLG.E.UI.RefreshTaskOverview();
@@ -145,7 +145,7 @@ public class CharacterFollow : CharacterBase
         if (DataMng.E.UserData.FirstShowFairy)
         {
             // 挨拶チャット
-            UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.None, 99);
+            UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 99);
             DataMng.E.UserData.FirstShowFairy = false;
         }
 

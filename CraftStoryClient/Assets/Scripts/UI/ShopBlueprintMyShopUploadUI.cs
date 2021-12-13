@@ -68,6 +68,8 @@ public class ShopBlueprintMyShopUploadUI : UIBase
                                             img.color = new Color(1f, 1f, 1f, count == 0 ? 1 : 1 / 256f);
                                             if (count == 1)
                                             {
+                                                DataMng.E.RuntimeData.NewEmailCount++;
+                                                HomeLG.E.UI.RefreshRedPoint();
                                                 UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 124);
                                             }
                                         });
