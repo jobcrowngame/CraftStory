@@ -59,11 +59,11 @@ public class EntityCrops : EntityBase
         if (EConfig.ID == 0 || cropsConfig == null)
             return;
 
-        if (ElapsedTime < cropsConfig.StateTime1)
+        if (ElapsedTime <= cropsConfig.StateTime1)
         {
             State = 1;
         }
-        else if (ElapsedTime < cropsConfig.StateTime2)
+        else if (ElapsedTime <= cropsConfig.StateTime2)
         {
             State = 2;
         }
