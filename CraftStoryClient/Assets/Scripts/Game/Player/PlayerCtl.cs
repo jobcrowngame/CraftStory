@@ -187,6 +187,17 @@ public class PlayerCtl : MonoBehaviour
                         StartCoroutine(UnLock());
                         break;
 
+                    case ItemType.Crops:
+                        Lock = true;
+                        Character.Behavior = BehaviorType.Create;
+
+                        var direction = CommonFunction.GetCreateEntityDirection(pos);
+                        var entity = (EntityCrops)CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos), direction);
+                        entity.Init();
+
+                        StartCoroutine(UnLock());
+                        break;
+
                     case ItemType.Lanthanum:
                     case ItemType.NomoObject:
                         Lock = true;
@@ -211,7 +222,7 @@ public class PlayerCtl : MonoBehaviour
                     case ItemType.HaveDirectionNomoObject:
                     case ItemType.Bed:
                         Lock = true;
-                        var direction = CommonFunction.GetCreateEntityDirection(pos);
+                        direction = CommonFunction.GetCreateEntityDirection(pos);
                         CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos), direction);
                         Character.Behavior = BehaviorType.Create;
 
@@ -309,20 +320,20 @@ public class PlayerCtl : MonoBehaviour
     /// <param name="entityId">インスタンスするエンティティID</param>
     /// <param name="pos">インスタンス座標</param>
     /// <param name="dType">向き</param>
-    private void CreateEntity(GameObject collider, int entityId, Vector3Int pos, Direction dType = Direction.up)
+    private EntityBase CreateEntity(GameObject collider, int entityId, Vector3Int pos, Direction dType = Direction.up)
     {
         var cell = collider.GetComponent<EntityBase>();
         if (cell == null)
-            return;
+            return null;
 
         // ターゲットEntityに置くできるかのチェック
         if (cell.EConfig.CanPut == 0)
         {
             CommonFunction.ShowHintBar(19);
-            return;
+            return null;
         }
 
-        WorldMng.E.MapCtl.CreateEntity(entityId, pos, dType);
+        var entity = WorldMng.E.MapCtl.CreateEntity(entityId, pos, dType);
 
         // ブロックやオブジェクトを置くミッション
         if (DataMng.E.RuntimeData.MapType != MapType.Guide)
@@ -341,6 +352,8 @@ public class PlayerCtl : MonoBehaviour
                 });
             }
         }
+
+        return entity;
     }
 
     /// <summary>
