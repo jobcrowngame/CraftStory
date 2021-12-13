@@ -47,6 +47,11 @@ public class HpUIBase : UIBase
     public virtual void OnDide() { }
 
     /// <summary>
+    /// ロックオン
+    /// </summary>
+    public virtual void OnLockUn(bool b) { }
+
+    /// <summary>
     /// Exp 追加
     /// </summary>
     public virtual void AddExp(int exp) { }

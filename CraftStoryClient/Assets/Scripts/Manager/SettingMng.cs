@@ -83,4 +83,9 @@ public class SettingMng : Single<SettingMng>
     /// いいね場合、ポイント追加数
     /// </summary>
     public const int GoodAddPointCount = 3;
+
+    /// <summary>
+    /// 最大ロックオン距離
+    /// </summary>
+    public const float MaxLockUnDistance = 20;
 }

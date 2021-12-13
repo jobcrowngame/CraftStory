@@ -338,15 +338,6 @@ public partial class HomeUI : UIBase
         FadeinImg.gameObject.SetActive(false);
     }
 
-    /// <summary>
-    /// ロックオン
-    /// </summary>
-    /// <param name="target">目標</param>
-    public void LockUnTarget(Transform target)
-    {
-        PlayerCtl.E.CameraCtl.LockUnTarget(target);
-    }
-
     public void FadeOutAndIn()
     {
         StartCoroutine(IFadeOutAndIn());

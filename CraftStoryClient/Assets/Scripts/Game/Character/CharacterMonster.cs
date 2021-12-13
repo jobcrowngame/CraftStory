@@ -30,8 +30,19 @@ public class CharacterMonster : CharacterBase
     {
         base.OnClick();
 
+        PlayerCtl.E.CameraCtl.CancelLockUn();
         PlayerCtl.E.Character.Target = this;
-        HomeLG.E.UI.LockUnTarget(transform);
+
+        var playerPos = CharacterCtl.E.getPlayer().transform.position;
+        var distance = Vector3.Distance(playerPos, transform.position);
+
+        Debug.Log(distance);
+
+        if (distance < SettingMng.MaxLockUnDistance)
+        {
+            HomeLG.E.UI.LockUnTarget(transform);
+            HpCtl.OnLockUn(true);
+        }
     }
 
     public override void OnBehaviorChange(BehaviorType behavior)

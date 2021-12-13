@@ -257,6 +257,13 @@ public class CameraCtl : MonoBehaviour
     }
     public void CancelLockUn()
     {
+        if (PlayerCtl.E.Character.Target != null)
+        {
+            var monster = PlayerCtl.E.Character.Target.GetComponent<CharacterMonster>();
+            if (monster != null)
+                monster.HpCtl.OnLockUn(false);
+        }
+
         target = null;
         PlayerCtl.E.Character.Target = null;
         IsLockUn = false;

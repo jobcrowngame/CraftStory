@@ -9,6 +9,7 @@ public class HpUIMonster : HpUIBase
     Text Level { get => FindChiled<Text>("Level"); }
     Text HPText { get => FindChiled<Text>("HPText"); }
     Transform DamageObjParent { get => FindChiled("DamageObjParent"); }
+    Transform LockUn { get => FindChiled("LockUn"); }
 
     public override void Init<T>(T data)
     {
@@ -52,6 +53,13 @@ public class HpUIMonster : HpUIBase
         base.OnDide();
 
         hpBar.gameObject.SetActive(false);
+    }
+
+    public override void OnLockUn(bool b)
+    {
+        base.OnLockUn(b);
+
+        LockUn.gameObject.SetActive(b);
     }
 
     private void RefreshHP()

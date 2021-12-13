@@ -111,6 +111,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorldUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2206265981962142066, guid: 3a375b1ebe7fcb446970cbfa1599208f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 618
+      objectReference: {fileID: 0}
     - target: {fileID: 3589678604605920357, guid: 3a375b1ebe7fcb446970cbfa1599208f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -205,6 +209,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3589678604605920357, guid: 3a375b1ebe7fcb446970cbfa1599208f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5853169479348952170, guid: 3a375b1ebe7fcb446970cbfa1599208f, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6573989051380308208, guid: 3a375b1ebe7fcb446970cbfa1599208f, type: 3}

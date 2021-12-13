@@ -5,7 +5,7 @@ public partial class HomeUI
 {
     Transform battle { get => FindChiled("Battle"); }
     Transform PointGet { get => FindChiled("PointGet"); }
-    
+
     Image hpBar { get => FindChiled<Image>("HpImg", battle); }
     Text hpText { get => FindChiled<Text>("HpText", battle); }
     MyText MonsterNumberLeft { get => FindChiled<MyText>("NumberLeft"); }
@@ -76,5 +76,14 @@ public partial class HomeUI
     public void ShowPointGet()
     {
         PointGet.GetComponent<Animation>().Play("HomePointGet");
+    }
+
+    /// <summary>
+    /// ロックオン
+    /// </summary>
+    /// <param name="target">目標</param>
+    public void LockUnTarget(Transform target)
+    {
+        PlayerCtl.E.CameraCtl.LockUnTarget(target);
     }
 }

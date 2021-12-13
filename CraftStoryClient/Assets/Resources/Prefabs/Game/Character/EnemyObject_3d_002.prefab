@@ -77,8 +77,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d87c5b73e029f04291bd8ae519e6ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fowardObj: {fileID: 0}
   mBehavior: 1
   moveDirection: {x: 0, y: 0, z: 0}
+  FreezeTime: 0
+  UseSkilling: 0
 --- !u!143 &5148864410641250340
 CharacterController:
   m_ObjectHideFlags: 0
@@ -174,6 +177,10 @@ PrefabInstance:
     - target: {fileID: 1873419843215701562, guid: 3a375b1ebe7fcb446970cbfa1599208f, type: 3}
       propertyPath: m_Name
       value: WorldUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2206265981962142066, guid: 3a375b1ebe7fcb446970cbfa1599208f, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3589678604605920357, guid: 3a375b1ebe7fcb446970cbfa1599208f, type: 3}
       propertyPath: m_Pivot.x
