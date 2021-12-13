@@ -192,8 +192,8 @@ public class PlayerCtl : MonoBehaviour
                         Character.Behavior = BehaviorType.Create;
 
                         var direction = CommonFunction.GetCreateEntityDirection(pos);
-                        var entity = (EntityCrops)CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos), direction);
-                        entity.Init();
+                        var entityCrops = (EntityCrops)CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos), direction);
+                        entityCrops.Init();
 
                         StartCoroutine(UnLock());
                         break;
