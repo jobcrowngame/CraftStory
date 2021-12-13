@@ -73,6 +73,11 @@ public enum ItemType
     Resource = 2,
 
     /// <summary>
+    /// 農作物
+    /// </summary>
+    Crops = 3,
+
+    /// <summary>
     /// 空の設計図
     /// </summary>
     NullBlueprint = 51,
