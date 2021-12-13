@@ -76,15 +76,8 @@ public class BlueprintReNameUI : UIBase
             {
                 // S3にテクスチャをアップロード
                 AWSS3Mng.E.UploadTexture2D(texture, fileName);
-
-                NWMng.E.RemoveItem((rp) =>
-                {
-                    NWMng.E.GetItems(() =>
-                    {
-                        PlayerCtl.E.SelectItem = null;
-                        Close();
-                    });
-                }, PlayerCtl.E.SelectItem.itemId, 1);
+                PlayerCtl.E.UseSelectItem();
+                Close();
             }
         });
     }

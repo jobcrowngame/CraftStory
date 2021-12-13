@@ -266,7 +266,7 @@ public class MapCtl
 
         CheckNextToEntitys(pos);
 
-        PlayerCtl.E.UseItem();
+        PlayerCtl.E.UseSelectItem();
 
         return entity;
     }

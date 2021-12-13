@@ -305,7 +305,7 @@ public class BuilderPencil
             WorldMng.E.MapCtl.InstantiateEntitys(selectBlueprintData, buildPos);
 
             // 設計図を消耗
-            PlayerCtl.E.UseItem();
+            PlayerCtl.E.UseSelectItem();
 
             GuideLG.E.Next();
 

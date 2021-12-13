@@ -139,7 +139,7 @@ public class PlayerCtl : MonoBehaviour
         builderPencil.CancelCreateBlueprint();
         builderPencil.CancelUserBlueprint();
 
-        selectItem = item;
+        SelectItem = item;
     }
 
     /// <summary>
@@ -366,9 +366,9 @@ public class PlayerCtl : MonoBehaviour
     /// アイテムを使用
     /// </summary>
     /// <param name="count"></param>
-    public void UseItem(int count = 1)
+    public void UseSelectItem(int count = 1)
     {
-        DataMng.E.UseItem(selectItem.id, count);
+        DataMng.E.ConsumableItemByGUID(selectItem.id, count);
     }
 
     /// <summary>
@@ -382,7 +382,7 @@ public class PlayerCtl : MonoBehaviour
 
         foreach (var item in items)
         {
-            ret = DataMng.E.CheckConsumableItem(item.Key, item.Value);
+            ret = DataMng.E.CheckConsumableItemByItemId(item.Key, item.Value);
 
             if (ret == false)
                 break;
@@ -390,7 +390,7 @@ public class PlayerCtl : MonoBehaviour
 
         foreach (var item in items)
         {
-            ret = DataMng.E.ConsumableItem(item.Key, item.Value);
+            ret = DataMng.E.ConsumableItemByItemId(item.Key, item.Value);
 
             if (ret == false)
                 break;

@@ -369,7 +369,7 @@ public class DataMng : Single<DataMng>
     /// <summary>
     /// 消耗アイテム
     /// </summary>
-    public void UseItem(int guid, int count = 1)
+    public void ConsumableItemByGUID(int guid, int count = 1)
     {
         if (GetItemByGuid(guid).count < count)
         {
@@ -392,13 +392,17 @@ public class DataMng : Single<DataMng>
                     RemoveItemByGuid(guid, count);
                     if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
                     if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
+
+                    var item = GetItemByGuid(PlayerCtl.E.SelectItem.id);
+                    if (item == null || item.count <= 0)
+                        PlayerCtl.E.SelectItem = null;
                 }, guid, count);
             }
         }
     }
-    public bool ConsumableItem(int itemID, int count = 1)
+    public bool ConsumableItemByItemId(int itemID, int count = 1)
     {
-        bool itemCheck = CheckConsumableItem(itemID, count);
+        bool itemCheck = CheckConsumableItemByItemId(itemID, count);
         if (itemCheck)
         {
             if (DataMng.E.RuntimeData.MapType != MapType.Guide)
@@ -428,7 +432,7 @@ public class DataMng : Single<DataMng>
     /// <param name="itemID">アイテムID</param>
     /// <param name="count">消耗数</param>
     /// <returns>消耗できるかの結果</returns>
-    public bool CheckConsumableItem(int itemID, int count = 1)
+    public bool CheckConsumableItemByItemId(int itemID, int count = 1)
     {
         int itemCount = 0;
         List<ItemData> items = null;

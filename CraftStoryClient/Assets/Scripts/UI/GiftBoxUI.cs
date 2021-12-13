@@ -76,7 +76,7 @@ public class GiftBoxUI : UIBase
                     Bonus3XLabel.gameObject.SetActive(false);
                     AdvertisingBtn.gameObject.SetActive(false);
                     AdvertisingLabel.gameObject.SetActive(false);
-                    DataMng.E.ConsumableItem(9005);
+                    DataMng.E.ConsumableItemByItemId(9005);
                     int count = AdventureCtl.E.BonusList.Count;
                     for (int i = 0; i < count; i++)
                     {
