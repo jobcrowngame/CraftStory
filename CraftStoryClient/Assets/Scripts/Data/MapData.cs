@@ -153,6 +153,7 @@ public class MapData
 
                 case EntityType.Block:
                 case EntityType.Block2:
+                case EntityType.Block3:
                 case EntityType.Block99:
                 case EntityType.Firm:
                     if (isCombineMesh)
@@ -372,6 +373,8 @@ public class MapData
 
             if ((EntityType)entity.EConfig.Type == EntityType.Block ||
                 (EntityType)entity.EConfig.Type == EntityType.Block2 ||
+                (EntityType)entity.EConfig.Type == EntityType.Block3 ||
+                (EntityType)entity.EConfig.Type == EntityType.Firm ||
                 (EntityType)entity.EConfig.Type == EntityType.Block99)
             {
                 WorldMng.E.MapCtl.RemoveMesh(entity);

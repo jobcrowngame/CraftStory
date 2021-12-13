@@ -187,10 +187,21 @@ public class PlayerCtl : MonoBehaviour
                         StartCoroutine(UnLock());
                         break;
 
+                    case ItemType.Block2:
+                        Lock = true;
+                        var direction = CommonFunction.GetCreateEntityDirection(pos);
+                        CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos), direction);
+                        Character.Behavior = BehaviorType.Create;
+
+                        WorldMng.E.MapCtl.CombineMesh();
+
+                        StartCoroutine(UnLock());
+                        break;
+
                     case ItemType.Crops:
                         Lock = true;
                         Character.Behavior = BehaviorType.Create;
-                        var direction = CommonFunction.GetCreateEntityDirection(pos);
+                        direction = CommonFunction.GetCreateEntityDirection(pos);
                         CreateEntity(collider, ConfigMng.E.Crops[selectItem.Config.ReferenceID].EntityID, Vector3Int.CeilToInt(pos), direction);
 
                         StartCoroutine(UnLock());

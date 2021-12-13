@@ -78,6 +78,11 @@ public enum ItemType
     Crops = 3,
 
     /// <summary>
+    /// 向きありブロック
+    /// </summary>
+    Block2 = 4,
+
+    /// <summary>
     /// 空の設計図
     /// </summary>
     NullBlueprint = 51,
