@@ -383,6 +383,10 @@ public class DataMng : Single<DataMng>
                 if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
                 if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
 
+                var item = GetItemByGuid(PlayerCtl.E.SelectItem.id);
+                if (item == null || item.count <= 0)
+                    PlayerCtl.E.SelectItem = null;
+
                 GuideLG.E.NextOnCreateBlock();
             }
             else
