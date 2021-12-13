@@ -176,14 +176,15 @@ class ConfigMng : Single<ConfigMng>
 
     public Crops GetCropsByEntityID(int entityId)
     {
-        if (Crops.ContainsKey(entityId))
+        foreach (var item in Crops.Values)
         {
-            return Crops[entityId];
+            if (item.EntityID == entityId)
+            {
+                return item;
+            }
         }
-        else
-        {
-            Logger.Error("Not find Crops " + entityId);
-            return null;
-        }
+
+        Logger.Error("Not find Crops " + entityId);
+        return null;
     }
 }

@@ -32,5 +32,14 @@ public class UserData
     /// <summary>
     /// 農作物時間
     /// </summary>
-    public Dictionary<UnityEngine.Vector3, DateTime> CropsTimers { get; set; }
+    public Dictionary<string, DateTime> CropsTimers 
+    {
+        get
+        {
+            if (mCropsTimers == null) mCropsTimers = new Dictionary<string, DateTime>();
+            return mCropsTimers;
+        }
+        set => mCropsTimers = value;
+    }
+    Dictionary<string, DateTime> mCropsTimers;
 }

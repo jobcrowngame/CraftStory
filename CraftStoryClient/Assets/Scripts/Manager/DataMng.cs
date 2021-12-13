@@ -97,8 +97,8 @@ public class DataMng : Single<DataMng>
         uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.UserDataName);
 
         //uData = new UserData();
-        //uData.Account = "r2YP56GDQxw9";
-        //uData.UserPW = "qR3NpqWxkIPP";
+        //uData.Account = "OC1RUMAjDeFv";
+        //uData.UserPW = "WeSEmdWkzLaB";
 
         try
         {
@@ -127,7 +127,6 @@ public class DataMng : Single<DataMng>
         uData.Account = id;
         uData.UserPW = pw;
         uData.PickupNoticeCheckMap = new Dictionary<int, DateTime>();
-        uData.CropsTimers = new Dictionary<UnityEngine.Vector3, DateTime>();
     }
     #endregion
     #region Map

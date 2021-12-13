@@ -190,10 +190,8 @@ public class PlayerCtl : MonoBehaviour
                     case ItemType.Crops:
                         Lock = true;
                         Character.Behavior = BehaviorType.Create;
-
                         var direction = CommonFunction.GetCreateEntityDirection(pos);
-                        var entityCrops = (EntityCrops)CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos), direction);
-                        entityCrops.Init();
+                        CreateEntity(collider, ConfigMng.E.Crops[selectItem.Config.ReferenceID].EntityID, Vector3Int.CeilToInt(pos), direction);
 
                         StartCoroutine(UnLock());
                         break;

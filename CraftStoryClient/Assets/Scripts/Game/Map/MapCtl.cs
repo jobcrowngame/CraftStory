@@ -16,9 +16,32 @@ public class MapCtl
     private CombineMeshObj CombineMeshObj { get => CellParent.GetComponent<CombineMeshObj>(); }
     public Transform EffectParent { get => effectParent; }
 
+    private Dictionary<Vector3Int, EntityCrops> cropsList;
+
     public MapCtl()
     {
         mapFactory = new MapDataFactory();
+        cropsList = new Dictionary<Vector3Int, EntityCrops>();
+
+        TimeZoneMng.E.AddTimerEvent03(Update1S);
+    }
+
+    private void Update1S()
+    {
+        foreach (var item in cropsList.Values)
+        {
+            item.Update1S();
+        }
+    }
+
+    public void AddCrops(Vector3Int pos, EntityCrops entity)
+    {
+        cropsList[pos] = entity;
+    }
+    public void RemoveCrops(Vector3Int pos)
+    {
+        cropsList.Remove(pos);
+        DataMng.E.UserData.CropsTimers.Remove(CommonFunction.Vector3ToString(pos));
     }
 
     /// <summary>
@@ -367,6 +390,11 @@ public class MapCtl
         // サスペンションのチェック
         var downEntityPos = new Vector3Int(pos.x, pos.y - 1, pos.z);
         var downEntityId = DataMng.E.MapData.Map[downEntityPos.x, downEntityPos.y, downEntityPos.z].entityID;
+
+        // 農作物の場合、下のブロックが畑のブロックならOK
+        if ((EntityType)config.Type == EntityType.Crops && (EntityType)ConfigMng.E.Entity[downEntityId].Type != EntityType.Firm)
+            return false;
+
         if (downEntityId <= 0)
         {
             return config.CanSuspension == 1;
@@ -575,6 +603,7 @@ public class MapCtl
         return mapData.Map[pos.x, pos.y, pos.z].entityID == 0 
             || mapData.Map[pos.x, pos.y, pos.z].entityID == (int)EntityType.Obstacle
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Block2
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Crops
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Workbench
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Kamado
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Resources

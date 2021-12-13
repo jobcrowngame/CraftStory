@@ -568,6 +568,16 @@ public class CommonFunction
         return angle < 90 && distance < maxDistance && b < radius;
     }
 
+    public static string Vector3ToString(Vector3 pos)
+    {
+        return string.Format("{0},{1},{2}", pos.x, pos.y, pos.z);
+    }
+    public static Vector3 StringToVector3(string posStr)
+    {
+        string[] pos = posStr.Split(',');
+        return new Vector3(int.Parse(pos[0]), int.Parse(pos[1]), int.Parse(pos[2]));
+    }
+
     #endregion
 
 

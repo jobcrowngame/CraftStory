@@ -154,6 +154,7 @@ public class MapData
                 case EntityType.Block:
                 case EntityType.Block2:
                 case EntityType.Block99:
+                case EntityType.Firm:
                     if (isCombineMesh)
                     {
                         if (!blocks.TryGetValue(entityCell.entityID, out obj))
@@ -186,6 +187,9 @@ public class MapData
 
                 case EntityType.Crops:
                     entity = CommonFunction.Instantiate<EntityCrops>(config.Resources, parent, pos);
+                    entity.Pos = pos;
+                    entity.Init();
+                    WorldMng.E.MapCtl.AddCrops(pos, (EntityCrops)entity);
                     break;
 
                 case EntityType.Resources:

@@ -1,14 +1,19 @@
 ﻿using JsonConfigData;
 using System;
+using UnityEngine;
 /// <summary>
 /// ブロック
 /// </summary>
 public class EntityCrops : EntityBase
 {
+    GameObject State1 { get => CommonFunction.FindChiledByName(transform, "State1"); }
+    GameObject State2 { get => CommonFunction.FindChiledByName(transform, "State2"); }
+    GameObject State3 { get => CommonFunction.FindChiledByName(transform, "State3"); }
+
     // 成熟
     bool IsState3 { get => ElapsedTime > cropsConfig.StateTime2; }
 
-    Crops cropsConfig;
+    Crops cropsConfig { get => ConfigMng.E.GetCropsByEntityID(EConfig.ID); }
     DateTime startTime;
 
     /// <summary>
@@ -22,6 +27,10 @@ public class EntityCrops : EntityBase
                 return;
 
             mState = value;
+
+            State1.gameObject.SetActive(value == 1);
+            State2.gameObject.SetActive(value == 2);
+            State3.gameObject.SetActive(value == 3);
         }
     }
     int mState = 0;
@@ -34,18 +43,20 @@ public class EntityCrops : EntityBase
         } 
     }
 
-    public void Init()
+    public override void Init()
     {
-        cropsConfig = ConfigMng.E.GetCropsByEntityID(EConfig.ID);
         startTime = GetTimer(Pos);
-
-        TimeZoneMng.E.AddTimerEvent03(Update1S);
+        CheckState();
     }
 
-    // 0.02秒
-    private void Update1S()
+    // 毎秒実行
+    public void Update1S()
     {
-        if (cropsConfig == null || ElapsedTime > cropsConfig.StateTime2)
+        CheckState();
+    }
+    private void CheckState()
+    {
+        if (EConfig.ID == 0 || cropsConfig == null)
             return;
 
         if (ElapsedTime < cropsConfig.StateTime1)
@@ -97,7 +108,7 @@ public class EntityCrops : EntityBase
         effect.Init();
 
         TimeZoneMng.E.RemoveTimerEvent03(Update1S);
-        DataMng.E.UserData.CropsTimers.Remove(Pos);
+        WorldMng.E.MapCtl.RemoveCrops(Pos);
     }
 
     /// <summary>
@@ -105,12 +116,14 @@ public class EntityCrops : EntityBase
     /// </summary>
     /// <param name="pos">key</param>
     /// <returns></returns>
-    private DateTime GetTimer(UnityEngine.Vector3 pos)
+    private DateTime GetTimer(Vector3 pos)
     {
         DateTime timer;
-        if (!DataMng.E.UserData.CropsTimers.TryGetValue(pos, out timer))
+        string key = CommonFunction.Vector3ToString(pos);
+        if (!DataMng.E.UserData.CropsTimers.TryGetValue(key, out timer))
         {
-            DataMng.E.UserData.CropsTimers[pos] = DateTime.Now;
+            timer = DateTime.Now;
+            DataMng.E.UserData.CropsTimers[key] = DateTime.Now;
         }
 
         return timer;

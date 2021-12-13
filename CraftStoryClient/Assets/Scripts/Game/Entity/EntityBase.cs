@@ -20,6 +20,7 @@ public class EntityBase : MonoBehaviour
 
     public List<Vector3Int> ObstacleList = new List<Vector3Int>();
 
+    public virtual void Init() { }
     public virtual void OnClick() { }
     /// <summary>
     /// 長い時間クリック
