@@ -82,6 +82,7 @@ public enum EntityType
     Flower = 3, // 花
     BigFlower = 4, // 巨大花
     Grass = 5, // 草
+    Firm = 6, // 畑
 
     /// <summary>
     /// 農作物

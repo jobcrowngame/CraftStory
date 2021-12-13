@@ -12,4 +12,28 @@ public class EntityBlock : EntityBase
 
         OnDestroyEntity();
     }
+
+    public override void OnClick()
+    {
+        base.OnClick();
+
+        if (DataMng.E.RuntimeData.MapType == MapType.Home)
+        {
+            // クワを装備している場合
+            if (PlayerCtl.E.SelectItem != null && PlayerCtl.E.SelectItem.Config.Type == 4100)
+            {
+                // 土・草土の場合は畑に変化
+                if (EConfig.ID == 1005 || EConfig.ID == 1006)
+                {
+                    WorldMng.E.MapCtl.DeleteEntity(this);
+                    WorldMng.E.MapCtl.CreateEntity(3000, this.Pos, 0);
+                    WorldMng.E.MapCtl.CombineMesh();
+                }
+                else
+                {
+                    CommonFunction.ShowHintBar(37);
+                }
+            }
+        }
+    }
 }

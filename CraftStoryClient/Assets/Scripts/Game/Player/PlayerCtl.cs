@@ -261,6 +261,14 @@ public class PlayerCtl : MonoBehaviour
                         StartCoroutine(UnLock());
                         break;
 
+                    case ItemType.Hoe:
+                        if (collider != null)
+                        {
+                            var entity = collider.GetComponent<EntityBase>();
+                            if (entity != null) entity.OnClick();
+                        }
+                        break;
+
                     default: Logger.Error("Not find ItemType " + (ItemType)selectItem.Config.Type); break;
                 }
             }

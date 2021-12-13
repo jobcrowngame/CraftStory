@@ -361,6 +361,8 @@
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\LodingTips.cs" />
+    <Compile Include="Assets\Scripts\Game\Entity\EntityCrops.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Crops.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
