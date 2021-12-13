@@ -187,8 +187,6 @@ public class MapData
 
                 case EntityType.Crops:
                     entity = CommonFunction.Instantiate<EntityCrops>(config.Resources, parent, pos);
-                    entity.Pos = pos;
-                    entity.Init();
                     WorldMng.E.MapCtl.AddCrops(pos, (EntityCrops)entity);
                     break;
 
@@ -258,6 +256,7 @@ public class MapData
                 entity.EntityID = entityCell.entityID;
                 entity.Pos = pos;
                 entity.Direction = (Direction)entityCell.direction;
+                entity.Init();
 
                 if (entity.EConfig.HaveDirection == 1)
                 {
