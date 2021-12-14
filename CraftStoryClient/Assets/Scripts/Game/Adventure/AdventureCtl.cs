@@ -90,7 +90,8 @@ public class AdventureCtl : Single<AdventureCtl>
 
     private void AddBuff()
     {
-        if (DataMng.E.RuntimeData.MapType != MapType.Brave)
+        if (DataMng.E.RuntimeData.MapType != MapType.Brave &&
+            DataMng.E.RuntimeData.MapType != MapType.Event)
             return;
 
         if (timer % SettingMng.CreateAdventureBuffStep == 0)
