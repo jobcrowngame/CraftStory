@@ -515,33 +515,41 @@ public class MapCtl
     /// <returns></returns>
     public static Vector3Int GetGroundPos(MapData mapData, int posX, int posZ, float offsetY = 0, int CreatePosOffset = 3)
     {
-        if (posX < 0) posX = UnityEngine.Random.Range(CreatePosOffset, mapData.SizeX - CreatePosOffset);
-        if (posZ < 0) posZ = UnityEngine.Random.Range(CreatePosOffset, mapData.SizeZ - CreatePosOffset);
-
-        int posY = GetVertexY(mapData, posX, posZ) + (int)offsetY;
-
-        Vector3Int newPos = new Vector3Int(posX, posY, posZ);
-        if (!CheckCreatePos(mapData, newPos))
+        try
         {
-            // 生成できない座標の場合、５回ループして新しいランダム座標を取得
-            for (int k = 0; k < 100; k++)
+            if (posX < 0) posX = UnityEngine.Random.Range(CreatePosOffset, mapData.SizeX - CreatePosOffset);
+            if (posZ < 0) posZ = UnityEngine.Random.Range(CreatePosOffset, mapData.SizeZ - CreatePosOffset);
+
+            int posY = GetVertexY(mapData, posX, posZ) + (int)offsetY;
+
+            Vector3Int newPos = new Vector3Int(posX, posY, posZ);
+            if (!CheckCreatePos(mapData, newPos))
             {
-                posX = UnityEngine.Random.Range(CreatePosOffset, mapData.SizeX - CreatePosOffset);
-                posZ = UnityEngine.Random.Range(CreatePosOffset, mapData.SizeZ - CreatePosOffset);
-                posY = GetVertexY(mapData, posX, posZ) + (int)offsetY;
-                newPos = new Vector3Int(posX, posY, posZ);
-                newPos = Vector3Int.CeilToInt(FixEntityPos(mapData, newPos, CreatePosOffset));
+                // 生成できない座標の場合、５回ループして新しいランダム座標を取得
+                for (int k = 0; k < 100; k++)
+                {
+                    posX = UnityEngine.Random.Range(CreatePosOffset, mapData.SizeX - CreatePosOffset);
+                    posZ = UnityEngine.Random.Range(CreatePosOffset, mapData.SizeZ - CreatePosOffset);
+                    posY = GetVertexY(mapData, posX, posZ) + (int)offsetY;
+                    newPos = new Vector3Int(posX, posY, posZ);
+                    newPos = Vector3Int.CeilToInt(FixEntityPos(mapData, newPos, CreatePosOffset));
 
-                // ゲットした座標に他のEntityがある場合、スキップ
-                if (mapData.Map[newPos.x, newPos.y, newPos.z].entityID > 0)
-                    continue;
-                
-                if (CheckCreatePos(mapData, newPos))
-                    break;
+                    // ゲットした座標に他のEntityがある場合、スキップ
+                    if (mapData.Map[newPos.x, newPos.y, newPos.z].entityID > 0)
+                        continue;
+
+                    if (CheckCreatePos(mapData, newPos))
+                        break;
+                }
             }
-        }
 
-        return newPos;
+            return newPos;
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex);
+            return Vector3Int.zero;
+        }
     }
     private static int GetVertexY(MapData mapData, int x, int z)
     {

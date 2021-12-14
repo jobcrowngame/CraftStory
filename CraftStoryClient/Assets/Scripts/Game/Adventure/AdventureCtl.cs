@@ -105,7 +105,8 @@ public class AdventureCtl : Single<AdventureCtl>
     /// <param name="id"></param>
     public void AddAdventureBuff(int id)
     {
-        Logger.Log("add buff");
+        if (DataMng.E.MapData == null)
+            return;
 
         var config = ConfigMng.E.AdventureBuff[id];
 
