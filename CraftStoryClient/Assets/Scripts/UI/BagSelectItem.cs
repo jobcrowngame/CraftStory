@@ -79,7 +79,11 @@ public class BagSelectItem : UIBase
                 {
                     // 装備箇所更新
                     itemData.equipSite = 0;
-                    BagLG.E.SelectItem.ItemData.equipSite = Index + 1;
+                    var item = DataMng.E.GetItemByGuid(BagLG.E.SelectItem.ItemData.id);
+                    if (item != null)
+                    {
+                        item.equipSite = Index + 1;
+                    }
 
                     RefreshUIBtns();
                 }, BagLG.E.SelectItem.ItemData.id, Index + 1);
