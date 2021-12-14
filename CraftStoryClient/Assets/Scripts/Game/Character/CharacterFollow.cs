@@ -39,7 +39,8 @@ public class CharacterFollow : CharacterBase
     {
         base.OnClick();
 
-        if (DataMng.E.RuntimeData.MapType == MapType.Brave)
+        if (DataMng.E.RuntimeData.MapType == MapType.Brave ||
+            DataMng.E.RuntimeData.MapType == MapType.Event)
             return;
 
         if (!TaskMng.E.IsEnd)
@@ -151,7 +152,8 @@ public class CharacterFollow : CharacterBase
 
         Behavior = BehaviorType.Run;
 
-        if (DataMng.E.RuntimeData.MapType != MapType.Brave)
+        if (DataMng.E.RuntimeData.MapType != MapType.Brave &&
+            DataMng.E.RuntimeData.MapType != MapType.Event)
         {
             // タスク全部Endしたら吹き出しを出さない
             if (TaskMng.E.IsEnd)
