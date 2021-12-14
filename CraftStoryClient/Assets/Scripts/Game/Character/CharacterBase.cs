@@ -75,7 +75,10 @@ public class CharacterBase : MonoBehaviour
     public float FreezeTime = 0;
 
     protected bool ForcedRotate = false;
-    public bool UseSkilling = false;
+    /// <summary>
+    /// スキル使用中
+    /// </summary>
+    public bool SkillUsing = false;
 
     #endregion
 
@@ -294,7 +297,10 @@ public class CharacterBase : MonoBehaviour
 
         // ジャンプ以外はスキル中状態にする
         if ((SkillData.SkillType)skill.Config.Type != SkillData.SkillType.Jump)
-            UseSkilling = true;
+        {
+            SkillUsing = true;
+            StopMove();
+        }
 
         StartCoroutine(UseSkillIE(targetGroup, skill, selectTarget));
     }
@@ -379,7 +385,7 @@ public class CharacterBase : MonoBehaviour
                     AddImpact(this, this, int.Parse(impact));
                 }
 
-                UseSkilling = false;
+                SkillUsing = false;
                 break;
 
             case SkillData.SkillType.RangeRecovery:
@@ -397,7 +403,7 @@ public class CharacterBase : MonoBehaviour
                     EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
 
                 Jump();
-                UseSkilling = false;
+                SkillUsing = false;
                 break;
 
             // ジャンプ
@@ -413,7 +419,7 @@ public class CharacterBase : MonoBehaviour
 
                     AddImpact(this, this, int.Parse(skill.Impacts[0]));
                 }
-                UseSkilling = false;
+                SkillUsing = false;
                 break;
 
             default:
@@ -445,7 +451,7 @@ public class CharacterBase : MonoBehaviour
         // 一回のImpact
         RangeAttackAddImpact(skill, targetCamp, skill.OneceImpacts);
 
-        UseSkilling = false;
+        SkillUsing = false;
     }
     private void RangeAttackAddImpact(SkillData skill, CharacterGroup targetCamp, string[] impacts)
     {
@@ -507,7 +513,7 @@ public class CharacterBase : MonoBehaviour
             SingleAttackIEAddImpact(skill, mainTarget, skill.OneceImpacts);
         }
 
-        UseSkilling = false;
+        SkillUsing = false;
     }
     private void SingleAttackIEAddImpact(SkillData skill, CharacterBase target, string[] impacts)
     {
@@ -550,7 +556,7 @@ public class CharacterBase : MonoBehaviour
             RangedRangeAttackIEAddImpact(skill, mainTarget, targetCamp, skill.OneceImpacts);
         }
 
-        UseSkilling = false;
+        SkillUsing = false;
     }
     private void RangedRangeAttackIEAddImpact(SkillData skill, CharacterBase mainTarget, CharacterGroup targetCamp, string[] impacts)
     {
@@ -589,7 +595,7 @@ public class CharacterBase : MonoBehaviour
         }
 
         ForcedRotate = false;
-        UseSkilling = false;
+        SkillUsing = false;
 
         // 一回のImpact
         BeamIEAddImpact(skill, targetCamp, skill.OneceImpacts);
@@ -629,7 +635,7 @@ public class CharacterBase : MonoBehaviour
             yield return new WaitForSeconds(interval);
         }
 
-        UseSkilling = false;
+        SkillUsing = false;
 
         // 一回のImpact
         RangeRecoveryIEAddImpact(skill, targetCamp, skill.OneceImpacts);
@@ -670,8 +676,6 @@ public class CharacterBase : MonoBehaviour
     /// </summary>
     protected virtual void Died()
     {
-        Logger.Log("{0}が死んだ。", gameObject.name);
-
         StopMove();
         Behavior = BehaviorType.Did;
 
@@ -785,7 +789,7 @@ public class CharacterBase : MonoBehaviour
     /// </summary>
     public void Jump()
     {
-        if (Controller.isGrounded && !UseSkilling)
+        if (Controller.isGrounded && !SkillUsing)
         {
             // ジャンプ前の行動を記録
             beforBehavior = Behavior;

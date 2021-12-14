@@ -118,6 +118,23 @@ public class PlayerCtl : MonoBehaviour
         {
             AdventureCtl.E.AddAdventureBuff(1);
         }
+
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            HomeLG.E.UI.ClickSkill(0);
+        }
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            HomeLG.E.UI.ClickSkill(1);
+        }
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            HomeLG.E.UI.ClickSkill(2);
+        }
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            HomeLG.E.UI.ClickSkill(3);
+        }
     }
 
     public void SetCharacter(CharacterPlayer character)
@@ -470,7 +487,7 @@ public class PlayerCtl : MonoBehaviour
     /// <param name="skill"></param>
     public void UserSkill(SkillData skill, Action<SkillData> successCallback)
     {
-        if (Character.ShareCDIsCooling || skill.IsCooling || Character.IsDied || Character.UseSkilling)
+        if (Character.ShareCDIsCooling || skill.IsCooling || Character.IsDied || Character.SkillUsing)
             return;
 
         // 単体攻撃、遠距離範囲攻撃の場合、目標がないと先ず目標を探す

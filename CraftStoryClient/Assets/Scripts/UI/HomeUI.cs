@@ -215,6 +215,11 @@ public partial class HomeUI : UIBase
         PlayerCtl.E.Pause(false);
     }
 
+    public void ClickSkill(int index)
+    {
+        skills[index].OnClickSkillBtn();
+    }
+
     /// <summary>
     /// コインを更新
     /// </summary>

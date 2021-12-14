@@ -39,28 +39,35 @@ public class CraftItemCell : UIBase
 
     public void Init(Craft config)
     {
-        var itemConfig = ConfigMng.E.Item[config.ItemID];
-        itemName.text = itemConfig.Name;
-        itemCount.text = "x1";
-        Icon.sprite = ReadResources<Sprite>(itemConfig.IconResourcesPath);
-        clickBtn.onClick.AddListener(() => 
+        try
         {
-            SelectedCraftItem = this;
-            CraftLG.E.SelectCraft = config;
-            CraftLG.E.SelectCraftItemCell = this;
-            CraftLG.E.UI.RefreshCost();
-            GuideLG.E.Next();
-        });
+            var itemConfig = ConfigMng.E.Item[config.ItemID];
+            itemName.text = itemConfig.Name;
+            itemCount.text = "x1";
+            Icon.sprite = ReadResources<Sprite>(itemConfig.IconResourcesPath);
+            clickBtn.onClick.AddListener(() =>
+            {
+                SelectedCraftItem = this;
+                CraftLG.E.SelectCraft = config;
+                CraftLG.E.SelectCraftItemCell = this;
+                CraftLG.E.UI.RefreshCost();
+                GuideLG.E.Next();
+            });
 
-        if (config.Recommendation == 1)
-        {
-            RecommendationIcon.gameObject.SetActive(true);
+            if (config.Recommendation == 1)
+            {
+                RecommendationIcon.gameObject.SetActive(true);
+            }
+
+            // 掲示板の場合、始めに作る以外はおすすめしない
+            if (config.ItemID == 3003 && DataMng.E.UserData.FirstCraftMission == 1)
+            {
+                RecommendationIcon.gameObject.SetActive(false);
+            }
         }
-
-        // 掲示板の場合、始めに作る以外はおすすめしない
-        if (config.ItemID == 3003 && DataMng.E.UserData.FirstCraftMission == 1)
+        catch (System.Exception ex)
         {
-            RecommendationIcon.gameObject.SetActive(false);
+            Logger.Error(ex);
         }
     }
 

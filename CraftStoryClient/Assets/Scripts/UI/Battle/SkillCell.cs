@@ -16,7 +16,7 @@ public class SkillCell : UIBase
         btn.onClick.AddListener(OnClickSkillBtn);
     }
 
-    private void OnClickSkillBtn()
+    public void OnClickSkillBtn()
     {
         if (mSkill == null || mSkill.IsCooling || PlayerCtl.E.Character.ShareCDIsCooling)
             return;
