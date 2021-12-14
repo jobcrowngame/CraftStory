@@ -175,6 +175,7 @@ public class MapData
                         }
 
                         entity = CommonFunction.Instantiate<EntityBlock>(ConfigMng.E.Entity[0].Resources, parent, pos);
+                        entity.GetComponent<MeshCollider>().sharedMesh = mesh.mesh;
                     }
                     else
                     {
