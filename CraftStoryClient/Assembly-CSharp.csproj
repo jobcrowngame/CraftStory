@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\UI\DeleteItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\Common\WaitingUI.cs" />
     <Compile Include="Assets\Scripts\Game\Player\CameraCtl.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\LodingTips.cs" />
     <Compile Include="Assets\Scripts\UI\ChatUI.cs" />
     <Compile Include="Assets\Scripts\UI\EquipListUI.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusUI.cs" />
@@ -280,6 +281,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Equipment.cs" />
     <Compile Include="Assets\RPG VFX Particles package 1\Demo\RPG_VFX_Particles_package_1_Demo.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Chat.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Crops.cs" />
     <Compile Include="Assets\Scripts\UI\DebugCell.cs" />
     <Compile Include="Assets\Scripts\Test\PlayerController.cs" />
     <Compile Include="Assets\Scripts\UI\GachaRatioUI.cs" />
@@ -354,15 +356,14 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mission.cs" />
     <Compile Include="Assets\Scripts\UI\GachaBonusLG.cs" />
     <Compile Include="Assets\Scripts\Test\Monster\DogController.cs" />
+    <Compile Include="Assets\Scripts\Game\Entity\EntityCrops.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterMonster.cs" />
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectChanger.cs" />
     <Compile Include="Assets\Scripts\Test\TestRotate.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\LodingTips.cs" />
-    <Compile Include="Assets\Scripts\Game\Entity\EntityCrops.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Crops.cs" />
+    <Compile Include="Assets\Scripts\Test\ShowMatrix.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
