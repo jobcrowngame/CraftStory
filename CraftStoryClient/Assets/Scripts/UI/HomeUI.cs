@@ -234,7 +234,7 @@ public partial class HomeUI : UIBase
     private void RefreshUiByMapType()
     {
         MenuBtn.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Brave 
-            || DataMng.E.RuntimeData.MapType != MapType.Event);
+            && DataMng.E.RuntimeData.MapType != MapType.Event);
 
         SceneName.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave 
             || DataMng.E.RuntimeData.MapType == MapType.Event);
