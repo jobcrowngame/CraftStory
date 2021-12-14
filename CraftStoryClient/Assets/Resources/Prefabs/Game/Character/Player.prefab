@@ -241,7 +241,7 @@ MonoBehaviour:
   mBehavior: 1
   moveDirection: {x: 0, y: 0, z: 0}
   FreezeTime: 0
-  UseSkilling: 0
+  SkillUsing: 0
   IsGrand: 0
   newDir: {x: 0, y: 0}
 --- !u!114 &9107403550295837978
@@ -335,7 +335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6934ac624d8f89f4db99923cf05b5694, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.68
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6934ac624d8f89f4db99923cf05b5694, type: 3}
       propertyPath: m_LocalPosition.z
