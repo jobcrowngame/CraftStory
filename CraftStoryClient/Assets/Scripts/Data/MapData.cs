@@ -171,7 +171,7 @@ public class MapData
                         var combineMO = parent.GetComponent<CombineMeshObj>();
                         if (combineMO != null)
                         {
-                            combineMO.AddObj(entityCell.entityID, mesh.mesh, render.material, pos);
+                            combineMO.AddObj(entityCell.entityID, mesh.mesh, render.material, pos, entityCell.direction);
                         }
 
                         entity = CommonFunction.Instantiate<EntityBlock>(ConfigMng.E.Entity[0].Resources, parent, pos);

@@ -10,14 +10,14 @@ public class CombineMeshObj : MonoBehaviour
     Dictionary<int, Material> materials = new Dictionary<int, Material>();
     List<Mesh> meshObjs = new List<Mesh>();
 
-    public void AddObj(int key, Mesh mesh, Material material, Vector3 pos)
+    public void AddObj(int key, Mesh mesh, Material material, Vector3 pos, int direction)
     {
         if (!materials.ContainsKey(key))
         {
             materials[key] = material;
         }
 
-        Matrix4x4 matri = new Matrix4x4(new Vector4(1, 0, 0, 0), new Vector4(0, 1, 0, 0), new Vector4(0, 0, 1, 0), new Vector4(pos.x, pos.y, pos.z, 0));
+        Matrix4x4 matri = GetMatrix4x4ByDir(direction, pos);
         CombineInstance instance = new CombineInstance();
         instance.transform = matri;
         instance.mesh = mesh;
@@ -73,5 +73,42 @@ public class CombineMeshObj : MonoBehaviour
         obj.transform.SetParent(transform);
         obj.transform.localPosition = Vector3.zero;
         return obj;
+    }
+
+    private Matrix4x4 GetMatrix4x4ByDir(int direction, Vector3 pos)
+    {
+        Vector4 v1 = Vector4.zero;
+        Vector4 v2 = Vector4.zero;
+        Vector4 v3 = Vector4.zero;
+        Vector4 v4 = new Vector4(pos.x, pos.y, pos.z, 0);
+
+        switch ((Direction)direction)
+        {
+            case Direction.back:
+                v1 = new Vector4(-1, 0, 0, 0);
+                v2 = new Vector4(0, 1, 0, 0);
+                v3 = new Vector4(0, 0, -1, 0);
+                break;
+
+            case Direction.right:
+                v1 = new Vector4(0, 0, -1, 0);
+                v2 = new Vector4(0, 1, 0, 0);
+                v3 = new Vector4(1, 0, 0, 0);
+                break;
+
+            case Direction.left:
+                v1 = new Vector4(0, 0, 1, 0);
+                v2 = new Vector4(0, 1, 0, 0);
+                v3 = new Vector4(-1, 0, 0, 0);
+                break;
+
+            default:
+                v1 = new Vector4(1, 0, 0, 0);
+                v2 = new Vector4(0, 1, 0, 0);
+                v3 = new Vector4(0, 0, 1, 0);
+                break;
+        }
+
+        return new Matrix4x4(v1, v2, v3, v4);
     }
 }
