@@ -28,9 +28,9 @@ public class EntityCrops : EntityBase
 
             mState = value;
 
-            State1.gameObject.SetActive(value == 1);
-            State2.gameObject.SetActive(value == 2);
-            State3.gameObject.SetActive(value == 3);
+            if (State1 != null) State1.gameObject.SetActive(value == 1);
+            if (State2 != null) State2.gameObject.SetActive(value == 2);
+            if (State3 != null) State3.gameObject.SetActive(value == 3);
         }
     }
     int mState = 0;

@@ -44,6 +44,11 @@ public class MapCtl
         DataMng.E.UserData.CropsTimers.Remove(CommonFunction.Vector3ToString(pos));
     }
 
+    public void ClearCrops()
+    {
+        cropsList.Clear();
+    }
+
     /// <summary>
     /// マップを生成
     /// </summary>

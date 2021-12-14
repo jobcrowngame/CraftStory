@@ -89,7 +89,7 @@ public partial class CharacterPlayer : CharacterBase
         if (PlayerCtl.E.Character == null)
             return;
 
-        Logger.Log("Player Behavior: " + behavior);
+        //Logger.Log("Player Behavior: " + behavior);
 
         PlayerCtl.E.Character.ShowDestroyEffect(behavior == BehaviorType.Breack);
 

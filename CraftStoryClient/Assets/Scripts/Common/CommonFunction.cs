@@ -195,6 +195,7 @@ public class CommonFunction
 
         // メッシュをクリア
         WorldMng.E.MapCtl.ClearMesh();
+        WorldMng.E.MapCtl.ClearCrops();
 
         // Scene遷移
         SceneManager.LoadSceneAsync("NowLoading");
