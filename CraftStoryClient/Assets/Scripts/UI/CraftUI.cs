@@ -17,6 +17,7 @@ public class CraftUI : UIBase
     Button LeftBtn10 { get => FindChiled<Button>("LeftBtn10"); }
     public MyText Explanatory { get => FindChiled<MyText>("Explanatory"); }
     CraftCostCell[] costCells;
+    ScrollRect ScrollViewRect { get => FindChiled<ScrollRect>("Scroll View"); }
 
     public readonly string ExplanatoryNoSelect = "アイテムをタップすると説明が表示されます";
 
@@ -50,6 +51,7 @@ public class CraftUI : UIBase
         ActiveSlectCountBtns(false);
 
         Explanatory.text = ExplanatoryNoSelect;
+        ScrollViewRect.enabled = true;
     }
 
     public void SetType(EntityType type)
