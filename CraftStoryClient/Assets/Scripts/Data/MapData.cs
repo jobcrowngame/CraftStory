@@ -229,6 +229,7 @@ public class MapData
 
                 case EntityType.Workbench:
                 case EntityType.Kamado:
+                case EntityType.EquipmentWorkbench:
                 case EntityType.Door:
                 case EntityType.Mission:
                 case EntityType.ChargeShop:

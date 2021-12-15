@@ -129,6 +129,11 @@ public enum ItemType
 
     Workbench = 1000,
     Kamado = 1001,
+
+    /// <summary>
+    /// 装備作業台
+    /// </summary>
+    EquipmentWorkbench = 1002,
     Door = 2000,
     Bed = 2001,
     Torch = 2100,

@@ -243,6 +243,7 @@ public class PlayerCtl : MonoBehaviour
 
                     case ItemType.Workbench:
                     case ItemType.Kamado:
+                    case ItemType.EquipmentWorkbench:
                     case ItemType.Door:
                     case ItemType.Mission:
                     case ItemType.HaveDirectionNomoObject:

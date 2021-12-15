@@ -132,6 +132,11 @@ public enum EntityType
     BlueprintShop = 1006,
 
     /// <summary>
+    /// 装備作業台
+    /// </summary>
+    EquipmentWorkbench = 1008,
+
+    /// <summary>
     /// ギフトショップ
     /// </summary>
     GiftShop = 1007,

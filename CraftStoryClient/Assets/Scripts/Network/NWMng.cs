@@ -299,7 +299,7 @@ public partial class NWMng : MonoBehaviour
     public void Craft(Action<JsonData> rp, Craft craft, int count)
     {
         var data = new NWData();
-        data.Add("creaftId",craft.ID);
+        data.Add("craftId", craft.ID);
         data.Add("count", count);
 
         StartCoroutine(HttpRequest(rp, data, CMD.Craft));
