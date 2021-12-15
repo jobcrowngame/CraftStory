@@ -17,6 +17,7 @@ public class BraveMain : MonoBehaviour
         AudioMng.E.ShowBGM("bgm_02");
 
         // 冒険エリア最大レベル統計
-        NWMng.E.ArriveFloor(null, DataMng.E.MapData.Config.Floor);
+        if (DataMng.E.RuntimeData.MapType == MapType.Brave)
+            NWMng.E.ArriveFloor(null, DataMng.E.MapData.Config.Floor);
     }
 }
