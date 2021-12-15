@@ -95,6 +95,11 @@ public enum EntityType
     /// </summary>
     Block3 = 8,
 
+    /// <summary>
+    /// 水ブロック
+    /// </summary>
+    Block4 = 9,
+
     Block99 = 99, // 壊れないブロック
     Resources = 100, // 
     TreasureBox = 110,
