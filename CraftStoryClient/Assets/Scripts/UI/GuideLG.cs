@@ -336,4 +336,9 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
     {
         DataMng.E.RuntimeData.GuideId = 6;
     }
+
+    public void DisableCraftScroll()
+    {
+        UI.GetGameObject("Craft(Clone)/BG/Scroll View").GetComponent<ScrollRect>().enabled = false;
+    }
 }
