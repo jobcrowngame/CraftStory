@@ -125,7 +125,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 DataMng.E.UserData.PickupNoticeCheckMap = new Dictionary<int, DateTime>();
             }
 
-
+            Main.LoginFailed = false;
 
             // 既存ユーザーの空腹度を100にする為
             if (DataMng.E.UserData.FreeFoodEated == 0)

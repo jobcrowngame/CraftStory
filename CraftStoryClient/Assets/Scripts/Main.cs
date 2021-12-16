@@ -47,6 +47,8 @@ public class Main : MonoBehaviour
                 }
             });
         });
+
+        StartCoroutine(OnLoginFailed());
     }
 
     private void OnApplicationQuit()
@@ -73,4 +75,29 @@ public class Main : MonoBehaviour
         public string version { get; set; }
         public int IsMaintenance { get; set; }
     }
+
+
+    #region OnLogin fail
+
+    public static bool LoginFailed = true;
+    string text = @"ログインに問題が発生しています。
+詳細は公式ツイッターをご確認ください。
+
+※OKボタンをタップすると公式ツイッターへ遷移します。";
+    private IEnumerator OnLoginFailed()
+    {
+        yield return new WaitForSeconds(15);
+
+        if (LoginFailed)
+        {
+            Logger.Error("ログイン失敗しました。{0}", DataMng.E.UserData.Account);
+
+            CommonFunction.ShowHintBox(text, () =>
+            {
+                Application.OpenURL("https://twitter.com/CraftStory37/");
+            });
+        }
+    }
+
+    #endregion OnLogin fail
 }
