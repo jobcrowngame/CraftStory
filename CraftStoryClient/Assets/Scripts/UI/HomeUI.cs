@@ -35,6 +35,11 @@ public partial class HomeUI : UIBase
     public Transform Items { get => FindChiled("Items"); }
 
     /// <summary>
+    /// アイテム欄
+    /// </summary>
+    Transform ItemsGridMask { get => Items != null ? FindChiled("GridMask", Items.gameObject) : null; }
+
+    /// <summary>
     /// 持ち物ボタン
     /// </summary>
     Button BagBtn;
@@ -246,7 +251,13 @@ public partial class HomeUI : UIBase
             || DataMng.E.RuntimeData.MapType == MapType.Test);
         
         Items.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home
-            || DataMng.E.RuntimeData.MapType == MapType.Guide);
+            || DataMng.E.RuntimeData.MapType == MapType.Guide
+            || DataMng.E.RuntimeData.MapType == MapType.Market);
+
+        if (Items.gameObject.activeSelf)
+        {
+            ItemsGridMask.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Market);
+        }
 
         Title.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Market);
 
