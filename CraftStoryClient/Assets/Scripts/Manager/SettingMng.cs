@@ -88,4 +88,19 @@ public class SettingMng : Single<SettingMng>
     /// 最大ロックオン距離
     /// </summary>
     public const float MaxLockUnDistance = 20;
+
+    /// <summary>
+    /// 最大空腹度
+    /// </summary>
+    public const int MaxHunger = 100;
+
+    /// <summary>
+    /// ジャンプで空腹度消耗
+    /// </summary>
+    public const int JumCostHumger = 1;
+
+    /// <summary>
+    /// 時間による空腹度消耗Step
+    /// </summary>
+    public const int CostHumgerTimer = 10;
 }

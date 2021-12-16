@@ -55,10 +55,6 @@ public partial class HomeUI : UIBase
     Transform ItemDropParent;
 
     /// <summary>
-    /// ジャンプボタン
-    /// </summary>
-    Button Jump;
-    /// <summary>
     /// 画面操作用　+ボタン
     /// </summary>
     MyButton PlussBtn;
@@ -123,7 +119,6 @@ public partial class HomeUI : UIBase
         BagBtn = FindChiled<Button>("BagBtn");
         btnsParent = FindChiled("Grid");
         ItemDropParent = FindChiled("ItemDropParent");
-        Jump = FindChiled<Button>("Jump");
         PlussBtn = FindChiled<MyButton>("PlussBtn");
         MinusBtn = FindChiled<MyButton>("MinusBtn");
         RedPoint = FindChiled("RedPoint");
@@ -135,12 +130,18 @@ public partial class HomeUI : UIBase
         TaskOverviewText = FindChiled<Transform>("Text", TaskOverview.transform);
     }
 
+    private void FixedUpdate()
+    {
+        FixedUpdateHunger();
+    }
+
     public override void Init()
     {
         base.Init();
         HomeLG.E.Init(this);
 
         InitBlueprint();
+        InitHunger();
 
         FadeinImg.enabled = true;
 
@@ -169,7 +170,6 @@ public partial class HomeUI : UIBase
        
         PlussBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(1); });
         MinusBtn.AddClickingListener(() => { PlayerCtl.E.CameraCtl.ChangeCameraPos(-1); });
-        Jump.onClick.AddListener(PlayerCtl.E.Jump);
 
         PlayerCtl.E.Joystick = FindChiled<SimpleInputNamespace.Joystick>("Joystick");
         PlayerCtl.E.ScreenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");

@@ -287,6 +287,7 @@
     <Compile Include="Assets\Scripts\Test\PlayerController.cs" />
     <Compile Include="Assets\Scripts\UI\GachaRatioUI.cs" />
     <Compile Include="Assets\Scripts\UI\LoginBonusLG.cs" />
+    <Compile Include="Assets\Scripts\Game\Battle\FireBool.cs" />
     <Compile Include="Assets\Scripts\UI\EquipListCell.cs" />
     <Compile Include="Assets\Scripts\UI\CraftItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\FriednCell.cs" />
@@ -302,6 +303,7 @@
     <Compile Include="Assets\Scripts\UI\ShopResourceUI.cs" />
     <Compile Include="Assets\Scripts\UI\LoginUI.cs" />
     <Compile Include="Assets\Scripts\Common\Single.cs" />
+    <Compile Include="Assets\Scripts\Common\VectorTool.cs" />
     <Compile Include="Assets\Scripts\UI\MenuUI.cs" />
     <Compile Include="Assets\Scripts\UI\DeleteItemUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ErrorMsg.cs" />
@@ -364,8 +366,10 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Test\Battle\FireBool.cs" />
-    <Compile Include="Assets\Scripts\Common\VectorTool.cs" />
+    <Compile Include="Assets\Scripts\Test\Battle\ColliderTest.cs" />
+    <Compile Include="Assets\Scripts\Game\Battle\Obstacle.cs" />
+    <Compile Include="Assets\Scripts\Game\Battle\FlyingObjBase.cs" />
+    <Compile Include="Assets\Scripts\UI\HomeUI.Hunger.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
