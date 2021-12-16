@@ -42,9 +42,11 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, Blast> BlastConfig = new Dictionary<int, Blast>();
     Dictionary<int, LodingTips> LodingTipsConfig = new Dictionary<int, LodingTips>();
     Dictionary<int, Crops> CropsConfig = new Dictionary<int, Crops>();
+    Dictionary<int, Food> FoodConfig = new Dictionary<int, Food>();
 
 
 
+    public Dictionary<int, Food> Food { get => FoodConfig; }
     public Dictionary<int, Crops> Crops { get => CropsConfig; }
     public Dictionary<int, LodingTips> LodingTips { get => LodingTipsConfig; }
     public Dictionary<int, Blast> Blast { get => BlastConfig; }
@@ -114,7 +116,8 @@ class ConfigMng : Single<ConfigMng>
         ReadConfig("Config/Blast", BlastConfig);
         ReadConfig("Config/LodingTips", LodingTipsConfig);
         ReadConfig("Config/Crops", CropsConfig);
-        
+        ReadConfig("Config/Food", FoodConfig);
+
 
 
         yield return null;

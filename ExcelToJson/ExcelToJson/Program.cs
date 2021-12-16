@@ -137,6 +137,7 @@ namespace ExcelToJson
                 case "Blast": list = Blast(tbl); break;
                 case "LodingTips": list = LodingTips(tbl); break;
                 case "Crops": list = Crops(tbl); break;
+                case "Food": list = Food(tbl); break;
 
 
 
@@ -929,6 +930,24 @@ namespace ExcelToJson
                     StateTime2 = ToFloat(tbl.Rows[i]["StateTime2"]),
                     DestroyAddItem = ToInt32(tbl.Rows[i]["DestroyAddItem"]),
                     Count = ToInt32(tbl.Rows[i]["Count"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        private static object Food(DataTable tbl)
+        {
+            List<Food> list = new List<Food>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new Food()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    ItemID = ToInt32(tbl.Rows[i]["ItemID"]),
+                    Type = ToInt32(tbl.Rows[i]["Type"]),
+                    Amount = ToInt32(tbl.Rows[i]["Amount"]),
+                    Percent = ToInt32(tbl.Rows[i]["Percent"]),
                 };
 
                 list.Add(data);

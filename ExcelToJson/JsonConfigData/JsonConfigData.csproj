@@ -56,6 +56,7 @@
     <Compile Include="Guide.cs" />
     <Compile Include="GuideStep.cs" />
     <Compile Include="Impact.cs" />
+    <Compile Include="Food.cs" />
     <Compile Include="LodingTips.cs" />
     <Compile Include="LoginBonus.cs" />
     <Compile Include="Mail.cs" />
