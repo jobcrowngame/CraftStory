@@ -25,6 +25,11 @@ public class UserData
     public bool FirstShowFairy = true;
 
     /// <summary>
+    /// 飢え
+    /// </summary>
+    public int Hunger { get; set; }
+
+    /// <summary>
     /// 強制表示お知らせ当日チェックマップ
     /// </summary>
     public Dictionary<int, DateTime> PickupNoticeCheckMap { get; set; }
