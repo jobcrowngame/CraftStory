@@ -137,10 +137,10 @@ public class BagUI : UIBase
     {
         foreach (var item in btns)
         {
-            item.IsSelected(false);
+            item.ColorChange(false);
         }
 
-        btns[index].IsSelected(true);
+        btns[index].ColorChange(true);
         ResetExplanatory();
     }
 

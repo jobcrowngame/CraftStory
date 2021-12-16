@@ -802,7 +802,7 @@ public class CharacterBase : MonoBehaviour
     public void AddFireBool(CharacterBase target)
     {
         var fireBool = CommonFunction.Instantiate<FireBool>("Prefabs/Battle/FireBool", null, transform.position);
-        fireBool.SetInfo(this, target, 10);
+        fireBool.SetInfo(this, target, 1);
     }
 
     #endregion
@@ -974,7 +974,12 @@ public enum BehaviorType
     /// </summary>
     Breack = 4,
 
-    Jump, // ジャンプ
+    Jump = 5, // ジャンプ
+
+    /// <summary>
+    /// 料理を食べる
+    /// </summary>
+    EatFood = 6,
 
     /// <summary>
     /// 凍結

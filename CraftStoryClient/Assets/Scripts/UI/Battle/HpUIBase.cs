@@ -57,6 +57,11 @@ public class HpUIBase : UIBase
     public virtual void AddExp(int exp) { }
 
     /// <summary>
+    /// 空腹タグを出す
+    /// </summary>
+    public virtual void ShowHungerBar(bool b) { }
+
+    /// <summary>
     /// カメラを向かう
     /// </summary>
     /// <param name="b"></param>

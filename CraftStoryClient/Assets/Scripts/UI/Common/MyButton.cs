@@ -84,9 +84,15 @@ public class MyButton : Button
     /// ボタングループで使う場合、選択してないボタンはグレイにする
     /// </summary>
     /// <param name="b"></param>
-    public void IsSelected(bool b)
+    public void ColorChange(bool b)
     {
         GetComponent<Image>().color = b ? Color.white : Color.grey;
+    }
+
+    public void Enable(bool b)
+    {
+        ColorChange(b);
+        this.enabled = b;
     }
 
     /// <summary>

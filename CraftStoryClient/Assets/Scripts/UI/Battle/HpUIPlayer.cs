@@ -8,6 +8,7 @@ public class HpUIPlayer : HpUIBase
 {
     Transform DamageObjParent { get => FindChiled("DamageObjParent"); }
     Text Behavior { get => FindChiled<Text>("Behavior"); }
+    Image HungerTag { get => FindChiled<Image>("HungerTag"); }
 
     Stack<int> addedExpStack;
 
@@ -89,5 +90,11 @@ public class HpUIPlayer : HpUIBase
         int addExp = addedExpStack.Pop();
         var obj = CommonFunction.Instantiate<ExpAdd>("Prefabs/Battle/ExpAdd", transform, transform.position);
         obj.Set(addExp);
+    }
+
+    public override void ShowHungerBar(bool b)
+    {
+        base.ShowHungerBar(b);
+        HungerTag.gameObject.SetActive(b);
     }
 }
