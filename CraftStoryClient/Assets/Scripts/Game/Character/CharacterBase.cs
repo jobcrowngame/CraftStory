@@ -666,7 +666,7 @@ public class CharacterBase : MonoBehaviour
     /// <param name="target"></param>
     /// <param name="attacker"></param>
     /// <param name="impactId"></param>
-    private void AddImpact(CharacterBase target, CharacterBase attacker, int impactId)
+    public void AddImpact(CharacterBase target, CharacterBase attacker, int impactId)
     {
         impactList.Add(new ImpactCell(target, attacker, impactId));
     }
@@ -797,6 +797,12 @@ public class CharacterBase : MonoBehaviour
             moveDirection.y = SettingMng.JumpSpeed;
             Behavior = BehaviorType.Jump;
         }
+    }
+
+    public void AddFireBool(CharacterBase target)
+    {
+        var fireBool = CommonFunction.Instantiate<FireBool>("Prefabs/Battle/FireBool", null, transform.position);
+        fireBool.SetInfo(this, target, 10);
     }
 
     #endregion
