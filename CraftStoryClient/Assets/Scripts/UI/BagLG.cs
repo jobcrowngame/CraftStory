@@ -72,21 +72,31 @@ public class BagLG : UILogicBase<BagLG, BagUI>
         /// <summary>
         /// ブロック
         /// </summary>
-        Block,
+        Block = 1,
 
         /// <summary>
         /// 他
         /// </summary>
-        Orther,
+        Orther = 2,
 
         /// <summary>
         /// 素材
         /// </summary>
-        Material,
+        Material = 3,
 
         /// <summary>
         /// 設計図
         /// </summary>
-        Blueprint,
+        Blueprint = 4,
+
+        /// <summary>
+        /// 料理
+        /// </summary>
+        Cocooking = 5,
+
+        /// <summary>
+        /// 装備
+        /// </summary>
+        Ecuipment = 6,
     }
 }

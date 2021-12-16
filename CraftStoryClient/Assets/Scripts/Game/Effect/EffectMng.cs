@@ -49,9 +49,16 @@ public class EffectMng : Single<EffectMng>
         }
     }
 
-    public EffectBase AddBattleEffect(string path, float time, Transform transform)
+    /// <summary>
+    /// Effectを追加
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="time"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public EffectBase AddBattleEffect(string path, float time, Transform target)
     {
-        return AddBattleEffectHaveParent(path, time, WorldMng.E.EffectParent, transform.position, transform.rotation);
+        return AddBattleEffectHaveParent(path, time, WorldMng.E.EffectParent, target.position, target.rotation);
     }
     public EffectBase AddBattleEffect(string path, float time, Vector3 pos, Quaternion rotation)
     {

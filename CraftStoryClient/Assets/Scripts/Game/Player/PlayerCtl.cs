@@ -119,6 +119,14 @@ public class PlayerCtl : MonoBehaviour
             AdventureCtl.E.AddAdventureBuff(1);
         }
 
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            if (Character.Target != null)
+            {
+                Character.AddFireBool(Character.Target);
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.F4))
         {
             HomeLG.E.UI.ClickSkill(0);
@@ -244,6 +252,7 @@ public class PlayerCtl : MonoBehaviour
                     case ItemType.Workbench:
                     case ItemType.Kamado:
                     case ItemType.EquipmentWorkbench:
+                    case ItemType.CookingTable:
                     case ItemType.Door:
                     case ItemType.Mission:
                     case ItemType.HaveDirectionNomoObject:

@@ -221,17 +221,6 @@ public class CommonFunction
     }
 
     /// <summary>
-    /// ベクターの計算
-    /// </summary>
-    /// <param name="v1"></param>
-    /// <param name="v2"></param>
-    /// <returns></returns>
-    public static Vector3Int Vector3Sum(Vector3Int v1, Vector3Int v2)
-    {
-        return new Vector3Int(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
-    }
-
-    /// <summary>
     /// プレイヤーの座標とインスタンスエンティティの座標から向きを取得
     /// </summary>
     /// <param name="createPos">インスタンス座標</param>
@@ -272,21 +261,7 @@ public class CommonFunction
         }
         return angle;
     }
-    /// <summary>
-    /// 角度から単位ベクトルを取得
-    /// </summary>
-    public static Vector2 AngleToVector2(float angle)
-    {
-        var radian = angle * (Mathf.PI / 180);
-        return new Vector2(Mathf.Sin(radian), Mathf.Cos(radian)).normalized;
-    }
-    /// <summary>
-    /// ベクトルから角度を取得
-    /// </summary>
-    public static float Vector2ToAngle(Vector2 vector)
-    {
-        return Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
-    }
+   
 
     /// <summary>
     /// ボーナスリストからアイテムリストを取得
@@ -577,6 +552,33 @@ public class CommonFunction
     {
         string[] pos = posStr.Split(',');
         return new Vector3(int.Parse(pos[0]), int.Parse(pos[1]), int.Parse(pos[2]));
+    }
+
+    /// <summary>
+    /// 角度から単位ベクトルを取得
+    /// </summary>
+    public static Vector2 AngleToVector2(float angle)
+    {
+        var radian = angle * (Mathf.PI / 180);
+        return new Vector2(Mathf.Sin(radian), Mathf.Cos(radian)).normalized;
+    }
+    /// <summary>
+    /// ベクトルから角度を取得
+    /// </summary>
+    public static float Vector2ToAngle(Vector2 vector)
+    {
+        return Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
+    }
+
+    /// <summary>
+    /// ベクターの計算
+    /// </summary>
+    /// <param name="v1"></param>
+    /// <param name="v2"></param>
+    /// <returns></returns>
+    public static Vector3Int Vector3Sum(Vector3Int v1, Vector3Int v2)
+    {
+        return new Vector3Int(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
     }
 
     #endregion

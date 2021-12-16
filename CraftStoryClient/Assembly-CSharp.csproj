@@ -106,6 +106,7 @@
     <Compile Include="Assets\Scripts\UI\NoticeUI.cs" />
     <Compile Include="Assets\Scripts\Test\TestCreateObj.cs" />
     <Compile Include="Assets\Scripts\Test\DragObj.cs" />
+    <Compile Include="Assets\Scripts\Test\ShowMatrix.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityGrass.cs" />
     <Compile Include="Assets\Scripts\UI\EmailUI.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityHaveDirection.cs" />
@@ -363,7 +364,8 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Test\ShowMatrix.cs" />
+    <Compile Include="Assets\Scripts\Test\Battle\FireBool.cs" />
+    <Compile Include="Assets\Scripts\Common\VectorTool.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

@@ -137,6 +137,11 @@ public enum EntityType
     EquipmentWorkbench = 1008,
 
     /// <summary>
+    /// 料理台
+    /// </summary>
+    CookingTable = 1009,
+
+    /// <summary>
     /// ギフトショップ
     /// </summary>
     GiftShop = 1007,

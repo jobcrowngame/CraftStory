@@ -230,6 +230,7 @@ public class MapData
                 case EntityType.Workbench:
                 case EntityType.Kamado:
                 case EntityType.EquipmentWorkbench:
+                case EntityType.CookingTable:
                 case EntityType.Door:
                 case EntityType.Mission:
                 case EntityType.ChargeShop:

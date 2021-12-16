@@ -134,6 +134,12 @@ public enum ItemType
     /// 装備作業台
     /// </summary>
     EquipmentWorkbench = 1002,
+
+    /// <summary>
+    /// 料理台
+    /// </summary>
+    CookingTable = 1003,
+
     Door = 2000,
     Bed = 2001,
     Torch = 2100,

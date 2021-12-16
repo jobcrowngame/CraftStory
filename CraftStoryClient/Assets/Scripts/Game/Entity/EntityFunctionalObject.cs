@@ -61,6 +61,7 @@ public class EntityFunctionalObject : EntityBase
             case EntityType.Workbench:
             case EntityType.Kamado:
             case EntityType.EquipmentWorkbench:
+            case EntityType.CookingTable:
                 var ui = UICtl.E.OpenUI<CraftUI>(UIType.Craft);
                 ui.SetType(Type);
                 break;
