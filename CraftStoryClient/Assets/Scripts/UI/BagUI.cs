@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using JsonConfigData;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -59,6 +60,14 @@ public class BagUI : UIBase
         DeleteBtn.onClick.AddListener(() => 
         {
             UICtl.E.OpenUI<DeleteItemUI>(UIType.DeleteItem);
+        });
+
+        EatButton.onClick.AddListener(() =>
+        {
+            Food food = ConfigMng.E.Food[BagLG.E.SelectItem.ItemData.itemId];
+            HomeLG.E.UI.RecoveryHunger(food.Percent);
+            DataMng.E.ConsumableItemByItemId(BagLG.E.SelectItem.ItemData.itemId, 1);
+            Close();
         });
     }
 
