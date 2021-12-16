@@ -124,6 +124,15 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             {
                 DataMng.E.UserData.PickupNoticeCheckMap = new Dictionary<int, DateTime>();
             }
+
+
+
+            // 既存ユーザーの空腹度を100にする為
+            if (DataMng.E.UserData.FreeFoodEated == 0)
+            {
+                DataMng.E.UserData.Hunger = 100;
+                DataMng.E.UserData.FreeFoodEated = 1;
+            }
         }, DataMng.E.UserData.UserPW);
     }
 

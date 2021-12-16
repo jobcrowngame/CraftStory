@@ -370,6 +370,7 @@
     <Compile Include="Assets\Scripts\Game\Battle\Obstacle.cs" />
     <Compile Include="Assets\Scripts\Game\Battle\FlyingObjBase.cs" />
     <Compile Include="Assets\Scripts\UI\HomeUI.Hunger.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Food.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

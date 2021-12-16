@@ -86,7 +86,7 @@ public partial class HomeUI
     /// 空腹度変化
     /// </summary>
     /// <param name="value"></param>
-    public void HungerChange(int value)
+    private void HungerChange(int value)
     {
         Hunger += value;
     }

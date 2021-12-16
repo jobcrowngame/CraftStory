@@ -30,6 +30,11 @@ public class UserData
     public int Hunger { get; set; }
 
     /// <summary>
+    /// 無料で空腹度を回復したかのフラグ（既存のユーザーの為）
+    /// </summary>
+    public int FreeFoodEated { get; set; }
+
+    /// <summary>
     /// 強制表示お知らせ当日チェックマップ
     /// </summary>
     public Dictionary<int, DateTime> PickupNoticeCheckMap { get; set; }
