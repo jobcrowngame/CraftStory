@@ -50,6 +50,9 @@ public partial class HomeUI
 
     public void InitHunger()
     {
+        PlayerCtl.E.Character.HpCtl.ShowHungerBar(false);
+        PlayerCtl.E.Character.MoveSpeed = 1;
+
         Jump.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home);
         HungerBar.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home);
 
@@ -78,8 +81,11 @@ public partial class HomeUI
 
     private void IsHunger(bool b)
     {
-        PlayerCtl.E.Character.HpCtl.ShowHungerBar(b);
-        PlayerCtl.E.Character.MoveSpeed = b ? 0.5f : 1;
+        if (DataMng.E.RuntimeData.MapType == MapType.Home)
+        {
+            PlayerCtl.E.Character.HpCtl.ShowHungerBar(b);
+            PlayerCtl.E.Character.MoveSpeed = b ? 0.5f : 1;
+        }
     }
 
     /// <summary>
