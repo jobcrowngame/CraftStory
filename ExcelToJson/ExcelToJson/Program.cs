@@ -944,7 +944,6 @@ namespace ExcelToJson
                 var data = new Food()
                 {
                     ID = ToInt32(tbl.Rows[i]["ID"]),
-                    ItemID = ToInt32(tbl.Rows[i]["ItemID"]),
                     Type = ToInt32(tbl.Rows[i]["Type"]),
                     Amount = ToInt32(tbl.Rows[i]["Amount"]),
                     Percent = ToInt32(tbl.Rows[i]["Percent"]),

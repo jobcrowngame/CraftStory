@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using JsonConfigData;
+/// <summary>
 /// 持ち物ロジック
 /// </summary>
 public class BagLG : UILogicBase<BagLG, BagUI>
@@ -21,10 +22,26 @@ public class BagLG : UILogicBase<BagLG, BagUI>
             {
                 selectItem.IsSelected(true);
                 UI.Explanatory.text = ConfigMng.E.Item[selectItem.ItemData.itemId].Explanatory;
+
+                // 食べ物の場合
+                if (ConfigMng.E.Food.ContainsKey(selectItem.ItemData.itemId))
+                {
+                    Food food = ConfigMng.E.Food[selectItem.ItemData.itemId];
+                    string recval = food.Amount != -1 ? food.Amount.ToString() : $"{food.Percent}%";
+                    UI.FoodEffect.text =
+                        food.Type == 1 ? $"満腹度：{recval}回復" :
+                        "";
+                    UI.EatButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    UI.FoodEffect.text = "";
+                    UI.EatButton.gameObject.SetActive(false);
+                }
             }
             else
             {
-                UI.Explanatory.text = UI.ExplanatoryNoSelect;
+                UI.ResetExplanatory();
             }
         }
     }

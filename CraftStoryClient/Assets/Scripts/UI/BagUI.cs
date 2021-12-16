@@ -14,6 +14,8 @@ public class BagUI : UIBase
     Dictionary<string, BagItemCell> cellDic;
     BagSelectItem[] selectItems;
     public MyText Explanatory { get => FindChiled<MyText>("Explanatory"); }
+    public MyText FoodEffect { get => FindChiled<MyText>("FoodEffect"); }
+    public Button EatButton { get => FindChiled<Button>("EatButton"); }
 
     Button DeleteBtn { get => FindChiled<Button>("DeleteBtn"); }
 
@@ -80,8 +82,8 @@ public class BagUI : UIBase
             DataMng.GetCoins(rp);
             Title.RefreshCoins();
         });
-        
-        Explanatory.text = ExplanatoryNoSelect;
+
+        ResetExplanatory();
     }
     public override void Close()
     {
@@ -139,6 +141,13 @@ public class BagUI : UIBase
         }
 
         btns[index].IsSelected(true);
+        ResetExplanatory();
+    }
+
+    public void ResetExplanatory()
+    {
         Explanatory.text = ExplanatoryNoSelect;
+        FoodEffect.text = "";
+        EatButton.gameObject.SetActive(false);
     }
 }
