@@ -11,13 +11,28 @@ public class BraveSelectLeveCell : UIBase
     {
         btn.AddClickListener((i) =>
         {
-            PlayerCtl.E.Lock = false;
-
-            // 冒険入るのミッション
-            NWMng.E.ClearMission(2, 1);
-
-            CommonFunction.GoToNextScene(config.ID);
+            if (AdventureCtl.E.BonusList.Count > 0)
+            {
+                AdventureCtl.E.GetBonus(() =>
+                {
+                    MoveScene();
+                });
+            }
+            else
+            {
+                MoveScene();
+            }
         });
+    }
+
+    private void MoveScene()
+    {
+        PlayerCtl.E.Lock = false;
+
+        // 冒険入るのミッション
+        NWMng.E.ClearMission(2, 1);
+
+        CommonFunction.GoToNextScene(config.ID);
     }
 
     public void Set(Map config)
