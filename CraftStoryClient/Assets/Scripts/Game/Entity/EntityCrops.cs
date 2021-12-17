@@ -11,7 +11,7 @@ public class EntityCrops : EntityBase
     GameObject State3 { get => CommonFunction.FindChiledByName(transform, "State3"); }
 
     // 成熟
-    bool IsState3 { get => ElapsedTime > cropsConfig.StateTime2; }
+    public bool IsState3 { get => ElapsedTime > cropsConfig.StateTime2; }
 
     Crops cropsConfig { get => ConfigMng.E.GetCropsByEntityID(EConfig.ID); }
     DateTime startTime;
@@ -95,10 +95,11 @@ public class EntityCrops : EntityBase
         }
 
         // アイテム追加
-        NWMng.E.AddItem(null, itemId, count);
-
-        // ローカルのアイテム数変更
-        DataMng.E.AddItem(itemId, count);
+        NWMng.E.AddItem((rp)=>
+        {
+            // ローカルのアイテム数変更
+            DataMng.E.AddItem(itemId, count);
+        }, itemId, count);
 
         // エンティティインスタンスを削除
         WorldMng.E.MapCtl.DeleteEntity(this);
@@ -107,6 +108,11 @@ public class EntityCrops : EntityBase
         var effect = EffectMng.E.AddEffect<EffectBase>(transform.position, EffectType.BlockDestroyEnd);
         effect.Init();
 
+        OnRemoveCropsEntity();
+    }
+
+    public void OnRemoveCropsEntity()
+    {
         TimeZoneMng.E.RemoveTimerEvent03(Update1S);
         WorldMng.E.MapCtl.RemoveCrops(Pos);
     }

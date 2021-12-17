@@ -94,6 +94,37 @@ public class EntityBlast : EntityBase
                             {
                                 addItems[config.ItemID] = 1;
                             }
+                        // 農業物の場合
+                        }else if ((EntityType)config.Type == EntityType.Crops)
+                        {
+                            EntityCrops entity = (EntityCrops)DataMng.E.MapData.GetEntity(pos);
+                            var cropsConfig = ConfigMng.E.GetCropsByEntityID(entity.EConfig.ID);
+                            int addItemID = 0;
+                            int count = 0;
+
+                            // 追加されるアイテムを決まる
+                            if (entity.IsState3)
+                            {
+                                addItemID = cropsConfig.DestroyAddItem;
+                                count = cropsConfig.Count;
+                            }
+                            else
+                            {
+                                addItemID = cropsConfig.ItemID;
+                                count = 1;
+                            }
+
+                            // アイテムリストに追加
+                            if (addItems.ContainsKey(addItemID))
+                            {
+                                addItems[addItemID] += count;
+                            }
+                            else
+                            {
+                                addItems[addItemID] = count;
+                            }
+
+                            entity.OnRemoveCropsEntity();
                         }
                     }
 
