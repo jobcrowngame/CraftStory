@@ -67,12 +67,13 @@ public class MapUI : UIBase
     {
         GuideLG.E.Next();
 
-        // ホームにからホーム遷移できません
+        // ホームからホーム遷移できません
         if (DataMng.E.RuntimeData.MapType == MapType.Home)
             return;
 
         // 冒険途中でホーム戻る場合、ボーナス計算します
-        if (DataMng.E.RuntimeData.MapType == MapType.Brave)
+        if (DataMng.E.RuntimeData.MapType == MapType.Brave ||
+            DataMng.E.RuntimeData.MapType == MapType.Event)
         {
             AdventureCtl.E.GetBonus(() =>
             {
@@ -96,7 +97,9 @@ public class MapUI : UIBase
             if (DataMng.E.RuntimeData.MapType == MapType.Market)
                 return;
 
-            if (DataMng.E.RuntimeData.MapType == MapType.Brave)
+            // 冒険途中でホーム戻る場合、ボーナス計算します
+            if (DataMng.E.RuntimeData.MapType == MapType.Brave ||
+                DataMng.E.RuntimeData.MapType == MapType.Event)
             {
                 AdventureCtl.E.GetBonus(() =>
                 {
@@ -145,7 +148,10 @@ public class MapUI : UIBase
         }
         else
         {
-            CommonFunction.GoToNextScene(2000);
+            AdventureCtl.E.GetBonus(() =>
+            {
+                CommonFunction.GoToNextScene(2000);
+            });
         }
     }
     private void OnClickEquipBtn()
