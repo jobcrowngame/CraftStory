@@ -42,10 +42,7 @@ public class ShopItemCell : UIBase
             PreviewBtn.onClick.AddListener(OnClickPreviewBtn);
         }
 
-        if (shopType == ShopType.EventItem)
-        {
-            UpdateLimited();
-        }
+        UpdateLimited();
     }
 
     private void UpdateLimited()
