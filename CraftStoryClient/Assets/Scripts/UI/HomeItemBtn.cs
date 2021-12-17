@@ -33,9 +33,9 @@ public class HomeItemBtn : UIBase
         }
     }
 
-    Image Icon;
-    Text Count;
-    Transform Selection;
+    Image Icon { get => FindChiled<Image>("Icon"); }
+    Text Count { get => FindChiled<Text>("Count"); }
+    Transform Selection { get => FindChiled("Selection"); }
 
     Button btn;
 
@@ -45,10 +45,6 @@ public class HomeItemBtn : UIBase
 
     private void Awake()
     {
-        Icon = FindChiled<Image>("Icon");
-        Count = FindChiled<Text>("Count");
-        Selection = FindChiled("Selection");
-
         btn = GetComponent<Button>();
         btn.onClick.AddListener(OnClick);
 
