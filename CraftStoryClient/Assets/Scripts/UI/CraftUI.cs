@@ -18,6 +18,8 @@ public class CraftUI : UIBase
     public MyText Explanatory { get => FindChiled<MyText>("Explanatory"); }
     CraftCostCell[] costCells;
     ScrollRect ScrollViewRect { get => FindChiled<ScrollRect>("Scroll View"); }
+    Transform btnsParent { get => FindChiled("Btns"); }
+    MyButton[] btns;
 
     public readonly string ExplanatoryNoSelect = "アイテムをタップすると説明が表示されます";
 
@@ -43,15 +45,30 @@ public class CraftUI : UIBase
         {
             costCells[i] = costCellParent.GetChild(i).gameObject.AddComponent<CraftCostCell>();
         }
+
+        btns = new MyButton[btnsParent.childCount];
+        for (int i = 0; i < btnsParent.childCount; i++)
+        {
+            btns[i] = btnsParent.GetChild(i).GetComponent<MyButton>();
+            btns[i].Index = i;
+            btns[i].AddClickListener((index) => { CraftLG.E.OnClickClassificationBtn(index); });
+        }
     }
     public override void Open()
     {
         base.Open();
 
+        CraftLG.E.Classification = BagLG.BagClassification.All;
+
         ActiveSlectCountBtns(false);
 
         Explanatory.text = ExplanatoryNoSelect;
         ScrollViewRect.enabled = true;
+    }
+
+    public void SetType()
+    {
+        SetType(entityType);
     }
 
     public void SetType(EntityType type)
@@ -74,7 +91,7 @@ public class CraftUI : UIBase
     /// <summary>
     /// クラフトサブのインスタンス
     /// </summary>
-    private void RefreshCraftCellList()
+    public void RefreshCraftCellList()
     {
         ClearCell(craftItemParent);
 
@@ -86,6 +103,12 @@ public class CraftUI : UIBase
 
         foreach (Craft item in ConfigMng.E.Craft.Values)
         {
+            var itemConf = ConfigMng.E.Item[item.ItemID];
+
+            if (CraftLG.E.Classification != BagLG.BagClassification.All &&
+                CraftLG.E.Classification != (BagLG.BagClassification)itemConf.BagType)
+                continue;
+
             if (item.Type == (int)entityType)
             {
                 // おすすめの場合
@@ -285,5 +308,15 @@ public class CraftUI : UIBase
     {
         btn.enabled = enable;
         btn.GetComponent<Image>().color = enable ? Color.white : Color.grey;
+    }
+
+    public void ChangeSelectBtn(int index)
+    {
+        foreach (var item in btns)
+        {
+            item.ColorChange(false);
+        }
+
+        btns[index].ColorChange(true);
     }
 }

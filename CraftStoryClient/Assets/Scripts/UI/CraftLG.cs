@@ -1,5 +1,6 @@
 ﻿
 using JsonConfigData;
+using static BagLG;
 
 public class CraftLG : UILogicBase<CraftLG, CraftUI>
 {
@@ -78,5 +79,34 @@ public class CraftLG : UILogicBase<CraftLG, CraftUI>
 
             UI.RefreshCost();
         }
+    }
+
+
+
+    /// <summary>
+    /// 持ち物の分類
+    /// </summary>
+    public BagClassification Classification
+    {
+        get => classification;
+        set
+        {
+            if (classification == value)
+                return;
+
+            classification = value;
+            UI.SetType();
+            UI.ChangeSelectBtn((int)value);
+        }
+    }
+    private BagClassification classification = BagClassification.None;
+
+    /// <summary>
+    /// 分類が変更イベント
+    /// </summary>
+    /// <param name="index"></param>
+    public void OnClickClassificationBtn(int index)
+    {
+        Classification = (BagClassification)index;
     }
 }
