@@ -53,44 +53,62 @@ public class BagSelectItem : UIBase
     /// </summary>
     private void OnClickSelectItem()
     {
-        if (BagLG.E.SelectItem == null)
-            return;
-
-        if (BagLG.E.SelectItem.ItemData.Config.CanEquip != 1)
-            return;
-
-        // 空の場合
-        if (itemData == null)
+        try
         {
-            NWMng.E.EquitItem((rp) =>
-            {
-                // 装備箇所更新
-                BagLG.E.SelectItem.ItemData.equipSite = Index + 1;
+            // 選択してるアイテムがない場合スキップ
+            if (BagLG.E.SelectItem == null)
+                return;
 
-                RefreshUIBtns();
-            }, BagLG.E.SelectItem.ItemData.id, Index + 1);
-        }
-        // アイテムがある場合
-        else
-        {
-            NWMng.E.EquitItem((rp) =>
+            // 装備出来ないアイテムならスキップ
+            if (BagLG.E.SelectItem.ItemData.Config.CanEquip != 1)
+                return;
+
+            // 同じアイテムならスキップ
+            if (itemData != null && BagLG.E.SelectItem.ItemData.id == itemData.id)
+                return;
+
+            // 空の場合
+            if (itemData == null)
             {
-                NWMng.E.EquitItem((rp2) =>
+                NWMng.E.EquitItem((rp) =>
                 {
                     // 装備箇所更新
-                    itemData.equipSite = 0;
-                    var item = DataMng.E.GetItemByGuid(BagLG.E.SelectItem.ItemData.id);
-                    if (item != null)
-                    {
-                        item.equipSite = Index + 1;
-                    }
+                    BagLG.E.SelectItem.ItemData.equipSite = Index + 1;
 
                     RefreshUIBtns();
                 }, BagLG.E.SelectItem.ItemData.id, Index + 1);
-            }, itemData.id, 0);
-        }
+            }
+            // アイテムがある場合
+            else
+            {
+                NWMng.E.EquitItem((rp) =>
+                {
+                    // 装備箇所更新
+                    var item = DataMng.E.GetItemByGuid(itemData.id);
+                    if (item != null)
+                    {
+                        item.equipSite = 0;
+                    }
 
-        GuideLG.E.Next();
+                    NWMng.E.EquitItem((rp2) =>
+                    {
+                        var item = DataMng.E.GetItemByGuid(BagLG.E.SelectItem.ItemData.id);
+                        if (item != null)
+                        {
+                            item.equipSite = Index + 1;
+                        }
+
+                        RefreshUIBtns();
+                    }, BagLG.E.SelectItem.ItemData.id, Index + 1);
+                }, itemData.id, 0);
+            }
+
+            GuideLG.E.Next();
+        }
+        catch (System.Exception ex)
+        {
+            Logger.Error(ex);
+        }
     }
 
     /// <summary>
@@ -102,12 +120,7 @@ public class BagSelectItem : UIBase
         if (BagLG.E.UI != null) BagLG.E.UI.RefreshSelectItemBtns();
         if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
 
-        if (PlayerCtl.E.SelectItem != null &&
-            Index + 1 == PlayerCtl.E.SelectItem.equipSite)
-        {
-            PlayerCtl.E.SelectItem = BagLG.E.SelectItem.ItemData;
-        }
-
+        HomeItemBtn.CurSelectBtn = null;
         BagLG.E.SelectItem = null;
     }
 }
