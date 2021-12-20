@@ -178,19 +178,16 @@ public class BuilderPencil
     public void UseBlueprint(Vector3Int startPos, string data, bool isLocked = false)
     {
         // 設計図内容によって、設計図データを生成
-        selectBlueprintData = new BlueprintData(data);
-        selectBlueprintData.IsLocked = isLocked;
+        if (selectBlueprintData == null)
+        {
+            selectBlueprintData = new BlueprintData(data);
+            selectBlueprintData.IsLocked = isLocked;
+        }
 
         // 残ってる設計図エンティティを作成
         WorldMng.E.MapCtl.DeleteBuilderPencil();
 
         buildPos = startPos;
-
-        //if (!selectBlueprintData.CheckPos(startPos))
-        //{
-        //    CancelUserBlueprint();
-        //    return;
-        //}
 
         // 半透明ブロックを作る
         WorldMng.E.MapCtl.InstantiateTransparenEntitys(selectBlueprintData, buildPos);
