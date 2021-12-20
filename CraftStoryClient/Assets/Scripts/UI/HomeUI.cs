@@ -220,6 +220,11 @@ public partial class HomeUI : UIBase
         PlayerCtl.E.Pause(false);
     }
 
+    public void OnDestroy()
+    {
+        HomeLG.E.ClearItemStack();
+    }
+
     public void ClickSkill(int index)
     {
         skills[index].OnClickSkillBtn();

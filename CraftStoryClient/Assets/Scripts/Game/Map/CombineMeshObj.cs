@@ -51,7 +51,8 @@ public class CombineMeshObj : MonoBehaviour
             meshObjs.Add(mesh.mesh);
 
             var renderer = obj.AddComponent<MeshRenderer>();
-            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            renderer.receiveShadows = true;
             renderer.material = materials[k];
         }
     }

@@ -422,6 +422,14 @@ public class CharacterBase : MonoBehaviour
                 SkillUsing = false;
                 break;
 
+            case SkillData.SkillType.FullMapAttack:
+                // Effect 追加
+                if (skill.Config.AttackerEffect != "N")
+                    EffectMng.E.AddBattleEffect(skill.Config.AttackerEffect, skill.Config.AttackerEffectTime, Model.transform);
+
+                StartCoroutine(FullMapAttack(skill, targetGroup));
+                break;
+
             default:
                 break;
         }
@@ -439,24 +447,24 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-    private IEnumerator RangeAttack(SkillData skill,  CharacterGroup targetCamp)
+    private IEnumerator RangeAttack(SkillData skill,  CharacterGroup targetGroup)
     {
         // 複数のダメージImpact
         for (int i = 0; i < skill.Config.AttackCount; i++)
         {
-            RangeAttackAddImpact(skill, targetCamp, skill.Impacts);
+            RangeAttackAddImpact(skill, targetGroup, skill.Impacts);
             yield return new WaitForSeconds(skill.Config.Interval);
         }
 
         // 一回のImpact
-        RangeAttackAddImpact(skill, targetCamp, skill.OneceImpacts);
+        RangeAttackAddImpact(skill, targetGroup, skill.OneceImpacts);
 
         SkillUsing = false;
     }
-    private void RangeAttackAddImpact(SkillData skill, CharacterGroup targetCamp, string[] impacts)
+    private void RangeAttackAddImpact(SkillData skill, CharacterGroup targetGroup, string[] impacts)
     {
         // 目標を探す
-        var targets = CharacterCtl.E.FindCharacterInRange(transform, skill.Config.Distance, targetCamp);
+        var targets = CharacterCtl.E.FindCharacterInRange(transform, skill.Config.Distance, targetGroup);
         foreach (var target in targets)
         {
             // 不存在、死んだ目標はスキップ
@@ -529,7 +537,7 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-    private IEnumerator RangedRangeAttackIE(SkillData skill, CharacterBase mainTarget, CharacterGroup targetCamp)
+    private IEnumerator RangedRangeAttackIE(SkillData skill, CharacterBase mainTarget, CharacterGroup targetGroup)
     {
         if (mainTarget != null)
         {
@@ -546,21 +554,21 @@ public class CharacterBase : MonoBehaviour
 
             while (attackCount > 0)
             {
-                RangedRangeAttackIEAddImpact(skill, mainTarget, targetCamp, skill.Impacts);
+                RangedRangeAttackIEAddImpact(skill, mainTarget, targetGroup, skill.Impacts);
 
                 attackCount--;
                 yield return new WaitForSeconds(interval);
             }
 
             // 一回のImpact
-            RangedRangeAttackIEAddImpact(skill, mainTarget, targetCamp, skill.OneceImpacts);
+            RangedRangeAttackIEAddImpact(skill, mainTarget, targetGroup, skill.OneceImpacts);
         }
 
         SkillUsing = false;
     }
-    private void RangedRangeAttackIEAddImpact(SkillData skill, CharacterBase mainTarget, CharacterGroup targetCamp, string[] impacts)
+    private void RangedRangeAttackIEAddImpact(SkillData skill, CharacterBase mainTarget, CharacterGroup targetGroup, string[] impacts)
     {
-        var targets = CharacterCtl.E.FindCharacterInRange(mainTarget.transform.position, skill.Config.Radius, targetCamp);
+        var targets = CharacterCtl.E.FindCharacterInRange(mainTarget.transform.position, skill.Config.Radius, targetGroup);
         foreach (var target in targets)
         {
             if (target == null || target.IsDied)
@@ -576,7 +584,7 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-    private IEnumerator BeamIE(SkillData skill, CharacterGroup targetCamp)
+    private IEnumerator BeamIE(SkillData skill, CharacterGroup targetGroup)
     {
         int attackCount = skill.Config.AttackCount;
         float interval = skill.Config.Interval > 0 ? skill.Config.Interval : 0;
@@ -588,7 +596,7 @@ public class CharacterBase : MonoBehaviour
 
         while (attackCount > 0)
         {
-            BeamIEAddImpact(skill, targetCamp, skill.Impacts);
+            BeamIEAddImpact(skill, targetGroup, skill.Impacts);
 
             attackCount--;
             yield return new WaitForSeconds(interval);
@@ -598,11 +606,11 @@ public class CharacterBase : MonoBehaviour
         SkillUsing = false;
 
         // 一回のImpact
-        BeamIEAddImpact(skill, targetCamp, skill.OneceImpacts);
+        BeamIEAddImpact(skill, targetGroup, skill.OneceImpacts);
     }
-    private void BeamIEAddImpact(SkillData skill, CharacterGroup targetCamp, string[] impacts)
+    private void BeamIEAddImpact(SkillData skill, CharacterGroup targetGroup, string[] impacts)
     {
-        var targets = CharacterCtl.E.FindCharacterInRect(this, skill.Config.Distance, skill.Config.Radius, targetCamp);
+        var targets = CharacterCtl.E.FindCharacterInRect(this, skill.Config.Distance, skill.Config.Radius, targetGroup);
         foreach (var target in targets)
         {
             if (target == null || target.IsDied)
@@ -618,7 +626,7 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-    private IEnumerator RangeRecoveryIE(SkillData skill, CharacterGroup targetCamp)
+    private IEnumerator RangeRecoveryIE(SkillData skill, CharacterGroup targetGroup)
     {
         int attackCount = skill.Config.AttackCount;
         float interval = skill.Config.Interval > 0 ? skill.Config.Interval : 0;
@@ -629,7 +637,7 @@ public class CharacterBase : MonoBehaviour
 
         while (attackCount > 0)
         {
-            RangeRecoveryIEAddImpact(skill, targetCamp, skill.Impacts);
+            RangeRecoveryIEAddImpact(skill, targetGroup, skill.Impacts);
 
             attackCount--;
             yield return new WaitForSeconds(interval);
@@ -638,12 +646,12 @@ public class CharacterBase : MonoBehaviour
         SkillUsing = false;
 
         // 一回のImpact
-        RangeRecoveryIEAddImpact(skill, targetCamp, skill.OneceImpacts);
+        RangeRecoveryIEAddImpact(skill, targetGroup, skill.OneceImpacts);
     }
-    private void RangeRecoveryIEAddImpact(SkillData skill, CharacterGroup targetCamp, string[] impacts)
+    private void RangeRecoveryIEAddImpact(SkillData skill, CharacterGroup targetGroup, string[] impacts)
     {
         // 目標を探す
-        var targets = CharacterCtl.E.FindCharacterInRange(transform.position, skill.Config.Radius, targetCamp);
+        var targets = CharacterCtl.E.FindCharacterInRange(transform.position, skill.Config.Radius, targetGroup);
         foreach (var target in targets)
         {
             if (target == null || target.IsDied)
@@ -658,6 +666,41 @@ public class CharacterBase : MonoBehaviour
             }
         }
     }
+
+    private IEnumerator FullMapAttack(SkillData skill, CharacterGroup targetGroup)
+    {
+        // 複数のダメージImpact
+        for (int i = 0; i < skill.Config.AttackCount; i++)
+        {
+            FullMapAttackAddImpact(skill, targetGroup, skill.Impacts);
+            yield return new WaitForSeconds(skill.Config.Interval);
+        }
+
+        // 一回のImpact
+        FullMapAttackAddImpact(skill, targetGroup, skill.OneceImpacts);
+
+        SkillUsing = false;
+    }
+    private void FullMapAttackAddImpact(SkillData skill, CharacterGroup targetGroup, string[] impacts)
+    {
+        // 目標を探す
+        var targets = CharacterCtl.E.FindCharacterAll(targetGroup);
+        foreach (var target in targets)
+        {
+            // 不存在、死んだ目標はスキップ
+            if (target == null || target.IsDied)
+                break;
+
+            foreach (var impact in impacts)
+            {
+                if (impact == "N")
+                    continue;
+
+                target.AddImpact(target, this, int.Parse(impact));
+            }
+        }
+    }
+
 
 
     /// <summary>

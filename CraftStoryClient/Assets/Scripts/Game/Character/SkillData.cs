@@ -89,6 +89,11 @@ public class SkillData
         RangeRecovery = 7,
 
         /// <summary>
+        /// 全マップ攻撃
+        /// </summary>
+        FullMapAttack = 8,
+
+        /// <summary>
         /// ジャンプ
         /// </summary>
         Jump = 100,

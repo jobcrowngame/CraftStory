@@ -56,6 +56,11 @@ public class HomeLG : UILogicBase<HomeLG, HomeUI>
         }
     }
 
+    public void ClearItemStack()
+    {
+        itemStack.Clear();
+    }
+
     public void DeleteItems()
     {
         UICtl.E.OpenUI<DeleteItemUI>(UIType.DeleteItem);

@@ -5,38 +5,41 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class FireBool : MonoBehaviour
+public class FireBool : FlyingObjBase
 {
     CharacterBase attacker;
     CharacterBase target;
     float speed;
 
-    public void Update()
+    public void FixedUpdate()
     {
         if (target == null)
             return;
-        
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Time.deltaTime * speed);
-        transform.LookAt(target.transform);
+
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed);
+        //transform.LookAt(target.transform);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        var entity = other.GetComponent<CharacterBase>();
-        if (entity == null)
+        var entity = other.gameObject.GetComponent<CharacterBase>();
+        if (entity != null)
         {
             entity.AddImpact(entity, attacker, 1);
         }
 
-        EffectMng.E.AddBattleEffect("FireBollBlast01", 3, target.transform);
+        if (target != null)
+        {
+            EffectMng.E.AddBattleEffect("FireBollBlast01", 3, target.transform);
+        }
 
         Destroy(gameObject);
     }
-
     public void SetInfo(CharacterBase attacker, CharacterBase target, float speed)
     {
         this.attacker = attacker;
         this.target = target;
         this.speed = speed;
+        transform.LookAt(target.transform);
     }
 }

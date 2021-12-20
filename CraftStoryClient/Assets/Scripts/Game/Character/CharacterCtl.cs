@@ -223,6 +223,20 @@ public class CharacterCtl : Single<CharacterCtl>
 
         return targets;
     }
+    public List<CharacterBase> FindCharacterAll(CharacterBase.CharacterGroup camp)
+    {
+        List<CharacterBase> targets = new List<CharacterBase>();
+
+        foreach (var item in characterList)
+        {
+            if (item == null || item.Group != camp || item.IsDied)
+                continue;
+
+            targets.Add(item);
+        }
+
+        return targets;
+    }
 
     /// <summary>
     /// 指定距離ないかの判定

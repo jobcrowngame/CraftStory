@@ -769,7 +769,7 @@ namespace ExcelToJson
                     FixtDamage = ToInt32(tbl.Rows[i]["FixtDamage"]),
                     Delay = ToFloat(tbl.Rows[i]["Delay"]),
                     Count = ToInt32(tbl.Rows[i]["Count"]),
-                    Interval = ToInt32(tbl.Rows[i]["Interval"]),
+                    Interval = ToFloat(tbl.Rows[i]["Interval"]),
                     TargetFreezeTime = ToFloat(tbl.Rows[i]["TargetFreezeTime"]),
                 };
 
