@@ -84,9 +84,12 @@ public class MapData
     }
 
     // 空のマップ判定
-    public bool IsNull(Vector3Int site)
+    public bool IsNull(Vector3Int pos)
     {
-        return map[site.x, site.y, site.z].entityID == 0;
+        if (MapCtl.IsOutRange(this, pos))
+            return false;
+
+        return map[pos.x, pos.y, pos.z].entityID == 0;
     }
     // マップサイズゲット
     public Vector3Int GetMapSize()

@@ -120,11 +120,14 @@ public class MapCtl
         var shader = Shader.Find("SemiTransparent");
         builderPencilParent = new GameObject("BuilderPancil").transform;
         builderPencilParent.position = startPos;
+        blueprint.State = BlueprintData.BlueprintState.None;
 
         foreach (var item in blueprint.blocks)
         {
+            var entityConfig = ConfigMng.E.Entity[item.id];
+
             // Obstacleなら処理しない
-            if ((EntityType)ConfigMng.E.Entity[item.id].Type == EntityType.Obstacle)
+            if ((EntityType)entityConfig.Type == EntityType.Obstacle)
                 continue;
 
             var entity = MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, builderPencilParent, item.GetPos(), false);
@@ -153,41 +156,30 @@ public class MapCtl
                 }
             }
 
-            var config = ConfigMng.E.Entity[item.id];
+            // エンティティのPos
+            var entityPos = Vector3Int.CeilToInt(entity.transform.position);
+            if (blueprint.State == BlueprintData.BlueprintState.None)
+            {
+                CheckPos(blueprint, entityPos);
+            }
+
+            // エンティティサイズが１以上の場合、関連Pos
+            var list = GetEntityPosListByDirection(item.id, entityPos, (Direction)item.direction);
+            foreach (var pos in list)
+            {
+                if (blueprint.State == BlueprintData.BlueprintState.None)
+                {
+                    CheckPos(blueprint, pos);
+                }
+            }
+
+            // シェーダー差し替え
             if (shader != null)
             {
-                // 被ってるかのフラグ
-                bool IsDuplicate = false;
-                // エンティティのPos
-                var entityPos = Vector3Int.CeilToInt(entity.transform.position);
-
-                // エンティティ本体が被ってるかのチェック
-                IsDuplicate = !DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(entityPos));
-
-                // エンティティサイズが１以上の場合、関連Pos
-                var list = GetEntityPosListByDirection(item.id, entityPos, (Direction)item.direction);
-
-                // 関連Posが被ってるかのチェック
-                foreach (var pos in list)
-                {
-                    IsDuplicate = !DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(pos));
-                    if (IsDuplicate)
-                    {
-                        // 設計図が被ってる
-                        blueprint.IsDuplicate = true;
-                        break;
-                    }
-                }
-
-                // 重複したらこの設計図重複してる状態にする
-                if (IsDuplicate)
-                {
-                    blueprint.IsDuplicate = true;
-                }
-
                 // サブObjectをゲット
                 List<GameObject> childs = new List<GameObject>();
                 CommonFunction.GetAllChiled(entity.transform, ref childs);
+                bool IsDuplicate = !DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(entityPos));
 
                 // サブObjectがない場合
                 if (childs.Count == 0)
@@ -215,6 +207,26 @@ public class MapCtl
                     }
                 }
             }
+        }
+    }
+    private void CheckPos(BlueprintData blueprint, Vector3Int pos)
+    {
+        // 最大高さをこえた場合
+        if (blueprint.State == BlueprintData.BlueprintState.None && pos.y >= DataMng.E.MapData.SizeY)
+        {
+            blueprint.State = BlueprintData.BlueprintState.TooHigh;
+        }
+
+        // マップサイズ範囲外の場合
+        if (blueprint.State == BlueprintData.BlueprintState.None && IsOutRange(DataMng.E.MapData, pos))
+        {
+            blueprint.State = BlueprintData.BlueprintState.IsOutRange;
+        }
+
+        // エンティティ本体が被ってるかのチェック
+        if (blueprint.State == BlueprintData.BlueprintState.None && !DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(pos)))
+        {
+            blueprint.State = BlueprintData.BlueprintState.IsDuplicate;
         }
     }
 

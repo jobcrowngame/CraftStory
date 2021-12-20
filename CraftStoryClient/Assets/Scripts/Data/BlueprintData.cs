@@ -32,6 +32,11 @@ public class BlueprintData
     private bool isDuplicate;
     public bool IsDuplicate { get => isDuplicate; set => isDuplicate = value; }
 
+    /// <summary>
+    /// 設計図の状態
+    /// </summary>
+    public BlueprintState State { get; set; }
+
     // 買った設計図はロックされる
     [NonSerialized]
     private bool isLocked;
@@ -112,5 +117,25 @@ public class BlueprintData
             posY = Pos.y;
             posZ = Pos.z;
         }
+    }
+
+    public enum BlueprintState
+    {
+        None = 0,
+
+        /// <summary>
+        /// 他のブロックと被ってる
+        /// </summary>
+        IsDuplicate = 1,
+
+        /// <summary>
+        /// 高すぎる
+        /// </summary>
+        TooHigh = 2,
+
+        /// <summary>
+        /// マップ範囲を超えてる
+        /// </summary>
+        IsOutRange = 3,
     }
 }
