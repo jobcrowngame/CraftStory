@@ -65,7 +65,6 @@ public class BagUI : UIBase
         EatButton.onClick.AddListener(() =>
         {
             PlayerCtl.E.EatFood(BagLG.E.SelectItem.ItemData.itemId);
-            DataMng.E.ConsumableItemByItemId(BagLG.E.SelectItem.ItemData.itemId, 1);
             Close();
         });
     }
