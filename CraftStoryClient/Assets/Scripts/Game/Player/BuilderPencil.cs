@@ -178,20 +178,16 @@ public class BuilderPencil
     public void UseBlueprint(Vector3Int startPos, string data, bool isLocked = false)
     {
         // 設計図内容によって、設計図データを生成
-        selectBlueprintData = new BlueprintData(data);
-        selectBlueprintData.IsLocked = isLocked;
+        if (selectBlueprintData == null)
+        {
+            selectBlueprintData = new BlueprintData(data);
+            selectBlueprintData.IsLocked = isLocked;
+        }
 
         // 残ってる設計図エンティティを作成
         WorldMng.E.MapCtl.DeleteBuilderPencil();
 
         buildPos = startPos;
-        selectBlueprintData.IsDuplicate = false;
-
-        if (!selectBlueprintData.CheckPos(startPos))
-        {
-            CancelUserBlueprint();
-            return;
-        }
 
         // 半透明ブロックを作る
         WorldMng.E.MapCtl.InstantiateTransparenEntitys(selectBlueprintData, buildPos);
@@ -233,7 +229,6 @@ public class BuilderPencil
         Logger.Log("SpinBlueprint");
 
         WorldMng.E.MapCtl.DeleteBuilderPencil();
-        selectBlueprintData.IsDuplicate = false;
 
         for (int i = 0; i < selectBlueprintData.blocks.Count; i++)
         {
@@ -270,52 +265,64 @@ public class BuilderPencil
     {
         Logger.Log("BuildBlueprint");
 
-        if (!selectBlueprintData.IsDuplicate)
+        switch (selectBlueprintData.State)
         {
-            if (!selectBlueprintData.IsLocked)
-            {
-                Dictionary<int, int> consumableItems = new Dictionary<int, int>();
+            case BlueprintData.BlueprintState.IsDuplicate:
+                CommonFunction.ShowHintBar(38);
+                GuideLG.E.Rollback();
+                return;
 
-                foreach (var entity in selectBlueprintData.blocks)
+            case BlueprintData.BlueprintState.TooHigh:
+                CommonFunction.ShowHintBar(39);
+                GuideLG.E.Rollback();
+                return;
+
+            case BlueprintData.BlueprintState.IsOutRange:
+                CommonFunction.ShowHintBar(40);
+                GuideLG.E.Rollback();
+                return;
+
+            default:
+                if (!selectBlueprintData.IsLocked)
                 {
-                    var config = ConfigMng.E.Entity[entity.id];
-                    // Obstacle は無視
-                    if ((EntityType)config.Type == EntityType.Obstacle)
-                        continue;
+                    Dictionary<int, int> consumableItems = new Dictionary<int, int>();
 
-                    int itemId = config.ItemID;
-                    if (consumableItems.ContainsKey(itemId))
+                    foreach (var entity in selectBlueprintData.blocks)
                     {
-                        consumableItems[itemId]++;
+                        var config = ConfigMng.E.Entity[entity.id];
+                        // Obstacle は無視
+                        if ((EntityType)config.Type == EntityType.Obstacle)
+                            continue;
+
+                        int itemId = config.ItemID;
+                        if (consumableItems.ContainsKey(itemId))
+                        {
+                            consumableItems[itemId]++;
+                        }
+                        else
+                        {
+                            consumableItems[itemId] = 1;
+                        }
                     }
-                    else
+
+                    var ret = PlayerCtl.E.ConsumableItems(consumableItems);
+                    if (!ret)
                     {
-                        consumableItems[itemId] = 1;
+                        CommonFunction.ShowHintBar(1);
+                        return;
                     }
                 }
 
-                var ret = PlayerCtl.E.ConsumableItems(consumableItems);
-                if (!ret)
-                {
-                    CommonFunction.ShowHintBar(1);
-                    return;
-                }
-            }
+                // ブロックを作る
+                WorldMng.E.MapCtl.InstantiateEntitys(selectBlueprintData, buildPos);
 
-            // ブロックを作る
-            WorldMng.E.MapCtl.InstantiateEntitys(selectBlueprintData, buildPos);
+                // 設計図を消耗
+                PlayerCtl.E.UseSelectItem();
 
-            // 設計図を消耗
-            PlayerCtl.E.UseSelectItem();
+                GuideLG.E.Next();
 
-            GuideLG.E.Next();
-
-            CancelUserBlueprint();
-        }
-        else
-        {
-            CommonFunction.ShowHintBar(28);
-            GuideLG.E.Rollback();
+                CancelUserBlueprint();
+                break;
         }
     }
 
