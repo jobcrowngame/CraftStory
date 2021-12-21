@@ -75,7 +75,7 @@ public partial class HomeUI
 
     private void CheckJumpState()
     {
-        bool canJump = Hunger >= SettingMng.JumCostHumger;
+        bool canJump = Hunger > 0 && Hunger >= SettingMng.JumCostHumger;
         Jump.Enable(canJump);
     }
 

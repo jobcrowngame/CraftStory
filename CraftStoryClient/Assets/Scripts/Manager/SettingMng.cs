@@ -97,7 +97,7 @@ public class SettingMng : Single<SettingMng>
     /// <summary>
     /// ジャンプで空腹度消耗
     /// </summary>
-    public const int JumCostHumger = 1;
+    public const int JumCostHumger = 0;
 
     /// <summary>
     /// 時間による空腹度消耗Step
