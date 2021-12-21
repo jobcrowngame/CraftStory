@@ -2048,7 +2048,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 388375d70b984a1469d150843711ef27, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 661a89b561627854d9917c56dd05e569, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2398,7 +2398,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 577ee2a844006714aae94974c637f84c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ab0dcc86228941c40963f0afc1b9f506, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2639,7 +2639,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5ad548dbfda63b44fadcea0430c9a2fc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 56aa3816e0570fc4b9e34925b80947cb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
