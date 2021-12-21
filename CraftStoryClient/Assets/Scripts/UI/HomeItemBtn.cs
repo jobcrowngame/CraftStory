@@ -57,6 +57,15 @@ public class HomeItemBtn : UIBase
         if (itemData == null)
             return;
 
+        // 食べ物の場合、選択しなく直接に食べる
+        if (itemData.Type == ItemType.Food)
+        {
+            PlayerCtl.E.EatFood(itemData.itemId);
+
+            HomeLG.E.UI.RefreshItemBtns();
+            return;
+        }
+
         CurSelectBtn = this;
     }
     private void OnSelected(bool b = true)

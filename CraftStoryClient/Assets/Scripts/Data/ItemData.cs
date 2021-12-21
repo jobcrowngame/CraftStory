@@ -17,6 +17,7 @@ public class ItemData
     public string textureName { get; set; } // 設計図のテクスチャ
     public int islocked { get; set; } // 販売出来ないようにロック
 
+    public ItemType Type { get => (ItemType)Config.Type; }
     public ItemData() { }
     public ItemData(int itemId, int count)
     {
@@ -126,6 +127,11 @@ public enum ItemType
     /// 3倍チケット
     /// </summary>
     ThreeXTicket = 95,
+
+    /// <summary>
+    /// 食べ物
+    /// </summary>
+    Food = 200,
 
     Workbench = 1000,
     Kamado = 1001,

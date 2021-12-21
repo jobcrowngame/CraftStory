@@ -496,9 +496,16 @@ public class PlayerCtl : MonoBehaviour
         if (HomeLG.E.UI != null)
         {
             Lock = true;
-            Food food = ConfigMng.E.Food[BagLG.E.SelectItem.ItemData.itemId];
+
+            // 回復量計算
+            Food food = ConfigMng.E.Food[itemId];
             int v = food.Amount + (int)(SettingMng.MaxHunger * food.Percent * 0.01f);
+
+            // 空腹度を回復
             HomeLG.E.UI.RecoveryHunger(v);
+
+            // アイテムを消耗
+            DataMng.E.ConsumableItemByItemId(itemId, 1);
 
             StartCoroutine(EatFoodIE());
         }
