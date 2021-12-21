@@ -55,8 +55,8 @@ public class BagLG : UILogicBase<BagLG, BagUI>
         get => classification;
         set
         {
-            if (classification == value)
-                return;
+            //if (classification == value)
+            //    return;
 
             classification = value;
             UI.RefreshItems();

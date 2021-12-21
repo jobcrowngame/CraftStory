@@ -91,8 +91,8 @@ public class CraftLG : UILogicBase<CraftLG, CraftUI>
         get => classification;
         set
         {
-            if (classification == value)
-                return;
+            //if (classification == value)
+            //    return;
 
             classification = value;
             UI.SetType();
