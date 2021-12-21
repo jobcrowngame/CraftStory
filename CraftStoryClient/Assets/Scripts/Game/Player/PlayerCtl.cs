@@ -514,7 +514,7 @@ public class PlayerCtl : MonoBehaviour
     {
         Character.Behavior = BehaviorType.EatFood;
 
-        yield return new WaitForSeconds(0.83f);
+        yield return new WaitForSeconds(2f);
 
         Character.Behavior = BehaviorType.Waiting;
         Lock = false;
