@@ -102,5 +102,5 @@ public class SettingMng : Single<SettingMng>
     /// <summary>
     /// 時間による空腹度消耗Step
     /// </summary>
-    public const int CostHumgerTimer = 10;
+    public const int CostHumgerTimer = 25;
 }
