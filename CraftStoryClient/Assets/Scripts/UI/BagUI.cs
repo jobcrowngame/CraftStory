@@ -64,8 +64,7 @@ public class BagUI : UIBase
 
         EatButton.onClick.AddListener(() =>
         {
-            Food food = ConfigMng.E.Food[BagLG.E.SelectItem.ItemData.itemId];
-            HomeLG.E.UI.RecoveryHunger(food.Percent);
+            PlayerCtl.E.EatFood(BagLG.E.SelectItem.ItemData.itemId);
             DataMng.E.ConsumableItemByItemId(BagLG.E.SelectItem.ItemData.itemId, 1);
             Close();
         });

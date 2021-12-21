@@ -105,8 +105,6 @@ public partial class HomeUI
     {
         Hunger += value;
 
-        PlayerCtl.E.Character.Behavior = BehaviorType.EatFood;
-
         var effect = EffectMng.E.AddUIEffect<EffectBase>(transform, HungerBar.transform.position, EffectType.Gacha);
         effect.Init();
     }

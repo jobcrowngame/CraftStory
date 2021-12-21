@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using JsonConfigData;
 using LitJson;
 using SimpleInputNamespace;
 using UnityEngine;
@@ -116,7 +117,7 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            AdventureCtl.E.AddAdventureBuff(1);
+            HomeLG.E.UI.RecoveryHunger(30);
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
@@ -488,6 +489,31 @@ public class PlayerCtl : MonoBehaviour
         return distance < SettingMng.NPCTTalkDistance;
     }
 
+    #region 普通
+
+    public void EatFood(int itemId)
+    {
+        if (HomeLG.E.UI != null)
+        {
+            Lock = true;
+            Food food = ConfigMng.E.Food[BagLG.E.SelectItem.ItemData.itemId];
+            int v = food.Amount + (int)(SettingMng.MaxHunger * food.Percent * 0.01f);
+            HomeLG.E.UI.RecoveryHunger(v);
+
+            StartCoroutine(EatFoodIE());
+        }
+    }
+    private IEnumerator EatFoodIE()
+    {
+        Character.Behavior = BehaviorType.EatFood;
+
+        yield return new WaitForSeconds(0.83f);
+
+        Character.Behavior = BehaviorType.Waiting;
+        Lock = false;
+    }
+
+    #endregion
 
     #region 戦闘
 
