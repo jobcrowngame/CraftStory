@@ -60,7 +60,7 @@ public class BagLG : UILogicBase<BagLG, BagUI>
 
             classification = value;
             UI.RefreshItems();
-            UI.ChangeSelectBtn((int)value);
+            UI.ChangeSelectBtn(BagClassfication2Index(value));
         }
     }
     private BagClassification classification = BagClassification.None;
@@ -71,7 +71,39 @@ public class BagLG : UILogicBase<BagLG, BagUI>
     /// <param name="index"></param>
     public void OnClickClassificationBtn(int index)
     {
-        Classification = (BagClassification)index;
+        Classification = Index2BagClassification(index);
+    }
+
+    public static BagClassification Index2BagClassification(int index)
+    {
+        switch (index)
+        {
+            case 0: return BagClassification.All; ;
+            case 1: return BagClassification.Tool;
+            case 2: return BagClassification.Block;
+            case 3: return BagClassification.Decoration;
+            case 4: return BagClassification.Blueprint;
+            case 5: return BagClassification.Food;
+            case 6: return BagClassification.Material;
+            case 7: return BagClassification.Equipment;
+
+            default: Logger.Error("知らない持ち物カテゴリ " + index); return BagClassification.None;
+        }
+    }
+    public static int BagClassfication2Index(BagClassification bclassification)
+    {
+        switch (bclassification)
+        {
+            case BagClassification.All: return 0;
+            case BagClassification.Block: return 2;
+            case BagClassification.Decoration: return 3;
+            case BagClassification.Material: return 6;
+            case BagClassification.Blueprint: return 4;
+            case BagClassification.Food: return 5;
+            case BagClassification.Equipment: return 7;
+            case BagClassification.Tool: return 1;
+            default: return -1;
+        }
     }
 
     /// <summary>
@@ -92,9 +124,9 @@ public class BagLG : UILogicBase<BagLG, BagUI>
         Block = 1,
 
         /// <summary>
-        /// 他
+        /// 装飾
         /// </summary>
-        Orther = 2,
+        Decoration = 2,
 
         /// <summary>
         /// 素材
@@ -109,11 +141,16 @@ public class BagLG : UILogicBase<BagLG, BagUI>
         /// <summary>
         /// 料理
         /// </summary>
-        Cocooking = 5,
+        Food = 5,
 
         /// <summary>
         /// 装備
         /// </summary>
-        Ecuipment = 6,
+        Equipment = 6,
+
+        /// <summary>
+        /// 道具
+        /// </summary>
+        Tool = 7,
     }
 }

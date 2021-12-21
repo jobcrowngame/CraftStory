@@ -96,7 +96,7 @@ public class CraftLG : UILogicBase<CraftLG, CraftUI>
 
             classification = value;
             UI.SetType();
-            UI.ChangeSelectBtn((int)value);
+            UI.ChangeSelectBtn(BagClassfication2Index(value));
         }
     }
     private BagClassification classification = BagClassification.None;
@@ -107,6 +107,6 @@ public class CraftLG : UILogicBase<CraftLG, CraftUI>
     /// <param name="index"></param>
     public void OnClickClassificationBtn(int index)
     {
-        Classification = (BagClassification)index;
+        Classification = Index2BagClassification(index);
     }
 }
