@@ -491,21 +491,21 @@ public class PlayerCtl : MonoBehaviour
 
     #region 普通
 
-    public void EatFood(int itemId)
+    public void EatFood(ItemData item)
     {
         if (HomeLG.E.UI != null)
         {
             Lock = true;
 
             // 回復量計算
-            Food food = ConfigMng.E.Food[itemId];
+            Food food = ConfigMng.E.Food[item.itemId];
             int v = food.Amount + (int)(SettingMng.MaxHunger * food.Percent * 0.01f);
 
             // 空腹度を回復
             HomeLG.E.UI.RecoveryHunger(v);
 
             // アイテムを消耗
-            DataMng.E.ConsumableItemByItemId(itemId, 1);
+            DataMng.E.ConsumableItemByGUID(item.id, 1);
 
             StartCoroutine(EatFoodIE());
         }

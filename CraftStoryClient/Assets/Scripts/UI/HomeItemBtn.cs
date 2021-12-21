@@ -60,7 +60,7 @@ public class HomeItemBtn : UIBase
         // 食べ物の場合、選択しなく直接に食べる
         if (itemData.Type == ItemType.Food)
         {
-            PlayerCtl.E.EatFood(itemData.itemId);
+            PlayerCtl.E.EatFood(itemData);
 
             HomeLG.E.UI.RefreshItemBtns();
             return;
