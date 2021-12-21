@@ -31,12 +31,12 @@ public class BagLG : UILogicBase<BagLG, BagUI>
                     UI.FoodEffect.text =
                         food.Type == 1 ? $"満腹度：{recval}回復" :
                         "";
-                    UI.EatButton.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home); // ショップ広場では出さない
+                    //UI.EatButton.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home); // ショップ広場では出さない
                 }
                 else
                 {
                     UI.FoodEffect.text = "";
-                    UI.EatButton.gameObject.SetActive(false);
+                    //UI.EatButton.gameObject.SetActive(false);
                 }
             }
             else
