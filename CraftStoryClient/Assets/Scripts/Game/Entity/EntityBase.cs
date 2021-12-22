@@ -100,6 +100,16 @@ public enum EntityType
     /// </summary>
     Block4 = 9,
 
+    /// <summary>
+    /// Boxコライダーを使うブロック（向きなし）
+    /// </summary>
+    Block5 = 10,
+
+    /// <summary>
+    /// Boxコライダーを使うブロック（向きあり）
+    /// </summary>
+    Block6 = 11,
+
     Block99 = 99, // 壊れないブロック
     Resources = 100, // 
     TreasureBox = 110,

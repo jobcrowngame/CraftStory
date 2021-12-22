@@ -158,6 +158,8 @@ public class MapData
                 case EntityType.Block2:
                 case EntityType.Block3:
                 case EntityType.Block4:
+                case EntityType.Block5:
+                case EntityType.Block6:
                 case EntityType.Block99:
                 case EntityType.Firm:
                     if (isCombineMesh)
@@ -178,16 +180,24 @@ public class MapData
                             combineMO.AddObj(entityCell.entityID, mesh.mesh, render.material, pos, entityCell.direction);
                         }
 
-                        entity = CommonFunction.Instantiate<EntityBlock>(ConfigMng.E.Entity[0].Resources, parent, pos);
-
-                        var collider = entity.GetComponent<MeshCollider>();
-                        collider.sharedMesh = mesh.mesh;
-
-                        // 水ブロックの場合、triggerにする
-                        if ((EntityType)config.Type == EntityType.Block4)
+                        if ((EntityType)config.Type == EntityType.Block5 ||
+                            (EntityType)config.Type == EntityType.Block6)
                         {
-                            collider.convex = true;
-                            collider.isTrigger = true;
+                            entity = CommonFunction.Instantiate<EntityBlock>(ConfigMng.E.Entity[1].Resources, parent, pos);
+                        }
+                        else
+                        {
+                            entity = CommonFunction.Instantiate<EntityBlock>(ConfigMng.E.Entity[0].Resources, parent, pos);
+
+                            var collider = entity.GetComponent<MeshCollider>();
+                            collider.sharedMesh = mesh.mesh;
+
+                            // 水ブロックの場合、triggerにする
+                            if ((EntityType)config.Type == EntityType.Block4)
+                            {
+                                collider.convex = true;
+                                collider.isTrigger = true;
+                            }
                         }
                     }
                     else
@@ -391,6 +401,8 @@ public class MapData
                 (EntityType)entity.EConfig.Type == EntityType.Block2 ||
                 (EntityType)entity.EConfig.Type == EntityType.Block3 ||
                 (EntityType)entity.EConfig.Type == EntityType.Block4 ||
+                (EntityType)entity.EConfig.Type == EntityType.Block5 ||
+                (EntityType)entity.EConfig.Type == EntityType.Block6 ||
                 (EntityType)entity.EConfig.Type == EntityType.Firm ||
                 (EntityType)entity.EConfig.Type == EntityType.Block99)
             {
