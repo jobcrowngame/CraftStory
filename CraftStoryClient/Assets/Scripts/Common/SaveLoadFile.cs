@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 
 /// <summary>
 /// ローカルのファイルセーブ、ロード
@@ -10,31 +12,16 @@ public class SaveLoadFile : Single<SaveLoadFile>
 	private FileStream fileStream;
 	private BinaryFormatter bf;
 
-	/// <summary>
-	/// ファイルのセーブ
-	/// </summary>
-	/// <param name="data"></param>
-	/// <param name="path"></param>
-	public void Save(object data, string path)
+	public async Task Save(object data, string path)
 	{
-		bf = new BinaryFormatter();
-		fileStream = null;
-
-		try
+		await Task.Run(() =>
 		{
-			fileStream = File.Create(path);
-			bf.Serialize(fileStream, data);
-		}
-		catch (IOException e1)
-		{
-			Logger.Error("ファイルオープンエラー");
-			Logger.Error(e1.Message);
-		}
-		finally
-		{
-			if (fileStream != null)
-				fileStream.Close();
-		}
+			BinaryFormatter bf = new BinaryFormatter();
+			using (FileStream stream = File.Open(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+			{
+				bf.Serialize(stream, data);
+			}
+		});
 	}
 
 	/// <summary>

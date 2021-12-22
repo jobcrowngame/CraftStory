@@ -197,6 +197,9 @@ public class CommonFunction
         WorldMng.E.MapCtl.ClearMesh();
         WorldMng.E.MapCtl.ClearCrops();
 
+        // ローカルデータをセーブ
+        if (DataMng.E != null) DataMng.E.Save();
+
         // Scene遷移
         SceneManager.LoadSceneAsync("NowLoading");
 

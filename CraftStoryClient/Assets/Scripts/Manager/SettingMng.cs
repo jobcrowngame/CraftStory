@@ -5,6 +5,9 @@
 /// </summary>
 public class SettingMng : Single<SettingMng>
 {
+    // 自動セーブタイム
+    public const int AutoSaveDataTime = 600;
+
     // カメラ角度制限　最大
     public const float LookUpAngleMax = 80f;
 

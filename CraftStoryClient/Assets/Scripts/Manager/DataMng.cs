@@ -2,6 +2,7 @@
 using LitJson;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 /// <summary>
 /// データマネージャー
@@ -80,12 +81,15 @@ public class DataMng : Single<DataMng>
     public void Save()
     {
         Logger.Log("Save Data");
-
         if (uData != null)
-            SaveLoadFile.E.Save(uData, PublicPar.SaveRootPath + PublicPar.UserDataName);
+        {
+            Task task = SaveLoadFile.E.Save(uData, PublicPar.SaveRootPath + PublicPar.UserDataName);
+        }
 
         if (mHomeData != null)
-            SaveLoadFile.E.Save(mHomeData.ToStringData(), PublicPar.SaveRootPath + PublicPar.MapDataName);
+        {
+            Task task = SaveLoadFile.E.Save(mHomeData.ToStringData(), PublicPar.SaveRootPath + PublicPar.MapDataName);
+        }
     }
 
     /// <summary>

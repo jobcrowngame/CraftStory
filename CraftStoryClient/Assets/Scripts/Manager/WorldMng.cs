@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Threading.Tasks;
 
 /// <summary>
 /// 世界マネージャー
@@ -23,6 +25,8 @@ public class WorldMng : MonoBehaviour
     public Transform CharacterParent;
     public Transform EffectParent;
 
+    private int timer = 0;
+
     public void Init()
     {
         CharacterParent = CreateParentObj("CharacterParent");
@@ -30,6 +34,15 @@ public class WorldMng : MonoBehaviour
 
         GameTimeCtl = new GameTimeCtl();
         MapCtl = new MapCtl();
+
+        // 定期時間でローカルデータをセーブ
+        timer = SettingMng.AutoSaveDataTime;
+        TimeZoneMng.E.AddTimerEvent03(AudoSave);
+    }
+
+    private void OnDestroy()
+    {
+        TimeZoneMng.E.RemoveTimerEvent03(AudoSave);
     }
 
     /// <summary>
@@ -63,5 +76,18 @@ public class WorldMng : MonoBehaviour
         obj.name = name;
 
         return obj.transform;
+    }
+
+    /// <summary>
+    /// 定期時間でローカルデータをセーブ
+    /// </summary>
+    public void AudoSave()
+    {
+        timer--;
+        if (timer <= 0)
+        {
+            if(DataMng.E != null) DataMng.E.Save();
+            timer = SettingMng.AutoSaveDataTime;
+        }
     }
 }
