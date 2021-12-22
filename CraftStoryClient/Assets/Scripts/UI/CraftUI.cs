@@ -16,6 +16,7 @@ public class CraftUI : UIBase
     Button LeftBtn { get => FindChiled<Button>("LeftBtn"); }
     Button LeftBtn10 { get => FindChiled<Button>("LeftBtn10"); }
     public MyText Explanatory { get => FindChiled<MyText>("Explanatory"); }
+    public MyText FoodEffect { get => FindChiled<MyText>("FoodEffect"); }
     CraftCostCell[] costCells;
     ScrollRect ScrollViewRect { get => FindChiled<ScrollRect>("Scroll View"); }
     Transform btnsParent { get => FindChiled("Btns"); }

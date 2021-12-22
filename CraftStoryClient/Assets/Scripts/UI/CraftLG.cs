@@ -28,10 +28,25 @@ public class CraftLG : UILogicBase<CraftLG, CraftUI>
             {
                 UI.ActiveSlectCountBtns();
                 UI.Explanatory.text = ConfigMng.E.Item[selectCraft.ItemID].Explanatory;
+
+                // 食べ物の場合
+                if (ConfigMng.E.Food.ContainsKey(selectCraft.ItemID))
+                {
+                    Food food = ConfigMng.E.Food[selectCraft.ItemID];
+                    string recval = food.Amount != -1 ? food.Amount.ToString() : $"{food.Percent}%";
+                    UI.FoodEffect.text =
+                        food.Type == 1 ? @"満腹度：
+" + recval + "回復" : "";
+                }
+                else
+                {
+                    UI.FoodEffect.text = "";
+                }
             }
             else
             {
                 UI.Explanatory.text = UI.ExplanatoryNoSelect;
+                UI.FoodEffect.text = "";
             }
         }
     }
