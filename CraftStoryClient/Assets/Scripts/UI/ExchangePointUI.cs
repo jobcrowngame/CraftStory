@@ -192,7 +192,7 @@ Amazonギフト券をお送りいたします。
             DataMng.E.RuntimeData.Coin3 -= int.Parse(PointInput.text);
             Close();
 
-            int guid = (int)rp["guid"];
+            string guid = (string)rp["guid"];
             CommonFunction.ShowHintBox(echangeOverTitle, "", string.Format(exchangeOverText, guid, MailInput.text),
                 () => { Close(); }, null);
 
