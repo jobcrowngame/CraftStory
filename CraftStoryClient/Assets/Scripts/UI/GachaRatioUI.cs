@@ -46,9 +46,9 @@ public class GachaRatioUI : UIBase
         ChangePercent(pond.Percent06, pond.Level06, ref level1, ref level2, ref level3);
         ChangePercent(pond.Percent07, pond.Level07, ref level1, ref level2, ref level3);
 
-        Level1P.text = level1 * 0.1f + "%";
-        Level2P.text = level2 * 0.1f + "%";
-        Level3P.text = level3 * 0.1f + "%";
+        Level1P.text = level1 * 0.01f + "%";
+        Level2P.text = level2 * 0.01f + "%";
+        Level3P.text = level3 * 0.01f + "%";
     }
     private void ChangePercent(int percent, int rare, ref int level1, ref int level2, ref int level3)
     {

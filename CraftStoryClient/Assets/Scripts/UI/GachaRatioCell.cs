@@ -9,7 +9,7 @@ public class GachaRatioCell : UIBase
     public void Set(int bonus, int percent, int rare)
     {
         Rare.text = GetRareString(rare);
-        Percent.text = percent / 10f + "%";
+        Percent.text = percent / 100f + "%";
 
         var config = ConfigMng.E.Bonus[bonus];
         Name.text = ConfigMng.E.Item[config.Bonus1].Name + "X" + config.BonusCount1;

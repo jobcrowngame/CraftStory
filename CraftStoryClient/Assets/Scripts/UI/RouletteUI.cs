@@ -55,7 +55,7 @@ public class RouletteUI : UIBase
         AgainMask.gameObject.SetActive(false);
 
         var config = ConfigMng.E.Gacha[(int)gachaId];
-        again = Random.Range(0, 1000) > config.AddBonusPercent ? false : true;
+        again = Random.Range(0, 10000) > config.AddBonusPercent ? false : true;
         index = Random.Range(1, 6) * 2;
 
         if (!again)
