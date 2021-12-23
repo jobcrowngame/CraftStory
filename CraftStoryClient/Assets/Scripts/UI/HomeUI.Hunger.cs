@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public partial class HomeUI
@@ -56,7 +57,7 @@ public partial class HomeUI
         Jump.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home);
         HungerBar.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home);
 
-        Jump.onClick.AddListener(OnJump);
+        Jump.OnPointerDown(OnJump);
 
         Hunger = DataMng.E.UserData.Hunger;
         timer = SettingMng.CostHumgerTimer;

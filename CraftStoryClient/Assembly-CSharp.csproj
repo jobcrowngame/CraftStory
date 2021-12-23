@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{C85E1AE6-1292-3581-E007-24E077556706}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -87,6 +86,7 @@
     <Compile Include="Assets\Scripts\UI\LotteryUI.cs" />
     <Compile Include="Assets\Scripts\UI\GiftBoxLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\CharacterGenerated.cs" />
+    <Compile Include="Assets\Scripts\UI\HomeUI.Hunger.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterFollow.cs" />
     <Compile Include="Assets\Scripts\UI\BlueprintPreviewLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Craft.cs" />
@@ -205,6 +205,7 @@
     <Compile Include="Assets\Scripts\UI\LotteryLG.cs" />
     <Compile Include="Assets\Scripts\Data\ItemData.cs" />
     <Compile Include="Assets\Scripts\UI\FriendSearchLG.cs" />
+    <Compile Include="Assets\Scripts\Game\Battle\FlyingObjBase.cs" />
     <Compile Include="Assets\Scripts\UI\EquipSkillCell.cs" />
     <Compile Include="Assets\Scripts\UI\ShopResourceLG.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyButton.cs" />
@@ -224,8 +225,10 @@
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionItemCell.cs" />
     <Compile Include="Assets\Scripts\UI\ShopGachaLG.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csMouseOrbit.cs" />
+    <Compile Include="Assets\Scripts\Test\Battle\ColliderTest.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeCell.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityBlast.cs" />
+    <Compile Include="Assets\Scripts\Game\Battle\Obstacle.cs" />
     <Compile Include="Assets\Scripts\UI\Battle\HpUIMonster.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintDetailsUI.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintMyShopSelectItemLG.cs" />
@@ -233,6 +236,7 @@
     <Compile Include="Assets\Scripts\Game\Effect\EffectMng.cs" />
     <Compile Include="Assets\Scripts\UI\MissionLG.cs" />
     <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Food.cs" />
     <Compile Include="Assets\Scripts\UI\ChargeCell.cs" />
     <Compile Include="Assets\Scripts\Manager\TimeZoneMng.cs" />
     <Compile Include="Assets\Scripts\UI\ShopChargeLG.cs" />
@@ -366,42 +370,37 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Test\Battle\ColliderTest.cs" />
-    <Compile Include="Assets\Scripts\Game\Battle\Obstacle.cs" />
-    <Compile Include="Assets\Scripts\Game\Battle\FlyingObjBase.cs" />
-    <Compile Include="Assets\Scripts\UI\HomeUI.Hunger.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Food.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
-    <None Include="Assets\GoogleMobileAds\GoogleMobileAds.dll" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_SmoothSmoke.shader" />
-    <None Include="Assets\GoogleMobileAds\GoogleMobileAds.iOS.dll" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Fast_Color_Alpha_Blend.shader" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Alpha.shader" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Dissolve.shader" />
-    <None Include="Assets\Resources\Shader\Simple.shader" />
-    <None Include="Assets\Resource\test.TXT" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Distortion.shader" />
-    <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Core.dll" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Blend_TwoSides.shader" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Electricity.shader" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Blend_CenterGlow.shader" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Blend_Normals.shader" />
-    <None Include="Assets\GoogleMobileAds\link.xml" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Warp.shader" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_FresnelRef.shader" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_AddTrail.shader" />
-    <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll" />
-    <None Include="Assets\Resources\Shader\SemiTransparent.shader" />
-    <None Include="Assets\Shaders\UIAdditive.shader" />
-    <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Android.dll" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Add_CenterGlow.shader" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Fast_Color_Add.shader" />
-    <None Include="Assets\GoogleMobileAds\GoogleMobileAds_version-6.0.2_manifest.txt" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Add.shader" />
-    <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Fast_Add.shader" />
-    <None Include="Assets\Resources\Shader\Test01.shader" />
+     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
+     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.dll" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_SmoothSmoke.shader" />
+     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.iOS.dll" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Fast_Color_Alpha_Blend.shader" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Alpha.shader" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Dissolve.shader" />
+     <None Include="Assets\Resources\Shader\Simple.shader" />
+     <None Include="Assets\Resource\test.TXT" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Distortion.shader" />
+     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Core.dll" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Blend_TwoSides.shader" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Electricity.shader" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Blend_CenterGlow.shader" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Blend_Normals.shader" />
+     <None Include="Assets\GoogleMobileAds\link.xml" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Warp.shader" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_FresnelRef.shader" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_AddTrail.shader" />
+     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll" />
+     <None Include="Assets\Resources\Shader\SemiTransparent.shader" />
+     <None Include="Assets\Shaders\UIAdditive.shader" />
+     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Android.dll" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Add_CenterGlow.shader" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Fast_Color_Add.shader" />
+     <None Include="Assets\GoogleMobileAds\GoogleMobileAds_version-6.0.2_manifest.txt" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Add.shader" />
+     <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Fast_Add.shader" />
+     <None Include="Assets\Resources\Shader\Test01.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

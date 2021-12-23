@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -33,6 +34,8 @@ public class MyButton : Button
     /// </summary>
     Action onClickingEvent;
 
+    Action onPointDown;
+
     protected override void Start()
     {
         onClick.AddListener(() =>
@@ -52,6 +55,12 @@ public class MyButton : Button
         }
     }
 
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        if (onPointDown != null)
+            onPointDown();
+    }
+
     /// <summary>
     /// クリックイベント追加
     /// </summary>
@@ -69,7 +78,10 @@ public class MyButton : Button
     {
         onClickingEvent = ac;
     }
-
+    public void OnPointerDown(Action ac)
+    {
+        onPointDown = ac;
+    }
 
     public void OnClicking()
     {
