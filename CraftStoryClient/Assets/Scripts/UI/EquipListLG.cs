@@ -1,5 +1,6 @@
 ﻿using LitJson;
 using System.Collections.Generic;
+using System.Linq;
 
 public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
 {
@@ -87,40 +88,25 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
             return;
         }
 
+        // ソート
         List<ItemEquipmentData> newItemList = new List<ItemEquipmentData>();
-
-        items.Sort(delegate (ItemEquipmentData x, ItemEquipmentData y) {
-            if (x.itemId == y.itemId) return 0;
-            else if (x.itemId > y.itemId) return 1;
-            else return -1;
-        });
-
+        IOrderedEnumerable<ItemEquipmentData> sortList;
         if (mSortUp)
         {
-            items.Sort(delegate (ItemEquipmentData x, ItemEquipmentData y)
-            {
-                if (x.equipmentConfig.RareLevel == y.equipmentConfig.RareLevel) return 0;
-                else if (x.equipmentConfig.RareLevel > y.equipmentConfig.RareLevel) return 1;
-                else return -1;
-            });
+            sortList = items.OrderBy(rec => rec.equipmentConfig.RareLevel).OrderBy(rec => rec.itemId);
         }
         else
         {
-            items.Sort(delegate (ItemEquipmentData x, ItemEquipmentData y)
-            {
-                if (x.equipmentConfig.RareLevel == y.equipmentConfig.RareLevel) return 0;
-                else if (x.equipmentConfig.RareLevel < y.equipmentConfig.RareLevel) return 1;
-                else return -1;
-            });
+            sortList = items.OrderByDescending(rec => rec.equipmentConfig.RareLevel).ThenByDescending(rec => rec.itemId);
         }
 
-        foreach (var item in items)
+        foreach (var item in sortList)
         {
             // 指定したアイテムタイプではないとスキップ
             if ((ItemType)item.Config.Type != itemType)
                 continue;
 
-            // 同じタグちゃないとスキップ
+            // 同じタグじゃないとスキップ
             if (mTagType != TagType.All && (TagType)item.equipmentConfig.TagType != mTagType)
                 continue;
 
