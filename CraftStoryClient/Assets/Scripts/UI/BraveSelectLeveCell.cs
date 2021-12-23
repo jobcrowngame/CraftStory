@@ -11,6 +11,11 @@ public class BraveSelectLeveCell : UIBase
     {
         btn.AddClickListener((i) =>
         {
+            if (MapLG.E.BtnIsLocked)
+                return;
+
+            MapLG.E.LockBtn();
+
             if (AdventureCtl.E.BonusList.Count > 0)
             {
                 AdventureCtl.E.GetBonus(() =>

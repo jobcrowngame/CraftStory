@@ -117,7 +117,7 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            HomeLG.E.UI.RecoveryHunger(30);
+            Lock = !Lock;
         }
 
         if (Input.GetKeyDown(KeyCode.F3))

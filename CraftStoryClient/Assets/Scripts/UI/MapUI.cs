@@ -55,6 +55,8 @@ public class MapUI : UIBase
             int count = int.Parse(rp.ToString());
             BluePrintHint.text = count == 0 ? BluePrintHint1 : BluePrintHint2;
         });
+
+        MapLG.E.LockBtn(false);
     }
     public override void Close()
     {
@@ -65,6 +67,11 @@ public class MapUI : UIBase
 
     private void OnClickHomeBtn()
     {
+        if (MapLG.E.BtnIsLocked)
+            return;
+
+        MapLG.E.LockBtn();
+
         GuideLG.E.Next();
 
         // ホームからホーム遷移できません
@@ -87,6 +94,11 @@ public class MapUI : UIBase
     }
     private void OnClickMarketBtn()
     {
+        if (MapLG.E.BtnIsLocked)
+            return;
+
+        MapLG.E.LockBtn();
+
         if (DataMng.E.RuntimeData.GuideEnd2 == 0)
         {
             DataMng.E.RuntimeData.GuideId = 2;
@@ -135,6 +147,11 @@ public class MapUI : UIBase
     }
     private void OnClickBraveBtn2()
     {
+        if (MapLG.E.BtnIsLocked)
+            return;
+
+        MapLG.E.LockBtn();
+
         if (!PlayerCtl.E.Character.IsEquipedEquipment())
         {
             OnClickEquipBtn();
