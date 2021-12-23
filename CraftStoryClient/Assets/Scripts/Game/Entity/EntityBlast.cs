@@ -145,6 +145,7 @@ public class EntityBlast : EntityBase
         }
 
         WorldMng.E.MapCtl.CombineMesh();
+        HomeLG.E.AddItems(addItems);
 
         NWMng.E.AddItems((rp) => 
         {

@@ -55,6 +55,17 @@ public class HomeLG : UILogicBase<HomeLG, HomeUI>
             itemStack.Push(new BraveCellItem() { itemId = config.Bonus6, count = config.BonusCount6 });
         }
     }
+    public void AddItem(int itemId, int count)
+    {
+        itemStack.Push(new BraveCellItem() { itemId = itemId, count = count });
+    }
+    public void AddItems(Dictionary<int, int> items)
+    {
+        foreach (var k in items.Keys)
+        {
+            itemStack.Push(new BraveCellItem() { itemId = k, count = items[k] });
+        }
+    }
 
     public void ClearItemStack()
     {

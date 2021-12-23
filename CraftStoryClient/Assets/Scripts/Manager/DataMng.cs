@@ -317,6 +317,7 @@ public class DataMng : Single<DataMng>
         }
         else
         {
+            HomeLG.E.AddItem(itemID, count);
             NWMng.E.AddItemInData((rp) =>
             {
                 NWMng.E.GetItems(() =>

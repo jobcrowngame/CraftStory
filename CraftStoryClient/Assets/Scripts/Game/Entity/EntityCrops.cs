@@ -99,6 +99,7 @@ public class EntityCrops : EntityBase
         {
             // ローカルのアイテム数変更
             DataMng.E.AddItem(itemId, count);
+            HomeLG.E.AddItem(itemId, count);
         }, itemId, count);
 
         // エンティティインスタンスを削除

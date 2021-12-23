@@ -248,9 +248,6 @@ public partial class HomeUI : UIBase
 
         SceneName.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave 
             || DataMng.E.RuntimeData.MapType == MapType.Event);
-        ItemDropParent.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave
-            || DataMng.E.RuntimeData.MapType == MapType.Event
-            || DataMng.E.RuntimeData.MapType == MapType.Guide);
         Battle.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave
             || DataMng.E.RuntimeData.MapType == MapType.Event
             || DataMng.E.RuntimeData.MapType == MapType.Test);
