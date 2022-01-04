@@ -87,32 +87,56 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
             ui.RefreshCells(null);
             return;
         }
-
-        // ソート
+        Dictionary<int, List<ItemEquipmentData>> newItemDic = new Dictionary<int, List<ItemEquipmentData>>();
         List<ItemEquipmentData> newItemList = new List<ItemEquipmentData>();
-        IOrderedEnumerable<ItemEquipmentData> sortList;
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (newItemDic.ContainsKey(items[i].equipmentConfig.RareLevel))
+            {
+                newItemDic[items[i].equipmentConfig.RareLevel].Add(items[i]);
+            }
+            else
+            {
+                newItemDic[items[i].equipmentConfig.RareLevel] = new List<ItemEquipmentData>();
+                newItemDic[items[i].equipmentConfig.RareLevel].Add(items[i]);
+            }
+        }
         if (mSortUp)
         {
-            sortList = items.OrderBy(rec => rec.equipmentConfig.RareLevel).OrderBy(rec => rec.itemId);
+            var dicList = newItemDic.OrderBy(rec => rec.Key);
+            foreach (var dic in dicList)
+            {
+                var itemList = dic.Value.OrderBy(rec => rec.itemId);
+                foreach (var item in itemList)
+                {
+                    // 指定したアイテムタイプではないとスキップ
+                    if ((ItemType)item.Config.Type != itemType)
+                        continue;
+                    // 同じタグじゃないとスキップ
+                    if (mTagType != TagType.All && (TagType)item.equipmentConfig.TagType != mTagType)
+                        continue;
+                    newItemList.Add(item);
+                }
+            }
         }
         else
         {
-            sortList = items.OrderByDescending(rec => rec.equipmentConfig.RareLevel).ThenByDescending(rec => rec.itemId);
+            var dicList = newItemDic.OrderByDescending(rec => rec.Key);
+            foreach (var dic in dicList)
+            {
+                var itemList = dic.Value.OrderByDescending(rec => rec.itemId);
+                foreach (var item in itemList)
+                {
+                    // 指定したアイテムタイプではないとスキップ
+                    if ((ItemType)item.Config.Type != itemType)
+                        continue;
+                    // 同じタグじゃないとスキップ
+                    if (mTagType != TagType.All && (TagType)item.equipmentConfig.TagType != mTagType)
+                        continue;
+                    newItemList.Add(item);
+                }
+            }
         }
-
-        foreach (var item in sortList)
-        {
-            // 指定したアイテムタイプではないとスキップ
-            if ((ItemType)item.Config.Type != itemType)
-                continue;
-
-            // 同じタグじゃないとスキップ
-            if (mTagType != TagType.All && (TagType)item.equipmentConfig.TagType != mTagType)
-                continue;
-
-            newItemList.Add(item);
-        }
-
         UI.RefreshCells(newItemList);
     }
 
