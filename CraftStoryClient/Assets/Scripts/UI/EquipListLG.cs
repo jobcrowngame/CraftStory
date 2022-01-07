@@ -51,7 +51,7 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
 
     public void GetEquipmentList()
     {
-        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
+        if (DataMng.E.MapData.Config.MapType != (int)MapType.Guide)
         {
             NWMng.E.GetEquipmentInfoList((rp) =>
             {
@@ -87,7 +87,6 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
             ui.RefreshCells(null);
             return;
         }
-
         Dictionary<int, List<ItemEquipmentData>> newItemDic = new Dictionary<int, List<ItemEquipmentData>>();
         List<ItemEquipmentData> newItemList = new List<ItemEquipmentData>();
         for (int i = 0; i < items.Count; i++)
@@ -102,7 +101,6 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
                 newItemDic[items[i].equipmentConfig.RareLevel].Add(items[i]);
             }
         }
-
         if (mSortUp)
         {
             var dicList = newItemDic.OrderBy(rec => rec.Key);
@@ -114,11 +112,9 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
                     // 指定したアイテムタイプではないとスキップ
                     if ((ItemType)item.Config.Type != itemType)
                         continue;
-
                     // 同じタグじゃないとスキップ
                     if (mTagType != TagType.All && (TagType)item.equipmentConfig.TagType != mTagType)
                         continue;
-
                     newItemList.Add(item);
                 }
             }
@@ -134,22 +130,19 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
                     // 指定したアイテムタイプではないとスキップ
                     if ((ItemType)item.Config.Type != itemType)
                         continue;
-
                     // 同じタグじゃないとスキップ
                     if (mTagType != TagType.All && (TagType)item.equipmentConfig.TagType != mTagType)
                         continue;
-
                     newItemList.Add(item);
                 }
             }
         }
-
         UI.RefreshCells(newItemList);
     }
 
     public void AppraisalEquipment(EquipListCell cell)
     {
-        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
+        if (DataMng.E.MapData.Config.MapType != (int)MapType.Guide)
         {
             NWMng.E.AppraisalEquipment((rp) =>
             {

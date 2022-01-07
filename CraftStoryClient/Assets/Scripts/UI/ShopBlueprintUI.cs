@@ -26,6 +26,8 @@ public class ShopBlueprintUI : UIBase
     ShopBlueprintMyShopCell[] myShopCells;
     Text MyGoodNum { get => FindChiled<Text>("MyGoodNum"); }
 
+    public bool DontResetCtrl { get; set; }
+
     private int maxCount;
 
     public override void Init()
@@ -79,19 +81,22 @@ public class ShopBlueprintUI : UIBase
     {
         base.Open();
 
-        // 開く場合、最新の順でソート
-        //ShopBlueprintLG.E.Type = ShopBlueprintLG.UIType.Blueprint1;
-        //ToggleBtns.SetValue(0);
-
         Title.RefreshCoins();
+        MyGoodNum.text = DataMng.E.RuntimeData.MyGoodNum.ToString();
 
         GuideLG.E.Next();
 
-        Dropdown.value = 5;
-
-        MyGoodNum.text = DataMng.E.RuntimeData.MyGoodNum.ToString();
-
-        ShopBlueprintLG.E.Type = ShopBlueprintLG.E.Type;
+        if (DontResetCtrl)
+        {
+            DontResetCtrl = false;
+            ShopBlueprintLG.E.Type = ShopBlueprintLG.E.Type;
+        }
+        else
+        {
+            ToggleBtns.SetValue(0);
+            Dropdown.value = 5;
+            ShopBlueprintLG.E.Type = ShopBlueprintLG.UIType.Blueprint1;
+        }
     }
 
     public void RefreshItemWindow(ShopBlueprintLG.UIType type)

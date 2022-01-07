@@ -547,7 +547,7 @@ public class CommonFunction
     }
     private static void GetBonus(string bonusList, int percent, ref List<int> _bonusList)
     {
-        var percentR = UnityEngine.Random.Range(0, 1000);
+        var percentR = UnityEngine.Random.Range(0, 10000);
         if (percentR < percent)
         {
             var bonusArr = bonusList.Split(',');

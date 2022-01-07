@@ -84,22 +84,27 @@ public class BlueprintPreviewUI : UIBase
         base.Close();
         PlayerCtl.E.BlueprintPreviewCtl.Show(false);
 
-        if (HomeLG.E.UI != null)
-        {
-            HomeLG.E.UI.Open();
-            if (beforUI != null) beforUI.Open();
-        }
+        bool bBeforUIOpen = false;
 
         if (HomeLG.E.UI != null)
         {
             HomeLG.E.UI.Open();
-            if (beforUI != null) beforUI.Open();
+            if (beforUI != null) bBeforUIOpen = true;
         }
 
         if (GuideLG.E.UI != null)
         {
             GuideLG.E.UI.Open();
-            if (beforUI != null) beforUI.Open();
+            if (beforUI != null) bBeforUIOpen = true;
+        }
+
+        if (bBeforUIOpen)
+        {
+            if(beforUI == ShopBlueprintLG.E.UI)
+            {
+                ShopBlueprintLG.E.UI.DontResetCtrl = true;
+            }
+            beforUI.Open();
         }
 
         if (HomeLG.E.UI != null)
@@ -107,7 +112,7 @@ public class BlueprintPreviewUI : UIBase
             HomeLG.E.UI.RefreshTaskOverview();
         }
 
-        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
+        if (DataMng.E.RuntimeData.MapType == MapType.Home)
         {
             WorldMng.E.GameTimeCtl.Active = true;
         }
