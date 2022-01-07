@@ -13,10 +13,10 @@ public class AudioMng : MonoBehaviour
     private AudioSource BGM { get => transform.GetChild(0).GetComponent<AudioSource>(); }
     private AudioSource SE { get => transform.GetChild(1).GetComponent<AudioSource>(); }
 
-    public static void Init(Transform parent)
+    public static void Init()
     {
         var prefab = Resources.Load("Prefabs/Game/Cor/AudoMng") as GameObject;
-        var obj = GameObject.Instantiate(prefab, parent);
+        var obj = GameObject.Instantiate(prefab, Main.E);
         entity = obj.GetComponent<AudioMng>();
         if (entity == null)
         {

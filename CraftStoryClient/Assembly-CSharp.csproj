@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\Test\CombineMesh\ScreenCtl.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityBed.cs" />
     <Compile Include="Assets\Scripts\Test\LerpTest.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\MapCell.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\MainTask.cs" />
     <Compile Include="Assets\Scripts\UI\GachaVerificationLG.cs" />
     <Compile Include="Assets\Scripts\Test\CombineMesh\CombineMeshMain.cs" />
@@ -93,7 +94,6 @@
     <Compile Include="Assets\Scripts\UI\NowLoadingLG.cs" />
     <Compile Include="Assets\Scripts\UI\FriendDescriptionLG.cs" />
     <Compile Include="Assets\Scripts\Game\Character\BattleCalculationCtl.cs" />
-    <Compile Include="Assets\Scripts\Data\MapCellData.cs" />
     <Compile Include="Assets\Scripts\Test\TestToggle.cs" />
     <Compile Include="Assets\Scripts\UI\SceneMain\MarketMain.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintMyShopSelectItemUI.cs" />
@@ -114,6 +114,7 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Entity.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Blast.cs" />
     <Compile Include="Assets\Scripts\UI\GachaAddBonusUI.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\MapTool.cs" />
     <Compile Include="Assets\Scripts\UI\GuideUI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
     <Compile Include="Assets\Scripts\UI\Battle\HpUIPlayer.cs" />
@@ -145,12 +146,13 @@
     <Compile Include="Assets\Scripts\Game\Adventure\AdventureBuffCell.cs" />
     <Compile Include="Assets\Scripts\Game\Player\BlueprintPreviewCtl.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintUI.cs" />
+    <Compile Include="Assets\Scripts\UI\SceneMain\AreaMapMain.cs" />
     <Compile Include="Assets\Scripts\Manager\ConfigMng.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyToggle.cs" />
     <Compile Include="Assets\Scripts\UI\ShopGachaUI.cs" />
     <Compile Include="Assets\Scripts\UI\HomeItemBtn.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Shop.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\MapArea.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\MapMng.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\RouletteCell.cs" />
     <Compile Include="Assets\Scripts\UI\Common\TitleUI.cs" />
     <Compile Include="Assets\Scripts\UI\NoticeDetailLG.cs" />
@@ -175,6 +177,7 @@
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionCell.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityTransferGate.cs" />
     <Compile Include="Assets\Scripts\Test\CombineMesh\MeshMaterialCombiner.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\MapInstance.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityFlowoer.cs" />
     <Compile Include="Assets\Scripts\UI\Common\SimpleMove.cs" />
     <Compile Include="Assets\Scripts\Game\Character\SkillData.cs" />
@@ -274,7 +277,7 @@
     <Compile Include="Assets\Scripts\UI\ShopSubscriptionDetailsUI.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterEquipment.cs" />
     <Compile Include="Assets\Scripts\UI\MissionUI.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\CombineMeshObj.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\CombineMeshCtl.cs" />
     <Compile Include="Assets\Scripts\Test\TestAnimator.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\AdventureBuff.cs" />
     <Compile Include="Assets\Scripts\UI\RouletteLG.cs" />
@@ -370,6 +373,7 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\MapEntitysPool.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

@@ -18,6 +18,32 @@ public class CommonFunction
     }
 
     /// <summary>
+    /// グローバルGameObjectのインスタンス
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T CreateGlobalObject<T>() where T : Component
+    {
+        Transform parent;
+        if (Main.E == null)
+        {
+            Logger.Error("Main E is null.({0})", typeof(T).ToString());
+            parent = null;
+        }
+        else
+        {
+            parent = Main.E.transform;
+        }
+
+        var obj = new GameObject();
+        obj.transform.parent = parent;
+        var entity = obj.AddComponent<T>();
+        obj.name = entity.ToString();
+
+        return entity;
+    }
+
+    /// <summary>
     /// サブObjectを取得共通メソッド
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -112,7 +138,7 @@ public class CommonFunction
             return null;
 
         var obj = GameObject.Instantiate(resources, parent) as GameObject;
-        obj.transform.position = pos;
+        obj.transform.localPosition = pos;
 
         return obj;
     }
@@ -189,20 +215,37 @@ public class CommonFunction
         NowLoadingLG.E.NextMapID = config.NextMap;
         NowLoadingLG.E.NextSceneName = config.NextMapSceneName;
 
+        // ローカルデータをセーブ
+        if (DataMng.E != null) DataMng.E.Save();
+
         DataMng.E.RuntimeData.MapType = (MapType)ConfigMng.E.Map[config.NextMap].MapType;
 
-        CharacterCtl.E.ClearCharacter();
+        // Objectをクリア
+        WorldMng.E.Clear();
 
-        // メッシュをクリア
-        WorldMng.E.MapCtl.ClearMesh();
-        WorldMng.E.MapCtl.ClearCrops();
+        GC.Collect();
+
+        // Scene遷移
+        SceneManager.LoadSceneAsync("NowLoading");
+
+    }
+    public static void GotoAreaMap()
+    {
+        UICtl.E.Clear();
+        if (DataMng.E.MapData != null) DataMng.E.MapData.ClearMapObj();
+        PlayerCtl.E.SelectItem = null;
+
+        NowLoadingLG.E.NextSceneName = "AreaMap";
+        DataMng.E.RuntimeData.MapType = MapType.AreaMap;
+
+        // Objectをクリア
+        WorldMng.E.Clear();
 
         // ローカルデータをセーブ
         if (DataMng.E != null) DataMng.E.Save();
 
         // Scene遷移
         SceneManager.LoadSceneAsync("NowLoading");
-
     }
 
     /// <summary>

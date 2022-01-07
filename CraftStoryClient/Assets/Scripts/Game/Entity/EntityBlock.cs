@@ -26,7 +26,7 @@ public class EntityBlock : EntityBase
                 if (EConfig.ID == 1005 || EConfig.ID == 1006)
                 {
                     WorldMng.E.MapCtl.DeleteEntity(this);
-                    WorldMng.E.MapCtl.CreateEntity(3000, this.Pos, 0);
+                    WorldMng.E.MapCtl.CreateEntity(3000, this.LocalPos, 0);
                     WorldMng.E.MapCtl.CombineMesh();
                 }
                 else

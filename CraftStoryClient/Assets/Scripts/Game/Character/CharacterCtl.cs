@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// キャラクタコンソール
 /// </summary>
-public class CharacterCtl : Single<CharacterCtl>
+public class CharacterCtl
 {
     private CharacterPlayer player;
     private List<CharacterBase> characterList = new List<CharacterBase>();
@@ -16,8 +16,24 @@ public class CharacterCtl : Single<CharacterCtl>
     public void CreateCharacter()
     {
         AddPlayer();
-        AddMonsters();
+
+        if (DataMng.E.RuntimeData.MapType != MapType.AreaMap)
+        {
+            AddMonsters();
+        }
+
         AddFollowCharacter();
+    }
+
+    public void FixedUpdate()
+    {
+        foreach (var item in characterList)
+        {
+            if (item.IsDied)
+                continue;
+
+            item.OnUpdate();
+        }
     }
 
     /// <summary>
@@ -34,7 +50,16 @@ public class CharacterCtl : Single<CharacterCtl>
         }
 
         // 生成する座標ゲット
-        Vector3 pos = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 3, DataMng.E.MapData.Config.CreatePosOffset);
+        Vector3 pos = Vector3.zero;
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+        {
+            pos = WorldMng.E.MapMng.GetPlayerGroundPos();
+        }
+        else
+        {
+            pos = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 3, DataMng.E.MapData.Config.CreatePosOffset);
+        }
+
         var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
         if (obj == null)
         {

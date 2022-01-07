@@ -106,4 +106,11 @@ public class SettingMng : Single<SettingMng>
     /// 時間による空腹度消耗Step
     /// </summary>
     public const int CostHumgerTimer = 25;
+
+    /// <summary>
+    /// エリアマップのサイズ
+    /// </summary>
+    public const int AreaMapSize = 30;
+    public const int AreaMapScaleX = 5;
+    public const int AreaMapScaleZ = 5;
 }

@@ -22,7 +22,7 @@ public class TimeZoneMng : MonoBehaviour
         get
         {
             if (entity == null)
-                entity = UICtl.E.CreateGlobalObject<TimeZoneMng>();
+                entity = CommonFunction.CreateGlobalObject<TimeZoneMng>();
 
             return entity;
         }
@@ -54,10 +54,10 @@ public class TimeZoneMng : MonoBehaviour
             SecondTimerEvent01.Invoke();
         }
 
-        SecondTimerEvent02.Invoke();
+        //SecondTimerEvent02.Invoke();
 
         Timer03Counter++;
-        if(Timer03Counter >= Timer03Ratio)
+        if (Timer03Counter >= Timer03Ratio)
         {
             Timer03Counter %= Timer03Ratio;
             SecondTimerEvent03.Invoke();

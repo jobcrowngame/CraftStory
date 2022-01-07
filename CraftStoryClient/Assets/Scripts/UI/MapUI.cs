@@ -8,6 +8,7 @@ public class MapUI : UIBase
     Button MarketBtn { get => FindChiled<Button>("MarketBtn"); }
     Button BraveBtn { get => FindChiled<Button>("BraveBtn"); }
     Button BraveBtn2 { get => FindChiled<Button>("BraveBtn2"); }
+    Button AreaMapBtn { get => FindChiled<Button>("AreaMapBtn"); }
     Button EquipBtn { get => FindChiled<Button>("EquipBtn"); }
     Transform SpriteAnim { get => FindChiled("SpriteAnim"); }
     Transform SpriteAnim4 { get => FindChiled("SpriteAnim4"); }
@@ -27,6 +28,7 @@ public class MapUI : UIBase
         MarketBtn.onClick.AddListener(OnClickMarketBtn);
         BraveBtn.onClick.AddListener(OnClickBraveBtn);
         BraveBtn2.onClick.AddListener(OnClickBraveBtn2);
+        AreaMapBtn.onClick.AddListener(OnClickAreaMapBtn);
         EquipBtn.onClick.AddListener(OnClickEquipBtn);
     }
 
@@ -170,6 +172,10 @@ public class MapUI : UIBase
                 CommonFunction.GoToNextScene(2000);
             });
         }
+    }
+    private void OnClickAreaMapBtn()
+    {
+        CommonFunction.GotoAreaMap();
     }
     private void OnClickEquipBtn()
     {

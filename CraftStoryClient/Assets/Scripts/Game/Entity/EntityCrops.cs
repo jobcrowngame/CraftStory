@@ -45,7 +45,7 @@ public class EntityCrops : EntityBase
 
     public override void Init()
     {
-        startTime = GetTimer(Pos);
+        startTime = GetTimer(LocalPos);
         CheckState();
     }
 
@@ -115,7 +115,7 @@ public class EntityCrops : EntityBase
     public void OnRemoveCropsEntity()
     {
         TimeZoneMng.E.RemoveTimerEvent03(Update1S);
-        WorldMng.E.MapCtl.RemoveCrops(Pos);
+        WorldMng.E.MapCtl.RemoveCrops(LocalPos);
     }
 
     /// <summary>

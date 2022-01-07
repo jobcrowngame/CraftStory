@@ -35,7 +35,7 @@ public class EquipListCell : UIBase
 
             Selected();
 
-            if (DataMng.E.MapData.Config.MapType == (int)MapType.Guide)
+            if (DataMng.E.RuntimeData.MapType == MapType.Guide)
             {
                 GuideLG.E.Next();
             }

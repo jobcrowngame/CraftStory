@@ -110,13 +110,13 @@ public class BuilderPencil
 
         // 含まれたEntityを検索
         List<BlueprintData.BlueprintEntityData> dataList = new List<BlueprintData.BlueprintEntityData>();
-        for (int y = (int)startPos.y; y < DataMng.E.MapData.GetMapSize().y; y++)
+        for (int y = (int)startPos.y; y < MapMng.GetMapSize().y; y++)
         {
             for (int x = minX; x < maxX; x++)
             {
                 for (int z = minZ; z < maxZ; z++)
                 {
-                    var cell = DataMng.E.MapData.Map[x, y, z];
+                    var cell = MapMng.GetMapDataByPosition(new Vector3Int(x, y, z));
                     var config = ConfigMng.E.Entity[cell.entityID];
 
                     // 空と除害は入れない
@@ -185,12 +185,12 @@ public class BuilderPencil
         }
 
         // 残ってる設計図エンティティを作成
-        WorldMng.E.MapCtl.DeleteBuilderPencil();
+        MapMng.DeleteBuilderPencil();
 
         buildPos = startPos;
 
         // 半透明ブロックを作る
-        WorldMng.E.MapCtl.InstantiateTransparenEntitys(selectBlueprintData, buildPos);
+        MapMng.InstantiateTransparenEntitys(selectBlueprintData, buildPos);
 
         if (selectBlueprintData.IsLocked)
         {
@@ -212,7 +212,7 @@ public class BuilderPencil
     /// </summary>
     public void CancelUserBlueprint()
     {
-        WorldMng.E.MapCtl.DeleteBuilderPencil();
+        MapMng.DeleteBuilderPencil();
         selectBlueprintData = null;
 
         var homeUI = UICtl.E.GetUI<HomeUI>(UIType.Home);
@@ -228,7 +228,7 @@ public class BuilderPencil
     {
         Logger.Log("SpinBlueprint");
 
-        WorldMng.E.MapCtl.DeleteBuilderPencil();
+        MapMng.DeleteBuilderPencil();
 
         for (int i = 0; i < selectBlueprintData.blocks.Count; i++)
         {
@@ -247,7 +247,7 @@ public class BuilderPencil
         foreach (var item in selectBlueprintData.blocks)
         {
             var newPos = CommonFunction.Vector3Sum(item.GetPos(), buildPos);
-            if (MapCtl.IsOutRange(DataMng.E.MapData, newPos))
+            if (MapMng.IsOutRange(newPos))
             {
                 CommonFunction.ShowHintBar(8);
                 CancelUserBlueprint();
@@ -255,7 +255,7 @@ public class BuilderPencil
             }
         }
 
-        WorldMng.E.MapCtl.InstantiateTransparenEntitys(selectBlueprintData, buildPos);
+        MapMng.InstantiateTransparenEntitys(selectBlueprintData, buildPos);
     }
 
     /// <summary>
@@ -314,7 +314,7 @@ public class BuilderPencil
                 }
 
                 // ブロックを作る
-                WorldMng.E.MapCtl.InstantiateEntitys(selectBlueprintData, buildPos);
+                MapMng.InstantiateEntitys(selectBlueprintData, buildPos);
 
                 // 設計図を消耗
                 PlayerCtl.E.UseSelectItem();

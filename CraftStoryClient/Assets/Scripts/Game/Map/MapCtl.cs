@@ -9,11 +9,10 @@ public class MapCtl
 {
     private MapDataFactory mapFactory; // マップ工場
     private Transform mapCellParent; // ブロック親
-    private Transform builderPencilParent; // 建物親
     private Transform effectParent; // エフェクト親
 
     public Transform CellParent { get => mapCellParent; }
-    private CombineMeshObj CombineMeshObj { get => CellParent.GetComponent<CombineMeshObj>(); }
+    private CombineMeshCtl CombineMeshObj { get => CellParent.GetComponent<CombineMeshCtl>(); }
     public Transform EffectParent { get => effectParent; }
 
     private Dictionary<Vector3Int, EntityCrops> cropsList;
@@ -56,7 +55,7 @@ public class MapCtl
     {
         DataMng.E.SetMapData(NowLoadingLG.E.NextMapID);
 
-        mapCellParent = new GameObject("Ground", typeof(CombineMeshObj)).transform;
+        mapCellParent = new GameObject("Ground", typeof(CombineMeshCtl)).transform;
         effectParent = new GameObject("Effects").transform;
 
         var startTime = DateTime.Now;
@@ -110,149 +109,10 @@ public class MapCtl
         CombineMesh();
     }
 
-    /// <summary>
-    /// 半透明エンティティをインスタンス
-    /// </summary>
-    /// <param name="blueprint"></param>
-    /// <param name="startPos"></param>
-    public void InstantiateTransparenEntitys(BlueprintData blueprint, Vector3Int startPos)
-    {
-        var shader = Shader.Find("SemiTransparent");
-        builderPencilParent = new GameObject("BuilderPancil").transform;
-        builderPencilParent.position = startPos;
-        blueprint.State = BlueprintData.BlueprintState.None;
+    
+   
 
-        foreach (var item in blueprint.blocks)
-        {
-            var entityConfig = ConfigMng.E.Entity[item.id];
-
-            // Obstacleなら処理しない
-            if ((EntityType)entityConfig.Type == EntityType.Obstacle)
-                continue;
-
-            var entity = MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, builderPencilParent, item.GetPos(), false);
-            entity.transform.localPosition = item.GetPos();
-
-            // 向きによって回転
-            if (entity.EConfig.HaveDirection == 1)
-            {
-                var angle = CommonFunction.GetCreateEntityAngleByDirection((Direction)item.direction);
-                entity.transform.localRotation = Quaternion.Euler(0, angle, 0);
-            }
-
-            // 半透明場合、Collider を Enabled する
-            var collider = entity.GetComponent<BoxCollider>();
-            if (collider != null)
-            {
-                collider.enabled = false;
-            }
-            // サブも同じ
-            foreach (Transform cell in entity.transform)
-            {
-                var cellCollider = cell.GetComponent<BoxCollider>();
-                if (cellCollider != null)
-                {
-                    cellCollider.enabled = false;
-                }
-            }
-
-            // エンティティのPos
-            var entityPos = Vector3Int.CeilToInt(entity.transform.position);
-            if (blueprint.State == BlueprintData.BlueprintState.None)
-            {
-                CheckPos(blueprint, entityPos);
-            }
-
-            // エンティティサイズが１以上の場合、関連Pos
-            var list = GetEntityPosListByDirection(item.id, entityPos, (Direction)item.direction);
-            foreach (var pos in list)
-            {
-                if (blueprint.State == BlueprintData.BlueprintState.None)
-                {
-                    CheckPos(blueprint, pos);
-                }
-            }
-
-            // シェーダー差し替え
-            if (shader != null)
-            {
-                // サブObjectをゲット
-                List<GameObject> childs = new List<GameObject>();
-                CommonFunction.GetAllChiled(entity.transform, ref childs);
-                bool IsDuplicate = !DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(entityPos));
-
-                // サブObjectがない場合
-                if (childs.Count == 0)
-                {
-                    var render = entity.GetComponent<Renderer>();
-                    if (render != null)
-                    {
-                        // 半透明シェーダーに差し替え
-                        render.material.shader = shader;
-                        render.material.color = IsDuplicate ? new Color(1, 0, 0, 0.5f) : new Color(1, 1, 1, 0.5f);
-                    }
-                }
-                // サブObjectがある場合
-                else
-                {
-                    foreach (var cell in childs)
-                    {
-                        var render = cell.GetComponent<Renderer>();
-                        if (render == null)
-                            continue;
-
-                        // 半透明シェーダーに差し替え
-                        render.material.shader = shader;
-                        render.material.color = IsDuplicate ? new Color(1, 0, 0, 0.5f) : new Color(1, 1, 1, 0.5f);
-                    }
-                }
-            }
-        }
-    }
-    private void CheckPos(BlueprintData blueprint, Vector3Int pos)
-    {
-        // 最大高さをこえた場合
-        if (blueprint.State == BlueprintData.BlueprintState.None && pos.y >= DataMng.E.MapData.SizeY)
-        {
-            blueprint.State = BlueprintData.BlueprintState.TooHigh;
-        }
-
-        // マップサイズ範囲外の場合
-        if (blueprint.State == BlueprintData.BlueprintState.None && IsOutRange(DataMng.E.MapData, pos))
-        {
-            blueprint.State = BlueprintData.BlueprintState.IsOutRange;
-        }
-
-        // エンティティ本体が被ってるかのチェック
-        if (blueprint.State == BlueprintData.BlueprintState.None && !DataMng.E.MapData.IsNull(Vector3Int.CeilToInt(pos)))
-        {
-            blueprint.State = BlueprintData.BlueprintState.IsDuplicate;
-        }
-    }
-
-    /// <summary>
-    /// エンティティをインスタンス
-    /// </summary>
-    /// <param name="blueprint"></param>
-    /// <param name="buildPos"></param>
-    public void InstantiateEntitys(BlueprintData blueprint, Vector3Int buildPos)
-    {
-        if (blueprint == null)
-        {
-            Logger.Error("blueprint is null");
-            return;
-        }
-
-        foreach (var item in blueprint.blocks)
-        {
-            var entity = DataMng.E.MapData.Add(new MapData.MapCellData() { entityID = item.id, direction = item.direction }
-                , CommonFunction.Vector3Sum(item.GetPos(), buildPos));
-            //CheckNextToEntitys(item.GetPos());
-        }
-
-        // メッシュを結合
-        WorldMng.E.MapCtl.CombineMesh();
-    }
+   
     /// <summary>
     /// エンティティを作成
     /// </summary>
@@ -297,7 +157,7 @@ public class MapCtl
         //Logger.Warning("DeleteEntity by entity {0}:{1}", entity.gameObject.name, entity.Pos);
 
         DataMng.E.MapData.RemoveEntity(entity);
-        CheckNextToEntitys(entity.Pos);
+        CheckNextToEntitys(entity.LocalPos);
         CombineMesh();
     }
     public void DeleteEntity(Vector3Int pos)
@@ -312,17 +172,12 @@ public class MapCtl
 
     public void RemoveMesh(EntityBase entity)
     {
-        CellParent.GetComponent<CombineMeshObj>().RemoveMesh(entity.EntityID, entity.Pos);
+        CellParent.GetComponent<CombineMeshCtl>().RemoveMesh(entity.EntityID, entity.LocalPos);
     }
     public void CombineMesh()
     {
-        if (CellParent == null)
-        {
-            Logger.Warning("CellParent is null");
-            return;
-        }
-
-        CombineMeshObj.Combine();
+        if (CellParent != null)
+            CombineMeshObj.Combine();
     }
     public void ClearMesh()
     {
@@ -333,14 +188,6 @@ public class MapCtl
         }
 
         CombineMeshObj.Clear();
-    }
-
-    /// <summary>
-    /// 設計図エンティティを削除
-    /// </summary>
-    public void DeleteBuilderPencil()
-    {
-        if(builderPencilParent != null) GameObject.Destroy(builderPencilParent.gameObject);
     }
 
     /// <summary>

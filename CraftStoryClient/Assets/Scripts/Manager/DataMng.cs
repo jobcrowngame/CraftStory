@@ -80,6 +80,9 @@ public class DataMng : Single<DataMng>
     /// </summary>
     public void Save()
     {
+        if (Main.E == null)
+            return;
+
         Logger.Log("Save Data");
         if (uData != null)
         {
@@ -90,6 +93,11 @@ public class DataMng : Single<DataMng>
         {
             Task task = SaveLoadFile.E.Save(mHomeData.ToStringData(), PublicPar.SaveRootPath + PublicPar.MapDataName);
         }
+
+        if (WorldMng.E.MapMng != null)
+        {
+            WorldMng.E.MapMng.SaveData();
+        }
     }
 
     /// <summary>
@@ -99,6 +107,11 @@ public class DataMng : Single<DataMng>
     public bool Load()
     {
         uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.UserDataName);
+        if (uData.PlayerPositionX == 0 && uData.PlayerPositionZ == 0)
+        {
+            uData.PlayerPositionX = 5;
+            uData.PlayerPositionZ = 5;
+        }
 
         //uData = new UserData();
         //uData.Account = "OC1RUMAjDeFv";

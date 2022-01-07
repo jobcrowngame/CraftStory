@@ -50,7 +50,7 @@ public class EquipListUI : UIBase
         {
             PlayerCtl.E.EquipEquipment(EquipListLG.E.SelectedItem.Data);
             Close();
-            if (DataMng.E.MapData.Config.MapType == (int)MapType.Guide)
+            if (DataMng.E.RuntimeData.MapType == MapType.Guide)
             {
                 GuideLG.E.Next();
             }

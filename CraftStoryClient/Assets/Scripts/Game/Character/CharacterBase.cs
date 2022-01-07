@@ -82,12 +82,10 @@ public class CharacterBase : MonoBehaviour
 
     #endregion
 
-    private void FixedUpdate()
+    public virtual void OnUpdate()
     {
-        if (DataMng.E.MapData == null)
-            return;
-
-        OnUpdate();
+        //if (DataMng.E.MapData == null)
+        //    return;
 
         // 死んだら何もしない
         if (Behavior == BehaviorType.Did)
@@ -97,13 +95,13 @@ public class CharacterBase : MonoBehaviour
         moveDirection.y -= SettingMng.Gravity;
 
         // マップ範囲外に出ないようにする
-        if (MoveBoundaryCheckPosX(moveDirection.x))
+        if (IsMapAreaOutX(moveDirection.x))
             moveDirection.x = 0;
-        if (MoveBoundaryCheckPosZ(moveDirection.z))
+        if (IsMapAreaOutZ(moveDirection.z))
             moveDirection.z = 0;
 
         // 移動
-        if (Controller != null && Controller.enabled == true) 
+        if (Controller != null && Controller.enabled == true)
             Controller.Move(moveDirection);
 
         if (Controller != null && Controller.isGrounded)
@@ -112,9 +110,7 @@ public class CharacterBase : MonoBehaviour
         // ジャンプ状態で地面に落ちるとジャンプ前の行動になる
         if (Controller != null && Behavior == BehaviorType.Jump && Controller.isGrounded)
             Behavior = beforBehavior;
-    }
-    public virtual void OnUpdate()
-    {
+
         // 共有CD時間
         ShareCD -= Time.deltaTime;
 
@@ -464,14 +460,14 @@ public class CharacterBase : MonoBehaviour
     private void RangeAttackAddImpact(SkillData skill, CharacterGroup targetGroup, string[] impacts)
     {
         // 目標を探す
-        var targets = CharacterCtl.E.FindCharacterInRange(transform, skill.Config.Distance, targetGroup);
+        var targets = WorldMng.E.CharacterCtl.FindCharacterInRange(transform, skill.Config.Distance, targetGroup);
         foreach (var target in targets)
         {
             // 不存在、死んだ目標はスキップ
             if (target == null || target.IsDied)
                 break;
 
-            var targetDir = CharacterCtl.E.CalculationDir(target.transform.position, transform.position);
+            var targetDir = WorldMng.E.CharacterCtl.CalculationDir(target.transform.position, transform.position);
             var angle = Vector2.Angle(targetDir, GetMeDirection());
 
             if (angle * 2 <= skill.Config.RangeAngle)
@@ -568,7 +564,7 @@ public class CharacterBase : MonoBehaviour
     }
     private void RangedRangeAttackIEAddImpact(SkillData skill, CharacterBase mainTarget, CharacterGroup targetGroup, string[] impacts)
     {
-        var targets = CharacterCtl.E.FindCharacterInRange(mainTarget.transform.position, skill.Config.Radius, targetGroup);
+        var targets = WorldMng.E.CharacterCtl.FindCharacterInRange(mainTarget.transform.position, skill.Config.Radius, targetGroup);
         foreach (var target in targets)
         {
             if (target == null || target.IsDied)
@@ -610,7 +606,7 @@ public class CharacterBase : MonoBehaviour
     }
     private void BeamIEAddImpact(SkillData skill, CharacterGroup targetGroup, string[] impacts)
     {
-        var targets = CharacterCtl.E.FindCharacterInRect(this, skill.Config.Distance, skill.Config.Radius, targetGroup);
+        var targets = WorldMng.E.CharacterCtl.FindCharacterInRect(this, skill.Config.Distance, skill.Config.Radius, targetGroup);
         foreach (var target in targets)
         {
             if (target == null || target.IsDied)
@@ -651,7 +647,7 @@ public class CharacterBase : MonoBehaviour
     private void RangeRecoveryIEAddImpact(SkillData skill, CharacterGroup targetGroup, string[] impacts)
     {
         // 目標を探す
-        var targets = CharacterCtl.E.FindCharacterInRange(transform.position, skill.Config.Radius, targetGroup);
+        var targets = WorldMng.E.CharacterCtl.FindCharacterInRange(transform.position, skill.Config.Radius, targetGroup);
         foreach (var target in targets)
         {
             if (target == null || target.IsDied)
@@ -684,7 +680,7 @@ public class CharacterBase : MonoBehaviour
     private void FullMapAttackAddImpact(SkillData skill, CharacterGroup targetGroup, string[] impacts)
     {
         // 目標を探す
-        var targets = CharacterCtl.E.FindCharacterAll(targetGroup);
+        var targets = WorldMng.E.CharacterCtl.FindCharacterAll(targetGroup);
         foreach (var target in targets)
         {
             // 不存在、死んだ目標はスキップ
@@ -932,19 +928,26 @@ public class CharacterBase : MonoBehaviour
     /// <summary>
     /// 移動範囲境界判断　X
     /// </summary>
-    protected bool MoveBoundaryCheckPosX(float posX)
+    protected bool IsMapAreaOutX(float posX)
     {
         try
         {
-            if (transform.position.x < SettingMng.MoveBoundaryOffset
+            if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+            {
+                return WorldMng.E.MapMng.IsMapAreaOutX(transform.position.x, moveDirection.x);
+            }
+            else
+            {
+                if (transform.position.x < SettingMng.MoveBoundaryOffset
                 && transform.position.x + posX < transform.position.x)
-                return true;
+                    return true;
 
-            if (transform.position.x > DataMng.E.MapData.Config.SizeX - SettingMng.MoveBoundaryOffset
-                && transform.position.x + posX > transform.position.x)
-                return true;
+                if (transform.position.x > DataMng.E.MapData.Config.SizeX - SettingMng.MoveBoundaryOffset
+                    && transform.position.x + posX > transform.position.x)
+                    return true;
 
-            return false;
+                return false;
+            }
         }
         catch (Exception ex)
         {
@@ -956,19 +959,26 @@ public class CharacterBase : MonoBehaviour
     /// <summary>
     /// 移動範囲境界判断　Y
     /// </summary>
-    protected bool MoveBoundaryCheckPosZ(float posZ)
+    protected bool IsMapAreaOutZ(float posZ)
     {
         try
         {
-            if (transform.position.z < SettingMng.MoveBoundaryOffset
+            if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+            {
+                return WorldMng.E.MapMng.IsMapAreaOutZ(transform.position.z, moveDirection.z);
+            }
+            else
+            {
+                if (transform.position.z < SettingMng.MoveBoundaryOffset
                 && transform.position.z + posZ < transform.position.z)
-                return true;
+                    return true;
 
-            if (transform.position.z > DataMng.E.MapData.Config.SizeZ - SettingMng.MoveBoundaryOffset
-                && transform.position.z + posZ > transform.position.z)
-                return true;
+                if (transform.position.z > DataMng.E.MapData.Config.SizeZ - SettingMng.MoveBoundaryOffset
+                    && transform.position.z + posZ > transform.position.z)
+                    return true;
 
-            return false;
+                return false;
+            }
         }
         catch (Exception ex)
         {

@@ -149,7 +149,7 @@ public class BlueprintPreviewCtl : MonoBehaviour
     public void CreateEntity(BlueprintData data)
     {
         CommonFunction.ClearCell(Parent);
-        Parent.GetComponent<CombineMeshObj>().Clear();
+        Parent.GetComponent<CombineMeshCtl>().Clear();
 
         foreach (var item in data.blocks)
         {
@@ -157,9 +157,14 @@ public class BlueprintPreviewCtl : MonoBehaviour
                 continue;
 
             var entity = MapData.InstantiateEntity(new MapData.MapCellData() { entityID = item.id, direction = item.direction }, Parent, item.GetPos());
+            if (entity == null)
+            {
+                Logger.Error("entity is null");
+                continue;
+            }
             entity.transform.localPosition = new Vector3(entity.transform.localPosition.x, entity.transform.localPosition.y - 10000, entity.transform.localPosition.z);
         }
 
-        Parent.GetComponent<CombineMeshObj>().Combine();
+        Parent.GetComponent<CombineMeshCtl>().Combine();
     }
 }
