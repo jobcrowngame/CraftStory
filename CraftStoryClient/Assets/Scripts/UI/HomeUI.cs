@@ -329,7 +329,8 @@ public partial class HomeUI : UIBase
             if (SpriteAnim != null)
             {
                 SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide &&
-                (DataMng.E.RuntimeData.GuideEnd2 == 0 || MapLG.E.IsEquipTutorial() || DataMng.E.RuntimeData.GuideEnd5 == 0));
+                //(DataMng.E.RuntimeData.GuideEnd2 == 0 || MapLG.E.IsEquipTutorial() || DataMng.E.RuntimeData.GuideEnd5 == 0));
+                DataMng.E.RuntimeData.GuideEnd2 == 0);
             }
         }
         catch (Exception ex)

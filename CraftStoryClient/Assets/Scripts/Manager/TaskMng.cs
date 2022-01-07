@@ -113,5 +113,6 @@ public class TaskMng : Single<TaskMng>
         BraveLv10,// 冒険エリア１０階
         UserLv10,// レベル10
         GuideBrave,// 冒険エリアチュートリアルが完了
+        Brave,// 冒険完了
     }
 }

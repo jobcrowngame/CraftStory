@@ -647,14 +647,14 @@ public class PlayerCtl : MonoBehaviour
             Character.Parameter.Refresh();
             if(HomeLG.E.UI != null) HomeLG.E.UI.ShowSpriteAnimation();
 
-            // 武器を装備してる場合、タスクが完了とする
-            if (Character.IsEquipedEquipment())
-                TaskMng.E.AddMainTaskCount(2);
+            //// 武器を装備してる場合、タスクが完了とする
+            //if (Character.IsEquipedEquipment())
+            //    TaskMng.E.AddMainTaskCount(2);
 
-            // チュートリアルマップ以外、武器チュートリアル完了、現在武器装備してない場合
+            // チュートリアルマップ以外、クラフトチュートリアル完了、現在武器装備してない場合
             // デフォルトで10001を装備する
             if (DataMng.E.RuntimeData.MapType != MapType.Guide &&
-                DataMng.E.RuntimeData.GuideEnd4 == 1 &&
+                DataMng.E.RuntimeData.GuideEnd3 == 1 &&
                 PlayerCtl.E.GetEquipByItemType(ItemType.Weapon) == null)
             {
                 // チュートリアルが完了後、デフォルトで武器を鑑定して装備

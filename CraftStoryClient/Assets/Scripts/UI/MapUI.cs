@@ -42,7 +42,8 @@ public class MapUI : UIBase
         //SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd2 == 0);
         SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide);
         SpriteAnim4.gameObject.SetActive(MapLG.E.IsEquipTutorial());
-        SpriteAnim5.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd5 == 0);
+        //SpriteAnim5.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd5 == 0);
+        SpriteAnim5.gameObject.SetActive(false);
 
         // 冒険エリアの場合、時間を停止
         if (DataMng.E.RuntimeData.MapType == MapType.Brave)
@@ -132,17 +133,21 @@ public class MapUI : UIBase
             return;
         }
 
-        if (DataMng.E.RuntimeData.GuideEnd5 == 0)
+        //if (DataMng.E.RuntimeData.GuideEnd5 == 0)
+        //{
+        //    DataMng.E.RuntimeData.GuideId = 5;
+        //    CommonFunction.GoToNextScene(107);
+        //}
+        //else
+        //{
+        //    if (DataMng.E.RuntimeData.MapType != MapType.Brave)
+        //    {
+        //        UICtl.E.OpenUI<BraveSelectLevelUI>(UIType.BraveSelectLevel);
+        //    }
+        //}
+        if (DataMng.E.RuntimeData.MapType != MapType.Brave)
         {
-            DataMng.E.RuntimeData.GuideId = 5;
-            CommonFunction.GoToNextScene(107);
-        }
-        else
-        {
-            if (DataMng.E.RuntimeData.MapType != MapType.Brave)
-            {
-                UICtl.E.OpenUI<BraveSelectLevelUI>(UIType.BraveSelectLevel);
-            }
+            UICtl.E.OpenUI<BraveSelectLevelUI>(UIType.BraveSelectLevel);
         }
     }
     private void OnClickBraveBtn2()
@@ -158,30 +163,35 @@ public class MapUI : UIBase
             return;
         }
 
-        if (DataMng.E.RuntimeData.GuideEnd5 == 0)
+        //if (DataMng.E.RuntimeData.GuideEnd5 == 0)
+        //{
+        //    DataMng.E.RuntimeData.GuideId = 5;
+        //    CommonFunction.GoToNextScene(107);
+        //}
+        //else
+        //{
+        //    AdventureCtl.E.GetBonus(() =>
+        //    {
+        //        CommonFunction.GoToNextScene(2000);
+        //    });
+        //}
+        AdventureCtl.E.GetBonus(() =>
         {
-            DataMng.E.RuntimeData.GuideId = 5;
-            CommonFunction.GoToNextScene(107);
-        }
-        else
-        {
-            AdventureCtl.E.GetBonus(() =>
-            {
-                CommonFunction.GoToNextScene(2000);
-            });
-        }
+            CommonFunction.GoToNextScene(2000);
+        });
     }
     private void OnClickEquipBtn()
     {
-        if (MapLG.E.IsEquipTutorial())
-        {
-            DataMng.E.RuntimeData.GuideId = 4;
-            CommonFunction.GoToNextScene(106);
-        }
-        else
-        {
-            UICtl.E.OpenUI<EquipUI>(UIType.Equip, UIOpenType.BeforeClose);
-        }
+        //if (MapLG.E.IsEquipTutorial())
+        //{
+        //    DataMng.E.RuntimeData.GuideId = 4;
+        //    CommonFunction.GoToNextScene(106);
+        //}
+        //else
+        //{
+        //    UICtl.E.OpenUI<EquipUI>(UIType.Equip, UIOpenType.BeforeClose);
+        //}
+        UICtl.E.OpenUI<EquipUI>(UIType.Equip, UIOpenType.BeforeClose);
     }
 
     private void EnActiveBtn(Button btn, bool b = true)
