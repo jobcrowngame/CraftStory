@@ -18,6 +18,8 @@ public class MapData
 
     public Map Config { get => ConfigMng.E.Map[id]; } // マップ設定ファイル
 
+    // マップID
+    public int ID { get => id; }
     // マップエンティティ
     public MapCellData[,,] Map { get => map; }
     [NonSerialized]
@@ -37,10 +39,10 @@ public class MapData
         SizeY = Config.SizeY;
         SizeZ = Config.SizeZ;
     }
-    public MapData(string stringData)
+    public MapData(string stringData, int id = 100)
     {
-        id = 100;
-         
+        this.id = id;
+
         string[] entitys = stringData.Split(',');
         string[] data;
         int index = 0;
@@ -174,10 +176,10 @@ public class MapData
                         var mesh = obj.GetComponent<MeshFilter>();
                         var render = obj.GetComponent<MeshRenderer>();
 
-                        var combineMO = parent.GetComponent<CombineMeshObj>();
+                        var combineMO = parent.GetComponent<CombineMeshCtl>();
                         if (combineMO != null)
                         {
-                            combineMO.AddObj(entityCell.entityID, mesh.mesh, render.material, pos, entityCell.direction);
+                            combineMO.AddObj(entityCell.entityID, mesh.mesh, render.material, pos, (Direction)entityCell.direction);
                         }
 
                         if ((EntityType)config.Type == EntityType.Block5 ||
@@ -281,7 +283,7 @@ public class MapData
             if (entity != null)
             {
                 entity.EntityID = entityCell.entityID;
-                entity.Pos = pos;
+                entity.LocalPos = pos;
                 entity.Direction = (Direction)entityCell.direction;
                 entity.Init();
 
@@ -357,6 +359,11 @@ public class MapData
 
         return entity;
     }
+
+    public void SetData(MapCellData data, Vector3Int pos)
+    {
+        Map[pos.x, pos.y, pos.z] = data;
+    }
     /// <summary>
     /// エンティティ削除
     /// </summary>
@@ -367,9 +374,9 @@ public class MapData
         try
         {
             // マップ範囲以外のエンティティチェック
-            if (MapCtl.IsOutRange(this, entity.Pos))
+            if (MapCtl.IsOutRange(this, entity.LocalPos))
             {
-                Logger.Error("Remove mapdata file." + entity.Pos);
+                Logger.Error("Remove mapdata file." + entity.LocalPos);
                 return;
             }
 
@@ -378,26 +385,21 @@ public class MapData
 
             // マップデータを削除
             if (removeMapdat)
-                map[entity.Pos.x, entity.Pos.y, entity.Pos.z].entityID = 0;
+                map[entity.LocalPos.x, entity.LocalPos.y, entity.LocalPos.z].entityID = 0;
 
             // 阻害を削除
-            var obstacleList = MapCtl.GetEntityPosListByDirection(entity.EntityID, entity.Pos, entity.direction);
+            var obstacleList = MapCtl.GetEntityPosListByDirection(entity.EntityID, entity.LocalPos, entity.direction);
             foreach (var item in obstacleList)
             {
                 map[item.x, item.y, item.z].entityID = 0;
             }
 
-            if (entityDic.ContainsKey(entity.Pos))
+            if (entityDic.ContainsKey(entity.LocalPos))
             {
                 GameObject.Destroy(entity.gameObject);
-                entityDic.Remove(entity.Pos);
-            }
-            else
-            {
-                Logger.Warning("Remove entity Failure");
-            }
+                entityDic.Remove(entity.LocalPos);
 
-            if ((EntityType)entity.EConfig.Type == EntityType.Block ||
+                if ((EntityType)entity.EConfig.Type == EntityType.Block ||
                 (EntityType)entity.EConfig.Type == EntityType.Block2 ||
                 (EntityType)entity.EConfig.Type == EntityType.Block3 ||
                 (EntityType)entity.EConfig.Type == EntityType.Block4 ||
@@ -405,8 +407,9 @@ public class MapData
                 (EntityType)entity.EConfig.Type == EntityType.Block6 ||
                 (EntityType)entity.EConfig.Type == EntityType.Firm ||
                 (EntityType)entity.EConfig.Type == EntityType.Block99)
-            {
-                WorldMng.E.MapCtl.RemoveMesh(entity);
+                {
+                    WorldMng.E.MapCtl.RemoveMesh(entity);
+                }
             }
         }
         catch (Exception ex)
@@ -514,6 +517,11 @@ public enum MapType
     /// イベント
     /// </summary>
     Event = 7,
+
+    /// <summary>
+    /// エリアマップ
+    /// </summary>
+    AreaMap = 8,
 
     /// <summary>
     /// テスト

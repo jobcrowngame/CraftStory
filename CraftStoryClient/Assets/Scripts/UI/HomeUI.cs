@@ -175,7 +175,7 @@ public partial class HomeUI : UIBase
         PlayerCtl.E.ScreenDraggingCtl = FindChiled<ScreenDraggingCtl>("ScreenDraggingCtl");
         PlayerCtl.E.CameraCtl = Camera.main.GetComponent<CameraCtl>();
 
-        SceneName.text = DataMng.E.MapData.Config.Name;
+        if(DataMng.E.MapData != null) SceneName.text = DataMng.E.MapData.Config.Name;
 
         skills = new SkillCell[Battle.GetChild(0).childCount];
         for (int i = 0; i < Battle.GetChild(0).childCount; i++)
@@ -211,7 +211,7 @@ public partial class HomeUI : UIBase
         SetSkills();
 
         // 10階まで行くタスク
-        if (DataMng.E.MapData.Config.Floor >= 10)
+        if (DataMng.E.MapData != null && DataMng.E.MapData.Config.Floor >= 10)
             TaskMng.E.AddMainTaskCount(9);
 
         TaskOverview.text = "";
@@ -253,6 +253,7 @@ public partial class HomeUI : UIBase
             || DataMng.E.RuntimeData.MapType == MapType.Test);
         
         Items.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home
+             || DataMng.E.RuntimeData.MapType == MapType.AreaMap
             || DataMng.E.RuntimeData.MapType == MapType.Guide
             || DataMng.E.RuntimeData.MapType == MapType.Market);
 

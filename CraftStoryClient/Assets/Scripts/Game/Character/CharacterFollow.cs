@@ -22,7 +22,7 @@ public class CharacterFollow : CharacterBase
 
         Model.gameObject.SetActive(false);
 
-        if ((MapType)DataMng.E.MapData.Config.MapType == MapType.Home)
+        if (DataMng.E.RuntimeData.MapType == MapType.Home)
         {
             if (!NoticeLG.E.IsFirst)
             {

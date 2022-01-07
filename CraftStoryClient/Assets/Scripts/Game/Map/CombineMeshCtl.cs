@@ -4,13 +4,14 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
-public class CombineMeshObj : MonoBehaviour
+public class CombineMeshCtl : MonoBehaviour
 {
-    Dictionary<int, Dictionary<Vector3, CombineInstance>> combine = new Dictionary<int, Dictionary<Vector3, CombineInstance>>();
+    Dictionary<int, Dictionary<Vector3Int, CombineInstance>> combine = new Dictionary<int, Dictionary<Vector3Int, CombineInstance>>();
     Dictionary<int, Material> materials = new Dictionary<int, Material>();
-    List<Mesh> meshObjs = new List<Mesh>();
+    List<Mesh> meshList = new List<Mesh>();
+    List<GameObject> meshObj = new List<GameObject>();
 
-    public void AddObj(int key, Mesh mesh, Material material, Vector3 pos, int direction)
+    public void AddObj(int key, Mesh mesh, Material material, Vector3Int pos, Direction direction)
     {
         if (!materials.ContainsKey(key))
         {
@@ -23,37 +24,43 @@ public class CombineMeshObj : MonoBehaviour
         instance.mesh = mesh;
 
         if (!combine.ContainsKey(key))
-            combine[key] = new Dictionary<Vector3, CombineInstance>();
+            combine[key] = new Dictionary<Vector3Int, CombineInstance>();
         
         combine[key][pos] = instance;
     }
 
-    public void RemoveMesh(int key, Vector3 pos)
+    public void RemoveMesh(int key, Vector3Int pos)
     {
-        combine[key].Remove(pos);
+        if (combine.ContainsKey(key))
+        {
+            combine[key].Remove(pos);
+        }
     }
 
     public void Combine()
     {
-        foreach (var item in meshObjs)
+        foreach (var item in meshList)
         {
             Destroy(item);
         }
-        meshObjs.Clear();
+        meshList.Clear();
+        DestroyMeshObj();
 
         foreach (var k in combine.Keys)
         {
-            var obj = CreateMeshObj(k.ToString());
-            var mesh = obj.AddComponent<MeshFilter>();
+            var CombinedMeshObj = CreateMeshObj(k.ToString());
+            var mesh = CombinedMeshObj.AddComponent<MeshFilter>();
             mesh.mesh = new Mesh();
             mesh.mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
             mesh.mesh.CombineMeshes(combine[k].Values.ToArray());
-            meshObjs.Add(mesh.mesh);
+            meshList.Add(mesh.mesh);
 
-            var renderer = obj.AddComponent<MeshRenderer>();
+            var renderer = CombinedMeshObj.AddComponent<MeshRenderer>();
             renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
             renderer.receiveShadows = true;
             renderer.material = materials[k];
+
+            meshObj.Add(CombinedMeshObj);
         }
     }
 
@@ -61,7 +68,15 @@ public class CombineMeshObj : MonoBehaviour
     {
         combine.Clear();
         materials.Clear();
-        meshObjs.Clear();
+        meshList.Clear();
+    }
+    private void DestroyMeshObj()
+    {
+        foreach (var item in meshObj)
+        {
+            Destroy(item);
+        }
+        meshObj.Clear();
     }
   
     /// <Summary>
@@ -76,14 +91,14 @@ public class CombineMeshObj : MonoBehaviour
         return obj;
     }
 
-    private Matrix4x4 GetMatrix4x4ByDir(int direction, Vector3 pos)
+    private Matrix4x4 GetMatrix4x4ByDir(Direction direction, Vector3 pos)
     {
         Vector4 v1 = Vector4.zero;
         Vector4 v2 = Vector4.zero;
         Vector4 v3 = Vector4.zero;
         Vector4 v4 = new Vector4(pos.x, pos.y, pos.z, 0);
 
-        switch ((Direction)direction)
+        switch (direction)
         {
             case Direction.back:
                 v1 = new Vector4(-1, 0, 0, 0);

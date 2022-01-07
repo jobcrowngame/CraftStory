@@ -7,9 +7,12 @@ using LitJson;
 /// </summary>
 public class Main : MonoBehaviour
 {
+    public static Transform E;
+
     void Start()
     {
         DontDestroyOnLoad(this);
+        E = transform;
 
         StartCoroutine(Init());
     }
@@ -18,10 +21,14 @@ public class Main : MonoBehaviour
     {
         DataMng.E.Init();
         TaskMng.E.Init();
+        UICtl.E.Init();
+        TimeZoneMng.E.Init();
+        WorldMng.E.Init();
+        AudioMng.Init();
+        //UserTest.E.Init();
 
         yield return ConfigMng.E.InitInitCoroutine();
         yield return ResourcesMng.E.InitInitCoroutine();
-        yield return UICtl.E.InitCoroutine(gameObject);
         yield return LoadData();
         yield return NWMng.E.InitInitCoroutine();
         yield return AWSS3Mng.E.InitInitCoroutine();

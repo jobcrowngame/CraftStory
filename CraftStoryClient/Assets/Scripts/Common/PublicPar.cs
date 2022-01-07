@@ -62,6 +62,7 @@ public class PublicPar
 #endif
 
     public static string MapDataName = "/MapData.dat";
+    public static string AreaMapName = "/AreaMapData_";
     public static string UserDataName = "/UserData.dat";
 
     public static string AppStoryURL_IOS = "https://apps.apple.com/jp/app/id1571438709";

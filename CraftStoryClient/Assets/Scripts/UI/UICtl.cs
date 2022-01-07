@@ -8,7 +8,6 @@ using UnityEngine;
 /// </summary>
 public class UICtl : Single<UICtl>
 {
-    private static Transform glubalObjParent; // グローバルGameObject親
     private UIBase curentOpenUI; // オープンしてるUI
     private UIBase Waiting; // 通信が遅い場合、待つUI
 
@@ -26,34 +25,13 @@ public class UICtl : Single<UICtl>
         }
     }
 
-    public IEnumerator InitCoroutine(GameObject glubalObj)
+    public override void Init()
     {
+        base.Init();
+
          Logger.Log("初期化 UICtl");
 
-        glubalObjParent = glubalObj.transform;
         uiDic = new Dictionary<UIType, UIBase>();
-
-        //UserTest.E.Init();
-        TimeZoneMng.E.Init();
-        WorldMng.E.Init();
-        AudioMng.Init(glubalObjParent);
-
-        yield return true;
-    }
-
-    /// <summary>
-    /// グローバルGameObjectのインスタンス
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public T CreateGlobalObject<T>() where T : Component
-    {
-        var obj = new GameObject();
-        obj.transform.parent = glubalObjParent;
-        var entity = obj.AddComponent<T>();
-        obj.name = entity.ToString();
-
-        return entity;
     }
 
     /// <summary>

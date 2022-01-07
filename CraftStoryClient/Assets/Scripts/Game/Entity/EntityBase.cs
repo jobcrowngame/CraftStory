@@ -14,7 +14,8 @@ public class EntityBase : MonoBehaviour
 
     public int EntityID { get => id; set => id = value; } // エンティティID
     public Entity EConfig { get => ConfigMng.E.Entity[id]; } // エンティティ設定ファイル
-    public Vector3Int Pos { get => pos; set => pos = value; } // 座標
+    public Vector3Int LocalPos { get => pos; set => pos = value; } // 座標
+    public Vector3Int WorldPos { get => Vector3Int.CeilToInt(transform.position); }
     public EntityType Type { get => (EntityType)EConfig.Type; } // エンティティタイプ
     public Direction Direction { get => direction; set => direction = value; } // 向き
 
@@ -68,11 +69,29 @@ public class EntityBase : MonoBehaviour
         // ローカルのアイテム数変更
         DataMng.E.AddItem(itemId, count);
         HomeLG.E.AddItem(itemId, count);
-        // エンティティインスタンスを削除
-        WorldMng.E.MapCtl.DeleteEntity(this);
+
         // 削除Effectを追加
         var effect = EffectMng.E.AddEffect<EffectBase>(transform.position, EffectType.BlockDestroyEnd);
         effect.Init();
+
+        // エンティティインスタンスを削除
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+        {
+            var cell = MapMng.GetMapCell(WorldPos);
+            cell.Map.OnDestroyEntity(cell);
+            cell.ActiveAroundBlock();
+            cell.Map.CombineMesh();
+        }
+        else
+        {
+            WorldMng.E.MapCtl.DeleteEntity(this);
+        }
+
+        DestroyObject();
+    }
+    public void DestroyObject()
+    {
+        Destroy(gameObject);
     }
 }
 

@@ -123,8 +123,14 @@ public partial class CharacterPlayer : CharacterBase
         if (transform.position.y < -10)
         {
             Controller.enabled = false;
-            transform.position = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 5, DataMng.E.MapData.Config.CreatePosOffset);
+            transform.position = WorldMng.E.MapMng.GetPlayerGroundPos(5);
             Controller.enabled = true;
+        }
+
+        // エリアマップの場合、今のエリアをチェック
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+        {
+            WorldMng.E.MapMng.CheckArea(transform);
         }
     }
 
@@ -195,7 +201,7 @@ public partial class CharacterPlayer : CharacterBase
     /// <param name="y"></param>
     public void Move(float x, float y)
     {
-        if (DataMng.E.MapData == null || PlayerCtl.E.CameraCtl == null || IsDied)
+        if (PlayerCtl.E.CameraCtl == null || IsDied)
             return;
 
         var angle1 = 360 - CommonFunction.Vector2ToAngle(new Vector2(x, y).normalized) + 90;

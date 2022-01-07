@@ -17,7 +17,7 @@ public class PlayerCtl : MonoBehaviour
         {
             if (entity == null)
             {
-                entity = UICtl.E.CreateGlobalObject<PlayerCtl>();
+                entity = CommonFunction.CreateGlobalObject<PlayerCtl>();
                 entity.Init();
             }
 
@@ -117,7 +117,7 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            Lock = !Lock;
+            CommonFunction.GotoAreaMap();
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
@@ -181,7 +181,8 @@ public class PlayerCtl : MonoBehaviour
             return;
 
         // ホーム、チュートリアルの場合
-        if (DataMng.E.RuntimeData.MapType == MapType.Home 
+        if (DataMng.E.RuntimeData.MapType == MapType.Home
+            || DataMng.E.RuntimeData.MapType == MapType.AreaMap
             || DataMng.E.RuntimeData.MapType == MapType.Guide
             || DataMng.E.RuntimeData.MapType == MapType.Market)
         {
@@ -336,7 +337,8 @@ public class PlayerCtl : MonoBehaviour
         if (collider == null)
             return;
 
-        if (DataMng.E.RuntimeData.MapType == MapType.Home)
+        if (DataMng.E.RuntimeData.MapType == MapType.Home 
+            || DataMng.E.RuntimeData.MapType == MapType.AreaMap)
         {
             var baseCell = collider.GetComponent<EntityBase>();
             if (baseCell != null)
@@ -378,10 +380,18 @@ public class PlayerCtl : MonoBehaviour
             return null;
         }
 
-        var entity = WorldMng.E.MapCtl.CreateEntity(entityId, pos, dType);
+        EntityBase entity;
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+        {
+            entity = WorldMng.E.MapMng.CreateEntity(entityId, pos, dType);
+        }
+        else
+        {
+            entity = WorldMng.E.MapCtl.CreateEntity(entityId, pos, dType);
+        }
 
         // ブロックやオブジェクトを置くミッション
-        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
+        if (entity != null && DataMng.E.RuntimeData.MapType != MapType.Guide)
         {
             NWMng.E.ClearMission(4, 1);
 
@@ -539,7 +549,7 @@ public class PlayerCtl : MonoBehaviour
         {
             // 目標がない場合、探す
             if (Character.Target == null)
-                Character.Target = CharacterCtl.E.FindTargetInSecurityRange(CharacterBase.CharacterGroup.Monster,
+                Character.Target = WorldMng.E.CharacterCtl.FindTargetInSecurityRange(CharacterBase.CharacterGroup.Monster,
                     Character.transform.position, skill.distance);
 
             // 探しても目標がない場合、スキップ

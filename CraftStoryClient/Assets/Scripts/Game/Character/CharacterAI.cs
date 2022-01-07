@@ -104,7 +104,7 @@ public class CharacterAI
     /// <returns></returns>
     public bool TargetInSecurityRange()
     {
-        target = CharacterCtl.E.FindTargetInSecurityRange(CharacterBase.CharacterGroup.Player, 
+        target = WorldMng.E.CharacterCtl.FindTargetInSecurityRange(CharacterBase.CharacterGroup.Player, 
             mCharacter.transform.position, mCharacter.Parameter.SecurityRange);
 
         return target != null;

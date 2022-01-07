@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class UserData
@@ -33,6 +34,14 @@ public class UserData
     /// 無料で空腹度を回復したかのフラグ（既存のユーザーの為）
     /// </summary>
     public int FreeFoodEated { get; set; }
+
+    /// <summary>
+    /// 今のエリア
+    /// </summary>
+    public int AreaIndexX { get; set; }
+    public int AreaIndexZ { get; set; }
+    public int PlayerPositionX { get; set; }
+    public int PlayerPositionZ { get; set; }
 
     /// <summary>
     /// 強制表示お知らせ当日チェックマップ

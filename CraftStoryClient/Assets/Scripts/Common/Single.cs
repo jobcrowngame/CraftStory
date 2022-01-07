@@ -20,8 +20,5 @@ public class Single<T> where T : class, new()
         }
     }
 
-    public virtual void Init()
-    {
-
-    }
+    public virtual void Init() { }
 }

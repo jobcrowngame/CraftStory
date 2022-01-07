@@ -16,7 +16,7 @@ public partial class NWMng : MonoBehaviour
         get
         {
             if (entity == null)
-                entity = UICtl.E.CreateGlobalObject<NWMng>();
+                entity = CommonFunction.CreateGlobalObject<NWMng>();
 
             return entity;
         }
@@ -43,7 +43,7 @@ public partial class NWMng : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ConnectIE(Action<JsonData> rp)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.ProductionURL))
+        using (UnityWebRequest www = UnityWebRequest.Get(PublicPar.LocalURL))
         {
             yield return www.SendWebRequest();
 

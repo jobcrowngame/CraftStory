@@ -282,7 +282,7 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
 
     public void AddGuideMonster1()
     {
-        CharacterCtl.E.AddMonster(1);
+        WorldMng.E.CharacterCtl.AddMonster(1);
         UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (1)").SetActive(false);
         UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (2)").SetActive(true);
         UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (3)").SetActive(true);
@@ -292,10 +292,10 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
 
     public void AddGuideMonster2()
     {
-        CharacterCtl.E.AddMonster(1);
-        CharacterCtl.E.AddMonster(1);
-        CharacterCtl.E.AddMonster(1);
-        CharacterCtl.E.AddMonster(1);
+        WorldMng.E.CharacterCtl.AddMonster(1);
+        WorldMng.E.CharacterCtl.AddMonster(1);
+        WorldMng.E.CharacterCtl.AddMonster(1);
+        WorldMng.E.CharacterCtl.AddMonster(1);
         UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (1)").SetActive(true);
         UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (2)").SetActive(false);
         UI.GetGameObject("Home(Clone)/Battle/SkillMask/SkillMask (3)").SetActive(true);

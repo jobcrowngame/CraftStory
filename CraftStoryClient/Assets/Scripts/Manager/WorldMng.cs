@@ -12,7 +12,7 @@ public class WorldMng : MonoBehaviour
         get
         {
             if (entity == null)
-                entity = UICtl.E.CreateGlobalObject<WorldMng>();
+                entity = CommonFunction.CreateGlobalObject<WorldMng>();
 
             return entity;
         }
@@ -21,19 +21,22 @@ public class WorldMng : MonoBehaviour
 
     public MapCtl MapCtl { get; set; }
     public GameTimeCtl GameTimeCtl { get; set; }
+    public MapMng MapMng { get; set; }
+    public CharacterCtl CharacterCtl { get; set; }
 
-    public Transform CharacterParent;
+    //public Transform CharacterParent;
     public Transform EffectParent;
 
     private int timer = 0;
 
     public void Init()
     {
-        CharacterParent = CreateParentObj("CharacterParent");
+        //CharacterParent = CreateParentObj("CharacterParent");
         EffectParent = CreateParentObj("EffectParent");
 
         GameTimeCtl = new GameTimeCtl();
         MapCtl = new MapCtl();
+        CharacterCtl = new CharacterCtl();
 
         // 定期時間でローカルデータをセーブ
         timer = SettingMng.AutoSaveDataTime;
@@ -45,13 +48,28 @@ public class WorldMng : MonoBehaviour
         TimeZoneMng.E.RemoveTimerEvent03(AudoSave);
     }
 
+    private void FixedUpdate()
+    {
+        if(CharacterCtl != null) CharacterCtl.FixedUpdate();
+    }
+
+    public void Clear()
+    {
+        // メッシュをクリア
+        MapCtl.ClearMesh();
+        MapCtl.ClearCrops();
+
+        // キャラクタクリア
+        CharacterCtl.ClearCharacter();
+    }
+
     /// <summary>
     /// 世界の　GameObject　をインスタンス
     /// </summary>
     public void CreateGameObjects()
     {
         MapCtl.CreateMap();
-        CharacterCtl.E.CreateCharacter();
+        CharacterCtl.CreateCharacter();
 
         // ガイドの場合、一時的のアイテムを追加
         if (DataMng.E.RuntimeData.MapType == MapType.Guide)
@@ -67,6 +85,11 @@ public class WorldMng : MonoBehaviour
 
         AdventureCtl.E.Init();
         GoogleMobileAdsMng.E.Init();
+    }
+    public void CreateAreaMap(MapMng areaMap)
+    {
+        MapMng = areaMap;
+        MapMng.Init();
     }
 
     private Transform CreateParentObj(string name)

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// マップデータ生成する工場
 /// </summary>
-public class MapDataFactory
+public class MapDataFactory : Single<MapDataFactory>
 {
     private MapData mData;
     private Map mapConfig;

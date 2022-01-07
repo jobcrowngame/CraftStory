@@ -19,7 +19,7 @@ public class AWSS3Mng : MonoBehaviour
         get
         {
             if (entity == null)
-                entity = UICtl.E.CreateGlobalObject<AWSS3Mng>();
+                entity = CommonFunction.CreateGlobalObject<AWSS3Mng>();
 
             return entity;
         }

@@ -4,9 +4,8 @@ namespace JsonConfigData
     public class MapArea : ConfigBase
     {
         public int MapId { get; set; }
-        public int Forward { get; set; }
-        public int Back { get; set; }
-        public int Right { get; set; }
-        public int Left { get; set; }
+        public string RelatedArea { get; set; }
+        public int OffsetX { get; set; }
+        public int OffsetZ { get; set; }
     }
 }
