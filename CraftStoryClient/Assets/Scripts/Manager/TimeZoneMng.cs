@@ -54,7 +54,7 @@ public class TimeZoneMng : MonoBehaviour
             SecondTimerEvent01.Invoke();
         }
 
-        //SecondTimerEvent02.Invoke();
+        SecondTimerEvent02.Invoke();
 
         Timer03Counter++;
         if (Timer03Counter >= Timer03Ratio)
