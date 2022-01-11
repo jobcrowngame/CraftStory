@@ -107,10 +107,53 @@ public class SettingMng : Single<SettingMng>
     /// </summary>
     public const int CostHumgerTimer = 25;
 
+    #region エリアマップ
+
     /// <summary>
     /// エリアマップのサイズ
     /// </summary>
     public const int AreaMapSize = 30;
+
+    /// <summary>
+    /// エリアの規模
+    /// </summary>
     public const int AreaMapScaleX = 5;
     public const int AreaMapScaleZ = 5;
+
+    /// <summary>
+    /// エリアマップで敵が生成する半径
+    /// </summary>
+    public const int AreaMapCreateMonsterRange = 50;
+
+    /// <summary>
+    /// エリアマップで敵が追いかける距離
+    /// </summary>
+    public const int AreaMapChaseRange = 40;
+
+    /// <summary>
+    /// エリアマップで敵が生成する最大数
+    /// </summary>
+    public const int AreaMapCreateMonsterMaxCount = 6;
+
+    /// <summary>
+    /// エリアマップで敵が生成する間隔（秒）
+    /// </summary>
+    public const int AreaMapCreateMonsterInterval = 300;
+
+    /// <summary>
+    /// エリアマップで敵がデスポーン時間（秒）
+    /// </summary>
+    public const int AreaMapMonsterDespawnTime = 60;
+
+    /// <summary>
+    /// エリアマップで敵がデスポーン距離
+    /// </summary>
+    public const int AreaMapMonsterDespawnRange = 70;
+
+    /// <summary>
+    /// 松明影響範囲
+    /// </summary>
+    public const int TorchRange = 10;
+
+    #endregion
 }

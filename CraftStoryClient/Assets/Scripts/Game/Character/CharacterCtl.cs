@@ -10,14 +10,27 @@ public class CharacterCtl
     private CharacterPlayer player;
     private List<CharacterBase> characterList = new List<CharacterBase>();
 
+    // 敵の数
     private int mRemainingNumber = 0;
     public int RemainingNumber { get => mRemainingNumber; }
+
+    // エリアマップの敵が生成される時間
+    int createAreaMapMonsterTimer = 0;
+
+    List<int> mAreaMapMonsterList = new List<int>();
 
     public void CreateCharacter()
     {
         AddPlayer();
 
-        if (DataMng.E.RuntimeData.MapType != MapType.AreaMap)
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+        {
+            mAreaMapMonsterList = GetAreaMapCreateMonsterEntityId();
+            mRemainingNumber = 0;
+            createAreaMapMonsterTimer = SettingMng.AreaMapCreateMonsterInterval;
+            TimeZoneMng.E.AddTimerEvent03(AddAreaMapMonster);
+        }
+        else
         {
             AddMonsters();
         }
@@ -27,14 +40,43 @@ public class CharacterCtl
 
     public void FixedUpdate()
     {
-        foreach (var item in characterList)
+        for (int i = 0; i < characterList.Count; i++)
         {
-            if (item.IsDied)
+            if (characterList[i] == null || characterList[i].IsDied)
                 continue;
 
-            item.OnUpdate();
+            characterList[i].OnUpdate();
         }
     }
+
+    /// <summary>
+    /// モンスターを倒す場合
+    /// </summary>
+    public void MonsterDied()
+    {
+        mRemainingNumber--;
+        CheckMapClear();
+    }
+
+    /// <summary>
+    /// 冒険マップがクリアしたかの判定
+    /// </summary>
+    private void CheckMapClear()
+    {
+        // エリアマップの場合、スキップ
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+            return;
+
+        if (HomeLG.E.UI != null)
+            HomeLG.E.UI.UpdateNumberLeftMonster(mRemainingNumber);
+
+        if (mRemainingNumber == 0)
+        {
+            DataMng.E.MapData.OnClear();
+        }
+    }
+
+    #region キャラクタ生成
 
     /// <summary>
     /// プレイヤーエンティティをインスタンス
@@ -57,7 +99,7 @@ public class CharacterCtl
         }
         else
         {
-            pos = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 3, DataMng.E.MapData.Config.CreatePosOffset);
+            pos = MapCtl.GetGroundPos(DataMng.E.MapData, DataMng.E.MapData.Config.PlayerPosX, DataMng.E.MapData.Config.PlayerPosZ, 1, DataMng.E.MapData.Config.CreatePosOffset);
         }
 
         var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
@@ -90,8 +132,8 @@ public class CharacterCtl
         var characterGeneratedStr = DataMng.E.MapData.Config.CharacterGenerated;
         string[] characterGenerated = characterGeneratedStr.Split(',');
 
-        mRemainingNumber = (characterGeneratedStr != "N") 
-            ? characterGenerated.Length 
+        mRemainingNumber = (characterGeneratedStr != "N")
+            ? characterGenerated.Length
             : 0;
 
         foreach (var item in characterGenerated)
@@ -111,11 +153,19 @@ public class CharacterCtl
     /// <summary>
     /// モンスターを生成
     /// </summary>
-    public void AddMonster(int characterGeneratedID)
+    public void AddMonster(int characterGeneratedID, int posX = -1, int posZ = -1)
     {
         // モンスターをインスタンス
         var characterGeneratedCfg = ConfigMng.E.CharacterGenerated[characterGeneratedID];
         var characterCfg = ConfigMng.E.Character[characterGeneratedCfg.CharacterId];
+
+        posX = posX > 0 ? posX : characterGeneratedCfg.PosX;
+        posZ = posZ > 0 ? posZ : characterGeneratedCfg.PosZ;
+
+        int CreatePosOffset = DataMng.E.MapData != null ? DataMng.E.MapData.Config.CreatePosOffset : 3;
+
+        // 生成する座標ゲット
+        Vector3Int pos = MapMng.GetGroundPos(posX, posZ, 1, CreatePosOffset);
 
         var resource = Resources.Load(characterCfg.Prefab) as GameObject;
         if (resource == null)
@@ -123,9 +173,6 @@ public class CharacterCtl
             Logger.Error("not find Monster Prefabs： {0}", characterCfg.Prefab);
             return;
         }
-
-        // 生成する座標ゲット
-        Vector3 pos = MapCtl.GetGroundPos(DataMng.E.MapData, characterGeneratedCfg.PosX, characterGeneratedCfg.PosZ, 3, DataMng.E.MapData.Config.CreatePosOffset);
 
         var obj = GameObject.Instantiate(resource, pos, Quaternion.identity);
         if (obj == null)
@@ -166,7 +213,7 @@ public class CharacterCtl
             return;
         }
 
-        followCharacter.transform.localRotation = Quaternion.Euler(0,0,0);
+        followCharacter.transform.localRotation = Quaternion.Euler(0, 0, 0);
         followCharacter.Init(id, CharacterBase.CharacterGroup.Fairy);
         followCharacter.SetTarget(player.FollowPoint);
 
@@ -174,24 +221,137 @@ public class CharacterCtl
     }
 
     /// <summary>
-    /// モンスターを倒す場合
+    /// エリアマップのモンスター生成
     /// </summary>
-    public void MonsterDied()
+    public void AddAreaMapMonster()
     {
-        mRemainingNumber--;
-        CheckMapClear();
-    }
+        // 主人公がない場合、スキップ
+        if (player == null)
+            return;
 
-    private void CheckMapClear()
-    {
-        if (HomeLG.E.UI != null)
-            HomeLG.E.UI.UpdateNumberLeftMonster(mRemainingNumber);
+        createAreaMapMonsterTimer--;
+        if (createAreaMapMonsterTimer > 0)
+            return;
 
-        if (mRemainingNumber == 0)
+        createAreaMapMonsterTimer = SettingMng.AreaMapCreateMonsterInterval;
+
+        int creteMaxCount = SettingMng.AreaMapCreateMonsterMaxCount - RemainingNumber + 1;
+        int range = Random.Range(0, creteMaxCount);
+        var createPosList = GetAreaMapCreateMonsterPosList();
+
+        // 生成できる座標がないとスキップ
+        if (createPosList.Count <= 0)
+            return;
+
+        for (int i = 0; i < range; i++)
         {
-            DataMng.E.MapData.OnClear();
+            int rangePos = Random.Range(0, createPosList.Count);
+            int rangeEntityIndex = Random.Range(0, mAreaMapMonsterList.Count);
+
+            AddMonster(mAreaMapMonsterList[rangeEntityIndex], createPosList[rangePos].x, createPosList[rangePos].z);
+            mRemainingNumber++;
+
+            Logger.Warning("敵が生成 {0}", mAreaMapMonsterList[rangeEntityIndex]);
         }
+
     }
+
+    public void RemoveMonster(CharacterBase character)
+    {
+        characterList.Remove(character);
+    }
+
+    /// <summary>
+    /// エリアマップで敵が生成する座標
+    /// </summary>
+    private List<Vector3Int> GetAreaMapCreateMonsterPosList()
+    {
+        int y = (int)player.transform.position.y;
+        int minX = (int)(player.transform.position.x - SettingMng.AreaMapCreateMonsterRange);
+        int minZ = (int)(player.transform.position.z - SettingMng.AreaMapCreateMonsterRange);
+        int maxX = (int)(player.transform.position.x + SettingMng.AreaMapCreateMonsterRange);
+        int maxZ = (int)(player.transform.position.z + SettingMng.AreaMapCreateMonsterRange);
+
+        var torchArea = GetTorchAreaPosList();
+        List<Vector3Int> list = new List<Vector3Int>();
+        for (int z = minZ; z < maxZ; z++)
+        {
+            for (int x = minX; x < maxX; x++)
+            {
+                var newPos = new Vector3Int(x, y, z);
+
+                // マップ範囲以外ならスキップ
+                if (MapMng.IsOutRange(newPos))
+                    continue;
+
+                // 松明範囲内の場合、スキップ
+                if (torchArea.Contains(newPos))
+                    continue;
+
+                list.Add(newPos);
+            }
+        }
+        return list;
+    }
+
+    /// <summary>
+    /// 松明エリアをゲット
+    /// </summary>
+    /// <returns></returns>
+    private List<Vector3Int> GetTorchAreaPosList()
+    {
+        List<Vector3Int> list = new List<Vector3Int>();
+        var torchList = WorldMng.E.MapMng.GetTorchs();
+        foreach (var item in torchList)
+        {
+            int y = item.WorldPosition.y;
+            int minX = item.WorldPosition.x - SettingMng.TorchRange;
+            int minZ = item.WorldPosition.z - SettingMng.TorchRange;
+            int maxX = item.WorldPosition.x + SettingMng.TorchRange;
+            int maxZ = item.WorldPosition.z + SettingMng.TorchRange;
+
+            for (int z = minZ; z < maxZ; z++)
+            {
+                for (int x = minX; x < maxX; x++)
+                {
+                    var newPos = new Vector3Int(x, y, z);
+
+                    // マップ範囲以外ならスキップ
+                    if (MapMng.IsOutRange(newPos))
+                        continue;
+
+                    if (!list.Contains(newPos))
+                        list.Add(newPos);
+                }
+            }
+
+        }
+
+        return list;
+    }
+
+    /// <summary>
+    /// エリアマップで生成できるモンスターリスト
+    /// </summary>
+    /// <returns></returns>
+    private List<int> GetAreaMapCreateMonsterEntityId()
+    {
+        List<int> list = new List<int>();
+        foreach (var item in ConfigMng.E.CharacterGenerated.Values)
+        {
+            if (item.AreaMapActivation == 0)
+                continue;
+
+            // 主人公よりレベルが高いのは生成しない
+            if (ConfigMng.E.Character[item.CharacterId].Level > DataMng.E.RuntimeData.Lv)
+                continue;
+
+            list.Add(item.ID);
+        }
+        return list;
+    }
+
+    #endregion
 
     #region 戦闘
 
@@ -354,6 +514,7 @@ public class CharacterCtl
     public void ClearCharacter()
     {
         characterList.Clear();
+        TimeZoneMng.E.RemoveTimerEvent03(AddAreaMapMonster);
     }
 
     #endregion 

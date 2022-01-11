@@ -124,6 +124,7 @@
     <Compile Include="Assets\Scripts\Test\CreateUIMng.cs" />
     <Compile Include="Assets\Scripts\Test\RunTest.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Gacha.cs" />
+    <Compile Include="Assets\Scripts\Game\Map\MapEntitysPool.cs" />
     <Compile Include="Assets\Scripts\Game\Character\Parameter.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csAnimationSpin.cs" />
     <Compile Include="Assets\Scripts\UI\RouletteUI.cs" />
@@ -373,7 +374,6 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
-    <Compile Include="Assets\Scripts\Game\Map\MapEntitysPool.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

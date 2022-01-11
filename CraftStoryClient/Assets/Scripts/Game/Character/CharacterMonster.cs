@@ -9,17 +9,28 @@ public class CharacterMonster : CharacterBase
     CharacterAI ai;
     CharacterBase Target { get => ai.Target; }
 
+    public Vector3 CreatedPos { get => mCreatedPos; }
+    public bool Active { get; set; }
+
+    Vector3 mCreatedPos;
+    float despawn = 0;
+
+
     public override void Init(int characterId, CharacterGroup camp)
     {
         base.Init(characterId, camp);
 
         Behavior = BehaviorType.Waiting;
         ai = new CharacterAI(this);
+
+        mCreatedPos = transform.position;
     }
 
     public override void OnUpdate()
     {
-        base.OnUpdate();
+        if (Active)
+            base.OnUpdate();
+
         if (ai != null && Behavior != BehaviorType.Did)
         {
             ai.Update();
@@ -81,6 +92,32 @@ public class CharacterMonster : CharacterBase
         StartCoroutine(DiedIE());
     }
 
+    public void CheckDespawn(bool b)
+    {
+        Active = !b;
+
+        if (b)
+        {
+            despawn += Time.deltaTime;
+
+            if (despawn >= SettingMng.AreaMapMonsterDespawnTime)
+            {
+                ai = null;
+                Behavior = BehaviorType.Did;
+
+                WorldMng.E.CharacterCtl.RemoveMonster(this);
+
+                WorldMng.E.CharacterCtl.MonsterDied();
+                GameObject.Destroy(gameObject);
+            }
+            return;
+        }
+        else
+        {
+            despawn = 0;
+        }
+    }
+
     protected override void TargetDied()
     {
         base.TargetDied();
@@ -109,7 +146,7 @@ public class CharacterMonster : CharacterBase
         var randomAngle = Random.Range(0, 360);
         var dir = CommonFunction.AngleToVector2(randomAngle);
 
-        MoveToTarget(dir);
+        MoveToByDirection(dir);
         StartCoroutine(RandomMoveIE());
     }
     IEnumerator RandomMoveIE()
@@ -133,6 +170,9 @@ public class CharacterMonster : CharacterBase
         if (Parameter.RandomMoveOnWait == 1)
         {
             Behavior = BehaviorType.Waiting;
+        }
+        else {
+            Behavior = BehaviorType.Nono;
         }
     }
 
@@ -170,28 +210,30 @@ public class CharacterMonster : CharacterBase
     /// <summary>
     /// 目標を目指して移動
     /// </summary>
-    public void MoveToTarget()
+    public void MoveToTargetPos(Vector3 targetPos)
     {
-        // 目標がない場合、スキップ
-        if (Target == null)
-            return;
-
-        // 他の動作をしてる場合、スキップ
-        if (CanNotChangeBehavior())
-            return;
-
         // 向きを調整
-        var direction = GetDircetion(Target.transform);
-        Rotation(direction);
-        MoveToTarget(direction);
+        var direction = GetDircetion(targetPos);
+        MoveToByDirection(direction);
     }
-    public void MoveToTarget(Vector2 direction)
+    public void MoveToByDirection(Vector2 direction)
     {
         if (Behavior != BehaviorType.Run) Behavior = BehaviorType.Run;
+
+        Rotation(direction);
 
         // 移動遷移量設定
         moveDirection.x = direction.x * Parameter.MoveSpeed * Time.deltaTime;
         moveDirection.z = direction.y * Parameter.MoveSpeed * Time.deltaTime;
+    }
+
+    /// <summary>
+    /// 生成された座標にいる
+    /// </summary>
+    /// <returns></returns>
+    public bool InCreatedPos()
+    {
+        return Mathf.Abs(Vector3.Distance(transform.position, CreatedPos)) < 3;
     }
 
     /// <summary>

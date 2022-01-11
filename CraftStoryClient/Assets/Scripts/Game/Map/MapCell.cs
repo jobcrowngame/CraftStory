@@ -95,6 +95,10 @@ public class MapCell
             // エンティティをインスタンス
             entity = MapTool.InstantiateEntity(this, map.transform, localPosition);
 
+            // 松明の場合、記録
+            if (Type == EntityType.Torch)
+                Map.TorchDic.Add(this);
+
             //Logger.Warning("Instance {0},{1}", EntityId, LocalPosition);
             return 1;
         }
@@ -110,6 +114,10 @@ public class MapCell
         if (Entity != null) Entity.DestroyObject();
         data.entityID = 0;
         Entity = null;
+
+        // 松明の場合、削除
+        if (Type == EntityType.Torch)
+            Map.TorchDic.Remove(this);
     }
 
     public void ActiveAroundBlock()

@@ -10,18 +10,27 @@ public class CharacterAI
     public CharacterBase Target { get => target; }
 
     float dazeTime = 0;
+    bool mGotoCreatedPos;
+    public bool Active { get; set; }
 
     public CharacterAI(CharacterMonster character)
     {
         mCharacter = character;
+        Active = true;
     }
 
     public void Update()
     {
+        if (!Active)
+            return;
+
         // 死んだら何もしない
         if (mCharacter.Behavior == BehaviorType.Did ||
             mCharacter.Behavior == BehaviorType.Hit)
             return;
+
+        // デスポーンチェック
+        mCharacter.CheckDespawn(CheckDespawnRange());
 
         if (InCombat)
         {
@@ -29,11 +38,21 @@ public class CharacterAI
                 FindTarget();
             else
             {
+                // 追いかける距離以外になると、やめる
+                if (CheckOutChaseRange())
+                {
+                    mGotoCreatedPos = true;
+                    InCombat = false;
+                    return;
+                }
+
                 if (CheckInAttackRange())
                     mCharacter.Attack();
                 else
                 {
-                    mCharacter.MoveToTarget();
+                    // 目標があり、他の動作をしてない場合
+                    if (Target != null && !mCharacter.CanNotChangeBehavior())
+                        mCharacter.MoveToTargetPos(Target.transform.position);
                 }
             }
         }
@@ -57,34 +76,56 @@ public class CharacterAI
 
                 // 戦闘状態になる
                 InCombat = true;
+
+                // 生成座標に戻るをやめる
+                mGotoCreatedPos = false;
             }
-        }
-        else if (mCharacter.Parameter.RandomMoveOnWait == 0)
-        {
-            mCharacter.DazeAction();
         }
         else
         {
             InCombat = false;
 
-            if (dazeTime <= 0)
+            // 生成された座標に戻る
+            if (mGotoCreatedPos)
             {
-                var random = Random.Range(0, 100);
-                if (random < 50)
+                mCharacter.MoveToTargetPos(mCharacter.CreatedPos);
+
+                // 生成された座標にいる場合、止める
+                if (mCharacter.InCreatedPos())
                 {
-                    mCharacter.RandomMove();
-                }
-                else
-                {
-                    mCharacter.DazeAction();
+                    mGotoCreatedPos = false;
+                    mCharacter.StopMove();
                 }
 
-                // 動作の時間を分ける為 -2,+2offsetを加算
-                dazeTime = SettingMng.DazeTime + Random.Range(-2,2);
+                return;
+            }
+
+            if (mCharacter.Parameter.RandomMoveOnWait == 0)
+            {
+                mCharacter.DazeAction();
             }
             else
             {
-                dazeTime -= Time.deltaTime;
+
+                if (dazeTime <= 0)
+                {
+                    var random = Random.Range(0, 100);
+                    if (random < 50)
+                    {
+                        mCharacter.RandomMove();
+                    }
+                    else
+                    {
+                        mCharacter.DazeAction();
+                    }
+
+                    // 動作の時間を分ける為 -2,+2offsetを加算
+                    dazeTime = SettingMng.DazeTime + Random.Range(-2, 2);
+                }
+                else
+                {
+                    dazeTime -= Time.deltaTime;
+                }
             }
         }
     }
@@ -140,6 +181,26 @@ public class CharacterAI
         }
 
         return Mathf.Abs(dis) <= maxDistance;
+    }
+
+    public bool CheckOutChaseRange()
+    {
+        if (Target == null || mCharacter == null)
+            return true;
+        
+        var dis = Mathf.Abs( Vector3.Distance(Target.transform.position, mCharacter.transform.position));
+        return dis > SettingMng.AreaMapChaseRange;
+    }
+
+    /// <summary>
+    /// デスポーン範囲以外のチェック
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckDespawnRange()
+    {
+        var player = WorldMng.E.CharacterCtl.getPlayer();
+        var dis = Mathf.Abs(Vector3.Distance(player.transform.position, mCharacter.transform.position));
+        return dis > SettingMng.AreaMapMonsterDespawnRange;
     }
 
     /// <summary>

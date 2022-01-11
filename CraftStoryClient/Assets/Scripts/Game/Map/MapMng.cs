@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -302,6 +303,17 @@ public class MapMng : MonoBehaviour
         cell.Map.CombineMesh();
 
         return cell.Entity;
+    }
+
+    public List<MapCell> GetTorchs()
+    {
+        List<MapCell> list = new List<MapCell>();
+        foreach (var map in mapInstanceArr)
+        {
+            list.AddRange(map.TorchDic);
+        }
+
+        return list;
     }
 
     #region static function
