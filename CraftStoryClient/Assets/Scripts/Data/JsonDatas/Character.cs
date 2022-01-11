@@ -26,5 +26,6 @@ namespace JsonConfigData
         public int RandomMoveOnWait { get; set; }
         public float DazeTime { get; set; }
         public float MoveSpeed { get; set; }
+        public int ChaseRange { get; set; }
     }
 }

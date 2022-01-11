@@ -729,6 +729,7 @@ namespace ExcelToJson
                     RandomMoveOnWait = ToInt32(tbl.Rows[i]["RandomMoveOnWait"]),
                     DazeTime = ToFloat(tbl.Rows[i]["DazeTime"]),
                     MoveSpeed = ToFloat(tbl.Rows[i]["MoveSpeed"]),
+                    ChaseRange = ToInt32(tbl.Rows[i]["ChaseRange"]),
 
                 };
 
@@ -747,6 +748,7 @@ namespace ExcelToJson
                     CharacterId = ToInt32(tbl.Rows[i]["CharacterId"]),
                     PosX = ToInt32(tbl.Rows[i]["PosX"]),
                     PosZ = ToInt32(tbl.Rows[i]["PosZ"]),
+                    AreaMapActivation = ToInt32(tbl.Rows[i]["AreaMapActivation"]),
                 };
 
                 list.Add(data);

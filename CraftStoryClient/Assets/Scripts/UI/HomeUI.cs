@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Profiling;
 using UnityEngine.UI;
 
 public partial class HomeUI : UIBase
@@ -249,6 +248,7 @@ public partial class HomeUI : UIBase
         SceneName.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave 
             || DataMng.E.RuntimeData.MapType == MapType.Event);
         Battle.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave
+            || DataMng.E.RuntimeData.MapType == MapType.AreaMap
             || DataMng.E.RuntimeData.MapType == MapType.Event
             || DataMng.E.RuntimeData.MapType == MapType.Test);
         
@@ -257,6 +257,16 @@ public partial class HomeUI : UIBase
             || DataMng.E.RuntimeData.MapType == MapType.Guide
             || DataMng.E.RuntimeData.MapType == MapType.Market);
 
+        MonsterNumberLeft.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave
+            || DataMng.E.RuntimeData.MapType == MapType.Event
+            || DataMng.E.RuntimeData.MapType == MapType.Test);
+
+        Jump.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home
+             || DataMng.E.RuntimeData.MapType == MapType.AreaMap);
+
+        HungerBar.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home
+             || DataMng.E.RuntimeData.MapType == MapType.AreaMap);
+
         if (Items.gameObject.activeSelf)
         {
             ItemsGridMask.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Market);
@@ -264,7 +274,9 @@ public partial class HomeUI : UIBase
 
         Title.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Market);
 
-        Clock.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home);
+        Clock.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home
+             || DataMng.E.RuntimeData.MapType == MapType.AreaMap);
+
         TaskOverview.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Home);
         TaskOverviewText.gameObject.SetActive(false);
     }

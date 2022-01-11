@@ -20,9 +20,11 @@ public class MapInstance : MonoBehaviour
     public bool Active { get; set; }
     public bool Actived { get; set; }
 
-    public Dictionary<Vector3Int, MapCell> ObjDic { get => objDic; }
-    Dictionary<Vector3Int, MapCell> objDic;
+    public Dictionary<Vector3Int, MapCell> ObjDic { get => mObjDic; }
+    Dictionary<Vector3Int, MapCell> mObjDic;
 
+    public List<MapCell> TorchDic { get => mTorchDic; }
+    List<MapCell> mTorchDic;
     public MapArea MapAreaConfig { get => ConfigMng.E.MapArea[areaId]; }
 
     public EntityBase TransferGate { get; set; }
@@ -34,7 +36,8 @@ public class MapInstance : MonoBehaviour
     {
         this.areaId = areaId;
 
-        objDic = new Dictionary<Vector3Int, MapCell>();
+        mObjDic = new Dictionary<Vector3Int, MapCell>();
+        mTorchDic = new List<MapCell>();
 
         combineObj = gameObject.AddComponent<CombineMeshCtl>();
         transform.localPosition = new Vector3(MapAreaConfig.OffsetX * SettingMng.AreaMapSize, 0, MapAreaConfig.OffsetZ * SettingMng.AreaMapSize);
@@ -158,7 +161,8 @@ public class MapInstance : MonoBehaviour
         StopCoroutine(InstantiateEntitysIE());
 
         CommonFunction.ClearCell(transform);
-        objDic.Clear();
+        mObjDic.Clear();
+        mTorchDic.Clear();
         combineObj.Clear();
     }
 

@@ -107,7 +107,7 @@ public class DataMng : Single<DataMng>
     public bool Load()
     {
         uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.UserDataName);
-        if (uData.PlayerPositionX == 0 && uData.PlayerPositionZ == 0)
+        if (uData != null && uData.PlayerPositionX == 0 && uData.PlayerPositionZ == 0)
         {
             uData.PlayerPositionX = 5;
             uData.PlayerPositionZ = 5;
@@ -145,6 +145,8 @@ public class DataMng : Single<DataMng>
         uData.UserPW = pw;
         uData.PickupNoticeCheckMap = new Dictionary<int, DateTime>();
         uData.Hunger = 100;
+        uData.AreaIndexX = 5;
+        uData.AreaIndexX = 5;
     }
     #endregion
     #region Map
