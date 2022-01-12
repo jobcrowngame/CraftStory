@@ -261,16 +261,6 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
     ここからはGuideLGMethodListの設定で呼び出すメソッド     
     */
 
-    public void PreserveRuntimeData()
-    {
-        HomeRuntimeData = new RuntimeData();
-        HomeRuntimeData.Lv = DataMng.E.RuntimeData.Lv;
-        HomeRuntimeData.Exp = DataMng.E.RuntimeData.Exp;
-        HomeRuntimeData.Coin1 = DataMng.E.RuntimeData.Coin1;
-        HomeRuntimeData.Coin2 = DataMng.E.RuntimeData.Coin2;
-        HomeRuntimeData.Coin3 = DataMng.E.RuntimeData.Coin3;
-    }
-
     public void InitGuideEquip()
     {
         var data = DataMng.E.GetItemByItemId(10004);

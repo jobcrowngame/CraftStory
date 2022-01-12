@@ -5,6 +5,9 @@
 /// </summary>
 public class SettingMng : Single<SettingMng>
 {
+    // ローカル化
+    public const bool UseLocalData = true;
+
     // 自動セーブタイム
     public const int AutoSaveDataTime = 300;
 

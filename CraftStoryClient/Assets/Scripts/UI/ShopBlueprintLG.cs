@@ -82,7 +82,7 @@ public class ShopBlueprintLG : UILogicBase<ShopBlueprintLG, ShopBlueprintUI>
         NWMng.E.LevelUpMyShop((rp) =>
         {
             DataMng.E.MyShop.myShopLv = (int)rp["myShopLv"];
-            DataMng.E.RuntimeData.Coin1 = (int)rp["coin1"];
+            LocalDataMng.E.Data.UserDataT.coin1 = (int)rp["coin1"];
 
             UI.RefreshMyShopWindow();
 

@@ -33,7 +33,7 @@ public class ShopBlueprintDetailsUI : UIBase
 
             CommonFunction.ShowHintBox(msg, () =>
             {
-                if (DataMng.E.RuntimeData.Coin3 < data.price)
+                if (LocalDataMng.E.Data.UserDataT.coin3 < data.price)
                 {
                     CommonFunction.ShowHintBar(15);
                     return;
@@ -41,7 +41,7 @@ public class ShopBlueprintDetailsUI : UIBase
 
                 NWMng.E.BuyMyShopItem((rp) =>
                 {
-                    DataMng.E.RuntimeData.Coin3 -= data.price;
+                    LocalDataMng.E.Data.UserDataT.coin3 -= data.price;
                     CommonFunction.ShowHintBar(17);
 
                     ShopBlueprintLG.E.UI.RefreshCoin();
@@ -106,7 +106,7 @@ public class ShopBlueprintDetailsUI : UIBase
 
 
             DataMng.E.RuntimeData.UseGoodNum++;
-            DataMng.E.RuntimeData.Coin3 += SettingMng.GoodAddPointCount;
+            LocalDataMng.E.Data.UserDataT.coin3 += SettingMng.GoodAddPointCount;
 
             ShopBlueprintLG.E.UI.RefreshGoodNum(data.targetAcc);
             ShopBlueprintLG.E.UI.RefreshCoin();

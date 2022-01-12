@@ -35,9 +35,9 @@ public class Title2UI : UIBase
     /// </summary>
     public void RefreshCoins()
     {
-        Text1.text = DataMng.E.RuntimeData.Coin1.ToString();
-        Text2.text = DataMng.E.RuntimeData.Coin2.ToString();
-        Text3.text = DataMng.E.RuntimeData.Coin3.ToString();
+        Text1.text = DataMng.E.GetCoinByID(9000).ToString();
+        Text2.text = DataMng.E.GetCoinByID(9001).ToString();
+        Text3.text = DataMng.E.GetCoinByID(9002).ToString();
     }
 
     /// <summary>

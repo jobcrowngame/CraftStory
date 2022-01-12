@@ -247,7 +247,7 @@
     <Compile Include="Assets\Scripts\Game\Character\CharacterAI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mail.cs" />
     <Compile Include="Assets\Scripts\UI\Battle\ExpAdd.cs" />
-    <Compile Include="Assets\Scripts\Data\UserData.cs" />
+    <Compile Include="Assets\Scripts\Data\LocalData\UserData.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyToggleGroupCtl.cs" />
     <Compile Include="Assets\Scripts\UI\ShopBlueprintSystemCell.cs" />
     <Compile Include="Assets\Scripts\Test\TestAngle.cs" />
@@ -374,6 +374,13 @@
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
+    <Compile Include="Assets\Scripts\Data\LocalData\LocalDataMng.cs" />
+    <Compile Include="Assets\Scripts\Data\LocalData\LocalData.cs" />
+    <Compile Include="Assets\Scripts\Data\LocalData\ItemTable.cs" />
+    <Compile Include="Assets\Scripts\Data\LocalData\UserDataTable.cs" />
+    <Compile Include="Assets\Scripts\Data\LocalData\limitedTable.cs" />
+    <Compile Include="Assets\Scripts\Data\LocalData\Statistics_userTable.cs" />
+    <Compile Include="Assets\Scripts\Data\LocalData\EquipmentTable.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />

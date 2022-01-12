@@ -201,11 +201,13 @@ public partial class HomeUI : UIBase
     {
         base.Open();
 
-        NWMng.E.GetCoins((rp) =>
-        {
-            DataMng.GetCoins(rp);
-            RefreshCoins();
-        });
+        RefreshCoins();
+
+        //NWMng.E.GetCoins((rp) =>
+        //{
+        //    DataMng.GetCoins(rp);
+        //    RefreshCoins();
+        //});
 
         SetSkills();
 

@@ -84,7 +84,7 @@ public class HpUIPlayer : HpUIBase
     }
     private void AddExpInstance()
     {
-        if (addedExpStack.Count == 0)
+        if (addedExpStack == null || addedExpStack.Count == 0)
             return;
 
         int addExp = addedExpStack.Pop();

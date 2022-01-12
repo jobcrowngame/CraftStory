@@ -151,9 +151,9 @@ public class GiftBoxUI : UIBase
 
         //Icon.sprite = ReadResources<Sprite>("");
         Name.text = DataMng.E.RuntimeData.NickName;
-        Lv.text = "Lv." + DataMng.E.RuntimeData.Lv;
+        Lv.text = "Lv." + LocalDataMng.E.Data.UserDataT.lv;
         AddExp.text = "+" + addedExp;
-        Slider.value = DataMng.E.RuntimeData.Exp / (float)ConfigMng.E.Character[DataMng.E.RuntimeData.Lv].LvUpExp;
+        Slider.value = DataMng.E.RuntimeData.Exp / (float)ConfigMng.E.Character[LocalDataMng.E.Data.UserDataT.lv].LvUpExp;
 
 #if UNITY_ANDROID
         AdvertisingBtn.gameObject.SetActive(false);
@@ -175,7 +175,7 @@ public class GiftBoxUI : UIBase
         Exp.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
 
-        var lvUpExp = ConfigMng.E.Character[DataMng.E.RuntimeData.Lv].LvUpExp;
+        var lvUpExp = ConfigMng.E.Character[LocalDataMng.E.Data.UserDataT.lv].LvUpExp;
         var step = DataMng.E.RuntimeData.Exp + addedExp < lvUpExp ?
                addedExp / 50f :
                (lvUpExp - DataMng.E.RuntimeData.Exp) / 50f;
@@ -218,8 +218,8 @@ public class GiftBoxUI : UIBase
     }
     private IEnumerator LevelUpIE()
     {
-        DataMng.E.RuntimeData.Lv++;
-        Lv.text = "Lv." + DataMng.E.RuntimeData.Lv;
+        LocalDataMng.E.Data.UserDataT.lv++;
+        Lv.text = "Lv." + LocalDataMng.E.Data.UserDataT.lv;
         Slider.value = 0;
 
         Lv.GetComponent<Animation>().Play("LevelUpText");

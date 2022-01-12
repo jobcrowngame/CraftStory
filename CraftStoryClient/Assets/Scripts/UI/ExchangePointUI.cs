@@ -99,7 +99,7 @@ Amazonギフト券をお送りいたします。
 
         MailInput.text = string.IsNullOrEmpty(DataMng.E.RuntimeData.Email) ? "" : DataMng.E.RuntimeData.Email;
 
-        string point = string.Format("所持：{0}ポイント", DataMng.E.RuntimeData.Coin3.ToString("#,0"));
+        string point = string.Format("所持：{0}ポイント", LocalDataMng.E.Data.UserDataT.coin3.ToString("#,0"));
         MyPointCount.text = point;
         SetPoint(1000);
         OnPointInputValueChange();
@@ -189,7 +189,8 @@ Amazonギフト券をお送りいたします。
 
         NWMng.E.ExchangePoints((rp) =>
         {
-            DataMng.E.RuntimeData.Coin3 -= int.Parse(PointInput.text);
+            LocalDataMng.E.Data.UserDataT.coin3 -= int.Parse(PointInput.text);
+            
             Close();
 
             string guid = (string)rp["guid"];
@@ -249,9 +250,9 @@ Amazonギフト券をお送りいたします。
             inputCount = int.Parse(PointInput.text);
 
             // 持ってるポイントより大きい数を入力すると、持ってる数と同じにする
-            if (inputCount > DataMng.E.RuntimeData.Coin3)
+            if (inputCount > LocalDataMng.E.Data.UserDataT.coin3)
             {
-                inputCount = DataMng.E.RuntimeData.Coin3;
+                inputCount = LocalDataMng.E.Data.UserDataT.coin3;
             }
 
             // 最大 100000　にする

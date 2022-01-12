@@ -98,6 +98,8 @@ public class DataMng : Single<DataMng>
         {
             WorldMng.E.MapMng.SaveData();
         }
+
+        LocalDataMng.E.Save();
     }
 
     /// <summary>
@@ -475,18 +477,20 @@ public class DataMng : Single<DataMng>
     {
         switch (id)
         {
-            case 9000: return RuntimeData.Coin1;
-            case 9001: return RuntimeData.Coin2;
-            default: return RuntimeData.Coin3;
+            case 9000: return LocalDataMng.E.Data.UserDataT.coin1;
+            case 9001: return LocalDataMng.E.Data.UserDataT.coin2;
+            case 9002: return LocalDataMng.E.Data.UserDataT.coin3;
+            case 9003: return GetItemByItemId(id) != null ? GetItemByItemId(id).count : 0;
+            default: Logger.Error("not find coin type " + id); return 0;
         }
     }
     public void ConsumableCoin(int id, int count)
     {
         switch (id)
         {
-            case 9000: RuntimeData.Coin1 -= count; break;
-            case 9001: RuntimeData.Coin2 -= count; break;
-            default: RuntimeData.Coin3 -= count; break;
+            case 9000: LocalDataMng.E.Data.UserDataT.coin1 -= count; break;
+            case 9001: LocalDataMng.E.Data.UserDataT.coin2 -= count; break;
+            default: LocalDataMng.E.Data.UserDataT.coin3 -= count; break;
         }
     }
     
@@ -510,6 +514,15 @@ public class DataMng : Single<DataMng>
     {
         try
         {
+            if (E.UserData.LocalDataLoaded)
+            {
+                E.SetItems(LocalDataMng.E.GetItemList());
+                if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
+                return;
+            }
+
+           
+
             if (string.IsNullOrEmpty(jsonData.ToString()))
                 E.Items.Clear();
             else
@@ -530,9 +543,9 @@ public class DataMng : Single<DataMng>
         if (string.IsNullOrEmpty(jsonData.ToString()))
             return;
 
-        E.RuntimeData.Coin1 = (int)jsonData["coin1"];
-        E.RuntimeData.Coin2 = (int)jsonData["coin2"];
-        E.RuntimeData.Coin3 = (int)jsonData["coin3"];
+        //E.RuntimeData.Coin1 = (int)jsonData["coin1"];
+        //E.RuntimeData.Coin2 = (int)jsonData["coin2"];
+        //E.RuntimeData.Coin3 = (int)jsonData["coin3"];
     }
 
 #endregion

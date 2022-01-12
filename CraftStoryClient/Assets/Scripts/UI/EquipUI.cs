@@ -87,7 +87,7 @@ public class EquipUI : UIBase
     /// </summary>
     public void RefreshParameter()
     {
-        Level.text = "レベル：" + DataMng.E.RuntimeData.Lv;
+        Level.text = "レベル：" + LocalDataMng.E.Data.UserDataT.lv;
 
         int nextExp = ConfigMng.E.Character[PlayerCtl.E.Character.Parameter.Level].LvUpExp;
         Exp.text = string.Format("Exp：{0}/{1}", (int)DataMng.E.RuntimeData.Exp, nextExp);

@@ -120,7 +120,7 @@ public class EntityFunctionalObject : EntityBase
             case EntityType.GiftShop:
                 PlayerCtl.E.TalkToNPC(transform, () =>
                 {
-                    if (DataMng.E.RuntimeData.Coin3 < 1000)
+                    if (LocalDataMng.E.Data.UserDataT.coin3 < 1000)
                     {
                         UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 6);
                         return;

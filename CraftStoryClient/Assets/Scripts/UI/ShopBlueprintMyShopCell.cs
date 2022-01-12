@@ -88,7 +88,7 @@ public class ShopBlueprintMyShopCell : UIBase
 
                 CommonFunction.ShowHintBox(msg, () =>
                 {
-                    if (DataMng.E.RuntimeData.Coin1 < 100)
+                    if (LocalDataMng.E.Data.UserDataT.coin1 < 100)
                     {
                         CommonFunction.ShowHintBar(1010001);
                     }
@@ -97,7 +97,7 @@ public class ShopBlueprintMyShopCell : UIBase
                         NWMng.E.LoadBlueprint((rp) =>
                         {
                             DataMng.E.MyShop.MyShopItem[Index - 1] = new MyShopItem();
-                            DataMng.E.RuntimeData.Coin1 -= 100;
+                            LocalDataMng.E.Data.UserDataT.coin1 -= 100;
                             ShopBlueprintLG.E.UI.RefreshMyShopWindow();
                             OpenTimer = false;
                             ShopBlueprintLG.E.UI.RefreshCoin();
@@ -134,7 +134,7 @@ public class ShopBlueprintMyShopCell : UIBase
 
                 CommonFunction.ShowHintBox(null, msg, () =>
                 {
-                    if (DataMng.E.RuntimeData.Coin1 < cost)
+                    if (LocalDataMng.E.Data.UserDataT.coin1 < cost)
                     {
                         CommonFunction.ShowHintBar(1010001);
                     }

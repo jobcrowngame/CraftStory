@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 public class RuntimeData
 {
-    public int Coin1 { get; set; } // クラフトシード
-    public int Coin2 { get; set; } // クリスタル
-    public int Coin3 { get; set; } // ポイント
-
     /// <summary>
     /// ニックネーム
     /// </summary>
@@ -91,13 +83,6 @@ public class RuntimeData
     /// トータル設置済ブロック数
     /// </summary>
     public int TotalSetBlockCount { get; set; }
-
-
-
-
-
-
-
 
     /// <summary>
     /// 本日の最初ログイン

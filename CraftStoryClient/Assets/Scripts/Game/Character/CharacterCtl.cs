@@ -110,7 +110,7 @@ public class CharacterCtl
         }
 
         player = obj.GetComponent<CharacterPlayer>();
-        player.Init(DataMng.E.RuntimeData.Lv, CharacterBase.CharacterGroup.Player);
+        player.Init(LocalDataMng.E.Data.UserDataT.lv, CharacterBase.CharacterGroup.Player);
         var hpbar = CommonFunction.FindChiledByName<HpUIBase>(player.transform, "WorldUI");
         player.SetHpBar(hpbar);
 
@@ -343,7 +343,7 @@ public class CharacterCtl
                 continue;
 
             // 主人公よりレベルが高いのは生成しない
-            if (ConfigMng.E.Character[item.CharacterId].Level > DataMng.E.RuntimeData.Lv)
+            if (ConfigMng.E.Character[item.CharacterId].Level > LocalDataMng.E.Data.UserDataT.lv)
                 continue;
 
             list.Add(item.ID);

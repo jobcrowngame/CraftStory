@@ -181,7 +181,7 @@ public partial class NWMng : MonoBehaviour
     /// アイテムリストをゲット
     /// </summary>
     /// <param name="rp"></param>
-    private void GetItemList(Action<JsonData> rp)
+    public void GetItemList(Action<JsonData> rp)
     {
         var data = new NWData();
 

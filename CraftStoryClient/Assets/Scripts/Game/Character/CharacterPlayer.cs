@@ -70,15 +70,12 @@ public partial class CharacterPlayer : CharacterBase
         weaponL = CommonFunction.FindChiledByName(transform, "Weapon_L").transform;
         weaponR = CommonFunction.FindChiledByName(transform, "Weapon_R").transform;
 
-        // 装備する
-        PlayerCtl.E.EquipEquipments();
-
         Behavior = BehaviorType.Waiting;
 
         ShowArrow(null, false);
 
         // レベル10になるタスク
-        if (DataMng.E.RuntimeData.Lv >= 10)
+        if (LocalDataMng.E.Data.UserDataT.lv >= 10)
             TaskMng.E.AddMainTaskCount(10);
     }
 

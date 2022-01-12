@@ -24,6 +24,17 @@ public class ItemData
         this.itemId = itemId;
         this.count = count;
     }
+    public ItemData(ItemTable.Row row)
+    {
+        id = row.id;
+        itemId = row.itemId;
+        count = row.count;
+        newName = string.IsNullOrEmpty(row.newName) ? "" : row.newName;
+        equipSite = row.equipSite;
+        relationData = string.IsNullOrEmpty(row.relationData) ? "" : row.relationData;
+        textureName = string.IsNullOrEmpty(row.textureName) ? "" : row.textureName;
+        islocked = row.islocked ? 1 : 0;
+    }
 
     public Item Config { get => ConfigMng.E.Item[itemId];}
 

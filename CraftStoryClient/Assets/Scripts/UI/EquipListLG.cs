@@ -51,22 +51,16 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
 
     public void GetEquipmentList()
     {
-        if (DataMng.E.MapData.Config.MapType != (int)MapType.Guide)
+        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
         {
-            NWMng.E.GetEquipmentInfoList((rp) =>
+            var result = LocalDataMng.E.GetEquipmentInfoList();
+            items.Clear();
+            foreach (var item in result)
             {
-                if (!string.IsNullOrEmpty(rp.ToString()))
-                {
-                    var result = JsonMapper.ToObject<List<EquipListRP>>(rp.ToJson());
-                    items.Clear();
-                    foreach (var item in result)
-                    {
-                        items.Add(new ItemEquipmentData(item));
-                    }
-                }
+                items.Add(new ItemEquipmentData(item));
+            }
 
-                RefreshCells();
-            });
+            RefreshCells();
         }
         else
         {

@@ -149,6 +149,9 @@ public class PlayerCtl : MonoBehaviour
     public void SetCharacter(CharacterPlayer character)
     {
         Character = character;
+
+        // 装備する
+        PlayerCtl.E.EquipEquipments();
     }
 
     public void Jump()
@@ -637,54 +640,46 @@ public class PlayerCtl : MonoBehaviour
     /// </summary>
     public void EquipEquipments()
     {
-        NWMng.E.GetEquipmentInfoList((rp) =>
+        var result = LocalDataMng.E.GetEquipmentInfoList();
+        foreach (var r in result)
         {
-            if (string.IsNullOrEmpty(rp.ToString()))
-                return;
-            else
+            var item = DataMng.E.GetItemByGuid(r.id);
+            if (item != null && item.equipSite > 0)
             {
-                var result = JsonMapper.ToObject<List<EquipListLG.EquipListRP>>(rp.ToJson());
-                foreach (var r in result)
-                {
-                    var item = DataMng.E.GetItemByGuid(r.id);
-                    if (item != null && item.equipSite > 0)
-                    {
-                        OnEquipment(new ItemEquipmentData(r), item.equipSite);
-                    }
-                }
+                OnEquipment(new ItemEquipmentData(r), item.equipSite);
             }
+        }
 
-            Character.Parameter.Refresh();
-            if(HomeLG.E.UI != null) HomeLG.E.UI.ShowSpriteAnimation();
+        Character.Parameter.Refresh();
+        if (HomeLG.E.UI != null) HomeLG.E.UI.ShowSpriteAnimation();
 
-            //// 武器を装備してる場合、タスクが完了とする
-            //if (Character.IsEquipedEquipment())
-            //    TaskMng.E.AddMainTaskCount(2);
+        //// 武器を装備してる場合、タスクが完了とする
+        //if (Character.IsEquipedEquipment())
+        //    TaskMng.E.AddMainTaskCount(2);
 
-            // チュートリアルマップ以外、クラフトチュートリアル完了、現在武器装備してない場合
-            // デフォルトで10001を装備する
-            if (DataMng.E.RuntimeData.MapType != MapType.Guide &&
-                DataMng.E.RuntimeData.GuideEnd3 == 1 &&
-                PlayerCtl.E.GetEquipByItemType(ItemType.Weapon) == null)
+        // チュートリアルマップ以外、クラフトチュートリアル完了、現在武器装備してない場合
+        // デフォルトで10001を装備する
+        if (DataMng.E.RuntimeData.MapType != MapType.Guide &&
+            DataMng.E.RuntimeData.GuideEnd3 == 1 &&
+            PlayerCtl.E.GetEquipByItemType(ItemType.Weapon) == null)
+        {
+            // チュートリアルが完了後、デフォルトで武器を鑑定して装備
+            var item = DataMng.E.GetItemByItemId(10001);
+            if (item != null)
             {
-                // チュートリアルが完了後、デフォルトで武器を鑑定して装備
-                var item = DataMng.E.GetItemByItemId(10001);
-                if (item != null)
+                var equipment = new ItemEquipmentData(item);
+                NWMng.E.AppraisalEquipment((rp) =>
                 {
-                    var equipment = new ItemEquipmentData(item);
-                    NWMng.E.AppraisalEquipment((rp) =>
-                    {
-                        equipment.islocked = 1;
-                        equipment.SetAttachSkills((string)rp);
+                    equipment.islocked = 1;
+                    equipment.SetAttachSkills((string)rp);
 
-                        NWMng.E.EquitItem((rp) =>
-                        {
-                            PlayerCtl.E.EquipEquipment(equipment);
-                        }, item.id, 101);
-                    }, item.id, 1);
-                }
+                    NWMng.E.EquitItem((rp) =>
+                    {
+                        PlayerCtl.E.EquipEquipment(equipment);
+                    }, item.id, 101);
+                }, item.id, 1);
             }
-        });
+        }
     }
 
     /// <summary>

@@ -53,7 +53,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             DataMng.E.RuntimeData.Comment = loginRP.comment;
             DataMng.E.RuntimeData.Email = loginRP.email;
             DataMng.E.RuntimeData.UseGoodNum = loginRP.goodNum;
-            DataMng.E.RuntimeData.Lv = loginRP.lv;
+            LocalDataMng.E.Data.UserDataT.lv = loginRP.lv;
             DataMng.E.RuntimeData.Exp = loginRP.exp;
             DataMng.E.RuntimeData.MyGoodNum = loginRP.myGoodNum;
             DataMng.E.RuntimeData.FirstLoginDaily = loginRP.firstLoginDaily;
@@ -87,7 +87,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
 
             NoticeLG.E.IsFirst = true;
 
-            NWMng.E.GetItems();
+            //NWMng.E.GetItems();
 
             NWMng.E.GetCoins((rp) =>
             {
@@ -133,6 +133,8 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 DataMng.E.UserData.Hunger = 100;
                 DataMng.E.UserData.FreeFoodEated = 1;
             }
+
+            LocalDataMng.E.Init();
         }, DataMng.E.UserData.UserPW);
     }
 

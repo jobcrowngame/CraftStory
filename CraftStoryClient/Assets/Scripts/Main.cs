@@ -36,26 +36,36 @@ public class Main : MonoBehaviour
         UICtl.E.OpenUI<LoginUI>(UIType.Login);
         AudioMng.E.ShowBGM("bgm_01");
 
-        NWMng.E.Connect((rp) =>
+        // Test
+        //DataMng.E.UserData.LocalDataLoaded = false;
+
+        if (DataMng.E.UserData.LocalDataLoaded)
         {
-            NWMng.E.URL = (string)rp["url"];
-            Logger.Warning("[URL]-" + NWMng.E.URL);
-
-            NWMng.E.GetVersion((rp) =>
+            LocalDataMng.E.Init();
+        }
+        else
+        {
+            NWMng.E.Connect((rp) =>
             {
-                var result = JsonMapper.ToObject<GetVersionRP>(rp.ToJson());
-                if (Application.version == result.version)
-                {
-                    LoginLg.E.Login(result.IsMaintenance);
-                }
-                else
-                {
-                    CommonFunction.VersionUp(result.version);
-                }
-            });
-        });
+                NWMng.E.URL = (string)rp["url"];
+                Logger.Warning("[URL]-" + NWMng.E.URL);
 
-        StartCoroutine(OnLoginFailed());
+                NWMng.E.GetVersion((rp) =>
+                {
+                    var result = JsonMapper.ToObject<GetVersionRP>(rp.ToJson());
+                    if (Application.version == result.version)
+                    {
+                        LoginLg.E.Login(result.IsMaintenance);
+                    }
+                    else
+                    {
+                        CommonFunction.VersionUp(result.version);
+                    }
+                });
+            });
+
+            StartCoroutine(OnLoginFailed());
+        }
     }
 
     private void OnApplicationQuit()

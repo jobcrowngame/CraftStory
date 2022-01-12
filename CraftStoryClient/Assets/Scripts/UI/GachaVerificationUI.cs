@@ -41,13 +41,7 @@ public class GachaVerificationUI : UIBase
         OkBtn.onClick.AddListener(() =>
         {
             int costId = gachaConfig.Cost;
-            int coinRemain =
-                costId == 9000 ? DataMng.E.RuntimeData.Coin1 :
-                costId == 9001 ? DataMng.E.RuntimeData.Coin2 :
-                costId == 9002 ? DataMng.E.RuntimeData.Coin3 :
-                costId == 9003 ? (DataMng.E.GetItemByItemId(costId) != null ? DataMng.E.GetItemByItemId(costId).count : 0) :
-                0;
-
+            int coinRemain = DataMng.E.GetCoinByID(costId);
 
             if (coinRemain < gachaConfig.CostCount)
             {
@@ -81,12 +75,7 @@ public class GachaVerificationUI : UIBase
         Des.text = string.Format(des, confItemName, gachaConfig.CostCount, gachaConfig.Title);
 
         int costId = gachaConfig.Cost;
-        int coinRemain =
-            costId == 9000 ? DataMng.E.RuntimeData.Coin1 :
-            costId == 9001 ? DataMng.E.RuntimeData.Coin2 :
-            costId == 9002 ? DataMng.E.RuntimeData.Coin3 :
-            costId == 9003 ? (DataMng.E.GetItemByItemId(costId) != null ? DataMng.E.GetItemByItemId(costId).count : 0) :
-            0;
+        int coinRemain = DataMng.E.GetCoinByID(costId);
 
         GachaVerificationLG.UIType uiType = coinRemain >= gachaConfig.CostCount
             ? GachaVerificationLG.UIType.Type1

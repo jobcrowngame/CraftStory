@@ -25,7 +25,7 @@ public class ShopBlueprintUserCell : UIBase
             NWMng.E.MyShopGoodEvent((rp) =>
             {
                 DataMng.E.RuntimeData.UseGoodNum++;
-                DataMng.E.RuntimeData.Coin3 += SettingMng.GoodAddPointCount;
+                LocalDataMng.E.Data.UserDataT.coin3 += SettingMng.GoodAddPointCount;
 
                 ShopBlueprintLG.E.RefreshGoodNum(data.targetAcc);
                 ShopBlueprintLG.E.UI.RefreshCoin();

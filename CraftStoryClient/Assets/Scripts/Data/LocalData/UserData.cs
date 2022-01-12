@@ -6,6 +6,11 @@ using UnityEngine;
 public class UserData
 {
     /// <summary>
+    /// ローカル化してるかのフラグ
+    /// </summary>
+    public bool LocalDataLoaded = false;
+
+    /// <summary>
     /// アカウント
     /// </summary>
     public string Account { get; set; }

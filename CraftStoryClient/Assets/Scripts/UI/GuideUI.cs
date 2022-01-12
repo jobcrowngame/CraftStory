@@ -146,7 +146,7 @@ public class GuideUI : UIBase
             else if (DataMng.E.RuntimeData.GuideId == 6)
             {
                 DataMng.E.RuntimeData.GuideEnd5 = 1;
-                DataMng.E.RuntimeData.Lv = GuideLG.E.HomeRuntimeData.Lv;
+                LocalDataMng.E.Data.UserDataT.lv = GuideLG.E.HomeRuntimeData.Lv;
                 DataMng.E.RuntimeData.Exp = GuideLG.E.HomeRuntimeData.Exp;
                 TaskMng.E.AddMainTaskCount(11);
             }

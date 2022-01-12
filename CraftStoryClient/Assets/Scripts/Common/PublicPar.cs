@@ -64,6 +64,7 @@ public class PublicPar
     public static string MapDataName = "/MapData.dat";
     public static string AreaMapName = "/AreaMapData_";
     public static string UserDataName = "/UserData.dat";
+    public static string LocalDataName = "/LocalData.dat";
 
     public static string AppStoryURL_IOS = "https://apps.apple.com/jp/app/id1571438709";
     public static string AppStoryURL_Android = "https://play.google.com/store/apps/details?id=com.jobcrown.craftstory";
