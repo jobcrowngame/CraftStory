@@ -32,11 +32,8 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             LocalDataMng.E.Data.UserDataT.email = loginRP.email;
             LocalDataMng.E.Data.UserDataT.exp = loginRP.exp;
 
-            LocalDataMng.E.Data.limitedT.goodNum_daily = loginRP.goodNum;
-            LocalDataMng.E.Data.limitedT.goodNum_total = loginRP.myGoodNum;
             LocalDataMng.E.Data.limitedT.main_task = loginRP.mainTaskID;
             LocalDataMng.E.Data.limitedT.main_task_count = loginRP.mainTaskClearedCount;
-            LocalDataMng.E.Data.limitedT.logined = loginRP.firstLoginDaily;
             LocalDataMng.E.Data.limitedT.guide_end = loginRP.guide_end;
             LocalDataMng.E.Data.limitedT.guide_end2 = loginRP.guide_end2;
             LocalDataMng.E.Data.limitedT.guide_end3 = loginRP.guide_end3;

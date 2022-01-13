@@ -14,9 +14,6 @@ public class limitedTable
     public int guide_end4 { get; set; }
     public int guide_end5 { get; set; }
 
-    public int logined { get; set; }
-    public int goodNum_total { get; set; }
-    public int goodNum_daily { get; set; }
     public int main_task { get; set; }
     public int main_task_count { get; set; }
 }
