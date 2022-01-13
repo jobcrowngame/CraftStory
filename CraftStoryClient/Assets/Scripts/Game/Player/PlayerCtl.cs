@@ -399,13 +399,7 @@ public class PlayerCtl : MonoBehaviour
             DataMng.E.RuntimeData.TotalSetBlockCount++;
             if (DataMng.E.RuntimeData.TotalSetBlockCount >= 100 && LocalDataMng.E.Data.limitedT.guide_end == 0)
             {
-                // 設計図チュートリアルへ招待
-                var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 7);
-                chatUi.AddListenerOnClose(() =>
-                {
-                    DataMng.E.RuntimeData.GuideId = 1;
-                    CommonFunction.GoToNextScene(105);
-                });
+                TaskMng.E.AddMainTaskCount(5);
             }
         }
 
