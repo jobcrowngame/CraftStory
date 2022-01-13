@@ -35,7 +35,8 @@ public class DataMng : Single<DataMng>
                 case MapType.FriendHome: return mFriendHomeData;
                 case MapType.Market: return mMarketData;
                 case MapType.Event: return mEventData;
-                default: return mBraveData;
+                case MapType.Brave: return mBraveData;
+                default: return null;
             }
         }
     }
@@ -62,9 +63,8 @@ public class DataMng : Single<DataMng>
     private MyShopData myShop;
 
     public List<ItemData> Items { 
-        get => RuntimeData.MapType == MapType.Guide ? guideItems : items;
+        get => RuntimeData.MapType == MapType.Guide ? guideItems : LocalDataMng.E.Data.ItemT.list;
     }
-    private List<ItemData> items = new List<ItemData>();
     private List<ItemData> guideItems = new List<ItemData>();
     public List<ItemData> GuideItems { get => guideItems; }
 
@@ -122,14 +122,15 @@ public class DataMng : Single<DataMng>
         try
         {
             var mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.MapDataName);
-            if (!string.IsNullOrEmpty(mapData)) mHomeData = new MapData(mapData);
+            if (!string.IsNullOrEmpty(mapData)) 
+                mHomeData = new MapData(mapData);
         }
         catch (Exception ex)
         {
             Logger.Error("Load local map fail!! \n" + ex.Message);
         }
 
-        //if (mHomeData == null) mHomeData = WorldMng.E.MapCtl.CreateMapData(100); ;
+        if (mHomeData == null) mHomeData = WorldMng.E.MapCtl.CreateMapData(100); ;
 
         return true;
     }
@@ -143,12 +144,18 @@ public class DataMng : Single<DataMng>
     public void NewUser(string id, string pw)
     {
         uData = new UserData();
+        uData.LocalDataLoaded = true;
         uData.Account = id;
         uData.UserPW = pw;
         uData.PickupNoticeCheckMap = new Dictionary<int, DateTime>();
         uData.Hunger = 100;
         uData.AreaIndexX = 5;
         uData.AreaIndexX = 5;
+
+        uData.PlayerPositionX = 5;
+        uData.PlayerPositionZ = 5;
+
+        LocalDataMng.E.Init();
     }
     #endregion
     #region Map
@@ -207,15 +214,6 @@ public class DataMng : Single<DataMng>
     #region Item
 
     /// <summary>
-    /// アイテムリストをセット
-    /// </summary>
-    /// <param name="list"></param>
-    public void SetItems(List<ItemData> list)
-    {
-        items = list;
-    }
-
-    /// <summary>
     /// アイテムGUIDによってアイテムをゲット
     /// </summary>
     /// <param name="guid"></param>
@@ -266,6 +264,17 @@ public class DataMng : Single<DataMng>
         return null;
     }
 
+    public int GetNewItemGuid()
+    {
+        int guid = UserData.NewItemGuid++;
+
+        if (GetItemByGuid(guid) != null)
+        {
+            guid = GetNewItemGuid();
+        }
+
+        return guid;
+    }
     /// <summary>
     /// アイテム数追加
     /// </summary>
@@ -273,22 +282,55 @@ public class DataMng : Single<DataMng>
     /// <param name="count"></param>
     public void AddItem(int itemId, int count)
     {
-        var item = GetItemByItemId(itemId);
-        if (item == null)
-        {
-            item = new ItemData(itemId, count);
-        }
-        else
-        {
-            item.count += count;
-        }
+        if (itemId <= 0)
+            return;
 
-        if (item.count > 9999)
-        {
-            NWMng.E.GetItems(null);
-        }
+        //if (itemId == 9000 || itemId == 9001 || itemId == 9002)
+        //{
+        //    AddCoin(itemId, count);
+        //}
+        //else
+        //{
+            var item = GetItemByItemId(itemId);
+            if (item == null)
+            {
+                item = new ItemData(itemId, count);
+                Items.Add(item);
+            }
+            else
+            {
+                item.count += count;
+            }
 
-        if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
+
+            if (item.count > 9999)
+            {
+                NWMng.E.GetItems(null);
+            }
+
+            if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
+        //}
+    }
+    //public void AddCoin(int id, int count)
+    //{
+    //    switch (id)
+    //    {
+    //        case 9000: LocalDataMng.E.Data.UserDataT.coin1 += count; break;
+    //        case 9001: LocalDataMng.E.Data.UserDataT.coin2 += count; break;
+    //        case 9002: LocalDataMng.E.Data.UserDataT.coin3 += count; break;
+    //    }
+    //}
+
+    public void AddBonus(int bonusId)
+    {
+        var config = ConfigMng.E.Bonus[bonusId];
+
+        AddItem(config.Bonus1, config.BonusCount1);
+        AddItem(config.Bonus2, config.BonusCount2);
+        AddItem(config.Bonus3, config.BonusCount3);
+        AddItem(config.Bonus4, config.BonusCount4);
+        AddItem(config.Bonus5, config.BonusCount5);
+        AddItem(config.Bonus6, config.BonusCount6);
     }
 
     /// <summary>
@@ -335,13 +377,13 @@ public class DataMng : Single<DataMng>
         else
         {
             HomeLG.E.AddItem(itemID, count);
-            NWMng.E.AddItemInData((rp) =>
-            {
-                NWMng.E.GetItems(() =>
-                {
-                    if (action != null) action();
-                });
-            }, itemID, count, newName, data, textureName);
+            //NWMng.E.AddItemInData((rp) =>
+            //{
+            //    NWMng.E.GetItems(() =>
+            //    {
+            //        if (action != null) action();
+            //    });
+            //}, itemID, count, newName, data, textureName);
         }
     }
     public void RemoveItemByGuid(int guid, int count)
@@ -414,16 +456,13 @@ public class DataMng : Single<DataMng>
             }
             else
             {
-                NWMng.E.UseItem((rp) =>
-                {
-                    RemoveItemByGuid(guid, count);
-                    if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
-                    if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
+                RemoveItemByGuid(guid, count);
+                if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
+                if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
 
-                    var item = GetItemByGuid(guid);
-                    if (item == null || item.count <= 0)
-                        PlayerCtl.E.SelectItem = null;
-                }, guid, count);
+                var item = GetItemByGuid(guid);
+                if (item == null || item.count <= 0)
+                    PlayerCtl.E.SelectItem = null;
             }
         }
     }
@@ -432,19 +471,9 @@ public class DataMng : Single<DataMng>
         bool itemCheck = CheckConsumableItemByItemId(itemID, count);
         if (itemCheck)
         {
-            if (DataMng.E.RuntimeData.MapType != MapType.Guide)
-            {
-                NWMng.E.RemoveItem((rp) =>
-                {
-                    NWMng.E.GetItems(null);
-                }, itemID, count);
-            }
-            else
-            {
-                RemoveItemByItemId(itemID, count);
-                if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
-                if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
-            }
+            RemoveItemByItemId(itemID, count);
+            if (BagLG.E.UI != null) BagLG.E.UI.RefreshItems();
+            if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
         }
         else
         {
@@ -472,27 +501,6 @@ public class DataMng : Single<DataMng>
 
         return itemCount >= count;
     }
-
-    public int GetCoinByID(int id)
-    {
-        switch (id)
-        {
-            case 9000: return LocalDataMng.E.Data.UserDataT.coin1;
-            case 9001: return LocalDataMng.E.Data.UserDataT.coin2;
-            case 9002: return LocalDataMng.E.Data.UserDataT.coin3;
-            case 9003: return GetItemByItemId(id) != null ? GetItemByItemId(id).count : 0;
-            default: Logger.Error("not find coin type " + id); return 0;
-        }
-    }
-    public void ConsumableCoin(int id, int count)
-    {
-        switch (id)
-        {
-            case 9000: LocalDataMng.E.Data.UserDataT.coin1 -= count; break;
-            case 9001: LocalDataMng.E.Data.UserDataT.coin2 -= count; break;
-            default: LocalDataMng.E.Data.UserDataT.coin3 -= count; break;
-        }
-    }
     
 
     private bool TryGetItems(int itemID, out List<ItemData> itemList)
@@ -509,44 +517,7 @@ public class DataMng : Single<DataMng>
 
         return itemList.Count > 0;
     }
-
-    public static void GetItems(JsonData jsonData)
-    {
-        try
-        {
-            if (E.UserData.LocalDataLoaded)
-            {
-                E.SetItems(LocalDataMng.E.GetItemList());
-                if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
-                return;
-            }
-
-           
-
-            if (string.IsNullOrEmpty(jsonData.ToString()))
-                E.Items.Clear();
-            else
-            {
-                var items = JsonMapper.ToObject<List<ItemData>>(jsonData.ToJson());
-                E.SetItems(items);
-            }
-
-            if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
-        }
-        catch (Exception e)
-        {
-            Logger.Error(e.Message);
-        }
-    }
-    public static void GetCoins(JsonData jsonData)
-    {
-        if (string.IsNullOrEmpty(jsonData.ToString()))
-            return;
-
-        //E.RuntimeData.Coin1 = (int)jsonData["coin1"];
-        //E.RuntimeData.Coin2 = (int)jsonData["coin2"];
-        //E.RuntimeData.Coin3 = (int)jsonData["coin3"];
-    }
+   
 
 #endregion
 }

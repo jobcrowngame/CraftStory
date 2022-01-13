@@ -396,10 +396,8 @@ public class PlayerCtl : MonoBehaviour
         // ブロックやオブジェクトを置くミッション
         if (entity != null && DataMng.E.RuntimeData.MapType != MapType.Guide)
         {
-            NWMng.E.ClearMission(4, 1);
-
             DataMng.E.RuntimeData.TotalSetBlockCount++;
-            if (DataMng.E.RuntimeData.TotalSetBlockCount >= 100 && DataMng.E.RuntimeData.GuideEnd == 0)
+            if (DataMng.E.RuntimeData.TotalSetBlockCount >= 100 && LocalDataMng.E.Data.limitedT.guide_end == 0)
             {
                 TaskMng.E.AddMainTaskCount(5);
             }
@@ -634,9 +632,11 @@ public class PlayerCtl : MonoBehaviour
     /// </summary>
     public void EquipEquipments()
     {
-        var result = LocalDataMng.E.GetEquipmentInfoList();
-        foreach (var r in result)
+        foreach (var r in LocalDataMng.E.Data.ItemT.list)
         {
+            if (r.Type != ItemType.Weapon)
+                continue;
+            
             var item = DataMng.E.GetItemByGuid(r.id);
             if (item != null && item.equipSite > 0)
             {
@@ -654,8 +654,8 @@ public class PlayerCtl : MonoBehaviour
         // チュートリアルマップ以外、クラフトチュートリアル完了、現在武器装備してない場合
         // デフォルトで10001を装備する
         if (DataMng.E.RuntimeData.MapType != MapType.Guide &&
-            DataMng.E.RuntimeData.GuideEnd3 == 1 &&
-            PlayerCtl.E.GetEquipByItemType(ItemType.Weapon) == null)
+            LocalDataMng.E.Data.limitedT.guide_end3 == 1 &&
+            GetEquipByItemType(ItemType.Weapon) == null)
         {
             // チュートリアルが完了後、デフォルトで武器を鑑定して装備
             var item = DataMng.E.GetItemByItemId(10001);
@@ -665,12 +665,9 @@ public class PlayerCtl : MonoBehaviour
                 NWMng.E.AppraisalEquipment((rp) =>
                 {
                     equipment.islocked = 1;
-                    equipment.SetAttachSkills((string)rp);
+                    equipment.SetAttachSkills(rp);
 
-                    NWMng.E.EquitItem((rp) =>
-                    {
-                        PlayerCtl.E.EquipEquipment(equipment);
-                    }, item.id, 101);
+                    EquipEquipment(equipment);
                 }, item.id, 1);
             }
         }
@@ -742,8 +739,6 @@ public class PlayerCtl : MonoBehaviour
         int equipSite = (int)CommonFunction.GetEquipSite((ItemType)itemData.Config.Type);
         NWMng.E.EquitItem((rp) =>
         {
-            itemData.equipSite = equipSite;
-
             OnEquipment(itemData, equipSite);
         }, itemData.id, equipSite);
     }

@@ -39,6 +39,9 @@ public class AdventureCtl : Single<AdventureCtl>
     {
         bonusList.Add(id);
         HomeLG.E.AddBonus(id);
+
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+            DataMng.E.AddBonus(id);
     }
 
     // ボーナスリストクリア

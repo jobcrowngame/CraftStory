@@ -9,7 +9,7 @@ public class HomeMain : MonoBehaviour
         WorldMng.E.GameTimeCtl.Active = true;
 
         // オブジェクトを生成
-        WorldMng.E.CreateGameObjects();
+        WorldMng.E.CreateWorld();
 
         UICtl.E.OpenUI<HomeUI>(UIType.Home);
 

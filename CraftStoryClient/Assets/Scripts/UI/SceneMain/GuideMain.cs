@@ -9,7 +9,7 @@ public class GuideMain : MonoBehaviour
         GuideLG.E.ReStart();
 
         // オブジェクトを生成
-        WorldMng.E.CreateGameObjects();
+        WorldMng.E.CreateWorld();
 
         // 時間アクティブ（昼、夜差し替え）
         WorldMng.E.GameTimeCtl.Active = false;

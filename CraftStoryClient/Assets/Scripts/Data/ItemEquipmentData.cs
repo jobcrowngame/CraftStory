@@ -1,36 +1,29 @@
 ﻿using JsonConfigData;
 
-public class ItemEquipmentData : ItemData
+public class ItemEquipmentData
 {
-    string attachSkills;
-
-    public ItemEquipmentData() { }
     public ItemEquipmentData(ItemData itemdata)
     {
-        id = itemdata.id;
-        itemId = itemdata.itemId;
-        islocked = itemdata.islocked;
-        count = 1;
-    }
-    public ItemEquipmentData(EquipListLG.EquipListRP rp) : base(rp.itemId, 1)
-    {
-        id = rp.id;
-        itemId = rp.itemId;
-        islocked = rp.islocked;
-        if (islocked == 1) attachSkills = rp.skills;
-        count = 1;
-
-        equipSite = DataMng.E.GetItemByGuid(rp.id).equipSite;
+        itemData = itemdata;
     }
 
-    public Equipment equipmentConfig { get => ConfigMng.E.Equipment[Config.ReferenceID]; }
+    ItemData itemData;
 
-    public string[] AttachSkills { get => string.IsNullOrEmpty(attachSkills) ? null : attachSkills.Split(','); }
+    public int id { get => itemData.id; set => itemData.id = value; }
+    public int itemId { get => itemData.itemId; set => itemData.itemId = value; }
+    public int islocked { get => itemData.islocked; set => itemData.islocked = value; }
+    public bool IsLocked { get => itemData.IsLocked; }
+    public int equipSite { get => itemData.equipSite; set => itemData.equipSite = value; }
 
-    public string AttachSkillsStr { get => attachSkills; }
+    public Item Config { get => itemData.Config; }
+    public Equipment equipmentConfig { get => ConfigMng.E.Equipment[itemData.Config.ReferenceID]; }
+
+    public string[] AttachSkills { get => string.IsNullOrEmpty(itemData.skills) ? null : itemData.skills.Split(','); }
+
+    public string AttachSkillsStr { get => itemData.skills; }
 
     public void SetAttachSkills(string attachSkills)
     {
-        this.attachSkills = attachSkills;
+        itemData.skills = attachSkills;
     }
 }

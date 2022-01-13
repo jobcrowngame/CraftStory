@@ -27,6 +27,7 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, GachaTabs> gachaTabsConfig = new Dictionary<int, GachaTabs>();
     Dictionary<int, Roulette> rouletteConfig = new Dictionary<int, Roulette>();
     Dictionary<int, RouletteCell> rouletteCellConfig = new Dictionary<int, RouletteCell>();
+    Dictionary<int, RandomBonus> randomBonusConfig = new Dictionary<int, RandomBonus>();
     Dictionary<int, RandomBonusPond> randomBonusPondConfig = new Dictionary<int, RandomBonusPond>();
     Dictionary<int, Mission> MissionConfig = new Dictionary<int, Mission>();
     Dictionary<int, MText> MTextConfig = new Dictionary<int, MText>();
@@ -61,6 +62,7 @@ class ConfigMng : Single<ConfigMng>
     public Dictionary<int, Chat> Chat { get => ChatConfig; }
     public Dictionary<int, MText> MText { get => MTextConfig; }
     public Dictionary<int, Mission> Mission { get => MissionConfig; }
+    public Dictionary<int, RandomBonus> RandomBonus { get => randomBonusConfig; }
     public Dictionary<int, RandomBonusPond> RandomBonusPond { get => randomBonusPondConfig; }
     public Dictionary<int, RouletteCell> RouletteCell { get => rouletteCellConfig; }
     public Dictionary<int, Roulette> Roulette { get => rouletteConfig; }
@@ -86,6 +88,7 @@ class ConfigMng : Single<ConfigMng>
         ReadConfig("Config/Chat", ChatConfig);
         ReadConfig("Config/MText", MTextConfig);
         ReadConfig("Config/Mission", MissionConfig);
+        ReadConfig("Config/RandomBonus", randomBonusConfig);
         ReadConfig("Config/RandomBonusPond", randomBonusPondConfig);
         ReadConfig("Config/RouletteCell", rouletteCellConfig);
         ReadConfig("Config/Roulette", rouletteConfig);

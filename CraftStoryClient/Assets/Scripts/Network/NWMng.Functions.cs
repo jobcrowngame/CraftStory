@@ -12,36 +12,8 @@ public partial class NWMng
     /// <param name="callBack"></param>
     public void GetItems(Action callBack = null)
     {
-        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
-        {
-            GetItemList((rp) =>
-            {
-                DataMng.GetItems(rp);
-
-                if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
-                if (callBack != null) callBack();
-            });
-        }
-        else
-        {
-            if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
-            if (callBack != null) callBack();
-        }
-    }
-
-    /// <summary>
-    /// コインの更新
-    /// </summary>
-    /// <param name="callBack"></param>
-    public void RefreshCoins(Action callBack = null)
-    {
-        GetCoins((rp) =>
-        {
-            DataMng.GetCoins(rp);
-
-            if (callBack != null)
-                callBack();
-        });
+        if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
+        if (callBack != null) callBack();
     }
 
     /// <summary>
@@ -130,15 +102,5 @@ public partial class NWMng
             iData.relationData = (string)rp;
             if (callBack != null) callBack();
         }, itemGuid);
-    }
-
-    /// <summary>
-    /// ミッションクリア
-    /// </summary>
-    /// <param name="missionId">ミッションID</param>
-    /// <param name="missionType">ミッションタイプ</param>
-    public void ClearMission(int missionId, int missionType, int count = 1) 
-    {
-        ClearMission(null, missionId, missionType, count);
     }
 }

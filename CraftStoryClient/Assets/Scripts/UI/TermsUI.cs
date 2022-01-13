@@ -24,7 +24,8 @@ public class TermsUI : UIBase
         AgreeBtn = FindChiled<Button>("AgreeBtn");
         AgreeBtn.onClick.AddListener(() => 
         {
-            LoginLg.E.CreateNewAccount();
+            //LoginLg.E.CreateNewAccount();
+            LoginLg.E.UI.LoginResponse();
             Close();
         });
 

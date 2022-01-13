@@ -66,4 +66,6 @@ public class UserData
         set => mCropsTimers = value;
     }
     Dictionary<string, DateTime> mCropsTimers;
+
+    public int NewItemGuid = 1;
 }

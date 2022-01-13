@@ -40,7 +40,7 @@ public class EntityTreasureBox : EntityBase
         public int count { get; set; }
     }
 
-    private System.Collections.IEnumerator OnClickIE(JsonData rp)
+    private System.Collections.IEnumerator OnClickIE(Dictionary<int, int> rp)
     {
         if (anim != null)
             anim.Play("object_3d_065--01_Open");
@@ -49,15 +49,11 @@ public class EntityTreasureBox : EntityBase
 
         yield return new WaitForSeconds(0.2f);
 
-        if (!string.IsNullOrEmpty(rp.ToString()))
+        foreach (var dic in rp)
         {
-            var bonusList = JsonMapper.ToObject<List<BonusListCell>>(rp.ToJson());
-            foreach (var cell in bonusList)
+            for (int i = 0; i < dic.Value; i++)
             {
-                for (int i = 0; i < cell.count; i++)
-                {
-                    AdventureCtl.E.AddBonus(cell.bonus);
-                }
+                AdventureCtl.E.AddBonus(dic.Key);
             }
         }
 

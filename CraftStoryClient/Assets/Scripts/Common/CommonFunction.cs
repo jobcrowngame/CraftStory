@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using LitJson;
+using System.Linq;
 
 public class CommonFunction
 {
@@ -659,6 +660,73 @@ public class CommonFunction
 
             default: return ItemSite.None;
         }
+    }
+
+    public static Dictionary<int,int> GetRandomBonus(int randomBonusId)
+    {
+        Dictionary<int, int> dic = new Dictionary<int, int>();
+        var config = ConfigMng.E.RandomBonus[randomBonusId];
+
+        GetRandomBonusCell(config.Pond01, config.Count01, ref dic);
+        GetRandomBonusCell(config.Pond02, config.Count02, ref dic);
+        GetRandomBonusCell(config.Pond03, config.Count03, ref dic);
+
+        return dic;
+    }
+    private static void GetRandomBonusCell(int pondId, int count, ref Dictionary<int, int> dic)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            var list = new List<int>();
+            GetRandomBonusPond(pondId, ref list);
+            for (int j = 0; j < list.Count; j++)
+            {
+                if (dic.ContainsKey(list[j]))
+                {
+                    dic[list[j]]++;
+                }
+                else
+                {
+                    dic[list[j]] = 1;
+                }
+            }
+        }
+    }
+
+    public static void GetRandomBonusPond(int pondId, ref List<int> bonusList)
+    {
+        var config = ConfigMng.E.RandomBonusPond[pondId];
+
+        GetRandomBonusByPond(config.BonusList01, config.Percent01, ref bonusList);
+        GetRandomBonusByPond(config.BonusList02, config.Percent02, ref bonusList);
+        GetRandomBonusByPond(config.BonusList03, config.Percent03, ref bonusList);
+        GetRandomBonusByPond(config.BonusList04, config.Percent04, ref bonusList);
+        GetRandomBonusByPond(config.BonusList05, config.Percent05, ref bonusList);
+        GetRandomBonusByPond(config.BonusList06, config.Percent06, ref bonusList);
+        GetRandomBonusByPond(config.BonusList07, config.Percent07, ref bonusList);
+    }
+    private static void GetRandomBonusByPond(string bonusStr, int percent, ref List<int> bonusList)
+    {
+        var penrcentRange = UnityEngine.Random.Range(0, 10000);
+        if (penrcentRange <= percent)
+        {
+            string[] bonusArr = bonusStr.Split(',');
+            var range = UnityEngine.Random.Range(0, bonusArr.Length);
+            bonusList.Add(int.Parse(bonusArr[range]));
+        }
+    }
+
+    public static Dictionary<int, int> GetBonusDic(int bonusId)
+    {
+        Dictionary<int, int> dic = new Dictionary<int, int>();
+        var config = ConfigMng.E.Bonus[bonusId];
+        if (config.Bonus1 > 0) dic[config.Bonus1] = config.BonusCount1;
+        if (config.Bonus2 > 0) dic[config.Bonus2] = config.BonusCount2;
+        if (config.Bonus3 > 0) dic[config.Bonus3] = config.BonusCount3;
+        if (config.Bonus4 > 0) dic[config.Bonus4] = config.BonusCount4;
+        if (config.Bonus5 > 0) dic[config.Bonus5] = config.BonusCount5;
+        if (config.Bonus6 > 0) dic[config.Bonus6] = config.BonusCount6;
+        return dic;
     }
     #endregion 
 }

@@ -5,23 +5,6 @@ using System.Collections.Generic;
 public class LoginLg : UILogicBase<LoginLg, LoginUI>
 {
     /// <summary>
-    /// 新しいアカウントを作成
-    /// </summary>
-    public void CreateNewAccount()
-    {
-        NWMng.E.CreateNewAccount((rp) =>
-        {
-            DataMng.E.NewUser((string)rp["acc"], (string)rp["pw"]);
-
-            Logger.Log("新しいアカウント作成成功しました。\n{0}", (string)rp["acc"]);
-
-            DataMng.E.RuntimeData.IsNewUser = true;
-
-            Login(0);
-        });
-    }
-
-    /// <summary>
     /// ログイン
     /// </summary>
     /// <param name="IsMaintenance">メンテナンス 1=on 2=off</param>
@@ -42,28 +25,23 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
         {
             var loginRP = JsonMapper.ToObject<LoginRP>(rp.ToJson());
 
-            DataMng.E.token = loginRP.token;
-            DataMng.E.MyShop.myShopLv = loginRP.myShopLv;
-            DataMng.E.RuntimeData.GuideEnd = loginRP.guide_end;
-            DataMng.E.RuntimeData.GuideEnd2 = loginRP.guide_end2;
-            DataMng.E.RuntimeData.GuideEnd3 = loginRP.guide_end3;
-            DataMng.E.RuntimeData.GuideEnd4 = loginRP.guide_end4;
-            DataMng.E.RuntimeData.GuideEnd5 = loginRP.guide_end5;
-            DataMng.E.RuntimeData.NickName = loginRP.nickname;
-            DataMng.E.RuntimeData.Comment = loginRP.comment;
-            DataMng.E.RuntimeData.Email = loginRP.email;
-            DataMng.E.RuntimeData.UseGoodNum = loginRP.goodNum;
             LocalDataMng.E.Data.UserDataT.lv = loginRP.lv;
-            DataMng.E.RuntimeData.Exp = loginRP.exp;
-            DataMng.E.RuntimeData.MyGoodNum = loginRP.myGoodNum;
-            DataMng.E.RuntimeData.FirstLoginDaily = loginRP.firstLoginDaily;
+            LocalDataMng.E.Data.UserDataT.myShopLv = loginRP.myShopLv;
+            LocalDataMng.E.Data.UserDataT.nickname = loginRP.nickname;
+            LocalDataMng.E.Data.UserDataT.comment = loginRP.comment;
+            LocalDataMng.E.Data.UserDataT.email = loginRP.email;
+            LocalDataMng.E.Data.UserDataT.exp = loginRP.exp;
 
-            TaskMng.E.MainTaskId = loginRP.mainTaskID;
-            TaskMng.E.MainTaskClearedCount = loginRP.mainTaskClearedCount;
+            LocalDataMng.E.Data.limitedT.main_task = loginRP.mainTaskID;
+            LocalDataMng.E.Data.limitedT.main_task_count = loginRP.mainTaskClearedCount;
+            LocalDataMng.E.Data.limitedT.guide_end = loginRP.guide_end;
+            LocalDataMng.E.Data.limitedT.guide_end2 = loginRP.guide_end2;
+            LocalDataMng.E.Data.limitedT.guide_end3 = loginRP.guide_end3;
+            LocalDataMng.E.Data.limitedT.guide_end4 = loginRP.guide_end4;
+            LocalDataMng.E.Data.limitedT.guide_end5 = loginRP.guide_end5;
+
+            DataMng.E.token = loginRP.token;
             TaskMng.E.CheckClearedCount();
-
-            // IAPMngを初期化
-            IAPMng.E.Init();
 
             // マイショップデータ
             NWMng.E.GetMyShopInfo((rp) =>
@@ -79,6 +57,11 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 }
             });
 
+            NWMng.E.GetMaxBraveLevel((rp) =>
+            {
+                LocalDataMng.E.Data.Statistics_userT.maxArrivedFloor = (int)rp["maxArrivedFloor"];
+            });
+
             // サブスクリプションの状態
             NWMng.E.GetSubscriptionInfo();
 
@@ -89,10 +72,10 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
 
             //NWMng.E.GetItems();
 
-            NWMng.E.GetCoins((rp) =>
-            {
-                DataMng.GetCoins(rp);
-            });
+            //NWMng.E.GetCoins((rp) =>
+            //{
+            //    DataMng.GetCoins(rp);
+            //});
 
             NWMng.E.GetTotalSetBlockCount((rp) =>
             {
@@ -134,7 +117,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 DataMng.E.UserData.FreeFoodEated = 1;
             }
 
-            LocalDataMng.E.Init();
+            LocalDataMng.E.LoadServerData();
         }, DataMng.E.UserData.UserPW);
     }
 

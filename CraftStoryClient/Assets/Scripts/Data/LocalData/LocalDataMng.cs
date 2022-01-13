@@ -21,43 +21,26 @@ public class LocalDataMng : Single<LocalDataMng>
     {
         base.Init();
 
+        localData = new LocalData();
+    }
+
+    public void LoadServerData()
+    {
         if (DataMng.E.UserData.LocalDataLoaded)
         {
             Logger.Warning("ローカル");
             localData = (LocalData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.LocalDataName);
-            LoginLg.E.UI.LoginResponse();
-            return;
-        }
-
-        localData = new LocalData();
-
-        SetItemList();
-
-    }
-
-    #endregion
-
-    #region Get
-
-    public List<ItemData> GetItemList()
-    {
-        return localData.ItemT.GetItemList();
-    }
-
-    public List<EquipListLG.EquipListRP> GetEquipmentInfoList()
-    {
-        List<EquipListLG.EquipListRP> list = new List<EquipListLG.EquipListRP>();
-        foreach (var item in localData.EquipmentT.list)
-        {
-            list.Add(new EquipListLG.EquipListRP()
+            if (localData == null)
             {
-                id = item.id,
-                itemId = item.item_guid,
-                islocked = 1,
-                skills = item.skills
-            });
+                localData = new LocalData();
+            }
         }
-        return list;
+        else
+        {
+            SetItemList();
+        }
+
+        LoginLg.E.UI.LoginResponse();
     }
 
     #endregion
@@ -66,27 +49,11 @@ public class LocalDataMng : Single<LocalDataMng>
 
     public void SetItemList()
     {
-        localData.ItemT = new ItemTable();
-
         NWMng.E.GetItemList((rp) =>
         {
             if (!string.IsNullOrEmpty(rp.ToString())) 
             {
-                var items = JsonMapper.ToObject<List<ItemData>>(rp.ToJson());
-                foreach (var item in items)
-                {
-                    localData.ItemT.items.Add(new ItemTable.Row()
-                    {
-                        id = item.id,
-                        itemId = item.itemId,
-                        newName = item.newName,
-                        count = item.count,
-                        equipSite = item.equipSite,
-                        relationData = item.relationData,
-                        textureName = item.textureName,
-                        islocked = item.IsLocked
-                    });
-                }
+                localData.ItemT.list = JsonMapper.ToObject<List<ItemData>>(rp.ToJson());
 
                 SetEquipmentList();
             }
@@ -95,62 +62,20 @@ public class LocalDataMng : Single<LocalDataMng>
 
     public void SetEquipmentList()
     {
-        localData.EquipmentT = new EquipmentTable();
-
         NWMng.E.GetEquipmentInfoList((rp) =>
         {
             if (!string.IsNullOrEmpty(rp.ToString()))
             {
                 var result = JsonMapper.ToObject<List<EquipListLG.EquipListRP>>(rp.ToJson());
-                foreach (var item in result)
+                foreach (var equipment in result)
                 {
-                    localData.EquipmentT.list.Add(new EquipmentTable.Row()
-                    {
-                        id = item.id,
-                        item_guid = item.itemId,
-                        skills = item.skills
-                    });
+                    var item = DataMng.E.GetItemByGuid(equipment.id);
+                    item.islocked = equipment.islocked;
+                    item.skills = equipment.skills;
                 }
             }
-
-            SetLimited();
-            SetStatistics_user();
-            SetUserData();
-
             DataMng.E.UserData.LocalDataLoaded = true;
         });
-    }
-
-    public void SetLimited()
-    {
-        localData.limitedT = new limitedTable();
-
-        localData.limitedT.guide_end = DataMng.E.RuntimeData.GuideEnd;
-        localData.limitedT.guide_end2 = DataMng.E.RuntimeData.GuideEnd2;
-        localData.limitedT.guide_end3 = DataMng.E.RuntimeData.GuideEnd3;
-        localData.limitedT.guide_end4 = DataMng.E.RuntimeData.GuideEnd4;
-        localData.limitedT.guide_end5 = DataMng.E.RuntimeData.GuideEnd5;
-        localData.limitedT.goodNum_daily = DataMng.E.RuntimeData.UseGoodNum;
-        localData.limitedT.goodNum_total = DataMng.E.RuntimeData.MyGoodNum;
-        localData.limitedT.main_task = TaskMng.E.MainTaskId;
-        localData.limitedT.main_task_count = TaskMng.E.MainTaskClearedCount;
-        localData.limitedT.logined = DataMng.E.RuntimeData.FirstLoginDaily;
-    }
-
-    public void SetStatistics_user()
-    {
-        localData.Statistics_userT = new Statistics_userTable();
-    }
-
-    public void SetUserData()
-    {
-        localData.UserDataT = new UserDataTable();
-
-        localData.UserDataT.myShopLv = DataMng.E.MyShop.myShopLv;
-        localData.UserDataT.nickname = DataMng.E.RuntimeData.NickName;
-        localData.UserDataT.comment = DataMng.E.RuntimeData.Comment;
-        localData.UserDataT.email = DataMng.E.RuntimeData.Email;
-        localData.UserDataT.exp = (int)DataMng.E.RuntimeData.Exp;
     }
 
     #endregion

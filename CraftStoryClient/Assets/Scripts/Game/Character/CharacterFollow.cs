@@ -50,7 +50,7 @@ public class CharacterFollow : CharacterBase
 
             if (TaskMng.E.IsClear)
             {
-                NWMng.E.MainTaskEnd((rp) =>
+                NWMng.E.MainTaskEnd(() =>
                 {
                     var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, TaskMng.E.MainTaskConfig.EndChat);
                     chatUi.AddListenerOnClose(() =>
@@ -59,11 +59,8 @@ public class CharacterFollow : CharacterBase
                     });
                     TaskMng.E.Next();
 
-                    NWMng.E.RefreshCoins(() =>
-                    {
-                        if (HomeLG.E.UI != null) 
-                            HomeLG.E.UI.RefreshCoins();
-                    });
+                    if (HomeLG.E.UI != null)
+                        HomeLG.E.UI.RefreshCoins();
 
                     NWMng.E.GetItems();
                 }, TaskMng.E.MainTaskId);

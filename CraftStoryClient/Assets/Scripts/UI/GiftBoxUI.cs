@@ -112,7 +112,7 @@ public class GiftBoxUI : UIBase
             }
             else
             {
-                NWMng.E.AddExp((rp) =>
+                NWMng.E.AddExp(() =>
                 {
                     NWMng.E.ClearAdventure((rp) =>
                     {

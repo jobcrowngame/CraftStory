@@ -13,8 +13,7 @@ public class AreaMapMain : MonoBehaviour
         WorldMng.E.GameTimeCtl.Active = true;
 
         // オブジェクトを生成
-        WorldMng.E.CreateAreaMap(GetComponent<MapMng>());
-        WorldMng.E.CharacterCtl.CreateCharacter();
+        WorldMng.E.CreateWorld();
 
         UICtl.E.OpenUI<HomeUI>(UIType.Home);
 

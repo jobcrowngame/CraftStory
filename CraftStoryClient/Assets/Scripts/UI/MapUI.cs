@@ -5,15 +5,15 @@ public class MapUI : UIBase
 {
     Button CloseBtn { get => FindChiled<Button>("CloseBtn"); }
     Button HomeBtn { get => FindChiled<Button>("HomeBtn"); }
-    Button MarketBtn { get => FindChiled<Button>("MarketBtn"); }
+    //Button MarketBtn { get => FindChiled<Button>("MarketBtn"); }
     Button BraveBtn { get => FindChiled<Button>("BraveBtn"); }
-    Button BraveBtn2 { get => FindChiled<Button>("BraveBtn2"); }
+    //Button BraveBtn2 { get => FindChiled<Button>("BraveBtn2"); }
     Button AreaMapBtn { get => FindChiled<Button>("AreaMapBtn"); }
     Button EquipBtn { get => FindChiled<Button>("EquipBtn"); }
-    Transform SpriteAnim { get => FindChiled("SpriteAnim"); }
-    Transform SpriteAnim4 { get => FindChiled("SpriteAnim4"); }
-    Transform SpriteAnim5 { get => FindChiled("SpriteAnim5"); }
-    MyText BluePrintHint { get => FindChiled<MyText>("BluePrintHint"); }
+    //Transform SpriteAnim { get => FindChiled("SpriteAnim"); }
+    //Transform SpriteAnim4 { get => FindChiled("SpriteAnim4"); }
+    //Transform SpriteAnim5 { get => FindChiled("SpriteAnim5"); }
+    //MyText BluePrintHint { get => FindChiled<MyText>("BluePrintHint"); }
 
     readonly string BluePrintHint1 = @"設計図アップロードでポイントゲット！";
     readonly string BluePrintHint2 = @"設計図市場でどんな設計図があるか
@@ -25,9 +25,9 @@ public class MapUI : UIBase
 
         CloseBtn.onClick.AddListener(Close);
         HomeBtn.onClick.AddListener(OnClickHomeBtn);
-        MarketBtn.onClick.AddListener(OnClickMarketBtn);
+        //MarketBtn.onClick.AddListener(OnClickMarketBtn);
         BraveBtn.onClick.AddListener(OnClickBraveBtn);
-        BraveBtn2.onClick.AddListener(OnClickBraveBtn2);
+        //BraveBtn2.onClick.AddListener(OnClickBraveBtn2);
         AreaMapBtn.onClick.AddListener(OnClickAreaMapBtn);
         EquipBtn.onClick.AddListener(OnClickEquipBtn);
     }
@@ -37,15 +37,16 @@ public class MapUI : UIBase
         base.Open();
 
         EnActiveBtn(HomeBtn, DataMng.E.RuntimeData.MapType == MapType.Home);
-        EnActiveBtn(MarketBtn, DataMng.E.RuntimeData.MapType == MapType.Market);
+        //EnActiveBtn(MarketBtn, DataMng.E.RuntimeData.MapType == MapType.Market);
         EnActiveBtn(BraveBtn, DataMng.E.RuntimeData.MapType == MapType.Brave);
-        EnActiveBtn(BraveBtn2, DataMng.E.RuntimeData.MapType == MapType.Event);
+        //EnActiveBtn(BraveBtn2, DataMng.E.RuntimeData.MapType == MapType.Event);
+        EnActiveBtn(AreaMapBtn, DataMng.E.RuntimeData.MapType == MapType.AreaMap);
 
         //SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd2 == 0);
-        SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide);
-        SpriteAnim4.gameObject.SetActive(MapLG.E.IsEquipTutorial());
+        //SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide);
+        //SpriteAnim4.gameObject.SetActive(MapLG.E.IsEquipTutorial());
         //SpriteAnim5.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd5 == 0);
-        SpriteAnim5.gameObject.SetActive(false);
+        //SpriteAnim5.gameObject.SetActive(false);
 
         // 冒険エリアの場合、時間を停止
         if (DataMng.E.RuntimeData.MapType == MapType.Brave)
@@ -53,11 +54,7 @@ public class MapUI : UIBase
             PlayerCtl.E.Pause();
         }
 
-        NWMng.E.GetTotalUploadBlueprintCount((rp) =>
-        {
-            int count = int.Parse(rp.ToString());
-            BluePrintHint.text = count == 0 ? BluePrintHint1 : BluePrintHint2;
-        });
+        //BluePrintHint.text = BluePrintHint1;
 
         MapLG.E.LockBtn(false);
     }
@@ -102,7 +99,7 @@ public class MapUI : UIBase
 
         MapLG.E.LockBtn();
 
-        if (DataMng.E.RuntimeData.GuideEnd2 == 0)
+        if (LocalDataMng.E.Data.limitedT.guide_end2 == 0)
         {
             DataMng.E.RuntimeData.GuideId = 2;
             CommonFunction.GoToNextScene(104);

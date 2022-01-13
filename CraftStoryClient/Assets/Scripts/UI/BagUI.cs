@@ -37,7 +37,6 @@ public class BagUI : UIBase
     {
         Title.SetTitle("もちもの");
         Title.SetOnClose(() => { Close(); GuideLG.E.Next(); });
-        Title.ShowCoin(2);
 
         btns = new MyButton[btnsParent.childCount];
         for (int i = 0; i < btnsParent.childCount; i++)
@@ -79,20 +78,12 @@ public class BagUI : UIBase
 
         BagLG.E.Classification = BagLG.BagClassification.All;
 
-        NWMng.E.GetItems(() =>
-        {
-            RefreshItems();
-            RefreshSelectItemBtns();
-
-            GuideLG.E.Next();
-        });
-        NWMng.E.GetCoins((rp) =>
-        {
-            DataMng.GetCoins(rp);
-            Title.RefreshCoins();
-        });
+        RefreshItems();
+        RefreshSelectItemBtns();
 
         ResetExplanatory();
+
+        GuideLG.E.Next();
     }
     public override void Close()
     {

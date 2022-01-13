@@ -107,7 +107,7 @@ public class LoginBonusUI : UIBase
             NWMng.E.GetLoginBonus((rp) =>
             {
                 NWMng.E.GetItems();
-                NWMng.E.GetCoins(null);
+               
                 bonusIsGeted = true;
                 ClickBtn.enabled = true;
 

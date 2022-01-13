@@ -44,7 +44,7 @@ public class PersonalMessageUI : UIBase
                 return;
             }
 
-            NWMng.E.UpdateNickName((rp) =>
+            NWMng.E.UpdateNickName(() =>
             {
                 DataMng.E.RuntimeData.NickName = InputField.text;
                 NickNameText.text = DataMng.E.RuntimeData.NickName;
