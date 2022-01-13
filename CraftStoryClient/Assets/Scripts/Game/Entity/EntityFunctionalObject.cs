@@ -66,9 +66,6 @@ public class EntityFunctionalObject : EntityBase
                 ui.SetType(Type);
                 break;
 
-            case EntityType.Mission:
-                UICtl.E.OpenUI<MissionUI>(UIType.Mission);
-                break;
             default: Logger.Error("not find entityType " + Type); break;
         }
 

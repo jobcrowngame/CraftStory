@@ -63,11 +63,6 @@ public partial class HomeUI : UIBase
     MyButton MinusBtn;
 
     /// <summary>
-    /// びっくりマック
-    /// </summary>
-    Transform RedPoint;
-
-    /// <summary>
     /// スプリットAnimation
     /// </summary>
     Transform SpriteAnim;
@@ -113,14 +108,12 @@ public partial class HomeUI : UIBase
     {
         SceneName = FindChiled<MyText>("SceneName");
         FadeinImg = FindChiled<Image>("Fadein");
-        MenuBtn = FindChiled<Button>("MenuBtn");
         MapBtn = FindChiled<Button>("MapBtn");
         BagBtn = FindChiled<Button>("BagBtn");
         btnsParent = FindChiled("Grid");
         ItemDropParent = FindChiled("ItemDropParent");
         PlussBtn = FindChiled<MyButton>("PlussBtn");
         MinusBtn = FindChiled<MyButton>("MinusBtn");
-        RedPoint = FindChiled("RedPoint");
         SpriteAnim = FindChiled("SpriteAnim");
         Title = FindChiled<Title2UI>("Title2");
         DebugBtn = FindChiled<Button>("DebugBtn");
@@ -144,13 +137,6 @@ public partial class HomeUI : UIBase
 
         FadeinImg.enabled = true;
 
-        MenuBtn.onClick.AddListener(() => 
-        {
-            var menu = UICtl.E.OpenUI<MenuUI>(UIType.Menu); 
-            menu.Init();
-
-            GuideLG.E.Next();
-        });
         MapBtn.onClick.AddListener(() =>
         {
             UICtl.E.OpenUI<MapUI>(UIType.Map);
@@ -188,7 +174,6 @@ public partial class HomeUI : UIBase
         Title.ShowCoin(3);
 
         StartCoroutine(FadeIn());
-        RefreshRedPoint();
         RefreshItemBtns();
 
         RefreshUiByMapType();
@@ -202,13 +187,6 @@ public partial class HomeUI : UIBase
         base.Open();
 
         RefreshCoins();
-
-        //NWMng.E.GetCoins((rp) =>
-        //{
-        //    DataMng.GetCoins(rp);
-        //    RefreshCoins();
-        //});
-
         SetSkills();
 
         // 10階まで行くタスク
@@ -244,9 +222,6 @@ public partial class HomeUI : UIBase
     /// </summary>
     private void RefreshUiByMapType()
     {
-        //MenuBtn.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Brave 
-        //    && DataMng.E.RuntimeData.MapType != MapType.Event);
-
         SceneName.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave 
             || DataMng.E.RuntimeData.MapType == MapType.Event);
         Battle.gameObject.SetActive(DataMng.E.RuntimeData.MapType == MapType.Brave
@@ -297,11 +272,6 @@ public partial class HomeUI : UIBase
             cell.Index = i;
             itemBtns.Add(cell);
         }
-    }
-
-    public void RefreshRedPoint()
-    {
-        RedPoint.gameObject.SetActive(CommonFunction.MenuRedPoint());
     }
 
     /// <summary>

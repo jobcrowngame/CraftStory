@@ -62,21 +62,6 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 LocalDataMng.E.Data.Statistics_userT.maxArrivedFloor = (int)rp["maxArrivedFloor"];
             });
 
-            // サブスクリプションの状態
-            NWMng.E.GetSubscriptionInfo();
-
-            // 新しいメールヒント
-            NWMng.E.GetNewEmailCount();
-
-            NoticeLG.E.IsFirst = true;
-
-            //NWMng.E.GetItems();
-
-            //NWMng.E.GetCoins((rp) =>
-            //{
-            //    DataMng.GetCoins(rp);
-            //});
-
             NWMng.E.GetTotalSetBlockCount((rp) =>
             {
                 if (string.IsNullOrEmpty(rp.ToString()))

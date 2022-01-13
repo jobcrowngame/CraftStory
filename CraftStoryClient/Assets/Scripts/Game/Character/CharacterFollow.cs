@@ -21,18 +21,7 @@ public class CharacterFollow : CharacterBase
         ShowChatFlg(false);
 
         Model.gameObject.SetActive(false);
-
-        if (DataMng.E.RuntimeData.MapType == MapType.Home)
-        {
-            if (!NoticeLG.E.IsFirst)
-            {
-                ShowFairy();
-            }
-        }
-        else
-        {
-            ShowFairy();
-        }
+        ShowFairy();
     }
 
     public override void OnClick()

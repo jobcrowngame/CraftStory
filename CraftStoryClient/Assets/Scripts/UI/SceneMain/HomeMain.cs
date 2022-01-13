@@ -13,12 +13,6 @@ public class HomeMain : MonoBehaviour
 
         UICtl.E.OpenUI<HomeUI>(UIType.Home);
 
-        // ログイン後、始めにホームに入る場合、お知らせWindowを出す
-        if (NoticeLG.E.IsFirst)
-        {
-            NoticeLG.E.GetNoticeList();
-        }
-
         AudioMng.E.ShowBGM("bgm_01");
     }
 }

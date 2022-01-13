@@ -1,5 +1,5 @@
 ﻿
-public class MapLG : UILogicBase<MapLG, MenuUI>
+public class MapLG : UILogicBase<MapLG, MapUI>
 {
     private bool mLockBtn;
     public bool BtnIsLocked { get => mLockBtn; }
