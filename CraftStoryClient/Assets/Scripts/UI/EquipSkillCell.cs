@@ -19,7 +19,7 @@ public class EquipSkillCell : UIBase
 
             UICtl.E.OpenUI<SkillExplanationUI>(UIType.SkillExplanation, UIOpenType.OnCloseDestroyObj, skillId);
 
-            if (DataMng.E.MapData.Config.MapType == (int)MapType.Guide)
+            if (DataMng.E.RuntimeData.MapType == MapType.Guide)
             {
                 GuideLG.E.Next();
             }

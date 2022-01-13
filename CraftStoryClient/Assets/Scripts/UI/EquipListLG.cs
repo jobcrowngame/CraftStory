@@ -138,7 +138,7 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
 
     public void AppraisalEquipment(EquipListCell cell)
     {
-        if (DataMng.E.MapData.Config.MapType != (int)MapType.Guide)
+        if (DataMng.E.RuntimeData.MapType != MapType.Guide)
         {
             NWMng.E.AppraisalEquipment((rp) =>
             {

@@ -21,7 +21,7 @@ public class SkillExplanationUI : UIBase
         Title.SetOnClose(() => 
         {
             Close();
-            if (DataMng.E.MapData.Config.MapType == (int)MapType.Guide)
+            if (DataMng.E.RuntimeData.MapType == MapType.Guide)
             {
                 GuideLG.E.Next();
             }
