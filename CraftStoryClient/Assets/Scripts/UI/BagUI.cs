@@ -16,9 +16,6 @@ public class BagUI : UIBase
     BagSelectItem[] selectItems;
     public MyText Explanatory { get => FindChiled<MyText>("Explanatory"); }
     public MyText FoodEffect { get => FindChiled<MyText>("FoodEffect"); }
-    //public Button EatButton { get => FindChiled<Button>("EatButton"); }
-
-    Button DeleteBtn { get => FindChiled<Button>("DeleteBtn"); }
 
     public readonly string ExplanatoryNoSelect = "アイテムをタップすると説明が表示されます";
 
@@ -55,19 +52,6 @@ public class BagUI : UIBase
                 selectItems[i].Index = i;
             }
         }
-
-        DeleteBtn.onClick.AddListener(() => 
-        {
-            UICtl.E.OpenUI<DeleteItemUI>(UIType.DeleteItem);
-        });
-
-        /*
-        EatButton.onClick.AddListener(() =>
-        {
-            PlayerCtl.E.EatFood(BagLG.E.SelectItem.ItemData);
-            Close();
-        });
-        */
     }
 
     public override void Open()

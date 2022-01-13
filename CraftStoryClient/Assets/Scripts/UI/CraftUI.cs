@@ -194,8 +194,6 @@ public class CraftUI : UIBase
                     if (CraftLG.E.SelectCraft.ItemID == 3003 && DataMng.E.UserData.FirstCraftMission == 0)
                     {
                         DataMng.E.UserData.FirstCraftMission = 1;
-                        UICtl.E.OpenUI<MissionChatUI>(UIType.MissionChat, UIOpenType.None, 0);
-
                         CraftLG.E.SelectCount = 1;
                         CraftLG.E.SelectCraft = null;
 

@@ -72,11 +72,6 @@ public class HomeLG : UILogicBase<HomeLG, HomeUI>
         itemStack.Clear();
     }
 
-    public void DeleteItems()
-    {
-        UICtl.E.OpenUI<DeleteItemUI>(UIType.DeleteItem);
-    }
-
     public struct BraveCellItem
     {
         public int itemId;
