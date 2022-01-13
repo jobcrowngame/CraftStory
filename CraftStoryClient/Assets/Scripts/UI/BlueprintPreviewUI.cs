@@ -100,11 +100,11 @@ public class BlueprintPreviewUI : UIBase
 
         if (bBeforUIOpen)
         {
-            if(beforUI == ShopBlueprintLG.E.UI)
-            {
-                ShopBlueprintLG.E.UI.DontResetCtrl = true;
-            }
-            beforUI.Open();
+            //if(beforUI == ShopBlueprintLG.E.UI)
+            //{
+            //    ShopBlueprintLG.E.UI.DontResetCtrl = true;
+            //}
+            //beforUI.Open();
         }
 
         if (HomeLG.E.UI != null)

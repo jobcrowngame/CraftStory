@@ -285,12 +285,12 @@ public class DataMng : Single<DataMng>
         if (itemId <= 0)
             return;
 
-        if (itemId == 9000 || itemId == 9001 || itemId == 9002)
-        {
-            AddCoin(itemId, count);
-        }
-        else
-        {
+        //if (itemId == 9000 || itemId == 9001 || itemId == 9002)
+        //{
+        //    AddCoin(itemId, count);
+        //}
+        //else
+        //{
             var item = GetItemByItemId(itemId);
             if (item == null)
             {
@@ -309,17 +309,17 @@ public class DataMng : Single<DataMng>
             }
 
             if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
-        }
+        //}
     }
-    public void AddCoin(int id, int count)
-    {
-        switch (id)
-        {
-            case 9000: LocalDataMng.E.Data.UserDataT.coin1 += count; break;
-            case 9001: LocalDataMng.E.Data.UserDataT.coin2 += count; break;
-            case 9002: LocalDataMng.E.Data.UserDataT.coin3 += count; break;
-        }
-    }
+    //public void AddCoin(int id, int count)
+    //{
+    //    switch (id)
+    //    {
+    //        case 9000: LocalDataMng.E.Data.UserDataT.coin1 += count; break;
+    //        case 9001: LocalDataMng.E.Data.UserDataT.coin2 += count; break;
+    //        case 9002: LocalDataMng.E.Data.UserDataT.coin3 += count; break;
+    //    }
+    //}
 
     public void AddBonus(int bonusId)
     {
@@ -500,27 +500,6 @@ public class DataMng : Single<DataMng>
         }
 
         return itemCount >= count;
-    }
-
-    public int GetCoinByID(int id)
-    {
-        switch (id)
-        {
-            case 9000: return LocalDataMng.E.Data.UserDataT.coin1;
-            case 9001: return LocalDataMng.E.Data.UserDataT.coin2;
-            case 9002: return LocalDataMng.E.Data.UserDataT.coin3;
-            case 9003: return GetItemByItemId(id) != null ? GetItemByItemId(id).count : 0;
-            default: Logger.Error("not find coin type " + id); return 0;
-        }
-    }
-    public void ConsumableCoin(int id, int count)
-    {
-        switch (id)
-        {
-            case 9000: LocalDataMng.E.Data.UserDataT.coin1 -= count; break;
-            case 9001: LocalDataMng.E.Data.UserDataT.coin2 -= count; break;
-            default: LocalDataMng.E.Data.UserDataT.coin3 -= count; break;
-        }
     }
     
 

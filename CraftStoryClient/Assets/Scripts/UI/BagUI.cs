@@ -37,7 +37,6 @@ public class BagUI : UIBase
     {
         Title.SetTitle("もちもの");
         Title.SetOnClose(() => { Close(); GuideLG.E.Next(); });
-        Title.ShowCoin(2);
 
         btns = new MyButton[btnsParent.childCount];
         for (int i = 0; i < btnsParent.childCount; i++)
@@ -81,8 +80,6 @@ public class BagUI : UIBase
 
         RefreshItems();
         RefreshSelectItemBtns();
-
-        Title.RefreshCoins();
 
         ResetExplanatory();
 

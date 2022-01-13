@@ -46,9 +46,6 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             DataMng.E.token = loginRP.token;
             TaskMng.E.CheckClearedCount();
 
-            // IAPMngを初期化
-            IAPMng.E.Init();
-
             // マイショップデータ
             NWMng.E.GetMyShopInfo((rp) =>
             {
