@@ -11,7 +11,7 @@ public class TaskMng : Single<TaskMng>
         set
         {
             LocalDataMng.E.Data.limitedT.main_task = value;
-            CheckClearedCount();
+            //CheckClearedCount();
         }
     }
 
@@ -47,6 +47,8 @@ public class TaskMng : Single<TaskMng>
         // 今のタスクと違う場合スキップ
         if (MainTaskConfig.Type != taskType)
             return;
+
+        Logger.Log("タスク {0} 進捗変更 、+{1}", MainTaskConfig.ID, count);
 
         NWMng.E.AddMainTaskClearCount(() =>
         {
@@ -85,18 +87,18 @@ public class TaskMng : Single<TaskMng>
         IsReaded = false;
     }
 
-    public void CheckClearedCount()
-    {
-        switch ((TaskType)MainTaskConfig.Type)
-        {
-            case TaskType.GuideEndShop: MainTaskClearedCount = LocalDataMng.E.Data.limitedT.guide_end2; break;
-            case TaskType.GUideEndEquipment: MainTaskClearedCount = LocalDataMng.E.Data.limitedT.guide_end4; break;
-            case TaskType.GuideEndBlueprint: MainTaskClearedCount = LocalDataMng.E.Data.limitedT.guide_end; break;
-            case TaskType.GuideBrave: MainTaskClearedCount = LocalDataMng.E.Data.limitedT.guide_end5; break;
+    //public void CheckClearedCount()
+    //{
+    //    switch ((TaskType)MainTaskConfig.Type)
+    //    {
+    //        case TaskType.GuideEndShop: MainTaskClearedCount = LocalDataMng.E.Data.limitedT.guide_end2; break;
+    //        case TaskType.GUideEndEquipment: MainTaskClearedCount = LocalDataMng.E.Data.limitedT.guide_end4; break;
+    //        case TaskType.GuideEndBlueprint: MainTaskClearedCount = LocalDataMng.E.Data.limitedT.guide_end; break;
+    //        case TaskType.GuideBrave: MainTaskClearedCount = LocalDataMng.E.Data.limitedT.guide_end5; break;
 
-            default: MainTaskClearedCount = 0; break;
-        }
-    }
+    //        default: MainTaskClearedCount = 0; break;
+    //    }
+    //}
 
     public enum TaskType
     {

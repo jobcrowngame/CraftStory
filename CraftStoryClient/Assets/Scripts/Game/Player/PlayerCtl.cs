@@ -397,10 +397,7 @@ public class PlayerCtl : MonoBehaviour
         if (entity != null && DataMng.E.RuntimeData.MapType != MapType.Guide)
         {
             DataMng.E.RuntimeData.TotalSetBlockCount++;
-            if (DataMng.E.RuntimeData.TotalSetBlockCount >= 100 && LocalDataMng.E.Data.limitedT.guide_end == 0)
-            {
-                TaskMng.E.AddMainTaskCount(5);
-            }
+            TaskMng.E.AddMainTaskCount(5);
         }
 
         return entity;
@@ -645,7 +642,6 @@ public class PlayerCtl : MonoBehaviour
         }
 
         Character.Parameter.Refresh();
-        if (HomeLG.E.UI != null) HomeLG.E.UI.ShowSpriteAnimation();
 
         //// 武器を装備してる場合、タスクが完了とする
         //if (Character.IsEquipedEquipment())

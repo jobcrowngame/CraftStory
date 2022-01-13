@@ -34,14 +34,10 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
 
             LocalDataMng.E.Data.limitedT.main_task = loginRP.mainTaskID;
             LocalDataMng.E.Data.limitedT.main_task_count = loginRP.mainTaskClearedCount;
-            LocalDataMng.E.Data.limitedT.guide_end = loginRP.guide_end;
-            LocalDataMng.E.Data.limitedT.guide_end2 = loginRP.guide_end2;
             LocalDataMng.E.Data.limitedT.guide_end3 = loginRP.guide_end3;
-            LocalDataMng.E.Data.limitedT.guide_end4 = loginRP.guide_end4;
-            LocalDataMng.E.Data.limitedT.guide_end5 = loginRP.guide_end5;
 
             DataMng.E.token = loginRP.token;
-            TaskMng.E.CheckClearedCount();
+            //TaskMng.E.CheckClearedCount();
 
             // マイショップデータ
             NWMng.E.GetMyShopInfo((rp) =>

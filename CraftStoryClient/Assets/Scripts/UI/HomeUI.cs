@@ -304,26 +304,6 @@ public partial class HomeUI : UIBase
         }
     }
 
-    /// <summary>
-    /// マップのぴーちゃんのAnim
-    /// </summary>
-    public void ShowSpriteAnimation()
-    {
-        try
-        {
-            if (SpriteAnim != null)
-            {
-                SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide &&
-                //(DataMng.E.RuntimeData.GuideEnd2 == 0 || MapLG.E.IsEquipTutorial() || DataMng.E.RuntimeData.GuideEnd5 == 0));
-                LocalDataMng.E.Data.limitedT.guide_end2 == 0);
-            }
-        }
-        catch (Exception ex)
-        {
-            Logger.Error(ex.Message);
-        }
-    }
-
     public Vector2 GetBagIconPos()
     {
         return BagBtn.transform.position;

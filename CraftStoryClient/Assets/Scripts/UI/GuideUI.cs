@@ -114,39 +114,11 @@ public class GuideUI : UIBase
         Hand.gameObject.SetActive(false);
         GuideLG.E.end = true;
 
-        if (DataMng.E.RuntimeData.GuideId == 1)
-        {
-            LocalDataMng.E.Data.limitedT.guide_end = 1;
-            DataMng.E.RuntimeData.NewEmailCount++;
-            // 設計図タスク完了
-            TaskMng.E.AddMainTaskCount(5);
-        }
-        // ショップのチュートリアル完了
-        else if (DataMng.E.RuntimeData.GuideId == 2)
-        {
-            LocalDataMng.E.Data.limitedT.guide_end2 = 1;
-            // ショップタスク完了
-            TaskMng.E.AddMainTaskCount(1);
-        }
         // 最初のクラフトチュートリアル完了
-        else if (DataMng.E.RuntimeData.GuideId == 3)
+        if (DataMng.E.RuntimeData.GuideId == 3)
         {
             LocalDataMng.E.Data.limitedT.guide_end3 = 1;
             DataMng.E.RuntimeData.NewEmailCount++;
-        }
-        // 武器チュートリアル完了
-        else if (DataMng.E.RuntimeData.GuideId == 4)
-        {
-            LocalDataMng.E.Data.limitedT.guide_end4 = 1;
-            PlayerCtl.E.GetEquipedItems().Clear();
-            TaskMng.E.AddMainTaskCount(2);
-        }
-        else if (DataMng.E.RuntimeData.GuideId == 6)
-        {
-            LocalDataMng.E.Data.limitedT.guide_end5 = 1;
-            LocalDataMng.E.Data.UserDataT.lv = GuideLG.E.HomeRuntimeData.Lv;
-            DataMng.E.RuntimeData.Exp = GuideLG.E.HomeRuntimeData.Exp;
-            TaskMng.E.AddMainTaskCount(11);
         }
     }
 
