@@ -39,20 +39,23 @@ public class CharacterFollow : CharacterBase
 
             if (TaskMng.E.IsClear)
             {
-                NWMng.E.MainTaskEnd(() =>
+                var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, TaskMng.E.MainTaskConfig.EndChat);
+                chatUi.AddListenerOnClose(() =>
                 {
-                    var chatUi = UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, TaskMng.E.MainTaskConfig.EndChat);
-                    chatUi.AddListenerOnClose(() =>
-                    {
-                        HomeLG.E.UI.RefreshTaskOverview();
-                    });
-                    TaskMng.E.Next();
+                    HomeLG.E.UI.RefreshTaskOverview();
+                });
 
-                    if (HomeLG.E.UI != null)
-                        HomeLG.E.UI.RefreshCoins();
+                DataMng.E.AddBonus(TaskMng.E.MainTaskConfig.Bonus);
+                
+                TaskMng.E.Next();
 
-                    NWMng.E.GetItems();
-                }, TaskMng.E.MainTaskId);
+                LocalDataMng.E.Data.limitedT.main_task = TaskMng.E.MainTaskConfig.Next;
+                LocalDataMng.E.Data.limitedT.main_task_count = 0;
+
+                if (HomeLG.E.UI != null)
+                    HomeLG.E.UI.RefreshCoins();
+
+                NWMng.E.GetItems();
             }
             else
             {
