@@ -820,23 +820,6 @@ public partial class NWMng : MonoBehaviour
     }
 
     /// <summary>
-    /// タスク完了
-    /// </summary>
-    /// <param name="rp"></param>
-    /// <param name="taskId"></param>
-    public void MainTaskEnd(Action rp, int taskId)
-    {
-        var config = ConfigMng.E.MainTask[taskId];
-
-        LocalDataMng.E.Data.limitedT.main_task = config.Next;
-        LocalDataMng.E.Data.limitedT.main_task_count = 0;
-
-        DataMng.E.AddBonus(config.Bonus);
-
-        rp();
-    }
-
-    /// <summary>
     /// メインタスククリア数追加
     /// </summary>
     /// <param name="rp"></param>
