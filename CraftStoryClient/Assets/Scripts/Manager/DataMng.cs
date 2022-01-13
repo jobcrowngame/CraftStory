@@ -153,13 +153,6 @@ public class DataMng : Single<DataMng>
         uData.AreaIndexX = 5;
 
         LocalDataMng.E.Init();
-
-        AddItem(101, 100);
-        AddItem(105, 100);
-
-        AddItem(10001, 1);
-        AddItem(10002, 1);
-        AddItem(10003, 1);
     }
     #endregion
     #region Map

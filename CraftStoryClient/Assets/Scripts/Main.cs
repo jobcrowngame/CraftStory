@@ -43,6 +43,13 @@ public class Main : MonoBehaviour
         if (DataMng.E.UserData == null)
         {
             DataMng.E.NewUser("local", "local");
+            LocalDataMng.E.LoadServerData();
+
+            DataMng.E.AddItem(101, 100);
+            DataMng.E.AddItem(105, 100);
+            DataMng.E.AddItem(10001, 1);
+            DataMng.E.AddItem(10002, 1);
+            DataMng.E.AddItem(10003, 1);
         }
         else if (DataMng.E.UserData.LocalDataLoaded)
         {
