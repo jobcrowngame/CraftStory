@@ -40,6 +40,7 @@ public class MapUI : UIBase
         EnActiveBtn(MarketBtn, DataMng.E.RuntimeData.MapType == MapType.Market);
         EnActiveBtn(BraveBtn, DataMng.E.RuntimeData.MapType == MapType.Brave);
         EnActiveBtn(BraveBtn2, DataMng.E.RuntimeData.MapType == MapType.Event);
+        EnActiveBtn(AreaMapBtn, DataMng.E.RuntimeData.MapType == MapType.AreaMap);
 
         //SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide && DataMng.E.RuntimeData.GuideEnd2 == 0);
         SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide);
@@ -53,11 +54,7 @@ public class MapUI : UIBase
             PlayerCtl.E.Pause();
         }
 
-        NWMng.E.GetTotalUploadBlueprintCount((rp) =>
-        {
-            int count = int.Parse(rp.ToString());
-            BluePrintHint.text = count == 0 ? BluePrintHint1 : BluePrintHint2;
-        });
+        BluePrintHint.text = BluePrintHint1;
 
         MapLG.E.LockBtn(false);
     }
@@ -102,7 +99,7 @@ public class MapUI : UIBase
 
         MapLG.E.LockBtn();
 
-        if (DataMng.E.RuntimeData.GuideEnd2 == 0)
+        if (LocalDataMng.E.Data.limitedT.guide_end2 == 0)
         {
             DataMng.E.RuntimeData.GuideId = 2;
             CommonFunction.GoToNextScene(104);

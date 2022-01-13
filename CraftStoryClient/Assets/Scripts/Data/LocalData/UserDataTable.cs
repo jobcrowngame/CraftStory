@@ -3,6 +3,11 @@
 [Serializable]
 public class UserDataTable
 {
+    public UserDataTable()
+    {
+        lv = 1;
+    }
+
     public string acc { get; set; }
     public string pw { get; set; }
     public string nickname { get; set; }

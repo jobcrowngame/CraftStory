@@ -53,10 +53,12 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
     {
         if (DataMng.E.RuntimeData.MapType != MapType.Guide)
         {
-            var result = LocalDataMng.E.GetEquipmentInfoList();
             items.Clear();
-            foreach (var item in result)
+            foreach (var item in LocalDataMng.E.Data.ItemT.list)
             {
+                if (item.Type != ItemType.Weapon)
+                    continue;
+
                 items.Add(new ItemEquipmentData(item));
             }
 
@@ -140,7 +142,7 @@ public class EquipListLG : UILogicBase<EquipListLG, EquipListUI>
         {
             NWMng.E.AppraisalEquipment((rp) =>
             {
-                cell.AppraisalEquipment((string)rp);
+                cell.AppraisalEquipment(rp);
             }, cell.Data.id, cell.Data.equipmentConfig.ID);
         }
         else

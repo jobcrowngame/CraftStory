@@ -36,6 +36,7 @@ public class WorldMng : MonoBehaviour
 
         GameTimeCtl = new GameTimeCtl();
         MapCtl = new MapCtl();
+        MapMng = new MapMng();
         CharacterCtl = new CharacterCtl();
 
         // 定期時間でローカルデータをセーブ
@@ -66,9 +67,17 @@ public class WorldMng : MonoBehaviour
     /// <summary>
     /// 世界の　GameObject　をインスタンス
     /// </summary>
-    public void CreateGameObjects()
+    public void CreateWorld()
     {
-        MapCtl.CreateMap();
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+        {
+            MapMng.Init();
+        }
+        else
+        {
+            MapCtl.CreateMap();
+        }
+
         CharacterCtl.CreateCharacter();
 
         // ガイドの場合、一時的のアイテムを追加
@@ -85,11 +94,6 @@ public class WorldMng : MonoBehaviour
 
         AdventureCtl.E.Init();
         GoogleMobileAdsMng.E.Init();
-    }
-    public void CreateAreaMap(MapMng areaMap)
-    {
-        MapMng = areaMap;
-        MapMng.Init();
     }
 
     private Transform CreateParentObj(string name)

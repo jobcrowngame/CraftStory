@@ -61,18 +61,18 @@ public class ShopBlueprintMyShopUploadUI : UIBase
                                         CommonFunction.ShowHintBar(16);
 
                                         // 設計図アップロード案内の表示
-                                        NWMng.E.GetTotalUploadBlueprintCount((rp) =>
-                                        {
-                                            int count = int.Parse(rp.ToString());
-                                            Image img = GameObject.Find("BluePrintHintImage").GetComponent<Image>();
-                                            img.color = new Color(1f, 1f, 1f, count == 0 ? 1 : 1 / 256f);
-                                            if (count == 1)
-                                            {
-                                                DataMng.E.RuntimeData.NewEmailCount++;
-                                                HomeLG.E.UI.RefreshRedPoint();
-                                                UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 124);
-                                            }
-                                        });
+                                        //NWMng.E.GetTotalUploadBlueprintCount((rp) =>
+                                        //{
+                                        //    int count = int.Parse(rp.ToString());
+                                        //    Image img = GameObject.Find("BluePrintHintImage").GetComponent<Image>();
+                                        //    img.color = new Color(1f, 1f, 1f, count == 0 ? 1 : 1 / 256f);
+                                        //    if (count == 1)
+                                        //    {
+                                        //        DataMng.E.RuntimeData.NewEmailCount++;
+                                        //        HomeLG.E.UI.RefreshRedPoint();
+                                        //        UICtl.E.OpenUI<ChatUI>(UIType.Chat, UIOpenType.OnCloseDestroyObj, 124);
+                                        //    }
+                                        //});
 
                                     });
                                 }, itemData.id, Index, GetPrice(), textureName);

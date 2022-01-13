@@ -345,7 +345,7 @@ public partial class HomeUI : UIBase
             {
                 SpriteAnim.gameObject.SetActive(DataMng.E.RuntimeData.MapType != MapType.Guide &&
                 //(DataMng.E.RuntimeData.GuideEnd2 == 0 || MapLG.E.IsEquipTutorial() || DataMng.E.RuntimeData.GuideEnd5 == 0));
-                DataMng.E.RuntimeData.GuideEnd2 == 0);
+                LocalDataMng.E.Data.limitedT.guide_end2 == 0);
             }
         }
         catch (Exception ex)

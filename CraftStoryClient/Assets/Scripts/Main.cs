@@ -25,6 +25,7 @@ public class Main : MonoBehaviour
         TimeZoneMng.E.Init();
         WorldMng.E.Init();
         AudioMng.Init();
+        LocalDataMng.E.Init();
         //UserTest.E.Init();
 
         yield return ConfigMng.E.InitInitCoroutine();
@@ -39,9 +40,13 @@ public class Main : MonoBehaviour
         // Test
         //DataMng.E.UserData.LocalDataLoaded = false;
 
-        if (DataMng.E.UserData.LocalDataLoaded)
+        if (DataMng.E.UserData == null)
         {
-            LocalDataMng.E.Init();
+            DataMng.E.NewUser("local", "local");
+        }
+        else if (DataMng.E.UserData.LocalDataLoaded)
+        {
+            LocalDataMng.E.LoadServerData();
         }
         else
         {

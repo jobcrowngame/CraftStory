@@ -84,24 +84,20 @@ public class ShopItemCell : UIBase
                 {
                     NWMng.E.GetItems(()=> 
                     {
-                        NWMng.E.GetCoins((rp3) =>
+                        if (ShopChargeLG.E.UI != null) ShopChargeLG.E.UI.RefreshCoins();
+                        if (ShopResourceLG.E.UI != null) ShopResourceLG.E.UI.RefreshCoins();
+                        HomeLG.E.UI.RefreshCoins();
+                        if (config.LimitedCount != -1)
                         {
-                            DataMng.GetCoins(rp3);
-                            if (ShopChargeLG.E.UI != null) ShopChargeLG.E.UI.RefreshCoins();
-                            if (ShopResourceLG.E.UI != null) ShopResourceLG.E.UI.RefreshCoins();
-                            HomeLG.E.UI.RefreshCoins();
-                            if (config.LimitedCount != -1)
-                            {
-                                NWMng.E.GetShopLimitedCount((rp4) => {
-                                    ShopResourceLG.E.SetLimitedCount(config.ID, (int)rp4);
-                                    UpdateLimited();
-                                }, config.ID);
-                            }
+                            NWMng.E.GetShopLimitedCount((rp4) => {
+                                ShopResourceLG.E.SetLimitedCount(config.ID, (int)rp4);
+                                UpdateLimited();
+                            }, config.ID);
+                        }
 
-                            // ロイヤルコインを使うタスク
-                            if (config.Type == 8)
-                                TaskMng.E.AddMainTaskCount(8);
-                        });
+                        // ロイヤルコインを使うタスク
+                        if (config.Type == 8)
+                            TaskMng.E.AddMainTaskCount(8);
                     });
                     CommonFunction.ShowHintBar(5);
                 }, config.ID);

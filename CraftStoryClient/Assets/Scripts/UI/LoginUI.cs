@@ -32,7 +32,7 @@ public class LoginUI : UIBase
 
             NowLoadingLG.E.FixtTips = 0;
 
-            if (DataMng.E.RuntimeData.GuideEnd3 == 1)
+            if (LocalDataMng.E.Data.limitedT.guide_end3 == 1)
             {
                 CommonFunction.GoToNextScene(100);
             }

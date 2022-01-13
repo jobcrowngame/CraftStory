@@ -3,6 +3,11 @@
 [Serializable]
 public class limitedTable
 {
+    public limitedTable()
+    {
+        main_task = 1;
+    }
+
     public int id { get; set; }
     public int guide_end { get; set; }
     public int guide_end2 { get; set; }

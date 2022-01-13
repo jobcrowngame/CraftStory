@@ -163,14 +163,7 @@ public class IAPMng : Single<IAPMng>, IStoreListener
             {
                 NWMng.E.Charge((rp) =>
                 {
-                    NWMng.E.GetCoins((rp) =>
-                    {
-                        DataMng.GetCoins(rp);
-                        if (ShopChargeLG.E.UI != null) ShopChargeLG.E.UI.RefreshCoins();
-
-                        
-                    });
-
+                    if (ShopChargeLG.E.UI != null) ShopChargeLG.E.UI.RefreshCoins();
                     m_Controller.ConfirmPendingPurchase(product);
                 }, productId, receiptId);
             }

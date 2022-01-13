@@ -6,22 +6,19 @@ public class BraveSelectLevelLG : UILogicBase<BraveSelectLevelLG, BraveSelectLev
 {
     public void AddCells()
     {
-        NWMng.E.GetMaxBraveLevel((rp) =>
+        int maxArrivedFloor = LocalDataMng.E.Data.Statistics_userT.maxArrivedFloor;
+        int count = Mathf.Abs(maxArrivedFloor - 1) / 5;
+
+        UI.SetMaxFloor(maxArrivedFloor);
+
+        for (int i = 0; i <= count; i++)
         {
-            var result = JsonMapper.ToObject<BraveSelectLevelRP>(rp.ToJson());
-            int count = Mathf.Abs(result.maxArrivedFloor - 1) / 5;
-
-            UI.SetMaxFloor(result.maxArrivedFloor);
-
-            for (int i = 0; i <= count; i++)
+            var map = GetMapIdByIndex(i);
+            if (map != null)
             {
-                var map = GetMapIdByIndex(i);
-                if (map != null)
-                {
-                    UI.AddCell(map);
-                }
+                UI.AddCell(map);
             }
-        });
+        }
     }
 
     private Map GetMapIdByIndex(int index)

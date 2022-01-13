@@ -119,11 +119,12 @@ public class EntityBlast : EntityBase
 
         CombineMesh();
         HomeLG.E.AddItems(addItems);
-
-        NWMng.E.AddItems((rp) =>
+        foreach (var item in addItems)
         {
-            NWMng.E.GetItems();
-        }, addItems);
+            DataMng.E.AddItem(item.Key, item.Value);
+        }
+
+        if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
     }
 
     private List<Vector3Int> GetDestroyPosList(int radius)
@@ -234,16 +235,15 @@ public class EntityBlast : EntityBase
             foreach (var pos in posList)
             {
                 DataMng.E.MapData.Map[pos.x, pos.y, pos.z] = new MapData.MapCellData() { entityID = 0, direction = 0 };
+            }
 
+            foreach (var pos in posList)
+            {
                 // entityを削除
                 WorldMng.E.MapCtl.DeleteEntity(pos);
 
                 // 爆破周りのブロックをチェック
-                if (pos.x == -radius || pos.x == radius ||
-                    pos.y == -radius || pos.y == radius ||
-                    pos.z == -radius || pos.z == radius ||
-                    pos.y <= 1)
-                    WorldMng.E.MapCtl.CheckNextToEntitys(pos);
+                WorldMng.E.MapCtl.CheckNextToEntitys(pos);
             }
         }
     }

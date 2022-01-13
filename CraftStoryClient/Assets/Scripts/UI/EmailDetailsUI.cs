@@ -61,11 +61,7 @@ public class EmailDetailsUI : UIBase
                 {
                     CommonFunction.ShowHintBar(20);
                 });
-                NWMng.E.GetCoins((rp) =>
-                {
-                    DataMng.GetCoins(rp);
-                    if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshCoins();
-                });
+                if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshCoins();
             }, cell.Data.id);
         }
     }

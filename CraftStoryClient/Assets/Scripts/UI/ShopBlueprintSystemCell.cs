@@ -56,14 +56,8 @@ public class ShopBlueprintSystemCell : UIBase
                 () => {
                     NWMng.E.Buy((rp) =>
                     {
-                        NWMng.E.GetItems(null);
-                        NWMng.E.GetCoins((rp3) =>
-                        {
-                            DataMng.GetCoins(rp3);
-                            ShopBlueprintLG.E.UI.RefreshCoin();
-                            HomeLG.E.UI.RefreshCoins();
-                        });
-
+                        ShopBlueprintLG.E.UI.RefreshCoin();
+                        HomeLG.E.UI.RefreshCoins();
                         CommonFunction.ShowHintBar(5);
                     }, config.ID);
                 }, () => { });

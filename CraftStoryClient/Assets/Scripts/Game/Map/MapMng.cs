@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class MapMng : MonoBehaviour
+public class MapMng
 {
     private static Transform builderPencilParent; // 建物親
 
@@ -45,12 +45,23 @@ public class MapMng : MonoBehaviour
 
     // マップサイズ
     private int minX, maxX, minZ, maxZ, maxY;
-    public Vector3Int MapSize { get => new Vector3Int(maxX, mapInstanceArr[0, 0].Data.GetMapSize().y, maxZ); }
+    public Vector3Int MapSize 
+    {
+        get 
+        {
+            if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+            {
+                return new Vector3Int(maxX, mapInstanceArr[0, 0].Data.GetMapSize().y, maxZ);
+            }
+            else
+            {
+                return DataMng.E.MapData.GetMapSize();
+            }
+        }
+    }
 
     public void Init()
     {
-        AdventureCtl.E.Init();
-        GoogleMobileAdsMng.E.Init();
         MapTool.Clear();
 
         MapPool = new GameObject("MapPool").AddComponent<MapEntitysPool>();
@@ -263,7 +274,7 @@ public class MapMng : MonoBehaviour
 
     public void SaveData()
     {
-        if (DataMng.E.RuntimeData.MapType != MapType.AreaMap)
+        if (DataMng.E.RuntimeData.MapType != MapType.AreaMap || mapInstanceArr == null)
             return;
 
         foreach (var item in mapInstanceArr)
@@ -466,11 +477,29 @@ public class MapMng : MonoBehaviour
     }
     private static int GetVertexY(int x, int z)
     {
+        if (DataMng.E.RuntimeData.MapType != MapType.AreaMap)
+        {
+            return GetVertexY(DataMng.E.MapData, x, z);
+        }
+
         int y = 0;
         for (int i = WorldMng.E.MapMng.MapSize.y - 1; i >= 0; i--)
         {
             var cell = GetMapCell(new Vector3Int(x, i, z));
             if (cell == null || cell.EntityId == 0)
+                continue;
+
+            y = i + 1;
+            break;
+        }
+        return y;
+    }
+    private static int GetVertexY(MapData mapData, int x, int z)
+    {
+        int y = 0;
+        for (int i = mapData.SizeY - 1; i >= 0; i--)
+        {
+            if (mapData.Map[x, i, z].entityID == 0)
                 continue;
 
             y = i + 1;
@@ -486,13 +515,21 @@ public class MapMng : MonoBehaviour
     private static bool CheckCreatePos(Vector3 pos)
     {
         Vector3 downEntityPos = new Vector3(pos.x, pos.y - 1, pos.z);
-        if (MapMng.IsOutRange(WorldMng.E.MapMng.MapSize, Vector3Int.CeilToInt(downEntityPos)))
+        if (IsOutRange(WorldMng.E.MapMng.MapSize, Vector3Int.CeilToInt(downEntityPos)))
         {
             return false;
         }
 
-        var downEntity = GetMapCell(Vector3Int.CeilToInt(downEntityPos));
-        return downEntity == null ? false : ConfigMng.E.Entity[downEntity.Data.entityID].CanPut == 1;
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+        {
+            var downEntity = GetMapCell(Vector3Int.CeilToInt(downEntityPos));
+            return downEntity == null ? false : ConfigMng.E.Entity[downEntity.Data.entityID].CanPut == 1;
+        }
+        else
+        {
+            var downEntity = DataMng.E.MapData.Map[(int)downEntityPos.x, (int)downEntityPos.y, (int)downEntityPos.z];
+            return ConfigMng.E.Entity[downEntity.entityID].CanPut == 1;
+        }
     }
 
     public static bool CheckCanCreate(MapData mdata, int entityId, Vector3Int pos, Direction dType)

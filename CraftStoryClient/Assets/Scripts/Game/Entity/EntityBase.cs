@@ -65,7 +65,7 @@ public class EntityBase : MonoBehaviour
         int itemId = EConfig.ItemID;
         int count = 1;
         // 壊したブロックを手に入る
-        NWMng.E.AddItem(null, itemId, count);
+        //NWMng.E.AddItem(null, itemId, count);
         // ローカルのアイテム数変更
         DataMng.E.AddItem(itemId, count);
         HomeLG.E.AddItem(itemId, count);

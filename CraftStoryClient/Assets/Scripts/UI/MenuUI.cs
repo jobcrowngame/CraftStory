@@ -11,7 +11,6 @@ public class MenuUI : UIBase
     Button AdventureBtn { get => FindChiled<Button>("AdventureBtn"); }
     Button PlayDescriptionBtn { get => FindChiled<Button>("PlayDescriptionBtn"); }
     Button PersonalMessageBtn { get => FindChiled<Button>("PersonalMessageBtn"); }
-    Button FriendBtn { get => FindChiled<Button>("FriendBtn"); }
 
     Button PlayDescriptionBtn2 { get => FindChiled<Button>("PlayDescriptionBtn2"); }
     Button MessageBtn { get => FindChiled<Button>("MessageBtn"); }
@@ -28,7 +27,6 @@ public class MenuUI : UIBase
             AdventureBtn.gameObject.SetActive(false);
             PlayDescriptionBtn.gameObject.SetActive(false);
             PersonalMessageBtn.gameObject.SetActive(false);
-            FriendBtn.gameObject.SetActive(false);
 
             PlayDescriptionBtn2.gameObject.SetActive(false);
             MessageBtn.gameObject.SetActive(false);
@@ -105,9 +103,6 @@ public class MenuUI : UIBase
 
         AdventureBtn.onClick.AddListener(() =>
         {
-            // 冒険入るのミッション
-            NWMng.E.ClearMission(2, 1);
-
             CommonFunction.GoToNextScene(1000);
             Close();
         });
@@ -122,11 +117,6 @@ public class MenuUI : UIBase
             Close();
 
             GuideLG.E.Next();
-        });
-        FriendBtn.onClick.AddListener(() =>
-        {
-            UICtl.E.OpenUI<FriendUI>(UIType.Friend);
-            Close();
         });
         PlayDescriptionBtn2.onClick.AddListener(() =>
         {

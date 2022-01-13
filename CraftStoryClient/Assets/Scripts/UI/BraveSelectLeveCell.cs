@@ -34,9 +34,6 @@ public class BraveSelectLeveCell : UIBase
     {
         PlayerCtl.E.Lock = false;
 
-        // –`Œ¯“ü‚é‚Ìƒ~ƒbƒVƒ‡ƒ“
-        NWMng.E.ClearMission(2, 1);
-
         CommonFunction.GoToNextScene(config.ID);
     }
 

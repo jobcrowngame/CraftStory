@@ -189,82 +189,6 @@ public partial class NWMng : MonoBehaviour
     }
 
     /// <summary>
-    /// アイテムを手に入る
-    /// </summary>
-    public void AddItem(Action<JsonData> rp, int itemId, int count)
-    {
-        var data = new NWData();
-        data.Add("itemId", itemId);
-        data.Add("count", count);
-
-        StartCoroutine(HttpRequest(rp, data, CMD.AddItem));
-    }
-
-    /// <summary>
-    /// 設計図を手に入る
-    /// </summary>
-    public void AddItemInData(Action<JsonData> rp, int itemId, int count, string newName, string rdata, string textureName)
-    {
-        var data = new NWData();
-        data.Add("itemId",itemId);
-        data.Add("count", count);
-        data.Add("newName",newName);
-        data.Add("rdata",rdata);
-        data.Add("textureName", textureName);
-
-        StartCoroutine(HttpRequest(rp, data, CMD.AddItemInData));
-    }
-
-    /// <summary>
-    /// 服すのアイテムを手に入る
-    /// </summary>
-    /// <param name="rp"></param>
-    /// <param name="items"></param>
-    public void AddItems(Action<JsonData> rp, Dictionary<int, int> items)
-    {
-        var data = new NWData();
-
-        List<NWItemData> list = new List<NWItemData>();
-        foreach (var item in items)
-        {
-            list.Add(new NWItemData() { itemId = item.Key, count = item.Value });
-        }
-        data.Add("items", JsonMapper.ToJson(list));
-
-        StartCoroutine(HttpRequest(rp, data, CMD.AddItems));
-    }
-
-    /// <summary>
-    /// アイテムを消耗
-    /// </summary>
-    /// <param name="rp"></param>
-    /// <param name="guid"></param>
-    /// <param name="count"></param>
-    public void UseItem(Action<JsonData> rp, int guid, int count)
-    {
-        var data = new NWData();
-        data.Add("guid", guid);
-        data.Add("count", count);
-
-        StartCoroutine(HttpRequest(rp, data, CMD.UseItem));
-    }
-
-    /// <summary>
-    /// アイテムを削除
-    /// </summary>
-    /// <param name="rp"></param>
-    /// <param name="itemid"></param>
-    /// <param name="count"></param>
-    public void RemoveItem(Action<JsonData> rp, int itemid, int count)
-    {
-        var data = new NWData();
-        data.Add("itemId", itemid);
-        data.Add("count", count);
-
-        StartCoroutine(HttpRequest(rp, data, CMD.RemoveItemByItemId));
-    }
-
-    /// <summary>
     /// アイテムを装備
     /// </summary>
     /// <param name="rp"></param>
@@ -272,22 +196,11 @@ public partial class NWMng : MonoBehaviour
     /// <param name="site"></param>
     public void EquitItem(Action<JsonData> rp, int guid, int site)
     {
-        var data = new NWData();
-        data.Add("guid", guid);
-        data.Add("site", site);
+        var item = DataMng.E.GetItemByGuid(guid);
+        if (item != null)
+            item.equipSite = site;
 
-        if (DataMng.E.RuntimeData.MapType == MapType.Guide)
-        {
-            var item = DataMng.E.GetItemByGuid(guid);
-            if (item != null)
-                item.equipSite = site;
-            
-            if (rp != null) rp("");
-        }
-        else
-        {
-            StartCoroutine(HttpRequest(rp, data, CMD.EquitItem));
-        }
+        if (rp != null) rp("");
     }
 
     /// <summary>
@@ -298,11 +211,14 @@ public partial class NWMng : MonoBehaviour
     /// <param name="count"></param>
     public void Craft(Action<JsonData> rp, Craft craft, int count)
     {
-        var data = new NWData();
-        data.Add("craftId", craft.ID);
-        data.Add("count", count);
+        DataMng.E.RemoveItemByItemId(craft.Cost1, craft.Cost1Count);
+        DataMng.E.RemoveItemByItemId(craft.Cost2, craft.Cost2Count);
+        DataMng.E.RemoveItemByItemId(craft.Cost3, craft.Cost3Count);
+        DataMng.E.RemoveItemByItemId(craft.Cost4, craft.Cost4Count);
 
-        StartCoroutine(HttpRequest(rp, data, CMD.Craft));
+        DataMng.E.AddItem(craft.ItemID, count);
+
+        rp(null);
     }
 
     /// <summary>
@@ -316,17 +232,6 @@ public partial class NWMng : MonoBehaviour
         data.Add("shopId", shopId);
 
         StartCoroutine(HttpRequest(rp, data, CMD.Buy));
-    }
-
-    /// <summary>
-    /// 持っているコインをゲット
-    /// </summary>
-    /// <param name="rp"></param>
-    public void GetCoins(Action<JsonData> rp)
-    {
-        var data = new NWData();
-
-        StartCoroutine(HttpRequest(rp, data, CMD.GetCoins));
     }
 
     /// <summary>
@@ -345,42 +250,24 @@ public partial class NWMng : MonoBehaviour
     }
 
     /// <summary>
-    /// ボーナスをもらう
-    /// </summary>
-    /// <param name="rp"></param>
-    /// <param name="bonusId"></param>
-    public void GetBonus(Action<JsonData> rp, int bonusId)
-    {
-        var data = new NWData();
-        data.Add("bonusId", bonusId);
-        StartCoroutine(HttpRequest(rp, data, CMD.GetBonus));
-    }
-
-    /// <summary>
     /// 冒険マップのボーナス計算
     /// </summary>
     /// <param name="rp"></param>
     /// <param name="resources"></param>
     public void ClearAdventure(Action<JsonData> rp, List<int> resources)
     {
-        var data = new NWData();
-
-        string msg = "";
-        if (resources != null && resources.Count > 0)
+        foreach (var bonus in resources)
         {
-            msg = resources[0].ToString();
-            for (int i = 1; i < resources.Count; i++)
-            {
-                msg += "," + resources[i];
-            }
+            var config = ConfigMng.E.Bonus[bonus];
+            DataMng.E.AddItem(config.Bonus1, config.BonusCount1);
+            DataMng.E.AddItem(config.Bonus2, config.BonusCount2);
+            DataMng.E.AddItem(config.Bonus3, config.BonusCount3);
+            DataMng.E.AddItem(config.Bonus4, config.BonusCount4);
+            DataMng.E.AddItem(config.Bonus5, config.BonusCount5);
+            DataMng.E.AddItem(config.Bonus6, config.BonusCount6);
         }
-        else
-        {
-            msg = "-1";
-        }
-        data.Add("bonusList", msg);
 
-        StartCoroutine(HttpRequest(rp, data, CMD.ClearAdventure));
+        rp(null);
     }
 
     /// <summary>
@@ -419,12 +306,10 @@ public partial class NWMng : MonoBehaviour
     /// </summary>
     /// <param name="rp"></param>
     /// <param name="nickName"></param>
-    public void UpdateNickName(Action<JsonData> rp, string nickName)
+    public void UpdateNickName(Action rp, string nickName)
     {
-        var data = new NWData();
-        data.Add("nickName", nickName);
-
-        StartCoroutine(HttpRequest(rp, data, CMD.UpdateNickName));
+        LocalDataMng.E.Data.UserDataT.nickname = nickName;
+        rp();
     }
 
     /// <summary>
@@ -514,12 +399,10 @@ public partial class NWMng : MonoBehaviour
     /// </summary>
     /// <param name="rp"></param>
     /// <param name="randomBonusId"></param>
-    public void GetRandomBonus(Action<JsonData> rp, int randomBonusId)
+    public void GetRandomBonus(Action<Dictionary<int, int>> rp, int randomBonusId)
     {
-        var data = new NWData();
-        data.Add("randomBonusId", randomBonusId);
-
-        StartCoroutine(HttpRequest(rp, data, CMD.GetRandomBonus));
+        Dictionary<int, int> dic = CommonFunction.GetRandomBonus(randomBonusId);
+        rp(dic);
     }
 
     /// <summary>
@@ -592,18 +475,6 @@ public partial class NWMng : MonoBehaviour
         var data = new NWData();
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetSubscriptionInfo));
-    }
-
-    /// <summary>
-    /// チュートリアル完了
-    /// </summary>
-    /// <param name="rp"></param>
-    public void GuideEnd(Action<JsonData> rp, int guidId)
-    {
-        var data = new NWData();
-        data.Add("guidId", guidId);
-
-        StartCoroutine(HttpRequest(rp, data, CMD.GuideEnd));
     }
 
     /// <summary>
@@ -800,21 +671,6 @@ public partial class NWMng : MonoBehaviour
     }
 
     /// <summary>
-    /// ミッションをクリア
-    /// </summary>
-    /// /// <param name="missionId">ミッションID</param>
-    /// <param name="missionType">ミッションタイプ</param>
-    public void ClearMission(Action<JsonData> rp, int missionId, int missionType, int count = 1)
-    {
-        var data = new NWData();
-        data.Add("missionId", missionId);
-        data.Add("missionType", missionType);
-        data.Add("count", count);
-
-        StartCoroutine(HttpRequest(rp, data, CMD.ClearMission));
-    }
-
-    /// <summary>
     /// ミッションボーナスをもらう
     /// </summary>
     /// <param name="missionId">ミッションID</param>
@@ -883,20 +739,6 @@ public partial class NWMng : MonoBehaviour
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetShopLimitedCount));
     }
-
-    /// <summary>
-    /// 装備データをゲット
-    /// </summary>
-    /// <param name="rp"></param>
-    /// <param name="itemGuid">アイテムGUID</param>
-    public void GetEquipmentInfo(Action<JsonData> rp, int itemGuid)
-    {
-        var data = new NWData();
-        data.Add("itemGuid", itemGuid);
-
-        StartCoroutine(HttpRequest(rp, data, CMD.GetEquipmentInfo));
-    }
-
     /// <summary>
     /// 装備一覧ゲット
     /// </summary>
@@ -912,13 +754,33 @@ public partial class NWMng : MonoBehaviour
     /// <summary>
     /// 装備鑑定
     /// </summary>
-    public void AppraisalEquipment(Action<JsonData> rp, int itemGuid, int equipmentId)
+    public void AppraisalEquipment(Action<string> rp, int itemGuid, int equipmentId)
     {
-        var data = new NWData();
-        data.Add("itemGuid", itemGuid);
-        data.Add("equipmentId", equipmentId);
+        var config = ConfigMng.E.Equipment[equipmentId];
+        string[] pondArr = config.PondId.Split(',');
+        string skillStr = "";
 
-        StartCoroutine(HttpRequest(rp, data, CMD.AppraisalEquipment));
+        for (int i = 0; i < pondArr.Length; i++)
+        {
+            int pondId = int.Parse(pondArr[i]);
+
+            List<int> bonusList = new List<int>();
+            CommonFunction.GetRandomBonusPond(pondId, ref bonusList);
+
+            if (bonusList.Count == 0)
+                continue;
+
+            if (string.IsNullOrEmpty(skillStr))
+            {
+                skillStr = bonusList[0].ToString();
+            }
+            else
+            {
+                skillStr = skillStr + "," + bonusList[0].ToString();
+            }
+        }
+
+        rp(skillStr);
     }
 
     /// <summary>
@@ -926,12 +788,10 @@ public partial class NWMng : MonoBehaviour
     /// </summary>
     /// <param name="rp"></param>
     /// <param name="exp"></param>
-    public void AddExp(Action<JsonData> rp, int exp)
+    public void AddExp(Action rp, int exp)
     {
-        var data = new NWData();
-        data.Add("exp", exp);
-
-        StartCoroutine(HttpRequest(rp, data, CMD.AddExp));
+        LocalDataMng.E.Data.UserDataT.exp += exp;
+        rp();
     }
 
     /// <summary>
@@ -941,22 +801,12 @@ public partial class NWMng : MonoBehaviour
     /// <param name="exp"></param>
     public void ArriveFloor(Action<JsonData> rp, int arrivedFloor)
     {
-        var data = new NWData();
-        data.Add("arrivedFloor", arrivedFloor);
+        if (arrivedFloor > LocalDataMng.E.Data.Statistics_userT.maxArrivedFloor)
+            LocalDataMng.E.Data.Statistics_userT.maxArrivedFloor = arrivedFloor;
 
-        StartCoroutine(HttpRequest(rp, data, CMD.ArriveFloor));
+        LocalDataMng.E.Data.Statistics_userT.lastFloorCount++;
     }
 
-    /// <summary>
-    /// 復活
-    /// </summary>
-    /// <param name="rp"></param>
-    public void Resurrection(Action<JsonData> rp)
-    {
-        var data = new NWData();
-
-        StartCoroutine(HttpRequest(rp, data, CMD.Resurrection));
-    }
 
     /// <summary>
     /// トータル設置済ブロック数を取得
@@ -974,12 +824,16 @@ public partial class NWMng : MonoBehaviour
     /// </summary>
     /// <param name="rp"></param>
     /// <param name="taskId"></param>
-    public void MainTaskEnd(Action<JsonData> rp, int taskId)
+    public void MainTaskEnd(Action rp, int taskId)
     {
-        var data = new NWData();
-        data.Add("taskId", taskId);
+        var config = ConfigMng.E.MainTask[taskId];
 
-        StartCoroutine(HttpRequest(rp, data, CMD.MainTaskEnd));
+        LocalDataMng.E.Data.limitedT.main_task = config.Next;
+        LocalDataMng.E.Data.limitedT.main_task_count = 0;
+
+        DataMng.E.AddBonus(config.Bonus);
+
+        rp();
     }
 
     /// <summary>
@@ -987,12 +841,10 @@ public partial class NWMng : MonoBehaviour
     /// </summary>
     /// <param name="rp"></param>
     /// <param name="count"></param>
-    public void AddMainTaskClearCount(Action<JsonData> rp, int count)
+    public void AddMainTaskClearCount(Action rp, int count)
     {
-        var data = new NWData();
-        data.Add("count", count);
-
-        StartCoroutine(HttpRequest(rp, data, CMD.AddMainTaskClearCount));
+        LocalDataMng.E.Data.limitedT.main_task_count++;
+        rp();
     }
 
     /// <summary>
@@ -1028,44 +880,6 @@ public partial class NWMng : MonoBehaviour
         data.Add("step", step);
 
         StartCoroutine(HttpRequest(rp, data, CMD.GetLoginBonus));
-    }
-
-    /// <summary>
-    /// 設計図アップロード回数を取得
-    /// </summary>
-    /// <param name="rp"></param>
-    public void GetTotalUploadBlueprintCount(Action<JsonData> rp)
-    {
-        var data = new NWData();
-
-        StartCoroutine(HttpRequest(rp, data, CMD.GetTotalUploadBlueprintCount));
-    }
-
-    /// <summary>
-    /// ホームデータをサーバーにセーブ
-    /// </summary>
-    /// <param name="rp"></param>
-    /// <param name="homedata"></param>
-    public void SaveHomeData(Action<JsonData> rp, string homedata)
-    {
-        if (DataMng.E.UserData == null)
-            return;
-
-        var data = new NWData();
-        data.Add("homedata", homedata);
-
-        StartCoroutine(HttpRequest(rp, data, CMD.SaveHomeData));
-    }
-
-    /// <summary>
-    /// ホームデータをサーバーからロード
-    /// </summary>
-    /// <param name="rp"></param>
-    public void LoadHomeData(Action<JsonData> rp)
-    {
-        var data = new NWData();
-
-        StartCoroutine(HttpRequest(rp, data, CMD.LoadHomeData));
     }
 
     /// <summary>

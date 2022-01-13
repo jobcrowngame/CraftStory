@@ -79,20 +79,14 @@ public class BagUI : UIBase
 
         BagLG.E.Classification = BagLG.BagClassification.All;
 
-        NWMng.E.GetItems(() =>
-        {
-            RefreshItems();
-            RefreshSelectItemBtns();
+        RefreshItems();
+        RefreshSelectItemBtns();
 
-            GuideLG.E.Next();
-        });
-        NWMng.E.GetCoins((rp) =>
-        {
-            DataMng.GetCoins(rp);
-            Title.RefreshCoins();
-        });
+        Title.RefreshCoins();
 
         ResetExplanatory();
+
+        GuideLG.E.Next();
     }
     public override void Close()
     {

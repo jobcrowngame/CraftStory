@@ -1,5 +1,4 @@
 ﻿using JsonConfigData;
-using System;
 using System.Collections;
 
 using UnityEngine;
@@ -47,7 +46,7 @@ public class EquipSkillCell : UIBase
 
     IEnumerator ShowNewAddAnimationIE(int skillId)
     {
-        var effect = EffectMng.E.AddUIEffect<EffectBase>(EquipListLG.E.UI.transform, transform.position, EffectType.Gacha);
+        var effect = EffectMng.E.AddUIEffect<EffectBase>(transform, Vector3.zero, EffectType.Gacha);
         effect.Init();
 
         yield return new WaitForSeconds(1);

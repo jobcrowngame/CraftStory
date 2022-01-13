@@ -16,11 +16,13 @@ public class ItemData
     public string relationData { get; set; } // 連れてるデータ（設計図など）
     public string textureName { get; set; } // 設計図のテクスチャ
     public int islocked { get; set; } // 販売出来ないようにロック
+    public string skills { get; set; } // スキル
 
     public ItemType Type { get => (ItemType)Config.Type; }
     public ItemData() { }
     public ItemData(int itemId, int count)
     {
+        id = DataMng.E.GetNewItemGuid();
         this.itemId = itemId;
         this.count = count;
     }

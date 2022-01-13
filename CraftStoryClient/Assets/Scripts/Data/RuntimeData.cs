@@ -36,27 +36,6 @@ public class RuntimeData
     public DateTime SubscriptionUpdateTime03 { get; set; } // サブスクリプション 更新時間 3
 
     /// <summary>
-    /// 設計図チュートリアル完了のフラグ 0 = false 1 = true
-    /// </summary>
-    public int GuideEnd { get; set; }
-    /// <summary>
-    /// 市場チュートリアル完了のフラグ 0 = false 1 = true
-    /// </summary>
-    public int GuideEnd2 { get; set; }
-    /// <summary>
-    /// クラフトチュートリアル完了のフラグ 0 = false 1 = true
-    /// </summary>
-    public int GuideEnd3 { get; set; }
-    /// <summary>
-    /// 装備チュートリアル完了のフラグ 0 = false 1 = true
-    /// </summary>
-    public int GuideEnd4 { get; set; }
-    /// <summary>
-    /// 冒険チュートリアル完了のフラグ 0 = false 1 = true
-    /// </summary>
-    public int GuideEnd5 { get; set; }
-
-    /// <summary>
     /// 今のマップタイプ
     /// </summary>
     public MapType MapType { get; set; }

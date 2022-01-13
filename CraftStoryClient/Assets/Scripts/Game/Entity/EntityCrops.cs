@@ -94,13 +94,9 @@ public class EntityCrops : EntityBase
             count = 1;
         }
 
-        // アイテム追加
-        NWMng.E.AddItem((rp)=>
-        {
-            // ローカルのアイテム数変更
-            DataMng.E.AddItem(itemId, count);
-            HomeLG.E.AddItem(itemId, count);
-        }, itemId, count);
+        // ローカルのアイテム数変更
+        DataMng.E.AddItem(itemId, count);
+        HomeLG.E.AddItem(itemId, count);
 
         // エンティティインスタンスを削除
         WorldMng.E.MapCtl.DeleteEntity(this);
