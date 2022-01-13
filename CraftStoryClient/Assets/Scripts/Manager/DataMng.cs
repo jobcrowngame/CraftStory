@@ -152,6 +152,9 @@ public class DataMng : Single<DataMng>
         uData.AreaIndexX = 5;
         uData.AreaIndexX = 5;
 
+        uData.PlayerPositionX = 5;
+        uData.PlayerPositionZ = 5;
+
         LocalDataMng.E.Init();
     }
     #endregion
