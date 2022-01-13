@@ -4240,12 +4240,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7988186479230660709, guid: edd7afb2cd2795e49a6f80ca7dabd869, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7988186479230660709, guid: edd7afb2cd2795e49a6f80ca7dabd869, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7988186479230660712, guid: edd7afb2cd2795e49a6f80ca7dabd869, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7988186479230660714, guid: edd7afb2cd2795e49a6f80ca7dabd869, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7988186479831091449, guid: edd7afb2cd2795e49a6f80ca7dabd869, type: 3}
       propertyPath: m_LocalPosition.x
