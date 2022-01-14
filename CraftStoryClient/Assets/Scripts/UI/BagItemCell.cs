@@ -41,16 +41,9 @@ public class BagItemCell : UIBase
         if (itemData == null)
             return;
 
-        itemName.text = string.IsNullOrEmpty(ItemData.newName)
-            ? itemData.Config.Name
-            : itemData.newName;
+        itemName.text = itemData.Config.Name;
         Icon.sprite = ReadResources<Sprite>(itemData.Config.IconResourcesPath);
         itemCount.text = "x" + itemData.count;
-
-        if (itemData.Config.Type == (int)ItemType.Blueprint && !string.IsNullOrEmpty(itemData.textureName))
-        {
-            AWSS3Mng.E.DownLoadTexture2D(Icon, itemData.textureName);
-        }
 
         Equiped.gameObject.SetActive(
             CommonFunction.IsEquipment(itemData.itemId)

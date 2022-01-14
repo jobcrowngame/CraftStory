@@ -92,16 +92,7 @@ public class HomeItemBtn : UIBase
             // アイテムが変わった場合、Iconを更新
             if (itemData == null || newItemData.id != itemData.id)
             {
-
-                if (!string.IsNullOrEmpty(newItemData.textureName))
-                {
-                    AWSS3Mng.E.DownLoadTexture2D(Icon, newItemData.textureName);
-                }
-                else
-                {
-                    Icon.sprite = ReadResources<Sprite>(newItemData.Config.IconResourcesPath);
-                }
-
+                Icon.sprite = ReadResources<Sprite>(newItemData.Config.IconResourcesPath);
                 itemData = newItemData;
             }
 

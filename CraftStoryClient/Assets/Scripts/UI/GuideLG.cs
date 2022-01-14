@@ -233,8 +233,6 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         {
             itemId = 3002,
             count = 1,
-            newName = "ハウス",
-            relationData = config.Data,
             equipSite = 1,
         });
     }

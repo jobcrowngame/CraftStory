@@ -32,7 +32,6 @@ public class Main : MonoBehaviour
         yield return ResourcesMng.E.InitInitCoroutine();
         yield return LoadData();
         yield return NWMng.E.InitInitCoroutine();
-        yield return AWSS3Mng.E.InitInitCoroutine();
 
         UICtl.E.OpenUI<LoginUI>(UIType.Login);
         AudioMng.E.ShowBGM("bgm_01");

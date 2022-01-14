@@ -280,20 +280,6 @@ public class PlayerCtl : MonoBehaviour
                             builderPencil.End(newPos);
                         break;
 
-                    case ItemType.Blueprint:
-                        if (DataMng.E.RuntimeData.MapType == MapType.Guide)
-                        {
-                            BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.relationData);
-                        }
-                        else
-                        {
-                            NWMng.E.GetItemRelationData(selectItem.id, selectItem, () =>
-                            {
-                                BuilderPencil.UseBlueprint(Vector3Int.CeilToInt(pos), selectItem.relationData, selectItem.IsLocked);
-                            });
-                        }
-                        break;
-
                     case ItemType.Torch:
                         Lock = true;
                         CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos), dType);

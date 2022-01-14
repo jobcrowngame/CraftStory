@@ -345,8 +345,6 @@ public class DataMng : Single<DataMng>
             {
                 itemId = itemID,
                 count = count,
-                newName = newName,
-                relationData = data
             });
             if (action != null) action();
         }

@@ -263,7 +263,6 @@
     <Compile Include="Assets\Scripts\Manager\SettingMng.cs" />
     <Compile Include="Assets\Scripts\Data\MapData.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csShowAllEffect.cs" />
-    <Compile Include="Assets\Scripts\Cor\AWSS3Mng.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Blueprint.cs" />
     <Compile Include="Assets\Scripts\UI\SceneMain\BraveMain.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\MainSkill.cs" />

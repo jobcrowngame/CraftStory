@@ -26,10 +26,6 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             var loginRP = JsonMapper.ToObject<LoginRP>(rp.ToJson());
 
             LocalDataMng.E.Data.UserDataT.lv = loginRP.lv;
-            LocalDataMng.E.Data.UserDataT.myShopLv = loginRP.myShopLv;
-            LocalDataMng.E.Data.UserDataT.nickname = loginRP.nickname;
-            LocalDataMng.E.Data.UserDataT.comment = loginRP.comment;
-            LocalDataMng.E.Data.UserDataT.email = loginRP.email;
             LocalDataMng.E.Data.UserDataT.exp = loginRP.exp;
 
             LocalDataMng.E.Data.limitedT.main_task = loginRP.mainTaskID;
@@ -58,17 +54,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 DataMng.E.SetMapData(WorldMng.E.MapCtl.CreateMapData(100), MapType.Home);
                 ui.LoginResponse();
             }
-            // ローカルデータがある場合、サーバーにセーブ
-            else if (DataMng.E.GetHomeData() != null)
-            {
-                AWSS3Mng.E.SaveHomeData(DataMng.E.UserData.Account, DataMng.E.GetHomeData().ToStringData());
-                ui.LoginResponse();
-            }
-            // ローカルデータがない場合、サーバーからデータをもらう
-            else
-            {
-                LoadHomeData(5);
-            }
+
             // 強制表示お知らせ当日チェックマップがない場合は追加
             if (DataMng.E.UserData.PickupNoticeCheckMap == null)
             {
@@ -86,38 +72,6 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
 
             LocalDataMng.E.LoadData();
         }, DataMng.E.UserData.UserPW);
-    }
-
-    /// <summary>
-    /// S3から　ホームデータをロード
-    /// </summary>
-    /// <param name="retryCount"></param>
-    private void LoadHomeData(int retryCount)
-    {
-        AWSS3Mng.E.LoadHomeData(DataMng.E.UserData.Account, (rp) =>
-        {
-            if (!string.IsNullOrEmpty(rp))
-            {
-                DataMng.E.SetMapData(new MapData(rp), MapType.Home);
-            }
-            else
-            {
-                DataMng.E.SetMapData(WorldMng.E.MapCtl.CreateMapData(100), MapType.Home);
-            }
-
-            ui.LoginResponse();
-        }, ()=>
-        {
-            if (retryCount > 1)
-            {
-                LoadHomeData(--retryCount);
-            }
-            else
-            {
-                DataMng.E.SetMapData(WorldMng.E.MapCtl.CreateMapData(100), MapType.Home);
-                ui.LoginResponse();
-            }
-        });
     }
 
     private struct LoginRP

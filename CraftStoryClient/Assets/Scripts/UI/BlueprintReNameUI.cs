@@ -75,7 +75,6 @@ public class BlueprintReNameUI : UIBase
             else
             {
                 // S3にテクスチャをアップロード
-                AWSS3Mng.E.UploadTexture2D(texture, fileName);
                 PlayerCtl.E.UseSelectItem();
                 Close();
             }
