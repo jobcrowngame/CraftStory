@@ -39,20 +39,6 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             DataMng.E.token = loginRP.token;
             //TaskMng.E.CheckClearedCount();
 
-            // マイショップデータ
-            NWMng.E.GetMyShopInfo((rp) =>
-            {
-                DataMng.E.MyShop.Clear();
-                if (!string.IsNullOrEmpty(rp.ToString()))
-                {
-                    List<MyShopItem> shopItems = JsonMapper.ToObject<List<MyShopItem>>(rp.ToJson());
-                    for (int i = 0; i < shopItems.Count; i++)
-                    {
-                        DataMng.E.MyShop.MyShopItem[i] = shopItems[i];
-                    }
-                }
-            });
-
             NWMng.E.GetMaxBraveLevel((rp) =>
             {
                 LocalDataMng.E.Data.Statistics_userT.maxArrivedFloor = (int)rp["maxArrivedFloor"];
@@ -98,7 +84,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 DataMng.E.UserData.FreeFoodEated = 1;
             }
 
-            LocalDataMng.E.LoadServerData();
+            LocalDataMng.E.LoadData();
         }, DataMng.E.UserData.UserPW);
     }
 

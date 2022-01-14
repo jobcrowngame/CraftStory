@@ -89,6 +89,28 @@ public class AdventureCtl : Single<AdventureCtl>
     public void AddExp(int count)
     {
         curExp += count;
+
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+        {
+            LocalDataMng.E.Data.UserDataT.exp += count;
+            CheckLevelUp();
+        }
+    }
+
+    private void CheckLevelUp()
+    {
+        var lvUpExp = ConfigMng.E.Character[LocalDataMng.E.Data.UserDataT.lv].LvUpExp;
+        if (LocalDataMng.E.Data.UserDataT.exp >= lvUpExp)
+        {
+            LocalDataMng.E.Data.UserDataT.lv++;
+            LocalDataMng.E.Data.UserDataT.exp -= lvUpExp;
+
+            // add effect
+            HomeLG.E.UI.OnLevelUp();
+
+            // パラメータ更新
+            WorldMng.E.CharacterCtl.getPlayer().Parameter.LevelUp(LocalDataMng.E.Data.UserDataT.lv);
+        }
     }
 
     private void AddBuff()

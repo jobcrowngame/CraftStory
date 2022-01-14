@@ -197,6 +197,8 @@ public partial class HomeUI : UIBase
         Image toImage = TaskOverview.GetComponent<Image>();
         toImage.color = new Color(0f, 0f, 0f, 1 / 256f);
         PlayerCtl.E.Pause(false);
+
+        LevelUp.gameObject.SetActive(false);
     }
 
     public void OnDestroy()

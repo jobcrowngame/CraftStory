@@ -112,25 +112,26 @@ public class GiftBoxUI : UIBase
             }
             else
             {
-                NWMng.E.AddExp(() =>
+                LocalDataMng.E.Data.UserDataT.exp += AdventureCtl.E.CurExp;
+
+                foreach (var bonus in AdventureCtl.E.BonusList)
                 {
-                    NWMng.E.ClearAdventure((rp) =>
+                    DataMng.E.AddBonus(bonus);
+                }
+
+                if (okBtnCallBack != null)
+                {
+                    PlayerCtl.E.Lock = false;
+                    ClearCell(itemGridRoot);
+                    if (AdventureCtl.E.CurExp > 0)
                     {
-                        if (okBtnCallBack != null)
-                        {
-                            PlayerCtl.E.Lock = false;
-                            ClearCell(itemGridRoot);
-                            if (AdventureCtl.E.CurExp > 0)
-                            {
-                                StartCoroutine(StartAnimIE());
-                            }
-                            else
-                            {
-                                okBtnCallBack();
-                            }
-                        }
-                    }, AdventureCtl.E.BonusList);
-                }, AdventureCtl.E.CurExp);
+                        StartCoroutine(StartAnimIE());
+                    }
+                    else
+                    {
+                        okBtnCallBack();
+                    }
+                }
             }
         });
 
@@ -153,7 +154,7 @@ public class GiftBoxUI : UIBase
         Name.text = DataMng.E.RuntimeData.NickName;
         Lv.text = "Lv." + LocalDataMng.E.Data.UserDataT.lv;
         AddExp.text = "+" + addedExp;
-        Slider.value = DataMng.E.RuntimeData.Exp / (float)ConfigMng.E.Character[LocalDataMng.E.Data.UserDataT.lv].LvUpExp;
+        Slider.value = LocalDataMng.E.Data.UserDataT.exp / (float)ConfigMng.E.Character[LocalDataMng.E.Data.UserDataT.lv].LvUpExp;
 
 #if UNITY_ANDROID
         AdvertisingBtn.gameObject.SetActive(false);
@@ -215,6 +216,8 @@ public class GiftBoxUI : UIBase
         {
             okBtnCallBack();
         }
+
+        LocalDataMng.E.Data.UserDataT.exp = (int)DataMng.E.RuntimeData.Exp;
     }
     private IEnumerator LevelUpIE()
     {

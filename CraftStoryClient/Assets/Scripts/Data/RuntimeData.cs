@@ -8,21 +8,6 @@ public class RuntimeData
     public string NickName { get; set; }
 
     /// <summary>
-    /// コメント
-    /// </summary>
-    public string Comment { get; set; }
-
-    /// <summary>
-    /// メールアドレス
-    /// </summary>
-    public string Email { get; set; }
-
-    /// <summary>
-    /// レベル
-    /// </summary>
-    public int Lv { get; set; }
-
-    /// <summary>
     /// 経験値
     /// </summary>
     public float Exp { get; set; }

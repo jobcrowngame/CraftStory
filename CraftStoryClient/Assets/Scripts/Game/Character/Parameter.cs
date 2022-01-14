@@ -42,4 +42,9 @@ public class Parameter
     {
         CurHP = AllHP;
     }
+
+    public void LevelUp(int characterId)
+    {
+        mCharacterId = characterId;
+    }
 }

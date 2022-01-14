@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public partial class HomeUI
 {
     Transform battle { get => FindChiled("Battle"); }
     Transform PointGet { get => FindChiled("PointGet"); }
+    Transform LevelUp { get => FindChiled<Transform>("LevelUp"); }
+
 
     Image hpBar { get => FindChiled<Image>("HpImg", battle); }
     Text hpText { get => FindChiled<Text>("HpText", battle); }
@@ -85,5 +88,17 @@ public partial class HomeUI
     public void LockUnTarget(Transform target)
     {
         PlayerCtl.E.CameraCtl.LockUnTarget(target);
+    }
+
+    public void OnLevelUp()
+    {
+        StartCoroutine(OnLevelUpIE());
+    }
+    private IEnumerator OnLevelUpIE()
+    {
+        LevelUp.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+
+        LevelUp.gameObject.SetActive(false);
     }
 }

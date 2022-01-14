@@ -47,21 +47,6 @@ public class DataMng : Single<DataMng>
     private MapData mMarketData;
     private MapData mEventData;
 
-    /// <summary>
-    /// マイショップデータ
-    /// </summary>
-    public MyShopData MyShop
-    {
-        get
-        {
-            if (myShop == null)
-                myShop = new MyShopData();
-            return myShop;
-        }
-        set => myShop = value;
-    }
-    private MyShopData myShop;
-
     public List<ItemData> Items { 
         get => RuntimeData.MapType == MapType.Guide ? guideItems : LocalDataMng.E.Data.ItemT.list;
     }
@@ -311,15 +296,6 @@ public class DataMng : Single<DataMng>
             if (HomeLG.E.UI != null) HomeLG.E.UI.RefreshItemBtns();
         //}
     }
-    //public void AddCoin(int id, int count)
-    //{
-    //    switch (id)
-    //    {
-    //        case 9000: LocalDataMng.E.Data.UserDataT.coin1 += count; break;
-    //        case 9001: LocalDataMng.E.Data.UserDataT.coin2 += count; break;
-    //        case 9002: LocalDataMng.E.Data.UserDataT.coin3 += count; break;
-    //    }
-    //}
 
     public void AddBonus(int bonusId)
     {
