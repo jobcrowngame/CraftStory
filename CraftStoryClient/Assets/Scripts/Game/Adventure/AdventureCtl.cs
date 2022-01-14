@@ -60,7 +60,7 @@ public class AdventureCtl : Single<AdventureCtl>
     public void GetBonus(Action callback)
     {
         // 手に入れたアイテムがない場合、通信しない
-        if (BonusList.Count <= 0)
+        if (BonusList.Count <= 0 || DataMng.E.RuntimeData.MapType == MapType.AreaMap)
         {
             callback();
             return;

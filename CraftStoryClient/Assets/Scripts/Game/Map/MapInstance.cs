@@ -62,6 +62,10 @@ public class MapInstance : MonoBehaviour
         }
         return null;
     }
+    public MapData.MapCellData GetCellData(Vector3Int localPosition)
+    {
+        return Data.Map[localPosition.x, localPosition.y, localPosition.z];
+    }
 
     private void OnDestroy()
     {

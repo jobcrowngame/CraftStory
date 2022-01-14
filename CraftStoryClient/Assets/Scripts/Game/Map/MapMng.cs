@@ -353,7 +353,7 @@ public class MapMng
         if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
         {
             var cell = GetMapCell(entity.WorldPos);
-            cell.OnDestroy();
+            cell.Map.OnDestroyEntity(cell);
             cell.Map.CombineMesh();
         }
         else
@@ -419,6 +419,19 @@ public class MapMng
 
         return WorldMng.E.MapMng.mapInstanceArr[indexX, indexZ].GetCell(new Vector3Int(localPosX, worldPosition.y, localPosZ));
     }
+    public static MapData.MapCellData GetMapCellData(Vector3Int worldPosition)
+    {
+        if (IsOutRange(WorldMng.E.MapMng.MapSize, worldPosition))
+            return new MapData.MapCellData() { entityID = -1 };
+
+        int indexX = worldPosition.x / SettingMng.AreaMapSize;
+        int indexZ = worldPosition.z / SettingMng.AreaMapSize;
+
+        int localPosX = worldPosition.x % SettingMng.AreaMapSize;
+        int localPosZ = worldPosition.z % SettingMng.AreaMapSize;
+
+        return WorldMng.E.MapMng.mapInstanceArr[indexX, indexZ].GetCellData(new Vector3Int(localPosX, worldPosition.y, localPosZ));
+    }
     public static MapInstance GetMapInstance(Vector3Int worldPosition)
     {
         int indexX = worldPosition.x / SettingMng.AreaMapSize;
@@ -452,11 +465,11 @@ public class MapMng
         if (IsOutRange(WorldMng.E.MapMng.MapSize, WorldPosition))
             return false;
 
-        var cell = GetMapCell(WorldPosition);
-        if (cell == null)
-            return true;
+        var cellData = GetMapCellData(WorldPosition);
+        if (cellData.entityID < 0)
+            return false;
 
-        return cell.IsSurface;
+        return IsSurface(cellData.entityID);
     }
 
     public static bool IsSurface(int entityId)
