@@ -113,6 +113,7 @@ public class MapCell
     {
         if (Entity != null) Entity.DestroyObject();
         data.entityID = 0;
+        Map.Data.Map[LocalPosition.x, LocalPosition.y, LocalPosition.z].entityID = 0;
         Entity = null;
 
         // 松明の場合、削除

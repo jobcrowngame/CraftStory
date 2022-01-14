@@ -214,7 +214,7 @@ public class MapData
 
                 case EntityType.Crops:
                     entity = CommonFunction.Instantiate<EntityCrops>(config.Resources, parent, pos);
-                    WorldMng.E.MapCtl.AddCrops(pos, (EntityCrops)entity);
+                    WorldMng.E.MapMng.AddCrops(pos, (EntityCrops)entity);
                     break;
 
                 case EntityType.Resources:

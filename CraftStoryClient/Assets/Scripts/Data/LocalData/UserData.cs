@@ -60,12 +60,21 @@ public class UserData
     {
         get
         {
-            if (mCropsTimers == null) mCropsTimers = new Dictionary<string, DateTime>();
-            return mCropsTimers;
+            if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+            {
+                if (mCyberMapCropsTimers == null) mCyberMapCropsTimers = new Dictionary<string, DateTime>();
+                return mCyberMapCropsTimers;
+            }
+            else
+            {
+                if (mCropsTimers == null) mCropsTimers = new Dictionary<string, DateTime>();
+                return mCropsTimers;
+            }
         }
         set => mCropsTimers = value;
     }
     Dictionary<string, DateTime> mCropsTimers;
+    Dictionary<string, DateTime> mCyberMapCropsTimers;
 
     public int NewItemGuid = 1;
 }

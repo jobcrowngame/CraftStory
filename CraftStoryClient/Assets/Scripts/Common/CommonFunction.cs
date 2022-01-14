@@ -25,17 +25,7 @@ public class CommonFunction
     /// <returns></returns>
     public static T CreateGlobalObject<T>() where T : Component
     {
-        Transform parent;
-        if (Main.E == null)
-        {
-            Logger.Error("Main E is null.({0})", typeof(T).ToString());
-            parent = null;
-        }
-        else
-        {
-            parent = Main.E.transform;
-        }
-
+        Transform parent = Main.E == null ? null : Main.E.transform;
         var obj = new GameObject();
         obj.transform.parent = parent;
         var entity = obj.AddComponent<T>();
@@ -406,23 +396,6 @@ public class CommonFunction
     }
 
     /// <summary>
-    /// びっくりマックを表しするかの判断
-    /// </summary>
-    /// <returns></returns>
-    public static bool MenuRedPoint()
-    {
-        bool ret = false;
-        if (!ret) ret = NewMessage();
-        return ret;
-    }
-    public static bool NewMessage()
-    {
-        return DataMng.E.RuntimeData.NewEmailCount > 0
-            ? true
-            : false;
-    }
-
-    /// <summary>
     /// メンテナンス場合の動作
     /// </summary>
     public static void Maintenance()
@@ -453,34 +426,6 @@ public class CommonFunction
             QuitGame();
         });
     }
-
-
-    /// <summary>
-    /// 指定された文字列がメールアドレスとして正しい形式か検証する
-    /// </summary>
-    /// <param name="address">検証する文字列</param>
-    /// <returns>正しい時はTrue。正しくない時はFalse。</returns>
-    public static bool IsValidMailAddress(string address)
-    {
-        if (string.IsNullOrEmpty(address))
-        {
-            return false;
-        }
-
-        try
-        {
-            System.Net.Mail.MailAddress a =
-                new System.Net.Mail.MailAddress(address);
-        }
-        catch (FormatException)
-        {
-            //FormatExceptionがスローされた時は、正しくない
-            return false;
-        }
-
-        return true;
-    }
-
 
     /// <summary>
     /// テクスチャからSpriteに変換

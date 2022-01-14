@@ -49,6 +49,11 @@ public class EntityCrops : EntityBase
         CheckState();
     }
 
+    public void OnDestroy()
+    {
+        WorldMng.E.MapMng.RemoveCrops(WorldPos);
+    }
+
     // 毎秒実行
     public void Update1S()
     {
@@ -99,7 +104,7 @@ public class EntityCrops : EntityBase
         HomeLG.E.AddItem(itemId, count);
 
         // エンティティインスタンスを削除
-        WorldMng.E.MapCtl.DeleteEntity(this);
+        WorldMng.E.MapMng.DeleteEntity(this);
 
         // 削除Effectを追加
         var effect = EffectMng.E.AddEffect<EffectBase>(transform.position, EffectType.BlockDestroyEnd);
@@ -110,8 +115,7 @@ public class EntityCrops : EntityBase
 
     public void OnRemoveCropsEntity()
     {
-        TimeZoneMng.E.RemoveTimerEvent03(Update1S);
-        WorldMng.E.MapCtl.RemoveCrops(LocalPos);
+        WorldMng.E.MapMng.RemoveCrops(LocalPos);
     }
 
     /// <summary>

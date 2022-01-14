@@ -9,10 +9,14 @@ public class Main : MonoBehaviour
 {
     public static Transform E;
 
+    private void Awake()
+    {
+        E = transform;
+    }
+
     void Start()
     {
         DontDestroyOnLoad(this);
-        E = transform;
 
         StartCoroutine(Init());
     }

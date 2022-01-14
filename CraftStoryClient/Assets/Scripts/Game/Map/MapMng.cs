@@ -16,6 +16,14 @@ public class MapMng
     MapInstance[,] mapInstanceArr;
     private int loadAreaRange = 2;
 
+    private Dictionary<Vector3Int, EntityCrops> cropsList = new Dictionary<Vector3Int, EntityCrops>();
+    private Dictionary<Vector3Int, EntityCrops> areaMapCropsList = new Dictionary<Vector3Int, EntityCrops>();
+
+    public MapMng()
+    {
+        TimeZoneMng.E.AddTimerEvent03(Update1S);
+    }
+
     public int IndexX
     {
         get => DataMng.E.UserData.AreaIndexX;
@@ -102,6 +110,19 @@ public class MapMng
             PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
         }
     }
+
+    public void ClearMesh()
+    {
+        if (MapInstanceArr == null)
+            return;
+
+        foreach (var item in MapInstanceArr)
+        {
+            item.CombineMeshCtl.Clear();
+        }
+    }
+
+
 
     /// <summary>
     /// エリア変更
@@ -325,6 +346,62 @@ public class MapMng
         }
 
         return list;
+    }
+
+    public void DeleteEntity(EntityBase entity)
+    {
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+        {
+            var cell = GetMapCell(entity.WorldPos);
+            cell.OnDestroy();
+            cell.Map.CombineMesh();
+        }
+        else
+        {
+            WorldMng.E.MapCtl.DeleteEntity(entity);
+        }
+    }
+
+    private void Update1S()
+    {
+        foreach (var item in cropsList.Values)
+        {
+            item.Update1S();
+        }
+
+        foreach (var item in areaMapCropsList.Values)
+        {
+            item.Update1S();
+        }
+    }
+    public void AddCrops(Vector3Int pos, EntityCrops entity)
+    {
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+        {
+            areaMapCropsList[pos] = entity;
+        }
+        else
+        {
+            cropsList[pos] = entity;
+        }
+    }
+    public void RemoveCrops(Vector3Int pos)
+    {
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+        {
+            areaMapCropsList.Remove(pos);
+            DataMng.E.UserData.CropsTimers.Remove(CommonFunction.Vector3ToString(pos));
+        }
+        else
+        {
+            cropsList.Remove(pos);
+            DataMng.E.UserData.CropsTimers.Remove(CommonFunction.Vector3ToString(pos));
+        }
+    }
+    public void ClearCrops()
+    {
+        areaMapCropsList.Clear();
+        cropsList.Clear();
     }
 
     #region static function
@@ -552,7 +629,7 @@ public class MapMng
                     return false;
 
                 // 作りたい範囲内に他のブロックがある場合、NG
-                if (mdata.Map[item.x, item.y, item.z].entityID > 0)
+                if (GetMapCell(item).EntityId > 0)
                     return false;
             }
         }

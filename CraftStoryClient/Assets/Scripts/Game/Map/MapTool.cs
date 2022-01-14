@@ -95,7 +95,7 @@ public class MapTool
 
                 case EntityType.Crops:
                     entity = CommonFunction.Instantiate<EntityCrops>(cell.Config.Resources, parent, pos);
-                    WorldMng.E.MapCtl.AddCrops(pos, (EntityCrops)entity);
+                    WorldMng.E.MapMng.AddCrops(entity.WorldPos, (EntityCrops)entity);
                     break;
 
                 case EntityType.Resources:

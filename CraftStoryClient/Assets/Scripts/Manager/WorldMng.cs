@@ -41,12 +41,12 @@ public class WorldMng : MonoBehaviour
 
         // 定期時間でローカルデータをセーブ
         timer = SettingMng.AutoSaveDataTime;
-        TimeZoneMng.E.AddTimerEvent03(AudoSave);
+        TimeZoneMng.E.AddTimerEvent03(AutomaticSave);
     }
 
     private void OnDestroy()
     {
-        TimeZoneMng.E.RemoveTimerEvent03(AudoSave);
+        TimeZoneMng.E.RemoveTimerEvent03(AutomaticSave);
     }
 
     private void FixedUpdate()
@@ -58,7 +58,8 @@ public class WorldMng : MonoBehaviour
     {
         // メッシュをクリア
         MapCtl.ClearMesh();
-        MapCtl.ClearCrops();
+        MapMng.ClearMesh();
+        MapMng.ClearCrops();
 
         // キャラクタクリア
         CharacterCtl.ClearCharacter();
@@ -108,7 +109,7 @@ public class WorldMng : MonoBehaviour
     /// <summary>
     /// 定期時間でローカルデータをセーブ
     /// </summary>
-    public void AudoSave()
+    public void AutomaticSave()
     {
         timer--;
         if (timer <= 0)

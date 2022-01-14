@@ -15,37 +15,9 @@ public class MapCtl
     private CombineMeshCtl CombineMeshObj { get => CellParent.GetComponent<CombineMeshCtl>(); }
     public Transform EffectParent { get => effectParent; }
 
-    private Dictionary<Vector3Int, EntityCrops> cropsList;
-
     public MapCtl()
     {
         mapFactory = new MapDataFactory();
-        cropsList = new Dictionary<Vector3Int, EntityCrops>();
-
-        TimeZoneMng.E.AddTimerEvent03(Update1S);
-    }
-
-    private void Update1S()
-    {
-        foreach (var item in cropsList.Values)
-        {
-            item.Update1S();
-        }
-    }
-
-    public void AddCrops(Vector3Int pos, EntityCrops entity)
-    {
-        cropsList[pos] = entity;
-    }
-    public void RemoveCrops(Vector3Int pos)
-    {
-        cropsList.Remove(pos);
-        DataMng.E.UserData.CropsTimers.Remove(CommonFunction.Vector3ToString(pos));
-    }
-
-    public void ClearCrops()
-    {
-        cropsList.Clear();
     }
 
     /// <summary>

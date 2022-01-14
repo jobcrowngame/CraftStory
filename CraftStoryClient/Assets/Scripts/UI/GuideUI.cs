@@ -118,16 +118,7 @@ public class GuideUI : UIBase
         if (DataMng.E.RuntimeData.GuideId == 3)
         {
             LocalDataMng.E.Data.limitedT.guide_end3 = 1;
-            DataMng.E.RuntimeData.NewEmailCount++;
         }
-    }
-
-    /// <summary>
-    /// ’‚éWindow‚ğ•Â‚¶‚é
-    /// </summary>
-    public void CloseChatWindow()
-    {
-        Chat.gameObject.SetActive(false);
     }
 
     public void NextStep(int stepId)
