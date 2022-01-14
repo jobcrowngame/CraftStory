@@ -8,15 +8,11 @@ using System.Threading.Tasks;
 public class LocalData
 {
     public ItemTable ItemT;
-    public LimitedTable LimitedT;
-    public StatisticsUserTable StatisticsUserT;
     public UserDataTable UserDataT;
 
     public LocalData()
     {
         ItemT = new ItemTable();
-        LimitedT = new LimitedTable();
-        StatisticsUserT = new StatisticsUserTable();
         UserDataT = new UserDataTable();
     }
 }

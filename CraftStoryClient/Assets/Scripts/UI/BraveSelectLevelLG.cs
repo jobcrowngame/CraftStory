@@ -6,7 +6,7 @@ public class BraveSelectLevelLG : UILogicBase<BraveSelectLevelLG, BraveSelectLev
 {
     public void AddCells()
     {
-        int maxArrivedFloor = LocalDataMng.E.Data.StatisticsUserT.maxArrivedFloor;
+        int maxArrivedFloor = LocalDataMng.E.Data.UserDataT.maxArrivedFloor;
         int count = Mathf.Abs(maxArrivedFloor - 1) / 5;
 
         UI.SetMaxFloor(maxArrivedFloor);

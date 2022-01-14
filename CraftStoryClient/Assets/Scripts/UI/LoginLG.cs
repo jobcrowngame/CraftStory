@@ -28,16 +28,16 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
             LocalDataMng.E.Data.UserDataT.lv = loginRP.lv;
             LocalDataMng.E.Data.UserDataT.exp = loginRP.exp;
 
-            LocalDataMng.E.Data.LimitedT.main_task = loginRP.mainTaskID;
-            LocalDataMng.E.Data.LimitedT.main_task_count = loginRP.mainTaskClearedCount;
-            LocalDataMng.E.Data.LimitedT.guide_end3 = loginRP.guide_end3;
+            LocalDataMng.E.Data.UserDataT.main_task = loginRP.mainTaskID;
+            LocalDataMng.E.Data.UserDataT.main_task_count = loginRP.mainTaskClearedCount;
+            LocalDataMng.E.Data.UserDataT.guide_end3 = loginRP.guide_end3;
 
             DataMng.E.token = loginRP.token;
             //TaskMng.E.CheckClearedCount();
 
             NWMng.E.GetMaxBraveLevel((rp) =>
             {
-                LocalDataMng.E.Data.StatisticsUserT.maxArrivedFloor = (int)rp["maxArrivedFloor"];
+                LocalDataMng.E.Data.UserDataT.maxArrivedFloor = (int)rp["maxArrivedFloor"];
             });
 
             NWMng.E.GetTotalSetBlockCount((rp) =>
