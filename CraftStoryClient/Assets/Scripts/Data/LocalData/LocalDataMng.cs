@@ -24,7 +24,7 @@ public class LocalDataMng : Single<LocalDataMng>
         localData = new LocalData();
     }
 
-    public void LoadServerData()
+    public void LoadData()
     {
         if (DataMng.E.UserData.LocalDataLoaded)
         {
