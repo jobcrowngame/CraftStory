@@ -341,8 +341,6 @@ public partial class NWMng : MonoBehaviour
     {
         if (arrivedFloor > LocalDataMng.E.Data.StatisticsUserT.maxArrivedFloor)
             LocalDataMng.E.Data.StatisticsUserT.maxArrivedFloor = arrivedFloor;
-
-        LocalDataMng.E.Data.StatisticsUserT.lastFloorCount++;
     }
 
     /// <summary>
