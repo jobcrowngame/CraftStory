@@ -7,10 +7,10 @@ public class TaskMng : Single<TaskMng>
     /// </summary>
     public int MainTaskId
     {
-        get => LocalDataMng.E.Data.limitedT.main_task;
+        get => LocalDataMng.E.Data.UserDataT.main_task;
         set
         {
-            LocalDataMng.E.Data.limitedT.main_task = value;
+            LocalDataMng.E.Data.UserDataT.main_task = value;
             //CheckClearedCount();
         }
     }

@@ -339,10 +339,8 @@ public partial class NWMng : MonoBehaviour
     /// <param name="exp"></param>
     public void ArriveFloor(Action<JsonData> rp, int arrivedFloor)
     {
-        if (arrivedFloor > LocalDataMng.E.Data.Statistics_userT.maxArrivedFloor)
-            LocalDataMng.E.Data.Statistics_userT.maxArrivedFloor = arrivedFloor;
-
-        LocalDataMng.E.Data.Statistics_userT.lastFloorCount++;
+        if (arrivedFloor > LocalDataMng.E.Data.UserDataT.maxArrivedFloor)
+            LocalDataMng.E.Data.UserDataT.maxArrivedFloor = arrivedFloor;
     }
 
     /// <summary>
@@ -363,7 +361,7 @@ public partial class NWMng : MonoBehaviour
     /// <param name="count"></param>
     public void AddMainTaskClearCount(Action rp, int count)
     {
-        LocalDataMng.E.Data.limitedT.main_task_count++;
+        LocalDataMng.E.Data.UserDataT.main_task_count++;
         rp();
     }
 

@@ -71,7 +71,6 @@
     <Compile Include="Assets\Scripts\Manager\ResourcesMng.cs" />
     <Compile Include="Assets\Scripts\UI\Common\WaitingUI.cs" />
     <Compile Include="Assets\Scripts\Game\Player\CameraCtl.cs" />
-    <Compile Include="Assets\Scripts\Data\LocalData\limitedTable.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\LodingTips.cs" />
     <Compile Include="Assets\Scripts\UI\ChatUI.cs" />
     <Compile Include="Assets\Scripts\UI\EquipListUI.cs" />
@@ -118,7 +117,6 @@
     <Compile Include="Assets\Scripts\Game\Map\MapEntitysPool.cs" />
     <Compile Include="Assets\Scripts\Game\Character\Parameter.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csAnimationSpin.cs" />
-    <Compile Include="Assets\Scripts\Data\LocalData\Statistics_userTable.cs" />
     <Compile Include="Assets\Scripts\UI\BagLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Item.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\GuideStep.cs" />

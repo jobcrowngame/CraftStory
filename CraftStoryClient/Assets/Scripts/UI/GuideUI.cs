@@ -117,8 +117,16 @@ public class GuideUI : UIBase
         // 最初のクラフトチュートリアル完了
         if (DataMng.E.RuntimeData.GuideId == 3)
         {
-            LocalDataMng.E.Data.limitedT.guide_end3 = 1;
+            LocalDataMng.E.Data.UserDataT.guide_end3 = 1;
         }
+    }
+
+    /// <summary>
+    /// 喋るWindowを閉じる
+    /// </summary>
+    public void CloseChatWindow()
+    {
+        Chat.gameObject.SetActive(false);
     }
 
     public void NextStep(int stepId)
