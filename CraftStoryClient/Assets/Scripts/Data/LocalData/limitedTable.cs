@@ -1,9 +1,9 @@
 ﻿using System;
 
 [Serializable]
-public class limitedTable
+public class LimitedTable
 {
-    public limitedTable()
+    public LimitedTable()
     {
         main_task = 1;
     }

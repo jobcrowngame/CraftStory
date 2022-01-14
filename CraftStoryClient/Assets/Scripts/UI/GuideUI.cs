@@ -117,7 +117,7 @@ public class GuideUI : UIBase
         // 最初のクラフトチュートリアル完了
         if (DataMng.E.RuntimeData.GuideId == 3)
         {
-            LocalDataMng.E.Data.limitedT.guide_end3 = 1;
+            LocalDataMng.E.Data.LimitedT.guide_end3 = 1;
             DataMng.E.RuntimeData.NewEmailCount++;
         }
     }

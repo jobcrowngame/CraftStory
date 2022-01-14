@@ -636,7 +636,7 @@ public class PlayerCtl : MonoBehaviour
         // チュートリアルマップ以外、クラフトチュートリアル完了、現在武器装備してない場合
         // デフォルトで10001を装備する
         if (DataMng.E.RuntimeData.MapType != MapType.Guide &&
-            LocalDataMng.E.Data.limitedT.guide_end3 == 1 &&
+            LocalDataMng.E.Data.LimitedT.guide_end3 == 1 &&
             GetEquipByItemType(ItemType.Weapon) == null)
         {
             // チュートリアルが完了後、デフォルトで武器を鑑定して装備
