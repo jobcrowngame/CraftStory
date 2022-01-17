@@ -49,7 +49,6 @@ public class CharacterFollow : CharacterBase
                 
                 TaskMng.E.Next();
 
-                LocalDataMng.E.Data.UserDataT.main_task = TaskMng.E.MainTaskConfig.Next;
                 LocalDataMng.E.Data.UserDataT.main_task_count = 0;
 
                 if (HomeLG.E.UI != null)
