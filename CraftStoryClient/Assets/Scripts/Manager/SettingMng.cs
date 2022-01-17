@@ -45,7 +45,7 @@ public class SettingMng : Single<SettingMng>
     public const int MyShopCostLv2 = 500;
 
     // ゲーム内一日秒数
-    public const int GameDaySeconds = 60 * 18;
+    public const int GameDaySeconds = 60 * 2;
 
     // Skybox　明るさ最小
     public const float MinAmbientIntensity = 0.8f;
@@ -137,11 +137,13 @@ public class SettingMng : Single<SettingMng>
     /// エリアマップで敵が生成する最大数
     /// </summary>
     public const int AreaMapCreateMonsterMaxCount = 6;
+    public const int AreaMapCreateMonsterNightMaxCount = 12; // 夜
 
     /// <summary>
     /// エリアマップで敵が生成する間隔（秒）
     /// </summary>
     public const int AreaMapCreateMonsterInterval = 300;
+    public const int AreaMapCreateMonsterNightInterval = 150; // 夜
 
     /// <summary>
     /// エリアマップで敵がデスポーン時間（秒）

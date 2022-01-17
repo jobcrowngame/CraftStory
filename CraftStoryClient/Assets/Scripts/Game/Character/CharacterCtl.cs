@@ -229,14 +229,18 @@ public class CharacterCtl
         if (player == null)
             return;
 
+        // 夜になった場合、敵スポーン時間チェックして更新
+        if (WorldMng.E.GameTimeCtl.IsNight && createAreaMapMonsterTimer > SettingMng.AreaMapCreateMonsterNightInterval)
+            createAreaMapMonsterTimer = SettingMng.AreaMapCreateMonsterNightInterval;
+
         createAreaMapMonsterTimer--;
         if (createAreaMapMonsterTimer > 0)
             return;
 
-        createAreaMapMonsterTimer = SettingMng.AreaMapCreateMonsterInterval;
+        createAreaMapMonsterTimer = WorldMng.E.GameTimeCtl.IsNight ? SettingMng.AreaMapCreateMonsterNightInterval : SettingMng.AreaMapCreateMonsterInterval;
+        int defaltMaxCount = WorldMng.E.GameTimeCtl.IsNight ? SettingMng.AreaMapCreateMonsterNightMaxCount : SettingMng.AreaMapCreateMonsterMaxCount;
 
-        int creteMaxCount = SettingMng.AreaMapCreateMonsterMaxCount - RemainingNumber + 1;
-        int range = Random.Range(0, creteMaxCount);
+        int range = Random.Range(0, defaltMaxCount - RemainingNumber + 1);
         var createPosList = GetAreaMapCreateMonsterPosList();
 
         // 生成できる座標がないとスキップ

@@ -56,15 +56,24 @@ public class GameTimeCtl
                 RefreshClock(angle);
                 RefreshLight(angle);
                 RefreshSkyBox(angle);
+                CheckIsNight(angle);
             }
             else
             {
                 RefreshLight(35);
                 RefreshSkyBox(35);
+
+                mIsNight = false;
             }
         }
     }
     private float curTime;
+
+    /// <summary>
+    /// 今、夜かの判定
+    /// </summary>
+    public bool IsNight { get => mIsNight; }
+    private bool mIsNight;
 
     public GameTimeCtl()
     {
@@ -118,6 +127,15 @@ public class GameTimeCtl
         {
             ClockHand.transform.rotation = Quaternion.Euler(0, 0, 120 - angle);
         }
+    }
+
+    /// <summary>
+    /// 夜のチェック
+    /// </summary>
+    /// <param name="angle"></param>
+    private void CheckIsNight(float angle)
+    {
+        mIsNight = angle > 240;
     }
 
     /// <summary>
