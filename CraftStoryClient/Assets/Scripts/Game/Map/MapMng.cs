@@ -507,11 +507,11 @@ public class MapMng
             || entityType == (int)EntityType.TransferGate;
     }
 
-    public static bool IsOutRange(Vector3Int mapSize, Vector3Int worldPos)
+    public static bool IsOutRange(Vector3Int mapSize, Vector3Int worldPos, int offset = 0)
     {
-        return worldPos.x < 0 || worldPos.x > mapSize.x - 1
-            || worldPos.y < 0 || worldPos.y > mapSize.y - 1
-            || worldPos.z < 0 || worldPos.z > mapSize.z - 1;
+        return worldPos.x < 0 + offset || worldPos.x > mapSize.x - 1 - offset
+            || worldPos.y < 0 + offset || worldPos.y > mapSize.y - 1 - offset
+            || worldPos.z < 0 + offset || worldPos.z > mapSize.z - 1 - offset;
     }
     public static bool IsOutRange(Vector3Int worldPos)
     {
@@ -605,7 +605,7 @@ public class MapMng
     private static bool CheckCreatePos(Vector3 pos)
     {
         Vector3 downEntityPos = new Vector3(pos.x, pos.y - 1, pos.z);
-        if (IsOutRange(WorldMng.E.MapMng.MapSize, Vector3Int.CeilToInt(downEntityPos)))
+        if (IsOutRange(WorldMng.E.MapMng.MapSize, Vector3Int.CeilToInt(downEntityPos), 3))
         {
             return false;
         }
