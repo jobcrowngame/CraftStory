@@ -75,10 +75,15 @@ public class Main : MonoBehaviour
             {
                 DataMng.E.NewUser();
                 UICtl.E.OpenUI<TermsUI>(UIType.Terms);
-            }
 
-            LoginLg.E.UI.LoginResponse();
-            Initing = false;
+                if (DataMng.E.MapData == null)
+                    DataMng.E.NewHomeData();
+            }
+            else
+            {
+                LoginLg.E.UI.LoginResponse();
+                Initing = false;
+            }
         }
     }
 

@@ -115,7 +115,6 @@ public class DataMng : Single<DataMng>
             Logger.Error("Load local map fail!! \n" + ex.Message);
         }
 
-        if (mHomeData == null) mHomeData = WorldMng.E.MapCtl.CreateMapData(100); ;
 
         LocalDataMng.E.LoadLocalData();
 
@@ -150,6 +149,11 @@ public class DataMng : Single<DataMng>
     }
     #endregion
     #region Map
+
+    public void NewHomeData()
+    {
+        mHomeData = WorldMng.E.MapCtl.CreateMapData(100); ;
+    }
 
     /// <summary>
     /// マップデータを設置
