@@ -94,37 +94,15 @@ public class DataMng : Single<DataMng>
     public bool Load()
     {
         uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.UserDataName);
-
-        //uData = new UserData();
-        //uData.Account = "OC1RUMAjDeFv";
-        //uData.UserPW = "WeSEmdWkzLaB";
-
-        if (uData == null)
-        {
-            uData = new UserData();
-            uData.LocalDataLoaded = true;
-            uData.Account = "local";
-            uData.UserPW = "local";
-            uData.PickupNoticeCheckMap = new Dictionary<int, DateTime>();
-            uData.Hunger = 100;
-            uData.AreaIndexX = 5;
-            uData.AreaIndexX = 5;
-
-            uData.PlayerPositionX = 5;
-            uData.PlayerPositionZ = 5;
-
-            AddItem(101, 100);
-            AddItem(105, 100);
-            AddItem(10001, 1);
-            AddItem(10002, 1);
-            AddItem(10003, 1);
-        }
-
         if (uData != null && uData.PlayerPositionX == 0 && uData.PlayerPositionZ == 0)
         {
             uData.PlayerPositionX = 5;
             uData.PlayerPositionZ = 5;
         }
+
+        //uData = new UserData();
+        //uData.Account = "OC1RUMAjDeFv";
+        //uData.UserPW = "WeSEmdWkzLaB";
 
         try
         {
@@ -150,9 +128,25 @@ public class DataMng : Single<DataMng>
     /// </summary>
     /// <param name="id"></param>
     /// <param name="pw"></param>
-    public void NewUser(string id, string pw)
+    public void NewUser()
     {
-        
+        uData = new UserData();
+        uData.LocalDataLoaded = true;
+        uData.Account = "local";
+        uData.UserPW = "local";
+        uData.PickupNoticeCheckMap = new Dictionary<int, DateTime>();
+        uData.Hunger = 100;
+        uData.AreaIndexX = 5;
+        uData.AreaIndexX = 5;
+
+        uData.PlayerPositionX = 5;
+        uData.PlayerPositionZ = 5;
+
+        AddItem(101, 100);
+        AddItem(105, 100);
+        AddItem(10001, 1);
+        AddItem(10002, 1);
+        AddItem(10003, 1);
     }
     #endregion
     #region Map

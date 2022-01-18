@@ -46,7 +46,7 @@ public class Main : MonoBehaviour
         // Test
         //DataMng.E.UserData.LocalDataLoaded = false;
 
-        if (!DataMng.E.UserData.LocalDataLoaded)
+        if (DataMng.E.UserData != null && !DataMng.E.UserData.LocalDataLoaded)
         {
             NWMng.E.Connect((rp) =>
             {
@@ -71,6 +71,12 @@ public class Main : MonoBehaviour
         }
         else
         {
+            if (DataMng.E.UserData == null)
+            {
+                DataMng.E.NewUser();
+                UICtl.E.OpenUI<TermsUI>(UIType.Terms);
+            }
+
             LoginLg.E.UI.LoginResponse();
             Initing = false;
         }
