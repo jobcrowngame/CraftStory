@@ -94,15 +94,16 @@ public class DataMng : Single<DataMng>
     public bool Load()
     {
         uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.UserDataName);
+
+        //uData = new UserData();
+        //uData.Account = "OC1RUMAjDeFv";
+        //uData.UserPW = "WeSEmdWkzLaB";
+
         if (uData != null && uData.PlayerPositionX == 0 && uData.PlayerPositionZ == 0)
         {
             uData.PlayerPositionX = 5;
             uData.PlayerPositionZ = 5;
         }
-
-        //uData = new UserData();
-        //uData.Account = "OC1RUMAjDeFv";
-        //uData.UserPW = "WeSEmdWkzLaB";
 
         try
         {
@@ -283,16 +284,58 @@ public class DataMng : Single<DataMng>
         var item = GetItemByItemId(itemId);
         if (item == null)
         {
-            item = new ItemData(itemId, count);
-            Items.Add(item);
+            do
+            {
+                int newCount = 0;
+                var config = ConfigMng.E.Item[itemId];
+                if (config.MaxCount >= count)
+                {
+                    newCount = count;
+                    count = 0;
+                }
+                else
+                {
+                    newCount = config.MaxCount;
+                    count -= config.MaxCount;
+                }
+
+                item = new ItemData(itemId, newCount);
+                Items.Add(item);
+            } while (count > 0);
         }
         else
         {
-            item.count += count;
+            if (item.Config.MaxCount >= count + item.count)
+            {
+                item.count += count;
+            }
+            else
+            {
+                item.count = item.Config.MaxCount;
+                count -= item.Config.MaxCount - item.count;
+
+                do
+                {
+                    int newCount = 0;
+                    if (item.Config.MaxCount >= count)
+                    {
+                        newCount = count;
+                        count = 0;
+                    }
+                    else
+                    {
+                        newCount = item.Config.MaxCount;
+                        count -= item.Config.MaxCount;
+                    }
+
+                    item = new ItemData(itemId, newCount);
+                    Items.Add(item);
+                } while (count > 0);
+            }
         }
 
 
-        if (item.count > 9999)
+        if (item.count > item.Config.MaxCount)
         {
             NWMng.E.GetItems(null);
         }

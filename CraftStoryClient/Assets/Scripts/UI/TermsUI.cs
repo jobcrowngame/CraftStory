@@ -26,6 +26,7 @@ public class TermsUI : UIBase
         {
             LoginLg.E.UI.LoginResponse();
             Main.E.Initing = false;
+            DataMng.E.Save();
             Close();
         });
 
