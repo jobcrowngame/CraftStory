@@ -39,6 +39,5 @@ public class EntityTransferGate : EntityBase
         }
 
         CommonFunction.GoToNextScene(nextTransferGateID);
-        AdventureCtl.E.Clear();
     }
 }

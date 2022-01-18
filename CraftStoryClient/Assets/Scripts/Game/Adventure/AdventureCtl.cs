@@ -8,7 +8,7 @@ using UnityEngine;
 public class AdventureCtl : Single<AdventureCtl>
 {
     // 一時的手にいれたボーナス
-    private List<int> bonusList;
+    private List<int> bonusList = new List<int>();
     public List<int> BonusList { get => bonusList; }
 
     // 手に入れた経験値
@@ -28,7 +28,6 @@ public class AdventureCtl : Single<AdventureCtl>
     {
         base.Init();
 
-        bonusList = new List<int>();
         timer = 0;
 
         TimeZoneMng.E.AddTimerEvent03(UpdateBySeconds);

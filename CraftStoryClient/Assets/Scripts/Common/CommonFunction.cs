@@ -189,6 +189,7 @@ public class CommonFunction
     /// <param name="TransferGateID">転送門ID</param>
     public static void GoToNextScene(int TransferGateID)
     {
+        AdventureCtl.E.Clear();
         UICtl.E.Clear();
         if (DataMng.E.MapData != null) DataMng.E.MapData.ClearMapObj();
         PlayerCtl.E.SelectItem = null;
@@ -222,6 +223,7 @@ public class CommonFunction
     }
     public static void GotoAreaMap()
     {
+        AdventureCtl.E.Clear();
         UICtl.E.Clear();
         if (DataMng.E.MapData != null) DataMng.E.MapData.ClearMapObj();
         PlayerCtl.E.SelectItem = null;
