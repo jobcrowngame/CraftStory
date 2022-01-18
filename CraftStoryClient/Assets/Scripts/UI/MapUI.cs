@@ -93,15 +93,13 @@ public class MapUI : UIBase
         {
             AdventureCtl.E.GetBonus(() =>
             {
-                CommonFunction.GoToNextScene(100);
+                CommonFunction.GotoAreaMap();
             });
         }
         else
         {
-            CommonFunction.GoToNextScene(100);
+            CommonFunction.GotoAreaMap();
         }
-
-        CommonFunction.GotoAreaMap();
     }
     private void OnClickEquipBtn()
     {
