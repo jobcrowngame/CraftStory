@@ -70,7 +70,7 @@ public class LoginLg : UILogicBase<LoginLg, LoginUI>
                 DataMng.E.UserData.FreeFoodEated = 1;
             }
 
-            LocalDataMng.E.LoadData();
+            LocalDataMng.E.LoadServerData();
         }, DataMng.E.UserData.UserPW);
     }
 

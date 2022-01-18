@@ -61,5 +61,6 @@ public class LoginUI : UIBase
         BGBtn.enabled = true;
 
         UICtl.E.LockUI(false);
+        Main.E.Initing = false;
     }
 }

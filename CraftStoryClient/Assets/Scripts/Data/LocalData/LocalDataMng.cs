@@ -24,23 +24,15 @@ public class LocalDataMng : Single<LocalDataMng>
         localData = new LocalData();
     }
 
-    public void LoadData()
+    public void LoadServerData()
     {
-        if (DataMng.E.UserData.LocalDataLoaded)
-        {
-            Logger.Warning("ローカル");
-            localData = (LocalData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.LocalDataName);
-            if (localData == null)
-            {
-                localData = new LocalData();
-            }
-        }
-        else
-        {
-            SetItemList();
-        }
-
-        LoginLg.E.UI.LoginResponse();
+        SetItemList();
+    }
+    public void LoadLocalData()
+    {
+        var mLocalData = (LocalData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.LocalDataName);
+        if (mLocalData != null)
+            localData = mLocalData;
     }
 
     #endregion
@@ -74,7 +66,9 @@ public class LocalDataMng : Single<LocalDataMng>
                     item.skills = equipment.skills;
                 }
             }
+
             DataMng.E.UserData.LocalDataLoaded = true;
+            LoginLg.E.UI.LoginResponse();
         });
     }
 

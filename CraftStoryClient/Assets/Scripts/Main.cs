@@ -7,11 +7,13 @@ using LitJson;
 /// </summary>
 public class Main : MonoBehaviour
 {
-    public static Transform E;
+    public static Main E;
+
+    public bool Initing = false;
 
     private void Awake()
     {
-        E = transform;
+        E = this;
     }
 
     void Start()
@@ -23,6 +25,8 @@ public class Main : MonoBehaviour
 
     IEnumerator Init()
     {
+        Initing = true;
+
         DataMng.E.Init();
         TaskMng.E.Init();
         UICtl.E.Init();
@@ -30,7 +34,6 @@ public class Main : MonoBehaviour
         WorldMng.E.Init();
         AudioMng.Init();
         LocalDataMng.E.Init();
-        //UserTest.E.Init();
 
         yield return ConfigMng.E.InitInitCoroutine();
         yield return ResourcesMng.E.InitInitCoroutine();
@@ -43,22 +46,7 @@ public class Main : MonoBehaviour
         // Test
         //DataMng.E.UserData.LocalDataLoaded = false;
 
-        if (DataMng.E.UserData == null)
-        {
-            DataMng.E.NewUser("local", "local");
-            LocalDataMng.E.LoadData();
-
-            DataMng.E.AddItem(101, 100);
-            DataMng.E.AddItem(105, 100);
-            DataMng.E.AddItem(10001, 1);
-            DataMng.E.AddItem(10002, 1);
-            DataMng.E.AddItem(10003, 1);
-        }
-        else if (DataMng.E.UserData.LocalDataLoaded)
-        {
-            LocalDataMng.E.LoadData();
-        }
-        else
+        if (!DataMng.E.UserData.LocalDataLoaded)
         {
             NWMng.E.Connect((rp) =>
             {
@@ -81,17 +69,24 @@ public class Main : MonoBehaviour
 
             StartCoroutine(OnLoginFailed());
         }
+        else
+        {
+            LoginLg.E.UI.LoginResponse();
+            Initing = false;
+        }
     }
 
     private void OnApplicationQuit()
     {
-        if (DataMng.E != null) DataMng.E.Save();
+        if (DataMng.E != null && !Initing) 
+            DataMng.E.Save();
     }
 
     private void OnApplicationPause(bool pauseStatus)
     {
 
-        if (DataMng.E != null) DataMng.E.Save();
+        if (DataMng.E != null && !Initing) 
+            DataMng.E.Save();
     }
 
     private IEnumerator LoadData()
@@ -101,13 +96,11 @@ public class Main : MonoBehaviour
         yield return DataMng.E.Load();
     }
 
-
     private struct GetVersionRP
     {
         public string version { get; set; }
         public int IsMaintenance { get; set; }
     }
-
 
     #region OnLogin fail
 
