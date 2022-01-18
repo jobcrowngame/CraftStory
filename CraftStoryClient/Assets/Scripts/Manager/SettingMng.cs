@@ -45,7 +45,7 @@ public class SettingMng : Single<SettingMng>
     public const int MyShopCostLv2 = 500;
 
     // ゲーム内一日秒数
-    public const int GameDaySeconds = 60 * 2;
+    public const int GameDaySeconds = 60 * 18;
 
     // Skybox　明るさ最小
     public const float MinAmbientIntensity = 0.8f;
