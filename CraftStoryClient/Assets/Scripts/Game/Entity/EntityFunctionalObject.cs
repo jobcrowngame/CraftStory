@@ -66,6 +66,10 @@ public class EntityFunctionalObject : EntityBase
                 ui.SetType(Type);
                 break;
 
+            // 何もしない
+            case EntityType.Mission:
+                break;
+
             default: Logger.Error("not find entityType " + Type); break;
         }
 

@@ -87,6 +87,20 @@ public class MapUI : UIBase
    
     private void OnClickAreaMapBtn()
     {
+        // 冒険途中でエリアマップに遷移する場合、ボーナス計算します
+        if (DataMng.E.RuntimeData.MapType == MapType.Brave ||
+            DataMng.E.RuntimeData.MapType == MapType.Event)
+        {
+            AdventureCtl.E.GetBonus(() =>
+            {
+                CommonFunction.GoToNextScene(100);
+            });
+        }
+        else
+        {
+            CommonFunction.GoToNextScene(100);
+        }
+
         CommonFunction.GotoAreaMap();
     }
     private void OnClickEquipBtn()

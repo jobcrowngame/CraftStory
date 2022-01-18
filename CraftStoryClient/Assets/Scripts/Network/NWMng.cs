@@ -200,10 +200,10 @@ public partial class NWMng : MonoBehaviour
     /// <param name="count"></param>
     public void Craft(Action<JsonData> rp, Craft craft, int count)
     {
-        DataMng.E.RemoveItemByItemId(craft.Cost1, craft.Cost1Count);
-        DataMng.E.RemoveItemByItemId(craft.Cost2, craft.Cost2Count);
-        DataMng.E.RemoveItemByItemId(craft.Cost3, craft.Cost3Count);
-        DataMng.E.RemoveItemByItemId(craft.Cost4, craft.Cost4Count);
+        DataMng.E.RemoveItemByItemId(craft.Cost1, craft.Cost1Count * count);
+        DataMng.E.RemoveItemByItemId(craft.Cost2, craft.Cost2Count * count);
+        DataMng.E.RemoveItemByItemId(craft.Cost3, craft.Cost3Count * count);
+        DataMng.E.RemoveItemByItemId(craft.Cost4, craft.Cost4Count * count);
 
         DataMng.E.AddItem(craft.ItemID, count);
 
