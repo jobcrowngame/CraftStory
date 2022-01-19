@@ -73,9 +73,10 @@ public class CharacterMonster : CharacterBase
         string[] pondIds = Parameter.PondIds.Split(',');
         for (int i = 0; i < pondIds.Length; i++)
         {
-            foreach (var item in CommonFunction.GetBonusListByPondId(int.Parse(pondIds[i])))
+            int bonusId = CommonFunction.GetBonusByPondId(int.Parse(pondIds[i]));
+            if (bonusId > 0)
             {
-                AdventureCtl.E.AddBonus(item);
+                AdventureCtl.E.AddBonus(bonusId);
             }
         }
 

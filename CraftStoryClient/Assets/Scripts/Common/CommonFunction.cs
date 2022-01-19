@@ -478,29 +478,39 @@ public class CommonFunction
     /// </summary>
     /// <param name="pondId"></param>
     /// <returns></returns>
-    public static List<int> GetBonusListByPondId(int pondId)
+    public static int GetBonusByPondId(int pondId)
     {
-        List<int> bonusList = new List<int>();
         var config = ConfigMng.E.RandomBonusPond[pondId];
-
-        GetBonus(config.BonusList01, config.Percent01, ref bonusList);
-        GetBonus(config.BonusList02, config.Percent02, ref bonusList);
-        GetBonus(config.BonusList03, config.Percent03, ref bonusList);
-        GetBonus(config.BonusList04, config.Percent04, ref bonusList);
-        GetBonus(config.BonusList05, config.Percent05, ref bonusList);
-        GetBonus(config.BonusList06, config.Percent06, ref bonusList);
-        GetBonus(config.BonusList07, config.Percent07, ref bonusList);
-
-        return bonusList;
-    }
-    private static void GetBonus(string bonusList, int percent, ref List<int> _bonusList)
-    {
         var percentR = UnityEngine.Random.Range(0, 10000);
-        if (percentR < percent)
+
+        string bonusListStr = "";
+        int curPercent = config.Percent01;
+        if (percentR <= config.Percent01) bonusListStr = config.BonusList01;
+        else if (percentR <= config.Percent01 + config.Percent02) bonusListStr = config.BonusList02;
+        else if (percentR <= config.Percent01 + config.Percent02 + config.Percent03) bonusListStr = config.BonusList03;
+        else if (percentR <= config.Percent01 + config.Percent02 + config.Percent03 + config.Percent04) 
+            bonusListStr = config.BonusList04;
+        else if (percentR <= config.Percent01 + config.Percent02 + config.Percent03 + config.Percent04 + 
+            config.Percent05) 
+            bonusListStr = config.BonusList05;
+        else if (percentR <= config.Percent01 + config.Percent02 + config.Percent03 + config.Percent04 + 
+            config.Percent05 + config.Percent06) 
+            bonusListStr = config.BonusList06;
+        else if (percentR <= config.Percent01 + config.Percent02 + config.Percent03 + config.Percent04 + 
+            config.Percent05 + config.Percent06 + config.Percent07) 
+            bonusListStr = config.BonusList07;
+        else bonusListStr = "";
+
+        if (!string.IsNullOrEmpty(bonusListStr))
         {
-            var bonusArr = bonusList.Split(',');
+            var bonusArr = bonusListStr.Split(',');
             var bonusR = UnityEngine.Random.Range(0, bonusArr.Length);
-            _bonusList.Add(int.Parse(bonusArr[bonusR]));
+            Debug.LogError(percentR + "," + bonusListStr + "," + bonusR);
+            return int.Parse(bonusArr[bonusR]);
+        }
+        else
+        {
+            return -1;
         }
     }
 
