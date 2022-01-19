@@ -116,6 +116,9 @@ public class MapInstance : MonoBehaviour
             {
                 for (int x = 0; x < Data.GetMapSize().x; x++)
                 {
+                    if (!Actived)
+                        break;
+
                     var localPosition = new Vector3Int(x, y, z);
                     ObjDic[x,y,z] = new MapCell(this, Data.Map[x, y, z], localPosition);
                     ObjDic[x, y, z].InstanceObj();
@@ -123,7 +126,8 @@ public class MapInstance : MonoBehaviour
             }
         }
 
-        CombineMesh();
+        if (Actived)
+            CombineMesh();
     }
     private System.Collections.IEnumerator InstantiateEntitysIE()
     {
@@ -135,6 +139,9 @@ public class MapInstance : MonoBehaviour
             {
                 for (int x = 0; x < Data.GetMapSize().x; x++)
                 {
+                    if (!Actived)
+                        break;
+
                     var localPosition = new Vector3Int(x, y, z);
                     ObjDic[x,y,z] = new MapCell(this, Data.Map[x, y, z], localPosition);
                 }
@@ -149,6 +156,9 @@ public class MapInstance : MonoBehaviour
             {
                 for (int x = 0; x < Data.GetMapSize().x; x++)
                 {
+                    if (!Actived)
+                        break;
+
                     if (ObjDic[x, y, z] == null)
                     {
                         Logger.Error("area {3} [{0},{1},{2}] is null", x, y, z, areaId);
@@ -169,14 +179,8 @@ public class MapInstance : MonoBehaviour
             }
         }
 
-        var startTime = DateTime.Now;
-
-        CombineMesh();
-
-        TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-        Logger.Log("CombineMeshするに {0} かかりました。", elapsedSpan.TotalMilliseconds);
-        
-        yield return null;
+        if (Actived)
+            CombineMesh();
     }
 
     private void DestroyInstance()
