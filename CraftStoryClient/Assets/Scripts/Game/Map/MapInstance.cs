@@ -149,12 +149,18 @@ public class MapInstance : MonoBehaviour
             {
                 for (int x = 0; x < Data.GetMapSize().x; x++)
                 {
+                    if (ObjDic[x, y, z] == null)
+                    {
+                        Logger.Error("area {3} [{0},{1},{2}] is null", x, y, z, areaId);
+                        continue;
+                    }
+
                     var result = ObjDic[x,y,z].InstanceObj();
 
                     if (result == 1)
                         count++;
 
-                    if (count == 15)
+                    if (count == 10)
                     {
                         count = 0;
                         yield return null;
