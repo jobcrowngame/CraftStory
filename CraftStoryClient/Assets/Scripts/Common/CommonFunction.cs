@@ -505,7 +505,6 @@ public class CommonFunction
         {
             var bonusArr = bonusListStr.Split(',');
             var bonusR = UnityEngine.Random.Range(0, bonusArr.Length);
-            Debug.LogError(percentR + "," + bonusListStr + "," + bonusR);
             return int.Parse(bonusArr[bonusR]);
         }
         else
