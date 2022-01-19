@@ -20,8 +20,11 @@ public class MapInstance : MonoBehaviour
     public bool Active { get; set; }
     public bool Actived { get; set; }
 
-    public Dictionary<Vector3Int, MapCell> ObjDic { get => mObjDic; }
-    Dictionary<Vector3Int, MapCell> mObjDic;
+    //public Dictionary<Vector3Int, MapCell> ObjDic { get => mObjDic; }
+    //Dictionary<Vector3Int, MapCell> mObjDic;
+    public MapCell[,,] ObjDic { get => mObjDic; }
+    MapCell[,,] mObjDic;
+
 
     public List<MapCell> TorchDic { get => mTorchDic; }
     List<MapCell> mTorchDic;
@@ -36,7 +39,7 @@ public class MapInstance : MonoBehaviour
     {
         this.areaId = areaId;
 
-        mObjDic = new Dictionary<Vector3Int, MapCell>();
+        mObjDic = new MapCell[SettingMng.AreaMapSize,100, SettingMng.AreaMapSize];
         mTorchDic = new List<MapCell>();
 
         combineObj = gameObject.AddComponent<CombineMeshCtl>();
@@ -56,11 +59,7 @@ public class MapInstance : MonoBehaviour
 
     public MapCell GetCell(Vector3Int localPosition)
     {
-        if (ObjDic.ContainsKey(localPosition))
-        {
-            return ObjDic[localPosition];
-        }
-        return null;
+        return mObjDic[localPosition.x, localPosition.y, localPosition.z];
     }
     public MapData.MapCellData GetCellData(Vector3Int localPosition)
     {
@@ -118,14 +117,10 @@ public class MapInstance : MonoBehaviour
                 for (int x = 0; x < Data.GetMapSize().x; x++)
                 {
                     var localPosition = new Vector3Int(x, y, z);
-                    ObjDic[localPosition] = new MapCell(this, Data.Map[x, y, z], localPosition);
+                    ObjDic[x,y,z] = new MapCell(this, Data.Map[x, y, z], localPosition);
+                    ObjDic[x, y, z].InstanceObj();
                 }
             }
-        }
-
-        foreach (var cell in ObjDic.Values)
-        {
-            cell.InstanceObj();
         }
 
         CombineMesh();
@@ -141,21 +136,40 @@ public class MapInstance : MonoBehaviour
                 for (int x = 0; x < Data.GetMapSize().x; x++)
                 {
                     var localPosition = new Vector3Int(x, y, z);
-                    ObjDic[localPosition] = new MapCell(this, Data.Map[x, y, z], localPosition);
+                    ObjDic[x,y,z] = new MapCell(this, Data.Map[x, y, z], localPosition);
+                }
+            }
+                yield return null;
+        }
+
+        int count = 0;
+        for (int y = 0; y < Data.GetMapSize().y; y++)
+        {
+            for (int z = 0; z < Data.GetMapSize().z; z++)
+            {
+                for (int x = 0; x < Data.GetMapSize().x; x++)
+                {
+                    var result = ObjDic[x,y,z].InstanceObj();
+
+                    if (result == 1)
+                        count++;
+
+                    if (count == 15)
+                    {
+                        count = 0;
+                        yield return null;
+                    }
                 }
             }
         }
 
-        foreach (var cell in ObjDic.Values)
-        {
-            var result = cell.InstanceObj();
-            if (result == 1) yield return null;
-
-            if (ObjDic == null || ObjDic.Count == 0 || !Actived)
-                break;
-        }
+        var startTime = DateTime.Now;
 
         CombineMesh();
+
+        TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
+        Logger.Log("CombineMeshするに {0} かかりました。", elapsedSpan.TotalMilliseconds);
+        
         yield return null;
     }
 
@@ -165,7 +179,7 @@ public class MapInstance : MonoBehaviour
         StopCoroutine(InstantiateEntitysIE());
 
         CommonFunction.ClearCell(transform);
-        mObjDic.Clear();
+        mObjDic = new MapCell[SettingMng.AreaMapSize, 100, SettingMng.AreaMapSize];
         mTorchDic.Clear();
         combineObj.Clear();
     }
