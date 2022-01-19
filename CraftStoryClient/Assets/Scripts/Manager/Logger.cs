@@ -43,11 +43,6 @@ public class Logger : Single<Logger>
             string msg = string.Format("[ERROR]" + format, args);
             Debug.LogErrorFormat(msg);
             DebugLG.E.Add(msg);
-
-#if UNITY_EDITOR
-#else
-    NWMng.E.ShowClientLog(msg);
-#endif
         }
     }
     public static void Error(Exception e)
