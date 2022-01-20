@@ -17,7 +17,7 @@ public class BagUI : UIBase
     public MyText Explanatory { get => FindChiled<MyText>("Explanatory"); }
     public MyText FoodEffect { get => FindChiled<MyText>("FoodEffect"); }
 
-    public readonly string ExplanatoryNoSelect = "アイテムをタップすると説明が表示されます";
+    public readonly string ExplanatoryNoSelect = "アイテムをタップすると説明が表示されます。";
 
     public override void Init()
     {

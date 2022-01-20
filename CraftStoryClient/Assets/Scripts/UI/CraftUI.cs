@@ -22,7 +22,7 @@ public class CraftUI : UIBase
     Transform btnsParent { get => FindChiled("Btns"); }
     MyButton[] btns;
 
-    public readonly string ExplanatoryNoSelect = "アイテムをタップすると説明が表示されます";
+    public readonly string ExplanatoryNoSelect = "アイテムをタップすると説明が表示されます。";
 
     private EntityType entityType;
 
