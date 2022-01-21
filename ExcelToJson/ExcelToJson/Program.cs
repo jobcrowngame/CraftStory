@@ -694,7 +694,6 @@ namespace ExcelToJson
                 {
                     ID = ToInt32(tbl.Rows[i]["ID"]),
                     MapId = ToInt32(tbl.Rows[i]["MapId"]),
-                    RelatedArea = ToString(tbl.Rows[i]["RelatedArea"]),
                     OffsetX = ToInt32(tbl.Rows[i]["OffsetX"]),
                     OffsetZ = ToInt32(tbl.Rows[i]["OffsetZ"]),
                 };
