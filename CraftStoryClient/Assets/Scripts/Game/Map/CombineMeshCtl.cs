@@ -39,13 +39,6 @@ public class CombineMeshCtl : MonoBehaviour
 
     public void Combine()
     {
-        foreach (var item in meshList)
-        {
-            Destroy(item);
-        }
-        meshList.Clear();
-        DestroyMeshObj();
-
         foreach (var k in combine.Keys)
         {
             var CombinedMeshObj = CreateMeshObj(k.ToString());
@@ -66,17 +59,20 @@ public class CombineMeshCtl : MonoBehaviour
 
     public void Clear()
     {
-        combine.Clear();
-        materials.Clear();
-        meshList.Clear();
-    }
-    private void DestroyMeshObj()
-    {
+        foreach (var item in meshList)
+        {
+            Destroy(item);
+        }
+
         foreach (var item in meshObj)
         {
             Destroy(item);
         }
+
         meshObj.Clear();
+        combine.Clear();
+        materials.Clear();
+        meshList.Clear();
     }
   
     /// <Summary>

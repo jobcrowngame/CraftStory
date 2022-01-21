@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.UI;
 
 public partial class HomeUI : UIBase
@@ -92,6 +93,10 @@ public partial class HomeUI : UIBase
     /// </summary>
     MyText TaskOverview;
 
+    Text Memory1 {  get => FindChiled<Text>("Memory1"); }
+    Text Memory2 {  get => FindChiled<Text>("Memory2"); }
+    Text Memory3 {  get => FindChiled<Text>("Memory3"); }
+
     /// <summary>
     /// タスク概要テキスト(表示制御用)
     /// </summary>
@@ -125,6 +130,7 @@ public partial class HomeUI : UIBase
     private void FixedUpdate()
     {
         FixedUpdateHunger();
+        RefreshMemoryInfo();
     }
 
     public override void Init()
@@ -410,4 +416,10 @@ public partial class HomeUI : UIBase
         }
     }
 
+    public void RefreshMemoryInfo()
+    {
+        Memory1.text = "プールとして用意してくれているメモリー使用量:" + (float)Profiler.GetTotalReservedMemoryLong() / (1024 * 1024 * 1024) + "GB";
+        Memory2.text = "現在使用しているメモリー使用量:" + (float)Profiler.GetTotalAllocatedMemoryLong() / (1024 * 1024 * 1024) + "GB";
+        Memory3.text = "プレイヤー座標：" + PlayerCtl.E.Character.transform.position;
+    }
 }
