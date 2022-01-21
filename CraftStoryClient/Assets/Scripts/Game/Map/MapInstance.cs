@@ -20,6 +20,7 @@ public class MapInstance : MonoBehaviour
     MapData data;
 
     public bool Active { get; set; }
+    public bool Activeing{ get; set; }
     public bool Actived { get; set; }
 
     //public Dictionary<Vector3Int, MapCell> ObjDic { get => mObjDic; }
@@ -62,8 +63,7 @@ public class MapInstance : MonoBehaviour
 
     private void OnDestroy()
     {
-        SaveData(true);
-        StopCoroutine(InstantiateEntitysIE());
+        SaveData();
     }
 
     public void Execution(bool isAsync = true)
@@ -86,47 +86,47 @@ public class MapInstance : MonoBehaviour
     /// <param name="isAsync"></param>
     private void Instance(bool isAsync = true)
     {
-        if (Actived)
+        if (Actived || Activeing)
             return;
+
+        Activeing = true;
 
         if (isAsync)
         {
-            //引数にstringが渡せるSubjectを作成
-            var sub = new Subject<int>();
+            if (Data == null)
+            {
+                //引数にstringが渡せるSubjectを作成
+                var sub = new Subject<int>();
 
-            //onNextで通常時の処理、onErrorでエラー時の処理、onCompletedで終了時の処理を登録
-            sub.Subscribe(
-                onNext: text =>
-                {
-                    mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
-                },
-                onError: error => Debug.Log("エラー！ : " + error),
-                onCompleted: () =>
-                {
-                    if (!string.IsNullOrEmpty(mapData))
+                //onNextで通常時の処理、onErrorでエラー時の処理、onCompletedで終了時の処理を登録
+                sub.Subscribe(
+                    onNext: text =>
                     {
-                        data = new MapData(mapData, MapAreaConfig.MapId);
-                    }
-                    else
+                        mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
+                    },
+                    onError: error => Debug.Log("エラー！ : " + error),
+                    onCompleted: () =>
                     {
-                        data = MapDataFactory.E.CreateMapData(MapAreaConfig.MapId);
-                    }
+                        if (!string.IsNullOrEmpty(mapData))
+                        {
+                            data = new MapData(mapData, MapAreaConfig.MapId);
+                        }
+                        else
+                        {
+                            data = MapDataFactory.E.CreateMapData(MapAreaConfig.MapId);
+                        }
 
-                    Actived = true;
-
-                    if (isAsync)
-                    {
                         StartCoroutine(InstantiateEntitysIE());
                     }
-                    else
-                    {
-                        InstantiateEntitys();
-                    }
-                }
-            );
+                );
 
-            sub.OnNext(1);
-            sub.OnCompleted();
+                sub.OnNext(1);
+                sub.OnCompleted();
+            }
+            else
+            {
+                StartCoroutine(InstantiateEntitysIE());
+            }
         }
         else
         {
@@ -140,16 +140,7 @@ public class MapInstance : MonoBehaviour
                 data = MapDataFactory.E.CreateMapData(MapAreaConfig.MapId);
             }
 
-            Actived = true;
-
-            if (isAsync)
-            {
-                StartCoroutine(InstantiateEntitysIE());
-            }
-            else
-            {
-                InstantiateEntitys();
-            }
+            InstantiateEntitys();
         }
     }
 
@@ -167,19 +158,25 @@ public class MapInstance : MonoBehaviour
             {
                 for (int x = 0; x < Data.GetMapSize().x; x++)
                 {
-                    if (!Actived)
-                        break;
+                    if (!Active)
+                    {
+                        Activeing = false;
+                        return;
+                    }
 
                     var localPosition = new Vector3Int(x, y, z);
-                    ObjDic[x,y,z] = new MapCell(this, Data.Map[x, y, z], localPosition);
+                    ObjDic[x, y, z] = new MapCell(this, Data.Map[x, y, z], localPosition);
                     ObjDic[x, y, z].InstanceObj();
                 }
             }
         }
 
-        if (Actived)
-            CombineMesh();
+        CombineMesh();
+
+        Actived = true;
+        Activeing = false;
     }
+
     private System.Collections.IEnumerator InstantiateEntitysIE()
     {
         Logger.Log("Instance Entitys Area:{0}", MapAreaConfig.ID);
@@ -190,14 +187,17 @@ public class MapInstance : MonoBehaviour
             {
                 for (int x = 0; x < Data.GetMapSize().x; x++)
                 {
-                    if (!Actived)
-                        break;
+                    if (!Active)
+                    {
+                        Activeing = false;
+                        yield break;
+                    }
 
                     var localPosition = new Vector3Int(x, y, z);
-                    ObjDic[x,y,z] = new MapCell(this, Data.Map[x, y, z], localPosition);
+                    ObjDic[x, y, z] = new MapCell(this, Data.Map[x, y, z], localPosition);
                 }
             }
-                yield return null;
+            yield return null;
         }
 
         int count = 0;
@@ -207,16 +207,20 @@ public class MapInstance : MonoBehaviour
             {
                 for (int x = 0; x < Data.GetMapSize().x; x++)
                 {
-                    if (!Actived)
-                        break;
+                    if (!Active)
+                    {
+                        Activeing = false;
+                        yield break;
+                    }
 
                     if (ObjDic[x, y, z] == null)
                     {
                         Logger.Error("area {3} [{0},{1},{2}] is null", x, y, z, areaId);
-                        continue;
+                        Activeing = false;
+                        yield break;
                     }
 
-                    var result = ObjDic[x,y,z].InstanceObj();
+                    var result = ObjDic[x, y, z].InstanceObj();
 
                     if (result == 1)
                         count++;
@@ -230,21 +234,34 @@ public class MapInstance : MonoBehaviour
             }
         }
 
-        if (Actived)
-            CombineMesh();
+        CombineMesh();
+
+        Actived = true;
+        Activeing = false;
     }
 
     private void DestroyInstance()
     {
-        Actived = false;
-        StopCoroutine(InstantiateEntitysIE());
-
+        if (Actived)
+        {
+            Observable.Timer(TimeSpan.FromSeconds(10)).Subscribe(_ =>
+            {
+                OnDestroyInstance();
+                SaveData();
+                Actived = false;
+            });
+        }
+        else
+        {
+            OnDestroyInstance();
+        }
+    }
+    private void OnDestroyInstance()
+    {
         CommonFunction.ClearCell(transform);
         mObjDic = new MapCell[SettingMng.AreaMapSize, 100, SettingMng.AreaMapSize];
         mTorchDic.Clear();
         combineObj.Clear();
-
-        SaveData(true);
     }
 
     /// <summary>
@@ -278,15 +295,11 @@ public class MapInstance : MonoBehaviour
     /// <summary>
     /// データセーブ
     /// </summary>
-    public void SaveData(bool deleteData = false)
+    public void SaveData()
     {
         if (!Actived || Data == null)
             return;
 
-        Task task = SaveLoadFile.E.Save(Data.ToStringData(), PublicPar.SaveRootPath + PublicPar.AreaMapName + MapAreaConfig.ID + ".dat", () =>
-        {
-            if (deleteData) 
-                data = null;
-        });
+        Task task = SaveLoadFile.E.Save(Data.ToStringData(), PublicPar.SaveRootPath + PublicPar.AreaMapName + MapAreaConfig.ID + ".dat");
     }
 }
