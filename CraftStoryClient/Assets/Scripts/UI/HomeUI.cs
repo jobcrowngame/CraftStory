@@ -130,7 +130,7 @@ public partial class HomeUI : UIBase
     private void FixedUpdate()
     {
         FixedUpdateHunger();
-        RefreshMemoryInfo();
+        //RefreshMemoryInfo();
     }
 
     public override void Init()
