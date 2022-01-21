@@ -504,7 +504,8 @@ public class MapMng
             || entityType == (int)EntityType.Block4
             || entityType == (int)EntityType.Block5
             || entityType == (int)EntityType.Block6
-            || entityType == (int)EntityType.Crops
+            || entityType == (int)EntityType.Seed
+            || entityType == (int)EntityType.TreeSeeds
             || entityType == (int)EntityType.Workbench
             || entityType == (int)EntityType.Kamado
             || entityType == (int)EntityType.EquipmentWorkbench
@@ -676,7 +677,10 @@ public class MapMng
             return false;
 
         // 農作物の場合、下のブロックが畑のブロックならOK
-        if ((EntityType)config.Type == EntityType.Crops && downCell.Type != EntityType.Firm)
+        if ((EntityType)config.Type == EntityType.Seed && downCell.Type != EntityType.Firm)
+            return false;
+
+        if ((EntityType)config.Type == EntityType.TreeSeeds && downCell.EntityId != 1005 && downCell.EntityId != 1006)
             return false;
 
         if (downCell.EntityId <= 0)

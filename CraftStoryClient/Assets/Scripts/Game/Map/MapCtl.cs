@@ -228,7 +228,10 @@ public class MapCtl
         var downEntityId = DataMng.E.MapData.Map[downEntityPos.x, downEntityPos.y, downEntityPos.z].entityID;
 
         // 農作物の場合、下のブロックが畑のブロックならOK
-        if ((EntityType)config.Type == EntityType.Crops && (EntityType)ConfigMng.E.Entity[downEntityId].Type != EntityType.Firm)
+        if ((EntityType)config.Type == EntityType.Seed && (EntityType)ConfigMng.E.Entity[downEntityId].Type != EntityType.Firm)
+            return false;
+
+        if ((EntityType)config.Type == EntityType.TreeSeeds && downEntityId != 1005 && downEntityId != 1006)
             return false;
 
         if (downEntityId <= 0)
@@ -451,7 +454,8 @@ public class MapCtl
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Block4
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Block5
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Block6
-            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Crops
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Seed
+            || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.TreeSeeds
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Workbench
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.Kamado
             || ConfigMng.E.Entity[mapData.Map[pos.x, pos.y, pos.z].entityID].Type == (int)EntityType.EquipmentWorkbench

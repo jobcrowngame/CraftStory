@@ -106,9 +106,9 @@ public enum EntityType
     Firm = 6, // 畑
 
     /// <summary>
-    /// 農作物
+    /// 種
     /// </summary>
-    Crops = 7,
+    Seed = 7,
 
     /// <summary>
     /// 向きあるブロック
@@ -129,6 +129,11 @@ public enum EntityType
     /// Boxコライダーを使うブロック（向きあり）
     /// </summary>
     Block6 = 11,
+
+    /// <summary>
+    /// 木の種
+    /// </summary>
+    TreeSeeds = 12,
 
     Block99 = 99, // 壊れないブロック
     Resources = 100, // 

@@ -122,7 +122,7 @@ public class BuilderPencil
                     // 空と除害は入れない
                     if ((EntityType)config.Type == EntityType.None ||
                         (EntityType)config.Type == EntityType.Obstacle ||
-                        (EntityType)config.Type == EntityType.Crops)
+                        (EntityType)config.Type == EntityType.Seed)
                         continue;
 
                     dataList.Add(new BlueprintData.BlueprintEntityData()

@@ -212,7 +212,8 @@ public class MapData
                     entity = CommonFunction.Instantiate<EntityGrass>(config.Resources, parent, pos);
                     break;
 
-                case EntityType.Crops:
+                case EntityType.Seed:
+                case EntityType.TreeSeeds:
                     entity = CommonFunction.Instantiate<EntityCrops>(config.Resources, parent, pos);
                     WorldMng.E.MapMng.AddCrops(pos, (EntityCrops)entity);
                     break;

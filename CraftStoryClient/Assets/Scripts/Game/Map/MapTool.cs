@@ -93,7 +93,8 @@ public class MapTool
                     entity = CommonFunction.Instantiate<EntityGrass>(cell.Config.Resources, parent, pos);
                     break;
 
-                case EntityType.Crops:
+                case EntityType.Seed:
+                case EntityType.TreeSeeds:
                     entity = CommonFunction.Instantiate<EntityCrops>(cell.Config.Resources, parent, pos);
                     WorldMng.E.MapMng.AddCrops(entity.WorldPos, (EntityCrops)entity);
                     break;

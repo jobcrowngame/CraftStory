@@ -75,12 +75,17 @@ public enum ItemType
     /// <summary>
     /// 農作物
     /// </summary>
-    Crops = 3,
+    Seed = 3,
 
     /// <summary>
     /// 向きありブロック
     /// </summary>
     Block2 = 4,
+
+    /// <summary>
+    /// 木の種
+    /// </summary>
+    TreeSeeds = 5,
 
     /// <summary>
     /// 空の設計図

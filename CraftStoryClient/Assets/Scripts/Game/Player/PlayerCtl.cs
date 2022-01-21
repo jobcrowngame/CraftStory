@@ -217,22 +217,23 @@ public class PlayerCtl : MonoBehaviour
                         StartCoroutine(UnLock());
                         break;
 
-                    case ItemType.Block2:
+                    case ItemType.Seed:
+                    case ItemType.TreeSeeds:
                         Lock = true;
-                        var direction = CommonFunction.GetCreateEntityDirection(pos);
-                        CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos), direction);
                         Character.Behavior = BehaviorType.Create;
-
-                        WorldMng.E.MapCtl.CombineMesh();
+                        var direction = CommonFunction.GetCreateEntityDirection(pos);
+                        CreateEntity(collider, ConfigMng.E.Crops[selectItem.Config.ReferenceID].EntityID, Vector3Int.CeilToInt(pos), direction);
 
                         StartCoroutine(UnLock());
                         break;
 
-                    case ItemType.Crops:
+                    case ItemType.Block2:
                         Lock = true;
-                        Character.Behavior = BehaviorType.Create;
                         direction = CommonFunction.GetCreateEntityDirection(pos);
-                        CreateEntity(collider, ConfigMng.E.Crops[selectItem.Config.ReferenceID].EntityID, Vector3Int.CeilToInt(pos), direction);
+                        CreateEntity(collider, selectItem.Config.ReferenceID, Vector3Int.CeilToInt(pos), direction);
+                        Character.Behavior = BehaviorType.Create;
+
+                        WorldMng.E.MapCtl.CombineMesh();
 
                         StartCoroutine(UnLock());
                         break;

@@ -21,7 +21,7 @@ public class EntityBlock : EntityBase
             DataMng.E.RuntimeData.MapType == MapType.AreaMap)
         {
             // クワを装備している場合
-            if (PlayerCtl.E.SelectItem != null && PlayerCtl.E.SelectItem.Config.Type == 4100)
+            if (PlayerCtl.E.SelectItem != null && PlayerCtl.E.SelectItem.Type == ItemType.Hoe)
             {
                 // 土・草土の場合は畑に変化
                 if (EConfig.ID == 1005 || EConfig.ID == 1006)

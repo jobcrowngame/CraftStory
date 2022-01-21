@@ -74,7 +74,8 @@ public class TimeZoneMng : MonoBehaviour
     }
     public void RemoveTimerEvent01(UnityAction ac)
     {
-        SecondTimerEvent01.RemoveListener(ac);
+        if (SecondTimerEvent01 != null)
+            SecondTimerEvent01.RemoveListener(ac);
     }
 
     /// <summary>
@@ -86,7 +87,8 @@ public class TimeZoneMng : MonoBehaviour
     }
     public void RemoveTimerEvent02(UnityAction ac)
     {
-        SecondTimerEvent02.RemoveListener(ac);
+        if (SecondTimerEvent02 != null)
+            SecondTimerEvent02.RemoveListener(ac);
     }
 
     /// <summary>
@@ -98,7 +100,8 @@ public class TimeZoneMng : MonoBehaviour
     }
     public void RemoveTimerEvent03(UnityAction ac)
     {
-        SecondTimerEvent03.RemoveListener(ac);
+        if (SecondTimerEvent03 != null)
+            SecondTimerEvent03.RemoveListener(ac);
     }
 
     public void Stop()
