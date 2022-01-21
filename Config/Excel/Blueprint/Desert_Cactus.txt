@@ -1,0 +1,1 @@
+{"sizeX":1,"sizeZ":1,"blocks":[{"id":1012,"posX":0,"posY":0,"posZ":0,"direction":0},{"id":1012,"posX":0,"posY":1,"posZ":0,"direction":0}],"IsDuplicate":false,"State":0,"IsLocked":false}
