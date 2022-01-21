@@ -418,8 +418,11 @@ public partial class HomeUI : UIBase
 
     public void RefreshMemoryInfo()
     {
-        Memory1.text = "プールとして用意してくれているメモリー使用量:" + (float)Profiler.GetTotalReservedMemoryLong() / (1024 * 1024 * 1024) + "GB";
-        Memory2.text = "現在使用しているメモリー使用量:" + (float)Profiler.GetTotalAllocatedMemoryLong() / (1024 * 1024 * 1024) + "GB";
-        Memory3.text = "プレイヤー座標：" + PlayerCtl.E.Character.transform.position;
+        if (PlayerCtl.E.Character != null)
+        {
+            Memory1.text = "プールとして用意してくれているメモリー使用量:" + (float)Profiler.GetTotalReservedMemoryLong() / (1024 * 1024 * 1024) + "GB";
+            Memory2.text = "現在使用しているメモリー使用量:" + (float)Profiler.GetTotalAllocatedMemoryLong() / (1024 * 1024 * 1024) + "GB";
+            Memory3.text = "プレイヤー座標：" + PlayerCtl.E.Character.transform.position;
+        }
     }
 }

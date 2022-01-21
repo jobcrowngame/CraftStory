@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -199,19 +200,21 @@ public class MapMng
             Logger.Warning("bad index X,Y [{0},{1}]", IndexX, IndexZ);
             return;
         }
-
-        DataMng.E.UserData.AreaIndexX = indexX;
-        DataMng.E.UserData.AreaIndexZ = indexZ;
-
-        for (int z = -loadAreaRange; z <= loadAreaRange; z++)
+        else
         {
-            for (int x = -loadAreaRange; x <= loadAreaRange; x++)
-            {
-                if (indexX + x < 0 || indexZ + z < 0 || indexX + x >= SettingMng.AreaMapScaleX || indexZ +z >= SettingMng.AreaMapScaleZ)
-                    continue;
+            DataMng.E.UserData.AreaIndexX = indexX;
+            DataMng.E.UserData.AreaIndexZ = indexZ;
 
-                mapInstanceArr[indexX + x, indexZ + z].Active = true;
-                mapInstanceArr[indexX + x, indexZ + z].Execution(false);
+            for (int z = -loadAreaRange; z <= loadAreaRange; z++)
+            {
+                for (int x = -loadAreaRange; x <= loadAreaRange; x++)
+                {
+                    if (indexX + x < 0 || indexZ + z < 0 || indexX + x >= SettingMng.AreaMapScaleX || indexZ + z >= SettingMng.AreaMapScaleZ)
+                        continue;
+
+                    mapInstanceArr[indexX + x, indexZ + z].Active = true;
+                    mapInstanceArr[indexX + x, indexZ + z].Execution(false);
+                }
             }
         }
     }
@@ -300,7 +303,7 @@ public class MapMng
 
         foreach (var item in mapInstanceArr)
         {
-            Task task = SaveLoadFile.E.Save(item.Data.ToStringData(), PublicPar.SaveRootPath + PublicPar.AreaMapName + item.MapAreaConfig.ID + ".dat");
+            item.SaveData();
         }
     }
 
@@ -421,16 +424,27 @@ public class MapMng
     }
     public static MapData.MapCellData GetMapCellData(Vector3Int worldPosition)
     {
-        if (IsOutRange(WorldMng.E.MapMng.MapSize, worldPosition))
-            return new MapData.MapCellData() { entityID = -1 };
+        try
+        {
+            if (IsOutRange(WorldMng.E.MapMng.MapSize, worldPosition))
+                return new MapData.MapCellData() { entityID = -1 };
 
-        int indexX = worldPosition.x / SettingMng.AreaMapSize;
-        int indexZ = worldPosition.z / SettingMng.AreaMapSize;
+            int indexX = worldPosition.x / SettingMng.AreaMapSize;
+            int indexZ = worldPosition.z / SettingMng.AreaMapSize;
 
-        int localPosX = worldPosition.x % SettingMng.AreaMapSize;
-        int localPosZ = worldPosition.z % SettingMng.AreaMapSize;
+            int localPosX = worldPosition.x % SettingMng.AreaMapSize;
+            int localPosZ = worldPosition.z % SettingMng.AreaMapSize;
 
-        return WorldMng.E.MapMng.mapInstanceArr[indexX, indexZ].GetCellData(new Vector3Int(localPosX, worldPosition.y, localPosZ));
+            if (indexX > SettingMng.AreaMapScaleX - 1 || indexZ > SettingMng.AreaMapScaleZ - 1)
+                return new MapData.MapCellData() { entityID = -1 };
+
+            return WorldMng.E.MapMng.mapInstanceArr[indexX, indexZ].GetCellData(new Vector3Int(localPosX, worldPosition.y, localPosZ));
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex);
+            throw;
+        }
     }
     public static MapInstance GetMapInstance(Vector3Int worldPosition)
     {
@@ -462,14 +476,22 @@ public class MapMng
     }
     private static bool CheckAroundIsSurface(Vector3Int WorldPosition)
     {
-        if (IsOutRange(WorldMng.E.MapMng.MapSize, WorldPosition))
-            return false;
+        try
+        {
+            if (IsOutRange(WorldMng.E.MapMng.MapSize, WorldPosition))
+                return false;
 
-        var cellData = GetMapCellData(WorldPosition);
-        if (cellData.entityID < 0)
-            return false;
+            var cellData = GetMapCellData(WorldPosition);
+            if (cellData.entityID < 0)
+                return false;
 
-        return IsSurface(cellData.entityID);
+            return IsSurface(cellData.entityID);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex);
+            return false;
+        }
     }
 
     public static bool IsSurface(int entityId)

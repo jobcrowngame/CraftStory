@@ -12,7 +12,7 @@ public class SaveLoadFile : Single<SaveLoadFile>
 	private FileStream fileStream;
 	private BinaryFormatter bf;
 
-	public async Task Save(object data, string path)
+	public async Task Save(object data, string path, Action callback = null)
 	{
 		await Task.Run(() =>
 		{
@@ -20,6 +20,11 @@ public class SaveLoadFile : Single<SaveLoadFile>
 			using (FileStream stream = File.Open(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
 			{
 				bf.Serialize(stream, data);
+
+                if (callback != null)
+                {
+					callback();
+				}
 			}
 		});
 	}

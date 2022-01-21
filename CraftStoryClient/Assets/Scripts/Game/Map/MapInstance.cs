@@ -1,6 +1,8 @@
 ﻿using JsonConfigData;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UniRx;
 using UnityEngine;
 
 
@@ -44,17 +46,6 @@ public class MapInstance : MonoBehaviour
 
         combineObj = gameObject.AddComponent<CombineMeshCtl>();
         transform.localPosition = new Vector3(MapAreaConfig.OffsetX * SettingMng.AreaMapSize, 0, MapAreaConfig.OffsetZ * SettingMng.AreaMapSize);
-
-        // ローカルデータロード
-        var mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
-        if (!string.IsNullOrEmpty(mapData))
-        {
-            data = new MapData(mapData, MapAreaConfig.MapId);
-        }
-        else
-        {
-            data = MapDataFactory.E.CreateMapData(MapAreaConfig.MapId);
-        }
     }
 
     public MapCell GetCell(Vector3Int localPosition)
@@ -63,11 +54,15 @@ public class MapInstance : MonoBehaviour
     }
     public MapData.MapCellData GetCellData(Vector3Int localPosition)
     {
+        if (Data == null)
+            return new MapData.MapCellData() { entityID = -1 };
+
         return Data.Map[localPosition.x, localPosition.y, localPosition.z];
     }
 
     private void OnDestroy()
     {
+        SaveData(true);
         StopCoroutine(InstantiateEntitysIE());
     }
 
@@ -82,6 +77,9 @@ public class MapInstance : MonoBehaviour
             DestroyInstance();
         }
     }
+
+    string mapData;
+
     /// <summary>
     /// 
     /// </summary>
@@ -91,17 +89,70 @@ public class MapInstance : MonoBehaviour
         if (Actived)
             return;
 
-        Actived = true;
-
         if (isAsync)
         {
-            StartCoroutine(InstantiateEntitysIE());
+            //引数にstringが渡せるSubjectを作成
+            var sub = new Subject<int>();
+
+            //onNextで通常時の処理、onErrorでエラー時の処理、onCompletedで終了時の処理を登録
+            sub.Subscribe(
+                onNext: text =>
+                {
+                    mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
+                },
+                onError: error => Debug.Log("エラー！ : " + error),
+                onCompleted: () =>
+                {
+                    if (!string.IsNullOrEmpty(mapData))
+                    {
+                        data = new MapData(mapData, MapAreaConfig.MapId);
+                    }
+                    else
+                    {
+                        data = MapDataFactory.E.CreateMapData(MapAreaConfig.MapId);
+                    }
+
+                    Actived = true;
+
+                    if (isAsync)
+                    {
+                        StartCoroutine(InstantiateEntitysIE());
+                    }
+                    else
+                    {
+                        InstantiateEntitys();
+                    }
+                }
+            );
+
+            sub.OnNext(1);
+            sub.OnCompleted();
         }
         else
         {
-            InstantiateEntitys();
+            string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
+            if (!string.IsNullOrEmpty(mapData))
+            {
+                data = new MapData(mapData, MapAreaConfig.MapId);
+            }
+            else
+            {
+                data = MapDataFactory.E.CreateMapData(MapAreaConfig.MapId);
+            }
+
+            Actived = true;
+
+            if (isAsync)
+            {
+                StartCoroutine(InstantiateEntitysIE());
+            }
+            else
+            {
+                InstantiateEntitys();
+            }
         }
     }
+
     /// <summary>
     /// エンティティをインスタンス
     /// </summary>
@@ -192,6 +243,8 @@ public class MapInstance : MonoBehaviour
         mObjDic = new MapCell[SettingMng.AreaMapSize, 100, SettingMng.AreaMapSize];
         mTorchDic.Clear();
         combineObj.Clear();
+
+        SaveData(true);
     }
 
     /// <summary>
@@ -220,5 +273,20 @@ public class MapInstance : MonoBehaviour
 
         Data.SetData(new MapData.MapCellData() { entityID = 0 }, mapCell.LocalPosition);
         mapCell.OnDestroy();
+    }
+
+    /// <summary>
+    /// データセーブ
+    /// </summary>
+    public void SaveData(bool deleteData = false)
+    {
+        if (!Actived || Data == null)
+            return;
+
+        Task task = SaveLoadFile.E.Save(Data.ToStringData(), PublicPar.SaveRootPath + PublicPar.AreaMapName + MapAreaConfig.ID + ".dat", () =>
+        {
+            if (deleteData) 
+                data = null;
+        });
     }
 }
