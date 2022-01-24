@@ -369,11 +369,17 @@ public class MapMng
     {
         foreach (var item in cropsList.Values)
         {
+            if (item == null || item.IsDestroy)
+                continue;
+            
             item.Update1S();
         }
 
         foreach (var item in areaMapCropsList.Values)
         {
+            if (item == null || item.IsDestroy)
+                continue;
+
             item.Update1S();
         }
     }

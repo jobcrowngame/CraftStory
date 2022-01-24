@@ -16,6 +16,8 @@ public class EntityCrops : EntityBase
     Crops cropsConfig { get => ConfigMng.E.GetCropsByEntityID(EConfig.ID); }
     DateTime startTime;
 
+    public bool IsDestroy { get; private set; }
+
     /// <summary>
     /// 状態変更
     /// </summary>
@@ -47,11 +49,8 @@ public class EntityCrops : EntityBase
     {
         startTime = GetTimer(LocalPos);
         CheckState();
-    }
 
-    public void OnDestroy()
-    {
-        WorldMng.E.MapMng.RemoveCrops(WorldPos);
+        IsDestroy = false;
     }
 
     // 毎秒実行
@@ -116,6 +115,7 @@ public class EntityCrops : EntityBase
     public void OnRemoveCropsEntity()
     {
         WorldMng.E.MapMng.RemoveCrops(LocalPos);
+        IsDestroy = true;
     }
 
     /// <summary>

@@ -80,9 +80,18 @@ public class EntityBlast : EntityBase
                     }
                     // 農業物の場合
                 }
-                else if ((EntityType)config.Type == EntityType.Seed)
+                else if ((EntityType)config.Type == EntityType.Seed || (EntityType)config.Type == EntityType.TreeSeeds)
                 {
-                    EntityCrops entity = (EntityCrops)DataMng.E.MapData.GetEntity(pos);
+                    EntityCrops entity;
+                    if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+                    {
+                        entity = (EntityCrops)MapMng.GetMapCell(pos).Entity;
+                    }
+                    else
+                    {
+                        entity = (EntityCrops)DataMng.E.MapData.GetEntity(pos);
+                    }
+
                     var cropsConfig = ConfigMng.E.GetCropsByEntityID(entity.EConfig.ID);
                     int addItemID = 0;
                     int count = 0;
