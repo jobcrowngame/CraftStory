@@ -93,29 +93,37 @@ public class EntityBlast : EntityBase
                     }
 
                     var cropsConfig = ConfigMng.E.GetCropsByEntityID(entity.EConfig.ID);
-                    int addItemID = 0;
-                    int count = 0;
+
+                    Dictionary<int, int> addItemIDMap = new Dictionary<int, int>();
 
                     // 追加されるアイテムを決まる
                     if (entity.IsState3)
                     {
-                        addItemID = cropsConfig.DestroyAddItem;
-                        count = cropsConfig.Count;
+                        string[] addItemIDArr = cropsConfig.DestroyAddItems.Split(',');
+                        string[] countArr = cropsConfig.Counts.Split(',');
+
+                        for (int i = 0; i < addItemIDArr.Length; i++)
+                        {
+                            addItemIDMap[int.Parse(addItemIDArr[i])] = int.Parse(countArr[i]);
+                        }
                     }
                     else
                     {
-                        addItemID = cropsConfig.ItemID;
-                        count = 1;
+                        addItemIDMap[cropsConfig.ItemID] = 1;
                     }
 
-                    // アイテムリストに追加
-                    if (addItems.ContainsKey(addItemID))
+                    foreach (int addItemID in addItemIDMap.Keys)
                     {
-                        addItems[addItemID] += count;
-                    }
-                    else
-                    {
-                        addItems[addItemID] = count;
+                        int count = addItemIDMap[addItemID];
+                        // アイテムリストに追加
+                        if (addItems.ContainsKey(addItemID))
+                        {
+                            addItems[addItemID] += count;
+                        }
+                        else
+                        {
+                            addItems[addItemID] = count;
+                        }
                     }
 
                     entity.OnRemoveCropsEntity();

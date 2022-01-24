@@ -928,8 +928,8 @@ namespace ExcelToJson
                     EntityID = ToInt32(tbl.Rows[i]["EntityID"]),
                     StateTime1 = ToFloat(tbl.Rows[i]["StateTime1"]),
                     StateTime2 = ToFloat(tbl.Rows[i]["StateTime2"]),
-                    DestroyAddItem = ToInt32(tbl.Rows[i]["DestroyAddItem"]),
-                    Count = ToInt32(tbl.Rows[i]["Count"]),
+                    DestroyAddItems = ToString(tbl.Rows[i]["DestroyAddItems"]),
+                    Counts = ToString(tbl.Rows[i]["Counts"]),
                 };
 
                 list.Add(data);

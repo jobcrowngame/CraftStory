@@ -7,7 +7,7 @@ namespace JsonConfigData
         public int EntityID { get; set; }
         public float StateTime1 { get; set; }
         public float StateTime2 { get; set; }
-        public int DestroyAddItem { get; set; }
-        public int Count { get; set; }
+        public string DestroyAddItems { get; set; }
+        public string Counts { get; set; }
     }
 }

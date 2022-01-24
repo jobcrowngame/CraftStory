@@ -1,5 +1,6 @@
 ﻿using JsonConfigData;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// ブロック
@@ -84,23 +85,31 @@ public class EntityCrops : EntityBase
     {
         base.ClickingEnd();
 
-        int itemId, count;
+        Dictionary<int, int> addItemIDMap = new Dictionary<int, int>();
         var cropsConfig = ConfigMng.E.GetCropsByEntityID(EConfig.ID);
 
         if (IsState3)
         {
-            itemId = cropsConfig.DestroyAddItem;
-            count = cropsConfig.Count;
+            string[] addItemIDArr = cropsConfig.DestroyAddItems.Split(',');
+            string[] countArr = cropsConfig.Counts.Split(',');
+
+            for (int i = 0; i < addItemIDArr.Length; i++)
+            {
+                addItemIDMap[int.Parse(addItemIDArr[i])] = int.Parse(countArr[i]);
+            }
         }
         else
         {
-            itemId = cropsConfig.ItemID;
-            count = 1;
+            addItemIDMap[cropsConfig.ItemID] = 1;
         }
 
         // ローカルのアイテム数変更
-        DataMng.E.AddItem(itemId, count);
-        HomeLG.E.AddItem(itemId, count);
+        foreach (int itemId in addItemIDMap.Keys)
+        {
+            int count = addItemIDMap[itemId];
+            DataMng.E.AddItem(itemId, count);
+            HomeLG.E.AddItem(itemId, count);
+        }
 
         // エンティティインスタンスを削除
         WorldMng.E.MapMng.DeleteEntity(this);
