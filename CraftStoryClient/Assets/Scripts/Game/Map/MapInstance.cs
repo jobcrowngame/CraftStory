@@ -61,11 +61,6 @@ public class MapInstance : MonoBehaviour
         return Data.Map[localPosition.x, localPosition.y, localPosition.z];
     }
 
-    private void OnDestroy()
-    {
-        SaveData();
-    }
-
     public void Execution(bool isAsync = true)
     {
         if (Active)

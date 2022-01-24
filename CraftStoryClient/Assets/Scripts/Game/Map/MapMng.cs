@@ -60,7 +60,7 @@ public class MapMng
         {
             if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
             {
-                return new Vector3Int(maxX, mapInstanceArr[0, 0].Data.GetMapSize().y, maxZ);
+                return new Vector3Int(maxX, SettingMng.AreaMapV3Y, maxZ);
             }
             else
             {
@@ -505,6 +505,7 @@ public class MapMng
         var entityType = ConfigMng.E.Entity[entityId].Type;
 
         return entityId == 0
+            || entityId == 10000
             || entityType == (int)EntityType.Block2
             || entityType == (int)EntityType.Block3
             || entityType == (int)EntityType.Block4

@@ -121,7 +121,12 @@ public class SettingMng : Single<SettingMng>
     /// エリアの規模
     /// </summary>
     public const int AreaMapScaleX = 5;
-    public const int AreaMapScaleZ = 5;
+    public const int AreaMapScaleZ = 9;
+
+    /// <summary>
+    /// エリアマップの最大高さ
+    /// </summary>
+    public const int AreaMapV3Y = 100;
 
     /// <summary>
     /// エリアマップで敵が生成する半径

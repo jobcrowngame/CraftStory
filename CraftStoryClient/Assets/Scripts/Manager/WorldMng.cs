@@ -44,11 +44,6 @@ public class WorldMng : MonoBehaviour
         TimeZoneMng.E.AddTimerEvent03(AutomaticSave);
     }
 
-    private void OnDestroy()
-    {
-        TimeZoneMng.E.RemoveTimerEvent03(AutomaticSave);
-    }
-
     private void FixedUpdate()
     {
         if(CharacterCtl != null) CharacterCtl.FixedUpdate();
