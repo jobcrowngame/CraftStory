@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class MapMng
+public class MapMng : SingleMono<MapMng>
 {
     private static Transform builderPencilParent; // 建物親
 
@@ -22,7 +22,6 @@ public class MapMng
 
     public MapMng()
     {
-        TimeZoneMng.E.AddTimerEvent03(Update1S);
     }
 
     public int IndexX
@@ -33,7 +32,7 @@ public class MapMng
             if (value == DataMng.E.UserData.AreaIndexX)
                 return;
 
-            AreaChangeX(DataMng.E.UserData.AreaIndexX, value);
+            StartCoroutine(AreaChangeXIE(DataMng.E.UserData.AreaIndexX, value));
 
             DataMng.E.UserData.AreaIndexX = value;
         }
@@ -46,7 +45,7 @@ public class MapMng
             if (value == DataMng.E.UserData.AreaIndexZ)
                 return;
 
-            AreaChangeZ(DataMng.E.UserData.AreaIndexZ, value);
+            StartCoroutine(AreaChangeZIE(DataMng.E.UserData.AreaIndexZ, value));
 
             DataMng.E.UserData.AreaIndexZ = value;
         }
@@ -69,7 +68,7 @@ public class MapMng
         }
     }
 
-    public void Init()
+    public override void Init()
     {
         MapTool.Clear();
 
@@ -110,6 +109,8 @@ public class MapMng
         {
             PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
         }
+
+        TimeZoneMng.E.AddTimerEvent03(Update1S);
     }
 
     public void ClearMesh()
@@ -128,7 +129,7 @@ public class MapMng
     /// <summary>
     /// エリア変更
     /// </summary>
-    public void AreaChangeX(int from, int to)
+    public IEnumerator AreaChangeXIE(int from, int to)
     {
         Logger.Log("Area map index change X: {0}➡{1}", from, to);
 
@@ -136,7 +137,7 @@ public class MapMng
         {
             for (int x = from - loadAreaRange; x <= from + loadAreaRange; x++)
             {
-                if (x < 0 || z < 0 || x >= SettingMng.AreaMapScaleX || z >= SettingMng.AreaMapScaleX)
+                if (x < 0 || z < 0 || x >= SettingMng.AreaMapScaleX || z >= SettingMng.AreaMapScaleZ)
                     continue;
 
                 mapInstanceArr[x, z].Active = false;
@@ -147,19 +148,21 @@ public class MapMng
         {
             for (int x = to - loadAreaRange; x <= to + loadAreaRange; x++)
             {
-                if (x < 0 || z < 0 || x >= SettingMng.AreaMapScaleX || z >= SettingMng.AreaMapScaleX)
+                if (x < 0 || z < 0 || x >= SettingMng.AreaMapScaleX || z >= SettingMng.AreaMapScaleZ)
                     continue;
 
-                mapInstanceArr[x, z].Active = true;
+                mapInstanceArr[x, z].ActiveInstance();
+                yield return null;
             }
         }
 
         foreach (var item in mapInstanceArr)
         {
             item.Execution();
+            yield return null;
         }
     }
-    public void AreaChangeZ(int from, int to)
+    public IEnumerator AreaChangeZIE(int from, int to)
     {
         Logger.Log("Area map index change Z: {0}➡{1}", from, to);
 
@@ -167,7 +170,7 @@ public class MapMng
         {
             for (int z = from - loadAreaRange; z <= from + loadAreaRange; z++)
             {
-                if (x < 0 || z < 0 || x >= SettingMng.AreaMapScaleZ || z >= SettingMng.AreaMapScaleZ)
+                if (x < 0 || z < 0 || x >= SettingMng.AreaMapScaleX || z >= SettingMng.AreaMapScaleZ)
                     continue;
 
                 mapInstanceArr[x, z].Active = false;
@@ -178,16 +181,18 @@ public class MapMng
         {
             for (int z = to - loadAreaRange; z <= to + loadAreaRange; z++)
             {
-                if (x < 0 || z < 0 || x >= SettingMng.AreaMapScaleZ || z >= SettingMng.AreaMapScaleZ)
+                if (x < 0 || z < 0 || x >= SettingMng.AreaMapScaleX || z >= SettingMng.AreaMapScaleZ)
                     continue;
 
-                mapInstanceArr[x, z].Active = true;
+                mapInstanceArr[x, z].ActiveInstance();
+                yield return null;
             }
         }
 
         foreach (var item in mapInstanceArr)
         {
             item.Execution();
+            yield return null;
         }
     }
     public void AreaInit(int posX, int posZ)
@@ -212,41 +217,12 @@ public class MapMng
                     if (indexX + x < 0 || indexZ + z < 0 || indexX + x >= SettingMng.AreaMapScaleX || indexZ + z >= SettingMng.AreaMapScaleZ)
                         continue;
 
-                    mapInstanceArr[indexX + x, indexZ + z].Active = true;
+                    mapInstanceArr[indexX + x, indexZ + z].ActiveInstance();
                     mapInstanceArr[indexX + x, indexZ + z].Execution(false);
                 }
             }
         }
     }
-
-    ///// <summary>
-    ///// マップを追加
-    ///// </summary>
-    ///// <param name="areaId"></param>
-    //private void AddMapDataToAreaDic(int areaId)
-    //{
-    //    var areaInstance = new GameObject("Ground", typeof(MapInstance)).GetComponent<MapInstance>();
-    //    areaInstance.transform.SetParent(MapParent);
-    //    areaInstance.Init(areaId);
-
-    //    mapDic[areaId] = areaInstance;
-
-    //    var config = ConfigMng.E.MapArea[areaId];
-    //    if (config.OffsetX < minX) minX = config.OffsetX;
-    //    if (config.OffsetX + 50 > maxX) maxX = config.OffsetX + 50;
-    //    if (config.OffsetZ < minZ) minZ = config.OffsetZ;
-    //    if (config.OffsetZ + 50 > maxZ) maxZ = config.OffsetZ + 50;
-    //}
-
-    ///// <summary>
-    ///// マップを削除
-    ///// </summary>
-    ///// <param name="areaId"></param>
-    //private void RemoveMapDataFromAreaDic(int areaId)
-    //{
-    //    mapDic[areaId].DestroyInstance();
-    //    mapDic.Remove(areaId);
-    //}
 
     public Vector3Int GetPlayerGroundPos(int offsetY = 3)
     {
@@ -298,7 +274,7 @@ public class MapMng
 
     public void SaveData()
     {
-        if (DataMng.E.RuntimeData.MapType != MapType.AreaMap || mapInstanceArr == null)
+        if (DataMng.E.RuntimeData == null || DataMng.E.RuntimeData.MapType != MapType.AreaMap || mapInstanceArr == null)
             return;
 
         foreach (var item in mapInstanceArr)
@@ -310,7 +286,7 @@ public class MapMng
     public EntityBase CreateEntity(int entityId, Vector3Int pos, Direction dType)
     {
         // マップエリア以外ならエラーメッセージを出す。
-        if (IsOutRange(WorldMng.E.MapMng.MapSize, pos))
+        if (IsOutRange(MapSize, pos))
         {
             if (pos.y > DataMng.E.MapData.GetMapSize().y - 1)
             {
@@ -417,7 +393,7 @@ public class MapMng
 
     public static MapCell GetMapCell(Vector3Int worldPosition)
     {
-        if (IsOutRange(WorldMng.E.MapMng.MapSize, worldPosition))
+        if (IsOutRange(E.MapSize, worldPosition))
             return null;
 
         int indexX = worldPosition.x / SettingMng.AreaMapSize;
@@ -426,13 +402,13 @@ public class MapMng
         int localPosX = worldPosition.x % SettingMng.AreaMapSize;
         int localPosZ = worldPosition.z % SettingMng.AreaMapSize;
 
-        return WorldMng.E.MapMng.mapInstanceArr[indexX, indexZ].GetCell(new Vector3Int(localPosX, worldPosition.y, localPosZ));
+        return E.mapInstanceArr[indexX, indexZ].GetCell(new Vector3Int(localPosX, worldPosition.y, localPosZ));
     }
     public static MapData.MapCellData GetMapCellData(Vector3Int worldPosition)
     {
         try
         {
-            if (IsOutRange(WorldMng.E.MapMng.MapSize, worldPosition))
+            if (IsOutRange(E.MapSize, worldPosition))
                 return new MapData.MapCellData() { entityID = -1 };
 
             int indexX = worldPosition.x / SettingMng.AreaMapSize;
@@ -444,7 +420,7 @@ public class MapMng
             if (indexX > SettingMng.AreaMapScaleX - 1 || indexZ > SettingMng.AreaMapScaleZ - 1)
                 return new MapData.MapCellData() { entityID = -1 };
 
-            return WorldMng.E.MapMng.mapInstanceArr[indexX, indexZ].GetCellData(new Vector3Int(localPosX, worldPosition.y, localPosZ));
+            return E.mapInstanceArr[indexX, indexZ].GetCellData(new Vector3Int(localPosX, worldPosition.y, localPosZ));
         }
         catch (Exception ex)
         {
@@ -456,7 +432,7 @@ public class MapMng
     {
         int indexX = worldPosition.x / SettingMng.AreaMapSize;
         int indexZ = worldPosition.z / SettingMng.AreaMapSize;
-        return WorldMng.E.MapMng.MapInstanceArr[indexX, indexZ];
+        return E.MapInstanceArr[indexX, indexZ];
     }
 
     public static void ActiveMapCell(Vector3Int worldPosition)
@@ -484,7 +460,7 @@ public class MapMng
     {
         try
         {
-            if (IsOutRange(WorldMng.E.MapMng.MapSize, WorldPosition))
+            if (IsOutRange(E.MapSize, WorldPosition))
                 return false;
 
             var cellData = GetMapCellData(WorldPosition);
@@ -562,8 +538,8 @@ public class MapMng
     {
         try
         {
-            if (posX < 0) posX = UnityEngine.Random.Range(CreatePosOffset, WorldMng.E.MapMng.MapSize.x - CreatePosOffset);
-            if (posZ < 0) posZ = UnityEngine.Random.Range(CreatePosOffset, WorldMng.E.MapMng.MapSize.z - CreatePosOffset);
+            if (posX < 0) posX = UnityEngine.Random.Range(CreatePosOffset, E.MapSize.x - CreatePosOffset);
+            if (posZ < 0) posZ = UnityEngine.Random.Range(CreatePosOffset, E.MapSize.z - CreatePosOffset);
 
             int posY = GetVertexY(posX, posZ) + (int)offsetY;
 
@@ -573,8 +549,8 @@ public class MapMng
                 // 生成できない座標の場合、ｋ回ループして新しいランダム座標を取得
                 for (int k = 0; k < 100; k++)
                 {
-                    posX = UnityEngine.Random.Range(CreatePosOffset, WorldMng.E.MapMng.MapSize.x - CreatePosOffset);
-                    posZ = UnityEngine.Random.Range(CreatePosOffset, WorldMng.E.MapMng.MapSize.z - CreatePosOffset);
+                    posX = UnityEngine.Random.Range(CreatePosOffset, E.MapSize.x - CreatePosOffset);
+                    posZ = UnityEngine.Random.Range(CreatePosOffset, E.MapSize.z - CreatePosOffset);
                     posY = GetVertexY(posX, posZ) + (int)offsetY;
                     newPos = new Vector3Int(posX, posY, posZ);
 
@@ -603,7 +579,7 @@ public class MapMng
         }
 
         int y = 0;
-        for (int i = WorldMng.E.MapMng.MapSize.y - 1; i >= 0; i--)
+        for (int i = E.MapSize.y - 1; i >= 0; i--)
         {
             var cell = GetMapCell(new Vector3Int(x, i, z));
             if (cell == null || cell.EntityId == 0)
@@ -635,7 +611,7 @@ public class MapMng
     private static bool CheckCreatePos(Vector3 pos)
     {
         Vector3 downEntityPos = new Vector3(pos.x, pos.y - 1, pos.z);
-        if (IsOutRange(WorldMng.E.MapMng.MapSize, Vector3Int.CeilToInt(downEntityPos), 3))
+        if (IsOutRange(E.MapSize, Vector3Int.CeilToInt(downEntityPos), 3))
         {
             return false;
         }
@@ -668,7 +644,7 @@ public class MapMng
             foreach (var item in list)
             {
                 // マップ外ならNG
-                if (IsOutRange(WorldMng.E.MapMng.MapSize, item))
+                if (IsOutRange(E.MapSize, item))
                     return false;
 
                 // 作りたい範囲内に他のブロックがある場合、NG
@@ -771,7 +747,7 @@ public class MapMng
     {
         if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
         {
-            return WorldMng.E.MapMng.MapSize;
+            return E.MapSize;
         }
         else
         {

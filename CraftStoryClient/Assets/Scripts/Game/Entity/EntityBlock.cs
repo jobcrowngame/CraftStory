@@ -28,8 +28,8 @@ public class EntityBlock : EntityBase
                 {
                     if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
                     {
-                        WorldMng.E.MapMng.DeleteEntity(this);
-                        WorldMng.E.MapMng.CreateEntity(3000, WorldPos, 0);
+                        MapMng.E.DeleteEntity(this);
+                        MapMng.E.CreateEntity(3000, WorldPos, 0);
                     }
                     else
                     {

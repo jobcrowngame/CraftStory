@@ -180,7 +180,7 @@ public class EntityBlast : EntityBase
     {
         if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
         {
-            return MapMng.IsOutRange(WorldMng.E.MapMng.MapSize, pos);
+            return MapMng.IsOutRange(MapMng.E.MapSize, pos);
         }
         else
         {

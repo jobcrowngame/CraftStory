@@ -21,7 +21,6 @@ public class WorldMng : MonoBehaviour
 
     public MapCtl MapCtl { get; set; }
     public GameTimeCtl GameTimeCtl { get; set; }
-    public MapMng MapMng { get; set; }
     public CharacterCtl CharacterCtl { get; set; }
 
     //public Transform CharacterParent;
@@ -36,7 +35,6 @@ public class WorldMng : MonoBehaviour
 
         GameTimeCtl = new GameTimeCtl();
         MapCtl = new MapCtl();
-        MapMng = new MapMng();
         CharacterCtl = new CharacterCtl();
 
         // 定期時間でローカルデータをセーブ
@@ -53,8 +51,8 @@ public class WorldMng : MonoBehaviour
     {
         // メッシュをクリア
         MapCtl.ClearMesh();
-        MapMng.ClearMesh();
-        MapMng.ClearCrops();
+        MapMng.E.ClearMesh();
+        MapMng.E.ClearCrops();
 
         // キャラクタクリア
         CharacterCtl.ClearCharacter();
@@ -67,7 +65,7 @@ public class WorldMng : MonoBehaviour
     {
         if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
         {
-            MapMng.Init();
+            MapMng.E.Init();
         }
         else
         {

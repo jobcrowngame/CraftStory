@@ -934,7 +934,7 @@ public class CharacterBase : MonoBehaviour
         {
             if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
             {
-                return WorldMng.E.MapMng.IsMapAreaOutX(transform.position.x, moveDirection.x);
+                return MapMng.E.IsMapAreaOutX(transform.position.x, moveDirection.x);
             }
             else
             {
@@ -965,7 +965,7 @@ public class CharacterBase : MonoBehaviour
         {
             if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
             {
-                return WorldMng.E.MapMng.IsMapAreaOutZ(transform.position.z, moveDirection.z);
+                return MapMng.E.IsMapAreaOutZ(transform.position.z, moveDirection.z);
             }
             else
             {

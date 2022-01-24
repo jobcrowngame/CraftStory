@@ -19,7 +19,6 @@ public class MapCell
     }
     public Vector3Int LocalPosition { get => localPosition; }
 
-    public bool IsSurface { get => MapMng.IsSurface(data.entityID); }
     public MapCellData Data { get => data; }
 
     public Entity Config { get => ConfigMng.E.Entity[data.entityID]; }

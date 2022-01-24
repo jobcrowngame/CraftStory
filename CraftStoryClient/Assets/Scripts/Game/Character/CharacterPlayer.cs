@@ -120,14 +120,14 @@ public partial class CharacterPlayer : CharacterBase
         if (transform.position.y < -10)
         {
             Controller.enabled = false;
-            transform.position = WorldMng.E.MapMng.GetPlayerGroundPos(5);
+            transform.position = MapMng.E.GetPlayerGroundPos(5);
             Controller.enabled = true;
         }
 
         // エリアマップの場合、今のエリアをチェック
         if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
         {
-            WorldMng.E.MapMng.CheckArea(transform);
+            MapMng.E.CheckArea(transform);
         }
     }
 

@@ -112,7 +112,7 @@ public class EntityCrops : EntityBase
         }
 
         // エンティティインスタンスを削除
-        WorldMng.E.MapMng.DeleteEntity(this);
+        MapMng.E.DeleteEntity(this);
 
         // 削除Effectを追加
         var effect = EffectMng.E.AddEffect<EffectBase>(transform.position, EffectType.BlockDestroyEnd);
@@ -123,7 +123,7 @@ public class EntityCrops : EntityBase
 
     public void OnRemoveCropsEntity()
     {
-        WorldMng.E.MapMng.RemoveCrops(LocalPos);
+        MapMng.E.RemoveCrops(LocalPos);
         IsDestroy = true;
     }
 

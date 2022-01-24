@@ -8,7 +8,6 @@ using UnityEngine;
 
 public class MapInstance : MonoBehaviour
 {
-
     public CombineMeshCtl CombineMeshCtl { get => combineObj; }
     CombineMeshCtl combineObj;
 
@@ -56,11 +55,28 @@ public class MapInstance : MonoBehaviour
     public MapData.MapCellData GetCellData(Vector3Int localPosition)
     {
         if (Data == null)
-            return new MapData.MapCellData() { entityID = -1 };
+            return new MapData.MapCellData() { entityID = 0 };
 
         return Data.Map[localPosition.x, localPosition.y, localPosition.z];
     }
 
+    public void ActiveInstance()
+    {
+        Active = true;
+
+        if (data == null)
+        {
+            string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
+            if (!string.IsNullOrEmpty(mapData))
+            {
+                data = new MapData(mapData, MapAreaConfig.MapId);
+            }
+            else
+            {
+                data = MapDataFactory.E.CreateMapData(MapAreaConfig.MapId);
+            }
+        }
+    }
     public void Execution(bool isAsync = true)
     {
         if (Active)
@@ -72,8 +88,6 @@ public class MapInstance : MonoBehaviour
             DestroyInstance();
         }
     }
-
-    string mapData;
 
     /// <summary>
     /// 
@@ -88,53 +102,10 @@ public class MapInstance : MonoBehaviour
 
         if (isAsync)
         {
-            if (Data == null)
-            {
-                //引数にstringが渡せるSubjectを作成
-                var sub = new Subject<int>();
-
-                //onNextで通常時の処理、onErrorでエラー時の処理、onCompletedで終了時の処理を登録
-                sub.Subscribe(
-                    onNext: text =>
-                    {
-                        mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
-                    },
-                    onError: error => Debug.Log("エラー！ : " + error),
-                    onCompleted: () =>
-                    {
-                        if (!string.IsNullOrEmpty(mapData))
-                        {
-                            data = new MapData(mapData, MapAreaConfig.MapId);
-                        }
-                        else
-                        {
-                            data = MapDataFactory.E.CreateMapData(MapAreaConfig.MapId);
-                        }
-
-                        StartCoroutine(InstantiateEntitysIE());
-                    }
-                );
-
-                sub.OnNext(1);
-                sub.OnCompleted();
-            }
-            else
-            {
-                StartCoroutine(InstantiateEntitysIE());
-            }
+            StartCoroutine(InstantiateEntitysIE());
         }
         else
         {
-            string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
-            if (!string.IsNullOrEmpty(mapData))
-            {
-                data = new MapData(mapData, MapAreaConfig.MapId);
-            }
-            else
-            {
-                data = MapDataFactory.E.CreateMapData(MapAreaConfig.MapId);
-            }
-
             InstantiateEntitys();
         }
     }
@@ -175,6 +146,19 @@ public class MapInstance : MonoBehaviour
     private System.Collections.IEnumerator InstantiateEntitysIE()
     {
         Logger.Log("Instance Entitys Area:{0}", MapAreaConfig.ID);
+
+        if (data == null)
+        {
+            string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
+            if (!string.IsNullOrEmpty(mapData))
+            {
+                data = new MapData(mapData, MapAreaConfig.MapId);
+            }
+            else
+            {
+                data = MapDataFactory.E.CreateMapData(MapAreaConfig.MapId);
+            }
+        }
 
         for (int y = 0; y < Data.GetMapSize().y; y++)
         {

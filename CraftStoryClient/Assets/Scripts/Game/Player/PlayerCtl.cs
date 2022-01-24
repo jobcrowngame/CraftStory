@@ -373,7 +373,7 @@ public class PlayerCtl : MonoBehaviour
         EntityBase entity;
         if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
         {
-            entity = WorldMng.E.MapMng.CreateEntity(entityId, pos, dType);
+            entity = MapMng.E.CreateEntity(entityId, pos, dType);
         }
         else
         {

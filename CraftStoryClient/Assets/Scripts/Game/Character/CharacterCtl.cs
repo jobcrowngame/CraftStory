@@ -95,7 +95,7 @@ public class CharacterCtl
         Vector3 pos = Vector3.zero;
         if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
         {
-            pos = WorldMng.E.MapMng.GetPlayerGroundPos();
+            pos = MapMng.E.GetPlayerGroundPos();
         }
         else
         {
@@ -305,7 +305,7 @@ public class CharacterCtl
     private List<Vector3Int> GetTorchAreaPosList()
     {
         List<Vector3Int> list = new List<Vector3Int>();
-        var torchList = WorldMng.E.MapMng.GetTorchs();
+        var torchList = MapMng.E.GetTorchs();
         foreach (var item in torchList)
         {
             int y = item.WorldPosition.y;

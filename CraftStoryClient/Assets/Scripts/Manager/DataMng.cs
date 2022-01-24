@@ -79,9 +79,9 @@ public class DataMng : Single<DataMng>
             Task task = SaveLoadFile.E.Save(mHomeData.ToStringData(), PublicPar.SaveRootPath + PublicPar.MapDataName);
         }
 
-        if (WorldMng.E.MapMng != null)
+        if (MapMng.E != null)
         {
-            WorldMng.E.MapMng.SaveData();
+            MapMng.E.SaveData();
         }
 
         LocalDataMng.E.Save();
