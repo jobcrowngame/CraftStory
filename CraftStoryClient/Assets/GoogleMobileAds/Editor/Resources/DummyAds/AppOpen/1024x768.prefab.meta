@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: b18ecf64be00344e7b039c69e9af56bf
+guid: 30454d768d0994255b52eafa89dad8e2
 labels:
 - gvh
 - gvh_version-6.1.2
-- gvhp_exportpath-GoogleMobileAds/Editor/GoogleMobileAdsSKAdNetworkItems.xml
+- gvhp_exportpath-GoogleMobileAds/Editor/Resources/DummyAds/AppOpen/1024x768.prefab
 timeCreated: 1480838400
-TextScriptImporter:
+PrefabImporter:
   externalObjects: {}
   userData:
   assetBundleName:

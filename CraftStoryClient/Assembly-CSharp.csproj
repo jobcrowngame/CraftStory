@@ -107,10 +107,10 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Blast.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapTool.cs" />
     <Compile Include="Assets\Scripts\UI\GuideUI.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
     <Compile Include="Assets\Scripts\UI\Battle\HpUIPlayer.cs" />
-    <Compile Include="Assets\Scripts\UI\MapLG.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Base.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyText.cs" />
+    <Compile Include="Assets\Scripts\UI\MapLG.cs" />
     <Compile Include="Assets\Scripts\Test\CreateUIMng.cs" />
     <Compile Include="Assets\Scripts\Test\RunTest.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Gacha.cs" />
@@ -198,12 +198,12 @@
     <Compile Include="Assets\Scripts\UI\Battle\HpUIMonster.cs" />
     <Compile Include="Assets\Scripts\Game\Effect\EffectMng.cs" />
     <Compile Include="Assets\Scripts\UI\IconItemCell.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonDatas\Food.cs" />
     <Compile Include="Assets\Scripts\Manager\TimeZoneMng.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonDatas\Food.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterAI.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mail.cs" />
-    <Compile Include="Assets\Scripts\UI\Battle\ExpAdd.cs" />
     <Compile Include="Assets\Scripts\Data\LocalData\UserData.cs" />
+    <Compile Include="Assets\Scripts\UI\Battle\ExpAdd.cs" />
     <Compile Include="Assets\Scripts\UI\Common\MyToggleGroupCtl.cs" />
     <Compile Include="Assets\Scripts\Test\TestAngle.cs" />
     <Compile Include="Assets\Scripts\Game\Player\ScreenDraggingCtl.cs" />
@@ -294,14 +294,15 @@
     <Compile Include="Assets\Scripts\Data\JsonDatas\Mission.cs" />
     <Compile Include="Assets\Scripts\Test\Monster\DogController.cs" />
     <Compile Include="Assets\Scripts\Game\Entity\EntityCrops.cs" />
+    <Compile Include="Assets\Scripts\Test\TestRotate.cs" />
     <Compile Include="Assets\Scripts\Game\Character\CharacterMonster.cs" />
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectChanger.cs" />
-    <Compile Include="Assets\Scripts\Test\TestRotate.cs" />
     <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\csDestroyEffect.cs" />
     <Compile Include="Assets\Scripts\UI\GuideLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\ConfigBase.cs" />
   </ItemGroup>
   <ItemGroup>
+     <None Include="Assets\GoogleMobileAds\GoogleMobileAds_version-6.1.2_manifest.txt" />
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.dll" />
      <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_SmoothSmoke.shader" />
@@ -327,7 +328,6 @@
      <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Android.dll" />
      <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Add_CenterGlow.shader" />
      <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Fast_Color_Add.shader" />
-     <None Include="Assets\GoogleMobileAds\GoogleMobileAds_version-6.0.2_manifest.txt" />
      <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Add.shader" />
      <None Include="Assets\RPG VFX Particles package 1\Shader\Effect_Fast_Add.shader" />
      <None Include="Assets\Resources\Shader\Test01.shader" />
@@ -1037,6 +1037,10 @@
       <Project>{E4E72E7A-33B6-6920-68E9-1CBAA6F605B8}</Project>
       <Name>AppsFlyer.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="UniRx.csproj">
+      <Project>{1F626EED-2635-B138-1A0A-8D7F228BD232}</Project>
+      <Name>UniRx</Name>
+    </ProjectReference>
     <ProjectReference Include="SimpleInput.Runtime.csproj">
       <Project>{815990B8-154B-3E8B-07EC-8B4C0A3CDCA8}</Project>
       <Name>SimpleInput.Runtime</Name>
@@ -1048,10 +1052,6 @@
     <ProjectReference Include="SimpleInput.Editor.csproj">
       <Project>{F6107704-C902-9D6D-57B8-7633D2D6595F}</Project>
       <Name>SimpleInput.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="UniRx.csproj">
-      <Project>{1F626EED-2635-B138-1A0A-8D7F228BD232}</Project>
-      <Name>UniRx</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
