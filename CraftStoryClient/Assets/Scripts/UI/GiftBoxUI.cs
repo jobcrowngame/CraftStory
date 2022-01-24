@@ -155,10 +155,6 @@ public class GiftBoxUI : UIBase
         Lv.text = "Lv." + LocalDataMng.E.Data.UserDataT.lv;
         AddExp.text = "+" + addedExp;
         Slider.value = LocalDataMng.E.Data.UserDataT.exp / (float)ConfigMng.E.Character[LocalDataMng.E.Data.UserDataT.lv].LvUpExp;
-
-#if UNITY_ANDROID
-        AdvertisingBtn.gameObject.SetActive(false);
-#endif
     }
 
     public override void Destroy()
