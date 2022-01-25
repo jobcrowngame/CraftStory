@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 6359199550695239410}
   - component: {fileID: 6727351188688130434}
   m_Layer: 0
-  m_Name: object_3d_302
+  m_Name: object_3d_crp_204
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
