@@ -99,7 +99,9 @@ public class MapMng : SingleMono<MapMng>
                     = area.OffsetZ * SettingMng.AreaMapSize + SettingMng.AreaMapSize;
         }
 
-        AreaInit(DataMng.E.UserData.PlayerPositionX, DataMng.E.UserData.PlayerPositionZ);
+        int posX, posZ;
+        GetSpawnPos(out posX, out posZ);
+        AreaInit(posX, posZ);
 
         // 設計図プレイビューコンソールObjectを追加
         if (DataMng.E.RuntimeData.MapType == MapType.Home ||
@@ -226,9 +228,9 @@ public class MapMng : SingleMono<MapMng>
 
     public Vector3Int GetPlayerGroundPos(int offsetY = 3)
     {
-        int x = DataMng.E.UserData.PlayerPositionX;
-        int z = DataMng.E.UserData.PlayerPositionZ;
-        return GetGroundPos(x, z, offsetY);
+        int posX, posZ;
+        GetSpawnPos(out posX, out posZ);
+        return GetGroundPos(posX, posZ, offsetY);
     }
 
     /// <summary>
@@ -267,9 +269,6 @@ public class MapMng : SingleMono<MapMng>
     {
         IndexX = (int)(playerTrans.position.x / SettingMng.AreaMapSize);
         IndexZ = (int)(playerTrans.position.z / SettingMng.AreaMapSize);
-
-        DataMng.E.UserData.PlayerPositionX = (int)(playerTrans.position.x);
-        DataMng.E.UserData.PlayerPositionZ = (int)(playerTrans.position.z);
     }
 
     public void SaveData()
@@ -957,5 +956,24 @@ public class MapMng : SingleMono<MapMng>
         }
     }
 
+    public static void GetSpawnPos(out int posX, out int posZ)
+    {
+        if (DataMng.E.UserData.PlayerSpawnPosX == 0 && DataMng.E.UserData.PlayerSpawnPosZ == 0)
+        {
+            if (DataMng.E.UserData.PlayerDefaltSpawnPosX == 0 && DataMng.E.UserData.PlayerDefaltSpawnPosZ == 0)
+            {
+                DataMng.E.UserData.PlayerDefaltSpawnPosX = 5;
+                DataMng.E.UserData.PlayerDefaltSpawnPosZ = 5;
+            }
+
+            posX = DataMng.E.UserData.PlayerDefaltSpawnPosX;
+            posZ = DataMng.E.UserData.PlayerDefaltSpawnPosZ;
+        }
+        else
+        {
+            posX = DataMng.E.UserData.PlayerSpawnPosX;
+            posZ = DataMng.E.UserData.PlayerSpawnPosZ;
+        }
+    }
     #endregion
 }

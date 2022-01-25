@@ -225,6 +225,9 @@ public class MapInstance : MonoBehaviour
         {
             Observable.Timer(TimeSpan.FromSeconds(10)).Subscribe(_ =>
             {
+                if (Active)
+                    return;
+
                 OnDestroyInstance();
                 SaveData();
                 Actived = false;

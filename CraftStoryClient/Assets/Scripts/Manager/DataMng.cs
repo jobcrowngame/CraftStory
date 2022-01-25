@@ -99,12 +99,6 @@ public class DataMng : Single<DataMng>
         //uData.Account = "OC1RUMAjDeFv";
         //uData.UserPW = "WeSEmdWkzLaB";
 
-        if (uData != null && uData.PlayerPositionX == 0 && uData.PlayerPositionZ == 0)
-        {
-            uData.PlayerPositionX = 5;
-            uData.PlayerPositionZ = 5;
-        }
-
         try
         {
             var mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.MapDataName);
@@ -136,11 +130,6 @@ public class DataMng : Single<DataMng>
         uData.UserPW = "local";
         uData.PickupNoticeCheckMap = new Dictionary<int, DateTime>();
         uData.Hunger = 100;
-        uData.AreaIndexX = 5;
-        uData.AreaIndexX = 5;
-
-        uData.PlayerPositionX = 5;
-        uData.PlayerPositionZ = 5;
 
         AddItem(101, 100);
         AddItem(105, 100);

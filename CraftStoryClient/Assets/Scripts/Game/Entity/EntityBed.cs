@@ -28,6 +28,9 @@ public class EntityBed : EntityBase
                 return;
             }
 
+            DataMng.E.UserData.PlayerSpawnPosX = WorldPos.x;
+            DataMng.E.UserData.PlayerSpawnPosZ = WorldPos.z;
+
             HomeLG.E.UI.FadeOutAndIn();
         }, () => { });
     }
@@ -40,5 +43,11 @@ public class EntityBed : EntityBase
         base.ClickingEnd();
 
         OnDestroyEntity();
+
+        if (WorldPos.x == DataMng.E.UserData.PlayerSpawnPosX && WorldPos.z == DataMng.E.UserData.PlayerSpawnPosZ)
+        {
+            DataMng.E.UserData.PlayerSpawnPosX = 0;
+            DataMng.E.UserData.PlayerSpawnPosZ = 0;
+        }
     }
 }

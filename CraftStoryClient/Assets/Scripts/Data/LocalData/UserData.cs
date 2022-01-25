@@ -45,8 +45,10 @@ public class UserData
     /// </summary>
     public int AreaIndexX { get; set; }
     public int AreaIndexZ { get; set; }
-    public int PlayerPositionX { get; set; }
-    public int PlayerPositionZ { get; set; }
+    public int PlayerDefaltSpawnPosX { get; set; }
+    public int PlayerDefaltSpawnPosZ { get; set; }
+    public int PlayerSpawnPosX { get; set; }
+    public int PlayerSpawnPosZ { get; set; }
 
     /// <summary>
     /// 強制表示お知らせ当日チェックマップ
