@@ -49,17 +49,10 @@ public class EntityCrops : EntityBase
     public override void Init()
     {
         startTime = GetTimer(LocalPos);
-        CheckState();
-
         IsDestroy = false;
     }
 
-    // 毎秒実行
     public void Update1S()
-    {
-        CheckState();
-    }
-    private void CheckState()
     {
         if (EConfig.ID == 0 || cropsConfig == null)
             return;

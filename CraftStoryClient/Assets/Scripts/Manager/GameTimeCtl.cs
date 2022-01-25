@@ -78,8 +78,19 @@ public class GameTimeCtl
     public GameTimeCtl()
     {
         ResetTime(); 
-        TimeZoneMng.E.AddTimerEvent02(() => { CurTime += 0.02f; });
         Active = false;
+    }
+
+    float timer = 1;
+    public void FixedUpdate()
+    {
+        timer += 0.02f;
+
+        if (timer > 1)
+        {
+            timer -= 1;
+            CurTime += 1;
+        }
     }
 
     /// <summary>

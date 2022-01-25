@@ -6,6 +6,15 @@ using System.Threading.Tasks;
 
 public class EntityBed : EntityBase
 {
+    string msg1 = @"「寝ると朝になります。
+また、新たなスポーン地点に設定されます。
+寝ますか？
+※スポーン地点に設定したベッドを壊すと初期のスポーン地点がリセットされます」";
+
+    string msg2 = @"「寝ると朝になります。
+寝ますか？";
+
+
     /// <summary>
     /// クリックイベント
     /// </summary>
@@ -19,8 +28,9 @@ public class EntityBed : EntityBase
             return;
         }
 
-        CommonFunction.ShowHintBox(@"寝ると朝になります。
-寝ますか？", () =>
+        string msg = IsSpawn() ? msg2 : msg1;
+
+        CommonFunction.ShowHintBox(msg, () =>
         {
             if (!WorldMng.E.GameTimeCtl.CanSleep)
             {
@@ -44,10 +54,15 @@ public class EntityBed : EntityBase
 
         OnDestroyEntity();
 
-        if (WorldPos.x == DataMng.E.UserData.PlayerSpawnPosX && WorldPos.z == DataMng.E.UserData.PlayerSpawnPosZ)
+        if (IsSpawn())
         {
             DataMng.E.UserData.PlayerSpawnPosX = 0;
             DataMng.E.UserData.PlayerSpawnPosZ = 0;
         }
+    }
+
+    private bool IsSpawn()
+    {
+        return WorldPos.x == DataMng.E.UserData.PlayerSpawnPosX && WorldPos.z == DataMng.E.UserData.PlayerSpawnPosZ;
     }
 }

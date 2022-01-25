@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JsonConfigData;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,6 @@ public class MapMng : SingleMono<MapMng>
 
     private Dictionary<Vector3Int, EntityCrops> cropsList = new Dictionary<Vector3Int, EntityCrops>();
     private Dictionary<Vector3Int, EntityCrops> areaMapCropsList = new Dictionary<Vector3Int, EntityCrops>();
-
-    public MapMng()
-    {
-    }
 
     public int IndexX
     {
@@ -68,6 +65,33 @@ public class MapMng : SingleMono<MapMng>
         }
     }
 
+    float timer = 0;
+    private void Update()
+    {
+        timer += Time.deltaTime;
+
+        if (timer > 1)
+        {
+            timer -= 1;
+
+            foreach (var item in cropsList.Values)
+            {
+                if (item == null || item.IsDestroy)
+                    continue;
+
+                item.Update1S();
+            }
+
+            foreach (var item in areaMapCropsList.Values)
+            {
+                if (item == null || item.IsDestroy)
+                    continue;
+
+                item.Update1S();
+            }
+        }
+    }
+
     public override void Init()
     {
         MapTool.Clear();
@@ -80,24 +104,10 @@ public class MapMng : SingleMono<MapMng>
 
         minX = SettingMng.MoveBoundaryOffset;
         minZ = SettingMng.MoveBoundaryOffset;
+        maxX = SettingMng.AreaMapScaleX * SettingMng.AreaMapSize;
+        maxZ = SettingMng.AreaMapScaleZ * SettingMng.AreaMapSize;
 
         mapInstanceArr = new MapInstance[SettingMng.AreaMapScaleX, SettingMng.AreaMapScaleZ];
-        foreach (var area in ConfigMng.E.MapArea.Values)
-        {
-            var areaInstance = new GameObject("Ground_" + area.ID, typeof(MapInstance)).GetComponent<MapInstance>();
-            areaInstance.transform.SetParent(MapParent);
-            areaInstance.Init(area.ID);
-
-            mapInstanceArr[area.OffsetX, area.OffsetZ] = areaInstance;
-
-            // マップサイズX
-            if (area.OffsetX * SettingMng.AreaMapSize + SettingMng.AreaMapSize > maxX) maxX 
-                    = area.OffsetX * SettingMng.AreaMapSize + SettingMng.AreaMapSize;
-
-            // マップサイズZ
-            if (area.OffsetZ * SettingMng.AreaMapSize + SettingMng.AreaMapSize > maxZ) maxZ 
-                    = area.OffsetZ * SettingMng.AreaMapSize + SettingMng.AreaMapSize;
-        }
 
         int posX, posZ;
         GetSpawnPos(out posX, out posZ);
@@ -111,8 +121,6 @@ public class MapMng : SingleMono<MapMng>
         {
             PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
         }
-
-        TimeZoneMng.E.AddTimerEvent03(Update1S);
     }
 
     public void ClearMesh()
@@ -142,7 +150,9 @@ public class MapMng : SingleMono<MapMng>
                 if (x < 0 || z < 0 || x >= SettingMng.AreaMapScaleX || z >= SettingMng.AreaMapScaleZ)
                     continue;
 
-                mapInstanceArr[x, z].Active = false;
+                var arr = GetMapInstanceArr(x, z);
+                arr.Active = false;
+                //mapInstanceArr[x, z] = null;
             }
         }
 
@@ -153,13 +163,17 @@ public class MapMng : SingleMono<MapMng>
                 if (x < 0 || z < 0 || x >= SettingMng.AreaMapScaleX || z >= SettingMng.AreaMapScaleZ)
                     continue;
 
-                mapInstanceArr[x, z].ActiveInstance();
+                var arr = GetMapInstanceArr(x, z);
+                arr.ActiveInstance();
                 yield return null;
             }
         }
 
         foreach (var item in mapInstanceArr)
         {
+            if (item == null)
+                continue;
+
             item.Execution();
             yield return null;
         }
@@ -175,7 +189,9 @@ public class MapMng : SingleMono<MapMng>
                 if (x < 0 || z < 0 || x >= SettingMng.AreaMapScaleX || z >= SettingMng.AreaMapScaleZ)
                     continue;
 
-                mapInstanceArr[x, z].Active = false;
+                var arr = GetMapInstanceArr(x, z);
+                arr.Active = false;
+                //mapInstanceArr[x, z] = null;
             }
         }
 
@@ -186,13 +202,17 @@ public class MapMng : SingleMono<MapMng>
                 if (x < 0 || z < 0 || x >= SettingMng.AreaMapScaleX || z >= SettingMng.AreaMapScaleZ)
                     continue;
 
-                mapInstanceArr[x, z].ActiveInstance();
+                var arr = GetMapInstanceArr(x, z);
+                arr.ActiveInstance();
                 yield return null;
             }
         }
 
         foreach (var item in mapInstanceArr)
         {
+            if (item == null)
+                continue;
+
             item.Execution();
             yield return null;
         }
@@ -219,11 +239,41 @@ public class MapMng : SingleMono<MapMng>
                     if (indexX + x < 0 || indexZ + z < 0 || indexX + x >= SettingMng.AreaMapScaleX || indexZ + z >= SettingMng.AreaMapScaleZ)
                         continue;
 
-                    mapInstanceArr[indexX + x, indexZ + z].ActiveInstance();
-                    mapInstanceArr[indexX + x, indexZ + z].Execution(false);
+                    var arr = GetMapInstanceArr(indexX + x, indexZ + z);
+                    arr.ActiveInstance();
+                    arr.Execution(false);
                 }
             }
         }
+    }
+
+    private MapInstance GetMapInstanceArr(int indexX, int indexZ)
+    {
+        if (mapInstanceArr[indexX, indexZ] == null)
+        {
+            var config = GetMapAreaConfig(indexX, indexZ);
+            if (config != null)
+            {
+                var areaInstance = new GameObject("Ground_" + config.ID, typeof(MapInstance)).GetComponent<MapInstance>();
+                areaInstance.transform.SetParent(MapParent);
+                areaInstance.Init(config.ID);
+
+                mapInstanceArr[indexX, indexZ] = areaInstance;
+            }
+        }
+
+        return mapInstanceArr[indexX, indexZ];
+    }
+    private MapArea GetMapAreaConfig(int offsetX, int offsetZ)
+    {
+        foreach (var item in ConfigMng.E.MapArea.Values)
+        {
+            if (item.OffsetX == offsetX && item.OffsetZ == offsetZ)
+            {
+                return item;
+            }
+        }
+        return null;
     }
 
     public Vector3Int GetPlayerGroundPos(int offsetY = 3)
@@ -278,6 +328,9 @@ public class MapMng : SingleMono<MapMng>
 
         foreach (var item in mapInstanceArr)
         {
+            if (item == null)
+                continue;
+
             item.SaveData();
         }
     }
@@ -340,24 +393,7 @@ public class MapMng : SingleMono<MapMng>
         }
     }
 
-    private void Update1S()
-    {
-        foreach (var item in cropsList.Values)
-        {
-            if (item == null || item.IsDestroy)
-                continue;
-            
-            item.Update1S();
-        }
-
-        foreach (var item in areaMapCropsList.Values)
-        {
-            if (item == null || item.IsDestroy)
-                continue;
-
-            item.Update1S();
-        }
-    }
+    
     public void AddCrops(Vector3Int pos, EntityCrops entity)
     {
         if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
@@ -419,7 +455,11 @@ public class MapMng : SingleMono<MapMng>
             if (indexX > SettingMng.AreaMapScaleX - 1 || indexZ > SettingMng.AreaMapScaleZ - 1)
                 return new MapData.MapCellData() { entityID = -1 };
 
-            return E.mapInstanceArr[indexX, indexZ].GetCellData(new Vector3Int(localPosX, worldPosition.y, localPosZ));
+            var arr = E.GetMapInstanceArr(indexX, indexZ);
+            if (arr == null)
+                return new MapData.MapCellData() { entityID = -1 };
+
+            return arr.GetCellData(new Vector3Int(localPosX, worldPosition.y, localPosZ));
         }
         catch (Exception ex)
         {

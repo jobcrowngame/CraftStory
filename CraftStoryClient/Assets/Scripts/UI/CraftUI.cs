@@ -221,7 +221,6 @@ public class CraftUI : UIBase
         createCount = CraftLG.E.SelectCount > 10 ? 10 : CraftLG.E.SelectCount;
         maxTimer = step * createCount;
         timer = 0;
-        TimeZoneMng.E.AddTimerEvent02(CloneIcon);
     }
 
     float timer;
@@ -229,16 +228,10 @@ public class CraftUI : UIBase
     int createCount;
     float step = 10;
 
-    /// <summary>
-    /// AnimationIconをコピー
-    /// </summary>
-    /// <param name="count"></param>
-    /// <returns></returns>
-    private void CloneIcon()
+    private void FixedUpdate()
     {
         if (timer >= maxTimer)
         {
-            TimeZoneMng.E.RemoveTimerEvent02(CloneIcon);
             UICtl.E.LockUI(false);
             return;
         }

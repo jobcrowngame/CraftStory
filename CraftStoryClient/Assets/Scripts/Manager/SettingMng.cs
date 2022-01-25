@@ -120,8 +120,8 @@ public class SettingMng : Single<SettingMng>
     /// <summary>
     /// エリアの規模
     /// </summary>
-    public const int AreaMapScaleX = 5;
-    public const int AreaMapScaleZ = 9;
+    public const int AreaMapScaleX = 333;
+    public const int AreaMapScaleZ = 333;
 
     /// <summary>
     /// エリアマップの最大高さ

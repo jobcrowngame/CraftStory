@@ -44,7 +44,8 @@ public class WorldMng : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(CharacterCtl != null) CharacterCtl.FixedUpdate();
+        if (CharacterCtl != null) CharacterCtl.FixedUpdate();
+        if (GameTimeCtl != null) GameTimeCtl.FixedUpdate();
     }
 
     public void Clear()
