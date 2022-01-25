@@ -373,6 +373,9 @@ public class MapMng : SingleMono<MapMng>
         List<MapCell> list = new List<MapCell>();
         foreach (var map in mapInstanceArr)
         {
+            if (map == null)
+                continue;
+
             list.AddRange(map.TorchDic);
         }
 
@@ -1002,8 +1005,8 @@ public class MapMng : SingleMono<MapMng>
         {
             if (DataMng.E.UserData.PlayerDefaltSpawnPosX == 0 && DataMng.E.UserData.PlayerDefaltSpawnPosZ == 0)
             {
-                DataMng.E.UserData.PlayerDefaltSpawnPosX = 5;
-                DataMng.E.UserData.PlayerDefaltSpawnPosZ = 5;
+                DataMng.E.UserData.PlayerDefaltSpawnPosX = 5000;
+                DataMng.E.UserData.PlayerDefaltSpawnPosZ = 5000;
             }
 
             posX = DataMng.E.UserData.PlayerDefaltSpawnPosX;
