@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -439,6 +440,9 @@ public class MapMng : SingleMono<MapMng>
 
         int localPosX = worldPosition.x % SettingMng.AreaMapSize;
         int localPosZ = worldPosition.z % SettingMng.AreaMapSize;
+
+        if (E.mapInstanceArr[indexX, indexZ] == null)
+            return null;
 
         return E.mapInstanceArr[indexX, indexZ].GetCell(new Vector3Int(localPosX, worldPosition.y, localPosZ));
     }

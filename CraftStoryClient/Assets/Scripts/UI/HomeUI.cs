@@ -127,10 +127,10 @@ public partial class HomeUI : UIBase
         TaskOverviewText = FindChiled<Transform>("Text", TaskOverview.transform);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        FixedUpdateHunger();
-        //RefreshMemoryInfo();
+        UpdateHunger();
+        RefreshMemoryInfo();
     }
 
     public override void Init()
@@ -422,7 +422,7 @@ public partial class HomeUI : UIBase
         {
             Memory1.text = "プールとして用意してくれているメモリー使用量:" + (float)Profiler.GetTotalReservedMemoryLong() / (1024 * 1024 * 1024) + "GB";
             Memory2.text = "現在使用しているメモリー使用量:" + (float)Profiler.GetTotalAllocatedMemoryLong() / (1024 * 1024 * 1024) + "GB";
-            Memory3.text = "プレイヤー座標：" + PlayerCtl.E.Character.transform.position;
+            Memory3.text = "MonoUsedSize：" + (float)Profiler.GetMonoUsedSizeLong() / (1024 * 1024 * 1024) + "GB";
         }
     }
 }

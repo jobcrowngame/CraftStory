@@ -38,7 +38,7 @@ public partial class HomeUI
         }
     }
 
-    private void FixedUpdateHunger()
+    private void UpdateHunger()
     {
         timer -= 0.02f;
 

@@ -66,10 +66,16 @@ public class MapInstance : MonoBehaviour
 
         if (data == null)
         {
-            string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
+            string fileName = PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat";
+            string mapData = (string)SaveLoadFile.E.Load(fileName);
             if (!string.IsNullOrEmpty(mapData))
             {
+                var startTime = DateTime.Now;
+
                 data = new MapData(mapData, MapAreaConfig.MapId);
+
+                TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
+                Logger.Log("mapData {1} をロードするに {0} かかりました。", elapsedSpan.TotalMilliseconds, fileName);
             }
             else
             {
