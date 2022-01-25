@@ -52,7 +52,6 @@ public class WorldMng : MonoBehaviour
     {
         // メッシュをクリア
         MapCtl.ClearMesh();
-        MapMng.E.ClearMesh();
         MapMng.E.ClearCrops();
 
         // キャラクタクリア

@@ -425,7 +425,6 @@ public class MapData
     {
         entityDic.Clear();
         blocks.Clear();
-
     }
 
     /// <summary>

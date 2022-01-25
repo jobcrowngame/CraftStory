@@ -25,6 +25,9 @@ public class MapCell
     public EntityType Type { get => (EntityType)Config.Type; }
     public Direction Direction { get => (Direction)data.direction; }
     public int EntityId { get => data.entityID; }
+
+    public bool IsSurface { get; set; }
+
     public EntityBase Entity 
     { 
         get => entity;
@@ -41,6 +44,8 @@ public class MapCell
         this.data = data;
         this.localPosition = localPosition;
         this.map = map;
+
+        CheckIsSurface();
     }
 
     public void SetData(MapCellData data)
@@ -88,8 +93,11 @@ public class MapCell
             if (data.entityID < 1 || Type == EntityType.Obstacle)
                 return 0;
 
-            if (!MapMng.CheckAroundIsSurface(this))
+            if (!IsSurface)
                 return 0;
+
+            //if (!MapMng.CheckAroundIsSurface(this))
+            //    return 0;
 
             // エンティティをインスタンス
             entity = MapTool.InstantiateEntity(this, map.transform, localPosition);
@@ -129,5 +137,22 @@ public class MapCell
         MapMng.ActiveMapCell(new Vector3Int(WorldPosition.x, WorldPosition.y + 1, WorldPosition.z));
         MapMng.ActiveMapCell(new Vector3Int(WorldPosition.x, WorldPosition.y, WorldPosition.z - 1));
         MapMng.ActiveMapCell(new Vector3Int(WorldPosition.x, WorldPosition.y, WorldPosition.z + 1));
+    }
+
+    private void CheckIsSurface()
+    {
+        IsSurface = false;
+
+        if (IsSurface == false) IsSurface = CheckAround(new Vector3Int(localPosition.x - 1, localPosition.y, localPosition.z));
+        if (IsSurface == false) IsSurface = CheckAround(new Vector3Int(localPosition.x + 1, localPosition.y, localPosition.z));
+        if (IsSurface == false) IsSurface = CheckAround(new Vector3Int(localPosition.x, localPosition.y - 1, localPosition.z));
+        if (IsSurface == false) IsSurface = CheckAround(new Vector3Int(localPosition.x, localPosition.y + 1, localPosition.z));
+        if (IsSurface == false) IsSurface = CheckAround(new Vector3Int(localPosition.x, localPosition.y, localPosition.z - 1));
+        if (IsSurface == false) IsSurface = CheckAround(new Vector3Int(localPosition.x, localPosition.y, localPosition.z + 1));
+    }
+    private bool CheckAround(Vector3Int localPos)
+    {
+        var cellData = map.GetCellData(localPos);
+        return MapMng.IsSurface(cellData.entityID);
     }
 }

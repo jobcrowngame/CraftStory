@@ -14,9 +14,8 @@ public class MapMng : SingleMono<MapMng>
     public Transform MapParent { get; private set; }
     public Transform EffectParent { get; private set; }
     public MapEntitysPool MapPool { get; set; }
-    public MapInstance[,] MapInstanceArr { get => mapInstanceArr; }
 
-    MapInstance[,] mapInstanceArr;
+    //MapInstance[,] mapInstanceArr;
     private int loadAreaRange = 2;
 
     private Dictionary<Vector3Int, EntityCrops> cropsList = new Dictionary<Vector3Int, EntityCrops>();
@@ -108,7 +107,7 @@ public class MapMng : SingleMono<MapMng>
         maxX = SettingMng.AreaMapScaleX * SettingMng.AreaMapSize;
         maxZ = SettingMng.AreaMapScaleZ * SettingMng.AreaMapSize;
 
-        mapInstanceArr = new MapInstance[SettingMng.AreaMapScaleX, SettingMng.AreaMapScaleZ];
+        //mapInstanceArr = new MapInstance[SettingMng.AreaMapScaleX, SettingMng.AreaMapScaleZ];
 
         int posX, posZ;
         GetSpawnPos(out posX, out posZ);
@@ -123,18 +122,6 @@ public class MapMng : SingleMono<MapMng>
             PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
         }
     }
-
-    public void ClearMesh()
-    {
-        if (MapInstanceArr == null)
-            return;
-
-        foreach (var item in MapInstanceArr)
-        {
-            item.CombineMeshCtl.Clear();
-        }
-    }
-
 
 
     /// <summary>
@@ -152,8 +139,7 @@ public class MapMng : SingleMono<MapMng>
                     continue;
 
                 var arr = GetMapInstanceArr(x, z);
-                arr.Active = false;
-                //mapInstanceArr[x, z] = null;
+                arr.EnActiveInstance();
             }
         }
 
@@ -165,19 +151,20 @@ public class MapMng : SingleMono<MapMng>
                     continue;
 
                 var arr = GetMapInstanceArr(x, z);
-                arr.ActiveInstance();
+                arr.AsyncActiveInstance();
+
                 yield return null;
             }
         }
 
-        foreach (var item in mapInstanceArr)
-        {
-            if (item == null)
-                continue;
+        //foreach (var item in mapInstanceArr)
+        //{
+        //    if (item == null)
+        //        continue;
 
-            item.Execution();
-            yield return null;
-        }
+        //    item.Execution();
+        //    yield return null;
+        //}
     }
     public IEnumerator AreaChangeZIE(int from, int to)
     {
@@ -191,8 +178,7 @@ public class MapMng : SingleMono<MapMng>
                     continue;
 
                 var arr = GetMapInstanceArr(x, z);
-                arr.Active = false;
-                //mapInstanceArr[x, z] = null;
+                arr.EnActiveInstance();
             }
         }
 
@@ -204,19 +190,20 @@ public class MapMng : SingleMono<MapMng>
                     continue;
 
                 var arr = GetMapInstanceArr(x, z);
-                arr.ActiveInstance();
+                arr.AsyncActiveInstance();
+
                 yield return null;
             }
         }
 
-        foreach (var item in mapInstanceArr)
-        {
-            if (item == null)
-                continue;
+        //foreach (var item in mapInstanceArr)
+        //{
+        //    if (item == null)
+        //        continue;
 
-            item.Execution();
-            yield return null;
-        }
+        //    item.Execution();
+        //    yield return null;
+        //}
     }
     public void AreaInit(int posX, int posZ)
     {
@@ -242,7 +229,6 @@ public class MapMng : SingleMono<MapMng>
 
                     var arr = GetMapInstanceArr(indexX + x, indexZ + z);
                     arr.ActiveInstance();
-                    arr.Execution(false);
                 }
             }
         }
@@ -250,20 +236,19 @@ public class MapMng : SingleMono<MapMng>
 
     private MapInstance GetMapInstanceArr(int indexX, int indexZ)
     {
-        if (mapInstanceArr[indexX, indexZ] == null)
-        {
-            var config = GetMapAreaConfig(indexX, indexZ);
-            if (config != null)
-            {
-                var areaInstance = new GameObject("Ground_" + config.ID, typeof(MapInstance)).GetComponent<MapInstance>();
-                areaInstance.transform.SetParent(MapParent);
-                areaInstance.Init(config.ID);
+        var config = GetMapAreaConfig(indexX, indexZ);
+        MapInstance mapInstance = CommonFunction.FindChiledByName<MapInstance>(MapParent, config.ID.ToString());
 
-                mapInstanceArr[indexX, indexZ] = areaInstance;
-            }
+        if (mapInstance == null)
+        {
+            mapInstance = new GameObject(config.ID.ToString()).AddComponent<MapInstance>();
+            mapInstance.transform.SetParent(MapParent);
+            mapInstance.Init(config.ID);
+
+            //mapInstanceArr[indexX, indexZ] = areaInstance;
         }
 
-        return mapInstanceArr[indexX, indexZ];
+        return mapInstance;
     }
     private MapArea GetMapAreaConfig(int offsetX, int offsetZ)
     {
@@ -324,16 +309,18 @@ public class MapMng : SingleMono<MapMng>
 
     public void SaveData()
     {
-        if (DataMng.E.RuntimeData == null || DataMng.E.RuntimeData.MapType != MapType.AreaMap || mapInstanceArr == null)
-            return;
+        return;
 
-        foreach (var item in mapInstanceArr)
-        {
-            if (item == null)
-                continue;
+        //if (DataMng.E.RuntimeData == null || DataMng.E.RuntimeData.MapType != MapType.AreaMap || mapInstanceArr == null)
+        //    return;
 
-            item.SaveData();
-        }
+        //foreach (var item in mapInstanceArr)
+        //{
+        //    if (item == null)
+        //        continue;
+
+        //    item.SaveData();
+        //}
     }
 
     public EntityBase CreateEntity(int entityId, Vector3Int pos, Direction dType)
@@ -372,13 +359,13 @@ public class MapMng : SingleMono<MapMng>
     public List<MapCell> GetTorchs()
     {
         List<MapCell> list = new List<MapCell>();
-        foreach (var map in mapInstanceArr)
-        {
-            if (map == null)
-                continue;
+        //foreach (var map in mapInstanceArr)
+        //{
+        //    if (map == null)
+        //        continue;
 
-            list.AddRange(map.TorchDic);
-        }
+        //    list.AddRange(map.TorchDic);
+        //}
 
         return list;
     }
@@ -441,10 +428,11 @@ public class MapMng : SingleMono<MapMng>
         int localPosX = worldPosition.x % SettingMng.AreaMapSize;
         int localPosZ = worldPosition.z % SettingMng.AreaMapSize;
 
-        if (E.mapInstanceArr[indexX, indexZ] == null)
+        var arr = E.GetMapInstanceArr(indexX, indexZ);
+        if (arr == null)
             return null;
 
-        return E.mapInstanceArr[indexX, indexZ].GetCell(new Vector3Int(localPosX, worldPosition.y, localPosZ));
+        return arr.GetCell(new Vector3Int(localPosX, worldPosition.y, localPosZ));
     }
     public static MapData.MapCellData GetMapCellData(Vector3Int worldPosition)
     {
@@ -473,12 +461,6 @@ public class MapMng : SingleMono<MapMng>
             Logger.Error(ex);
             throw;
         }
-    }
-    public static MapInstance GetMapInstance(Vector3Int worldPosition)
-    {
-        int indexX = worldPosition.x / SettingMng.AreaMapSize;
-        int indexZ = worldPosition.z / SettingMng.AreaMapSize;
-        return E.MapInstanceArr[indexX, indexZ];
     }
 
     public static void ActiveMapCell(Vector3Int worldPosition)
@@ -559,11 +541,11 @@ public class MapMng : SingleMono<MapMng>
             || entityType == (int)EntityType.TransferGate;
     }
 
-    public static bool IsOutRange(Vector3Int mapSize, Vector3Int worldPos, int offset = 0)
+    public static bool IsOutRange(Vector3Int mapSize, Vector3Int Pos, int offset = 0)
     {
-        return worldPos.x < 0 + offset || worldPos.x > mapSize.x - 1 - offset
-            || worldPos.y < 0 + offset || worldPos.y > mapSize.y - 1 - offset
-            || worldPos.z < 0 + offset || worldPos.z > mapSize.z - 1 - offset;
+        return Pos.x < 0 + offset || Pos.x > mapSize.x - 1 - offset
+            || Pos.y < 0 + offset || Pos.y > mapSize.y - 1 - offset
+            || Pos.z < 0 + offset || Pos.z > mapSize.z - 1 - offset;
     }
     public static bool IsOutRange(Vector3Int worldPos)
     {

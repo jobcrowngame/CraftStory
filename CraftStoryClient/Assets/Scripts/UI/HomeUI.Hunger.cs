@@ -93,6 +93,9 @@ public partial class HomeUI
     /// <param name="value"></param>
     private void HungerChange(int value)
     {
+        if (DataMng.E.UserData == null)
+            return;
+
         Hunger += value;
     }
 
