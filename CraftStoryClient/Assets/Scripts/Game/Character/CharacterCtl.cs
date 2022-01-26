@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// キャラクタコンソール
 /// </summary>
-public class CharacterCtl
+public class CharacterCtl : SingleMono<CharacterCtl>
 {
     private CharacterPlayer player;
     private List<CharacterBase> characterList = new List<CharacterBase>();
@@ -16,6 +16,7 @@ public class CharacterCtl
 
     // エリアマップの敵が生成される時間
     int createAreaMapMonsterTimer = 0;
+    float timer;
 
     List<int> mAreaMapMonsterList = new List<int>();
 
@@ -28,7 +29,6 @@ public class CharacterCtl
             mAreaMapMonsterList = GetAreaMapCreateMonsterEntityId();
             mRemainingNumber = 0;
             createAreaMapMonsterTimer = SettingMng.AreaMapCreateMonsterInterval;
-            TimeZoneMng.E.AddTimerEvent03(AddAreaMapMonster);
         }
         else
         {
@@ -38,7 +38,16 @@ public class CharacterCtl
         AddFollowCharacter();
     }
 
-    public void FixedUpdate()
+    private void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer > 1)
+        {
+            timer -= 1;
+            AddAreaMapMonster();
+        }
+    }
+    private void FixedUpdate()
     {
         for (int i = 0; i < characterList.Count; i++)
         {
@@ -226,7 +235,7 @@ public class CharacterCtl
     public void AddAreaMapMonster()
     {
         // 主人公がない場合、スキップ
-        if (player == null)
+        if (player == null || DataMng.E.RuntimeData.MapType != MapType.AreaMap)
             return;
 
         // 夜になった場合、敵スポーン時間チェックして更新
@@ -238,14 +247,19 @@ public class CharacterCtl
             return;
 
         createAreaMapMonsterTimer = WorldMng.E.GameTimeCtl.IsNight ? SettingMng.AreaMapCreateMonsterNightInterval : SettingMng.AreaMapCreateMonsterInterval;
-        int defaltMaxCount = WorldMng.E.GameTimeCtl.IsNight ? SettingMng.AreaMapCreateMonsterNightMaxCount : SettingMng.AreaMapCreateMonsterMaxCount;
 
+        StartCoroutine(AddAreaMapMonsterIE());
+    }
+
+    private IEnumerator<int> AddAreaMapMonsterIE()
+    {
+        int defaltMaxCount = WorldMng.E.GameTimeCtl.IsNight ? SettingMng.AreaMapCreateMonsterNightMaxCount : SettingMng.AreaMapCreateMonsterMaxCount;
         int range = Random.Range(0, defaltMaxCount - RemainingNumber + 1);
         var createPosList = GetAreaMapCreateMonsterPosList();
 
         // 生成できる座標がないとスキップ
         if (createPosList.Count <= 0)
-            return;
+            yield break;
 
         for (int i = 0; i < range; i++)
         {
@@ -256,8 +270,8 @@ public class CharacterCtl
             mRemainingNumber++;
 
             Logger.Warning("敵が生成 {0}", mAreaMapMonsterList[rangeEntityIndex]);
+            yield return 1;
         }
-
     }
 
     public void RemoveMonster(CharacterBase character)
@@ -518,7 +532,6 @@ public class CharacterCtl
     public void ClearCharacter()
     {
         characterList.Clear();
-        TimeZoneMng.E.RemoveTimerEvent03(AddAreaMapMonster);
     }
 
     #endregion 

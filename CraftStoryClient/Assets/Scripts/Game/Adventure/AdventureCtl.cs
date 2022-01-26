@@ -108,7 +108,7 @@ public class AdventureCtl : Single<AdventureCtl>
             HomeLG.E.UI.OnLevelUp();
 
             // パラメータ更新
-            WorldMng.E.CharacterCtl.getPlayer().Parameter.LevelUp(LocalDataMng.E.Data.UserDataT.lv);
+            CharacterCtl.E.getPlayer().Parameter.LevelUp(LocalDataMng.E.Data.UserDataT.lv);
         }
     }
 

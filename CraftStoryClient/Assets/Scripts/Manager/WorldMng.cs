@@ -21,7 +21,6 @@ public class WorldMng : MonoBehaviour
 
     public MapCtl MapCtl { get; set; }
     public GameTimeCtl GameTimeCtl { get; set; }
-    public CharacterCtl CharacterCtl { get; set; }
 
     //public Transform CharacterParent;
     public Transform EffectParent;
@@ -35,7 +34,6 @@ public class WorldMng : MonoBehaviour
 
         GameTimeCtl = new GameTimeCtl();
         MapCtl = new MapCtl();
-        CharacterCtl = new CharacterCtl();
 
         // 定期時間でローカルデータをセーブ
         timer = SettingMng.AutoSaveDataTime;
@@ -44,7 +42,6 @@ public class WorldMng : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (CharacterCtl != null) CharacterCtl.FixedUpdate();
         if (GameTimeCtl != null) GameTimeCtl.FixedUpdate();
     }
 
@@ -55,7 +52,7 @@ public class WorldMng : MonoBehaviour
         MapMng.E.ClearCrops();
 
         // キャラクタクリア
-        CharacterCtl.ClearCharacter();
+        CharacterCtl.E.ClearCharacter();
     }
 
     /// <summary>
@@ -72,7 +69,7 @@ public class WorldMng : MonoBehaviour
             MapCtl.CreateMap();
         }
 
-        CharacterCtl.CreateCharacter();
+        CharacterCtl.E.CreateCharacter();
 
         // ガイドの場合、一時的のアイテムを追加
         if (DataMng.E.RuntimeData.MapType == MapType.Guide)

@@ -528,7 +528,7 @@ public class PlayerCtl : MonoBehaviour
         {
             // 目標がない場合、探す
             if (Character.Target == null)
-                Character.Target = WorldMng.E.CharacterCtl.FindTargetInSecurityRange(CharacterBase.CharacterGroup.Monster,
+                Character.Target = CharacterCtl.E.FindTargetInSecurityRange(CharacterBase.CharacterGroup.Monster,
                     Character.transform.position, skill.distance);
 
             // 探しても目標がない場合、スキップ

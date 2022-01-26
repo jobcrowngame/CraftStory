@@ -44,7 +44,7 @@ public class CharacterMonster : CharacterBase
         PlayerCtl.E.CameraCtl.CancelLockUn();
         PlayerCtl.E.Character.Target = this;
 
-        var playerPos = WorldMng.E.CharacterCtl.getPlayer().transform.position;
+        var playerPos = CharacterCtl.E.getPlayer().transform.position;
         var distance = Vector3.Distance(playerPos, transform.position);
 
         Debug.Log(distance);
@@ -86,7 +86,7 @@ public class CharacterMonster : CharacterBase
         // Exp手に入る演出
         PlayerCtl.E.AddExp(Parameter.AddExp);
 
-        WorldMng.E.CharacterCtl.MonsterDied();
+        CharacterCtl.E.MonsterDied();
 
         GuideLG.E.NextOnCreateBlock();
 
@@ -106,9 +106,9 @@ public class CharacterMonster : CharacterBase
                 ai = null;
                 Behavior = BehaviorType.Did;
 
-                WorldMng.E.CharacterCtl.RemoveMonster(this);
+                CharacterCtl.E.RemoveMonster(this);
 
-                WorldMng.E.CharacterCtl.MonsterDied();
+                CharacterCtl.E.MonsterDied();
                 GameObject.Destroy(gameObject);
             }
             return;
@@ -194,7 +194,7 @@ public class CharacterMonster : CharacterBase
         Rotation(direction);
 
         // 助け呼ぶ範囲内のモンスター
-        var monsterList = WorldMng.E.CharacterCtl.FindTargetListInSecurityRange(Group, transform.position, Parameter.CallForHelpRange);
+        var monsterList = CharacterCtl.E.FindTargetListInSecurityRange(Group, transform.position, Parameter.CallForHelpRange);
         foreach (CharacterMonster item in monsterList)
         {
             if (item.Parameter.RespondToHelp == 1)

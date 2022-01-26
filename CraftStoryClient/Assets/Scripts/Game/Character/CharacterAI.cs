@@ -145,7 +145,7 @@ public class CharacterAI
     /// <returns></returns>
     public bool TargetInSecurityRange()
     {
-        target = WorldMng.E.CharacterCtl.FindTargetInSecurityRange(CharacterBase.CharacterGroup.Player, 
+        target = CharacterCtl.E.FindTargetInSecurityRange(CharacterBase.CharacterGroup.Player, 
             mCharacter.transform.position, mCharacter.Parameter.SecurityRange);
 
         return target != null;
@@ -198,7 +198,7 @@ public class CharacterAI
     /// <returns></returns>
     public bool CheckDespawnRange()
     {
-        var player = WorldMng.E.CharacterCtl.getPlayer();
+        var player = CharacterCtl.E.getPlayer();
         var dis = Mathf.Abs(Vector3.Distance(player.transform.position, mCharacter.transform.position));
         return dis > SettingMng.AreaMapMonsterDespawnRange;
     }

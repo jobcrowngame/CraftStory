@@ -55,8 +55,8 @@ public partial class HomeUI
     /// </summary>
     public void ShowMonsterNumberLeft()
     {
-        MonsterNumberLeft.gameObject.SetActive(WorldMng.E.CharacterCtl.RemainingNumber > 0);
-        UpdateNumberLeftMonster(WorldMng.E.CharacterCtl.RemainingNumber);
+        MonsterNumberLeft.gameObject.SetActive(CharacterCtl.E.RemainingNumber > 0);
+        UpdateNumberLeftMonster(CharacterCtl.E.RemainingNumber);
     }
 
     /// <summary>

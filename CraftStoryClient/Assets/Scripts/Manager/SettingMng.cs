@@ -148,7 +148,7 @@ public class SettingMng : Single<SettingMng>
     /// エリアマップで敵が生成する間隔（秒）
     /// </summary>
     public const int AreaMapCreateMonsterInterval = 120;
-    public const int AreaMapCreateMonsterNightInterval = 150; // 夜
+    public const int AreaMapCreateMonsterNightInterval = 60; // 夜
 
     /// <summary>
     /// エリアマップで敵がデスポーン時間（秒）

@@ -460,14 +460,14 @@ public class CharacterBase : MonoBehaviour
     private void RangeAttackAddImpact(SkillData skill, CharacterGroup targetGroup, string[] impacts)
     {
         // 目標を探す
-        var targets = WorldMng.E.CharacterCtl.FindCharacterInRange(transform, skill.Config.Distance, targetGroup);
+        var targets = CharacterCtl.E.FindCharacterInRange(transform, skill.Config.Distance, targetGroup);
         foreach (var target in targets)
         {
             // 不存在、死んだ目標はスキップ
             if (target == null || target.IsDied)
                 break;
 
-            var targetDir = WorldMng.E.CharacterCtl.CalculationDir(target.transform.position, transform.position);
+            var targetDir = CharacterCtl.E.CalculationDir(target.transform.position, transform.position);
             var angle = Vector2.Angle(targetDir, GetMeDirection());
 
             if (angle * 2 <= skill.Config.RangeAngle)
@@ -564,7 +564,7 @@ public class CharacterBase : MonoBehaviour
     }
     private void RangedRangeAttackIEAddImpact(SkillData skill, CharacterBase mainTarget, CharacterGroup targetGroup, string[] impacts)
     {
-        var targets = WorldMng.E.CharacterCtl.FindCharacterInRange(mainTarget.transform.position, skill.Config.Radius, targetGroup);
+        var targets = CharacterCtl.E.FindCharacterInRange(mainTarget.transform.position, skill.Config.Radius, targetGroup);
         foreach (var target in targets)
         {
             if (target == null || target.IsDied)
@@ -606,7 +606,7 @@ public class CharacterBase : MonoBehaviour
     }
     private void BeamIEAddImpact(SkillData skill, CharacterGroup targetGroup, string[] impacts)
     {
-        var targets = WorldMng.E.CharacterCtl.FindCharacterInRect(this, skill.Config.Distance, skill.Config.Radius, targetGroup);
+        var targets = CharacterCtl.E.FindCharacterInRect(this, skill.Config.Distance, skill.Config.Radius, targetGroup);
         foreach (var target in targets)
         {
             if (target == null || target.IsDied)
@@ -647,7 +647,7 @@ public class CharacterBase : MonoBehaviour
     private void RangeRecoveryIEAddImpact(SkillData skill, CharacterGroup targetGroup, string[] impacts)
     {
         // 目標を探す
-        var targets = WorldMng.E.CharacterCtl.FindCharacterInRange(transform.position, skill.Config.Radius, targetGroup);
+        var targets = CharacterCtl.E.FindCharacterInRange(transform.position, skill.Config.Radius, targetGroup);
         foreach (var target in targets)
         {
             if (target == null || target.IsDied)
@@ -680,7 +680,7 @@ public class CharacterBase : MonoBehaviour
     private void FullMapAttackAddImpact(SkillData skill, CharacterGroup targetGroup, string[] impacts)
     {
         // 目標を探す
-        var targets = WorldMng.E.CharacterCtl.FindCharacterAll(targetGroup);
+        var targets = CharacterCtl.E.FindCharacterAll(targetGroup);
         foreach (var target in targets)
         {
             // 不存在、死んだ目標はスキップ
