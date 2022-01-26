@@ -152,6 +152,9 @@ public class MapCell
     }
     private bool CheckAround(Vector3Int localPos)
     {
+        if (localPos.y < 0)
+            return false;
+
         var cellData = map.GetCellData(localPos);
         return MapMng.IsSurface(cellData.entityID);
     }
