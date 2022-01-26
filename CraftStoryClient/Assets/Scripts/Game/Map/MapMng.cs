@@ -29,7 +29,7 @@ public class MapMng : SingleMono<MapMng>
             if (value == DataMng.E.UserData.AreaIndexX)
                 return;
 
-            AreaChangeX(DataMng.E.UserData.AreaIndexX, value);
+            StartCoroutine(AreaChangeX(DataMng.E.UserData.AreaIndexX, value));
 
             DataMng.E.UserData.AreaIndexX = value;
         }
@@ -42,7 +42,7 @@ public class MapMng : SingleMono<MapMng>
             if (value == DataMng.E.UserData.AreaIndexZ)
                 return;
 
-            AreaChangeZ(DataMng.E.UserData.AreaIndexZ, value);
+            StartCoroutine(AreaChangeZ(DataMng.E.UserData.AreaIndexZ, value));
 
             DataMng.E.UserData.AreaIndexZ = value;
         }
@@ -127,7 +127,7 @@ public class MapMng : SingleMono<MapMng>
     /// <summary>
     /// エリア変更
     /// </summary>
-    public void AreaChangeX(int from, int to)
+    public IEnumerator AreaChangeX(int from, int to)
     {
         Logger.Log("Area map index change X: {0}➡{1}", from, to);
 
@@ -140,6 +140,7 @@ public class MapMng : SingleMono<MapMng>
 
                 var arr = GetMapInstanceArr(x, z);
                 arr.EnActiveInstance();
+                yield return null;
             }
         }
 
@@ -152,10 +153,11 @@ public class MapMng : SingleMono<MapMng>
 
                 var arr = GetMapInstanceArr(x, z);
                 arr.AsyncActiveInstance();
+                yield return null;
             }
         }
     }
-    public void AreaChangeZ(int from, int to)
+    public IEnumerator AreaChangeZ(int from, int to)
     {
         Logger.Log("Area map index change Z: {0}➡{1}", from, to);
 
@@ -168,6 +170,7 @@ public class MapMng : SingleMono<MapMng>
 
                 var arr = GetMapInstanceArr(x, z);
                 arr.EnActiveInstance();
+                yield return null;
             }
         }
 
@@ -180,6 +183,7 @@ public class MapMng : SingleMono<MapMng>
 
                 var arr = GetMapInstanceArr(x, z);
                 arr.AsyncActiveInstance();
+                yield return null;
             }
         }
     }
@@ -287,18 +291,17 @@ public class MapMng : SingleMono<MapMng>
 
     public void SaveData()
     {
-        return;
+        if (MapParent == null || DataMng.E.RuntimeData == null || DataMng.E.RuntimeData.MapType != MapType.AreaMap)
+            return;
 
-        //if (DataMng.E.RuntimeData == null || DataMng.E.RuntimeData.MapType != MapType.AreaMap || mapInstanceArr == null)
-        //    return;
-
-        //foreach (var item in mapInstanceArr)
-        //{
-        //    if (item == null)
-        //        continue;
-
-        //    item.SaveData();
-        //}
+        foreach (Transform item in MapParent)
+        {
+            var arr = item.GetComponent<MapInstance>();
+            if (arr != null)
+            {
+                arr.SaveData();
+            }
+        }
     }
 
     public EntityBase CreateEntity(int entityId, Vector3Int pos, Direction dType)
@@ -446,6 +449,7 @@ public class MapMng : SingleMono<MapMng>
         var cell = GetMapCell(worldPosition);
         if (cell != null)
         {
+            cell.IsSurface = true;
             cell.InstanceObj();
         }
     }

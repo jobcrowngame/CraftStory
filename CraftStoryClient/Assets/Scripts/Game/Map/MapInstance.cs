@@ -147,7 +147,7 @@ public class MapInstance : MonoBehaviour
                     if (result == 1)
                         count++;
 
-                    if (count == 15)
+                    if (count == 20)
                     {
                         count = 0;
                         yield return 1;
