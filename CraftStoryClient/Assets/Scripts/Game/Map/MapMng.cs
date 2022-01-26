@@ -29,7 +29,7 @@ public class MapMng : SingleMono<MapMng>
             if (value == DataMng.E.UserData.AreaIndexX)
                 return;
 
-            StartCoroutine(AreaChangeXIE(DataMng.E.UserData.AreaIndexX, value));
+            AreaChangeX(DataMng.E.UserData.AreaIndexX, value);
 
             DataMng.E.UserData.AreaIndexX = value;
         }
@@ -42,7 +42,7 @@ public class MapMng : SingleMono<MapMng>
             if (value == DataMng.E.UserData.AreaIndexZ)
                 return;
 
-            StartCoroutine(AreaChangeZIE(DataMng.E.UserData.AreaIndexZ, value));
+            AreaChangeZ(DataMng.E.UserData.AreaIndexZ, value);
 
             DataMng.E.UserData.AreaIndexZ = value;
         }
@@ -127,7 +127,7 @@ public class MapMng : SingleMono<MapMng>
     /// <summary>
     /// エリア変更
     /// </summary>
-    public IEnumerator AreaChangeXIE(int from, int to)
+    public void AreaChangeX(int from, int to)
     {
         Logger.Log("Area map index change X: {0}➡{1}", from, to);
 
@@ -152,21 +152,10 @@ public class MapMng : SingleMono<MapMng>
 
                 var arr = GetMapInstanceArr(x, z);
                 arr.AsyncActiveInstance();
-
-                yield return null;
             }
         }
-
-        //foreach (var item in mapInstanceArr)
-        //{
-        //    if (item == null)
-        //        continue;
-
-        //    item.Execution();
-        //    yield return null;
-        //}
     }
-    public IEnumerator AreaChangeZIE(int from, int to)
+    public void AreaChangeZ(int from, int to)
     {
         Logger.Log("Area map index change Z: {0}➡{1}", from, to);
 
@@ -191,19 +180,8 @@ public class MapMng : SingleMono<MapMng>
 
                 var arr = GetMapInstanceArr(x, z);
                 arr.AsyncActiveInstance();
-
-                yield return null;
             }
         }
-
-        //foreach (var item in mapInstanceArr)
-        //{
-        //    if (item == null)
-        //        continue;
-
-        //    item.Execution();
-        //    yield return null;
-        //}
     }
     public void AreaInit(int posX, int posZ)
     {

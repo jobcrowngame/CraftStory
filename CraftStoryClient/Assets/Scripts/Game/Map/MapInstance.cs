@@ -55,19 +55,6 @@ public class MapInstance : MonoBehaviour
 
     bool isLoaded = false;
 
-    private void Update()
-    {
-        if (isLoaded)
-        {
-            isLoaded = false;
-
-            if (!Activeing)
-            {
-                StartCoroutine(InstanceObjsIE());
-            }
-        }
-    }
-
     public void InstanceData()
     {
         string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
@@ -85,6 +72,20 @@ public class MapInstance : MonoBehaviour
             data = MapDataFactory.E.CreateMapData(MapAreaConfig.MapId);
         }
     }
+    public void AsyncInstanceData()
+    {
+        Observable
+        .ToAsync(() => {
+            InstanceData();
+        })
+        .Invoke()
+        .Subscribe(x => {
+            InstanceEntitys();
+        }, () => {
+            isLoaded = true;
+        });
+    }
+
     public void InstanceEntitys()
     {
         var startTime = DateTime.Now;
@@ -125,9 +126,28 @@ public class MapInstance : MonoBehaviour
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
         Logger.Log("InstanceObjs するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
     }
-    private IEnumerator<int> InstanceObjsIE()
+    private IEnumerator<int> InstanceEntitysAndObjsIE()
     {
         var startTime = DateTime.Now;
+
+        for (int y = 0; y < Data.GetMapSize().y; y++)
+        {
+            for (int z = 0; z < Data.GetMapSize().z; z++)
+            {
+                for (int x = 0; x < Data.GetMapSize().x; x++)
+                {
+                    var localPosition = new Vector3Int(x, y, z);
+                    ObjDic[x, y, z] = new MapCell(this, Data.Map[x, y, z], localPosition);
+                }
+            }
+            yield return 1;
+        }
+
+        TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
+        Logger.Log("InstanceEntitys するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
+
+
+        startTime = DateTime.Now;
 
         Activeing = true;
         int count = 0;
@@ -142,7 +162,7 @@ public class MapInstance : MonoBehaviour
                     if (result == 1)
                         count++;
 
-                    if (count == 10)
+                    if (count == 30)
                     {
                         count = 0;
                         yield return 1;
@@ -157,7 +177,7 @@ public class MapInstance : MonoBehaviour
         Actived = true;
         Activeing = false;
 
-        var elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
+        elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
         Logger.Log("InstanceObjs するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
 
         yield return 0;
@@ -178,6 +198,16 @@ public class MapInstance : MonoBehaviour
         return Data.Map[localPosition.x, localPosition.y, localPosition.z];
     }
 
+    private void Update()
+    {
+        if (isLoaded)
+        {
+            isLoaded = false;
+
+            StartCoroutine(InstanceEntitysAndObjsIE());
+        }
+    }
+
     public void ActiveInstance()
     {
         Active = true;
@@ -193,23 +223,16 @@ public class MapInstance : MonoBehaviour
     {
         Active = true;
 
+        //if (!Actived)
+        //{
+        //    AsyncInstanceData();
+        //}
+
         if (!Actived)
         {
-            //StartCoroutine(AsyncActiveInstanceIE());
-
-            Observable
-                .ToAsync(() => {
-                    InstanceData();
-                    Debug.Log("ToAsync ThreadId : " + Thread.CurrentThread.ManagedThreadId);
-                })
-                .Invoke()
-                .Subscribe(x => {
-                    InstanceEntitys();
-                    Debug.Log("ToAsync OnNext : " + x);
-                }, () => {
-                    isLoaded = true;
-                    Debug.Log("ToAsync OnCompleted");
-                });
+            InstanceData();
+            InstanceEntitys();
+            InstanceObjs();
         }
     }
     
