@@ -49,11 +49,7 @@ public class MapInstance : MonoBehaviour
 
         combineObj = gameObject.AddComponent<CombineMeshCtl>();
         transform.localPosition = new Vector3(MapAreaConfig.OffsetX * SettingMng.AreaMapSize, 0, MapAreaConfig.OffsetZ * SettingMng.AreaMapSize);
-
-        //StartCoroutine(InstanceIE());
     }
-
-    bool isLoaded = false;
 
     public void InstanceData()
     {
@@ -72,20 +68,6 @@ public class MapInstance : MonoBehaviour
             data = MapDataFactory.E.CreateMapData(MapAreaConfig.MapId);
         }
     }
-    public void AsyncInstanceData()
-    {
-        Observable
-        .ToAsync(() => {
-            InstanceData();
-        })
-        .Invoke()
-        .Subscribe(x => {
-            InstanceEntitys();
-        }, () => {
-            isLoaded = true;
-        });
-    }
-
     public void InstanceEntitys()
     {
         var startTime = DateTime.Now;
@@ -128,6 +110,9 @@ public class MapInstance : MonoBehaviour
     }
     private IEnumerator<int> InstanceEntitysAndObjsIE()
     {
+        InstanceData();
+        yield return 1;
+
         var startTime = DateTime.Now;
 
         for (int y = 0; y < Data.GetMapSize().y; y++)
@@ -162,7 +147,7 @@ public class MapInstance : MonoBehaviour
                     if (result == 1)
                         count++;
 
-                    if (count == 30)
+                    if (count == 15)
                     {
                         count = 0;
                         yield return 1;
@@ -198,16 +183,6 @@ public class MapInstance : MonoBehaviour
         return Data.Map[localPosition.x, localPosition.y, localPosition.z];
     }
 
-    private void Update()
-    {
-        if (isLoaded)
-        {
-            isLoaded = false;
-
-            StartCoroutine(InstanceEntitysAndObjsIE());
-        }
-    }
-
     public void ActiveInstance()
     {
         Active = true;
@@ -223,16 +198,9 @@ public class MapInstance : MonoBehaviour
     {
         Active = true;
 
-        //if (!Actived)
-        //{
-        //    AsyncInstanceData();
-        //}
-
         if (!Actived)
         {
-            InstanceData();
-            InstanceEntitys();
-            InstanceObjs();
+            StartCoroutine(InstanceEntitysAndObjsIE());
         }
     }
     
