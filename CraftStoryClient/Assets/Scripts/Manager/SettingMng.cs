@@ -141,8 +141,8 @@ public class SettingMng : Single<SettingMng>
     /// <summary>
     /// エリアマップで敵が生成する最大数
     /// </summary>
-    public const int AreaMapCreateMonsterMaxCount = 20;
-    public const int AreaMapCreateMonsterNightMaxCount = 40; // 夜
+    public const int AreaMapCreateMonsterMaxCount = 13;
+    public const int AreaMapCreateMonsterNightMaxCount = 20; // 夜
 
     /// <summary>
     /// エリアマップで敵が生成する間隔（秒）
