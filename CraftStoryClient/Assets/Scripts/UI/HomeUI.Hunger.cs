@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.EventSystems;
+using UnityEngine;
 using UnityEngine.UI;
 
 public partial class HomeUI
@@ -107,7 +108,8 @@ public partial class HomeUI
     {
         Hunger += value;
 
-        var effect = EffectMng.E.AddUIEffect<EffectBase>(transform, HungerBar.transform.position, EffectType.Gacha);
+        var effect = EffectMng.E.AddUIEffect<EffectBase>(HungerBar.transform, HungerBar.transform.position, EffectType.Gacha);
+        effect.transform.localPosition = Vector3.zero;
         effect.Init();
     }
 }
