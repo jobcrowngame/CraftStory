@@ -28,7 +28,16 @@ public class EntityBed : EntityBase
             return;
         }
 
-        string msg = IsSpawn() ? msg2 : msg1;
+        string msg = "";
+
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+        {
+            msg = IsSpawn() ? msg2 : msg1;
+        }
+        else
+        {
+            msg = msg2;
+        }
 
         CommonFunction.ShowHintBox(msg, () =>
         {
