@@ -77,6 +77,7 @@ public class HpUIBase : UIBase
     protected void AddDamageObj(int damage, Transform parent, string path)
     {
         var obj = CommonFunction.Instantiate<Damage>(path, parent, parent.position);
+        obj.transform.localPosition = Vector3.zero;
         obj.Set(damage.ToString());
     }
 
@@ -87,6 +88,7 @@ public class HpUIBase : UIBase
     protected void AddDamageRedObj(int damage, Transform parent)
     {
         var obj = CommonFunction.Instantiate<Damage>("Prefabs/Battle/DamageWhit", parent, parent.position);
+        obj.transform.localPosition = Vector3.zero;
         obj.Set(damage.ToString());
     }
 
@@ -97,6 +99,7 @@ public class HpUIBase : UIBase
     protected void AddRecoveryObj(int damage, Transform parent)
     {
         var obj = CommonFunction.Instantiate<Damage>("Prefabs/Battle/DamageGreen", parent, parent.position);
+        obj.transform.localPosition = Vector3.zero;
         obj.Set(damage.ToString());
     }
 }

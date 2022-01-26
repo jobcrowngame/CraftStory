@@ -89,6 +89,7 @@ public class HpUIPlayer : HpUIBase
 
         int addExp = addedExpStack.Pop();
         var obj = CommonFunction.Instantiate<ExpAdd>("Prefabs/Battle/ExpAdd", transform, transform.position);
+        obj.transform.localPosition = Vector3.zero;
         obj.Set(addExp);
     }
 
