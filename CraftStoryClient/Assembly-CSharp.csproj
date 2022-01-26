@@ -160,6 +160,7 @@
     <Compile Include="Assets\Scripts\Game\Entity\EntityBlock.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\LoginBonus.cs" />
     <Compile Include="Assets\Scripts\Test\DropArea.cs" />
+    <Compile Include="Assets\Scripts\Common\SingleMono.cs" />
     <Compile Include="Assets\Scripts\UI\Common\Title2UI.cs" />
     <Compile Include="Assets\Scripts\Game\Map\MapDataFactory.cs" />
     <Compile Include="Assets\Scripts\Data\LocalData\UserDataTable.cs" />
@@ -252,6 +253,7 @@
     <Compile Include="Assets\Scripts\UI\HomeLG.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Guide.cs" />
     <Compile Include="Assets\Scripts\UI\TermsLG.cs" />
+    <Compile Include="Assets\Scripts\Test\RX\TestRX.cs" />
     <Compile Include="Assets\Scripts\UI\LoginUI.cs" />
     <Compile Include="Assets\Scripts\Common\Single.cs" />
     <Compile Include="Assets\Scripts\Common\VectorTool.cs" />
@@ -276,6 +278,7 @@
     <Compile Include="Assets\Scripts\Common\CommonFunction.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
     <Compile Include="Assets\Scripts\Data\JsonDatas\Map.cs" />
+    <Compile Include="Assets\Scripts\Test\RX\TestRXManin.cs" />
     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectEditor.cs" />
     <Compile Include="Assets\Scripts\UI\NowLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\SceneMain\HomeMain.cs" />

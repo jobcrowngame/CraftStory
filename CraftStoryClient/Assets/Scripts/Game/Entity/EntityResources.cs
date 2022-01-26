@@ -21,7 +21,7 @@ public class EntityResources : EntityBase
             effect.Init();
 
             AdventureCtl.E.AddBonus(EConfig.BonusID);
-            WorldMng.E.MapCtl.DeleteEntity(this);
+            MapMng.E.DeleteEntity(this);
         }
     }
 }

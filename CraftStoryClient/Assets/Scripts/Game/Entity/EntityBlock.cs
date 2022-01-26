@@ -33,7 +33,8 @@ public class EntityBlock : EntityBase
                     }
                     else
                     {
-                        WorldMng.E.MapCtl.DeleteEntity(this);
+                        MapMng.E.DeleteEntity(this);
+
                         WorldMng.E.MapCtl.CreateEntity(3000, this.LocalPos, 0);
                         WorldMng.E.MapCtl.CombineMesh();
                     }

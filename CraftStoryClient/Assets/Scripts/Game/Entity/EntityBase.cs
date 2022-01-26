@@ -84,7 +84,7 @@ public class EntityBase : MonoBehaviour
         }
         else
         {
-            WorldMng.E.MapCtl.DeleteEntity(this);
+            MapMng.E.DeleteEntity(this);
         }
 
         DestroyObject();

@@ -85,7 +85,7 @@ class GuideLG : UILogicBase<GuideLG, GuideUI>
         var effect = EffectMng.E.AddEffect<EffectBase>(entity.transform.position, EffectType.ResourcesDestroy);
         AdventureCtl.E.AddBonus(entity.EConfig.BonusID);
         effect.Init();
-        WorldMng.E.MapCtl.DeleteEntity(entity);
+        MapMng.E.DeleteEntity(entity);
 
         Next();
     }

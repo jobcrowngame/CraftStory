@@ -59,6 +59,6 @@ public class EntityTreasureBox : EntityBase
 
         yield return new WaitForSeconds(2);
 
-        WorldMng.E.MapCtl.DeleteEntity(this);
+        MapMng.E.DeleteEntity(this);
     }
 }
