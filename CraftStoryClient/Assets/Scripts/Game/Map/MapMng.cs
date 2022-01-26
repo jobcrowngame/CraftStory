@@ -268,16 +268,15 @@ public class MapMng : SingleMono<MapMng>
 
     private MapInstance GetMapInstanceArr(int indexX, int indexZ)
     {
-        var config = GetMapAreaConfig(indexX, indexZ);
-        MapInstance mapInstance = CommonFunction.FindChiledByName<MapInstance>(MapParent, config.ID.ToString());
+        string name = string.Format("x{0}z{1}", indexX, indexZ);
+        MapInstance mapInstance = CommonFunction.FindChiledByName<MapInstance>(MapParent, name);
 
         if (mapInstance == null)
         {
-            mapInstance = new GameObject(config.ID.ToString()).AddComponent<MapInstance>();
+            var config = GetMapAreaConfig(indexX, indexZ);
+            mapInstance = new GameObject(name).AddComponent<MapInstance>();
             mapInstance.transform.SetParent(MapParent);
             mapInstance.Init(config.ID);
-
-            //mapInstanceArr[indexX, indexZ] = areaInstance;
         }
 
         return mapInstance;
