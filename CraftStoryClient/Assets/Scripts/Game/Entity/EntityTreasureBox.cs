@@ -16,7 +16,15 @@ public class EntityTreasureBox : EntityBase
     {
         base.ClickingEnd();
 
-        Logger.Warning("EntityTreasureBox cliking end");
+        if (playing)
+            return;
+
+        playing = true;
+
+        NWMng.E.GetRandomBonus((rp) =>
+        {
+            StartCoroutine(OnClickIE(rp));
+        }, EConfig.BonusID);
     }
 
     public override void OnClick()

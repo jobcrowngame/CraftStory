@@ -17,11 +17,26 @@ public class EntityResources : EntityBase
         }
         else
         {
-            var effect = EffectMng.E.AddEffect<EffectBase>(transform.position, EffectType.ResourcesDestroy);
-            effect.Init();
-
-            AdventureCtl.E.AddBonus(EConfig.BonusID);
-            MapMng.E.DeleteEntity(this);
+            AddBonus();
         }
+    }
+
+    public override void ClickingEnd()
+    {
+        base.ClickingEnd();
+
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+        {
+            AddBonus();
+        }
+    }
+
+    private void AddBonus()
+    {
+        var effect = EffectMng.E.AddEffect<EffectBase>(transform.position, EffectType.ResourcesDestroy);
+        effect.Init();
+
+        AdventureCtl.E.AddBonus(EConfig.BonusID);
+        MapMng.E.DeleteEntity(this);
     }
 }
