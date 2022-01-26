@@ -82,10 +82,9 @@ public class BagLG : UILogicBase<BagLG, BagUI>
             case 1: return BagClassification.Tool;
             case 2: return BagClassification.Block;
             case 3: return BagClassification.Decoration;
-            case 4: return BagClassification.Blueprint;
-            case 5: return BagClassification.Food;
-            case 6: return BagClassification.Material;
-            case 7: return BagClassification.Equipment;
+            case 4: return BagClassification.Food;
+            case 5: return BagClassification.Material;
+            case 6: return BagClassification.Equipment;
 
             default: Logger.Error("知らない持ち物カテゴリ " + index); return BagClassification.None;
         }
@@ -95,13 +94,12 @@ public class BagLG : UILogicBase<BagLG, BagUI>
         switch (bclassification)
         {
             case BagClassification.All: return 0;
+            case BagClassification.Tool: return 1;
             case BagClassification.Block: return 2;
             case BagClassification.Decoration: return 3;
-            case BagClassification.Material: return 6;
-            case BagClassification.Blueprint: return 4;
-            case BagClassification.Food: return 5;
-            case BagClassification.Equipment: return 7;
-            case BagClassification.Tool: return 1;
+            case BagClassification.Food: return 4;
+            case BagClassification.Material: return 5;
+            case BagClassification.Equipment: return 6;
             default: return -1;
         }
     }
