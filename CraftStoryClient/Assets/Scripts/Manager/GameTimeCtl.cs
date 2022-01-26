@@ -84,12 +84,15 @@ public class GameTimeCtl
     float timer = 1;
     public void FixedUpdate()
     {
-        timer += 0.02f;
-
-        if (timer > 1)
+        if (Active) 
         {
-            timer -= 1;
-            CurTime += 1;
+            timer += 0.02f;
+
+            if (timer > 1)
+            {
+                timer -= 1;
+                CurTime += 1;
+            }
         }
     }
 

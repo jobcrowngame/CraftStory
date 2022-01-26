@@ -5,7 +5,6 @@ public class HomeMain : MonoBehaviour
     void Start()
     {
         // 時間アクティブ（昼、夜差し替え）
-        WorldMng.E.GameTimeCtl.ResetTime();
         WorldMng.E.GameTimeCtl.Active = true;
 
         // オブジェクトを生成
