@@ -29,9 +29,12 @@ public class MapMng : SingleMono<MapMng>
             if (value == DataMng.E.UserData.AreaIndexX)
                 return;
 
+            beforArea = GetMapInstanceArr(IndexX, IndexZ);
+
             StartCoroutine(AreaChangeX(DataMng.E.UserData.AreaIndexX, value));
 
             DataMng.E.UserData.AreaIndexX = value;
+
         }
     }
     public int IndexZ
@@ -42,11 +45,16 @@ public class MapMng : SingleMono<MapMng>
             if (value == DataMng.E.UserData.AreaIndexZ)
                 return;
 
+            beforArea = GetMapInstanceArr(IndexX, IndexZ);
+
             StartCoroutine(AreaChangeZ(DataMng.E.UserData.AreaIndexZ, value));
 
             DataMng.E.UserData.AreaIndexZ = value;
         }
     }
+
+    public MapInstance BeforArea { get => beforArea; }
+    private MapInstance beforArea;
 
     // マップサイズ
     private int minX, maxX, minZ, maxZ, maxY;

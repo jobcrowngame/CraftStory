@@ -120,7 +120,22 @@ public partial class CharacterPlayer : CharacterBase
         if (transform.position.y < -10)
         {
             Controller.enabled = false;
-            transform.position = MapMng.E.GetPlayerGroundPos(5);
+            if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
+            {
+                MapCell cell = null;
+                for (int i = 0; i < SettingMng.AreaMapV3Y; i++)
+                {
+                    cell = MapMng.E.BeforArea.GetCell(new Vector3Int(SettingMng.AreaMapSize / 2, i, SettingMng.AreaMapSize / 2));
+                    if (cell.EntityId <= 0)
+                        continue;
+
+                    transform.position = new Vector3(cell.WorldPosition.x, cell.WorldPosition.y + 5, cell.WorldPosition.z);
+                }
+            }
+            else 
+            {
+                transform.position = MapMng.E.GetPlayerGroundPos(5);
+            }
             Controller.enabled = true;
         }
 
