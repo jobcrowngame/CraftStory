@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 public class EntityBed : EntityBase
 {
-    string msg1 = @"「寝ると朝になります。
+    string msg1 = @"寝ると朝になります。
 また、新たなスポーン地点に設定されます。
 寝ますか？
-※スポーン地点に設定したベッドを壊すと初期のスポーン地点がリセットされます」";
+※スポーン地点に設定したベッドを壊すと初期のスポーン地点がリセットされます。";
 
-    string msg2 = @"「寝ると朝になります。
+    string msg2 = @"寝ると朝になります。
 寝ますか？";
 
 
