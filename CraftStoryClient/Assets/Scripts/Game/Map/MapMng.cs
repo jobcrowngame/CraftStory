@@ -140,7 +140,6 @@ public class MapMng : SingleMono<MapMng>
 
                 var arr = GetMapInstanceArr(x, z);
                 arr.EnActiveInstance();
-                yield return null;
             }
         }
 
@@ -170,7 +169,6 @@ public class MapMng : SingleMono<MapMng>
 
                 var arr = GetMapInstanceArr(x, z);
                 arr.EnActiveInstance();
-                yield return null;
             }
         }
 
