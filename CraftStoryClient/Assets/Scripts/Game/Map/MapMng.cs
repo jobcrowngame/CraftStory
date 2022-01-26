@@ -21,6 +21,8 @@ public class MapMng : SingleMono<MapMng>
     private Dictionary<Vector3Int, EntityCrops> cropsList = new Dictionary<Vector3Int, EntityCrops>();
     private Dictionary<Vector3Int, EntityCrops> areaMapCropsList = new Dictionary<Vector3Int, EntityCrops>();
 
+    Stack<MapInstance> asyncInstanceStack = new Stack<MapInstance>();
+
     public int IndexX
     {
         get => DataMng.E.UserData.AreaIndexX;
@@ -30,8 +32,12 @@ public class MapMng : SingleMono<MapMng>
                 return;
 
             beforArea = GetMapInstanceArr(IndexX, IndexZ);
+            if (beforArea == null)
+            {
+                Logger.Error("Set beforArea fail");
+            }
 
-            StartCoroutine(AreaChangeX(DataMng.E.UserData.AreaIndexX, value));
+            AreaChangeX(DataMng.E.UserData.AreaIndexX, value);
 
             DataMng.E.UserData.AreaIndexX = value;
 
@@ -46,8 +52,12 @@ public class MapMng : SingleMono<MapMng>
                 return;
 
             beforArea = GetMapInstanceArr(IndexX, IndexZ);
+            if (beforArea == null)
+            {
+                Logger.Error("Set beforArea fail");
+            }
 
-            StartCoroutine(AreaChangeZ(DataMng.E.UserData.AreaIndexZ, value));
+            AreaChangeZ(DataMng.E.UserData.AreaIndexZ, value);
 
             DataMng.E.UserData.AreaIndexZ = value;
         }
@@ -98,6 +108,11 @@ public class MapMng : SingleMono<MapMng>
                 item.Update1S();
             }
         }
+
+        if (asyncInstanceStack.Count > 0)
+        {
+            AsyncInstance();
+        }
     }
 
     public override void Init()
@@ -129,13 +144,28 @@ public class MapMng : SingleMono<MapMng>
         {
             PlayerCtl.E.BlueprintPreviewCtl = BlueprintPreviewCtl.Instantiate();
         }
+
+        beforArea = GetMapInstanceArr(IndexX, IndexZ);
+    }
+
+    private void AsyncInstance()
+    {
+        var arr = asyncInstanceStack.Pop();
+        if (arr.Active)
+        {
+            arr.AsyncActiveInstance();
+        }
+        else
+        {
+            arr.EnActiveInstance();
+        }
     }
 
 
     /// <summary>
     /// エリア変更
     /// </summary>
-    public IEnumerator AreaChangeX(int from, int to)
+    public void AreaChangeX(int from, int to)
     {
         Logger.Log("Area map index change X: {0}➡{1}", from, to);
 
@@ -147,7 +177,11 @@ public class MapMng : SingleMono<MapMng>
                     continue;
 
                 var arr = GetMapInstanceArr(x, z);
-                arr.EnActiveInstance();
+                arr.Active = false;
+                //arr.EnActiveInstance();
+
+                if (!asyncInstanceStack.Contains(arr)) 
+                    asyncInstanceStack.Push(arr);
             }
         }
 
@@ -159,12 +193,15 @@ public class MapMng : SingleMono<MapMng>
                     continue;
 
                 var arr = GetMapInstanceArr(x, z);
-                arr.AsyncActiveInstance();
-                yield return null;
+                arr.Active = true;
+
+                //arr.AsyncActiveInstance();
+                if (!asyncInstanceStack.Contains(arr))
+                    asyncInstanceStack.Push(arr);
             }
         }
     }
-    public IEnumerator AreaChangeZ(int from, int to)
+    public void AreaChangeZ(int from, int to)
     {
         Logger.Log("Area map index change Z: {0}➡{1}", from, to);
 
@@ -176,7 +213,11 @@ public class MapMng : SingleMono<MapMng>
                     continue;
 
                 var arr = GetMapInstanceArr(x, z);
-                arr.EnActiveInstance();
+                arr.Active = false;
+                //arr.EnActiveInstance();
+
+                if (!asyncInstanceStack.Contains(arr))
+                    asyncInstanceStack.Push(arr);
             }
         }
 
@@ -188,8 +229,11 @@ public class MapMng : SingleMono<MapMng>
                     continue;
 
                 var arr = GetMapInstanceArr(x, z);
-                arr.AsyncActiveInstance();
-                yield return null;
+                arr.Active = true;
+                //arr.AsyncActiveInstance();
+
+                if (!asyncInstanceStack.Contains(arr))
+                    asyncInstanceStack.Push(arr);
             }
         }
     }
@@ -991,6 +1035,52 @@ public class MapMng : SingleMono<MapMng>
             posX = DataMng.E.UserData.PlayerSpawnPosX;
             posZ = DataMng.E.UserData.PlayerSpawnPosZ;
         }
+    }
+
+    public static IEnumerator<MapData> AsyncCreateMapData(string stringData, int id = 100)
+    {
+        MapData mData = new MapData(id);
+
+        string[] entitys = stringData.Split(',');
+        string[] data;
+        int index = 0;
+
+        int createCount = 0;
+
+        string[] sizeStr = entitys[entitys.Length - 1].Split('-');
+        for (int x = 0; x < mData.SizeX; x++)
+        {
+            for (int y = 0; y < mData.SizeY; y++)
+            {
+                for (int z = 0; z < mData.SizeZ; z++)
+                {
+                    data = entitys[index++].Split('-');
+                    int entityId = int.Parse(data[0]);
+
+                    if (y == 0)
+                    {
+                        mData.Map[x,y,z] = new MapData.MapCellData() { entityID = 1999 };
+                    }
+                    else if (ConfigMng.E.Entity[entityId].HaveDirection == 1)
+                    {
+                        mData.Map[x, y, z] = new MapData.MapCellData() { entityID = entityId, direction = int.Parse(data[1]) };
+                    }
+                    else
+                    {
+                        mData.Map[x, y, z] = new MapData.MapCellData() { entityID = entityId };
+                    }
+
+                    createCount++;
+                    if (createCount > 50)
+                    {
+                        createCount = 0;
+                        yield return null;
+                    }
+                }
+            }
+        }
+
+        yield return mData;
     }
     #endregion
 }

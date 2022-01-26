@@ -53,15 +53,21 @@ public class MapInstance : MonoBehaviour
 
     public void InstanceData()
     {
+        var startTime = DateTime.Now;
+
         string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
+
+        TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
+        Logger.Log("{1} をロードするに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + areaId);
+
         if (!string.IsNullOrEmpty(mapData))
         {
-            var startTime = DateTime.Now;
+            startTime = DateTime.Now;
 
             data = new MapData(mapData, MapAreaConfig.MapId);
 
-            TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-            Logger.Log("mapData {1} をロードするに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + areaId);
+            elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
+            Logger.Log("{1} を生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + areaId);
         }
         else
         {
@@ -110,62 +116,122 @@ public class MapInstance : MonoBehaviour
     }
     private IEnumerator<int> InstanceEntitysAndObjsIE()
     {
-        InstanceData();
-        yield return 1;
-
-        var startTime = DateTime.Now;
-
-        for (int y = 0; y < Data.GetMapSize().y; y++)
-        {
-            for (int z = 0; z < Data.GetMapSize().z; z++)
-            {
-                for (int x = 0; x < Data.GetMapSize().x; x++)
-                {
-                    var localPosition = new Vector3Int(x, y, z);
-                    ObjDic[x, y, z] = new MapCell(this, Data.Map[x, y, z], localPosition);
-                }
-            }
-            yield return 1;
-        }
-
-        TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-        Logger.Log("InstanceEntitys するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
-
-
-        startTime = DateTime.Now;
+        if (Actived || Activeing)
+            yield break;
 
         Activeing = true;
-        int count = 0;
-        for (int y = 0; y < Data.GetMapSize().y; y++)
+
+        // データを作成
         {
-            for (int z = 0; z < Data.GetMapSize().z; z++)
+            var startTime = DateTime.Now;
+
+
+            string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
+            if (!string.IsNullOrEmpty(mapData))
             {
-                for (int x = 0; x < Data.GetMapSize().x; x++)
+                MapData mData = new MapData(MapAreaConfig.MapId);
+
+                string[] entitys = mapData.Split(',');
+                string[] dataStr;
+                int index = 0;
+
+                string[] sizeStr = entitys[entitys.Length - 1].Split('-');
+                for (int x = 0; x < mData.SizeX; x++)
                 {
-                    var result = ObjDic[x, y, z].InstanceObj();
-
-                    if (result == 1)
-                        count++;
-
-                    if (count == 20)
+                    for (int y = 0; y < mData.SizeY; y++)
                     {
-                        count = 0;
-                        yield return 1;
+                        for (int z = 0; z < mData.SizeZ; z++)
+                        {
+                            dataStr = entitys[index++].Split('-');
+                            int entityId = int.Parse(dataStr[0]);
+
+                            if (y == 0)
+                            {
+                                mData.Map[x, y, z] = new MapData.MapCellData() { entityID = 1999 };
+                            }
+                            else if (ConfigMng.E.Entity[entityId].HaveDirection == 1)
+                            {
+                                mData.Map[x, y, z] = new MapData.MapCellData() { entityID = entityId, direction = int.Parse(dataStr[1]) };
+                            }
+                            else
+                            {
+                                mData.Map[x, y, z] = new MapData.MapCellData() { entityID = entityId };
+                            }
+                        }
                     }
+
+                    yield return 1;
                 }
+
+                data = mData;
+            }
+            else
+            {
+                data = MapDataFactory.E.CreateMapData(MapAreaConfig.MapId);
             }
 
-            yield return 1;
+            TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
+            Logger.Log("{1} をロードするに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + areaId);
         }
 
-        CombineMesh();
-        Actived = true;
-        Activeing = false;
+        // MapCellを生成
+        {
+            var startTime = DateTime.Now;
 
-        elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-        Logger.Log("InstanceObjs するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
+            for (int y = 0; y < Data.GetMapSize().y; y++)
+            {
+                for (int z = 0; z < Data.GetMapSize().z; z++)
+                {
+                    for (int x = 0; x < Data.GetMapSize().x; x++)
+                    {
+                        var localPosition = new Vector3Int(x, y, z);
+                        ObjDic[x, y, z] = new MapCell(this, Data.Map[x, y, z], localPosition);
+                    }
+                }
+                yield return 1;
+            }
 
-        yield return 0;
+            var elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
+            Logger.Log("InstanceEntitys するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
+        }
+
+        // InstanceObj
+        {
+            var startTime = DateTime.Now;
+
+            int count = 0;
+            for (int y = 0; y < Data.GetMapSize().y; y++)
+            {
+                for (int z = 0; z < Data.GetMapSize().z; z++)
+                {
+                    for (int x = 0; x < Data.GetMapSize().x; x++)
+                    {
+                        var result = ObjDic[x, y, z].InstanceObj();
+
+                        if (result == 1)
+                            count++;
+
+                        if (count == 15)
+                        {
+                            count = 0;
+                            yield return 1;
+                        }
+                    }
+                }
+
+                yield return 1;
+            }
+
+            CombineMesh();
+
+            Actived = true;
+            Activeing = false;
+
+            var elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
+            Logger.Log("InstanceObjs するに {0} かかりました。", elapsedSpan.TotalMilliseconds);
+        }
+
+        yield return 1;
     }
 
     public MapCell GetCell(Vector3Int localPosition)
