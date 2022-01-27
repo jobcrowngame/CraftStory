@@ -46,8 +46,8 @@ public class GoogleMobileAdsMng : Single<GoogleMobileAdsMng>
     {
         this.callBack = callBack;
 
-        ////広告を表示
-        RequestReward();
+        //////広告を表示
+        //RequestReward();
 
         if (this.rewardedAd.IsLoaded())
         {
