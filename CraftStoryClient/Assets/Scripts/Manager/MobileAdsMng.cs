@@ -13,8 +13,6 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
     // レアアイテムプレゼント
     const int AddItemTimer = 300;
 
-    DateTime beforKillAdsTime;
-
     int[] randomBonusArr = new int[] { 100,101,102,103,104,105,106,107,108 };
 
     private void Update()
@@ -62,10 +60,6 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
     }
     private void ShowAdsAddItem()
     {
-        // 50パーセント
-        if (Random.Range(0, 100) > 50)
-            return;
-
         GoogleMobileAdsMng.E.ShowReawrd(() =>
         {
             for (int i = 0; i < 3; i++)
@@ -79,10 +73,6 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
     }
     private void ShowAdsNotSleep()
     {
-        // 50パーセント
-        if (Random.Range(0, 100) > 50)
-            return;
-
         GoogleMobileAdsMng.E.ShowReawrd(() =>
         {
             HomeLG.E.UI.FadeOutAndIn();
@@ -92,10 +82,6 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
     }
     private void ShowAdsAddHunger()
     {
-        // 50パーセント
-        if (Random.Range(0, 100) > 50)
-            return;
-
         GoogleMobileAdsMng.E.ShowReawrd(() =>
         {
             // 空腹度を回復
@@ -106,15 +92,6 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
     }
     private void ShowAdsKillAll()
     {
-        // ５分の間隔
-        TimeSpan deltaTime = new TimeSpan(DateTime.Now.Ticks - beforKillAdsTime.Ticks);
-        if (deltaTime.TotalSeconds < 300)
-            return;
-
-        // 20パーセント
-        if (Random.Range(0, 100) > 20)
-            return;
-
         GoogleMobileAdsMng.E.ShowReawrd(() =>
         {
             CharacterCtl.E.KillAllMonster();
@@ -124,6 +101,8 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
             AudioMng.E.ShowBGM("bgm_02");
         });
     }
+    DateTime beforKillAdsTime;
+    public DateTime BeforKillAdsTime { get => beforKillAdsTime; }
 
     public enum MobileAdsType
     {

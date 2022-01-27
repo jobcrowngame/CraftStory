@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -44,6 +45,9 @@ public partial class HomeUI
         if (activeAds)
             return;
 
+        if (!CheckShowByPercent(adsType))
+            return;
+
         Logger.Log("show ads " + adsType);
 
         activeAds = true;
@@ -62,6 +66,28 @@ public partial class HomeUI
         }
 
         MobileAdsIcon.sprite = ReadResources<Sprite>(iconPath);
+    }
+    private bool CheckShowByPercent(MobileAdsMng.MobileAdsType adsType)
+    {
+        int percent = 0;
+        switch (adsType)
+        {
+            case MobileAdsMng.MobileAdsType.AddItem:
+            case MobileAdsMng.MobileAdsType.NotSleep:
+            case MobileAdsMng.MobileAdsType.AddHunger: 
+                percent = 50; break;
+
+            case MobileAdsMng.MobileAdsType.KillAll: 
+                percent = 20;
+
+                // ５分の間隔
+                TimeSpan deltaTime = new TimeSpan(DateTime.Now.Ticks - MobileAdsMng.E.BeforKillAdsTime.Ticks);
+                if (deltaTime.TotalSeconds < 300)
+                    percent = -1;
+                break;
+        }
+
+        return UnityEngine.Random.Range(0, 100) <= percent;
     }
 
     public void CloseMobileAds()
