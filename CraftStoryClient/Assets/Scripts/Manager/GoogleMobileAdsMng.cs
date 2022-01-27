@@ -15,6 +15,9 @@ public class GoogleMobileAdsMng : Single<GoogleMobileAdsMng>
         Logger.Log("GoogleMobileAdsMng 初期化");
         //アプリ起動時に一度必ず実行（他のスクリプトで実行していたら不要）
         MobileAds.Initialize(initStatus => { });
+
+        //広告を表示
+        RequestReward();
     }
     private void RequestReward()
     {
@@ -29,9 +32,6 @@ public class GoogleMobileAdsMng : Single<GoogleMobileAdsMng>
         this.rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
         AdRequest request = new AdRequest.Builder().Build();
         this.rewardedAd.LoadAd(request);
-
-        //広告を表示
-        RequestReward();
     }
     //動画の視聴が完了したら実行される（途中で閉じられた場合は呼ばれない）
     public void HandleUserEarnedReward(object sender, Reward args)
