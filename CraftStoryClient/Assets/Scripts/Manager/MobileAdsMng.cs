@@ -72,6 +72,8 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
             {
                 int randomIndex = Random.Range(0, randomBonusArr.Length);
                 AdventureCtl.E.AddBonus(randomBonusArr[randomIndex]);
+
+                AudioMng.E.ShowBGM("bgm_02");
             }
         });
     }
@@ -87,6 +89,8 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
         GoogleMobileAdsMng.E.ShowReawrd(() =>
         {
             HomeLG.E.UI.FadeOutAndIn();
+
+            AudioMng.E.ShowBGM("bgm_02");
         });
     }
     private void ShowAdsAddHunger()
@@ -102,6 +106,8 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
         {
             // 空腹度を回復
             HomeLG.E.UI.RecoveryHunger(100);
+
+            AudioMng.E.ShowBGM("bgm_02");
         });
     }
     private void ShowAdsKillAll()
@@ -124,6 +130,8 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
             CharacterCtl.E.KillAllMonster();
 
             beforKillAdsTime = DateTime.Now;
+
+            AudioMng.E.ShowBGM("bgm_02");
         });
     }
 
