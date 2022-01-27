@@ -52,10 +52,10 @@ public partial class HomeUI
         string iconPath = "";
         switch (MobileAdsMng.E.AdsType)
         {
-            case MobileAdsMng.MobileAdsType.AddItem: iconPath = ""; break;
-            case MobileAdsMng.MobileAdsType.NotSleep: iconPath = ""; break;
-            case MobileAdsMng.MobileAdsType.AddHunger: iconPath = ""; break;
-            case MobileAdsMng.MobileAdsType.KillAll: iconPath = ""; break;
+            case MobileAdsMng.MobileAdsType.AddItem: iconPath = "Textures/button_2d_055"; break;
+            case MobileAdsMng.MobileAdsType.NotSleep: iconPath = "Textures/button_2d_056"; break;
+            case MobileAdsMng.MobileAdsType.AddHunger: iconPath = "Textures/button_2d_057"; break;
+            case MobileAdsMng.MobileAdsType.KillAll: iconPath = "Textures/button_2d_058"; break;
         }
 
         MobileAdsIcon.sprite = ReadResources<Sprite>(iconPath);
