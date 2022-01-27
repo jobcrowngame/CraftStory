@@ -361,7 +361,7 @@ public class CharacterCtl : SingleMono<CharacterCtl>
                 continue;
 
             // 主人公よりレベルが高いのは生成しない
-            if (ConfigMng.E.Character[item.CharacterId].Level > LocalDataMng.E.Data.UserDataT.lv)
+            if (ConfigMng.E.Character[item.CharacterId].Level > LocalDataMng.E.Data.UserDataT.lv + 10)
                 continue;
 
             list.Add(item.ID);
