@@ -19,9 +19,9 @@ public class GoogleMobileAdsMng : Single<GoogleMobileAdsMng>
     private void RequestReward()
     {
 #if UNITY_ANDROID
-    private string adUnitId = "ca-app-pub-7823916958756862/4363280363";
+    adUnitId = "ca-app-pub-7823916958756862/4363280363";
 #elif UNITY_IOS
-    private string adUnitId = "ca-app-pub-7823916958756862/5564874911";
+    adUnitId = "ca-app-pub-7823916958756862/5564874911";
 #endif
 
         this.rewardedAd = new RewardedAd(adUnitId);
