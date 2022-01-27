@@ -56,7 +56,7 @@ public partial class HomeUI
 
         if (DataMng.E.RuntimeData.MapType == MapType.AreaMap && Hunger == 0)
         {
-            hungerDamageTimer -= 0.02f;
+            hungerDamageTimer -= Time.deltaTime;
             if (hungerDamageTimer <= 0)
             {
                 hungerDamageTimer = SettingMng.HungerDamageIntervalSec;
