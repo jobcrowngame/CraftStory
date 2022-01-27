@@ -155,7 +155,7 @@ public class GameTimeCtl
     /// </summary>
     private void ShowMobileAds(float angle)
     {
-        if (!ShowAdsed && angle > 280)
+        if (!ShowAdsed && angle > 260)
         {
             ShowAdsed = true;
 

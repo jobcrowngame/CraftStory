@@ -112,25 +112,20 @@ public class PlayerCtl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            CommonFunction.GoToNextScene(0);
+            HomeLG.E.UI.ShowMobileAds(MobileAdsMng.MobileAdsType.AddItem);
         }
-
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            CommonFunction.GotoAreaMap();
+            HomeLG.E.UI.ShowMobileAds(MobileAdsMng.MobileAdsType.NotSleep);
         }
-
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            if (Character.Target != null)
-            {
-                Character.AddFireBool(Character.Target);
-            }
+            HomeLG.E.UI.ShowMobileAds(MobileAdsMng.MobileAdsType.AddHunger);
         }
-
         if (Input.GetKeyDown(KeyCode.F4))
         {
-            HomeLG.E.UI.ClickSkill(0);
+            HomeLG.E.UI.ShowMobileAds(MobileAdsMng.MobileAdsType.KillAll);
+            //HomeLG.E.UI.ClickSkill(0);
         }
         if (Input.GetKeyDown(KeyCode.F5))
         {

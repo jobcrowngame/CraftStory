@@ -257,5 +257,6 @@ public class CharacterMonster : CharacterBase
     public override void Kill()
     {
         Died();
+        CharacterCtl.E.RemoveMonster(this);
     }
 }

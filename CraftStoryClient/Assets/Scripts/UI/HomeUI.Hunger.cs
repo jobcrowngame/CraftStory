@@ -46,7 +46,7 @@ public partial class HomeUI
 
     private void UpdateHunger()
     {
-        timer -= 0.02f;
+        timer -= Time.deltaTime;
 
         if (timer <= 0)
         {

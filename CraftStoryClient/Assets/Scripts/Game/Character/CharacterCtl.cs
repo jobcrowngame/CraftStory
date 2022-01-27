@@ -520,6 +520,9 @@ public class CharacterCtl : SingleMono<CharacterCtl>
         List<CharacterBase> list = new List<CharacterBase>();
         foreach (var item in characterList)
         {
+            if (item == null)
+                continue;
+
             if (item.IsDied)
                 continue;
 
