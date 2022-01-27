@@ -15,18 +15,16 @@ public class GoogleMobileAdsMng : Single<GoogleMobileAdsMng>
         Logger.Log("GoogleMobileAdsMng 初期化");
         //アプリ起動時に一度必ず実行（他のスクリプトで実行していたら不要）
         MobileAds.Initialize(initStatus => { });
-
         //広告を表示
         RequestReward();
     }
     private void RequestReward()
     {
 #if UNITY_ANDROID
-    adUnitId = "ca-app-pub-7823916958756862~8494097064";
+        adUnitId = "ca-app-pub-7823916958756862/4363280363";
 #elif UNITY_IOS
-    adUnitId = "ca-app-pub-7823916958756862~2126879702";
+        adUnitId = "ca-app-pub-7823916958756862/5564874911";
 #endif
-
         this.rewardedAd = new RewardedAd(adUnitId);
         //動画の視聴が完了したら「HandleUserEarnedReward」を呼ぶ
         this.rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
@@ -49,7 +47,7 @@ public class GoogleMobileAdsMng : Single<GoogleMobileAdsMng>
         this.callBack = callBack;
 
         ////広告を表示
-        //RequestReward();
+        RequestReward();
 
         if (this.rewardedAd.IsLoaded())
         {
