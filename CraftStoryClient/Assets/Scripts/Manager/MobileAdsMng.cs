@@ -117,7 +117,6 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
 
         GoogleMobileAdsMng.E.ShowReawrd(() =>
         {
-            // 空腹度を回復
             CharacterCtl.E.KillAllMonster();
 
             beforKillAdsTime = DateTime.Now;

@@ -27,7 +27,7 @@ public partial class HomeUI
         {
             adsTimer += Time.deltaTime;
 
-            TimerImage.fillAmount = adsTimer / adsEnactiveTimer;
+            TimerImage.fillAmount = (float)(adsEnactiveTimer - adsTimer) / adsEnactiveTimer;
 
             if (adsTimer > adsEnactiveTimer)
             {
