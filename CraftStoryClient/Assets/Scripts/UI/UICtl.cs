@@ -268,4 +268,5 @@ public enum UIType
     SkillExplanation,
     BraveSelectLevel,
     LoginBonus,
+    Revive,
 }

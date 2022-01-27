@@ -165,9 +165,15 @@ public partial class CharacterPlayer : CharacterBase
     IEnumerator OnDied()
     {
         yield return new WaitForSeconds(4);
-        CommonFunction.GoToNextScene(100);
+        UICtl.E.OpenUI<ReviveUI>(UIType.Revive);
     }
-    
+
+    public override void Resurrection()
+    {
+        EffectMng.E.AddBattleEffect("Skill_106_1", 3f, Model.transform);
+
+        base.Resurrection();
+    }
 
     public override void EquipEquipment(ItemEquipmentData equipmentData)
     {
