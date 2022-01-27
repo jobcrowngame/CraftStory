@@ -28,6 +28,7 @@ public class ReviveUI : UIBase
             ReviveBtn.gameObject.SetActive(false);
             GoogleMobileAdsMng.E.ShowReawrd(() =>
             {
+                AudioMng.E.ShowBGM("bgm_02");
                 Close();
                 // 復活
                 CharacterCtl.E.getPlayer().Resurrection();

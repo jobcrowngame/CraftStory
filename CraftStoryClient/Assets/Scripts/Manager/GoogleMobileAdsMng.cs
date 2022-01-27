@@ -50,6 +50,7 @@ public class GoogleMobileAdsMng : Single<GoogleMobileAdsMng>
 
         if (this.rewardedAd.IsLoaded())
         {
+            AudioMng.E.StopBGM();
             this.rewardedAd.Show();
         }
         else
