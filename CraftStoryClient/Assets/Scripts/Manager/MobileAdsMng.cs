@@ -79,9 +79,6 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
     }
     private void ShowAdsNotSleep()
     {
-        if (DataMng.E.RuntimeData.MapType != MapType.AreaMap)
-            return;
-
         // 50パーセント
         if (Random.Range(0, 100) > 50)
             return;
@@ -95,9 +92,6 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
     }
     private void ShowAdsAddHunger()
     {
-        if (DataMng.E.RuntimeData.MapType != MapType.AreaMap)
-            return;
-
         // 50パーセント
         if (Random.Range(0, 100) > 50)
             return;
@@ -112,9 +106,6 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
     }
     private void ShowAdsKillAll()
     {
-        if (DataMng.E.RuntimeData.MapType != MapType.AreaMap)
-            return;
-
         // ５分の間隔
         TimeSpan deltaTime = new TimeSpan(DateTime.Now.Ticks - beforKillAdsTime.Ticks);
         if (deltaTime.TotalSeconds < 300)
