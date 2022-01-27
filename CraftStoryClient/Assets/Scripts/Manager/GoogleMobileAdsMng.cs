@@ -29,6 +29,9 @@ public class GoogleMobileAdsMng : Single<GoogleMobileAdsMng>
         this.rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
         AdRequest request = new AdRequest.Builder().Build();
         this.rewardedAd.LoadAd(request);
+
+        //広告を表示
+        RequestReward();
     }
     //動画の視聴が完了したら実行される（途中で閉じられた場合は呼ばれない）
     public void HandleUserEarnedReward(object sender, Reward args)
@@ -45,8 +48,8 @@ public class GoogleMobileAdsMng : Single<GoogleMobileAdsMng>
     {
         this.callBack = callBack;
 
-        //広告を表示
-        RequestReward();
+        ////広告を表示
+        //RequestReward();
 
         if (this.rewardedAd.IsLoaded())
         {
