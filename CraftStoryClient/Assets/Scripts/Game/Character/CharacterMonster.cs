@@ -136,6 +136,7 @@ public class CharacterMonster : CharacterBase
         Model.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(10f);
+        CharacterCtl.E.RemoveMonster(this);
         GameObject.Destroy(gameObject);
     }
 
@@ -257,6 +258,5 @@ public class CharacterMonster : CharacterBase
     public override void Kill()
     {
         Died();
-        CharacterCtl.E.RemoveMonster(this);
     }
 }
