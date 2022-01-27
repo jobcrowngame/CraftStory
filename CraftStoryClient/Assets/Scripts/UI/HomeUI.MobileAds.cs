@@ -38,6 +38,9 @@ public partial class HomeUI
 
     public void ShowMobileAds(MobileAdsMng.MobileAdsType adsType)
     {
+        if (DataMng.E.RuntimeData.MapType != MapType.AreaMap)
+            return;
+
         if (activeAds)
             return;
 
