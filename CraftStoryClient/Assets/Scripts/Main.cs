@@ -34,6 +34,7 @@ public class Main : MonoBehaviour
         WorldMng.E.Init();
         AudioMng.Init();
         LocalDataMng.E.Init();
+        MobileAdsMng.E.Init();
 
         yield return ConfigMng.E.InitInitCoroutine();
         yield return ResourcesMng.E.InitInitCoroutine();
