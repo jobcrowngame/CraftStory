@@ -18,6 +18,8 @@ public partial class HomeUI
 
     float timer;
 
+    float hungerDamageTimer;
+
     private int Hunger
     {
         get => DataMng.E.UserData.Hunger;
@@ -51,6 +53,16 @@ public partial class HomeUI
             HungerChange(-1);
             timer = SettingMng.CostHumgerTimer;
         }
+
+        if (DataMng.E.RuntimeData.MapType == MapType.AreaMap && Hunger == 0)
+        {
+            hungerDamageTimer -= 0.02f;
+            if (hungerDamageTimer <= 0)
+            {
+                hungerDamageTimer = SettingMng.HungerDamageIntervalSec;
+                PlayerCtl.E.Character.AddDamageRatio(null, SettingMng.HungerDamageRatio);
+            }
+        }
     }
 
     public void InitHunger()
@@ -62,6 +74,7 @@ public partial class HomeUI
 
         Hunger = DataMng.E.UserData.Hunger;
         timer = SettingMng.CostHumgerTimer;
+        hungerDamageTimer = SettingMng.HungerDamageIntervalSec;
 
         CheckJumpState();
     }
