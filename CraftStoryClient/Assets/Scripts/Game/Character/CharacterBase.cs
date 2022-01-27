@@ -724,6 +724,11 @@ public class CharacterBase : MonoBehaviour
         StopAllCoroutines();
     }
 
+    public void AddDamageRatio(CharacterBase attacker, float ratio)
+    {
+        AddDamage(attacker, Mathf.CeilToInt(Parameter.AllHP * ratio));
+    }
+
     /// <summary>
     /// ダメージを与える
     /// </summary>
@@ -756,7 +761,10 @@ public class CharacterBase : MonoBehaviour
             Parameter.CurHP = 0;
 
             Died();
-            attacker.TargetDied();
+            if (attacker != null) 
+            { 
+                attacker.TargetDied(); 
+            }
         }
 
         if (HpCtl != null)
