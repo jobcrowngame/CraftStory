@@ -131,6 +131,7 @@ public partial class HomeUI : UIBase
     {
         UpdateHunger();
         //RefreshMemoryInfo();
+        UpdateMobileAds();
     }
 
     public override void Init()
@@ -140,6 +141,7 @@ public partial class HomeUI : UIBase
 
         InitBlueprint();
         InitHunger();
+        InitMobileAds();
 
         FadeinImg.enabled = true;
 

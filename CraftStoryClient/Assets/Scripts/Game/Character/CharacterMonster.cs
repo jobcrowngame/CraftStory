@@ -253,4 +253,9 @@ public class CharacterMonster : CharacterBase
             StartUseSkill(CharacterGroup.Player, skill, Target);
         }
     }
+
+    public override void Kill()
+    {
+        Died();
+    }
 }

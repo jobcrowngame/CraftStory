@@ -45,8 +45,12 @@ public class GameTimeCtl
         {
             curTime = value;
 
+            // 一日が終わる
             if (curTime > SettingMng.GameDaySeconds)
+            {
                 curTime = 0.01f;
+                ShowAdsed = false;
+            }
 
             if (Active)
             {
@@ -57,6 +61,7 @@ public class GameTimeCtl
                 RefreshLight(angle);
                 RefreshSkyBox(angle);
                 CheckIsNight(angle);
+                ShowMobileAds(angle);
             }
             else
             {
@@ -74,6 +79,8 @@ public class GameTimeCtl
     /// </summary>
     public bool IsNight { get => mIsNight; }
     private bool mIsNight;
+
+    private bool ShowAdsed = false;
 
     public GameTimeCtl()
     {
@@ -140,6 +147,22 @@ public class GameTimeCtl
         if (ClockHand != null)
         {
             ClockHand.transform.rotation = Quaternion.Euler(0, 0, 120 - angle);
+        }
+    }
+
+    /// <summary>
+    /// 寝る広告を出す
+    /// </summary>
+    private void ShowMobileAds(float angle)
+    {
+        if (!ShowAdsed && angle > 280)
+        {
+            ShowAdsed = true;
+
+            if (HomeLG.E.UI != null)
+            {
+                HomeLG.E.UI.ShowMobileAds(MobileAdsMng.MobileAdsType.NotSleep);
+            }
         }
     }
 

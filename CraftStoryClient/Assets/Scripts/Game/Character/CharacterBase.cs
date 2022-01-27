@@ -725,6 +725,11 @@ public class CharacterBase : MonoBehaviour
     }
 
     /// <summary>
+    /// 強制殺す
+    /// </summary>
+    public virtual void Kill() { }
+
+    /// <summary>
     /// ダメージを与える
     /// </summary>
     /// <param name="attacker"></param>

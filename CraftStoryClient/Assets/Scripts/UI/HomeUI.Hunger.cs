@@ -36,6 +36,9 @@ public partial class HomeUI
             HungerBar.value = value;
 
             CheckJumpState();
+
+            if (value == 5 && HomeLG.E.UI != null)
+                HomeLG.E.UI.ShowMobileAds(MobileAdsMng.MobileAdsType.AddHunger);
         }
     }
 

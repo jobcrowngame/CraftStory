@@ -272,6 +272,12 @@ public class CharacterCtl : SingleMono<CharacterCtl>
             Logger.Warning("敵が生成 {0}", mAreaMapMonsterList[rangeEntityIndex]);
             yield return 1;
         }
+
+        // 最大敵の場合、広告を出す
+        if (RemainingNumber >= defaltMaxCount && HomeLG.E.UI != null)
+        {
+            HomeLG.E.UI.ShowMobileAds(MobileAdsMng.MobileAdsType.KillAll);
+        }
     }
 
     public void RemoveMonster(CharacterBase character)
@@ -532,6 +538,20 @@ public class CharacterCtl : SingleMono<CharacterCtl>
     public void ClearCharacter()
     {
         characterList.Clear();
+    }
+
+    /// <summary>
+    /// 全敵を殺す
+    /// </summary>
+    public void KillAllMonster()
+    {
+        for (int i = 0; i < characterList.Count; i++)
+        {
+            if (characterList[i].Group == CharacterBase.CharacterGroup.Monster)
+            {
+                characterList[i].Kill();
+            }
+        }
     }
 
     #endregion 
