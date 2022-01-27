@@ -165,5 +165,11 @@ public class SettingMng : Single<SettingMng>
     /// </summary>
     public const int TorchRange = 10;
 
+    // 空腹時HP減少割合
+    public const float HungerDamageRatio = 0.008f;
+
+    // 空腹時HP減少間隔(秒)
+    public const int HungerDamageIntervalSec = 1;
+
     #endregion
 }
