@@ -131,24 +131,24 @@ public class SettingMng : Single<SettingMng>
     /// <summary>
     /// エリアマップで敵が生成する半径
     /// </summary>
-    public const int AreaMapCreateMonsterRange = 50;
+    public const int AreaMapCreateMonsterRange = 35;
 
     /// <summary>
     /// エリアマップで敵が追いかける距離
     /// </summary>
-    public const int AreaMapChaseRange = 40;
+    public const int AreaMapChaseRange = 25;
 
     /// <summary>
     /// エリアマップで敵が生成する最大数
     /// </summary>
-    public const int AreaMapCreateMonsterMaxCount = 13;
-    public const int AreaMapCreateMonsterNightMaxCount = 20; // 夜
+    public const int AreaMapCreateMonsterMaxCount = 3;
+    public const int AreaMapCreateMonsterNightMaxCount = 30; // 夜
 
     /// <summary>
     /// エリアマップで敵が生成する間隔（秒）
     /// </summary>
     public const int AreaMapCreateMonsterInterval = 60;
-    public const int AreaMapCreateMonsterNightInterval = 60; // 夜
+    public const int AreaMapCreateMonsterNightInterval = 5; // 夜
 
     /// <summary>
     /// エリアマップで敵がデスポーン時間（秒）
@@ -158,12 +158,12 @@ public class SettingMng : Single<SettingMng>
     /// <summary>
     /// エリアマップで敵がデスポーン距離
     /// </summary>
-    public const int AreaMapMonsterDespawnRange = 70;
+    public const int AreaMapMonsterDespawnRange = 50;
 
     /// <summary>
     /// 松明影響範囲
     /// </summary>
-    public const int TorchRange = 10;
+    public const int TorchRange = 7;
 
     // 空腹時HP減少割合
     public const float HungerDamageRatio = 0.008f;
