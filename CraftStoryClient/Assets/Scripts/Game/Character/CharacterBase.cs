@@ -726,7 +726,7 @@ public class CharacterBase : MonoBehaviour
 
     public void AddDamageRatio(CharacterBase attacker, float ratio)
     {
-        AddDamage(attacker, Mathf.CeilToInt(Parameter.AllHP * ratio));
+        AddDamage(attacker, Mathf.FloorToInt(Parameter.AllHP * ratio));
     }
 
     /// <summary>
