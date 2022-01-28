@@ -5,6 +5,7 @@ public class LoginUI : UIBase
 {
     Image Start;
     Text Ver;
+    Text Acc { get => FindChiled<Text>("Acc"); }
     Button BGBtn;
     Button Terms01Btn;
     Button Terms02Btn;
@@ -62,5 +63,10 @@ public class LoginUI : UIBase
 
         UICtl.E.LockUI(false);
         Main.E.Initing = false;
+    }
+
+    public void SetAcc(string acc)
+    {
+        Acc.text = acc;
     }
 }

@@ -41,7 +41,7 @@ public class Main : MonoBehaviour
         yield return LoadData();
         yield return NWMng.E.InitInitCoroutine();
 
-        UICtl.E.OpenUI<LoginUI>(UIType.Login);
+        var ui = UICtl.E.OpenUI<LoginUI>(UIType.Login);
         AudioMng.E.ShowBGM("bgm_01");
 
         // Test
@@ -49,11 +49,9 @@ public class Main : MonoBehaviour
 
         if (DataMng.E.UserData != null && !DataMng.E.UserData.LocalDataLoaded)
         {
+            string acc = DataMng.E.UserData.Account;
             DataMng.E.NewUser();
-            UICtl.E.OpenUI<TermsUI>(UIType.Terms);
-
-            if (DataMng.E.MapData == null)
-                DataMng.E.NewHomeData();
+            DataMng.E.UserData.Account = acc;
         }
         else
         {
@@ -71,6 +69,8 @@ public class Main : MonoBehaviour
                 Initing = false;
             }
         }
+
+        ui.SetAcc(DataMng.E.UserData.Account);
     }
 
     private void OnApplicationQuit()
