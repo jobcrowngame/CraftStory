@@ -11,7 +11,7 @@ public class MobileAdsMng : SingleMono<MobileAdsMng>
     int deltaTime = 0;
 
     // レアアイテムプレゼント
-    const int AddItemTimer = 300;
+    const int AddItemTimer = 180;
 
     int[] randomBonusArr = new int[] { 100,101,102,103,104,105,106,107,108 };
 
