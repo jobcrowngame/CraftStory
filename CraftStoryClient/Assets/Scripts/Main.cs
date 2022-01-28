@@ -49,26 +49,11 @@ public class Main : MonoBehaviour
 
         if (DataMng.E.UserData != null && !DataMng.E.UserData.LocalDataLoaded)
         {
-            NWMng.E.Connect((rp) =>
-            {
-                NWMng.E.URL = (string)rp["url"];
-                Logger.Warning("[URL]-" + NWMng.E.URL);
+            DataMng.E.NewUser();
+            UICtl.E.OpenUI<TermsUI>(UIType.Terms);
 
-                NWMng.E.GetVersion((rp) =>
-                {
-                    var result = JsonMapper.ToObject<GetVersionRP>(rp.ToJson());
-                    if (Application.version == result.version)
-                    {
-                        LoginLg.E.Login(result.IsMaintenance);
-                    }
-                    else
-                    {
-                        CommonFunction.VersionUp(result.version);
-                    }
-                });
-            });
-
-            StartCoroutine(OnLoginFailed());
+            if (DataMng.E.MapData == null)
+                DataMng.E.NewHomeData();
         }
         else
         {
