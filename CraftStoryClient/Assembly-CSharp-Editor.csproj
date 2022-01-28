@@ -831,13 +831,13 @@
       <Project>{815990B8-154B-3E8B-07EC-8B4C0A3CDCA8}</Project>
       <Name>SimpleInput.Runtime</Name>
     </ProjectReference>
-    <ProjectReference Include="GoogleMobileAds.Editor.csproj">
-      <Project>{D1D738CE-BD15-E0D6-D0A3-C2EECF09FAE8}</Project>
-      <Name>GoogleMobileAds.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="SimpleInput.Editor.csproj">
       <Project>{F6107704-C902-9D6D-57B8-7633D2D6595F}</Project>
       <Name>SimpleInput.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="GoogleMobileAds.Editor.csproj">
+      <Project>{D1D738CE-BD15-E0D6-D0A3-C2EECF09FAE8}</Project>
+      <Name>GoogleMobileAds.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
