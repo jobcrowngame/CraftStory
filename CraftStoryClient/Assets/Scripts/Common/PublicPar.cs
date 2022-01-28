@@ -57,7 +57,7 @@ public class PublicPar
         Application.persistentDataPath;
 #elif UNITY_ANDROID
         Application.persistentDataPath;
-#elif UNITY_EDITOR
+# else
         Application.dataPath + "/SaveData";
 #endif
 
