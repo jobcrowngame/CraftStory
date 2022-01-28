@@ -52,6 +52,9 @@ public class Main : MonoBehaviour
             string acc = DataMng.E.UserData.Account;
             DataMng.E.NewUser();
             DataMng.E.UserData.Account = acc;
+
+            LoginLg.E.UI.LoginResponse();
+            Initing = false;
         }
         else
         {
