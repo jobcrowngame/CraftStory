@@ -66,6 +66,7 @@
     <Compile Include="MainTask.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapArea.cs" />
+    <Compile Include="MapAreaDeterioration.cs" />
     <Compile Include="Mission.cs" />
     <Compile Include="Mountain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

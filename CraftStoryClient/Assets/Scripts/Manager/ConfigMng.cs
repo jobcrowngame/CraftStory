@@ -33,7 +33,7 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, MText> MTextConfig = new Dictionary<int, MText>();
     Dictionary<int, Chat> ChatConfig = new Dictionary<int, Chat>();
     Dictionary<string, MapArea> MapAreaConfig = new Dictionary<string, MapArea>();
-    Dictionary<string, MapArea> MapAreaConfigDeterioration = new Dictionary<string, MapArea>();
+    Dictionary<string, MapArea> MapAreaDeteriorationConfig = new Dictionary<string, MapArea>();
     Dictionary<int, Character> CharacterConfig = new Dictionary<int, Character>();
     Dictionary<int, CharacterGenerated> CharacterGeneratedConfig = new Dictionary<int, CharacterGenerated>();
     Dictionary<int, Impact> ImpactConfig = new Dictionary<int, Impact>();
@@ -60,7 +60,7 @@ class ConfigMng : Single<ConfigMng>
     public Dictionary<int, CharacterGenerated> CharacterGenerated { get => CharacterGeneratedConfig; }
     public Dictionary<int, Character> Character { get => CharacterConfig; }
     public Dictionary<string, MapArea> MapArea { get => MapAreaConfig; }
-    public Dictionary<string, MapArea> MapAreaDeterioration { get => MapAreaConfig; }
+    public Dictionary<string, MapArea> MapAreaDeterioration { get => MapAreaDeteriorationConfig; }
     public Dictionary<int, Chat> Chat { get => ChatConfig; }
     public Dictionary<int, MText> MText { get => MTextConfig; }
     public Dictionary<int, Mission> Mission { get => MissionConfig; }
@@ -111,7 +111,7 @@ class ConfigMng : Single<ConfigMng>
         ReadConfig("Config/Guide", guideConfig);
         ReadConfig("Config/GuideStep", guideStepConfig);
         ReadAreaMapConfig("Config/MapArea", MapAreaConfig);
-        ReadAreaMapConfig("Config/MapArea", MapAreaConfigDeterioration);
+        ReadAreaMapConfig("Config/MapAreaDeterioration", MapAreaDeteriorationConfig);
         ReadConfig("Config/Character", CharacterConfig);
         ReadConfig("Config/CharacterGenerated", CharacterGeneratedConfig);
         ReadConfig("Config/Impact", ImpactConfig);

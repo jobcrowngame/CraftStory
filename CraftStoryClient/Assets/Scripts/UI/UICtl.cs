@@ -217,6 +217,7 @@ public enum UIOpenType
 }
 public enum UIType
 {
+    AreaMapSetting,
     Login,
     NowLoading,
     Home,

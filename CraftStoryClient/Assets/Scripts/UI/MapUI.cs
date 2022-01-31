@@ -7,6 +7,7 @@ public class MapUI : UIBase
     Button HomeBtn { get => FindChiled<Button>("HomeBtn"); }
     Button BraveBtn { get => FindChiled<Button>("BraveBtn"); }
     Button AreaMapBtn { get => FindChiled<Button>("AreaMapBtn"); }
+    Button AreaMapSettingBtn { get => FindChiled<Button>("AreaMapSettingBtn"); }
     Button EquipBtn { get => FindChiled<Button>("EquipBtn"); }
 
     public override void Init()
@@ -17,6 +18,7 @@ public class MapUI : UIBase
         HomeBtn.onClick.AddListener(OnClickHomeBtn);
         BraveBtn.onClick.AddListener(OnClickBraveBtn);
         AreaMapBtn.onClick.AddListener(OnClickAreaMapBtn);
+        AreaMapSettingBtn.onClick.AddListener(OnClickAreaMapSettingBtn);
         EquipBtn.onClick.AddListener(OnClickEquipBtn);
     }
 
@@ -27,6 +29,7 @@ public class MapUI : UIBase
         EnActiveBtn(HomeBtn, DataMng.E.RuntimeData.MapType == MapType.Home);
         EnActiveBtn(BraveBtn, DataMng.E.RuntimeData.MapType == MapType.Brave);
         EnActiveBtn(AreaMapBtn, DataMng.E.RuntimeData.MapType == MapType.AreaMap);
+        EnActiveBtn(AreaMapSettingBtn, DataMng.E.RuntimeData.MapType == MapType.AreaMap);
 
         // 冒険エリアの場合、時間を停止
         if (DataMng.E.RuntimeData.MapType == MapType.Brave)
@@ -127,6 +130,10 @@ public class MapUI : UIBase
                     GoToAreaMap();
                 });
         }
+    }
+    private void OnClickAreaMapSettingBtn()
+    {
+        UICtl.E.OpenUI<AreaMapSettingUI>(UIType.AreaMapSetting);
     }
     private void OnClickEquipBtn()
     {

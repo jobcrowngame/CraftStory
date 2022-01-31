@@ -823,6 +823,10 @@
       <Project>{E4E72E7A-33B6-6920-68E9-1CBAA6F605B8}</Project>
       <Name>AppsFlyer.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="UniRx.csproj">
+      <Project>{1F626EED-2635-B138-1A0A-8D7F228BD232}</Project>
+      <Name>UniRx</Name>
+    </ProjectReference>
     <ProjectReference Include="SimpleInput.Runtime.csproj">
       <Project>{815990B8-154B-3E8B-07EC-8B4C0A3CDCA8}</Project>
       <Name>SimpleInput.Runtime</Name>
@@ -834,10 +838,6 @@
     <ProjectReference Include="SimpleInput.Editor.csproj">
       <Project>{F6107704-C902-9D6D-57B8-7633D2D6595F}</Project>
       <Name>SimpleInput.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="UniRx.csproj">
-      <Project>{1F626EED-2635-B138-1A0A-8D7F228BD232}</Project>
-      <Name>UniRx</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

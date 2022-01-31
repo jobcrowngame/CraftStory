@@ -127,6 +127,7 @@ namespace ExcelToJson
                 case "MText": list = MText(tbl); break;
                 case "Chat": list = Chat(tbl); break;
                 case "MapArea": list = MapArea(tbl); break;
+                case "MapAreaDeterioration": list = MapAreaDeterioration(tbl); break;
                 case "Character": list = Character(tbl); break;
                 case "CharacterGenerated": list = CharacterGenerated(tbl); break;
                 case "Impact": list = Impact(tbl); break;
@@ -702,6 +703,24 @@ namespace ExcelToJson
             }
             return list;
         }
+        private static object MapAreaDeterioration(DataTable tbl)
+        {
+            List<MapAreaDeterioration> list = new List<MapAreaDeterioration>();
+            for (int i = 1; i < tbl.Rows.Count; i++)
+            {
+                var data = new MapAreaDeterioration()
+                {
+                    ID = ToInt32(tbl.Rows[i]["ID"]),
+                    MapId = ToInt32(tbl.Rows[i]["MapId"]),
+                    OffsetX = ToInt32(tbl.Rows[i]["OffsetX"]),
+                    OffsetZ = ToInt32(tbl.Rows[i]["OffsetZ"]),
+                };
+
+                list.Add(data);
+            }
+            return list;
+        }
+        
         private static object Character(DataTable tbl)
         {
             List<Character> list = new List<Character>();

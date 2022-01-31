@@ -378,6 +378,11 @@ public class CommonFunction
     {
         ShowHintBox(null, msg, okAction, cancelAction, okBtn, cancelBtn);
     }
+    public static void ShowHintBoxInTitle(string title, string msg, Action okAction, Action cancelAction = null,
+        string okBtn = "button_2D_007", string cancelBtn = "button_2D_006")
+    {
+        ShowHintBox(title, null, msg, okAction, cancelAction, okBtn, cancelBtn);
+    }
     // メッセージボックスにアイコンを追加
     public static void ShowHintBox(string iconPath, string msg, Action okAction, Action cancelAction = null, 
         string okBtn = "button_2D_007", string cancelBtn = "button_2D_006")
