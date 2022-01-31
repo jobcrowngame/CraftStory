@@ -12,7 +12,7 @@ public class MapMng : SingleMono<MapMng>
     public MapEntitysPool MapPool { get; set; }
 
     //MapInstance[,] mapInstanceArr;
-    private int loadAreaRange = 2;
+    private int loadAreaRange = 1;
 
     private Dictionary<Vector3Int, EntityCrops> cropsList = new Dictionary<Vector3Int, EntityCrops>();
     private Dictionary<Vector3Int, EntityCrops> areaMapCropsList = new Dictionary<Vector3Int, EntityCrops>();

@@ -68,6 +68,10 @@ public class Main : MonoBehaviour
             }
             else
             {
+                // タスク設定ファイルに含まれない場合、強制で13になる
+                if (!ConfigMng.E.MainTask.ContainsKey(LocalDataMng.E.Data.UserDataT.main_task))
+                    LocalDataMng.E.Data.UserDataT.main_task = 13;
+
                 LoginLg.E.UI.LoginResponse();
                 Initing = false;
             }
