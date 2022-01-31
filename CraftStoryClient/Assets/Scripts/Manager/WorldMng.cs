@@ -84,7 +84,6 @@ public class WorldMng : MonoBehaviour
         }
 
         AdventureCtl.E.Init();
-        GoogleMobileAdsMng.E.Init();
     }
 
     private Transform CreateParentObj(string name)

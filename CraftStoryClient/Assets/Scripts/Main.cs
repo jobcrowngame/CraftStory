@@ -35,6 +35,8 @@ public class Main : MonoBehaviour
         AudioMng.Init();
         LocalDataMng.E.Init();
         MobileAdsMng.E.Init();
+        GoogleMobileAdsMng.E.Init();
+
 
         yield return ConfigMng.E.InitInitCoroutine();
         yield return ResourcesMng.E.InitInitCoroutine();

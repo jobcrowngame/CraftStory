@@ -2,12 +2,13 @@
 using GoogleMobileAds.Api;
 using System;
 
-public class GoogleMobileAdsMng : Single<GoogleMobileAdsMng>
+public class GoogleMobileAdsMng : SingleMono<GoogleMobileAdsMng>
 {
     private string adUnitId;
     private RewardedAd rewardedAd;
 
     private Action callBack;
+    private bool HandleUserEarnedRewarded;
 
     // Use this for initialization
     public override void Init()
@@ -31,23 +32,34 @@ public class GoogleMobileAdsMng : Single<GoogleMobileAdsMng>
         rewardedAd.LoadAd(request);
     }
 
+    private void Update()
+    {
+        OnHandleUserEarnedReward();
+    }
+
     private void OnAdLoaded(object sender, EventArgs args)
     {
         Logger.Log("OnAdLoaded");
+
+        AdRequest request = new AdRequest.Builder().Build();
+        rewardedAd.LoadAd(request);
     }
 
     public void HandleUserEarnedReward(object sender, Reward args)
     {
         Logger.Log("報酬獲得！");
 
-        if (callBack != null)
+        HandleUserEarnedRewarded = true;
+    }
+    private void OnHandleUserEarnedReward()
+    {
+        if (HandleUserEarnedRewarded)
         {
-            callBack();
+            HandleUserEarnedRewarded = false;
 
-            AdRequest request = new AdRequest.Builder().Build();
-            this.rewardedAd.LoadAd(request);
+            if (callBack != null)
+                callBack();
         }
-
     }
     public void ShowReawrd(Action callBack)
     {
