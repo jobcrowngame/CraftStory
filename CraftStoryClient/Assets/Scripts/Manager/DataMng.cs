@@ -71,12 +71,12 @@ public class DataMng : Single<DataMng>
         Logger.Log("Save Data");
         if (uData != null)
         {
-            Task task = SaveLoadFile.E.Save(uData, PublicPar.SaveRootPath + PublicPar.UserDataName);
+            Task task = FileIO.E.Save(uData, PublicPar.SaveRootPath + PublicPar.UserDataName);
         }
 
         if (mHomeData != null)
         {
-            Task task = SaveLoadFile.E.Save(mHomeData.ToStringData(), PublicPar.SaveRootPath + PublicPar.MapDataName);
+            Task task = FileIO.E.Save(mHomeData.ToStringData(), PublicPar.SaveRootPath + PublicPar.MapDataName);
         }
 
         if (MapMng.E != null)
@@ -93,7 +93,7 @@ public class DataMng : Single<DataMng>
     /// <returns></returns>
     public bool Load()
     {
-        uData = (UserData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.UserDataName);
+        uData = (UserData)FileIO.E.Load(PublicPar.SaveRootPath + PublicPar.UserDataName);
 
         //uData = new UserData();
         //uData.Account = "OC1RUMAjDeFv";
@@ -101,7 +101,7 @@ public class DataMng : Single<DataMng>
 
         try
         {
-            var mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.MapDataName);
+            var mapData = (string)FileIO.E.Load(PublicPar.SaveRootPath + PublicPar.MapDataName);
             if (!string.IsNullOrEmpty(mapData)) 
                 mHomeData = new MapData(mapData);
         }

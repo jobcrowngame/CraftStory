@@ -57,7 +57,7 @@ public class MapInstance : MonoBehaviour
     {
         var startTime = DateTime.Now;
 
-        string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaKey + ".dat");
+        string mapData = (string)FileIO.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaKey + ".dat");
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
         Logger.Log("{1} をロードするに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + areaKey);
@@ -128,7 +128,7 @@ public class MapInstance : MonoBehaviour
             var startTime = DateTime.Now;
 
 
-            string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaKey + ".dat");
+            string mapData = (string)FileIO.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaKey + ".dat");
             if (!string.IsNullOrEmpty(mapData))
             {
                 MapData mData = new MapData(MapAreaConfig.MapId);
@@ -342,6 +342,6 @@ public class MapInstance : MonoBehaviour
         if (!Actived || Data == null)
             return;
 
-        Task task = SaveLoadFile.E.Save(Data.ToStringData(), PublicPar.SaveRootPath + PublicPar.AreaMapName + config.ID + ".dat");
+        Task task = FileIO.E.Save(Data.ToStringData(), PublicPar.SaveRootPath + PublicPar.AreaMapName + config.ID + ".dat");
     }
 }

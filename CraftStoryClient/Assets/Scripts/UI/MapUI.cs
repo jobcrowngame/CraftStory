@@ -85,7 +85,7 @@ public class MapUI : UIBase
         }
     }
    
-    private void OnClickAreaMapBtn()
+    private void GoToAreaMap()
     {
         // 冒険途中でエリアマップに遷移する場合、ボーナス計算します
         if (DataMng.E.RuntimeData.MapType == MapType.Brave ||
@@ -99,6 +99,33 @@ public class MapUI : UIBase
         else
         {
             CommonFunction.GotoAreaMap();
+        }
+    }
+    private void OnClickAreaMapBtn()
+    {
+        if (DataMng.E.UserData.NotFirstInAreaMap)
+        {
+            GoToAreaMap();
+        }
+        else
+        {
+            string msg = @"劣化版のエリアマップをつかいますか。";
+
+            CommonFunction.ShowHintBox(msg,
+                () =>
+                {
+                    FileIO.E.DeleteAreaMap(PublicPar.SaveRootPath);
+
+                    DataMng.E.UserData.IsDeterioration = true;
+                    DataMng.E.UserData.NotFirstInAreaMap = true;
+                    GoToAreaMap();
+                },
+                () =>
+                {
+                    DataMng.E.UserData.IsDeterioration = false;
+                    DataMng.E.UserData.NotFirstInAreaMap = true;
+                    GoToAreaMap();
+                });
         }
     }
     private void OnClickEquipBtn()

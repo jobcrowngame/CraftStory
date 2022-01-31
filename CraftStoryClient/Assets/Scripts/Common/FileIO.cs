@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// ローカルのファイルセーブ、ロード
 /// </summary>
-public class SaveLoadFile : Single<SaveLoadFile>
+public class FileIO : Single<FileIO>
 {
 
 	private FileStream fileStream;
@@ -72,5 +72,14 @@ public class SaveLoadFile : Single<SaveLoadFile>
 		Logger.Error("not find save file." + path);
 
 		return null;
+	}
+
+	public void DeleteAreaMap(string path)
+    {
+		string[] files = Directory.GetFiles(path, "AreaMapData*", SearchOption.AllDirectories);
+		foreach (var item in files)
+		{
+			File.Delete(item);
+		}
 	}
 }

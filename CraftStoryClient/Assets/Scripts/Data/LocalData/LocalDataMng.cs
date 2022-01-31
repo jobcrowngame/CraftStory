@@ -11,7 +11,7 @@ public class LocalDataMng : Single<LocalDataMng>
     {
         if (localData != null)
         {
-            Task task = SaveLoadFile.E.Save(localData, PublicPar.SaveRootPath + PublicPar.LocalDataName);
+            Task task = FileIO.E.Save(localData, PublicPar.SaveRootPath + PublicPar.LocalDataName);
         }
     }
 
@@ -30,7 +30,7 @@ public class LocalDataMng : Single<LocalDataMng>
     }
     public void LoadLocalData()
     {
-        var mLocalData = (LocalData)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.LocalDataName);
+        var mLocalData = (LocalData)FileIO.E.Load(PublicPar.SaveRootPath + PublicPar.LocalDataName);
         if (mLocalData != null)
             localData = mLocalData;
     }

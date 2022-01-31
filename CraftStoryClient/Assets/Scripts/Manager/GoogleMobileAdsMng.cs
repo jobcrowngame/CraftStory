@@ -1,5 +1,4 @@
-﻿
-using GoogleMobileAds.Api;
+﻿using GoogleMobileAds.Api;
 using System;
 
 public class GoogleMobileAdsMng : SingleMono<GoogleMobileAdsMng>
@@ -37,11 +36,19 @@ public class GoogleMobileAdsMng : SingleMono<GoogleMobileAdsMng>
         OnHandleUserEarnedReward();
     }
 
+    /// <summary>
+    /// 広告がロード出来た場合
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
     private void OnAdLoaded(object sender, EventArgs args)
     {
         Logger.Log("OnAdLoaded");
     }
 
+    /// <summary>
+    /// 広告成功場合
+    /// </summary>
     public void HandleUserEarnedReward(object sender, Reward args)
     {
         Logger.Log("報酬獲得！");
@@ -61,6 +68,11 @@ public class GoogleMobileAdsMng : SingleMono<GoogleMobileAdsMng>
                 callBack();
         }
     }
+
+    /// <summary>
+    /// 広告を出す
+    /// </summary>
+    /// <param name="callBack"></param>
     public void ShowReawrd(Action callBack)
     {
         this.callBack = callBack;

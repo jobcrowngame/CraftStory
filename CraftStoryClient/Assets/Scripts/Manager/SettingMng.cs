@@ -115,7 +115,9 @@ public class SettingMng : Single<SettingMng>
     /// <summary>
     /// エリアマップのサイズ
     /// </summary>
-    public const int AreaMapSize = 40;
+    public static int AreaMapSize { get => DataMng.E.UserData.IsDeterioration ? mAreaMapSizeDeterioration : mAreaMapSize; }
+    private const int mAreaMapSize = 30;
+    private const int mAreaMapSizeDeterioration = 40;
 
     /// <summary>
     /// エリアの規模

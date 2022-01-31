@@ -41,6 +41,16 @@ public class UserData
     public int FreeFoodEated { get; set; }
 
     /// <summary>
+    /// 劣化版のフラグ
+    /// </summary>
+    public bool IsDeterioration { get; set; }
+
+    /// <summary>
+    /// 始めにエリアマップ入る
+    /// </summary>
+    public bool NotFirstInAreaMap { get; set; }
+
+    /// <summary>
     /// 今のエリア
     /// </summary>
     public int AreaIndexX { get; set; }

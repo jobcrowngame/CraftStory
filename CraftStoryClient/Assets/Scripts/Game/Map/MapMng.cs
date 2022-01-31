@@ -11,9 +11,7 @@ public class MapMng : SingleMono<MapMng>
     public Transform EffectParent { get; private set; }
     public MapEntitysPool MapPool { get; set; }
 
-    //MapInstance[,] mapInstanceArr;
-    private int loadAreaRange = 1;
-
+    private int loadAreaRange = 0;
     private Dictionary<Vector3Int, EntityCrops> cropsList = new Dictionary<Vector3Int, EntityCrops>();
     private Dictionary<Vector3Int, EntityCrops> areaMapCropsList = new Dictionary<Vector3Int, EntityCrops>();
 
@@ -82,6 +80,9 @@ public class MapMng : SingleMono<MapMng>
     float timer = 0;
     private void Update()
     {
+        if (asyncInstanceStack == null)
+            return;
+
         timer += Time.deltaTime;
 
         if (timer > 1)
@@ -128,6 +129,7 @@ public class MapMng : SingleMono<MapMng>
 
         //mapInstanceArr = new MapInstance[SettingMng.AreaMapScaleX, SettingMng.AreaMapScaleZ];
 
+        loadAreaRange = DataMng.E.UserData.IsDeterioration ? 1 : 2;
         int posX, posZ;
         GetSpawnPos(out posX, out posZ);
         AreaInit(posX, posZ);
@@ -279,7 +281,14 @@ public class MapMng : SingleMono<MapMng>
     }
     private MapArea GetMapAreaConfig(int offsetX, int offsetZ)
     {
-        return ConfigMng.E.MapArea["x" + offsetX + "z" + offsetZ];
+        if (DataMng.E.UserData.IsDeterioration)
+        {
+            return ConfigMng.E.MapAreaDeterioration["x" + offsetX + "z" + offsetZ];
+        }
+        else
+        {
+            return ConfigMng.E.MapArea["x" + offsetX + "z" + offsetZ];
+        }
     }
 
     public Vector3Int GetPlayerGroundPos(int offsetY = 3)
