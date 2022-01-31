@@ -40,9 +40,6 @@ public class GoogleMobileAdsMng : SingleMono<GoogleMobileAdsMng>
     private void OnAdLoaded(object sender, EventArgs args)
     {
         Logger.Log("OnAdLoaded");
-
-        AdRequest request = new AdRequest.Builder().Build();
-        rewardedAd.LoadAd(request);
     }
 
     public void HandleUserEarnedReward(object sender, Reward args)
@@ -56,6 +53,9 @@ public class GoogleMobileAdsMng : SingleMono<GoogleMobileAdsMng>
         if (HandleUserEarnedRewarded)
         {
             HandleUserEarnedRewarded = false;
+
+            AdRequest request = new AdRequest.Builder().Build();
+            rewardedAd.LoadAd(request);
 
             if (callBack != null)
                 callBack();
