@@ -267,13 +267,19 @@ public class MapMng : SingleMono<MapMng>
         string name = string.Format("x{0}z{1}", indexX, indexZ);
         MapInstance mapInstance = CommonFunction.FindChiledByName<MapInstance>(MapParent, name);
 
+        var startTime = DateTime.Now;
+
         if (mapInstance == null)
         {
             var config = GetMapAreaConfig(indexX, indexZ);
             mapInstance = new GameObject(name).AddComponent<MapInstance>();
             mapInstance.transform.SetParent(MapParent);
-            mapInstance.Init(config.ID);
+            mapInstance.Init(config);
         }
+
+        var elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
+        Logger.Log("{1} を生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + "x" + indexX + "z" + indexZ);
+        
 
         return mapInstance;
     }
@@ -286,7 +292,7 @@ public class MapMng : SingleMono<MapMng>
                 return item;
             }
         }
-        return null;
+        return ConfigMng.E.MapArea["x" + offsetX + "z" + offsetZ];
     }
 
     public Vector3Int GetPlayerGroundPos(int offsetY = 3)
@@ -839,7 +845,7 @@ public class MapMng : SingleMono<MapMng>
             return;
         }
 
-        Dictionary<int, MapInstance> mapDic = new Dictionary<int, MapInstance>();
+        Dictionary<string, MapInstance> mapDic = new Dictionary<string, MapInstance>();
 
         foreach (var item in blueprint.blocks)
         {
@@ -853,8 +859,8 @@ public class MapMng : SingleMono<MapMng>
                 cell.InstanceObj();
 
                 // エリアが違う場合、影響エリアを記録
-                if (!mapDic.ContainsKey(cell.Map.AreaID))
-                    mapDic[cell.Map.AreaID] = cell.Map;
+                if (!mapDic.ContainsKey(cell.Map.AreaKey))
+                    mapDic[cell.Map.AreaKey] = cell.Map;
             }
             else
             {

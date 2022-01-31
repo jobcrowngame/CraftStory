@@ -32,7 +32,7 @@ class ConfigMng : Single<ConfigMng>
     Dictionary<int, Mission> MissionConfig = new Dictionary<int, Mission>();
     Dictionary<int, MText> MTextConfig = new Dictionary<int, MText>();
     Dictionary<int, Chat> ChatConfig = new Dictionary<int, Chat>();
-    Dictionary<int, MapArea> MapAreaConfig = new Dictionary<int, MapArea>();
+    Dictionary<string, MapArea> MapAreaConfig = new Dictionary<string, MapArea>();
     Dictionary<int, Character> CharacterConfig = new Dictionary<int, Character>();
     Dictionary<int, CharacterGenerated> CharacterGeneratedConfig = new Dictionary<int, CharacterGenerated>();
     Dictionary<int, Impact> ImpactConfig = new Dictionary<int, Impact>();
@@ -58,7 +58,7 @@ class ConfigMng : Single<ConfigMng>
     public Dictionary<int, Impact> Impact { get => ImpactConfig; }
     public Dictionary<int, CharacterGenerated> CharacterGenerated { get => CharacterGeneratedConfig; }
     public Dictionary<int, Character> Character { get => CharacterConfig; }
-    public Dictionary<int, MapArea> MapArea { get => MapAreaConfig; }
+    public Dictionary<string, MapArea> MapArea { get => MapAreaConfig; }
     public Dictionary<int, Chat> Chat { get => ChatConfig; }
     public Dictionary<int, MText> MText { get => MTextConfig; }
     public Dictionary<int, Mission> Mission { get => MissionConfig; }
@@ -108,7 +108,7 @@ class ConfigMng : Single<ConfigMng>
         ReadConfig("Config/Entity", entityConfig);
         ReadConfig("Config/Guide", guideConfig);
         ReadConfig("Config/GuideStep", guideStepConfig);
-        ReadConfig("Config/MapArea", MapAreaConfig);
+        ReadAreaMapConfig("Config/MapArea", MapAreaConfig);
         ReadConfig("Config/Character", CharacterConfig);
         ReadConfig("Config/CharacterGenerated", CharacterGeneratedConfig);
         ReadConfig("Config/Impact", ImpactConfig);
@@ -147,6 +147,36 @@ class ConfigMng : Single<ConfigMng>
             for (int i = 0; i < list.Count; i++)
             {
                 dic[list[i].ID] = list[i];
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Logger.Error(ex);
+        }
+    }
+
+    public void ReadAreaMapConfig(string path, Dictionary<string, MapArea> dic)
+    {
+        try
+        {
+            var config = Resources.Load<TextAsset>(path);
+            if (config == null)
+            {
+                Logger.Error("load Resources fail." + path);
+                return;
+            }
+
+            var list = JsonMapper.ToObject<List<MapArea>>(config.text);
+            if (list == null)
+            {
+                Logger.Error("DeserializeObject file fail." + path);
+                return;
+            }
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                string key = "x" + list[i].OffsetX + "z" + list[i].OffsetZ;
+                dic[key] = list[i];
             }
         }
         catch (System.Exception ex)

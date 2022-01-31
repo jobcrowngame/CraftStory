@@ -7,7 +7,7 @@ public class EntityBlast : EntityBase
 {
     Blast config;
     float curTime;
-    Dictionary<int, MapInstance> areaList = new Dictionary<int, MapInstance>();
+    Dictionary<string, MapInstance> areaList = new Dictionary<string, MapInstance>();
 
     public void Set(int entityId)
     {
@@ -207,8 +207,8 @@ public class EntityBlast : EntityBase
             }
 
             // 影響エリアを記録
-            if (!areaList.ContainsKey(cell.Map.AreaID))
-                areaList[cell.Map.AreaID] = cell.Map;
+            if (!areaList.ContainsKey(cell.Map.AreaKey))
+                areaList[cell.Map.AreaKey] = cell.Map;
 
             return cell.EntityId;
         }
@@ -226,15 +226,15 @@ public class EntityBlast : EntityBase
     {
         if (DataMng.E.RuntimeData.MapType == MapType.AreaMap)
         {
-            Dictionary<int, MapInstance> mapList = new Dictionary<int, MapInstance>();
+            Dictionary<string, MapInstance> mapList = new Dictionary<string, MapInstance>();
 
             foreach (var pos in posList)
             {
                 var cell = MapMng.GetMapCell(pos);
                 cell.Map.OnDestroyEntity(cell);
 
-                if (!mapList.ContainsKey(cell.Map.AreaID))
-                    mapList[cell.Map.AreaID] = cell.Map;
+                if (!mapList.ContainsKey(cell.Map.AreaKey))
+                    mapList[cell.Map.AreaKey] = cell.Map;
             }
 
             foreach (var pos in posList)

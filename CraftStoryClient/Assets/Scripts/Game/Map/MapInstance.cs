@@ -12,9 +12,9 @@ public class MapInstance : MonoBehaviour
     public CombineMeshCtl CombineMeshCtl { get => combineObj; }
     CombineMeshCtl combineObj;
 
-    int areaId;
+    string areaKey;
 
-    public int AreaID { get => areaId; }
+    public string AreaKey { get => areaKey; }
 
     public MapData Data { get => data; }
     MapData data;
@@ -33,16 +33,18 @@ public class MapInstance : MonoBehaviour
 
     public List<MapCell> TorchDic { get => mTorchDic; }
     List<MapCell> mTorchDic;
-    public MapArea MapAreaConfig { get => ConfigMng.E.MapArea[areaId]; }
+    public MapArea MapAreaConfig { get => config; }
+    private MapArea config;
 
     public EntityBase TransferGate { get; set; }
 
     public int OffsetX { get => MapAreaConfig.OffsetX * SettingMng.AreaMapSize; }
     public int OffsetZ { get => MapAreaConfig.OffsetZ * SettingMng.AreaMapSize; }
 
-    public void Init(int areaId)
+    public void Init(MapArea config)
     {
-        this.areaId = areaId;
+        this.config = config;
+        areaKey = "x" + config.OffsetX + "z" + config.OffsetZ; ;
 
         mObjDic = new MapCell[SettingMng.AreaMapSize, SettingMng.AreaMapV3Y, SettingMng.AreaMapSize];
         mTorchDic = new List<MapCell>();
@@ -55,10 +57,10 @@ public class MapInstance : MonoBehaviour
     {
         var startTime = DateTime.Now;
 
-        string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
+        string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaKey + ".dat");
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-        Logger.Log("{1} をロードするに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + areaId);
+        Logger.Log("{1} をロードするに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + areaKey);
 
         if (!string.IsNullOrEmpty(mapData))
         {
@@ -67,7 +69,7 @@ public class MapInstance : MonoBehaviour
             data = new MapData(mapData, MapAreaConfig.MapId);
 
             elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-            Logger.Log("{1} を生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + areaId);
+            Logger.Log("{1} をInstanceDataするに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + areaKey);
         }
         else
         {
@@ -126,7 +128,7 @@ public class MapInstance : MonoBehaviour
             var startTime = DateTime.Now;
 
 
-            string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaId + ".dat");
+            string mapData = (string)SaveLoadFile.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaKey + ".dat");
             if (!string.IsNullOrEmpty(mapData))
             {
                 MapData mData = new MapData(MapAreaConfig.MapId);
@@ -171,7 +173,7 @@ public class MapInstance : MonoBehaviour
             }
 
             TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-            Logger.Log("{1} をロードするに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + areaId);
+            Logger.Log("{1} をロードするに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + areaKey);
         }
 
         // MapCellを生成
@@ -340,6 +342,6 @@ public class MapInstance : MonoBehaviour
         if (!Actived || Data == null)
             return;
 
-        Task task = SaveLoadFile.E.Save(Data.ToStringData(), PublicPar.SaveRootPath + PublicPar.AreaMapName + MapAreaConfig.ID + ".dat");
+        Task task = SaveLoadFile.E.Save(Data.ToStringData(), PublicPar.SaveRootPath + PublicPar.AreaMapName + AreaKey + ".dat");
     }
 }
