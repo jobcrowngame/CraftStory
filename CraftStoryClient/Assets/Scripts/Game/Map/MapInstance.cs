@@ -57,7 +57,7 @@ public class MapInstance : MonoBehaviour
     {
         var startTime = DateTime.Now;
 
-        string mapData = (string)FileIO.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + areaKey + ".dat");
+        string mapData = (string)FileIO.E.Load(PublicPar.SaveRootPath + PublicPar.AreaMapName + config.ID + ".dat");
 
         TimeSpan elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
         Logger.Log("{1} をロードするに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + areaKey);
