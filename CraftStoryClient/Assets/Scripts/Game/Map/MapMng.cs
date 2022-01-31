@@ -267,8 +267,6 @@ public class MapMng : SingleMono<MapMng>
         string name = string.Format("x{0}z{1}", indexX, indexZ);
         MapInstance mapInstance = CommonFunction.FindChiledByName<MapInstance>(MapParent, name);
 
-        var startTime = DateTime.Now;
-
         if (mapInstance == null)
         {
             var config = GetMapAreaConfig(indexX, indexZ);
@@ -277,21 +275,10 @@ public class MapMng : SingleMono<MapMng>
             mapInstance.Init(config);
         }
 
-        var elapsedSpan = new TimeSpan(DateTime.Now.Ticks - startTime.Ticks);
-        Logger.Log("{1} を生成するに {0} かかりました。", elapsedSpan.TotalMilliseconds, PublicPar.AreaMapName + "x" + indexX + "z" + indexZ);
-        
-
         return mapInstance;
     }
     private MapArea GetMapAreaConfig(int offsetX, int offsetZ)
     {
-        foreach (var item in ConfigMng.E.MapArea.Values)
-        {
-            if (item.OffsetX == offsetX && item.OffsetZ == offsetZ)
-            {
-                return item;
-            }
-        }
         return ConfigMng.E.MapArea["x" + offsetX + "z" + offsetZ];
     }
 
