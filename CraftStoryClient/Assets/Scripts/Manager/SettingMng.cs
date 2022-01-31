@@ -115,7 +115,7 @@ public class SettingMng : Single<SettingMng>
     /// <summary>
     /// エリアマップのサイズ
     /// </summary>
-    public const int AreaMapSize = 50;
+    public const int AreaMapSize = 40;
 
     /// <summary>
     /// エリアの規模

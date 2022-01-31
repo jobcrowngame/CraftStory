@@ -342,6 +342,6 @@ public class MapInstance : MonoBehaviour
         if (!Actived || Data == null)
             return;
 
-        Task task = SaveLoadFile.E.Save(Data.ToStringData(), PublicPar.SaveRootPath + PublicPar.AreaMapName + AreaKey + ".dat");
+        Task task = SaveLoadFile.E.Save(Data.ToStringData(), PublicPar.SaveRootPath + PublicPar.AreaMapName + config.ID + ".dat");
     }
 }
